@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  name: 
+  description: 
+  created_by: 1
+
+two:
+  name: 
+  description: 
+  created_by: 1
