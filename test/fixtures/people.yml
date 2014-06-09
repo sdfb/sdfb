@@ -1,15 +1,19 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
 
 one:
-  name: 
-  created_by: 
-  birth_year: 
-  death_year: 
+  original_id: 1
+  first_name: MyString
+  last_name: MyString
+  created_by: 1
+  birth_year: 1
+  death_year: 1
   historical_significance: MyText
 
 two:
-  name: 
-  created_by: 
-  birth_year: 
-  death_year: 
+  original_id: 1
+  first_name: MyString
+  last_name: MyString
+  created_by: 1
+  birth_year: 1
+  death_year: 1
   historical_significance: MyText
