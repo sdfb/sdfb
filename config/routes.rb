@@ -1,15 +1,13 @@
 Sdfb::Application.routes.draw do
-  resources :groups
-
 
   resources :people
 
 
+  # main resources
+  resources :groups
   resources :relationships
 
-
   resources :users
-
 
   resources :user_rel_contribs
 

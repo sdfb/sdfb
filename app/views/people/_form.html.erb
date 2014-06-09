@@ -12,20 +12,28 @@
   <% end %>
 
   <div class="field">
-    <%= f.label :name %><br />
-    <%= f.text_field :name %>
+    <%= f.label :original_id %><br />
+    <%= f.number_field :original_id %>
+  </div>
+  <div class="field">
+    <%= f.label :first_name %><br />
+    <%= f.text_field :first_name %>
+  </div>
+  <div class="field">
+    <%= f.label :last_name %><br />
+    <%= f.text_field :last_name %>
   </div>
   <div class="field">
     <%= f.label :created_by %><br />
-    <%= f.text_field :created_by %>
+    <%= f.number_field :created_by %>
   </div>
   <div class="field">
     <%= f.label :birth_year %><br />
-    <%= f.text_field :birth_year %>
+    <%= f.number_field :birth_year %>
   </div>
   <div class="field">
     <%= f.label :death_year %><br />
-    <%= f.text_field :death_year %>
+    <%= f.number_field :death_year %>
   </div>
   <div class="field">
     <%= f.label :historical_significance %><br />
