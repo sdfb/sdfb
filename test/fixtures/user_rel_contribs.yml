@@ -1,0 +1,17 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  relationship_id: 
+  created_by: 
+  confidence_type: 
+  annotation: 
+  bibliography: 
+  relationship_type: MyString
+
+two:
+  relationship_id: 
+  created_by: 
+  confidence_type: 
+  annotation: 
+  bibliography: 
+  relationship_type: MyString
