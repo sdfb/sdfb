@@ -1,5 +1,3 @@
 class UserRelContrib < ActiveRecord::Base
-  attr_accessible :annotation, :bibliography, :confidence_type, :created_by, :relationship_id, :relationship_type
-  belongs_to :user
-  belongs_to :relationship
+  attr_accessible :annotation, :bibliography, :confidence_type, :created_by, :is_flagged, :relationship_id, :relationship_type
 end

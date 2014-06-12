@@ -35,6 +35,11 @@
   <%= @person.historical_significance %>
 </p>
 
+<p>
+  <b>Is approved:</b>
+  <%= @person.is_approved %>
+</p>
+
 
 <%= link_to 'Edit', edit_person_path(@person) %> |
 <%= link_to 'Back', people_path %>

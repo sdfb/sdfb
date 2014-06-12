@@ -1,0 +1,30 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Person:</b>
+  <%= @user_person_contrib.person_id %>
+</p>
+
+<p>
+  <b>Created by:</b>
+  <%= @user_person_contrib.created_by %>
+</p>
+
+<p>
+  <b>Annotation:</b>
+  <%= @user_person_contrib.annotation %>
+</p>
+
+<p>
+  <b>Bibliography:</b>
+  <%= @user_person_contrib.bibliography %>
+</p>
+
+<p>
+  <b>Is flagged:</b>
+  <%= @user_person_contrib.is_flagged %>
+</p>
+
+
+<%= link_to 'Edit', edit_user_person_contrib_path(@user_person_contrib) %> |
+<%= link_to 'Back', user_person_contribs_path %>

@@ -18,7 +18,7 @@ class UserRelContribsControllerTest < ActionController::TestCase
 
   test "should create user_rel_contrib" do
     assert_difference('UserRelContrib.count') do
-      post :create, user_rel_contrib: { annotation: @user_rel_contrib.annotation, bibliography: @user_rel_contrib.bibliography, confidence_type: @user_rel_contrib.confidence_type, created_by: @user_rel_contrib.created_by, relationship_id: @user_rel_contrib.relationship_id, relationship_type: @user_rel_contrib.relationship_type }
+      post :create, user_rel_contrib: { annotation: @user_rel_contrib.annotation, bibliography: @user_rel_contrib.bibliography, confidence_type: @user_rel_contrib.confidence_type, created_by: @user_rel_contrib.created_by, is_flagged: @user_rel_contrib.is_flagged, relationship_id: @user_rel_contrib.relationship_id, relationship_type: @user_rel_contrib.relationship_type }
     end
 
     assert_redirected_to user_rel_contrib_path(assigns(:user_rel_contrib))
@@ -35,7 +35,7 @@ class UserRelContribsControllerTest < ActionController::TestCase
   end
 
   test "should update user_rel_contrib" do
-    put :update, id: @user_rel_contrib, user_rel_contrib: { annotation: @user_rel_contrib.annotation, bibliography: @user_rel_contrib.bibliography, confidence_type: @user_rel_contrib.confidence_type, created_by: @user_rel_contrib.created_by, relationship_id: @user_rel_contrib.relationship_id, relationship_type: @user_rel_contrib.relationship_type }
+    put :update, id: @user_rel_contrib, user_rel_contrib: { annotation: @user_rel_contrib.annotation, bibliography: @user_rel_contrib.bibliography, confidence_type: @user_rel_contrib.confidence_type, created_by: @user_rel_contrib.created_by, is_flagged: @user_rel_contrib.is_flagged, relationship_id: @user_rel_contrib.relationship_id, relationship_type: @user_rel_contrib.relationship_type }
     assert_redirected_to user_rel_contrib_path(assigns(:user_rel_contrib))
   end
 

@@ -1,18 +1,30 @@
 Sdfb::Application.routes.draw do
 
+  resources :groups
+
+
+  resources :user_group_contribs
+
+
+  resources :group_assignments
+
+
   resources :people
 
 
-  # main resources
-  resources :groups
+  resources :user_person_contribs
+
+
   resources :relationships
 
+
   resources :users
+
 
   resources :user_rel_contribs
 
 
-  # The priority is based upon order of creation:
+  # main resources  # The priority is based upon order of creation:
   # first created -> highest priority.
 
   # Sample of regular route:
