@@ -1,11 +1,13 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
 
 one:
-  name: 
-  description: 
   created_by: 1
+  name: MyString
+  description: MyText
+  is_approved: false
 
 two:
-  name: 
-  description: 
   created_by: 1
+  name: MyString
+  description: MyText
+  is_approved: false

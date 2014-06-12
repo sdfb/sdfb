@@ -1,17 +1,19 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
 
 one:
-  relationship_id: 
-  created_by: 
-  confidence_type: 
-  annotation: 
-  bibliography: 
+  relationship_id: 1
+  created_by: 1
+  confidence_type: MyString
+  annotation: MyText
+  bibliography: MyText
   relationship_type: MyString
+  is_flagged: false
 
 two:
-  relationship_id: 
-  created_by: 
-  confidence_type: 
-  annotation: 
-  bibliography: 
+  relationship_id: 1
+  created_by: 1
+  confidence_type: MyString
+  annotation: MyText
+  bibliography: MyText
   relationship_type: MyString
+  is_flagged: false

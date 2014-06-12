@@ -2,9 +2,10 @@
 
 <table>
   <tr>
+    <th>Created by</th>
     <th>Name</th>
     <th>Description</th>
-    <th>Created by</th>
+    <th>Is approved</th>
     <th></th>
     <th></th>
     <th></th>
@@ -12,9 +13,10 @@
 
 <% @groups.each do |group| %>
   <tr>
+    <td><%= group.created_by %></td>
     <td><%= group.name %></td>
     <td><%= group.description %></td>
-    <td><%= group.created_by %></td>
+    <td><%= group.is_approved %></td>
     <td><%= link_to 'Show', group %></td>
     <td><%= link_to 'Edit', edit_group_path(group) %></td>
     <td><%= link_to 'Destroy', group, method: :delete, data: { confirm: 'Are you sure?' } %></td>

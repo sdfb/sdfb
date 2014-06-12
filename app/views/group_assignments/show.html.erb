@@ -1,0 +1,25 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Created by:</b>
+  <%= @group_assignment.created_by %>
+</p>
+
+<p>
+  <b>Group:</b>
+  <%= @group_assignment.group_id %>
+</p>
+
+<p>
+  <b>Person:</b>
+  <%= @group_assignment.person_id %>
+</p>
+
+<p>
+  <b>Is approved:</b>
+  <%= @group_assignment.is_approved %>
+</p>
+
+
+<%= link_to 'Edit', edit_group_assignment_path(@group_assignment) %> |
+<%= link_to 'Back', group_assignments_path %>

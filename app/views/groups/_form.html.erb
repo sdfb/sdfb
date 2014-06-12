@@ -12,16 +12,20 @@
   <% end %>
 
   <div class="field">
+    <%= f.label :created_by %><br />
+    <%= f.number_field :created_by %>
+  </div>
+  <div class="field">
     <%= f.label :name %><br />
     <%= f.text_field :name %>
   </div>
   <div class="field">
     <%= f.label :description %><br />
-    <%= f.text_field :description %>
+    <%= f.text_area :description %>
   </div>
   <div class="field">
-    <%= f.label :created_by %><br />
-    <%= f.number_field :created_by %>
+    <%= f.label :is_approved %><br />
+    <%= f.check_box :is_approved %>
   </div>
   <div class="actions">
     <%= f.submit %>

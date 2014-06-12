@@ -1,11 +1,15 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
 
 one:
-  person1_index: 
-  person2_index: 
+  person1_index: 1
+  person2_index: 1
   original_certainty: 9.99
+  average_certainty: 9.99
+  is_approved: false
 
 two:
-  person1_index: 
-  person2_index: 
+  person1_index: 1
+  person2_index: 1
   original_certainty: 9.99
+  average_certainty: 9.99
+  is_approved: false

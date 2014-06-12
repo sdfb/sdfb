@@ -8,6 +8,7 @@ one:
   birth_year: 1
   death_year: 1
   historical_significance: MyText
+  is_approved: false
 
 two:
   original_id: 1
@@ -17,3 +18,4 @@ two:
   birth_year: 1
   death_year: 1
   historical_significance: MyText
+  is_approved: false

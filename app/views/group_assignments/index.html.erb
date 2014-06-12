@@ -1,0 +1,29 @@
+<h1>Listing group_assignments</h1>
+
+<table>
+  <tr>
+    <th>Created by</th>
+    <th>Group</th>
+    <th>Person</th>
+    <th>Is approved</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @group_assignments.each do |group_assignment| %>
+  <tr>
+    <td><%= group_assignment.created_by %></td>
+    <td><%= group_assignment.group_id %></td>
+    <td><%= group_assignment.person_id %></td>
+    <td><%= group_assignment.is_approved %></td>
+    <td><%= link_to 'Show', group_assignment %></td>
+    <td><%= link_to 'Edit', edit_group_assignment_path(group_assignment) %></td>
+    <td><%= link_to 'Destroy', group_assignment, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Group assignment', new_group_assignment_path %>

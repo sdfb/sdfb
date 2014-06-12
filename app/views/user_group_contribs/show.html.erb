@@ -1,0 +1,30 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Group:</b>
+  <%= @user_group_contrib.group_id %>
+</p>
+
+<p>
+  <b>Created by:</b>
+  <%= @user_group_contrib.created_by %>
+</p>
+
+<p>
+  <b>Annotation:</b>
+  <%= @user_group_contrib.annotation %>
+</p>
+
+<p>
+  <b>Bibliography:</b>
+  <%= @user_group_contrib.bibliography %>
+</p>
+
+<p>
+  <b>Is flagged:</b>
+  <%= @user_group_contrib.is_flagged %>
+</p>
+
+
+<%= link_to 'Edit', edit_user_group_contrib_path(@user_group_contrib) %> |
+<%= link_to 'Back', user_group_contribs_path %>

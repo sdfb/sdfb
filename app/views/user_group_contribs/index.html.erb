@@ -1,0 +1,31 @@
+<h1>Listing user_group_contribs</h1>
+
+<table>
+  <tr>
+    <th>Group</th>
+    <th>Created by</th>
+    <th>Annotation</th>
+    <th>Bibliography</th>
+    <th>Is flagged</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @user_group_contribs.each do |user_group_contrib| %>
+  <tr>
+    <td><%= user_group_contrib.group_id %></td>
+    <td><%= user_group_contrib.created_by %></td>
+    <td><%= user_group_contrib.annotation %></td>
+    <td><%= user_group_contrib.bibliography %></td>
+    <td><%= user_group_contrib.is_flagged %></td>
+    <td><%= link_to 'Show', user_group_contrib %></td>
+    <td><%= link_to 'Edit', edit_user_group_contrib_path(user_group_contrib) %></td>
+    <td><%= link_to 'Destroy', user_group_contrib, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New User group contrib', new_user_group_contrib_path %>

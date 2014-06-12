@@ -1,0 +1,31 @@
+<h1>Listing user_person_contribs</h1>
+
+<table>
+  <tr>
+    <th>Person</th>
+    <th>Created by</th>
+    <th>Annotation</th>
+    <th>Bibliography</th>
+    <th>Is flagged</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @user_person_contribs.each do |user_person_contrib| %>
+  <tr>
+    <td><%= user_person_contrib.person_id %></td>
+    <td><%= user_person_contrib.created_by %></td>
+    <td><%= user_person_contrib.annotation %></td>
+    <td><%= user_person_contrib.bibliography %></td>
+    <td><%= user_person_contrib.is_flagged %></td>
+    <td><%= link_to 'Show', user_person_contrib %></td>
+    <td><%= link_to 'Edit', edit_user_person_contrib_path(user_person_contrib) %></td>
+    <td><%= link_to 'Destroy', user_person_contrib, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New User person contrib', new_user_person_contrib_path %>

@@ -1,6 +1,11 @@
 <p id="notice"><%= notice %></p>
 
 <p>
+  <b>Created by:</b>
+  <%= @group.created_by %>
+</p>
+
+<p>
   <b>Name:</b>
   <%= @group.name %>
 </p>
@@ -11,8 +16,8 @@
 </p>
 
 <p>
-  <b>Created by:</b>
-  <%= @group.created_by %>
+  <b>Is approved:</b>
+  <%= @group.is_approved %>
 </p>
 
 

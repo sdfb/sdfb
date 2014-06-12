@@ -5,6 +5,8 @@
     <th>Person1 index</th>
     <th>Person2 index</th>
     <th>Original certainty</th>
+    <th>Average certainty</th>
+    <th>Is approved</th>
     <th></th>
     <th></th>
     <th></th>
@@ -15,6 +17,8 @@
     <td><%= relationship.person1_index %></td>
     <td><%= relationship.person2_index %></td>
     <td><%= relationship.original_certainty %></td>
+    <td><%= relationship.average_certainty %></td>
+    <td><%= relationship.is_approved %></td>
     <td><%= link_to 'Show', relationship %></td>
     <td><%= link_to 'Edit', edit_relationship_path(relationship) %></td>
     <td><%= link_to 'Destroy', relationship, method: :delete, data: { confirm: 'Are you sure?' } %></td>

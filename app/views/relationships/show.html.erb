@@ -15,6 +15,16 @@
   <%= @relationship.original_certainty %>
 </p>
 
+<p>
+  <b>Average certainty:</b>
+  <%= @relationship.average_certainty %>
+</p>
+
+<p>
+  <b>Is approved:</b>
+  <%= @relationship.is_approved %>
+</p>
+
 
 <%= link_to 'Edit', edit_relationship_path(@relationship) %> |
 <%= link_to 'Back', relationships_path %>

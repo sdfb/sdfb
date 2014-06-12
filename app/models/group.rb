@@ -1,4 +1,3 @@
 class Group < ActiveRecord::Base
-  attr_accessible :created_by, :description, :name
-  belongs_to :person
+  attr_accessible :created_by, :description, :is_approved, :name
 end
