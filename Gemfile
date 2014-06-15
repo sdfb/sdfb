@@ -22,7 +22,11 @@ end
 
 gem 'jquery-rails'
 
+# This gem encrypts passwords
 gem 'bcrypt-ruby', :require => "bcrypt"
+
+# This gem handles user authorizations
+gem 'cancan'
 
 # To use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.0.0'
