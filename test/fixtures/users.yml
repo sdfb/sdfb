@@ -1,27 +1,29 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
 
 one:
-  password: MyString
-  password_confirmation: MyString
   about_description: MyText
   affiliation: MyString
   email: MyString
   first_name: MyString
   is_active: false
   last_name: MyString
+  password: MyString
+  password_confirmation: MyString
   password_hash: MyString
   password_salt: MyString
   user_type: MyString
+  is_admin: false
 
 two:
-  password: MyString
-  password_confirmation: MyString
   about_description: MyText
   affiliation: MyString
   email: MyString
   first_name: MyString
   is_active: false
   last_name: MyString
+  password: MyString
+  password_confirmation: MyString
   password_hash: MyString
   password_salt: MyString
   user_type: MyString
+  is_admin: false

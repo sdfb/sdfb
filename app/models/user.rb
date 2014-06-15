@@ -1,7 +1,10 @@
 class User < ActiveRecord::Base
-  attr_accessible :about_description, :affiliation, :email, :first_name, :is_active, :last_name, :password, :password_confirmation, :password_hash, :password_salt, :user_type
-
+  attr_accessible :about_description, :affiliation, :email, :first_name, :is_active, :is_admin, :last_name, :password, :password_confirmation, :password_hash, :password_salt, :user_type
   attr_accessor :password
+
+  # Callbacks
+  # -----------------------------
+  before_save :encrypt_password
 
   # Relationships
   # -----------------------------
@@ -17,12 +20,12 @@ class User < ActiveRecord::Base
   # -----------------------------
   validates_presence_of :first_name
   validates_presence_of :last_name
-  validates_presence_of :password_hash
-  validates_presence_of :password_salt
+  # validates_presence_of :password_hash
+  # validates_presence_of :password_salt
   validates_presence_of :user_type
   validates_presence_of :affiliation
-  validates_presence_of :is_admin
-  validates_presence_of :is_active
+  #validates_presence_of :is_admin
+  #validates_presence_of :is_active
 
   # password must be present and at least 4 characters long, with a confirmation
   validates_presence_of :password, :on => :create
@@ -38,6 +41,11 @@ class User < ActiveRecord::Base
   def password_present?
     !password.nil?
   end
-end
 
+  def encrypt_password
+    if password.present?
+      self.password_salt = BCrypt::Engine.generate_salt
+      self.password_hash = BCrypt::Engine.hash_secret(password, password_salt)
+    end
+  end
 end

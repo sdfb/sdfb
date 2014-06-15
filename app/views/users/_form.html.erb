@@ -12,14 +12,6 @@
   <% end %>
 
   <div class="field">
-    <%= f.label :password %><br />
-    <%= f.text_field :password %>
-  </div>
-  <div class="field">
-    <%= f.label :password_confirmation %><br />
-    <%= f.text_field :password_confirmation %>
-  </div>
-  <div class="field">
     <%= f.label :about_description %><br />
     <%= f.text_area :about_description %>
   </div>
@@ -44,6 +36,14 @@
     <%= f.text_field :last_name %>
   </div>
   <div class="field">
+    <%= f.label :password %><br />
+    <%= f.text_field :password %>
+  </div>
+  <div class="field">
+    <%= f.label :password_confirmation %><br />
+    <%= f.text_field :password_confirmation %>
+  </div>
+  <div class="field">
     <%= f.label :password_hash %><br />
     <%= f.text_field :password_hash %>
   </div>
@@ -54,6 +54,10 @@
   <div class="field">
     <%= f.label :user_type %><br />
     <%= f.text_field :user_type %>
+  </div>
+  <div class="field">
+    <%= f.label :is_admin %><br />
+    <%= f.check_box :is_admin %>
   </div>
   <div class="actions">
     <%= f.submit %>
