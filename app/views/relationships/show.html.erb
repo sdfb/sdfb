@@ -30,6 +30,7 @@
   <%= @relationship.created_by %>
 </p>
 
-
-<%= link_to 'Edit', edit_relationship_path(@relationship) %> |
+<% if can? :update, @relationship %>
+  <%= link_to 'Edit', edit_relationship_path(@relationship) %> |
+<% end %>
 <%= link_to 'Back', relationships_path %>

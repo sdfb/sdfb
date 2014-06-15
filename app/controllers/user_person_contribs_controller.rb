@@ -1,6 +1,9 @@
 class UserPersonContribsController < ApplicationController
   # GET /user_person_contribs
   # GET /user_person_contribs.json
+
+  authorize_resource
+
   def index
     @user_person_contribs = UserPersonContrib.all
 

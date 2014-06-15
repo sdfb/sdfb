@@ -25,9 +25,15 @@
     <td><%= person.death_year %></td>
     <td><%= person.historical_significance %></td>
     <td><%= person.is_approved %></td>
-    <td><%= link_to 'Show', person %></td>
-    <td><%= link_to 'Edit', edit_person_path(person) %></td>
-    <td><%= link_to 'Destroy', person, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+    <% if can? :show, people %>
+        <td><%= link_to 'Show', person %></td>
+    <% end %>
+    <% if can? :update, people %>      
+        <td><%= link_to 'Edit', edit_person_path(person) %></td>
+    <% end %>
+    <% if can? :destroy, people %>   
+        <td><%= link_to 'Destroy', person, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+    <% end %>
   </tr>
 <% end %>
 </table>

@@ -1,6 +1,9 @@
 class PeopleController < ApplicationController
   # GET /people
   # GET /people.json
+
+  authorize_resource
+  
   def index
     @people = Person.all
 

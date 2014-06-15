@@ -1,6 +1,9 @@
 class GroupsController < ApplicationController
   # GET /groups
   # GET /groups.json
+
+  authorize_resource
+  
   def index
     @groups = Group.all
 

@@ -21,9 +21,15 @@
     <td><%= relationship.person1_index %></td>
     <td><%= relationship.person2_index %></td>
     <td><%= relationship.created_by %></td>
-    <td><%= link_to 'Show', relationship %></td>
-    <td><%= link_to 'Edit', edit_relationship_path(relationship) %></td>
-    <td><%= link_to 'Destroy', relationship, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+    <% if can? :show, relationship %>
+        <td><%= link_to 'Show', relationship %></td>
+    <% end %>
+    <% if can? :update, relationship %>
+        <td><%= link_to 'Edit', edit_relationship_path(relationship) %></td>
+    <% end %>
+    <% if can? :destroy, relationship %>
+        <td><%= link_to 'Destroy', relationship, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+    <% end %>
   </tr>
 <% end %>
 </table>

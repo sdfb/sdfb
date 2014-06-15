@@ -20,6 +20,8 @@
   <%= @group_assignment.is_approved %>
 </p>
 
+<% if can? :update, @group_assignment %>
+    <td><%= link_to 'Edit', edit_group_assignment_path(group_assignment) %> |</td>
+<% end %>
 
-<%= link_to 'Edit', edit_group_assignment_path(@group_assignment) %> |
 <%= link_to 'Back', group_assignments_path %>

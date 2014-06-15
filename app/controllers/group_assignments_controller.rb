@@ -1,6 +1,9 @@
 class GroupAssignmentsController < ApplicationController
   # GET /group_assignments
   # GET /group_assignments.json
+
+  authorize_resource
+  
   def index
     @group_assignments = GroupAssignment.all
 
