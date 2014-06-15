@@ -17,9 +17,15 @@
     <td><%= group.name %></td>
     <td><%= group.description %></td>
     <td><%= group.is_approved %></td>
-    <td><%= link_to 'Show', group %></td>
-    <td><%= link_to 'Edit', edit_group_path(group) %></td>
-    <td><%= link_to 'Destroy', group, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+    <% if can? :show, group %>
+      <td><%= link_to 'Show', group %></td>
+    <% end %>
+    <% if can? :update, group %>
+      <td><%= link_to 'Edit', edit_group_path(group) %></td>
+    <% end %>
+    <% if can? :destroy, group %>
+      <td><%= link_to 'Destroy', group, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+    <% end %>
   </tr>
 <% end %>
 </table>

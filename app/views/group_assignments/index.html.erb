@@ -17,9 +17,16 @@
     <td><%= group_assignment.group_id %></td>
     <td><%= group_assignment.person_id %></td>
     <td><%= group_assignment.is_approved %></td>
-    <td><%= link_to 'Show', group_assignment %></td>
-    <td><%= link_to 'Edit', edit_group_assignment_path(group_assignment) %></td>
-    <td><%= link_to 'Destroy', group_assignment, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+
+    <% if can? :show, group_assignment %>
+      <td><%= link_to 'Show', group_assignment %></td>
+    <% end %>
+    <% if can? :update, group_assignment %>
+      <td><%= link_to 'Edit', edit_group_assignment_path(group_assignment) %></td>
+    <% end %>
+    <% if can? :destroy, group_assignment %>
+      <td><%= link_to 'Destroy', group_assignment, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+    <% end %>
   </tr>
 <% end %>
 </table>

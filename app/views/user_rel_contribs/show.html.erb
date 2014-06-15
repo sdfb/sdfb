@@ -35,6 +35,7 @@
   <%= @user_rel_contrib.is_flagged %>
 </p>
 
-
-<%= link_to 'Edit', edit_user_rel_contrib_path(@user_rel_contrib) %> |
+<% if can? :update, @user_rel_contrib %>
+  <%= link_to 'Edit', edit_user_rel_contrib_path(@user_rel_contrib) %> |
+<% end %>
 <%= link_to 'Back', user_rel_contribs_path %>

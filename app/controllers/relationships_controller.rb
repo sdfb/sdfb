@@ -1,6 +1,9 @@
 class RelationshipsController < ApplicationController
   # GET /relationships
   # GET /relationships.json
+  
+  authorize_resource
+
   def index
     @relationships = Relationship.all
 

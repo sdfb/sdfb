@@ -19,9 +19,15 @@
     <td><%= user_person_contrib.annotation %></td>
     <td><%= user_person_contrib.bibliography %></td>
     <td><%= user_person_contrib.is_flagged %></td>
-    <td><%= link_to 'Show', user_person_contrib %></td>
-    <td><%= link_to 'Edit', edit_user_person_contrib_path(user_person_contrib) %></td>
-    <td><%= link_to 'Destroy', user_person_contrib, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+    <% if can? :show, user_person_contrib %>
+        <td><%= link_to 'Show', user_person_contrib %></td>
+    <% end %>
+    <% if can? :update, user_person_contrib %>
+        <td><%= link_to 'Edit', edit_user_person_contrib_path(user_person_contrib) %></td>
+    <% end %>
+    <% if can? :destroy, user_person_contrib %>
+        <td><%= link_to 'Destroy', user_person_contrib, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+    <% end %>
   </tr>
 <% end %>
 </table>

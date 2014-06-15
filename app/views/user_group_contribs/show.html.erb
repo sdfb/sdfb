@@ -25,6 +25,7 @@
   <%= @user_group_contrib.is_flagged %>
 </p>
 
-
-<%= link_to 'Edit', edit_user_group_contrib_path(@user_group_contrib) %> |
+<% if can? :update, @user_group_contrib %>
+  <%= link_to 'Edit', edit_user_group_contrib_path(@user_group_contrib) %> |
+<% end %>
 <%= link_to 'Back', user_group_contribs_path %>
