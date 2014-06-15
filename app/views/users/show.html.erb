@@ -1,16 +1,6 @@
 <p id="notice"><%= notice %></p>
 
 <p>
-  <b>Password:</b>
-  <%= @user.password %>
-</p>
-
-<p>
-  <b>Password confirmation:</b>
-  <%= @user.password_confirmation %>
-</p>
-
-<p>
   <b>About description:</b>
   <%= @user.about_description %>
 </p>
@@ -41,6 +31,16 @@
 </p>
 
 <p>
+  <b>Password:</b>
+  <%= @user.password %>
+</p>
+
+<p>
+  <b>Password confirmation:</b>
+  <%= @user.password_confirmation %>
+</p>
+
+<p>
   <b>Password hash:</b>
   <%= @user.password_hash %>
 </p>
@@ -53,6 +53,11 @@
 <p>
   <b>User type:</b>
   <%= @user.user_type %>
+</p>
+
+<p>
+  <b>Is admin:</b>
+  <%= @user.is_admin %>
 </p>
 
 

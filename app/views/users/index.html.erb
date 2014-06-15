@@ -2,17 +2,18 @@
 
 <table>
   <tr>
-    <th>Password</th>
-    <th>Password confirmation</th>
     <th>About description</th>
     <th>Affiliation</th>
     <th>Email</th>
     <th>First name</th>
     <th>Is active</th>
     <th>Last name</th>
+    <th>Password</th>
+    <th>Password confirmation</th>
     <th>Password hash</th>
     <th>Password salt</th>
     <th>User type</th>
+    <th>Is admin</th>
     <th></th>
     <th></th>
     <th></th>
@@ -20,17 +21,18 @@
 
 <% @users.each do |user| %>
   <tr>
-    <td><%= user.password %></td>
-    <td><%= user.password_confirmation %></td>
     <td><%= user.about_description %></td>
     <td><%= user.affiliation %></td>
     <td><%= user.email %></td>
     <td><%= user.first_name %></td>
     <td><%= user.is_active %></td>
     <td><%= user.last_name %></td>
+    <td><%= user.password %></td>
+    <td><%= user.password_confirmation %></td>
     <td><%= user.password_hash %></td>
     <td><%= user.password_salt %></td>
     <td><%= user.user_type %></td>
+    <td><%= user.is_admin %></td>
     <td><%= link_to 'Show', user %></td>
     <td><%= link_to 'Edit', edit_user_path(user) %></td>
     <td><%= link_to 'Destroy', user, method: :delete, data: { confirm: 'Are you sure?' } %></td>
