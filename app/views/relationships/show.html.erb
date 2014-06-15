@@ -1,6 +1,21 @@
 <p id="notice"><%= notice %></p>
 
 <p>
+  <b>Average certainty:</b>
+  <%= @relationship.average_certainty %>
+</p>
+
+<p>
+  <b>Is approved:</b>
+  <%= @relationship.is_approved %>
+</p>
+
+<p>
+  <b>Original certainty:</b>
+  <%= @relationship.original_certainty %>
+</p>
+
+<p>
   <b>Person1 index:</b>
   <%= @relationship.person1_index %>
 </p>
@@ -11,18 +26,8 @@
 </p>
 
 <p>
-  <b>Original certainty:</b>
-  <%= @relationship.original_certainty %>
-</p>
-
-<p>
-  <b>Average certainty:</b>
-  <%= @relationship.average_certainty %>
-</p>
-
-<p>
-  <b>Is approved:</b>
-  <%= @relationship.is_approved %>
+  <b>Created by:</b>
+  <%= @relationship.created_by %>
 </p>
 
 

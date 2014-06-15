@@ -12,6 +12,18 @@
   <% end %>
 
   <div class="field">
+    <%= f.label :average_certainty %><br />
+    <%= f.text_field :average_certainty %>
+  </div>
+  <div class="field">
+    <%= f.label :is_approved %><br />
+    <%= f.check_box :is_approved %>
+  </div>
+  <div class="field">
+    <%= f.label :original_certainty %><br />
+    <%= f.text_field :original_certainty %>
+  </div>
+  <div class="field">
     <%= f.label :person1_index %><br />
     <%= f.number_field :person1_index %>
   </div>
@@ -20,16 +32,8 @@
     <%= f.number_field :person2_index %>
   </div>
   <div class="field">
-    <%= f.label :original_certainty %><br />
-    <%= f.text_field :original_certainty %>
-  </div>
-  <div class="field">
-    <%= f.label :average_certainty %><br />
-    <%= f.text_field :average_certainty %>
-  </div>
-  <div class="field">
-    <%= f.label :is_approved %><br />
-    <%= f.check_box :is_approved %>
+    <%= f.label :created_by %><br />
+    <%= f.number_field :created_by %>
   </div>
   <div class="actions">
     <%= f.submit %>

@@ -18,7 +18,7 @@ class RelationshipsControllerTest < ActionController::TestCase
 
   test "should create relationship" do
     assert_difference('Relationship.count') do
-      post :create, relationship: { average_certainty: @relationship.average_certainty, is_approved: @relationship.is_approved, original_certainty: @relationship.original_certainty, person1_index: @relationship.person1_index, person2_index: @relationship.person2_index }
+      post :create, relationship: { average_certainty: @relationship.average_certainty, created_by: @relationship.created_by, is_approved: @relationship.is_approved, original_certainty: @relationship.original_certainty, person1_index: @relationship.person1_index, person2_index: @relationship.person2_index }
     end
 
     assert_redirected_to relationship_path(assigns(:relationship))
@@ -35,7 +35,7 @@ class RelationshipsControllerTest < ActionController::TestCase
   end
 
   test "should update relationship" do
-    put :update, id: @relationship, relationship: { average_certainty: @relationship.average_certainty, is_approved: @relationship.is_approved, original_certainty: @relationship.original_certainty, person1_index: @relationship.person1_index, person2_index: @relationship.person2_index }
+    put :update, id: @relationship, relationship: { average_certainty: @relationship.average_certainty, created_by: @relationship.created_by, is_approved: @relationship.is_approved, original_certainty: @relationship.original_certainty, person1_index: @relationship.person1_index, person2_index: @relationship.person2_index }
     assert_redirected_to relationship_path(assigns(:relationship))
   end
 
