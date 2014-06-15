@@ -1,5 +1,8 @@
 Sdfb::Application.routes.draw do
 
+  resources :users
+
+
   resources :relationships
 
 
@@ -16,9 +19,6 @@ Sdfb::Application.routes.draw do
 
 
   resources :user_person_contribs
-
-
-  resources :users
 
 
   resources :user_rel_contribs

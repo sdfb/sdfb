@@ -1,18 +1,43 @@
 <p id="notice"><%= notice %></p>
 
 <p>
-  <b>First name:</b>
-  <%= @user.first_name %>
+  <b>Password:</b>
+  <%= @user.password %>
 </p>
 
 <p>
-  <b>Last name:</b>
-  <%= @user.last_name %>
+  <b>Password confirmation:</b>
+  <%= @user.password_confirmation %>
+</p>
+
+<p>
+  <b>About description:</b>
+  <%= @user.about_description %>
+</p>
+
+<p>
+  <b>Affiliation:</b>
+  <%= @user.affiliation %>
 </p>
 
 <p>
   <b>Email:</b>
   <%= @user.email %>
+</p>
+
+<p>
+  <b>First name:</b>
+  <%= @user.first_name %>
+</p>
+
+<p>
+  <b>Is active:</b>
+  <%= @user.is_active %>
+</p>
+
+<p>
+  <b>Last name:</b>
+  <%= @user.last_name %>
 </p>
 
 <p>
@@ -28,26 +53,6 @@
 <p>
   <b>User type:</b>
   <%= @user.user_type %>
-</p>
-
-<p>
-  <b>Affiliation:</b>
-  <%= @user.affiliation %>
-</p>
-
-<p>
-  <b>Is admin:</b>
-  <%= @user.is_admin %>
-</p>
-
-<p>
-  <b>About description:</b>
-  <%= @user.about_description %>
-</p>
-
-<p>
-  <b>Is active:</b>
-  <%= @user.is_active %>
 </p>
 
 

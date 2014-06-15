@@ -12,16 +12,36 @@
   <% end %>
 
   <div class="field">
-    <%= f.label :first_name %><br />
-    <%= f.text_field :first_name %>
+    <%= f.label :password %><br />
+    <%= f.text_field :password %>
   </div>
   <div class="field">
-    <%= f.label :last_name %><br />
-    <%= f.text_field :last_name %>
+    <%= f.label :password_confirmation %><br />
+    <%= f.text_field :password_confirmation %>
+  </div>
+  <div class="field">
+    <%= f.label :about_description %><br />
+    <%= f.text_area :about_description %>
+  </div>
+  <div class="field">
+    <%= f.label :affiliation %><br />
+    <%= f.text_field :affiliation %>
   </div>
   <div class="field">
     <%= f.label :email %><br />
     <%= f.text_field :email %>
+  </div>
+  <div class="field">
+    <%= f.label :first_name %><br />
+    <%= f.text_field :first_name %>
+  </div>
+  <div class="field">
+    <%= f.label :is_active %><br />
+    <%= f.check_box :is_active %>
+  </div>
+  <div class="field">
+    <%= f.label :last_name %><br />
+    <%= f.text_field :last_name %>
   </div>
   <div class="field">
     <%= f.label :password_hash %><br />
@@ -34,22 +54,6 @@
   <div class="field">
     <%= f.label :user_type %><br />
     <%= f.text_field :user_type %>
-  </div>
-  <div class="field">
-    <%= f.label :affiliation %><br />
-    <%= f.text_field :affiliation %>
-  </div>
-  <div class="field">
-    <%= f.label :is_admin %><br />
-    <%= f.check_box :is_admin %>
-  </div>
-  <div class="field">
-    <%= f.label :about_description %><br />
-    <%= f.text_area :about_description %>
-  </div>
-  <div class="field">
-    <%= f.label :is_active %><br />
-    <%= f.check_box :is_active %>
   </div>
   <div class="actions">
     <%= f.submit %>
