@@ -15,8 +15,7 @@ class Relationship < ActiveRecord::Base
   validates_presence_of :average_certainty
   validates_presence_of :original_certainty
   validates_presence_of :is_approved
-  validates_presence_of :created_by
-
+  # validates_presence_of :created_by
 
 	# Custom Methods
 	# -----------------------------
