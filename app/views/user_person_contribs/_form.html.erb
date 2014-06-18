@@ -16,8 +16,8 @@
     <%= f.number_field :person_id %>
   </div>
   <div class="field">
-    <%= f.label :created_by %><br />
-    <%= f.number_field :created_by %>
+<!--     <%= f.label :created_by %><br /> -->
+    <%= f.hidden_field :created_by, :value => current_user.id %>
   </div>
   <div class="field">
     <%= f.label :annotation %><br />

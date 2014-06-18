@@ -9,7 +9,7 @@ class Person < ActiveRecord::Base
   # Validations
   # -----------------------------
   validates_presence_of :birth_year
-  validates_presence_of :created_by
+  # validates_presence_of :created_by
   validates_presence_of :death_year
   validates_presence_of :first_name
   validates_presence_of :historical_significance
