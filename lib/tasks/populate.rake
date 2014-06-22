@@ -8,11 +8,10 @@ namespace :db do
     
     # Read in People     
     puts "Adding People..."
-
     inFile = File.new("lib/data/people.csv",'r')
     count = 0
     inFile.each { |line|
-      data = line.split('/n')
+      data = line.split('\n')
       data.each { |person|
         personData = person.split(",")
         original_id_input = personData[0]
@@ -24,11 +23,10 @@ namespace :db do
         count += 1
         puts first_name_input + " " + last_name_input
         Person.create(original_id: original_id_input, first_name: first_name_input, last_name: last_name_input, 
-          birth_year: birth_year_input, death_year: death_year_input, historical_significance: historical_sig_input)
+          birth_year: birth_year_input, death_year: death_year_input, historical_significance: historical_sig_input, is_approved: true)
        }
      }
      puts count
-     puts inFile.size
     inFile.close
     puts "Finished adding People"
   end
