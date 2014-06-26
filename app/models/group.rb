@@ -11,5 +11,18 @@ class Group < ActiveRecord::Base
   validates_presence_of :name
   validates_presence_of :description
   # validates_presence_of :created_by
-  validates_presence_of :is_approved
+
+  # Scope
+  # ----------------------------- 
+  scope :all_approved, where(is_approved: true)
+
+  # Custom Methods
+  # -----------------------------
+  def get_users_name
+    if (created_by != nil)
+      return User.find(created_by).first_name + " " + User.find(created_by).last_name
+    else
+      return "ODNB"
+    end
+  end
 end

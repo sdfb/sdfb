@@ -2,6 +2,8 @@ class GroupAssignmentsController < ApplicationController
   # GET /group_assignments
   # GET /group_assignments.json
 
+  # before_filter :check_login
+  before_filter :check_login, :only => [:new, :edit]
   authorize_resource
   
   def index

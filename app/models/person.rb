@@ -13,7 +13,6 @@ class Person < ActiveRecord::Base
   validates_presence_of :death_year
   validates_presence_of :first_name
   validates_presence_of :historical_significance
-  validates_presence_of :is_approved
   validates_presence_of :last_name
   validates_presence_of :original_id
 end

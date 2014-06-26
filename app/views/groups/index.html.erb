@@ -13,7 +13,7 @@
 
 <% @groups.each do |group| %>
   <tr>
-    <td><%= group.created_by %></td>
+    <td><%= group.get_users_name %></td>
     <td><%= group.name %></td>
     <td><%= group.description %></td>
     <td><%= group.is_approved %></td>

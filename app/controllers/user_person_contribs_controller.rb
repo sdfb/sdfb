@@ -2,6 +2,8 @@ class UserPersonContribsController < ApplicationController
   # GET /user_person_contribs
   # GET /user_person_contribs.json
 
+  # before_filter :check_login
+  before_filter :check_login, :only => [:index, :new, :edit]
   authorize_resource
 
   def index

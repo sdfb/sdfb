@@ -2,6 +2,8 @@ class PeopleController < ApplicationController
   # GET /people
   # GET /people.json
 
+  # before_filter :check_login
+  before_filter :check_login, :only => [:new, :edit]
   authorize_resource
   
   def index

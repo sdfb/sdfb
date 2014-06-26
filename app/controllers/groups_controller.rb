@@ -2,10 +2,12 @@ class GroupsController < ApplicationController
   # GET /groups
   # GET /groups.json
 
+  # before_filter :check_login
+  before_filter :check_login, :only => [:new, :edit]
   authorize_resource
   
   def index
-    @groups = Group.all
+    @groups = Group.all_approved
 
     respond_to do |format|
       format.html # index.html.erb
