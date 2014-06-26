@@ -15,7 +15,6 @@ rake db:populate_rel_uncertain
 rake db:populate_rel_unlikely
 
 TODO:
--populate script for group
 -redirect when a user does not have access to a page.
 -edit the forms (choose from user names) and validations
 -edit the views to display names

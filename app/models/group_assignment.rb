@@ -12,5 +12,4 @@ class GroupAssignment < ActiveRecord::Base
   validates_presence_of :group_id
   validates_presence_of :person_id
   validates_presence_of :created_by
-  validates_presence_of :is_approved
 end

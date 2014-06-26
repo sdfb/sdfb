@@ -2,6 +2,8 @@ class UserRelContribsController < ApplicationController
   # GET /user_rel_contribs
   # GET /user_rel_contribs.json
 
+  # before_filter :check_login
+  before_filter :check_login, :only => [:index, :new, :edit]
   authorize_resource
 
   def index
@@ -81,6 +83,13 @@ class UserRelContribsController < ApplicationController
     respond_to do |format|
       format.html { redirect_to user_rel_contribs_url }
       format.json { head :no_content }
+    end
+  end
+
+  def require_login
+    unless logged_in?
+      flash[:error] = "You must be logged in to access this section"
+      redirect_to login_url # halts request cycle
     end
   end
 end
