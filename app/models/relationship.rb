@@ -1,5 +1,5 @@
 class Relationship < ActiveRecord::Base
-  attr_accessible :average_certainty, :created_by, :is_approved, :original_certainty, :person1_index, :person2_index
+  attr_accessible :average_certainty, :created_by, :is_approved, :original_certainty, :person1_index, :person2_index 
   
   # Relationships
   # -----------------------------
@@ -16,9 +16,30 @@ class Relationship < ActiveRecord::Base
   validates_presence_of :original_certainty
   # validates_presence_of :created_by
 
+  # Scope
+  # ----------------------------- 
+  scope :all_approved, where(is_approved: true)
+
 	# Custom Methods
 	# -----------------------------
  	# Validation method to check that one person is not in a relationship with themselves
+
+  def get_person1_name
+    return Person.find(person1_index).first_name + " " + Person.find(person1_index).last_name 
+  end
+
+  def get_person2_name
+    return Person.find(person2_index).first_name + " " + Person.find(person2_index).last_name 
+  end
+
+  def get_users_name
+    if (created_by != nil)
+      return User.find(created_by).first_name + " " + User.find(created_by).last_name
+    else
+      return "ODNB"
+    end
+  end
+
   def check_two_different_people
     errors.add(:person2_index, "A person cannot have a relationship with his or herself.") if person1_index == person2_index
   end

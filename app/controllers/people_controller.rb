@@ -7,7 +7,7 @@ class PeopleController < ApplicationController
   authorize_resource
   
   def index
-    @people = Person.all
+    @people_approved = Person.all_approved
 
     respond_to do |format|
       format.html # index.html.erb

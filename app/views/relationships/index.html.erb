@@ -2,25 +2,36 @@
 
 <table>
   <tr>
-    <th>Average certainty</th>
-    <th>Is approved</th>
-    <th>Original certainty</th>
-    <th>Person1 index</th>
-    <th>Person2 index</th>
-    <th>Created by</th>
+    <th>Person 1</th>
+    <th>Person 2</th>
+    <% if current_user.is_admin %>
+        <th>Original Certainty</th>
+    <% end %>
+    <% if current_user.is_admin %>
+        <th>Average
+    <% else %>
+        <th>
+    <% end %>
+    Certainty</th>
+    <% if current_user.is_admin %>
+        <th>Created by</th>
+    <% end %>
     <th></th>
     <th></th>
     <th></th>
   </tr>
 
-<% @relationships.each do |relationship| %>
+<% @relationships_approved.each do |relationship| %>
   <tr>
+    <td><%= link_to relationship.get_person1_name, person_path(relationship.person1_index) %></td>
+    <td><%= link_to relationship.get_person2_name, person_path(relationship.person2_index) %></td>
+    <% if current_user.is_admin %>
+        <td><%= relationship.original_certainty %></td>
+    <% end %>
     <td><%= relationship.average_certainty %></td>
-    <td><%= relationship.is_approved %></td>
-    <td><%= relationship.original_certainty %></td>
-    <td><%= relationship.person1_index %></td>
-    <td><%= relationship.person2_index %></td>
-    <td><%= relationship.created_by %></td>
+    <% if current_user.is_admin %>
+        <td><%= relationship.get_users_name %></td>
+    <% end %>
     <% if can? :show, relationship %>
         <td><%= link_to 'Show', relationship %></td>
     <% end %>

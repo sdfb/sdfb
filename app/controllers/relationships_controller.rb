@@ -7,7 +7,7 @@ class RelationshipsController < ApplicationController
   authorize_resource
 
   def index
-    @relationships = Relationship.all
+    @relationships_approved = Relationship.all_approved
 
     respond_to do |format|
       format.html # index.html.erb

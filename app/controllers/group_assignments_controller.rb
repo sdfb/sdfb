@@ -7,7 +7,7 @@ class GroupAssignmentsController < ApplicationController
   authorize_resource
   
   def index
-    @group_assignments = GroupAssignment.all
+    @group_assignments_approved = GroupAssignment.all_approved
 
     respond_to do |format|
       format.html # index.html.erb
