@@ -7,6 +7,10 @@ class GroupAssignment < ActiveRecord::Base
   belongs_to :person
   belongs_to :user
 
+  # Scope
+  # ----------------------------- 
+  scope :all_approved, where(is_approved: true)
+
   # Validations
   # -----------------------------
   validates_presence_of :group_id

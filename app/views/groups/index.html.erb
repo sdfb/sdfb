@@ -2,21 +2,19 @@
 
 <table>
   <tr>
-    <th>Created by</th>
+    <!-- <th>Created by</th> -->
     <th>Name</th>
     <th>Description</th>
-    <th>Is approved</th>
     <th></th>
     <th></th>
     <th></th>
   </tr>
 
-<% @groups.each do |group| %>
+<% @groups_approved.each do |group| %>
   <tr>
-    <td><%= group.get_users_name %></td>
+    <!-- <td><%= group.get_users_name %></td> -->
     <td><%= group.name %></td>
     <td><%= group.description %></td>
-    <td><%= group.is_approved %></td>
     <% if can? :show, group %>
       <td><%= link_to 'Show', group %></td>
     <% end %>

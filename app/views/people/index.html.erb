@@ -2,36 +2,34 @@
 
 <table>
   <tr>
-    <th>Original</th>
+    <!-- <th>Original</th> -->
     <th>First name</th>
     <th>Last name</th>
-    <th>Created by</th>
+    <!-- <th>Created by</th> -->
     <th>Birth year</th>
     <th>Death year</th>
     <th>Historical significance</th>
-    <th>Is approved</th>
     <th></th>
     <th></th>
     <th></th>
   </tr>
 
-<% @people.each do |person| %>
+<% @people_approved.each do |person| %>
   <tr>
-    <td><%= person.original_id %></td>
+    <!-- <td><%= person.original_id %></td> -->
     <td><%= person.first_name %></td>
     <td><%= person.last_name %></td>
-    <td><%= person.created_by %></td>
+    <!-- <td><%= person.created_by %></td> -->
     <td><%= person.birth_year %></td>
     <td><%= person.death_year %></td>
     <td><%= person.historical_significance %></td>
-    <td><%= person.is_approved %></td>
-    <% if can? :show, people %>
+    <% if can? :show, person %>
         <td><%= link_to 'Show', person %></td>
     <% end %>
-    <% if can? :update, people %>      
+    <% if can? :update, person %>      
         <td><%= link_to 'Edit', edit_person_path(person) %></td>
     <% end %>
-    <% if can? :destroy, people %>   
+    <% if can? :destroy, person %>   
         <td><%= link_to 'Destroy', person, method: :delete, data: { confirm: 'Are you sure?' } %></td>
     <% end %>
   </tr>

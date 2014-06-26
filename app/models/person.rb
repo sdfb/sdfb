@@ -6,6 +6,11 @@ class Person < ActiveRecord::Base
   has_many :groups, :through => :group_assignments
   belongs_to :user
 
+  # Scope
+  # ----------------------------- 
+  scope :all_approved, where(is_approved: true)
+  scope :for_original_id, lambda {|original_id_input| where('original_id like ?', "%#{original_id_input}%") }
+
   # Validations
   # -----------------------------
   validates_presence_of :birth_year

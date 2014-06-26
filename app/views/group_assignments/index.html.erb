@@ -5,18 +5,16 @@
     <th>Created by</th>
     <th>Group</th>
     <th>Person</th>
-    <th>Is approved</th>
     <th></th>
     <th></th>
     <th></th>
   </tr>
 
-<% @group_assignments.each do |group_assignment| %>
+<% @group_assignments_approved.each do |group_assignment| %>
   <tr>
     <td><%= group_assignment.created_by %></td>
     <td><%= group_assignment.group_id %></td>
     <td><%= group_assignment.person_id %></td>
-    <td><%= group_assignment.is_approved %></td>
 
     <% if can? :show, group_assignment %>
       <td><%= link_to 'Show', group_assignment %></td>
