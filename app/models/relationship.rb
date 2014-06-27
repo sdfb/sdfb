@@ -22,8 +22,6 @@ class Relationship < ActiveRecord::Base
 
 	# Custom Methods
 	# -----------------------------
- 	# Validation method to check that one person is not in a relationship with themselves
-
   def get_person1_name
     return Person.find(person1_index).first_name + " " + Person.find(person1_index).last_name 
   end
@@ -40,6 +38,7 @@ class Relationship < ActiveRecord::Base
     end
   end
 
+  # Validation method to check that one person is not in a relationship with themselves
   def check_two_different_people
     errors.add(:person2_index, "A person cannot have a relationship with his or herself.") if person1_index == person2_index
   end

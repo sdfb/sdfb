@@ -2,7 +2,9 @@
 
 <table>
   <tr>
-    <th>Created by</th>
+    <% if current_user.is_admin %>
+      <th>Created by</th>
+    <% end %>
     <th>Group</th>
     <th>Person</th>
     <th></th>
@@ -12,10 +14,11 @@
 
 <% @group_assignments_approved.each do |group_assignment| %>
   <tr>
-    <td><%= group_assignment.created_by %></td>
-    <td><%= group_assignment.group_id %></td>
-    <td><%= group_assignment.person_id %></td>
-
+    <% if current_user.is_admin %>
+      <td><%= link_to group_assignment.get_users_name, user_path(group_assignment.created_by) %></td>
+    <% end %>
+    <td><%= link_to group_assignment.get_group_name, group_path(group_assignment.group_id) %></td>
+    <td><%= link_to group_assignment.get_person_name, person_path(group_assignment.person_id) %></td>
     <% if can? :show, group_assignment %>
       <td><%= link_to 'Show', group_assignment %></td>
     <% end %>

@@ -20,4 +20,11 @@ class Person < ActiveRecord::Base
   validates_presence_of :historical_significance
   validates_presence_of :last_name
   validates_presence_of :original_id
+
+  # Custom Methods
+  # -----------------------------
+  def get_person_name
+    return first_name + " " + last_name 
+  end
 end
+
