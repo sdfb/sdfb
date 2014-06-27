@@ -23,7 +23,27 @@ class UserRelContrib < ActiveRecord::Base
   validates_presence_of :bibliography
   validates_presence_of :confidence_type
   validates_presence_of :created_by
-  validates_presence_of :is_flagged
+  # validates_presence_of :is_flagged
   validates_presence_of :relationship_id
   validates_presence_of :relationship_type
+
+  def get_person1_name
+    return Person.find(Relationship.find(relationship_id).person1_index).first_name + " " + Person.find(Relationship.find(relationship_id).person1_index).last_name 
+  end
+
+  def get_person2_name
+    return Person.find(Relationship.find(relationship_id).person2_index).first_name + " " + Person.find(Relationship.find(relationship_id).person2_index).last_name 
+  end
+
+  def get_both_names
+    return Person.find(Relationship.find(relationship_id).person1_index).first_name + " " + Person.find(Relationship.find(relationship_id).person1_index).last_name + " & " + Person.find(Relationship.find(relationship_id).person2_index).first_name + " " + Person.find(Relationship.find(relationship_id).person2_index).last_name 
+  end
+
+  def get_users_name
+    if (created_by != nil)
+      return User.find(created_by).first_name + " " + User.find(created_by).last_name
+    else
+      return "ODNB"
+    end
+  end
 end

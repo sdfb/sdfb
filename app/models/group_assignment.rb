@@ -16,4 +16,22 @@ class GroupAssignment < ActiveRecord::Base
   validates_presence_of :group_id
   validates_presence_of :person_id
   validates_presence_of :created_by
+
+  # Custom Methods
+  # -----------------------------
+  def get_person_name
+    return Person.find(person_id).first_name + " " + Person.find(person_id).last_name 
+  end
+
+  def get_group_name
+    return Group.find(group_id).name
+  end
+
+  def get_users_name
+    if (created_by != nil)
+      return User.find(created_by).first_name + " " + User.find(created_by).last_name
+    else
+      return "ODNB"
+    end
+  end
 end

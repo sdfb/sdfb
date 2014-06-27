@@ -6,7 +6,7 @@
     <th>Created by</th>
     <th>Annotation</th>
     <th>Bibliography</th>
-    <th>Is flagged</th>
+    <!-- <th>Is flagged</th> -->
     <th></th>
     <th></th>
     <th></th>
@@ -14,11 +14,11 @@
 
 <% @user_person_contribs.each do |user_person_contrib| %>
   <tr>
-    <td><%= user_person_contrib.person_id %></td>
-    <td><%= user_person_contrib.created_by %></td>
+    <td><%= link_to user_person_contrib.get_person_name, person_path(user_person_contrib.person_id) %></td>
+    <td><%= link_to user_person_contrib.get_users_name, user_path(user_person_contrib.created_by) %></td>
     <td><%= user_person_contrib.annotation %></td>
     <td><%= user_person_contrib.bibliography %></td>
-    <td><%= user_person_contrib.is_flagged %></td>
+    <!-- <td><%= user_person_contrib.is_flagged %></td> -->
     <% if can? :show, user_person_contrib %>
         <td><%= link_to 'Show', user_person_contrib %></td>
     <% end %>
