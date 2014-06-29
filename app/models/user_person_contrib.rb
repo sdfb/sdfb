@@ -11,8 +11,12 @@ class UserPersonContrib < ActiveRecord::Base
   validates_presence_of :annotation
   validates_presence_of :bibliography
   validates_presence_of :created_by
-  validates_presence_of :is_flagged
+  # validates_presence_of :is_flagged
   validates_presence_of :person_id
+
+  # Scope
+  # -----------------------------
+  scope :not_flagged, where(is_flagged: false)
 
   # Custom Methods
   # -----------------------------

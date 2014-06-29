@@ -7,7 +7,7 @@ class UserPersonContribsController < ApplicationController
   authorize_resource
 
   def index
-    @user_person_contribs = UserPersonContrib.all
+    @user_person_contribs = UserPersonContrib.not_flagged
 
     respond_to do |format|
       format.html # index.html.erb

@@ -1,0 +1,308 @@
+<html>
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+	<title>Six Degrees of Francis Bacon</title>
+	<link rel="shortcut icon" href="img/favicon.ico">
+	<link rel="stylesheet" type="text/css" href="css/reset.css" />
+	<link rel="stylesheet" type="text/css" href="http://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/2.2.2/css/bootstrap-responsive.min.css" />
+	<link rel="stylesheet" type="text/css" href="css/jquery-impromptu.min.css" />
+	<link rel="stylesheet" type="text/css" href="css/insights.standalone.css" />
+	<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css" />
+	<link rel="stylesheet" type="text/css" href="css/table.css" />
+	<link rel="stylesheet" type="text/css" href="css/accordion.css" />
+	<link rel="stylesheet" type="text/css" href="css/style.css" />
+	<link rel="stylesheet" type="text/css" href="css/landing.css" />
+
+	<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+	<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1/jquery-ui.min.js"></script>
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/datatables/1.9.4/jquery.dataTables.min.js"></script>
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/tabletop.js/1.1.0/tabletop.min.js"></script>
+	<script type="text/javascript" src="js/jquery-impromptu.min.js"></script>
+	<script type="text/javascript" src="js/data-tables-bootstrap.js"></script>
+	<script type="text/javascript" src="js/pace.min.js"></script>
+	<script type="text/javascript" src="js/insights.standalone.js"></script>
+	<script type="text/javascript" src="js/accordion.js"></script>
+	<script type="text/javascript" src="js/bootstrap.min.js"></script>
+	<script type="text/javascript" src="js/typeahead.js"></script>
+	<script type="text/javascript" src="js/script.js"></script>
+	<script type="text/javascript" src="js/display.js"></script>
+	<script type="text/javascript" src="js/landing.js"></script>
+</head>
+
+<body>
+	<div id="everything">
+	<header>Six Degrees of Francis Bacon</header>
+	<div id="results"></div>
+	<div id="graph"></div>
+	<div id="zoom">
+		<button class="icon" id="icon-zoomin" name="in"></button>
+		<button class="icon" id="icon-zoomout" name="out"></button>	
+		<button class="icon" id="icon-color"></button>
+		<button class="icon" id="icon-info"></button>
+	</div>
+	<div id="twogroupsmenu">
+		<button type="button" class="btn btn-primary" id="group1" ></button>
+		<button type="button" class="btn btn-primary active" id="group2" >Intersection</button>
+		<button type="button" class="btn btn-primary" id="group3" ></button>
+	</div>
+
+	<div id="guide">
+		<p> Node Color By Birth Year: </p>
+		<div class="icon" id="cancel"></div>
+		<img id="guide-pic" src="img/coloryearlegend.png" alt="Color Legend">
+	</div>
+
+	<aside>
+		<div id="accordion">
+
+			<!-- about bar -->
+			<h3 class="accordion_btn"><span id="icon-about"></span>About</h3>
+			<div  class="accordion_content " id="about">
+				Six Degrees of Francis Bacon (SDFB) is a digital reconstruction of the early modern social network (EMSN) that scholars and students from all over the world will be able to collaboratively expand, revise, curate, and critique.
+				<a href="http://sixdegreesoffrancisbacon.com/overview" target="_blank" style="color:#aae"> Read blog...</a><br><br>
+				<b>CREDITS</b><br>
+				User interface designed and implemented by Carnegie Mellon University Information Systems team members Ivy Chung, Sama Kanbour, Angela Qiu and Chanamon Ratanalert, under the supervision of advisor Raja Sooriamurthi. © 2014
+			</div>
+
+			<!-- search bar -->
+			<h3 class="accordion_btn on"><span id="icon-search"></span>Search</h3>
+			<div class="accordion_content active" id="search">
+				<ul>
+					<li id="onenode" class="clicked">Network</li>		
+					<li id="twonode">Shared network</li>
+					<li id="onegroup">Group</li>
+					<li id="twogroup">Shared groups</li>
+				</ul>
+
+				<!-- NODE FORMS -->
+				<section id="onenodeform">
+					<input class="form-control" type="text" id="one" placeholder="Name">
+					<a id="slide1" ><article class="slider" name="1"></article></a>
+					<article class="slider-result" id="slider-result1">Likely relationships</article>
+					<input id="confidence1" type="hidden" value="3"/>
+					<button class="btn btn-primary" type="button" id="findonenode" name="node">Find</button>
+				</section>
+
+				<section id="twonodeform">
+					<input class="form-control" type="text" id="two" placeholder="Name 1"><br>
+					<input class="form-control" type="text" id="three" placeholder="Name 2"><br>
+					<a id="slide2" ><article class="slider" name="2"></article></a>
+					<article class="slider-result" id="slider-result2">Likely relationships</article>
+					<input id="confidence2" type="hidden" value="3"/>
+					<input type="checkbox" id="check-shared" value="table">Show table<br>
+					<button class="btn btn-primary" type="button" id="findtwonode" name="node">Find</button>
+				</section>
+
+				<!-- GROUP FORMS -->
+				<section id="onegroupform">
+					<input 	class="form-control" type="text" id="four" placeholder="Group">
+					<button class="btn btn-primary" type="button" id="findonegroup" name="group">Find</button>
+				</section>
+
+				<section id="twogroupform">
+					<input 	class="form-control" type="text" id="five" placeholder="Group 1"><br>
+					<input 	class="form-control" type="text" id="six" placeholder="Group 2"><br>
+					<button class="btn btn-primary" type="button" id="findtwogroup" name="group">Find</button>
+				</section>
+			</div>
+
+			<!-- contribution bar -->
+			<h3 class="accordion_btn"><span id="icon-add"></span>Contribute</h3>
+			<div  class="accordion_content" id="contribute">
+				<ul>
+					<li id="addnode">Add person</li>
+					<li id="addgroup">Add group</li>
+					<li id="addedge">Annotate relationship</li>
+				</ul>
+				
+				<section id="addnodeform">
+					<script type="text/javascript">
+						var submitted = false;
+					</script>
+					<iframe name="hidden_iframe1" id="hidden_iframe1" style="display:none;" onload=""></iframe>
+					<form action="https://docs.google.com/forms/d/151VLJDd62rmg_elgMLsiRjwmN0ecuZZbWdFz1QazhtA/formResponse" id="googleaddnode" method="post" target="hidden_iframe1" onsubmit="submitted=true;">
+						<input 	class="form-control" type="text" name="entry.1804360896" id="entry_1804360896" placeholder="First Name">
+						<input 	class="form-control" type="text" name="entry.754797571"  id="entry_754797571"  placeholder="Last Name">
+						<input 	class="form-control" type="text" name="entry.524366257"  id="entry_524366257"  placeholder="Birth Date">
+						<input 	class="form-control" type="text" name="entry.1810714929" id="entry_1810714929" placeholder="Death Date">
+						<input 	class="form-control" type="text" name="entry.2129738910" id="entry_2129738910" placeholder="Historical Significance">
+						<input 	class="form-control" type="text" name="entry.1201727393" id="entry_1201727393" placeholder="Contributor (Your Name)">
+						<button class="btn btn-primary" type="submit" name="submit" id="submitnode">Submit</button>
+					</form>
+				</section>
+
+				<section id="addedgeform">
+					<script type="text/javascript">
+						var submitted = false;
+					</script>
+					<iframe name="hidden_iframe2" id="hidden_iframe2" style="display:none;" onload=""></iframe>
+					<form action="https://docs.google.com/forms/d/10Gfo4lX_iEArcffCxd5SqP9b-lEttdW5ymOTwX5-t5A/formResponse" id="googleaddedge" method="post" target="hidden_iframe2" onsubmit="submitted=true;">
+						<input class="form-control" type="text" name="entry.768090773" id="entry_768090773" placeholder="Name 1">
+						<input class="form-control" type="text" name="entry.1321382891" id="entry_1321382891" placeholder="Name 2">
+						<select class="form-control" name="entry.1695736706" id="entry_1695736706">
+							<option value="">Relationship type</option>
+							<option value="No relationship exists">No relationship exists</option>
+							<option value="Acquaintances">Acquaintances</option>
+							<option value="Ancestor/Descendent">Ancestor/Descendent</option>
+							<option value="Antagonists">Antagonists</option>
+							<option value="Mentor/Apprentice">Mentor/Apprentice</option>
+							<option value="Parent/Child">Parent/Child</option>
+							<option value="Close Friends">Close Friends</option>
+							<option value="Collaborators">Collaborators</option>
+							<option value="Colleagues">Colleagues</option>
+							<option value="Employer/Employee">Employer/Employee</option>
+							<option value="Enemies">Enemies</option>
+							<option value="Engaged">Engaged</option>
+							<option value="Friends">Friends</option>
+							<option value="Grandparent/Grandchild">Grandparent/Grandchild</option>
+							<option value="Met">Met</option>
+							<option value="Influenced one another">Influenced one another</option>
+							<option value="Knew in passing">Knew in passing</option>
+							<option value="Knew of one another">Knew of one another</option>
+							<option value="Life partners">Life partners</option>
+							<option value="Lived with">Lived with</option>
+							<option value="Neighbors">Neighbors</option>
+							<option value="Siblings">Siblings</option>
+							<option value="Spouses">Spouses</option>
+							<option value="Coworkers">Coworkers</option>
+						</select>
+						<select class="form-control" name="entry.875203595" id="entry_875203595">
+							<option value="">Confidence</option>
+							<option value="Very unlikely">Very unlikely</option>
+							<option value="Unlikely">Unlikely</option>
+							<option value="Possible">Possible</option>
+							<option value="Likely">Likely</option>
+							<option value="Certain">Certain</option>
+						</select>
+						<textarea 	class="form-control" type="text" name="entry.837175332" id="entry_837175332" placeholder="Annotation"></textarea>
+						<input		class="form-control" type="text" name="entry.484668707" id="entry_484668707" placeholder="Bibliographical Source(s)">
+						<input 		class="form-control" type="text" name="entry.1767559421" id="entry_1767559421" placeholder="Contributor (Your Name) ">
+						<button 	class="btn btn-primary" type="submit" name="submit" id="submitedge">Submit</button>
+					</form>
+				</section>
+
+				<section id="addgroupform">
+					<script type="text/javascript">
+						var submitted = false;
+					</script>
+					<iframe name="hidden_iframe3" id="hidden_iframe3" style="display:none;" onload=""></iframe>
+					<form action="https://docs.google.com/forms/d/1HbzCpwoLGMxEMVoRFiEA52SZdJa-8QpRO8cXVbe8_8Y/formResponse" id="googleaddgroup" method="post" target="hidden_iframe3" onsubmit="submitted=true;">
+						<input 	class="form-control" type="text" name="entry.110233074"  id="entry_110233074"  placeholder="Group Name">
+						<input 	class="form-control" type="text" name="entry.1177061505" id="entry_1177061505" placeholder="Person Name">
+						<input 	class="form-control" type="text" name="entry.370499701" id="entry_370499701" placeholder="Contributor (Your Name) ">
+						<button class="btn btn-primary" type="submit" name="submit" id="submitgroup">Submit</button>
+					</form>
+				</section>
+			</div>
+
+			<!-- relationship information bar -->
+			<h3 class="accordion_btn"><span id="icon-edge"></span>Relationship</h3>
+			<div  class="accordion_content " id="edgeinfo">
+				<button class="icon" id="icon-annotate" name="edge"></button>
+				<p id="edge-nodes"></p>
+				<b>CONFIDENCE&nbsp;</b> 	<a id="edge-confidence"></a><br>
+				<b>ANNOTATION&nbsp;</b> 	<a id="edge-annotation"></a><br>
+				<b>CONTRIBUTOR&nbsp;</b> 	<a id="edge-contributor"></a><br>
+			</div>
+
+			<!-- person information bar -->
+			<h3 class="accordion_btn"><span id="icon-node"></span>Person</h3>
+			<div  class="accordion_content " id="nodeinfo">
+				<button class="icon" id="icon-tag"  name="group"></button>
+				<button class="icon" id="icon-link" name="edge"></button>
+				<p id="node-name"></p>
+				<b>BIRTH DATE&nbsp;</b> 				<a id="node-bdate"></a><br>
+				<b>DEATH DATE&nbsp;</b> 				<a id="node-ddate"></a><br>
+				<b>HISTORICAL SIGNIFICANCE</b><br>		<a id="node-significance"></a><br>
+				<b>GROUPS&nbsp;</b>						<a id="node-group"></a><br>
+				<b>CITATION</b><br>						<a id="node-cite"></a><br>
+				<b>LINKS&nbsp;</b>
+				<a id="node-DNBlink" target="_blank">Oxford DNB</a> &nbsp;
+				<a id="node-GoogleLink" target="_blank">Google</a>
+			</div>
+		</div>
+	</aside>
+	</div> <!-- closing everything that's not landing page -->
+	<div id="landing">
+		<div id="landing-open">
+			<img id="net" src="img/net.png" >
+			<div id="wel">Welcome to</div>
+			<div id="title"> Six Degrees of Francis Bacon </div>
+			<img id="arrow" src="img/landing/arrow-down.png" width="40px">
+		</div>
+		<div id="landing-def">
+			<div id="def-info">
+				<b>Six Degrees of Francis Bacon</b> (SDFB) is a collaborative 
+				reconstruction of the social network of early modern 
+				Britain (1550-1700). SDFB shows who likely knew whom 
+				in the age of Elizabeth, Bacon, Shakespeare, and Hobbes.  
+				<br><br>
+				First, the SDFB team mined the history of scholarship 
+				to estimate and visualize roughly 115,000 relationships. 
+				On this site, scholars, students, and citizen humanists
+				 are expanding, curating, and revising early modern 
+				 British history.  
+			</div>
+		</div>
+		<div id="landing-what">
+			<div id="threecircles">
+				<h5>What can you do with Six Degrees of Francis Bacon?</h5>
+				<table id="threetable">
+					<tr>
+						<td><img src="img/landing/learn.png" width="120px"></td>
+						<td><img src="img/landing/query.png" width="120px"></td>
+						<td><img src="img/landing/contribute.png" width="120px"></td>
+					</tr>
+					<tr>
+						<td>Explore relationships and see early modern networks </td>
+						<td>Ask how individuals or groups were connected</td>
+						<td>Add names, annotate relationships, flag errors, share knowledge </td>
+					</tr>
+				</table>
+			</div>
+		</div>
+		<div id="landing-features">
+			<h5>Search Feature</h5>
+			<table id="searches">
+				<tr>
+					<td>
+						<img src="img/landing/f1.png" width="140px">
+						<br><br>
+						The connections of one individual
+					</td>
+					<td>
+						<img src="img/landing/f2.png" width="140px">
+						<br><br>
+						The mutual connections between two individuals
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<img src="img/landing/f3.png" width="140px">
+						<br><br>
+						The members of one group
+					</td>
+					<td>
+						<img src="img/landing/f4.png" width="140px">
+						<br><br>
+						The members of two groups
+					</td>
+				</tr>
+			</table>
+		</div>
+		<div id="landing-sidebar">
+			<h5>Research</h5>
+			<img src="img/landing/sidebar.png" height="70%">
+		</div>
+		<div id="arrows">
+			<img id="arrow-up" src="img/landing/arrow-up.png" width="40px">
+			<img id="arrow-down" src="img/landing/arrow-down.png" width="40px">
+		</div>
+		<div id="skip">Skip Intro</div>
+	</div> <!-- closing landing -->
+</body>
+
+</html>

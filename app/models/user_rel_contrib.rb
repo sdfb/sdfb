@@ -27,6 +27,10 @@ class UserRelContrib < ActiveRecord::Base
   validates_presence_of :relationship_id
   validates_presence_of :relationship_type
 
+  # Scope
+  # -----------------------------
+  scope :not_flagged, where(is_flagged: false)
+
   def get_person1_name
     return Person.find(Relationship.find(relationship_id).person1_index).first_name + " " + Person.find(Relationship.find(relationship_id).person1_index).last_name 
   end

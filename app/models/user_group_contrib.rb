@@ -12,8 +12,12 @@ class UserGroupContrib < ActiveRecord::Base
   validates_presence_of :bibliography
   validates_presence_of :created_by
   validates_presence_of :group_id
-  validates_presence_of :is_flagged
+  # validates_presence_of :is_flagged
   validates_uniqueness_of :email
+
+  # Scope
+  # -----------------------------
+  scope :not_flagged, where(is_flagged: false)
 
   # Custom Methods
   # -----------------------------
