@@ -1,0 +1,228 @@
+@import url(http://fonts.googleapis.com/css?family=Open+Sans:400,700);
+
+aside {
+    position: fixed;
+    left: 0;
+    top: 34px;
+    bottom: 0;
+    width: 300px;
+    height:100%;
+}
+
+#accordion {
+	background: #78A7BF;
+}
+
+#accordion h3 {
+	font-size: 12px;
+	line-height: 34px;
+	padding: 0 20px;
+	cursor: pointer;
+	color: #fff;
+	background: #196B94;
+}
+
+#accordion h3.on {
+	background-color: #185D80;
+}
+
+#accordion h3 span {
+    display: inline-block;
+    background-repeat: no-repeat;
+    background-size: 12px 12px;
+    width: 12px;
+    height: 15px;
+    opacity: .5;
+    margin-right: 10px;
+    position: relative;
+    top: 5px;
+}
+
+#nodeinfo, #contribute, #about{
+	overflow: auto;
+}
+
+.accordion_content {
+	display: none;
+	color:#222;
+	font-size:12px;
+	padding: 25px 22px;
+	line-height: 25px;
+	text-align:left;
+	height: calc(90% - 140px);
+}
+
+.accordion_content .active {
+    display: block;
+}
+
+.accordion_content section {
+    margin-top: 100px;
+    display: none;
+}
+
+.accordion_content section input, 
+.accordion_content section button, 
+.accordion_content section select,
+.accordion_content section textarea {
+    width: 246px;
+    height: 30px;
+    margin-bottom: 5px;
+    margin-left: 4px;
+    font-size: 11px;
+}
+
+.accordion_content section textarea {
+    height: 60px;
+}
+
+.form-control {
+    display: block;
+    padding: 6px 10px;
+    color: #555;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.accordion_content ul {
+    text-align: center;
+    display: inline;
+    margin: 0;
+    list-style: none;
+}
+
+.accordion_content ul li {
+	background-color: #fff;
+	float: left;
+	cursor: pointer;
+    width: 125px;
+    height: 40px;
+    line-height: 45px;
+    -webkit-transition: all 0.2s;
+    -moz-transition: all 0.2s;
+    -ms-transition: all 0.2s;
+    -o-transition: all 0.2s;
+    transition: all 0.2s;
+    -moz-box-shadow: inset #78A7BF 4px 4px 0 0;
+    -webkit-box-shadow: inset #78A7BF 4px 4px 0 0;
+    box-shadow: inset #78A7BF 4px 4px 0 0;
+}
+
+.accordion_content ul li:hover, .accordion_content ul li.clicked {
+	color: #fff;	
+	background-color: #185D80;
+}
+
+#addedge {
+    width: 250px;
+}
+
+#nodeinfo a, #edgeinfo a {
+	color: #fff;
+}
+
+#nodeinfo p, #edgeinfo p {
+	color: #fff;
+	text-align: center;
+	font-size:14px;
+	padding-bottom: 15px;
+}
+
+aside ::-webkit-scrollbar {  
+    width: 6px; 
+}  
+aside ::-webkit-scrollbar-track {  
+    background-color: #78A7BF;
+}  
+aside ::-webkit-scrollbar-thumb {  
+    background-color: #555;
+}  
+aside ::-webkit-scrollbar-thumb:hover {  
+    background-color: #aaa;  
+}
+
+.tt-hint {
+    display: none;
+}
+
+.tt-suggestion {
+    padding: 3px 10px;
+    font-size: 11px;
+}
+
+.tt-dropdown-menu {
+    width: 246px;
+    margin-bottom: 5px;
+    margin-left: 4px;
+    border: 1px solid #ccc;
+    background-color: #fff;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+}
+
+.tt-suggestion.tt-is-under-cursor {
+    color: #0097cf;
+    background-color: #ccc;
+}
+
+button.icon {
+    background-repeat: no-repeat;
+    background-size: 15px;
+    width: 30px;
+    height: 30px;
+    opacity: .6;
+    float: right;
+    border: none;
+    background-position: center;
+    background-color: transparent;
+}
+
+#icon-about {
+    background-image: url(../img/us.png);
+}
+
+#icon-search {
+    background-image: url(../img/search.png);
+}
+
+#icon-node {
+    background-image: url(../img/node.png);
+}
+
+#icon-edge {
+    background-image: url(../img/edge.png);
+}
+
+#icon-add {
+    background-image: url(../img/add.png);
+}
+
+#icon-annotate {
+    background-image: url(../img/annotate.png);
+}
+
+#icon-tag {
+    background-image: url(../img/tag.png);
+}
+
+#icon-link {
+    background-image: url(../img/link.png);
+}
+
+#icon-zoomin {
+    background-image: url(../img/zoomin.png);
+}
+
+#icon-zoomout {
+    background-image: url(../img/zoomout.png);
+}
+
+#icon-info {
+    background-image: url(../img/info.png);
+}
+
+#icon-color {
+    background-image: url(../img/colors.png);
+}
