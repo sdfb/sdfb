@@ -4,7 +4,10 @@ Sdfb::Application.routes.draw do
   get "logout" => "sessions#destroy", :as => "logout"
 
   get "sign_up" => "users#new", :as => "sign_up"
-  root :to => "users#new"
+  get "home/index"
+
+  # set the root
+  root :to => "home#index"
   
   resources :users
   
