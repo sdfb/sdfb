@@ -1,0 +1,21 @@
+@import url(http://fonts.googleapis.com/css?family=Open+Sans:400,700);
+
+.insights-graph .link {
+  fill: none;
+  stroke: #666;
+}
+
+.insights-graph .node circle {
+  fill: #ccc;
+  stroke: #fff;
+  stroke-width: 1.5px;
+  cursor:pointer;
+}
+
+.insights-graph text {
+  fill: #111;
+  pointer-events: none;
+  font-family: 'Open Sans',sans-serif;
+  font-size: 6px;
+  
+}
