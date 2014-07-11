@@ -9,7 +9,6 @@ gem 'sqlite3'
 gem 'will_paginate'
 gem 'simple_form'
 
-
 # Gems used only for assets and not required
 # in production environments by default.
 group :assets do
@@ -29,6 +28,9 @@ gem 'bcrypt-ruby', :require => "bcrypt"
 
 # This gem handles user authorizations
 gem 'cancan'
+
+# This gem is used to pass data from Ruby to JavaScript
+gem 'gon'
 
 # To use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.0.0'

@@ -23,7 +23,7 @@
  *     ensure that you either have "example_alt_pagination" as a body class name, or better yet,
  *     modify that selector.
  *   Note that the path used for Images is relative. All images are by default located in
- *     ../images/ - relative to this CSS file.
+ *      - relative to this CSS file.
  */
 
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
@@ -104,25 +104,25 @@
 }
 
 .paginate_disabled_previous {
-	background: url('../images/back_disabled.png') no-repeat top left;
+	background: url('back_disabled.png') no-repeat top left;
 }
 
 .paginate_enabled_previous {
-	background: url('../images/back_enabled.png') no-repeat top left;
+	background: url('back_enabled.png') no-repeat top left;
 }
 .paginate_enabled_previous:hover {
-	background: url('../images/back_enabled_hover.png') no-repeat top left;
+	background: url('back_enabled_hover.png') no-repeat top left;
 }
 
 .paginate_disabled_next {
-	background: url('../images/forward_disabled.png') no-repeat top right;
+	background: url('forward_disabled.png') no-repeat top right;
 }
 
 .paginate_enabled_next {
-	background: url('../images/forward_enabled.png') no-repeat top right;
+	background: url('forward_enabled.png') no-repeat top right;
 }
 .paginate_enabled_next:hover {
-	background: url('../images/forward_enabled_hover.png') no-repeat top right;
+	background: url('forward_enabled_hover.png') no-repeat top right;
 }
 
 
@@ -182,23 +182,23 @@ table.display td.center {
  */
 
 .sorting_asc {
-	background: url('../images/sort_asc.png') no-repeat center right;
+	background: url('sort_asc.png') no-repeat center right;
 }
 
 .sorting_desc {
-	background: url('../images/sort_desc.png') no-repeat center right;
+	background: url('sort_desc.png') no-repeat center right;
 }
 
 .sorting {
-	background: url('../images/sort_both.png') no-repeat center right;
+	background: url('sort_both.png') no-repeat center right;
 }
 
 .sorting_asc_disabled {
-	background: url('../images/sort_asc_disabled.png') no-repeat center right;
+	background: url('sort_asc_disabled.png') no-repeat center right;
 }
 
 .sorting_desc_disabled {
-	background: url('../images/sort_desc_disabled.png') no-repeat center right;
+	background: url('sort_desc_disabled.png') no-repeat center right;
 }
  
 table.display thead th:active,

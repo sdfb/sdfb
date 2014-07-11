@@ -94,7 +94,7 @@ header {
     position: absolute;
     top: 5px;
     right: 5px;
-    background-image: url(../img/dwn.png);
+    background-image: url(dwn.png);
     background-repeat: no-repeat;
     width: 25px;
     height: 25px;
@@ -161,7 +161,7 @@ header {
   display: inline-block;
   width: 246px;
   height: 11px;
-  background: url(../img/slider-bg.png);
+  background: url(slider-bg.png);
   background-repeat: no-repeat; 
   position: relative;
   margin: 15px 4px;
@@ -175,7 +175,7 @@ header {
   top:-7px;
   margin-left:-12px;
   z-index:10;
-  background:url(../img/slider-button.png);
+  background:url(slider-button.png);
   background-repeat:no-repeat; 
 }
 
@@ -218,7 +218,7 @@ header {
 }
 
 #cancel {
-    background-image: url(../img/cancel.png);
+    background-image: url(cancel.png);
     width: 25px;
     height: 25px;
     background-repeat: no-repeat;
