@@ -7,6 +7,7 @@ class PeopleController < ApplicationController
   authorize_resource
   
   def index
+    gon.people = Person.all_approved
     @people_approved = Person.all_approved
 
     respond_to do |format|

@@ -60,7 +60,6 @@
   margin: 0 auto;
   position: fixed;
   vertical-align: top;
-  vertical-align: middle;
   padding: 5px;
 }
 
@@ -87,7 +86,7 @@
 #landing-def{
   background: white;
   display: none;
-  background: url(../img/landing/blobbie.png) no-repeat;
+  background: url(landing/blobbie.png) no-repeat;
   background-size: auto 83%;
   background-position: center top;
   background-color: #ecebe9;

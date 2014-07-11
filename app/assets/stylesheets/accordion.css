@@ -180,49 +180,49 @@ button.icon {
 }
 
 #icon-about {
-    background-image: url(../img/us.png);
+    background-image: url(us.png);
 }
 
 #icon-search {
-    background-image: url(../img/search.png);
+    background-image: url(search.png);
 }
 
 #icon-node {
-    background-image: url(../img/node.png);
+    background-image: url(node.png);
 }
 
 #icon-edge {
-    background-image: url(../img/edge.png);
+    background-image: url(edge.png);
 }
 
 #icon-add {
-    background-image: url(../img/add.png);
+    background-image: url(add.png);
 }
 
 #icon-annotate {
-    background-image: url(../img/annotate.png);
+    background-image: url(annotate.png);
 }
 
 #icon-tag {
-    background-image: url(../img/tag.png);
+    background-image: url(tag.png);
 }
 
 #icon-link {
-    background-image: url(../img/link.png);
+    background-image: url(link.png);
 }
 
 #icon-zoomin {
-    background-image: url(../img/zoomin.png);
+    background-image: url(zoomin.png);
 }
 
 #icon-zoomout {
-    background-image: url(../img/zoomout.png);
+    background-image: url(zoomout.png);
 }
 
 #icon-info {
-    background-image: url(../img/info.png);
+    background-image: url(info.png);
 }
 
 #icon-color {
-    background-image: url(../img/colors.png);
+    background-image: url(colors.png);
 }
