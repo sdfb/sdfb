@@ -4,17 +4,22 @@
   <tr>
     <th>Person 1</th>
     <th>Person 2</th>
-    <% if current_user.is_admin %>
-        <th>Original Certainty</th>
+    <% if current_user != nil %>
+        <% if current_user.is_admin %>
+            <th>Original Certainty</th>
+        <% end %>
     <% end %>
-    <% if current_user.is_admin %>
-        <th>Average
-    <% else %>
-        <th>
+    <% if current_user != nil %>
+        <% if current_user.is_admin %>
+            <th>Average Certainty</th>
+        <% else %>
+            <th></th>
+        <% end %>
     <% end %>
-    Certainty</th>
-    <% if current_user.is_admin %>
-        <th>Created by</th>
+    <% if current_user != nil %>
+        <% if current_user.is_admin %>
+            <th>Created by</th>
+        <% end %>
     <% end %>
     <th></th>
     <th></th>
@@ -25,12 +30,16 @@
   <tr>
     <td><%= link_to relationship.get_person1_name, person_path(relationship.person1_index) %></td>
     <td><%= link_to relationship.get_person2_name, person_path(relationship.person2_index) %></td>
-    <% if current_user.is_admin %>
-        <td><%= relationship.original_certainty %></td>
+    <% if current_user != nil %>
+        <% if current_user.is_admin %>
+            <td><%= relationship.original_certainty %></td>
+        <% end %>
     <% end %>
     <td><%= relationship.average_certainty %></td>
-    <% if current_user.is_admin %>
-        <td><%= relationship.get_users_name %></td>
+    <% if current_user != nil %>
+        <% if current_user.is_admin %>
+            <td><%= relationship.get_users_name %></td>
+        <% end %>
     <% end %>
     <% if can? :show, relationship %>
         <td><%= link_to 'Show', relationship %></td>

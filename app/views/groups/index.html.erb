@@ -2,8 +2,10 @@
 
 <table>
   <tr>
-    <% if current_user.is_admin %>
-      <th>Created by</th>
+    <% if current_user != nil %>
+      <% if current_user.is_admin %>
+        <th>Created by</th>
+      <% end %>
     <% end %>
     <th>Name</th>
     <th>Description</th>
@@ -14,14 +16,16 @@
 
 <% @groups_approved.each do |group| %>
   <tr>
-    <% if current_user.is_admin %>
-      <td>
-        <% if group.created_by != nil %>
-          <%= link_to group.get_users_name, user_path(group.created_by) %>
-        <% else %>
-          <%= group.get_users_name %>
-        <% end %>
-      </td>
+    <% if current_user != nil %>
+      <% if current_user.is_admin %>
+        <td>
+          <% if group.created_by != nil %>
+            <%= link_to group.get_users_name, user_path(group.created_by) %>
+          <% else %>
+            <%= group.get_users_name %>
+          <% end %>
+        </td>
+      <% end %>
     <% end %>
     <td><%= group.name %></td>
     <td><%= group.description %></td>

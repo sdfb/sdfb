@@ -4,6 +4,7 @@ Sdfb::Application.routes.draw do
   get "logout" => "sessions#destroy", :as => "logout"
 
   get "sign_up" => "users#new", :as => "sign_up"
+  get "test" => "home#test", :as => "test"
   get "home/index"
 
   # set the root
