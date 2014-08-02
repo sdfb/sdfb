@@ -23,7 +23,7 @@ class User < ActiveRecord::Base
   # validates_presence_of :password_hash
   # validates_presence_of :password_salt
   validates_presence_of :user_type
-  validates_presence_of :affiliation
+  # validates_presence_of :affiliation
   #validates_presence_of :is_admin
   #validates_presence_of :is_active
 
