@@ -7,7 +7,9 @@ class GroupsController < ApplicationController
   authorize_resource
   
   def index
-    @groups_approved = Group.all_approved
+    @groups_approved = Group.approved
+    @groups_unapproved = Group.unapproved
+
 
     respond_to do |format|
       format.html # index.html.erb
