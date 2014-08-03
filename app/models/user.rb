@@ -37,6 +37,11 @@ class User < ActiveRecord::Base
   validates_uniqueness_of :email
   validates_format_of :email, :with => /^[\w]([^@\s,;]+)@(([a-z0-9.-]+\.)+(com|edu|org|net|gov|mil|biz|info))$/i
 
+  # Scope
+  # ----------------------------- 
+  scope :active, where(is_active: true)
+  scope :inactive, where(is_active: false)
+
   # Custom methods
   # -----------------------------
   def password_present?

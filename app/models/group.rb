@@ -14,7 +14,8 @@ class Group < ActiveRecord::Base
 
   # Scope
   # ----------------------------- 
-  scope :all_approved, where(is_approved: true)
+  scope :approved, where(is_approved: true)
+  scope :unapproved, where(is_approved: false)
 
   # Custom Methods
   # -----------------------------

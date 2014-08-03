@@ -1,28 +1,8 @@
 <p id="notice"><%= notice %></p>
 
 <p>
-  <b>About description:</b>
-  <%= @user.about_description %>
-</p>
-
-<p>
-  <b>Affiliation:</b>
-  <%= @user.affiliation %>
-</p>
-
-<p>
-  <b>Email:</b>
-  <%= @user.email %>
-</p>
-
-<p>
   <b>First name:</b>
   <%= @user.first_name %>
-</p>
-
-<p>
-  <b>Is active:</b>
-  <%= @user.is_active %>
 </p>
 
 <p>
@@ -31,23 +11,13 @@
 </p>
 
 <p>
-  <b>Password:</b>
-  <%= @user.password %>
+  <b>Email:</b>
+  <%= @user.email %>
 </p>
 
 <p>
-  <b>Password confirmation:</b>
-  <%= @user.password_confirmation %>
-</p>
-
-<p>
-  <b>Password hash:</b>
-  <%= @user.password_hash %>
-</p>
-
-<p>
-  <b>Password salt:</b>
-  <%= @user.password_salt %>
+  <b>Affiliation:</b>
+  <%= @user.affiliation %>
 </p>
 
 <p>
@@ -56,9 +26,24 @@
 </p>
 
 <p>
-  <b>Is admin:</b>
-  <%= @user.is_admin %>
+  <b>About description:</b>
+  <% if @user.about_description != "" %>
+    <%= @user.about_description %>
+  <% else %>
+    None
+  <% end %>
 </p>
+
+<% if current_user != nil %>
+  <% if current_user.is_admin %>
+    <p>
+      <b>Is admin:</b>
+      <% if @user.is_admin %>
+        true
+      <% end %>
+    </p>
+  <% end %>
+<% end %>
 
 <% if can? :update, @user %>
   <%= link_to 'Edit', edit_user_path(@user) %> |

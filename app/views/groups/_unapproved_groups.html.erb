@@ -1,0 +1,44 @@
+<h1>Unapproved Groups</h1>
+<table>
+  <tr>
+    <% if current_user != nil %>
+      <% if current_user.is_admin %>
+        <th>Created by</th>
+      <% end %>
+    <% end %>
+    <th>Name</th>
+    <th>Description</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @groups_unapproved.each do |group| %>
+  <tr>
+    <% if current_user != nil %>
+      <% if current_user.is_admin %>
+        <td>
+          <% if group.created_by != nil %>
+            <%= link_to group.get_users_name, user_path(group.created_by) %>
+          <% else %>
+            <%= group.get_users_name %>
+          <% end %>
+        </td>
+      <% end %>
+    <% end %>
+    <td><%= group.name %></td>
+    <td><%= group.description %></td>
+    <% if can? :show, group %>
+      <td><%= link_to 'Show', group %></td>
+    <% end %>
+    <% if can? :update, group %>
+      <td><%= link_to 'Edit', edit_group_path(group) %></td>
+    <% end %>
+    <% if can? :destroy, group %>
+      <td><%= link_to 'Destroy', group, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+    <% end %>
+  </tr>
+<% end %>
+</table>
+
+<br />

@@ -1,7 +1,7 @@
 Sdfb::Application.routes.draw do
 
-  get "login" => "sessions#new", :as => "login"
-  get "logout" => "sessions#destroy", :as => "logout"
+  get "sign_in" => "sessions#new", :as => "sign_in"
+  get "sign_out" => "sessions#destroy", :as => "sign_out"
 
   get "sign_up" => "users#new", :as => "sign_up"
   get "test" => "home#test", :as => "test"

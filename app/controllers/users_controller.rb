@@ -7,7 +7,8 @@ class UsersController < ApplicationController
   authorize_resource
 
   def index
-    @users = User.all
+    @inactive_users = User.inactive
+    @active_users = User.active
 
     respond_to do |format|
       format.html # index.html.erb
