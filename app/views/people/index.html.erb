@@ -37,7 +37,14 @@
         <td><%= person.last_name %></td>
         <% if current_user != nil %>
             <% if current_user.is_admin %>
-                <td><%= person.created_by %></td>
+                <td>
+                  <% if person.created_by.nil? %>
+                    ODNB
+                  <% else %>
+                    <%= person.created_by %>
+                    <!-- Created by is mixed up with updated by in the system -->
+                  <% end %>
+                </td>
             <% end %>
         <% end %>
         <td><%= person.birth_year %></td>
