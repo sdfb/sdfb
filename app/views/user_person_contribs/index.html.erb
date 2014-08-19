@@ -1,37 +1,48 @@
-<h1>Listing user_person_contribs</h1>
-
-<table>
-  <tr>
-    <th>Person</th>
-    <th>Created by</th>
-    <th>Annotation</th>
-    <th>Bibliography</th>
-    <!-- <th>Is flagged</th> -->
-    <th></th>
-    <th></th>
-    <th></th>
-  </tr>
-
-<% @user_person_contribs.each do |user_person_contrib| %>
-  <tr>
-    <td><%= link_to user_person_contrib.get_person_name, person_path(user_person_contrib.person_id) %></td>
-    <td><%= link_to user_person_contrib.get_users_name, user_path(user_person_contrib.created_by) %></td>
-    <td><%= user_person_contrib.annotation %></td>
-    <td><%= user_person_contrib.bibliography %></td>
-    <!-- <td><%= user_person_contrib.is_flagged %></td> -->
-    <% if can? :show, user_person_contrib %>
-        <td><%= link_to 'Show', user_person_contrib %></td>
+<%- model_class = UserPersonContrib -%>
+<div class="page-header">
+  <h1><%=t '.title', :default => model_class.model_name.human.pluralize.titleize %></h1>
+</div>
+<%= link_to t('.new', :default => t("helpers.links.new")),
+            new_user_person_contrib_path,
+            :class => 'btn btn-primary' %>
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th>Person</th>
+      <th>Created by</th>
+      <th>Annotation</th>
+      <th>Bibliography</th>
+      <!-- <th>Is flagged</th> -->
+      <th><%=t '.actions', :default => t("helpers.actions") %></th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @user_person_contribs.each do |user_person_contrib| %>
+      <tr>
+        <td><%= link_to user_person_contrib.id, user_person_contrib_path(user_person_contrib) %></td>
+        <td><%= user_person_contrib.person_id %></td>
+        <td><%= user_person_contrib.created_by %></td>
+        <td><%= user_person_contrib.annotation %></td>
+        <td><%= user_person_contrib.bibliography %></td>
+        <td><%= user_person_contrib.is_flagged %></td>
+        <td><%=l user_person_contrib.created_at %></td>
+        <td>
+          <% if can? :show, user_person_contrib %>
+            <%= link_to 'Show', user_person_contrib %>
+          <% end %>
+          <% if can? :update, user_person_contrib %>
+            <%= link_to t('.edit', :default => t("helpers.links.edit")),
+                      edit_user_person_contrib_path(user_person_contrib), :class => 'btn btn-mini' %>
+          <% end %>
+          <% if can? :destroy, user_person_contrib %>
+            <%= link_to t('.destroy', :default => t("helpers.links.destroy")),
+                      user_person_contrib_path(user_person_contrib),
+                      :method => :delete,
+                      :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')) },
+                      :class => 'btn btn-mini btn-danger' %>
+          <% end %>
+        </td>
+      </tr>
     <% end %>
-    <% if can? :update, user_person_contrib %>
-        <td><%= link_to 'Edit', edit_user_person_contrib_path(user_person_contrib) %></td>
-    <% end %>
-    <% if can? :destroy, user_person_contrib %>
-        <td><%= link_to 'Destroy', user_person_contrib, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-    <% end %>
-  </tr>
-<% end %>
+  </tbody>
 </table>
-
-<br />
-
-<%= link_to 'New User person contrib', new_user_person_contrib_path %>

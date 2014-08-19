@@ -1,51 +1,59 @@
 <p id="notice"><%= notice %></p>
 
-<p>
-  <b>First name:</b>
-  <%= @user.first_name %>
-</p>
+<%- model_class = User -%>
+<div class="page-header">
+  <h1><%=t '.title', :default => model_class.model_name.human.titleize %></h1>
+</div>
 
-<p>
-  <b>Last name:</b>
-  <%= @user.last_name %>
-</p>
-
-<p>
-  <b>Email:</b>
-  <%= @user.email %>
-</p>
-
-<p>
-  <b>Affiliation:</b>
-  <%= @user.affiliation %>
-</p>
-
-<p>
-  <b>User type:</b>
-  <%= @user.user_type %>
-</p>
-
-<p>
-  <b>About description:</b>
-  <% if @user.about_description != "" %>
-    <%= @user.about_description %>
-  <% else %>
-    None
+<dl class="dl-horizontal">
+  <dt><strong><%= model_class.human_attribute_name(:about_description) %>:</strong></dt>
+  <dd>
+    <% if @user.about_description != "" %>
+      <%= @user.about_description %>
+    <% else %>
+      None
+    <% end %>
+  </dd>
+  <dt><strong><%= model_class.human_attribute_name(:affiliation) %>:</strong></dt>
+  <dd><%= @user.affiliation %></dd>
+  <dt><strong><%= model_class.human_attribute_name(:email) %>:</strong></dt>
+  <dd><%= @user.email %></dd>
+  <dt><strong><%= model_class.human_attribute_name(:first_name) %>:</strong></dt>
+  <dd><%= @user.first_name %></dd>
+  <dt><strong><%= model_class.human_attribute_name(:is_active) %>:</strong></dt>
+  <dd><%= @user.is_active %></dd>
+  <dt><strong><%= model_class.human_attribute_name(:last_name) %>:</strong></dt>
+  <dd><%= @user.last_name %></dd>
+  <dt><strong><%= model_class.human_attribute_name(:password) %>:</strong></dt>
+  <dd><%= @user.password %></dd>
+  <dt><strong><%= model_class.human_attribute_name(:password_confirmation) %>:</strong></dt>
+  <dd><%= @user.password_confirmation %></dd>
+  <dt><strong><%= model_class.human_attribute_name(:password_hash) %>:</strong></dt>
+  <dd><%= @user.password_hash %></dd>
+  <dt><strong><%= model_class.human_attribute_name(:password_salt) %>:</strong></dt>
+  <dd><%= @user.password_salt %></dd>
+  <dt><strong><%= model_class.human_attribute_name(:user_type) %>:</strong></dt>
+  <dd><%= @user.user_type %></dd>
+  <% if current_user != nil %>
+    <% if current_user.is_admin %>
+      <dt><strong><%= model_class.human_attribute_name(:is_admin) %>:</strong></dt>
+      <dd>
+        <% if @user.is_admin %>
+          true
+        <% end %>
+      </dd>
+    <% end %>
   <% end %>
-</p>
+</dl>
 
-<% if current_user != nil %>
-  <% if current_user.is_admin %>
-    <p>
-      <b>Is admin:</b>
-      <% if @user.is_admin %>
-        true
-      <% end %>
-    </p>
-  <% end %>
-<% end %>
-
-<% if can? :update, @user %>
-  <%= link_to 'Edit', edit_user_path(@user) %> |
-<% end %>
-<%= link_to 'Back', users_path %>
+<div class="form-actions">
+  <%= link_to t('.back', :default => t("helpers.links.back")),
+              users_path, :class => 'btn'  %>
+  <%= link_to t('.edit', :default => t("helpers.links.edit")),
+              edit_user_path(@user), :class => 'btn' %>
+  <%= link_to t('.destroy', :default => t("helpers.links.destroy")),
+              user_path(@user),
+              :method => 'delete',
+              :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')) },
+              :class => 'btn btn-danger' %>
+</div>

@@ -1,41 +1,49 @@
-<h1>Listing user_rel_contribs</h1>
-
-<table>
-  <tr>
-    <th>Relationship</th>
-    <th>Created by</th>
-    <th>Confidence type</th>
-    <th>Annotation</th>
-    <th>Bibliography</th>
-    <th>Relationship type</th>
-    <!-- <th>Is flagged</th> -->
-    <th></th>
-    <th></th>
-    <th></th>
-  </tr>
-
-<% @user_rel_contribs.each do |user_rel_contrib| %>
-  <tr>
-    <td><%= link_to user_rel_contrib.get_both_names, relationship_path(user_rel_contrib.relationship_id) %></td>
-    <td><%= link_to user_rel_contrib.get_users_name, user_path(user_rel_contrib.created_by) %></td>
-    <td><%= user_rel_contrib.confidence_type %></td>
-    <td><%= user_rel_contrib.annotation %></td>
-    <td><%= user_rel_contrib.bibliography %></td>
-    <td><%= user_rel_contrib.relationship_type %></td>
-    <!-- <td><%= user_rel_contrib.is_flagged %></td> -->
-    <% if can? :show, user_rel_contrib %>
-        <td><%= link_to 'Show', user_rel_contrib %></td>
+<%- model_class = UserRelContrib -%>
+<div class="page-header">
+  <h1><%=t '.title', :default => model_class.model_name.human.pluralize.titleize %></h1>
+</div>
+<%= link_to t('.new', :default => t("helpers.links.new")),
+            new_user_rel_contrib_path,
+            :class => 'btn btn-primary' %>
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th>Relationship</th>
+      <th>Created by</th>
+      <th>Confidence type</th>
+      <th>Annotation</th>
+      <th>Bibliography</th>
+      <th>Relationship type</th>
+      <th><%=t '.actions', :default => t("helpers.actions") %></th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @user_rel_contribs.each do |user_rel_contrib| %>
+      <tr>
+        <td><%= link_to user_rel_contrib.get_both_names, relationship_path(user_rel_contrib.relationship_id) %></td>
+        <td><%= link_to user_rel_contrib.get_users_name, user_path(user_rel_contrib.created_by) %></td>
+        <td><%= user_rel_contrib.confidence_type %></td>
+        <td><%= user_rel_contrib.annotation %></td>
+        <td><%= user_rel_contrib.bibliography %></td>
+        <td><%= user_rel_contrib.relationship_type %></td>
+        <!-- <td><%= user_rel_contrib.is_flagged %></td> -->
+        <td>
+          <% if can? :show, user_rel_contrib %>
+            <%= link_to 'Show', user_rel_contrib %>
+          <% end %>
+          <% if can? :update, user_rel_contrib %>
+            <%= link_to t('.edit', :default => t("helpers.links.edit")),
+                      edit_user_rel_contrib_path(user_rel_contrib), :class => 'btn btn-mini' %>
+          <% end %>
+          <% if can? :destroy, user_rel_contrib %>
+            <%= link_to t('.destroy', :default => t("helpers.links.destroy")),
+                      user_rel_contrib_path(user_rel_contrib),
+                      :method => :delete,
+                      :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')) },
+                      :class => 'btn btn-mini btn-danger' %>
+          <% end %>
+        </td>
+      </tr>
     <% end %>
-    <% if can? :update, user_rel_contrib %>
-        <td><%= link_to 'Edit', edit_user_rel_contrib_path(user_rel_contrib) %></td>
-    <% end %>
-    <% if can? :destroy, user_rel_contrib %>
-        <td><%= link_to 'Destroy', user_rel_contrib, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-    <% end %>
-  </tr>
-<% end %>
+  </tbody>
 </table>
-
-<br />
-
-<%= link_to 'New User rel contrib', new_user_rel_contrib_path %>

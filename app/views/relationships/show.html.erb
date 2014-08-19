@@ -1,36 +1,35 @@
-<p id="notice"><%= notice %></p>
+<%- model_class = Relationship -%>
+<div class="page-header">
+  <h1><%=t '.title', :default => model_class.model_name.human.titleize %></h1>
+</div>
 
-<p>
-  <b>Average certainty:</b>
-  <%= @relationship.average_certainty %>
-</p>
+<dl class="dl-horizontal">
+  <dt><strong><%= model_class.human_attribute_name(:average_certainty) %>:</strong></dt>
+  <dd><%= @relationship.average_certainty %></dd>
+  <dt><strong><%= model_class.human_attribute_name(:is_approved) %>:</strong></dt>
+  <dd><%= @relationship.is_approved %></dd>
+  <dt><strong><%= model_class.human_attribute_name(:original_certainty) %>:</strong></dt>
+  <dd><%= @relationship.original_certainty %></dd>
+  <dt><strong><%= model_class.human_attribute_name(:person1_index) %>:</strong></dt>
+  <dd><%= @relationship.person1_index %></dd>
+  <dt><strong><%= model_class.human_attribute_name(:person2_index) %>:</strong></dt>
+  <dd><%= @relationship.person2_index %></dd>
+  <dt><strong><%= model_class.human_attribute_name(:created_by) %>:</strong></dt>
+  <dd><%= @relationship.created_by %></dd>
+</dl>
 
-<p>
-  <b>Is approved:</b>
-  <%= @relationship.is_approved %>
-</p>
-
-<p>
-  <b>Original certainty:</b>
-  <%= @relationship.original_certainty %>
-</p>
-
-<p>
-  <b>Person1 index:</b>
-  <%= @relationship.person1_index %>
-</p>
-
-<p>
-  <b>Person2 index:</b>
-  <%= @relationship.person2_index %>
-</p>
-
-<p>
-  <b>Created by:</b>
-  <%= @relationship.created_by %>
-</p>
-
-<% if can? :update, @relationship %>
-  <%= link_to 'Edit', edit_relationship_path(@relationship) %> |
-<% end %>
-<%= link_to 'Back', relationships_path %>
+<div class="form-actions">
+  <%= link_to t('.back', :default => t("helpers.links.back")),
+              relationships_path, :class => 'btn'  %>
+  <% if can? :update, @relationship %>
+    <%= link_to t('.edit', :default => t("helpers.links.edit")),
+              edit_relationship_path(@relationship), :class => 'btn' %>
+  <% end %>
+  <% if can? :destroy, @relationship %>
+    <%= link_to t('.destroy', :default => t("helpers.links.destroy")),
+              relationship_path(@relationship),
+              :method => 'delete',
+              :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')) },
+              :class => 'btn btn-danger' %>
+  <% end %>
+</div>

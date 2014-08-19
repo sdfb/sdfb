@@ -1,43 +1,46 @@
 <h1>Inactive Users</h1>
 
-<table>
-  <tr>
-    <th>First name</th>
-    <th>Last name</th>
-    <th>About description</th>
-    <th>Affiliation</th>
-    <th>Email</th>
-    <th>User type</th>
-    <th>Is admin</th>
-    <th></th>
-    <th></th>
-    <th></th>
-  </tr>
-
-<% @inactive_users.each do |user| %>
-  <tr>
-    <td><%= user.first_name %></td>
-    <td><%= user.last_name %></td>
-    <td><%= user.about_description %></td>
-    <td><%= user.affiliation %></td>
-    <td><%= user.email %></td>
-    <td><%= user.user_type %></td>
-    <td>
-        <% if user.is_admin %>
-            Admin
-        <% end %>
-    </td>
-    <% if can? :show, user %>
-        <td><%= link_to 'Show', user %></td>
+<table class="table table-striped">
+    <thead>
+      <tr>
+        <th>First name</th>
+        <th>Last name</th>
+        <th>About description</th>
+        <th>Affiliation</th>
+        <th>Email</th>
+        <th>User type</th>
+        <th>Is admin</th>
+        <th><%=t '.actions', :default => t("helpers.actions") %></th>
+      </tr>
+    </thead>
+  <tbody>
+    <% @inactive_users.each do |user| %>
+      <tr>
+        <td><%= user.first_name %></td>
+        <td><%= user.last_name %></td>
+        <td><%= user.about_description %></td>
+        <td><%= user.affiliation %></td>
+        <td><%= user.email %></td>
+        <td><%= user.user_type %></td>
+        <td>
+            <% if user.is_admin %>
+                Admin
+            <% end %>
+        </td>
+        <td>
+            <% if can? :show, user %>
+                <%= link_to 'Show', user %>
+            <% end %>
+            <% if can? :update, user %>
+                <%= link_to 'Edit', edit_user_path(user) %>
+            <% end %>
+            <% if can? :destroy, user %>
+                <%= link_to 'Destroy', user, method: :delete, data: { confirm: 'Are you sure?' } %>
+            <% end %>
+        </td>
+      </tr>
     <% end %>
-    <% if can? :update, user %>
-        <td><%= link_to 'Edit', edit_user_path(user) %></td>
-    <% end %>
-    <% if can? :destroy, user %>
-        <td><%= link_to 'Destroy', user, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-    <% end %>
-  </tr>
-<% end %>
+    </tbody>
 </table>
 
 <br />

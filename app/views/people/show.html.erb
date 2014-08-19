@@ -1,46 +1,39 @@
-<p id="notice"><%= notice %></p>
+<%- model_class = Person -%>
+<div class="page-header">
+  <h1><%=t '.title', :default => model_class.model_name.human.titleize %></h1>
+</div>
 
-<p>
-  <b>Original:</b>
-  <%= @person.original_id %>
-</p>
+<dl class="dl-horizontal">
+  <dt><strong><%= model_class.human_attribute_name(:original_id) %>:</strong></dt>
+  <dd><%= @person.original_id %></dd>
+  <dt><strong><%= model_class.human_attribute_name(:first_name) %>:</strong></dt>
+  <dd><%= @person.first_name %></dd>
+  <dt><strong><%= model_class.human_attribute_name(:last_name) %>:</strong></dt>
+  <dd><%= @person.last_name %></dd>
+  <dt><strong><%= model_class.human_attribute_name(:created_by) %>:</strong></dt>
+  <dd><%= @person.created_by %></dd>
+  <dt><strong><%= model_class.human_attribute_name(:birth_year) %>:</strong></dt>
+  <dd><%= @person.birth_year %></dd>
+  <dt><strong><%= model_class.human_attribute_name(:death_year) %>:</strong></dt>
+  <dd><%= @person.death_year %></dd>
+  <dt><strong><%= model_class.human_attribute_name(:historical_significance) %>:</strong></dt>
+  <dd><%= @person.historical_significance %></dd>
+  <dt><strong><%= model_class.human_attribute_name(:is_approved) %>:</strong></dt>
+  <dd><%= @person.is_approved %></dd>
+</dl>
 
-<p>
-  <b>First name:</b>
-  <%= @person.first_name %>
-</p>
-
-<p>
-  <b>Last name:</b>
-  <%= @person.last_name %>
-</p>
-
-<p>
-  <b>Created by:</b>
-  <%= @person.created_by %>
-</p>
-
-<p>
-  <b>Birth year:</b>
-  <%= @person.birth_year %>
-</p>
-
-<p>
-  <b>Death year:</b>
-  <%= @person.death_year %>
-</p>
-
-<p>
-  <b>Historical significance:</b>
-  <%= @person.historical_significance %>
-</p>
-
-<p>
-  <b>Is approved:</b>
-  <%= @person.is_approved %>
-</p>
-
-<% if can? :update, @people %> 
-  <%= link_to 'Edit', edit_person_path(@person) %> |
-<% end %>
-<%= link_to 'Back', people_path %>
+<div class="form-actions">
+  <%= link_to t('.back', :default => t("helpers.links.back")),
+              people_path, :class => 'btn'  %>
+  <% if can? :update, @people %> 
+    <%= link_to t('.edit', :default => t("helpers.links.edit")),
+              edit_person_path(@person), :class => 'btn' %>
+  <% end %>
+  <% if can? :destroy, @people %> 
+    <%= link_to t('.destroy', :default => t("helpers.links.destroy")),
+              person_path(@person),
+              :method => 'delete',
+              :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')) },
+              :class => 'btn btn-danger' %>
+  <% end %>
+</div>

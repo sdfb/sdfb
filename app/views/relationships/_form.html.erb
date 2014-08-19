@@ -1,29 +1,13 @@
-<%= simple_form_for(@relationship) do |f| %>
-  <fieldset>
-    <% if @relationship.errors.any? %>
-      <div id="error_explanation">
-        <h2><%= pluralize(@relationship.errors.count, "error") %> prohibited this relationship from being saved:</h2>
-
-        <ul>
-        <% @relationship.errors.full_messages.each do |msg| %>
-          <li><%= msg %></li>
-        <% end %>
-        </ul>
-      </div>
-    <% end %>
-
-    <%= f.input :average_certainty %>
-    <%= f.input :is_approved %>
-    <%= f.input :original_certainty %>
-    <!-- on save, make original certainty average certainty if original certainty is nil-->
-    <%= f.input :person1_index, :collection => Person.all_approved.map { |id| Person.find(id).get_person_name }, :include_blank => true %>
-    <%= f.input :person2_index, :collection => Person.all_approved.map { |id| Person.find(id).get_person_name }, :include_blank => true %>
-    <%= f.hidden_field :created_by, :value => current_user.id %>
-
-    <div class="form-actions">
-      <%= f.submit nil, :class => 'btn btn-primary' %>
-      <%= link_to 'Cancel', relationships_path, :class => 'btn' %>
-    </div>
-  </fieldset>
+<%= simple_form_for @relationship, :html => { :class => 'form-horizontal' } do |f| %>
+  <%= f.input :average_certainty %>
+  <%= f.input :is_approved %>
+  <%= f.input :original_certainty %>
+  <%= f.input :person1_index %>
+  <%= f.input :person2_index %>
+  <%= f.input :created_by %>
+  <div class="form-actions">
+    <%= f.button :submit, :class => 'btn-primary' %>
+    <%= link_to t('.cancel', :default => t("helpers.links.cancel")),
+                relationships_path, :class => 'btn' %>
+  </div>
 <% end %>
-
