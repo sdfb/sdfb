@@ -1,5 +1,6 @@
 <h1>Unapproved Groups</h1>
-<table>
+<table class="table table-striped">
+  <thead>
   <tr>
     <% if current_user != nil %>
       <% if current_user.is_admin %>
@@ -8,37 +9,45 @@
     <% end %>
     <th>Name</th>
     <th>Description</th>
-    <th></th>
-    <th></th>
-    <th></th>
+    <th><%=t '.actions', :default => t("helpers.actions") %></th>
   </tr>
+  </thead>
 
-<% @groups_unapproved.each do |group| %>
-  <tr>
-    <% if current_user != nil %>
-      <% if current_user.is_admin %>
+  <tbody>
+    <% @groups_unapproved.each do |group| %>
+      <tr>
+        <% if current_user != nil %>
+          <% if current_user.is_admin %>
+            <td>
+              <% if group.created_by != nil %>
+                <%= link_to group.get_users_name, user_path(group.created_by) %>
+              <% else %>
+                <%= group.get_users_name %>
+              <% end %>
+            </td>
+          <% end %>
+        <% end %>
+        <td><%= group.name %></td>
+        <td><%= group.description %></td>
         <td>
-          <% if group.created_by != nil %>
-            <%= link_to group.get_users_name, user_path(group.created_by) %>
-          <% else %>
-            <%= group.get_users_name %>
+          <% if can? :show, group %>
+            <%= link_to 'Show', group %>
+          <% end %>
+          <% if can? :update, group %>
+            <%= link_to t('.edit', :default => t("helpers.links.edit")),
+                            edit_group_path(group), :class => 'btn btn-mini' %>
+          <% end %>
+          <% if can? :destroy, group %>
+            <%= link_to t('.destroy', :default => t("helpers.links.destroy")),
+                        group_path(group),
+                        :method => :delete,
+                        :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')) },
+                        :class => 'btn btn-mini btn-danger' %>
           <% end %>
         </td>
-      <% end %>
+      </tr>
     <% end %>
-    <td><%= group.name %></td>
-    <td><%= group.description %></td>
-    <% if can? :show, group %>
-      <td><%= link_to 'Show', group %></td>
-    <% end %>
-    <% if can? :update, group %>
-      <td><%= link_to 'Edit', edit_group_path(group) %></td>
-    <% end %>
-    <% if can? :destroy, group %>
-      <td><%= link_to 'Destroy', group, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-    <% end %>
-  </tr>
-<% end %>
+  </tbody>
 </table>
 
-<br />
+<%= will_paginate @groups_unapproved, :param_name => 'groups_unapproved_page', :previous_label => "Previous&nbsp;", :next_label => "&nbsp;Next" %>

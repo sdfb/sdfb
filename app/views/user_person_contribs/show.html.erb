@@ -1,31 +1,35 @@
 <p id="notice"><%= notice %></p>
 
-<p>
-  <b>Person:</b>
-  <%= @user_person_contrib.person_id %>
-</p>
+<%- model_class = UserPersonContrib -%>
+<div class="page-header">
+  <h1><%=t '.title', :default => model_class.model_name.human.titleize %></h1>
+</div>
 
-<p>
-  <b>Created by:</b>
-  <%= @user_person_contrib.created_by %>
-</p>
+<dl class="dl-horizontal">
+  <dt><strong><%= model_class.human_attribute_name(:person_id) %>:</strong></dt>
+  <dd><%= @user_person_contrib.person_id %></dd>
+  <dt><strong><%= model_class.human_attribute_name(:created_by) %>:</strong></dt>
+  <dd><%= @user_person_contrib.created_by %></dd>
+  <dt><strong><%= model_class.human_attribute_name(:annotation) %>:</strong></dt>
+  <dd><%= @user_person_contrib.annotation %></dd>
+  <dt><strong><%= model_class.human_attribute_name(:bibliography) %>:</strong></dt>
+  <dd><%= @user_person_contrib.bibliography %></dd>
+  <dt><strong><%= model_class.human_attribute_name(:is_flagged) %>:</strong></dt>
+  <dd><%= @user_person_contrib.is_flagged %></dd>
+</dl>
 
-<p>
-  <b>Annotation:</b>
-  <%= @user_person_contrib.annotation %>
-</p>
-
-<p>
-  <b>Bibliography:</b>
-  <%= @user_person_contrib.bibliography %>
-</p>
-
-<p>
-  <b>Is flagged:</b>
-  <%= @user_person_contrib.is_flagged %>
-</p>
-
-<% if can? :update, @user_person_contrib %>
-  <%= link_to 'Edit', edit_user_person_contrib_path(@user_person_contrib) %> |
-<% end %>
-<%= link_to 'Back', user_person_contribs_path %>
+<div class="form-actions">
+  <%= link_to t('.back', :default => t("helpers.links.back")),
+              user_person_contribs_path, :class => 'btn'  %>
+  <% if can? :update, @user_person_contrib %>
+    <%= link_to t('.edit', :default => t("helpers.links.edit")),
+              edit_user_person_contrib_path(@user_person_contrib), :class => 'btn' %>
+  <% end %>
+  <% if can? :destroy, @user_person_contrib %>
+    <%= link_to t('.destroy', :default => t("helpers.links.destroy")),
+              user_person_contrib_path(@user_person_contrib),
+              :method => 'delete',
+              :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')) },
+              :class => 'btn btn-danger' %>
+  <% end %>
+</div>

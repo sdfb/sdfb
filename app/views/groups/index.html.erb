@@ -1,6 +1,9 @@
-<h1>Listing groups</h1>
-
-<%= link_to 'New Group', new_group_path %>
+<div class="page-header">
+  <h1>All Groups</h1>
+</div>
+<%= link_to 'New Group',
+            new_group_path,
+            :class => 'btn btn-primary' %>
 
 <%= render 'approved_groups' %>
 

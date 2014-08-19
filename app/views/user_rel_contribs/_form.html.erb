@@ -1,4 +1,4 @@
-<%= form_for(@user_rel_contrib) do |f| %>
+<%= simple_form_for @user_rel_contrib, :html => { :class => 'form-horizontal' } do |f| %>
   <% if @user_rel_contrib.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(@user_rel_contrib.errors.count, "error") %> prohibited this user_rel_contrib from being saved:</h2>
@@ -10,36 +10,16 @@
       </ul>
     </div>
   <% end %>
-
-  <div class="field">
-    <%= f.label :relationship_id %><br />
-    <%= f.number_field :relationship_id %>
-  </div>
-  <div class="field">
-<!--     <%= f.label :created_by %><br /> -->
-    <%= f.hidden_field :created_by, :value => current_user.id %>
-  </div>
-  <div class="field">
-    <%= f.label :confidence_type %><br />
-    <%= f.text_field :confidence_type %>
-  </div>
-  <div class="field">
-    <%= f.label :annotation %><br />
-    <%= f.text_area :annotation %>
-  </div>
-  <div class="field">
-    <%= f.label :bibliography %><br />
-    <%= f.text_area :bibliography %>
-  </div>
-  <div class="field">
-    <%= f.label :relationship_type %><br />
-    <%= f.text_field :relationship_type %>
-  </div>
-  <div class="field">
-    <%= f.label :is_flagged %><br />
-    <%= f.check_box :is_flagged %>
-  </div>
-  <div class="actions">
-    <%= f.submit %>
+  <%= f.input :relationship_id %>
+  <%= f.hidden_field :created_by, :value => current_user.id %>
+  <%= f.input :confidence_type %>
+  <%= f.input :annotation %>
+  <%= f.input :bibliography %>
+  <%= f.input :relationship_type %>
+  <%= f.input :is_flagged %>
+  <div class="form-actions">
+    <%= f.button :submit, :class => 'btn-primary' %>
+    <%= link_to t('.cancel', :default => t("helpers.links.cancel")),
+                user_rel_contribs_path, :class => 'btn' %>
   </div>
 <% end %>

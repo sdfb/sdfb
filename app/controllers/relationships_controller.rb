@@ -7,7 +7,7 @@ class RelationshipsController < ApplicationController
   authorize_resource
 
   def index
-    @relationships_approved = Relationship.all_approved
+    @relationships_approved = Relationship.all_approved.paginate(:page => params[:relationships_approved_page]).per_page(20)
 
     respond_to do |format|
       format.html # index.html.erb

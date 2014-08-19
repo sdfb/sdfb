@@ -7,8 +7,8 @@ class GroupsController < ApplicationController
   authorize_resource
   
   def index
-    @groups_approved = Group.approved
-    @groups_unapproved = Group.unapproved
+    @groups_approved = Group.approved.paginate(:page => params[:groups_approved_page]).per_page(20)
+    @groups_unapproved = Group.unapproved.paginate(:page => params[:groups_unapproved_page]).per_page(20)
 
 
     respond_to do |format|

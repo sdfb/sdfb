@@ -1,59 +1,64 @@
-<h1>Listing relationships</h1>
-
-<table>
-  <tr>
-    <th>Person 1</th>
-    <th>Person 2</th>
-    <% if current_user != nil %>
-        <% if current_user.is_admin %>
-            <th>Original Certainty</th>
+<%- model_class = Relationship -%>
+<div class="page-header">
+  <h1>All Relationships</h1>
+</div>
+<%= link_to 'New Relationship',
+            new_relationship_path,
+            :class => 'btn btn-primary' %>
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th>Person 1</th>
+      <th>Person 2</th>
+      <% if current_user != nil %>
+          <% if current_user.is_admin %>
+              <th>Original Certainty</th>
+          <% end %>
+      <% end %>
+      <th>Average Certainty</th>
+      <% if current_user != nil %>
+          <% if current_user.is_admin %>
+              <th>Created by</th>
+          <% end %>
+      <% end %>
+      <th><%=t '.actions', :default => t("helpers.actions") %></th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @relationships_approved.each do |relationship| %>
+      <tr>
+        <td><%= link_to relationship.get_person1_name, person_path(relationship.person1_index) %></td>
+        <td><%= link_to relationship.get_person2_name, person_path(relationship.person2_index) %></td>
+        <% if current_user != nil %>
+            <% if current_user.is_admin %>
+                <td><%= relationship.original_certainty %></td>
+            <% end %>
         <% end %>
-    <% end %>
-    <% if current_user != nil %>
-        <% if current_user.is_admin %>
-            <th>Average Certainty</th>
-        <% else %>
-            <th></th>
+        <td><%= relationship.average_certainty %></td>
+        <% if current_user != nil %>
+            <% if current_user.is_admin %>
+                <td><%= relationship.get_users_name %></td>
+            <% end %>
         <% end %>
+        <td>
+          <% if can? :show, relationship %>
+            <%= link_to 'Show', relationship %>
+          <% end %>
+          <% if can? :update, relationship %>
+            <%= link_to t('.edit', :default => t("helpers.links.edit")),
+                        edit_relationship_path(relationship), :class => 'btn btn-mini' %>
+          <% end %>
+          <% if can? :destroy, relationship %>
+            <%= link_to t('.destroy', :default => t("helpers.links.destroy")),
+                        relationship_path(relationship),
+                        :method => :delete,
+                        :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')) },
+                        :class => 'btn btn-mini btn-danger' %>
+          <% end %>
+        </td>
+      </tr>
     <% end %>
-    <% if current_user != nil %>
-        <% if current_user.is_admin %>
-            <th>Created by</th>
-        <% end %>
-    <% end %>
-    <th></th>
-    <th></th>
-    <th></th>
-  </tr>
-
-<% @relationships_approved.each do |relationship| %>
-  <tr>
-    <td><%= link_to relationship.get_person1_name, person_path(relationship.person1_index) %></td>
-    <td><%= link_to relationship.get_person2_name, person_path(relationship.person2_index) %></td>
-    <% if current_user != nil %>
-        <% if current_user.is_admin %>
-            <td><%= relationship.original_certainty %></td>
-        <% end %>
-    <% end %>
-    <td><%= relationship.average_certainty %></td>
-    <% if current_user != nil %>
-        <% if current_user.is_admin %>
-            <td><%= relationship.get_users_name %></td>
-        <% end %>
-    <% end %>
-    <% if can? :show, relationship %>
-        <td><%= link_to 'Show', relationship %></td>
-    <% end %>
-    <% if can? :update, relationship %>
-        <td><%= link_to 'Edit', edit_relationship_path(relationship) %></td>
-    <% end %>
-    <% if can? :destroy, relationship %>
-        <td><%= link_to 'Destroy', relationship, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-    <% end %>
-  </tr>
-<% end %>
+  </tbody>
 </table>
 
-<br />
-
-<%= link_to 'New Relationship', new_relationship_path %>
+<%= will_paginate @relationships_approved, :param_name => 'relationships_approved_page', :previous_label => "Previous&nbsp;", :next_label => "&nbsp;Next" %>

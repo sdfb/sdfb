@@ -1,5 +1,5 @@
-<h1>New group</h1>
-
-<%= render 'new_form' %>
-
-<%= link_to 'Back', groups_path %>
+<%- model_class = Group -%>
+<div class="page-header">
+  <h1><%=t '.title', :default => [:'helpers.titles.new', 'New %{model}'], :model => model_class.model_name.human.titleize %></h1>
+</div>
+<%= render :partial => 'new_form' %>

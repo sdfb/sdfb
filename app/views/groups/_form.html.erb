@@ -1,0 +1,22 @@
+<%= simple_form_for @group, :html => { :class => 'form-horizontal' } do |f| %>
+  <% if @group.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@group.errors.count, "error") %> prohibited this group from being saved:</h2>
+
+      <ul>
+      <% @group.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+  <%= f.input :created_by %>
+  <%= f.input :name %>
+  <%= f.input :description %>
+  <%= f.input :is_approved %>
+  <div class="form-actions">
+    <%= f.button :submit, :class => 'btn-primary' %>
+    <%= link_to t('.cancel', :default => t("helpers.links.cancel")),
+                groups_path, :class => 'btn' %>
+  </div>
+<% end %>

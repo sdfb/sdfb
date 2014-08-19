@@ -1,27 +1,33 @@
+<%- model_class = Group -%>
+<div class="page-header">
+  <h1><%=t '.title', :default => model_class.model_name.human.titleize %></h1>
+</div>
+
 <p id="notice"><%= notice %></p>
 
-<p>
-  <b>Created by:</b>
-  <%= @group.created_by %>
-</p>
+<dl class="dl-horizontal">
+  <dt><strong><%= model_class.human_attribute_name(:created_by) %>:</strong></dt>
+  <dd><%= @group.created_by %></dd>
+  <dt><strong><%= model_class.human_attribute_name(:name) %>:</strong></dt>
+  <dd><%= @group.name %></dd>
+  <dt><strong><%= model_class.human_attribute_name(:description) %>:</strong></dt>
+  <dd><%= @group.description %></dd>
+  <dt><strong><%= model_class.human_attribute_name(:is_approved) %>:</strong></dt>
+  <dd><%= @group.is_approved %></dd>
+</dl>
 
-<p>
-  <b>Name:</b>
-  <%= @group.name %>
-</p>
-
-<p>
-  <b>Description:</b>
-  <%= @group.description %>
-</p>
-
-<p>
-  <b>Is approved:</b>
-  <%= @group.is_approved %>
-</p>
-
-<% if can? :update, @group %>
-	<%= link_to 'Edit', edit_group_path(@group) %> |
-<% end %>
-
-<%= link_to 'Back', groups_path %>
+<div class="form-actions">
+  <%= link_to t('.back', :default => t("helpers.links.back")),
+              groups_path, :class => 'btn'  %>
+  <% if can? :update, @group %>
+    <%= link_to t('.edit', :default => t("helpers.links.edit")),
+              edit_group_path(@group), :class => 'btn' %>
+  <% end %>
+  <% if can? :destroy, @group %>
+    <%= link_to t('.destroy', :default => t("helpers.links.destroy")),
+              group_path(@group),
+              :method => 'delete',
+              :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')) },
+              :class => 'btn btn-danger' %>
+  <% end %>
+</div>

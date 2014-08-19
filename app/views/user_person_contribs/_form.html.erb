@@ -1,4 +1,4 @@
-<%= form_for(@user_person_contrib) do |f| %>
+<%= simple_form_for @user_person_contrib, :html => { :class => 'form-horizontal' } do |f| %>
   <% if @user_person_contrib.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(@user_person_contrib.errors.count, "error") %> prohibited this user_person_contrib from being saved:</h2>
@@ -10,28 +10,14 @@
       </ul>
     </div>
   <% end %>
-
-  <div class="field">
-    <%= f.label :person_id %><br />
-    <%= f.number_field :person_id %>
-  </div>
-  <div class="field">
-<!--     <%= f.label :created_by %><br /> -->
-    <%= f.hidden_field :created_by, :value => current_user.id %>
-  </div>
-  <div class="field">
-    <%= f.label :annotation %><br />
-    <%= f.text_area :annotation %>
-  </div>
-  <div class="field">
-    <%= f.label :bibliography %><br />
-    <%= f.text_area :bibliography %>
-  </div>
-  <div class="field">
-    <%= f.label :is_flagged %><br />
-    <%= f.check_box :is_flagged %>
-  </div>
-  <div class="actions">
-    <%= f.submit %>
+  <%= f.input :person_id %>
+  <%= f.hidden_field :created_by, :value => current_user.id %>
+  <%= f.input :annotation %>
+  <%= f.input :bibliography %>
+  <%= f.input :is_flagged %>
+  <div class="form-actions">
+    <%= f.button :submit, :class => 'btn-primary' %>
+    <%= link_to t('.cancel', :default => t("helpers.links.cancel")),
+                user_person_contribs_path, :class => 'btn' %>
   </div>
 <% end %>
