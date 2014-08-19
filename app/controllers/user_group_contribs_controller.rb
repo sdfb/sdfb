@@ -7,7 +7,7 @@ class UserGroupContribsController < ApplicationController
   authorize_resource
 
   def index
-    @user_group_contribs = UserGroupContrib.not_flagged
+    @user_group_contribs = UserGroupContrib.not_flagged.paginate(:page => params[:user_group_contribs_page]).per_page(20)
 
     respond_to do |format|
       format.html # index.html.erb
