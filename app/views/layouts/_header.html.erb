@@ -1,0 +1,22 @@
+<div class="navbar">
+  	<ul class="navbar-inner">
+        <a class="brand" href="/">Six Degrees of Francis Bacon</a>
+	  	<ul class="nav pull-left">
+			<li><%= link_to "People", people_path %></li>
+			<li><%= link_to "Relationships", relationships_path %></li>
+			<% if current_user %>
+				<!-- <li><%= link_to "Dashboard", root_url %></li> -->
+			<% end %>
+	  	</ul>
+	  	<ul class="nav pull-right">
+			<li class="divider-vertical"></li>
+			<% if current_user %>
+				<li><%= link_to current_user.email, user_path(current_user) %></li>
+				<li><%= link_to "Sign out", sign_out_path %></li>
+			<% else %>
+				<li><%= link_to "Sign Up", sign_up_path %></li>
+				<li><%= link_to "Sign in", sign_in_path %></li>
+			<% end %>
+	  	</ul>
+  	</ul>
+</div>
