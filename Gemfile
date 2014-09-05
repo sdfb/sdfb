@@ -27,7 +27,7 @@ end
 gem 'jquery-rails'
 
 # This gem encrypts passwords
-gem 'bcrypt-ruby', :require => "bcrypt"
+gem 'bcrypt', :require => "bcrypt"
 
 # This gem handles user authorizations
 gem 'cancan'

@@ -1,73 +1,80 @@
-<div class="page-header">
-  <h1>All People</h1>
-</div>
-<%= link_to 'New Person',
-            new_person_path,
-            :class => 'btn btn-primary' %>
-<table class="table table-striped">
-  <thead>
-    <tr>
-      <% if current_user != nil %>
-          <% if current_user.is_admin %>
-              <th>Original ID</th>
-          <% end %>
-      <% end %>
-      <th>First name</th>
-      <th>Last name</th>
-      <% if current_user != nil %>
-          <% if current_user.is_admin %>
-              <th>Created by</th>
-          <% end %>
-      <% end %>
-      <th>Birth year</th>
-      <th>Death year</th>
-      <th>Historical significance</th>
-      <th><%=t '.actions', :default => t("helpers.actions") %></th>
-    </tr>
-  </thead>
-  <tbody>
-    <% @people_approved.each do |person| %>
-      <tr>
-        <% if current_user != nil %>
-            <% if current_user.is_admin %>
-                <td><%= person.original_id %></td>
-            <% end %>
-        <% end %>
-        <td><%= person.first_name %></td>
-        <td><%= person.last_name %></td>
-        <% if current_user != nil %>
-            <% if current_user.is_admin %>
+<div class="row">
+  <div class="span12">
+    <div class="page-header">
+      <h1>All People</h1>
+    </div>
+    <div class="row">
+      <div class="span4">
+        <%= link_to 'New Person', new_person_path, :class => 'btn btn-primary' %>
+      </div>
+      <div class="span8">
+        <table class="table table-striped">
+          <thead>
+            <tr>
+              <% if current_user != nil %>
+                  <% if current_user.is_admin %>
+                      <th>Original ID</th>
+                  <% end %>
+              <% end %>
+              <th>First name</th>
+              <th>Last name</th>
+              <% if current_user != nil %>
+                  <% if current_user.is_admin %>
+                      <th>Created by</th>
+                  <% end %>
+              <% end %>
+              <th>Birth year</th>
+              <th>Death year</th>
+              <th>Historical significance</th>
+              <th><%=t '.actions', :default => t("helpers.actions") %></th>
+            </tr>
+          </thead>
+          <tbody>
+            <% @people_approved.each do |person| %>
+              <tr>
+                <% if current_user != nil %>
+                    <% if current_user.is_admin %>
+                        <td><%= person.original_id %></td>
+                    <% end %>
+                <% end %>
+                <td><%= person.first_name %></td>
+                <td><%= person.last_name %></td>
+                <% if current_user != nil %>
+                    <% if current_user.is_admin %>
+                        <td>
+                          <% if person.created_by.nil? %>
+                            ODNB
+                          <% else %>
+                            <%= person.created_by %>
+                            <!-- Created by is mixed up with updated by in the system -->
+                          <% end %>
+                        </td>
+                    <% end %>
+                <% end %>
+                <td><%= person.birth_year %></td>
+                <td><%= person.death_year %></td>
+                <td><%= person.historical_significance %></td>
                 <td>
-                  <% if person.created_by.nil? %>
-                    ODNB
-                  <% else %>
-                    <%= person.created_by %>
-                    <!-- Created by is mixed up with updated by in the system -->
+                  <% if can? :show, person %>
+                      <%= link_to 'Show', person %>
+                  <% end %>
+                  <% if can? :update, person %>      
+                      <%= link_to t('.edit', :default => t("helpers.links.edit")),
+                                  edit_person_path(person), :class => 'btn btn-mini' %>
+                  <% end %>
+                  <% if can? :destroy, person %>   
+                      <%= link_to t('.destroy', :default => t("helpers.links.destroy")),
+                                  person_path(person),
+                                  :method => :delete,
+                                  :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')) },
+                                  :class => 'btn btn-mini btn-danger' %>
                   <% end %>
                 </td>
+              </tr>
             <% end %>
-        <% end %>
-        <td><%= person.birth_year %></td>
-        <td><%= person.death_year %></td>
-        <td><%= person.historical_significance %></td>
-        <td>
-          <% if can? :show, person %>
-              <%= link_to 'Show', person %>
-          <% end %>
-          <% if can? :update, person %>      
-              <%= link_to t('.edit', :default => t("helpers.links.edit")),
-                          edit_person_path(person), :class => 'btn btn-mini' %>
-          <% end %>
-          <% if can? :destroy, person %>   
-              <%= link_to t('.destroy', :default => t("helpers.links.destroy")),
-                          person_path(person),
-                          :method => :delete,
-                          :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')) },
-                          :class => 'btn btn-mini btn-danger' %>
-          <% end %>
-        </td>
-      <% end %>
-  </tbody>
-</table>
-
-<%= will_paginate @people_approved, :param_name => 'people_approved_page', :previous_label => "Previous&nbsp;", :next_label => "&nbsp;Next" %>
+          </tbody>
+        </table>
+        <%= will_paginate @people_approved, :param_name => 'people_approved_page', :previous_label => "Previous&nbsp;", :next_label => "&nbsp;Next" %>
+      </div>
+  </div>
+</div>
