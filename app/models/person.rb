@@ -1,6 +1,6 @@
 class Person < ActiveRecord::Base
-  attr_accessible :birth_year, :created_by, :death_year, :first_name, :historical_significance, :is_approved, :last_name, :original_id
-  
+  attr_accessible :birth_year, :created_by, :death_year, :first_name, :historical_significance, :is_approved, :last_name, :original_id, :uncertain, :unlikely, :possible, :likely, :certain
+
   # Relationships
   # -----------------------------
   has_many :groups, :through => :group_assignments
@@ -27,4 +27,5 @@ class Person < ActiveRecord::Base
     return first_name + " " + last_name 
   end
 end
+
 
