@@ -42,4 +42,8 @@ class Relationship < ActiveRecord::Base
   def check_two_different_people
     errors.add(:person2_index, "A person cannot have a relationship with his or herself.") if person1_index == person2_index
   end
+
+
+  # on update or save for relationship, update person's list
+  
 end

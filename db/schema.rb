@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140819163004) do
+ActiveRecord::Schema.define(:version => 20140905172419) do
 
   create_table "group_assignments", :force => true do |t|
     t.integer  "created_by"
@@ -42,6 +42,11 @@ ActiveRecord::Schema.define(:version => 20140819163004) do
     t.boolean  "is_approved"
     t.datetime "created_at",              :null => false
     t.datetime "updated_at",              :null => false
+    t.text     "uncertain"
+    t.text     "unlikely"
+    t.text     "possible"
+    t.text     "likely"
+    t.text     "certain"
   end
 
   create_table "relationships", :force => true do |t|
