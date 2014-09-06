@@ -26,6 +26,7 @@ class Relationship < ActiveRecord::Base
   # ----------------------------- 
   before_create :create_peoples_rel_sum
   before_update :update_peoples_rel_sum
+  after_destroy :delete_peoples_rel_sum
 
 	# Custom Methods
 	# -----------------------------
@@ -71,6 +72,32 @@ class Relationship < ActiveRecord::Base
     new_rel_record[0] = person1_index
     person2_current_rel_sum = Person.find(person2_index_in).rel_sum
     person2_current_rel_sum.push(new_rel_record)
+    Person.update(person2_index, rel_sum: person2_current_rel_sum)
+  end
+
+  # When a relationship is deleted, it is removed from each person's relationship summary
+  def delete_peoples_rel_sum
+    person1_index_in = self.person1_index
+    person2_index_in = self.person2_index
+
+    # replace the person 1's current_rel_sum with a smaller rel_sum that does not have the relationship
+    person1_current_rel_sum = Person.find(person1_index_in).rel_sum
+    person1_current_rel_sum.each_with_index do |rel_record_1, i|
+      if rel_record_1[0] == person2_index_in
+        person1_current_rel_sum.delete_at(i)
+        break
+      end
+    end
+    Person.update(person1_index, rel_sum: person1_current_rel_sum)
+
+    # replace the person 2's current_rel_sum with a smaller rel_sum that does not have the relationship
+    person2_current_rel_sum = Person.find(person2_index_in).rel_sum
+    person2_current_rel_sum.each_with_index do |rel_record_2, i|
+      if rel_record_2[0] == person1_index_in
+        person2_current_rel_sum.delete_at(i)
+        break
+      end
+    end
     Person.update(person2_index, rel_sum: person2_current_rel_sum)
   end
 
