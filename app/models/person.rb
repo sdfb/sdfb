@@ -1,6 +1,9 @@
 class Person < ActiveRecord::Base
-  attr_accessible :birth_year, :created_by, :death_year, :first_name, :historical_significance, :is_approved, :last_name, :original_id
-  
+  attr_accessible :birth_year, :created_by, :death_year, :first_name, :historical_significance, :is_approved, :last_name, :original_id, :rel_sum
+  serialize :rel_sum,Array
+  #rel_sum is the relationship summary that is updated whenever a relationship is created or updated
+  #rel_sum includes the person the indvidual has a relationship with, the updated average certainty, and whether it has been approved
+
   # Relationships
   # -----------------------------
   has_many :groups, :through => :group_assignments

@@ -11,7 +11,13 @@
   <dt><strong><%= model_class.human_attribute_name(:last_name) %>:</strong></dt>
   <dd><%= @person.last_name %></dd>
   <dt><strong><%= model_class.human_attribute_name(:created_by) %>:</strong></dt>
-  <dd><%= @person.created_by %></dd>
+  <dd><%= 
+  if @person.created_by.nil?
+    'ODNB'
+  else
+    @person.created_by
+  end
+  %></dd>
   <dt><strong><%= model_class.human_attribute_name(:birth_year) %>:</strong></dt>
   <dd><%= @person.birth_year %></dd>
   <dt><strong><%= model_class.human_attribute_name(:death_year) %>:</strong></dt>
@@ -19,7 +25,9 @@
   <dt><strong><%= model_class.human_attribute_name(:historical_significance) %>:</strong></dt>
   <dd><%= @person.historical_significance %></dd>
   <dt><strong><%= model_class.human_attribute_name(:is_approved) %>:</strong></dt>
-  <dd><%= @person.is_approved %></dd>
+  <dd><%= @person.is_approved.to_s %></dd>
+  <dt><strong>Relationship Summary:</strong></dt>
+  <dd><%= @person.rel_sum %></dd>
 </dl>
 
 <div class="form-actions">
