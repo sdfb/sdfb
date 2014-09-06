@@ -1,0 +1,47 @@
+<%- model_class = Relationship -%>
+<div class="page-header">
+  <h1>All Relationships</h1>
+</div>
+<%= link_to 'New Relationship',
+            new_relationship_path,
+            :class => 'btn btn-primary' %>
+
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th>Person 1</th>
+      <th>Person 2</th>
+      <% if current_user != nil %>
+          <% if current_user.is_admin %>
+              <th>Original Certainty</th>
+          <% end %>
+      <% end %>
+      <th>Average Certainty</th>
+      <% if current_user != nil %>
+          <% if current_user.is_admin %>
+              <th>Created by</th>
+          <% end %>
+      <% end %>
+      <th><%=t '.actions', :default => t("helpers.actions") %></th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @relationships_for_person do |relationship| %>
+      <tr>
+        <td><%= link_to relationship.get_person1_name, person_path(relationship.person1_index) %></td>
+        <td><%= link_to relationship.get_person2_name, person_path(relationship.person2_index) %></td>
+        <% if current_user != nil %>
+            <% if current_user.is_admin %>
+                <td><%= relationship.original_certainty %></td>
+            <% end %>
+        <% end %>
+        <td><%= relationship.average_certainty %></td>
+        <% if current_user != nil %>
+            <% if current_user.is_admin %>
+                <td><%= relationship.get_users_name %></td>
+            <% end %>
+        <% end %>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
