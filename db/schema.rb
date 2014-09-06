@@ -11,8 +11,6 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140905231921) do
-
   create_table "group_assignments", :force => true do |t|
     t.integer  "created_by"
     t.integer  "group_id"
@@ -42,7 +40,15 @@ ActiveRecord::Schema.define(:version => 20140905231921) do
     t.boolean  "is_approved"
     t.datetime "created_at",              :null => false
     t.datetime "updated_at",              :null => false
+<<<<<<< HEAD
     t.text     "rel_sum"
+=======
+    t.text     "uncertain"
+    t.text     "unlikely"
+    t.text     "possible"
+    t.text     "likely"
+    t.text     "certain"
+>>>>>>> 9d9903756f2420c7853aa8d77fb6716cf0f94824
   end
 
   create_table "relationships", :force => true do |t|
