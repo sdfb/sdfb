@@ -72,7 +72,11 @@ class Ability
       # A user can edit and manage their own user_rel_contrib, if they created it
       can :update, UserRelContrib do |x|
         x.created_by == user.id 
-      end    
+      end 
+
+      # A user can view search results
+      can :search, Person
+
     end
   end
 end
