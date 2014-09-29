@@ -9,6 +9,8 @@ Sdfb::Application.routes.draw do
 
   # set the root
   root :to => "home#index"
+
+  match '/search', :to => 'people#search'
   
   resources :users
   
