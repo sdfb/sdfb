@@ -1,17 +1,8 @@
-var keys = {
-	nodes: "0AhtG6Yl2-hiRdHdQM1JrS2JTRklaQ2M1ek41bEs5LVE",
-	annot: "0AhtG6Yl2-hiRdGdjLVNKZmJkbkhhNDMzQm5BTzlHX0E"
-}
 
-var addNodes;
-var addEdges;
 
-document.addEventListener('DOMContentLoaded', function () {
-	Tabletop.init({
-		key: keys.nodes,
-		callback: init
-	});
-});
+this.init();
+
+
 
 function node() {
 	this.id = null;
@@ -32,50 +23,54 @@ function group() {
 }
 
 // Creates a hash of nodes and groups, splits it up based on our database
-function init(result) {
+function init() {
 	var data = {
 		nodes: {},
 		groups: {},
 		nodes_names: {},
 		groups_names: {}
 	};
-	
-	result.nodes.elements.forEach(function (row) {
+
+	var people = gon.people;
+
+	for (p in people) {
 		var n = new node();
-		n.id = row.id;
-		n.first = row.first;
-		n.last = row.last;
-		n.birth = row.birth;
-		n.death = row.death; 
-		n.occupation = row.occupation;
-		n.label = row.first + ' ' + row.last;
-		n.name =  n.label + ' (' + row.birth + ')';
-		n.edges[0] = row.uncertain.split(', ');
-		n.edges[1] = row.unlikely.split(', ');
-		n.edges[2] = row.possible.split(', ');
-		n.edges[3] = row.likely.split(', ');
-		n.edges[4] = row.certain.split(', ');
+		n.id = p.original_id;
+		n.first = p.first_name;
+		n.last = p.last_name;
+		n.birth = p.birth_year;
+		n.death = p.death_year;
+		n.occupation = p.historical_significance;
+		n.label = n.first + " " + n.last;
 		data.nodes[n.id] = n;
-		data.nodes_names[n.name] = n.id;
-	});
 
-	result.groups.elements.forEach(function (row) {
-		var g = new group();
-		g.id  = row.id;
-		g.name = row.name;
-		g.nodes = row.nodes.split(', ');
-		data.groups[g.id] = g;
-		data.groups_names[g.name] = g;
-	});
 
-	initGraph(data);
+		for (rel in p.rel_sum) {
+			if (rel[0] in nodes) {
+				// Person already created, don't add relationship again
+			}
+			else {
+				n.edge += rel;
+			}
+		}
+	}
+
+
+	this.initGraph(data);
+}
+
+function makeGraph(data) {
+	var nodes = data[0];
+	var links = data[1];
+	var options = { width: $("#graph").width(), height: $("#graph").height(), colors: getColors() };
+	var graph = new Insights($("#graph")[0], nodes, links, options).render();
 }
 
 // Populates the suggested drop-down menus
 // Make the buttons in the search panel functional
 function initGraph(data){
 	
-	populateLists(data);
+	//populateLists(data);
 
 	//click methods for all the 'find' buttons in the search bar
 	$("#findonenode").click(function () {

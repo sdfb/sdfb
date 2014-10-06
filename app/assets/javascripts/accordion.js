@@ -7,7 +7,7 @@ $(document).ready(function(){
 			$(this).next().slideDown();
 		}
 	})
-})
+});
 
 // When a user clicks on a node or edge.
 function accordion(item) {
