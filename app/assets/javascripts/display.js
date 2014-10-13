@@ -467,24 +467,24 @@ function writeNetworkTable(dataSource, title){
     });
 };
 
-// Defines two custom functions (asc and desc) for string sorting
-jQuery.fn.dataTableExt.oSort['string-case-asc']  = function(x,y) {
-	return ((x < y) ? -1 : ((x > y) ?  0 : 0));
-};
+// // Defines two custom functions (asc and desc) for string sorting
+// jQuery.fn.dataTableExt.oSort['string-case-asc']  = function(x,y) {
+// 	return ((x < y) ? -1 : ((x > y) ?  0 : 0));
+// };
 
-jQuery.fn.dataTableExt.oSort['string-case-desc'] = function(x,y) {
-	return ((x < y) ?  1 : ((x > y) ? -1 : 0));
-};
+// jQuery.fn.dataTableExt.oSort['string-case-desc'] = function(x,y) {
+// 	return ((x < y) ?  1 : ((x > y) ? -1 : 0));
+// };
 
-// Takes in the title and data, allows users to download the data
-function downloadData(data, title) {
-	var result = title + " \n" + 'First Name,Last Name,Birth Date,Death Date,Historical Significance' + "\n";
-	data.forEach(function (cell) {
-		result += cell["first"] + ',' + cell["last"] + ',' + cell["birth"] + ',' + cell["death"] + ',' + cell["occupation"] + "\n";
-	});
-	var dwnbtn = $('<a href="data:text/csv;charset=utf-8,' + encodeURIComponent(result) + ' "download="' + title + '.csv"><div id="download"></div></a>');
-	$(dwnbtn).appendTo('#graph');
-}
+// // Takes in the title and data, allows users to download the data
+// function downloadData(data, title) {
+// 	var result = title + " \n" + 'First Name,Last Name,Birth Date,Death Date,Historical Significance' + "\n";
+// 	data.forEach(function (cell) {
+// 		result += cell["first"] + ',' + cell["last"] + ',' + cell["birth"] + ',' + cell["death"] + ',' + cell["occupation"] + "\n";
+// 	});
+// 	var dwnbtn = $('<a href="data:text/csv;charset=utf-8,' + encodeURIComponent(result) + ' "download="' + title + '.csv"><div id="download"></div></a>');
+// 	$(dwnbtn).appendTo('#graph');
+// }
 
 
 // Displays edge information 
@@ -512,30 +512,30 @@ function getAnnotation(id1, id2, data) {
 		$("#entry_768090773").val(data.nodes[id1].name);
 		$("#entry_1321382891").val(data.nodes[id2].name);
 	});
-}
+ }
 
-// Finds and returns correct confidence on the 0-4 scale
-function findConfidence(id1, id2, data) {
-	var p1 = data.nodes[id1];
-	var p2 = data.nodes[id2];
-	var i = -1;
-	p1.edges.forEach(function (list, index){
-		if (list.indexOf(p2.id) > -1) { i = index; return; }
-	});
-	if (i == 0) return "very unlikely";
-	else if (i == 1) return "unlikely";
-	else if (i == 2) return "possible";
-	else if (i == 3) return "likely";
-	else return "certain";
-}
+// // Finds and returns correct confidence on the 0-4 scale
+// function findConfidence(id1, id2, data) {
+// 	var p1 = data.nodes[id1];
+// 	var p2 = data.nodes[id2];
+// 	var i = -1;
+// 	p1.edges.forEach(function (list, index){
+// 		if (list.indexOf(p2.id) > -1) { i = index; return; }
+// 	});
+// 	if (i == 0) return "very unlikely";
+// 	else if (i == 1) return "unlikely";
+// 	else if (i == 2) return "possible";
+// 	else if (i == 3) return "likely";
+// 	else return "certain";
+// }
 
-function getConfidence(n) {
-	if (n == 0) return "at very unlikely to certain confidence";
-	else if (n == 1) return "at unlikely to certain confidence";
-	else if (n == 2) return "at possible to certain confidence";
-	else if (n == 3) return "at likely to certain confidence";
-	else return "at certain confidence";
-}
+// function getConfidence(n) {
+// 	if (n == 0) return "at very unlikely to certain confidence";
+// 	else if (n == 1) return "at unlikely to certain confidence";
+// 	else if (n == 2) return "at possible to certain confidence";
+// 	else if (n == 3) return "at likely to certain confidence";
+// 	else return "at certain confidence";
+// }
 
 // Populates dropdowns
 function populateLists(data){
