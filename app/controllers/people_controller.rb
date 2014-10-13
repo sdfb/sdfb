@@ -86,4 +86,13 @@ class PeopleController < ApplicationController
       format.json { head :no_content }
     end
   end
+
+  def search 
+    # allows for the admin to search from their dashboard
+    @query = params[:query]
+    if @query != ""
+      # @all_results = Person.search(@query).paginate(:page => params[:people_approved_page]).per_page(20)
+      @all_results = Person.search(@query)
+    end
+  end
 end
