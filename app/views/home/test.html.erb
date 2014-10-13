@@ -1,54 +1,27 @@
-<!doctype html>
+
+
+
+ 
 <html>
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-    <title>insights.js demo</title>
-    <link rel="stylesheet" href="assets/insights.standalone.css" />
+    <%= include_gon %>
+ 
+
+  <link rel="stylesheet" href="assets/insights.standalone.css" />
+ 
+  
+  
   </head>
+
   <body>
-    <div id="loader">rendering...</div>
-    <div id="parent"></div>
 
-    <script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
-    <script src="assets/insights.standalone.js"></script>
-    <script>
-      loader = document.getElementById('loader');
-      $.getJSON(gon.test, function(data) {
-        console.log(gon.people[0].id)
-        var nodes = data[0]
-          , links = data[1]
-          , el = document.getElementById("parent")
-          , options = {
-              width: screen.width,
-              height: screen.height,
-              colors: { "7": "blue" }
-            };
+    
+  <div id="loader">rendering...</div>
+  <div id="parent"></div>
+   
 
-        graph = new Insights(el, nodes, links, options)
-          .filter({ cluster: 0, size: [500, null] })
-          .zoom(.85)
-          .focus({ text: "color" }, { in: 1 })
-          .center()
-          .render();
-
-        graph.on('rendered', function() {
-          loader.remove();
-        })
-
-        graph.on("node:click", function(d) {
-          console.log("click", d);
-        });
-
-        graph.on("node:mouseover", function(d, offset) {
-          console.log("mouseover", d, offset);
-        });
-
-        graph.on("node:mouseout", function(d, offset) {
-          console.log("mouseout", d, offset);
-        });
-
-        graph.tooltip("<div>word: {{text}}</div><div>count: {{count}}</div>");
-      });
-    </script>
   </body>
 </html>
+
+
