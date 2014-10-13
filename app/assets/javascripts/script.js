@@ -1,6 +1,6 @@
 $(document).ready(function() {
 
-    // Tooltips
+ //    Tooltips
 	// $("#onenode").tooltip({placement: 	'right', title: 'Connections of one individual'});
 	// $("#twonode").tooltip({placement: 	'right', title: 'Mutual connections between two individuals'});
 	// $("#onegroup").tooltip({placement: 	'right', title: 'Members of one group'});
