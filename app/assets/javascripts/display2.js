@@ -10,10 +10,14 @@ function createGroup() {
   return nodeKey;
 }
 
+
+
+
+
 function getSize(node) {
 	// base off number of connections the node has 
   var numRels = node.rels.length;
-  var nodeSize = numRels * 4;
+  var nodeSize = numRels * 10;
   return nodeSize;
 }
 
@@ -80,7 +84,7 @@ var node = function() {
 
 function init(){
 	  var people = gon.people;
-      people = people.slice(1001,7000);
+      //1people = people.slice(1001,7000);
       var data = { nodes: [], edges: [], nodes_names: [], groups_names: [], nodeKeys: []};
   
   $.each(people, function(index, value) {
@@ -134,8 +138,8 @@ function init(){
 }
 
 
-       $(document).ready(function() {
+  $(document).ready(function() {
     	init();
-       });
+});
 
       
