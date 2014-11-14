@@ -1,6 +1,7 @@
 class Relationship < ActiveRecord::Base
-  attr_accessible :average_certainty, :created_by, :is_approved, :original_certainty, :person1_index, :person2_index 
-  
+  attr_accessible :max_certainty, :created_by, :is_approved, :original_certainty, :person1_index, :person2_index,
+  :start_date, :end_date, :justification, :approved_by, :approved_on
+
   # Relationships
   # -----------------------------
   belongs_to :user
@@ -12,7 +13,7 @@ class Relationship < ActiveRecord::Base
  	validate :check_two_different_people
   validates_presence_of :person1_index
   validates_presence_of :person2_index
-  validates_presence_of :average_certainty
+  validates_presence_of :max_certainty
   validates_presence_of :original_certainty
   # validates_presence_of :created_by
 
@@ -55,7 +56,7 @@ class Relationship < ActiveRecord::Base
   def create_peoples_rel_sum
     person1_index_in = self.person1_index
     person2_index_in = self.person2_index
-    average_certainty_in = self.average_certainty
+    max_certainty_in = self.max_certainty
     if self.is_approved
       is_approved_in = 1
     else
@@ -63,7 +64,7 @@ class Relationship < ActiveRecord::Base
     end
     new_rel_record = []
     new_rel_record.push(person2_index)
-    new_rel_record.push(average_certainty)
+    new_rel_record.push(max_certainty)
     new_rel_record.push(is_approved_in)
     person1_current_rel_sum = Person.find(person1_index_in).rel_sum
     person1_current_rel_sum.push(new_rel_record)
@@ -105,7 +106,7 @@ class Relationship < ActiveRecord::Base
   def update_peoples_rel_sum
     person1_index_in = self.person1_index
     person2_index_in = self.person2_index
-    average_certainty_in = self.average_certainty
+    max_certainty_in = self.max_certainty
     if self.is_approved
       is_approved_in = 1
     else
@@ -118,7 +119,7 @@ class Relationship < ActiveRecord::Base
     person1_updated_flag = false
     person1_current_rel_sum.each do |rel_record_1|
       if rel_record_1[0] == person2_index_in
-        rel_record_1[1] = average_certainty_in
+        rel_record_1[1] = max_certainty_in
         rel_record_1[2] = is_approved_in
         person1_updated_flag = true
       end
@@ -128,7 +129,7 @@ class Relationship < ActiveRecord::Base
     if person1_updated_flag == false
       new_rel_record = []
       new_rel_record.push(person2_index_in)
-      new_rel_record.push(average_certainty_in)
+      new_rel_record.push(max_certainty_in)
       new_rel_record.push(is_approved_in)
       person1_current_rel_sum.push(new_rel_record)
     end
@@ -140,7 +141,7 @@ class Relationship < ActiveRecord::Base
     person2_updated_flag = false
     person2_current_rel_sum.each do |rel_record_2|
       if rel_record_2[0] == person1_index_in
-        rel_record_2[1] = average_certainty_in
+        rel_record_2[1] = max_certainty_in
         rel_record_2[2] = is_approved_in
         person2_updated_flag = true
       end
@@ -150,7 +151,7 @@ class Relationship < ActiveRecord::Base
     if person2_updated_flag == false
       new_rel_record = []
       new_rel_record.push(person1_index_in)
-      new_rel_record.push(average_certainty_in)
+      new_rel_record.push(max_certainty_in)
       new_rel_record.push(is_approved_in)
       person2_current_rel_sum.push(new_rel_record)
     end

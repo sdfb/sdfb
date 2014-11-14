@@ -1,5 +1,7 @@
 class UserGroupContrib < ActiveRecord::Base
-  attr_accessible :annotation, :bibliography, :created_by, :group_id, :is_flagged
+  attr_accessible :annotation, :bibliography, :group_id, :created_by, :edited_by_on, :reviewed_by_on
+  serialize :edited_by_on,Array
+  serialize :reviewed_by_on,Array
   
   # Relationships
   # -----------------------------

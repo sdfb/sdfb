@@ -24,7 +24,7 @@ namespace :db do
         count += 1
         puts first_name_input + " " + last_name_input
         Person.create(original_id: original_id_input, first_name: first_name_input, last_name: last_name_input, 
-          birth_year: birth_year_input, death_year: death_year_input, historical_significance: historical_sig_input, is_approved: true, rel_sum: rel_sum_input)
+          ext_birth_year: birth_year_input, ext_death_year: death_year_input, historical_significance: historical_sig_input, is_approved: true, rel_sum: rel_sum_input)
        }
      }
      puts count

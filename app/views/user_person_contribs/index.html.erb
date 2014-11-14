@@ -12,7 +12,6 @@
       <th>Created by</th>
       <th>Annotation</th>
       <th>Bibliography</th>
-      <!-- <th>Is flagged</th> -->
       <th><%=t '.actions', :default => t("helpers.actions") %></th>
     </tr>
   </thead>
@@ -24,7 +23,6 @@
         <td><%= user_person_contrib.created_by %></td>
         <td><%= user_person_contrib.annotation %></td>
         <td><%= user_person_contrib.bibliography %></td>
-        <td><%= user_person_contrib.is_flagged %></td>
         <td><%=l user_person_contrib.created_at %></td>
         <td>
           <% if can? :show, user_person_contrib %>

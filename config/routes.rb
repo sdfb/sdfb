@@ -1,5 +1,26 @@
 Sdfb::Application.routes.draw do
 
+  resources :comments
+
+
+  resources :relationship_types
+
+
+  resources :rel_cat_assigns
+
+
+  resources :relationship_categories
+
+
+  resources :group_cat_assigns
+
+
+  resources :group_categories
+
+
+  resources :flags
+
+
   get "sign_in" => "sessions#new", :as => "sign_in"
   get "sign_out" => "sessions#destroy", :as => "sign_out"
 

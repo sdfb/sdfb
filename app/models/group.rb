@@ -1,5 +1,5 @@
 class Group < ActiveRecord::Base
-  attr_accessible :created_by, :description, :is_approved, :name
+  attr_accessible :created_by, :description, :is_approved, :name, :justification, :approved_by, :approved_on
   
   # Relationships
   # -----------------------------

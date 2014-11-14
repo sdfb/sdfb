@@ -15,7 +15,7 @@ namespace :db do
         person2_input = Person.for_original_id(relData[1]).first.id
         count += 1
         puts count
-        Relationship.create(person1_index: person1_input, person2_index: person2_input, is_approved: true, original_certainty: 0.95, average_certainty: 0.95)
+        Relationship.create(person1_index: person1_input, person2_index: person2_input, is_approved: true, original_certainty: 0.95, max_certainty: 0.95)
        }
      }
      puts count

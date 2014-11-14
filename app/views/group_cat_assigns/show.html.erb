@@ -1,0 +1,15 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Group:</b>
+  <%= @group_cat_assign.group_id %>
+</p>
+
+<p>
+  <b>Group category:</b>
+  <%= @group_cat_assign.group_category_id %>
+</p>
+
+
+<%= link_to 'Edit', edit_group_cat_assign_path(@group_cat_assign) %> |
+<%= link_to 'Back', group_cat_assigns_path %>
