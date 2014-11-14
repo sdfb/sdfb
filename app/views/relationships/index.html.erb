@@ -16,7 +16,7 @@
               <th>Original Certainty</th>
           <% end %>
       <% end %>
-      <th>Average Certainty</th>
+      <th>Maximum Certainty</th>
       <% if current_user != nil %>
           <% if current_user.is_admin %>
               <th>Created by</th>
@@ -35,7 +35,7 @@
                 <td><%= relationship.original_certainty %></td>
             <% end %>
         <% end %>
-        <td><%= relationship.average_certainty %></td>
+        <td><%= relationship.max_certainty %></td>
         <% if current_user != nil %>
             <% if current_user.is_admin %>
                 <td><%= relationship.get_users_name %></td>

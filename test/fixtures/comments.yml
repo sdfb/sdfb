@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  description: MyText
+  comment_type: MyString
+  associated_contrib: 1
+  created_by: 1
+
+two:
+  description: MyText
+  comment_type: MyString
+  associated_contrib: 1
+  created_by: 1

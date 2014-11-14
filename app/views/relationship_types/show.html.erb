@@ -1,0 +1,30 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Relationship type inverse:</b>
+  <%= @relationship_type.relationship_type_inverse_id %>
+</p>
+
+<p>
+  <b>Default rel category:</b>
+  <%= @relationship_type.default_rel_category %>
+</p>
+
+<p>
+  <b>Name:</b>
+  <%= @relationship_type.name %>
+</p>
+
+<p>
+  <b>Description:</b>
+  <%= @relationship_type.description %>
+</p>
+
+<p>
+  <b>Is active:</b>
+  <%= @relationship_type.is_active %>
+</p>
+
+
+<%= link_to 'Edit', edit_relationship_type_path(@relationship_type) %> |
+<%= link_to 'Back', relationship_types_path %>

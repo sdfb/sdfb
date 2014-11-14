@@ -1,0 +1,35 @@
+<h1>Listing flags</h1>
+
+<table>
+  <tr>
+    <th>Assoc object type</th>
+    <th>Assoc object</th>
+    <th>Flag type</th>
+    <th>Flag description</th>
+    <th>Created by</th>
+    <th>Resolved by</th>
+    <th>Resolved at</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @flags.each do |flag| %>
+  <tr>
+    <td><%= flag.assoc_object_type %></td>
+    <td><%= flag.assoc_object_id %></td>
+    <td><%= flag.flag_type %></td>
+    <td><%= flag.flag_description %></td>
+    <td><%= flag.created_by %></td>
+    <td><%= flag.resolved_by %></td>
+    <td><%= flag.resolved_at %></td>
+    <td><%= link_to 'Show', flag %></td>
+    <td><%= link_to 'Edit', edit_flag_path(flag) %></td>
+    <td><%= link_to 'Destroy', flag, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Flag', new_flag_path %>

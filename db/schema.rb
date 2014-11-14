@@ -11,13 +11,50 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140905231921) do
+ActiveRecord::Schema.define(:version => 20141103033703) do
+
+  create_table "comments", :force => true do |t|
+    t.text     "description"
+    t.string   "comment_type"
+    t.integer  "associated_contrib"
+    t.integer  "created_by"
+    t.datetime "created_at",         :null => false
+    t.datetime "updated_at",         :null => false
+  end
+
+  create_table "flags", :force => true do |t|
+    t.string   "assoc_object_type"
+    t.integer  "assoc_object_id"
+    t.string   "flag_type"
+    t.text     "flag_description"
+    t.integer  "created_by"
+    t.integer  "resolved_by"
+    t.datetime "resolved_at"
+    t.datetime "created_at",        :null => false
+    t.datetime "updated_at",        :null => false
+  end
 
   create_table "group_assignments", :force => true do |t|
     t.integer  "created_by"
     t.integer  "group_id"
     t.integer  "person_id"
     t.boolean  "is_approved"
+    t.datetime "created_at",  :null => false
+    t.datetime "updated_at",  :null => false
+    t.date     "start_date"
+    t.date     "end_date"
+  end
+
+  create_table "group_cat_assigns", :force => true do |t|
+    t.integer  "group_id"
+    t.integer  "group_category_id"
+    t.datetime "created_at",        :null => false
+    t.datetime "updated_at",        :null => false
+  end
+
+  create_table "group_categories", :force => true do |t|
+    t.string   "name"
+    t.text     "description"
     t.datetime "created_at",  :null => false
     t.datetime "updated_at",  :null => false
   end
@@ -27,8 +64,11 @@ ActiveRecord::Schema.define(:version => 20140905231921) do
     t.string   "name"
     t.text     "description"
     t.boolean  "is_approved"
-    t.datetime "created_at",  :null => false
-    t.datetime "updated_at",  :null => false
+    t.datetime "created_at",    :null => false
+    t.datetime "updated_at",    :null => false
+    t.text     "justification"
+    t.string   "approved_by"
+    t.string   "approved_on"
   end
 
   create_table "people", :force => true do |t|
@@ -36,22 +76,56 @@ ActiveRecord::Schema.define(:version => 20140905231921) do
     t.string   "first_name"
     t.string   "last_name"
     t.integer  "created_by"
-    t.integer  "birth_year"
-    t.integer  "death_year"
     t.text     "historical_significance"
     t.boolean  "is_approved"
-    t.datetime "created_at",                                        :null => false
-    t.datetime "updated_at",                                        :null => false
+    t.datetime "created_at",                               :null => false
+    t.datetime "updated_at",                               :null => false
     t.text     "uncertain"
     t.text     "unlikely"
     t.text     "possible"
     t.text     "likely"
     t.text     "certain"
-    t.text     "rel_sum",                 :default => "'--- []\n'"
+    t.text     "rel_sum",                 :default => "'"
+    t.string   "prefix"
+    t.string   "suffix"
+    t.string   "search_names_all"
+    t.string   "title"
+    t.date     "birth_year_type"
+    t.date     "ext_birth_year"
+    t.date     "alt_birth_year"
+    t.string   "death_year_type"
+    t.date     "ext_death_year"
+    t.date     "alt_death_year"
+    t.text     "justification"
+    t.integer  "approved_by"
+    t.datetime "approved_on"
+  end
+
+  create_table "rel_cat_assigns", :force => true do |t|
+    t.integer  "relationship_category_id"
+    t.integer  "relationship_type_id"
+    t.datetime "created_at",               :null => false
+    t.datetime "updated_at",               :null => false
+  end
+
+  create_table "relationship_categories", :force => true do |t|
+    t.string   "name"
+    t.text     "description"
+    t.datetime "created_at",  :null => false
+    t.datetime "updated_at",  :null => false
+  end
+
+  create_table "relationship_types", :force => true do |t|
+    t.integer  "relationship_type_inverse_id"
+    t.integer  "default_rel_category"
+    t.string   "name"
+    t.text     "description"
+    t.boolean  "is_active"
+    t.datetime "created_at",                   :null => false
+    t.datetime "updated_at",                   :null => false
   end
 
   create_table "relationships", :force => true do |t|
-    t.decimal  "average_certainty"
     t.boolean  "is_approved"
     t.decimal  "original_certainty"
     t.integer  "person1_index"
@@ -59,6 +133,12 @@ ActiveRecord::Schema.define(:version => 20140905231921) do
     t.integer  "created_by"
     t.datetime "created_at",         :null => false
     t.datetime "updated_at",         :null => false
+    t.decimal  "max_certainty"
+    t.date     "start_date"
+    t.date     "end_date"
+    t.text     "justification"
+    t.integer  "approved_by"
+    t.date     "approved_on"
   end
 
   create_table "user_group_contribs", :force => true do |t|
@@ -66,9 +146,10 @@ ActiveRecord::Schema.define(:version => 20140905231921) do
     t.integer  "created_by"
     t.text     "annotation"
     t.text     "bibliography"
-    t.boolean  "is_flagged"
-    t.datetime "created_at",   :null => false
-    t.datetime "updated_at",   :null => false
+    t.datetime "created_at",                               :null => false
+    t.datetime "updated_at",                               :null => false
+    t.text     "edited_by_on",   :default => "'--- []\n'"
+    t.text     "reviewed_by_on", :default => "'--- []\n'"
   end
 
   create_table "user_person_contribs", :force => true do |t|
@@ -76,9 +157,10 @@ ActiveRecord::Schema.define(:version => 20140905231921) do
     t.integer  "created_by"
     t.text     "annotation"
     t.text     "bibliography"
-    t.boolean  "is_flagged"
-    t.datetime "created_at",   :null => false
-    t.datetime "updated_at",   :null => false
+    t.datetime "created_at",                               :null => false
+    t.datetime "updated_at",                               :null => false
+    t.text     "edited_by_on",   :default => "'--- []\n'"
+    t.text     "reviewed_by_on", :default => "'--- []\n'"
   end
 
   create_table "user_rel_contribs", :force => true do |t|
@@ -88,9 +170,10 @@ ActiveRecord::Schema.define(:version => 20140905231921) do
     t.text     "annotation"
     t.text     "bibliography"
     t.string   "relationship_type"
-    t.boolean  "is_flagged"
-    t.datetime "created_at",        :null => false
-    t.datetime "updated_at",        :null => false
+    t.datetime "created_at",                                  :null => false
+    t.datetime "updated_at",                                  :null => false
+    t.text     "edited_by_on",      :default => "'--- []\n'"
+    t.text     "reviewed_by_on",    :default => "'--- []\n'"
   end
 
   create_table "users", :force => true do |t|
@@ -106,8 +189,13 @@ ActiveRecord::Schema.define(:version => 20140905231921) do
     t.string   "password_salt"
     t.string   "user_type"
     t.boolean  "is_admin"
-    t.datetime "created_at",            :null => false
-    t.datetime "updated_at",            :null => false
+    t.datetime "created_at",                               :null => false
+    t.datetime "updated_at",                               :null => false
+    t.string   "prefix"
+    t.string   "orcid"
+    t.integer  "created_by"
+    t.boolean  "is_curator",            :default => false
+    t.boolean  "curator_revoked",       :default => false
   end
 
 end

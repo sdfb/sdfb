@@ -1,0 +1,37 @@
+<%= form_for(@relationship_type) do |f| %>
+  <% if @relationship_type.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@relationship_type.errors.count, "error") %> prohibited this relationship_type from being saved:</h2>
+
+      <ul>
+      <% @relationship_type.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :relationship_type_inverse_id %><br />
+    <%= f.number_field :relationship_type_inverse_id %>
+  </div>
+  <div class="field">
+    <%= f.label :default_rel_category %><br />
+    <%= f.number_field :default_rel_category %>
+  </div>
+  <div class="field">
+    <%= f.label :name %><br />
+    <%= f.text_field :name %>
+  </div>
+  <div class="field">
+    <%= f.label :description %><br />
+    <%= f.text_area :description %>
+  </div>
+  <div class="field">
+    <%= f.label :is_active %><br />
+    <%= f.check_box :is_active %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

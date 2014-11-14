@@ -1,0 +1,2 @@
+module RelationshipTypesHelper
+end

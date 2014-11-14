@@ -1,5 +1,7 @@
 class Person < ActiveRecord::Base
-  attr_accessible :birth_year, :created_by, :death_year, :first_name, :historical_significance, :is_approved, :last_name, :original_id, :rel_sum
+  attr_accessible :original_id, :first_name, :last_name, :created_by, :historical_significance, :is_approved, :uncertain, :unlikely, :possible,
+  :likely, :certain, :rel_sum, :prefix, :suffix, :search_names_all, :title, :birth_year_type, :ext_birth_year, :alt_birth_year, :death_year_type,
+  :ext_death_year, :alt_death_year, :justification, :approved_by, :approved_on
   serialize :rel_sum,Array
   #rel_sum is the relationship summary that is updated whenever a relationship is created or updated
   #rel_sum includes the person the indvidual has a relationship with, the updated average certainty, and whether it has been approved
@@ -20,9 +22,9 @@ class Person < ActiveRecord::Base
 
   # Validations
   # -----------------------------
-  validates_presence_of :birth_year
+  validates_presence_of :ext_birth_year
   # validates_presence_of :created_by
-  validates_presence_of :death_year
+  validates_presence_of :ext_death_year
   validates_presence_of :first_name
   validates_presence_of :historical_significance
   validates_presence_of :last_name
@@ -41,5 +43,4 @@ class Person < ActiveRecord::Base
     end
   end
 end
-
 

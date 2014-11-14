@@ -1,0 +1,40 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Assoc object type:</b>
+  <%= @flag.assoc_object_type %>
+</p>
+
+<p>
+  <b>Assoc object:</b>
+  <%= @flag.assoc_object_id %>
+</p>
+
+<p>
+  <b>Flag type:</b>
+  <%= @flag.flag_type %>
+</p>
+
+<p>
+  <b>Flag description:</b>
+  <%= @flag.flag_description %>
+</p>
+
+<p>
+  <b>Created by:</b>
+  <%= @flag.created_by %>
+</p>
+
+<p>
+  <b>Resolved by:</b>
+  <%= @flag.resolved_by %>
+</p>
+
+<p>
+  <b>Resolved at:</b>
+  <%= @flag.resolved_at %>
+</p>
+
+
+<%= link_to 'Edit', edit_flag_path(@flag) %> |
+<%= link_to 'Back', flags_path %>

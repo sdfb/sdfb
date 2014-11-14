@@ -12,7 +12,6 @@
       <th>Created by</th>
       <th>Annotation</th>
       <th>Bibliography</th>
-      <!-- <th>Is flagged</th> -->
       <th><%=t '.actions', :default => t("helpers.actions") %></th>
     </tr>
   </thead>
@@ -23,7 +22,6 @@
         <td><%= link_to user_group_contrib.get_users_name, user_path(user_group_contrib.created_by) %></td>
         <td><%= user_group_contrib.annotation %></td>
         <td><%= user_group_contrib.bibliography %></td>
-        <!-- <td><%= user_group_contrib.is_flagged %></td> -->
         <td>
           <% if can? :show, user_group_contrib %>
               <%= link_to 'Show', user_group_contrib %>

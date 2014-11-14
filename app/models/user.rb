@@ -1,5 +1,6 @@
 class User < ActiveRecord::Base
-  attr_accessible :about_description, :affiliation, :email, :first_name, :is_active, :is_admin, :last_name, :password, :password_confirmation, :user_type, :password_hash, :password_salt
+  attr_accessible :about_description, :affiliation, :email, :first_name, :is_active, :last_name, :password,
+  :password_confirmation, :user_type, :password_hash, :password_salt, :prefix, :orcid, :curator_revoked, :username
   attr_accessor :password
 
   # Callbacks

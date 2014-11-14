@@ -1,0 +1,9 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  relationship_category_id: 1
+  relationship_type_id: 1
+
+two:
+  relationship_category_id: 1
+  relationship_type_id: 1
