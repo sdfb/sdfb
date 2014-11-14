@@ -11,21 +11,20 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20141103033703) do
+ActiveRecord::Schema.define(:version => 20141114024214) do
 
   create_table "comments", :force => true do |t|
-    t.text     "description"
     t.string   "comment_type"
     t.integer  "associated_contrib"
     t.integer  "created_by"
     t.datetime "created_at",         :null => false
     t.datetime "updated_at",         :null => false
+    t.text     "content"
   end
 
   create_table "flags", :force => true do |t|
     t.string   "assoc_object_type"
     t.integer  "assoc_object_id"
-    t.string   "flag_type"
     t.text     "flag_description"
     t.integer  "created_by"
     t.integer  "resolved_by"
@@ -50,6 +49,7 @@ ActiveRecord::Schema.define(:version => 20141103033703) do
     t.integer  "group_category_id"
     t.datetime "created_at",        :null => false
     t.datetime "updated_at",        :null => false
+    t.integer  "created_by"
   end
 
   create_table "group_categories", :force => true do |t|
@@ -57,6 +57,7 @@ ActiveRecord::Schema.define(:version => 20141103033703) do
     t.text     "description"
     t.datetime "created_at",  :null => false
     t.datetime "updated_at",  :null => false
+    t.integer  "created_by"
   end
 
   create_table "groups", :force => true do |t|
