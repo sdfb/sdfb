@@ -18,7 +18,7 @@ class PeopleControllerTest < ActionController::TestCase
 
   test "should create person" do
     assert_difference('Person.count') do
-      post :create, person: { birth_year: @person.birth_year, created_by: @person.created_by, death_year: @person.death_year, first_name: @person.first_name, historical_significance: @person.historical_significance, is_approved: @person.is_approved, last_name: @person.last_name, original_id: @person.original_id }
+      post :create, person: { ext_birth_year: @person.ext_birth_year, created_by: @person.created_by, death_year: @person.death_year, first_name: @person.first_name, historical_significance: @person.historical_significance, is_approved: @person.is_approved, last_name: @person.last_name, original_id: @person.original_id }
     end
 
     assert_redirected_to person_path(assigns(:person))
@@ -35,7 +35,7 @@ class PeopleControllerTest < ActionController::TestCase
   end
 
   test "should update person" do
-    put :update, id: @person, person: { birth_year: @person.birth_year, created_by: @person.created_by, death_year: @person.death_year, first_name: @person.first_name, historical_significance: @person.historical_significance, is_approved: @person.is_approved, last_name: @person.last_name, original_id: @person.original_id }
+    put :update, id: @person, person: { ext_birth_year: @person.ext_birth_year, created_by: @person.created_by, death_year: @person.death_year, first_name: @person.first_name, historical_significance: @person.historical_significance, is_approved: @person.is_approved, last_name: @person.last_name, original_id: @person.original_id }
     assert_redirected_to person_path(assigns(:person))
   end
 
