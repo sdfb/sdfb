@@ -68,32 +68,32 @@ $(document).ready(function() {
         $('#contribute').slideDown();
     });
 
- //   Sliding animation
-// 	$(".slider").slider({
-//         animate: true,
-//         range: "min",
-//         value: 3,
-//         min: 0,
-//         max: 4,
-//         step: 1,
-//         // Gets a live reading of the value and prints it on the page
-//         slide: function( event, ui ) {
-//         	var result = "Very unlikely";
-//         	if (ui.value == 1) {
-//         		result = "Unlikely";
-//         	} else if (ui.value == 2) {
-//         		result = "Possible";
-//         	} else if (ui.value == 3) {
-//         		result = "Likely";
-//         	} else if (ui.value == 4){
-//                 result = "Certain"
-//             }
-//             $("#slider-result" + this.attributes.name.nodeValue).html( result + " relationships");
-//         },
+ //  Sliding animation
+	$(".slider").slider({
+        animate: true,
+        range: "min",
+        value: 3,
+        min: 0,
+        max: 4,
+        step: 1,
+        // Gets a live reading of the value and prints it on the page
+        slide: function( event, ui ) {
+        	var result = "Very unlikely";
+        	if (ui.value == 1) {
+        		result = "Unlikely";
+        	} else if (ui.value == 2) {
+        		result = "Possible";
+        	} else if (ui.value == 3) {
+        		result = "Likely";
+        	} else if (ui.value == 4){
+                result = "Certain"
+            }
+            $("#slider-result" + this.attributes.name.nodeValue).html( result + " relationships");
+        },
 
-//         // Updates the hidden form field so we can submit the data using a form
-//         // change: function(event, ui) { 
-//         //     $("#confidence" + this.attributes.name.nodeValue).attr('value', ui.value);
-//         // }
-//     });
+        // Updates the hidden form field so we can submit the data using a form
+        change: function(event, ui) { 
+            $("#confidence" + this.attributes.name.value).attr('value', ui.value);
+        }
+    });
  });
