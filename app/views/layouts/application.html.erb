@@ -7,7 +7,7 @@
   <%= csrf_meta_tags %>
 </head>
 <body>
-<!-- 	<div id="user_nav">
+	<div id="user_nav">
 	  <% if current_user %>
 	    Logged in as <%= current_user.email %>
 	    <%= link_to "Sign out", sign_out_path %>
@@ -15,11 +15,11 @@
 	    <%= link_to "Sign up", sign_up_path %> or 
 	    <%= link_to "Sign in", sign_in_path %>
 	  <% end %>
-	</div> -->
-<!--   <% flash.each do |name, msg| %>
+	</div> 
+  <% flash.each do |name, msg| %>
     <%= content_tag :div, msg, :id => "flash#{name}" %>
-  <% end %>
-<%= yield %> -->
+  <% end %> 
+<%= yield %> 
 
 <!-- Nav Bar Header -->
 
