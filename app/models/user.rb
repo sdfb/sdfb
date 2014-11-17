@@ -22,6 +22,10 @@ class User < ActiveRecord::Base
   has_many :group_categories
   
 
+  # Misc Constants
+  # -----------------------------
+  USER_TYPES_LIST = ["Standard", "Curator","Admin"]
+
   # Validations
   # -----------------------------
   validates_presence_of :first_name
@@ -43,6 +47,9 @@ class User < ActiveRecord::Base
   validates_presence_of :password, :on => :create
   validates_confirmation_of :password
   validates_length_of :password, :minimum => 4, :if => :password_present?
+
+  #user must be one of three types: standard, curator, admin
+  validates :user_type, :inclusion => {:in => USER_TYPES_LIST}
 
   # email must be present and be a valid email format
   validates_presence_of :email

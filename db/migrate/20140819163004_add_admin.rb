@@ -6,7 +6,6 @@ class AddAdmin < ActiveRecord::Migration
     admin.email = "admin@example.com"
     admin.password = "admin"
     admin.password_confirmation = "admin"
-    admin.is_admin = true
     admin.user_type = "Admin"
     admin.is_active = true
     admin.save!

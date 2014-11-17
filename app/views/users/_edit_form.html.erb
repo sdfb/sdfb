@@ -44,18 +44,10 @@
     <%= f.text_area :about_description %>
   </div>
   <% if current_user != nil %>
-    <% if current_user.is_admin %>
+    <% if (current_user.user_type == "admin") %>
       <div class="field">
         <%= f.label :is_active %><br />
         <%= f.check_box :is_active %>
-      </div>
-    <% end %>
-  <% end %>
-  <% if current_user != nil %>
-    <% if current_user.is_admin %>
-      <div class="field">
-        <%= f.label :is_admin %><br />
-        <%= f.check_box :is_admin %>
       </div>
     <% end %>
   <% end %>

@@ -17,7 +17,7 @@
               <th>Person id</th>
               <th>ODNB id</th>
               <% if current_user != nil %>
-                  <% if current_user.is_admin %>
+                  <% if (current_user.user_type == "admin")  %>
                       <th>Original ID</th>
                   <% end %>
               <% end %>
@@ -28,7 +28,7 @@
               <th>Title</th>
               <th>All known identities</th>
               <% if current_user != nil %>
-                  <% if current_user.is_admin %>
+                  <% if (current_user.user_type == "admin")  %>
                       <th>Created by</th>
                   <% end %>
               <% end %>  
@@ -52,7 +52,7 @@
                 <td><%= person.id %></td>
                 <td><%= person.odnb_id %></td>
                 <% if current_user != nil %>
-                    <% if current_user.is_admin %>
+                    <% if (current_user.user_type == "admin")  %>
                         <td><%= person.original_id %></td>
                     <% end %>
                 <% end %>
@@ -63,7 +63,7 @@
                 <td><%= person.title %></td>
                 <td><%= person.search_names_all %></td>
                 <% if current_user != nil %>
-                    <% if current_user.is_admin %>
+                    <% if (current_user.user_type == "admin")  %>
                         <td>
                           <% if person.created_by.nil? %>
                             ODNB

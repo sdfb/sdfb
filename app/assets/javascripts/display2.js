@@ -382,8 +382,8 @@ function init() {
     n.first = value.first_name;
     n.last = value.last_name;
     n.label = n.first + " " + n.last;
-    n.birth = value.birth_year;
-    n.death = value.death_year;
+    n.birth = value.ext_birth_year;
+    n.death = value.ext_death_year;
     n.occupation = value.historical_significance;
     n.rels = value.rel_sum;
     n.size = n.rels.length;
