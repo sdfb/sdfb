@@ -7,7 +7,7 @@ class UserRelContribsController < ApplicationController
   authorize_resource
 
   def index
-    @user_rel_contribs = UserRelContrib.not_flagged.paginate(:page => params[:user_rel_contribs_page]).per_page(20)
+    @user_rel_contribs = UserRelContrib.paginate(:page => params[:user_rel_contribs_page]).per_page(20)
 
     respond_to do |format|
       format.html # index.html.erb

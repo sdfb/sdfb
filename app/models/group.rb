@@ -22,8 +22,8 @@ class Group < ActiveRecord::Base
 
   # Scope
   # ----------------------------- 
-  scope :approved, where(is_approved: true)
-  scope :unapproved, where(is_approved: false)
+  scope :approved, where("approved_by is not null")
+  scope :unapproved, where("approved_by is not null")
 
   # Custom Methods
   # -----------------------------

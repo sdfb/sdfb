@@ -37,7 +37,8 @@ class UserRelContrib < ActiveRecord::Base
 
   # Scope
   # -----------------------------
-  scope :not_flagged, where(is_flagged: false)
+  #broken because is_flagged is not an attribute
+  #scope :not_flagged, where(is_flagged: false)
 
 
   # Custom Methods

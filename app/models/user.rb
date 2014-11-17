@@ -29,12 +29,11 @@ class User < ActiveRecord::Base
   # Validations
   # -----------------------------
   validates_presence_of :first_name
-  validates_presence_of :is_active
+  validates :is_active, :inclusion => {:in => [true, false]}
   validates_presence_of :last_name
   validates_presence_of :password_confirmation
   validates_presence_of :user_type
-  validates_presence_of :prefix
-  validates_presence_of :curator_revoked
+  validates :curator_revoked, :inclusion => {:in => [true, false]}
   validates_presence_of :username
   validates_uniqueness_of :username
   # username must be at least 6 characters long

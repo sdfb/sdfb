@@ -35,6 +35,9 @@ gem 'cancan'
 # This gem is used to pass data from Ruby to JavaScript
 gem 'gon'
 
+# Validates dates
+gem 'validates_timeliness'
+
 # To use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.0.0'
 

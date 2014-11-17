@@ -3,7 +3,7 @@ class RelationshipCategory < ActiveRecord::Base
 
   # Relationships
   # -----------------------------
-  has_many :relationships, through :rel_cat_assigns
+  has_many :relationships, :through => :rel_cat_assigns
 
   # Validations
   # -----------------------------
