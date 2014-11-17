@@ -12,8 +12,14 @@
   <dd><%= @group.name %></dd>
   <dt><strong><%= model_class.human_attribute_name(:description) %>:</strong></dt>
   <dd><%= @group.description %></dd>
-  <dt><strong><%= model_class.human_attribute_name(:is_approved) %>:</strong></dt>
-  <dd><%= @group.is_approved %></dd>
+  <dt>Justification</dt>
+  <dd>@group.justification</dd>
+  <dt>Approved by</dt>
+  <dd>@group.approved_by</dd>
+  <dt>Approved on</dt>
+  <dd>@group.approved_on</dd>
+  <dt>Created at</dt>
+  <dd>@group.created_at</dd>
 </dl>
 
 <div class="form-actions">

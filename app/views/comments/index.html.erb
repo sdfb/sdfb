@@ -1,22 +1,23 @@
 <h1>Listing comments</h1>
-
 <table>
   <tr>
-    <th>Description</th>
+    <th>Comment ID</th>
     <th>Comment type</th>
     <th>Associated contrib</th>
     <th>Created by</th>
-    <th></th>
-    <th></th>
+    <th>Content</th>
+    <th>Created At</th>
     <th></th>
   </tr>
 
 <% @comments.each do |comment| %>
   <tr>
-    <td><%= comment.description %></td>
+    <td><%= comment.id %></td>
     <td><%= comment.comment_type %></td>
     <td><%= comment.associated_contrib %></td>
     <td><%= comment.created_by %></td>
+    <td><%= comment.content %></td>
+    <td><%= comment.created_at %></td>
     <td><%= link_to 'Show', comment %></td>
     <td><%= link_to 'Edit', edit_comment_path(comment) %></td>
     <td><%= link_to 'Destroy', comment, method: :delete, data: { confirm: 'Are you sure?' } %></td>

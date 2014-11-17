@@ -2,8 +2,11 @@
 
 <table>
   <tr>
+    <th>Group Category id</th>
     <th>Name</th>
     <th>Description</th>
+    <th>Created by</th>
+    <th>Created at</th>
     <th></th>
     <th></th>
     <th></th>
@@ -11,8 +14,11 @@
 
 <% @group_categories.each do |group_category| %>
   <tr>
+    <td><%= group_category.id %></td>
     <td><%= group_category.name %></td>
     <td><%= group_category.description %></td>
+    <td><%= group_category.created_by %></td>
+    <td><%= group_category.created_at %></td>
     <td><%= link_to 'Show', group_category %></td>
     <td><%= link_to 'Edit', edit_group_category_path(group_category) %></td>
     <td><%= link_to 'Destroy', group_category, method: :delete, data: { confirm: 'Are you sure?' } %></td>

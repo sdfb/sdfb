@@ -1,6 +1,11 @@
 <p id="notice"><%= notice %></p>
 
 <p>
+  <b>Flag id:</b>
+  <%= @flag.id %>
+</p>
+
+<p>
   <b>Assoc object type:</b>
   <%= @flag.assoc_object_type %>
 </p>
@@ -8,11 +13,6 @@
 <p>
   <b>Assoc object:</b>
   <%= @flag.assoc_object_id %>
-</p>
-
-<p>
-  <b>Flag type:</b>
-  <%= @flag.flag_type %>
 </p>
 
 <p>
@@ -35,6 +35,10 @@
   <%= @flag.resolved_at %>
 </p>
 
+<p>
+  <b>Created at:</b>
+  <%= @flag.created_at %>
+</p>
 
 <%= link_to 'Edit', edit_flag_path(@flag) %> |
 <%= link_to 'Back', flags_path %>

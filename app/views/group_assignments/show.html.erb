@@ -6,15 +6,32 @@
 <p id="notice"><%= notice %></p>
 
 <dl class="dl-horizontal">
+  <dt>Group Assignment id</dt>
+  <dd><%= @group_assignment.id %></dd>
   <dt><strong><%= model_class.human_attribute_name(:created_by) %>:</strong></dt>
   <dd><%= @group_assignment.created_by %></dd>
   <dt><strong><%= model_class.human_attribute_name(:group_id) %>:</strong></dt>
   <dd><%= @group_assignment.group_id %></dd>
   <dt><strong><%= model_class.human_attribute_name(:person_id) %>:</strong></dt>
   <dd><%= @group_assignment.person_id %></dd>
-  <dt><strong><%= model_class.human_attribute_name(:is_approved) %>:</strong></dt>
-  <dd><%= @group_assignment.is_approved %></dd>
+  <dt>Approved by</dt>
+  <dd><%= @group_assignment.approved_by %></dd>
+  <dt>Approved on</dt>
+  <dd><%= @group_assignment.approved_on %></dd>
+  <dt>Start date</dt>
+  <dd><%= @group_assignment.start_date %></dd>
+  <dt>End date</dt>
+  <dd><%= @group_assignment.end_date %></dd>
+  <dt>Created at</dt>
+  <dd><%= @group_assignment.created_at %></dd>
 </dl>
+
+
+    <th>Approved by</th>
+    <th>Approved on</th>
+    <th>Start date</th>
+    <th>End date</th>
+    <th>Created at</th>
 
 <div class="form-actions">
   <%= link_to t('.back', :default => t("helpers.links.back")),

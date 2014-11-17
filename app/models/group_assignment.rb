@@ -1,5 +1,5 @@
 class GroupAssignment < ActiveRecord::Base
-  attr_accessible :created_by, :group_id, :is_approved, :person_id, :start_date, :end_date
+  attr_accessible :created_by, :group_id, :approved_by, :approved_on, :person_id, :start_date, :end_date, :created_at
   
   # Relationships
   # -----------------------------
@@ -16,6 +16,13 @@ class GroupAssignment < ActiveRecord::Base
   validates_presence_of :group_id
   validates_presence_of :person_id
   validates_presence_of :created_by
+  validates_presence_of :approved_by
+  validates_presence_of :approved_on
+  ## approved_on must occur on the same date or after the created at date
+  validates_date :approved_on, :on_or_after => :created_at, :message => "This group assignment must be approved on or after the date it was created."
+
+  ## approved_on must occur on the same date or after the created at date
+  validates_date :end_date, :on_or_after => :start_date, :message => "End date must be on or after the start date."
 
   # Custom Methods
   # -----------------------------
