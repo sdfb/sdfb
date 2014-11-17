@@ -1,6 +1,11 @@
 <p id="notice"><%= notice %></p>
 
 <p>
+  <b>Relationship Type id:</b>
+  <%= @relationship_type.id %>
+</p>
+
+<p>
   <b>Relationship type inverse:</b>
   <%= @relationship_type.relationship_type_inverse_id %>
 </p>
@@ -23,6 +28,11 @@
 <p>
   <b>Is active:</b>
   <%= @relationship_type.is_active %>
+</p>
+
+<p>
+  <b>Created at:</b>
+  <%= @relationship_type.created_at %>
 </p>
 
 

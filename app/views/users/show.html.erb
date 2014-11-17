@@ -14,10 +14,18 @@
       None
     <% end %>
   </dd>
+  <dt><strong>User id:</strong></dt>
+  <dd><%= @user.id %></dd>
+  <dt><strong>ORC id:</strong></dt>
+  <dd><%= @user.orcid %></dd>
   <dt><strong><%= model_class.human_attribute_name(:affiliation) %>:</strong></dt>
   <dd><%= @user.affiliation %></dd>
   <dt><strong><%= model_class.human_attribute_name(:email) %>:</strong></dt>
   <dd><%= @user.email %></dd>
+  <dt><strong>Username:</strong></dt>
+  <dd><%= @user.username %></dd>
+  <dt><strong>Prefix:</strong></dt>
+  <dd><%= @user.prefix %></dd>
   <dt><strong><%= model_class.human_attribute_name(:first_name) %>:</strong></dt>
   <dd><%= @user.first_name %></dd>
   <dt><strong><%= model_class.human_attribute_name(:is_active) %>:</strong></dt>
@@ -34,16 +42,10 @@
   <dd><%= @user.password_salt %></dd>
   <dt><strong><%= model_class.human_attribute_name(:user_type) %>:</strong></dt>
   <dd><%= @user.user_type %></dd>
-  <% if current_user != nil %>
-    <% if current_user.is_admin %>
-      <dt><strong><%= model_class.human_attribute_name(:is_admin) %>:</strong></dt>
-      <dd>
-        <% if @user.is_admin %>
-          true
-        <% end %>
-      </dd>
-    <% end %>
-  <% end %>
+  <dt><strong>Curator revoked?:</strong></dt>
+  <dd><%= @user.curator_revoked %></dd>
+  <dt><strong>Created_at:</strong></dt>
+  <dd><%= @user.created_at %></dd>
 </dl>
 
 <div class="form-actions">

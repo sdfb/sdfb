@@ -1,6 +1,11 @@
 <p id="notice"><%= notice %></p>
 
 <p>
+  <b>Relationship Category Assignment id:</b>
+  <%= @rel_cat_assign.id %>
+</p>
+
+<p>
   <b>Relationship category:</b>
   <%= @rel_cat_assign.relationship_category_id %>
 </p>
@@ -10,6 +15,10 @@
   <%= @rel_cat_assign.relationship_type_id %>
 </p>
 
+<p>
+  <b>Created at:</b>
+  <%= @rel_cat_assign.created_at %>
+</p>
 
 <%= link_to 'Edit', edit_rel_cat_assign_path(@rel_cat_assign) %> |
 <%= link_to 'Back', rel_cat_assigns_path %>

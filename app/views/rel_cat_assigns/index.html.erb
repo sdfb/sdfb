@@ -2,8 +2,10 @@
 
 <table>
   <tr>
+    <th>Relationship Category Assingment id</th>
     <th>Relationship category</th>
     <th>Relationship type</th>
+    <th>Created at</th>
     <th></th>
     <th></th>
     <th></th>
@@ -11,8 +13,10 @@
 
 <% @rel_cat_assigns.each do |rel_cat_assign| %>
   <tr>
+    <td><%= rel_cat_assign.id %></td>
     <td><%= rel_cat_assign.relationship_category_id %></td>
     <td><%= rel_cat_assign.relationship_type_id %></td>
+    <td><%= rel_cat_assign.created_at %></td>
     <td><%= link_to 'Show', rel_cat_assign %></td>
     <td><%= link_to 'Edit', edit_rel_cat_assign_path(rel_cat_assign) %></td>
     <td><%= link_to 'Destroy', rel_cat_assign, method: :delete, data: { confirm: 'Are you sure?' } %></td>

@@ -1,6 +1,7 @@
 class UpdateAttributesRel < ActiveRecord::Migration
   def up
   	remove_column :relationships, :average_certainty
+    remove_column :relationships, :is_approved
   	add_column :relationships, :max_certainty, :decimal
   	add_column :relationships, :start_date, :date
   	add_column :relationships, :end_date, :date

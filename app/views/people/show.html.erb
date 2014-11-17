@@ -4,13 +4,23 @@
 </div>
 
 <dl class="dl-horizontal">
-  <dt><strong><%= model_class.human_attribute_name(:original_id) %>:</strong></dt>
-  <dd><%= @person.original_id %></dd>
-  <dt><strong><%= model_class.human_attribute_name(:first_name) %>:</strong></dt>
+  <dt><strong>Person id:</strong></dt>
+  <dd><%= @person.person_id %></dd>
+  <dt><strong>ODNB id:</strong></dt>
+  <dd><%= @person.odnb_id %></dd>
+  <dt><strong>Title:</strong></dt>
+  <dd><%= @person.title %></dd>
+  <dt><strong>Prefix:</strong></dt>
+  <dd><%= @person.prefix %></dd>
+  <dt><strong>First name:</strong></dt>
   <dd><%= @person.first_name %></dd>
-  <dt><strong><%= model_class.human_attribute_name(:last_name) %>:</strong></dt>
+  <dt><strong>Last Name:</strong></dt>
   <dd><%= @person.last_name %></dd>
-  <dt><strong><%= model_class.human_attribute_name(:created_by) %>:</strong></dt>
+  <dt><strong>Suffix:</strong></dt>
+  <dd><%= @person.suffix %></dd>
+  <dt><strong>All known identities:</strong></dt>
+  <dd><%= @person.search_names_all %></dd>
+  <dt><strong>Created by:</strong></dt>
   <dd><%= 
   if @person.created_by.nil?
     'ODNB'
@@ -18,16 +28,30 @@
     @person.created_by
   end
   %></dd>
-  <dt><strong><%= model_class.human_attribute_name(:ext_birth_year) %>:</strong></dt>
+  <dt><strong>Birth Year Type:</strong></dt>
+  <dd><%= @person.birth_year_type %></dd>
+  <dt><strong>Extant birth year:</strong></dt>
   <dd><%= @person.ext_birth_year %></dd>
-  <dt><strong><%= model_class.human_attribute_name(:ext_death_year) %>:</strong></dt>
+  <dt><strong>Alternate birth year:</strong></dt>
+  <dd><%= @person.alt_birth_year %></dd>
+  <dt><strong>Death Year Type:</strong></dt>
+  <dd><%= @person.death_year_type %></dd>
+  <dt><strong>Extant death year:</strong></dt>
   <dd><%= @person.ext_death_year %></dd>
-  <dt><strong><%= model_class.human_attribute_name(:historical_significance) %>:</strong></dt>
+  <dt><strong>Alternate death year:</strong></dt>
+  <dd><%= @person.alt_death_year %></dd>
+  <dt><strong>Historical Significance:</strong></dt>
   <dd><%= @person.historical_significance %></dd>
-  <dt><strong><%= model_class.human_attribute_name(:is_approved) %>:</strong></dt>
-  <dd><%= @person.is_approved.to_s %></dd>
   <dt><strong>Relationship Summary:</strong></dt>
   <dd><%= @person.rel_sum %></dd>
+  <dt><strong>Approved by:</strong></dt>
+  <dd><%= @person.approved_by %></dd>
+  <dt><strong>Approved on:</strong></dt>
+  <dd><%= @person.approved_on %></dd>
+  <dt><strong>Justification:</strong></dt>
+  <dd><%= @person.Justification %></dd>
+  <dt><strong>Created at:</strong></dt>
+  <dd><%= @person.created_at %></dd>
 </dl>
 
 <div class="form-actions">

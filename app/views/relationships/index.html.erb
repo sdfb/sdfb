@@ -9,6 +9,7 @@
 <table class="table table-striped">
   <thead>
     <tr>
+      <th>Relationship id</th>
       <th>Person 1</th>
       <th>Person 2</th>
       <% if current_user != nil %>
@@ -16,18 +17,26 @@
               <th>Original Certainty</th>
           <% end %>
       <% end %>
+      <th>Original Certainty</th>
       <th>Maximum Certainty</th>
       <% if current_user != nil %>
           <% if current_user.is_admin %>
               <th>Created by</th>
           <% end %>
       <% end %>
+      <th>Start Date</th>
+      <th>End Date</th>
+      <th>Justification</th>
+      <th>Approved by</th>
+      <th>Approved on</th>
+      <th>Created at</th>
       <th><%=t '.actions', :default => t("helpers.actions") %></th>
     </tr>
   </thead>
   <tbody>
     <% @relationships_approved.each do |relationship| %>
       <tr>
+        <td><%= relationship.id %></td>
         <td><%= link_to relationship.get_person1_name, person_path(relationship.person1_index) %></td>
         <td><%= link_to relationship.get_person2_name, person_path(relationship.person2_index) %></td>
         <% if current_user != nil %>
@@ -35,12 +44,19 @@
                 <td><%= relationship.original_certainty %></td>
             <% end %>
         <% end %>
+        <td><%= relationship.original_certainty %></td>
         <td><%= relationship.max_certainty %></td>
         <% if current_user != nil %>
             <% if current_user.is_admin %>
                 <td><%= relationship.get_users_name %></td>
             <% end %>
         <% end %>
+        <td><%= relationship.start_date %></td>
+        <td><%= relationship.end_date %></td>
+        <td><%= relationship.justification %></td>
+        <td><%= relationship.approved_by %></td>
+        <td><%= relationship.approved_on %></td>
+        <td><%= relationship.created_at %></td>
         <td>
           <% if can? :show, relationship %>
             <%= link_to 'Show', relationship %>
