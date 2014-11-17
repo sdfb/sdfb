@@ -8,7 +8,7 @@ class Ability
 	def initialize(user)
 		user ||= User.new
 		
-		if user.is_admin 
+		if (user.user_type == "admin") 
 			# If you're an admin, you have the power to manage everything
 			can :manage, :all
 		else
