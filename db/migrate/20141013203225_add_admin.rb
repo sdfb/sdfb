@@ -8,6 +8,8 @@ class AddAdmin < ActiveRecord::Migration
     admin.password_confirmation = "admin"
     admin.user_type = "Admin"
     admin.is_active = true
+    admin.username = "KatAdmin"
+    admin.curator_revoked = false
     admin.save!
   end
 

@@ -113,6 +113,7 @@ GEM
       ref
     thor (0.19.1)
     tilt (1.4.1)
+    timeliness (0.3.7)
     treetop (1.4.15)
       polyglot
       polyglot (>= 0.3.1)
@@ -125,6 +126,8 @@ GEM
     uglifier (2.5.3)
       execjs (>= 0.3.0)
       json (>= 1.8.0)
+    validates_timeliness (3.0.14)
+      timeliness (~> 0.3.6)
     will_paginate (3.0.7)
 
 PLATFORMS
@@ -144,4 +147,5 @@ DEPENDENCIES
   therubyracer
   twitter-bootstrap-rails
   uglifier (>= 1.0.3)
+  validates_timeliness
   will_paginate

@@ -14,13 +14,16 @@ class Person < ActiveRecord::Base
 
   # Scope
   # ----------------------------- 
-  ####scope :all_approved, where(is_approved: true)
+  scope :all_approved, where("approved_by is not null")
   scope :for_original_id, lambda {|original_id_input| where('original_id like ?', "%#{original_id_input}%") }
   scope :for_first_name, lambda {|first_name_input| where('first_name like ?', "%#{first_name_input}")}
   scope :for_last_name, lambda {|last_name_input| where('last_name like ?', "%#{last_name_input}")}
   scope :for_first_or_last_name,  lambda {|name_input| find_by_sql("SELECT * FROM people
   where first_name like '#{name_input}' OR last_name like '#{name_input}'")}
-  
+
+  # Misc Constants
+  DATE_TYPE_LIST = ["BF", "AF","IN","CA"]
+
   # Validations
   # -----------------------------
   validates_presence_of :first_name
@@ -56,13 +59,9 @@ class Person < ActiveRecord::Base
   ## approved_on must occur on the same date or after the created at date
   validates_date :approved_on, :on_or_after => :created_at, :message => "This person must be approved on or after the date it was created."
   ## birth year type is one included in the list
-  validates :birth_year_type, inclusion => {:in => DATE_TYPE_LIST}
+  validates_inclusion_of :birth_year_type, :in => DATE_TYPE_LIST
   ## birth year type is one included in the list
-  validates :death_year_type, inclusion => {:in => DATE_TYPE_LIST}
-
-
-  # Misc Constants
-  DATE_TYPE_LIST = ["BF", "AF","IN","CA"]
+  validates_inclusion_of :death_year_type, :in => DATE_TYPE_LIST
 
   # Custom Methods
   # -----------------------------

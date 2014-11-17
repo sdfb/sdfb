@@ -21,7 +21,8 @@ class UserGroupContrib < ActiveRecord::Base
 
   # Scope
   # -----------------------------
-  scope :not_flagged, where(is_flagged: false)
+  #broken since there is no is_falgged
+  ##scope :not_flagged, where(is_flagged: false)
 
   # Custom Methods
   # -----------------------------

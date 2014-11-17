@@ -9,7 +9,7 @@ class GroupAssignment < ActiveRecord::Base
 
   # Scope
   # ----------------------------- 
-  scope :all_approved, where(is_approved: true)
+  scope :all_approved, where("approved_by is not null")
 
   # Validations
   # -----------------------------

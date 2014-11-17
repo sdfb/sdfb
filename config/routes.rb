@@ -29,7 +29,10 @@ Sdfb::Application.routes.draw do
   get "home/index"
 
   # set the root
-  root :to => "~/www/app/views/test.html.erb"
+  root :to => "home#index"
+
+  # set the root
+  #root :to => "~/www/app/views/test.html.erb"
 
   match '/search', :to => 'people#search'
   

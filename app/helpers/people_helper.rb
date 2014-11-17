@@ -15,6 +15,7 @@ module PeopleHelper
     # check if exists first, or else create it.
     person1_updated_flag = false
 
+    #no is_approved so this is broken!
     person1_current_rel_sum.each do |rel_record_1|
       if rel_record_1[0] == person2_index
         rel_record_1[1] = max_certainty

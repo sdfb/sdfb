@@ -11,7 +11,7 @@
   <thead>
   <tr>
     <th>Group Assignment id</th>
-    <% if ! current_user.nil? && (current_user.user_type == "admin") %>
+    <% if ! current_user.nil? && (current_user.user_type == "Admin") %>
       <th>Created by</th>
     <% end %>
     <th>Group</th>
@@ -28,7 +28,7 @@
     <% @group_assignments_approved.each do |group_assignment| %>
       <tr>
         <td>group_assignment.id</td>
-        <% if (current_user.user_type == "admin")  %>
+        <% if (current_user.user_type == "Admin")  %>
           <td><%= link_to group_assignment.get_users_name, user_path(group_assignment.created_by) %></td>
         <% end %>
         <td><%= link_to group_assignment.get_group_name, group_path(group_assignment.group_id) %></td>

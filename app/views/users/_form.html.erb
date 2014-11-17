@@ -10,6 +10,8 @@
   <%= f.input :password_hash %>
   <%= f.input :password_salt %>
   <%= f.input :user_type %>
+  <%= f.input :username %>
+  <%= f.input :curator_revoked %>
   <div class="form-actions">
     <%= f.button :submit, :class => 'btn-primary' %>
     <%= link_to t('.cancel', :default => t("helpers.links.cancel")),

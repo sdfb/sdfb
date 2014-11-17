@@ -3,7 +3,7 @@
   <thead>
     <tr>
       <% if current_user != nil %>
-        <% if (current_user.user_type == "admin")  %>
+        <% if (current_user.user_type == "Admin")  %>
           <th>Created by</th>
         <% end %>
       <% end %>
@@ -20,7 +20,7 @@
     <% @groups_unapproved.each do |group| %>
       <tr>
         <% if current_user != nil %>
-          <% if (current_user.user_type == "admin")  %>
+          <% if (current_user.user_type == "Admin")  %>
             <td>
               <% if group.created_by != nil %>
                 <%= link_to group.get_users_name, user_path(group.created_by) %>

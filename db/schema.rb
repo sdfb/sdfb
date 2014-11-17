@@ -37,11 +37,12 @@ ActiveRecord::Schema.define(:version => 20141114024214) do
     t.integer  "created_by"
     t.integer  "group_id"
     t.integer  "person_id"
-    t.boolean  "is_approved"
     t.datetime "created_at",  :null => false
     t.datetime "updated_at",  :null => false
     t.date     "start_date"
     t.date     "end_date"
+    t.integer  "approved_by"
+    t.date     "approved_on"
   end
 
   create_table "group_cat_assigns", :force => true do |t|
@@ -64,7 +65,6 @@ ActiveRecord::Schema.define(:version => 20141114024214) do
     t.integer  "created_by"
     t.string   "name"
     t.text     "description"
-    t.boolean  "is_approved"
     t.datetime "created_at",    :null => false
     t.datetime "updated_at",    :null => false
     t.text     "justification"
@@ -73,19 +73,12 @@ ActiveRecord::Schema.define(:version => 20141114024214) do
   end
 
   create_table "people", :force => true do |t|
-    t.integer  "original_id"
     t.string   "first_name"
     t.string   "last_name"
     t.integer  "created_by"
     t.text     "historical_significance"
-    t.boolean  "is_approved"
     t.datetime "created_at",                               :null => false
     t.datetime "updated_at",                               :null => false
-    t.text     "uncertain"
-    t.text     "unlikely"
-    t.text     "possible"
-    t.text     "likely"
-    t.text     "certain"
     t.text     "rel_sum",                 :default => "'"
     t.string   "prefix"
     t.string   "suffix"
@@ -100,6 +93,7 @@ ActiveRecord::Schema.define(:version => 20141114024214) do
     t.text     "justification"
     t.integer  "approved_by"
     t.datetime "approved_on"
+    t.integer  "odnb_id"
   end
 
   create_table "rel_cat_assigns", :force => true do |t|
@@ -127,7 +121,6 @@ ActiveRecord::Schema.define(:version => 20141114024214) do
   end
 
   create_table "relationships", :force => true do |t|
-    t.boolean  "is_approved"
     t.decimal  "original_certainty"
     t.integer  "person1_index"
     t.integer  "person2_index"
@@ -189,7 +182,6 @@ ActiveRecord::Schema.define(:version => 20141114024214) do
     t.string   "password_hash"
     t.string   "password_salt"
     t.string   "user_type"
-    t.boolean  "is_admin"
     t.datetime "created_at",                               :null => false
     t.datetime "updated_at",                               :null => false
     t.string   "prefix"
@@ -197,6 +189,7 @@ ActiveRecord::Schema.define(:version => 20141114024214) do
     t.integer  "created_by"
     t.boolean  "is_curator",            :default => false
     t.boolean  "curator_revoked",       :default => false
+    t.string   "username"
   end
 
 end
