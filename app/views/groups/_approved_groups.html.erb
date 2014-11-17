@@ -9,6 +9,10 @@
       <% end %>
       <th>Name</th>
       <th>Description</th>
+      <th>Justification</th>
+      <th>Approved by</th>
+      <th>Approved on</th>
+      <th>Created at</th>
       <th><%=t '.actions', :default => t("helpers.actions") %></th>
     </tr>
   </thead>
@@ -28,6 +32,10 @@
         <% end %>
         <td><%= group.name %></td>
         <td><%= group.description %></td>
+        <td><%= group.justification %></td>
+        <td><%= group.approved_by %></td>
+        <td><%= group.approved_on %></td>
+        <td><%= group.created_at %></td>
         <td>
           <% if can? :show, group %>
             <%= link_to 'Show', group %>

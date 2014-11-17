@@ -2,17 +2,21 @@
 
 <table>
   <tr>
+    <th>Group Category Assignment id</th>
     <th>Group</th>
     <th>Group category</th>
-    <th></th>
-    <th></th>
+    <th>Created by</th>
+    <th>Created at</th>
     <th></th>
   </tr>
 
 <% @group_cat_assigns.each do |group_cat_assign| %>
   <tr>
+    <td><%= group_cat_assign.id %></td>
     <td><%= group_cat_assign.group_id %></td>
     <td><%= group_cat_assign.group_category_id %></td>
+    <td><%= group_cat_assign.created_by %></td>
+    <td><%= group_cat_assign.created_at %></td>
     <td><%= link_to 'Show', group_cat_assign %></td>
     <td><%= link_to 'Edit', edit_group_cat_assign_path(group_cat_assign) %></td>
     <td><%= link_to 'Destroy', group_cat_assign, method: :delete, data: { confirm: 'Are you sure?' } %></td>
