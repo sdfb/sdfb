@@ -1,12 +1,13 @@
-
+var francisID = 199;
     // group class
 function createGroup() {
   this.id = null;
   this.name = null;
   this.nodes = null;
 }
-    function createNodeKey(node) {
-  var nodeKey = {"text": node.first, "size": getSize(node), "id": node.id,  "cluster": getCluster(node.birth)};
+
+function createNodeKey(node) {
+  var nodeKey = {"text": node.first + " " + node.last, "size": 4, "id": node.id,  "cluster": getCluster(node.birth)};
   return nodeKey;
 }
 
@@ -16,9 +17,21 @@ function createGroup() {
 
 function getSize(node) {
 	// base off number of connections the node has 
-  var numRels = node.rels.length;
-  var nodeSize = numRels * 10;
-  return nodeSize;
+  var numRels = node.size;
+  var size = node.size; // default size
+
+  if (numRels == 0) {
+    size = 10;
+  }
+  else {
+    size = numRels * 20;
+
+    if (size > 200) {
+      size = 200; // max cap on size
+    }
+  }
+
+  return size;
 }
 
 // Returns the color id based on birth year
@@ -80,66 +93,334 @@ var node = function() {
   this.occupation = null;
   this.edges = [];
   this.key = null;
+  this.rels = 0;
+  this.size = 0;
+
 };
 
-function init(){
-	  var people = gon.people;
-      //1people = people.slice(1001,7000);
-      var data = { nodes: [], edges: [], nodes_names: [], groups_names: [], nodeKeys: []};
+function twoDegs(id, data) {
+
+  // francis ID = 968;
   
-  $.each(people, function(index, value) {
+  var p = data.nodes[id];
+  var keys = {};
+  var nodes = [];
+  var edges = [];
+
+  if (p.rels.length > 0) {
+    $.each(p.rels, function(index, value) {
+      
+      if (value[2] == 0 && value[1] > 0.9) {
+        // not approved, move on
+      }
+      else {
+        var q = data.nodes[value[0]]; // find person object in data by id
+        keys[q.id] = createNodeKey(q);
+        if (notInArray(edges, [p.id, q.id])) {
+          edges.push([p.id, q.id]);
+        }
+              if (q && q.rels.length > 0) {
+                $.each(q.rels, function(index, value) {
+                  if (value[2] != 0) {
+                    var r = data.nodes[value[0]];
+                    keys[r.id] = createNodeKey(r);
+
+                    if (notInArray(edges, [q.id, r.id])) {
+                        edges.push([q.id, r.id]);
+                    }
+
+                    if (r && r.rels.length > 0) {
+                      $.each(r.rels, function(index, value) {
+                        if (value[2] != 0 && value[1] > 0.9) {
+                          var s = data.nodes[value[0]];
+                          keys[s.id] = createNodeKey(s);
+
+                          if (s && (s.id in keys) && notInArray(edges, [r.id, s.id])) {
+                            edges.push([r.id, s.id]);
+                          }
+                        }
+                      });
+                    }
+                  }
+                });  
+              }
+            } 
+        });
+
+        keys[p.id] = {"text": p.first + " " + p.last, "size": 14, "id": p.id,  "cluster": getCluster(p.birth)};
+  }  
+
+$.each(keys, function(index, value) {
+  nodes.push(value);
+});
+
+  $('#graph').html('');
+  $("#results").html("Two degrees of <b>" + p.label);
+  
+  var options = { width: $("#graph").width(), height: $("#graph").height(), colors: getColors() };
+  var graph = new Insights($("#graph")[0], nodes, edges, options).render();
+  graph.center();
+  graph.focus(francisID);
+
+
+  graph.on("node:click", function(d) {
+    var clicked = data.nodes[d.id];
+    showNodeInfo(clicked, findGroups(clicked, data));
+  });
+  graph.on("edge:click", function(d) {
+    Pace.restart();
+    var id1 = parseInt(d.source.id);
+    var id2 = parseInt(d.target.id);
+    getAnnotation(id1 < id2 ? id1 : id2, id1 > id2 ? id1 : id2, data);
+  });
+  $('#zoom button.icon').click(function(e){
+    if (this.name == 'in') {
+      graph.zoomIn();
+    } else if (this.name == 'out') {
+      graph.zoomOut();
+    }
+  });
+
+}
+
+$('#zoom button.icon').click(function(e){
+    if (this.name == 'in') {
+      graph.zoomIn();
+    } else {
+      graph.zoomOut();
+    }
+  });
+
+// Creates the table container, used for group and shared group
+function writeGroupTable(dataSource, title){
+    $('#graph').html('<table cellpadding="0" cellspacing="0" border="0" class="display table table-bordered table-striped" id="data-table-container"></table>');
+    $('#data-table-container').dataTable({
+    'sPaginationType': 'bootstrap',
+    'iDisplayLength': 100,
+        'aaData': dataSource,
+        'aoColumns': [
+            {'mDataProp': 'first', 'sTitle': 'First Name'},
+            {'mDataProp': 'last', 'sTitle': 'Last Name'},
+            {'mDataProp': 'birth', 'sTitle': 'Birth Date'},
+            {'mDataProp': 'death', 'sTitle': 'Death Date'},
+            {'mDataProp': 'occupation', 'sTitle': 'Historical Significance'}
+        ],
+        'oLanguage': {
+            'sLengthMenu': '_MENU_ records per page'
+        }
+    });
+    downloadData(dataSource, title);
+};
+
+    //Tooltips
+  $("#onenode").tooltip({placement:   'right', title: 'Connections of one individual'});
+  $("#twonode").tooltip({placement:   'right', title: 'Mutual connections between two individuals'});
+  $("#onegroup").tooltip({placement:  'right', title: 'Members of one group'});
+  $("#twogroup").tooltip({placement:  'right', title: 'Mutual members of two groups'});
+
+    $("#addnode").tooltip({placement:   'right', title: 'Add a new individual to the database'});
+    $("#addgroup").tooltip({placement:  'right', title: 'Add a member to an existing or new group'});
+    $("#addedge").tooltip({placement:   'right', title: 'Add and annotate a relationship between two individuals'});
+
+    $("#icon-tag").tooltip({placement:  'right', title: 'Tag group'});
+    $("#icon-link").tooltip({placement: 'right', title: 'Add a relationship'});
+    $("#icon-annotate").tooltip({placement: 'right', title: 'Annotate relationship'});
+    $("#icon-info").tooltip({placement: 'left', title: 'Scroll to zoom, double click on node or edge for more information, single click to reset view'});
+    $("#icon-color").tooltip({placement: 'left', title: 'Click to view color legend'});
+
+// Displays node information
+function showNodeInfo(data, groups){
+  accordion("node");
+  $("#node-name").text(data.first+ " "+ data.last);
+  $("#node-bdate").text(data.birth);
+  $("#node-ddate").text(data.death);
+  $("#node-significance").text(data.occupation);
+  $("#node-group").text(groups);
+  var d = new Date();
+  $("#node-cite").text( data.first+ " "+ data.last + " Network Visualization. \n Six Degrees of Francis Bacon: Reassembling the Early Modern Social Network. Gen. eds. Daniel Shore and Christopher Warren. "+d.getMonth()+"/"+d.getDate()+"/"+d.getFullYear()+" <http://sixdegreesoffrancisbacon.com/>");
+  $("#node-DNBlink").attr("href", "http://www.oxforddnb.com/search/quick/?quicksearch=quicksearch&docPos=1&searchTarget=people&simpleName="+data.first+"-"+data.last+"&imageField.x=0&imageField.y=0&imageField=Go");//"http://www.oxforddnb.com/view/article/"+data.id);
+  $("#node-GoogleLink").attr("href", "http://www.google.com/search?q="+data.first+"+"+ data.last);
+}
+
+// Creates the table container, used for group and shared group
+function writeGroupTable(dataSource, title){
+    $('#graph').html('<table cellpadding="0" cellspacing="0" border="0" class="display table table-bordered table-striped" id="data-table-container"></table>');
+    $('#data-table-container').dataTable({
+    'sPaginationType': 'bootstrap',
+    'iDisplayLength': 100,
+        'aaData': dataSource,
+        'aoColumns': [
+            {'mDataProp': 'first', 'sTitle': 'First Name'},
+            {'mDataProp': 'last', 'sTitle': 'Last Name'},
+            {'mDataProp': 'birth', 'sTitle': 'Birth Date'},
+            {'mDataProp': 'death', 'sTitle': 'Death Date'},
+            {'mDataProp': 'occupation', 'sTitle': 'Historical Significance'}
+        ],
+        'oLanguage': {
+            'sLengthMenu': '_MENU_ records per page'
+        }
+    });
+    downloadData(dataSource, title);
+};
+
+function writeNetworkTable(dataSource, title){
+    $('#graph').html('<table cellpadding="0" cellspacing="0" border="0" class="display table table-bordered table-striped" id="data-table-container"></table>');
+    $('#data-table-container').dataTable({
+    'sPaginationType': 'bootstrap',
+    'iDisplayLength': 100,
+        'aaData': dataSource,
+        'aoColumns': [
+            {'mDataProp': 'network', 'sTitle': 'Network'},
+        ],
+        'oLanguage': {
+            'sLengthMenu': '_MENU_ records per page'
+        }
+    });
+};
+
+// Displays edge information 
+function getAnnotation(id1, id2, data) {
+  var confidence = findConfidence(id1, id2, data);
+  console.log(id1 + ' ' + id2 + ' ' + confidence);
+  Tabletop.init({
+    key: keys.annot,
+    query: 'source= ' + id1 + ' and target= ' + id2,
+    wanted: [confidence],
+    simpleSheet: true,
+    callback: function(result) {
+      result.forEach(function (row){
+        accordion("edge");
+        $("#edge-nodes").html(data.nodes[id1].first +" "+data.nodes[id1].last + " & " + data.nodes[id2].first+" "+data.nodes[id2].last);
+        $("#edge-confidence").html(confidence);
+        $("#edge-annotation").html(row.annotation);
+        $("#edge-contributor").html(row.contributor);
+        return true;
+      });
+    }
+  });
+  $("#icon-annotate").click(function(){
+    resetInputs();
+    $("#entry_768090773").val(data.nodes[id1].name);
+    $("#entry_1321382891").val(data.nodes[id2].name);
+  });
+ }
+
+ // Takes in the title and data, allows users to download the data
+function downloadData(data, title) {
+  var result = title + " \n" + 'First Name,Last Name,Birth Date,Death Date,Historical Significance' + "\n";
+  data.forEach(function (cell) {
+    result += cell["first"] + ',' + cell["last"] + ',' + cell["birth"] + ',' + cell["death"] + ',' + cell["occupation"] + "\n";
+  });
+  var dwnbtn = $('<a href="data:text/csv;charset=utf-8,' + encodeURIComponent(result) + ' "download="' + title + '.csv"><div id="download"></div></a>');
+  $(dwnbtn).appendTo('#graph');
+}
+
+ // Populates dropdowns
+function populateLists(data){
+  $('#one').typeahead({
+    local: Object.keys(data.nodes_names).sort()
+  });
+  $('#two').typeahead({
+    local: Object.keys(data.nodes_names).sort()
+  });
+  $('#three').typeahead({
+    local: Object.keys(data.nodes_names).sort()
+  });
+  $('#entry_768090773').typeahead({
+    local: Object.keys(data.nodes_names).sort()
+  });
+  $('#entry_1321382891').typeahead({
+    local: Object.keys(data.nodes_names).sort()
+  });
+  $('#entry_1177061505').typeahead({
+    local: Object.keys(data.nodes_names).sort()
+  });
+  $('#four').typeahead({
+    local: Object.keys(data.groups_names).sort()
+  });
+  $('#five').typeahead({
+    local: Object.keys(data.groups_names).sort()
+  });
+  $('#six').typeahead({
+    local: Object.keys(data.groups_names).sort()
+  });
+  $('#entry_110233074').typeahead({
+    local: Object.keys(data.groups_names).sort()
+  });
+}
+
+
+// Resets all input values and forms
+function resetInputs(){
+  $("#one").val('');
+  $("#one").typeahead('setQuery', '');
+  $("#two").val('');
+  $("#two").typeahead('setQuery', '');
+  $("#three").val('');
+  $("#three").typeahead('setQuery', '');
+  $("#four").val('');
+  $("#four").typeahead('setQuery', '');
+  $("#five").val('');
+  $("#five").typeahead('setQuery', '');
+  $("#six").val('');
+  $("#six").typeahead('setQuery', '');
+
+  document.getElementById('googleaddnode').reset();
+  document.getElementById('googleaddedge').reset();
+  document.getElementById('googleaddgroup').reset();
+}
+
+
+function init() {
+  var people = gon.people;
+
+	var data = { nodes: [], edges: [], nodes_names: [], groups_names: [], nodeKeys: []};
+  
+  $.each(people, function(index, value) { 
     var n = new node();
     n.id = value.id;
     n.first = value.first_name;
     n.last = value.last_name;
+    n.label = n.first + " " + n.last;
     n.birth = value.birth_year;
     n.death = value.death_year;
     n.occupation = value.historical_significance;
-    
-    if (value.rel_sum.length > 0) {
-      n.rels = value.rel_sum[0];
-      $.each(n.rels, function() {
-        if (n.rels[2] != 0) {
-          if (notInArray(data.edges, [n.id, n.rels[0]])) {
-            var tuple_like_thing = [n.id, n.rels[0]]
-            data.edges.push([n.id, n.rels[0]]);
-          }
-          else {
-            // relationship already in data, don't add again
-          }
-        }
-      });
-    }
-    else {
-      n.rels = [];
-    }
+    n.rels = value.rel_sum;
+    n.size = n.rels.length;
     data.nodes[n.id] = n;
-    n.key = createNodeKey(n);
-    data.nodeKeys.push(n.key);
+    
   });
 
 
-      loader = document.getElementById('loader');
-
-
-      var nodes = data.nodeKeys;
-      var links = data.edges;
-      var el = document.getElementById("parent");
-      var options = {
-              width: screen.width,
-              height: screen.height,
-              colors: getColors()};
-
-		var graph = new Insights(el, nodes, links, options).center().render();
-
-
-        graph.zoom(.10);
+  twoDegs(francisID, data);
+  populateLists(data);
 
 }
 
+// When a user clicks on a node or edge.
+function accordion(item) {
+  $(".accordion_content").removeClass('active');
+  $(".accordion_content").slideUp();
+  $("#accordion h3").removeClass('on');
+  $("#" + item + "info").prev().addClass('on'); 
+  $("#" + item + "info").addClass("active");
+  $("#" + item + "info").slideDown();
+}
 
-  $(document).ready(function() {
-    	init();
+
+$(document).ready(function() {
+    console.log("display");
+    init();
+      $("#accordion h3").click(function(){
+    $('#accordion h3').removeClass('on');
+    $(this).addClass('on');
+    $("#accordion div").slideUp();
+    if(!$(this).next().is(":visible")) {
+      $(this).next().slideDown();
+    }
+  });
+    
+
 });
 
       

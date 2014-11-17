@@ -5,8 +5,9 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 	<%= include_gon %>
-	<%= javascript_include_tag "application" %>
-	<%= stylesheet_link_tag "application" %>
+	<link rel="stylesheet" type="text/css" href="http://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/2.2.2/css/bootstrap-responsive.min.css">
+ <%= javascript_include_tag "jquery-2.1.1.min", "jquery-ui.min", "bootstrap.min", "insights.standalone", "script", "accordion", "landing", "pace.min", "typeahead", "display2" %>
+  <%= stylesheet_link_tag "reset", "jquery-impromptu.min", "jquery-ui.min", "bootstrap.min", "accordion", "insights.standalone", "table", "landing", "style"%>
 	<title>Six Degrees of Francis Bacon</title>
 
 </head>
@@ -204,6 +205,9 @@
 			</div>
 		</div>
 	</aside>
+	
+				
+	
 	</div> <!-- closing everything that's not landing page -->
 	<div id="landing">
 		<div id="landing-open">
@@ -280,7 +284,7 @@
 			<img id="arrow-up" src="assets/landing/arrow-up.png" width="40px">
 			<img id="arrow-down" src="assets/landing/arrow-down.png" width="40px">
 		</div>
-		<div id="skip">Skip Intro</div>
+		<div id="skipIntro">Skip Intro</div>
 	</div> <!-- closing landing -->
 </body>
 

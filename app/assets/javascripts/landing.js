@@ -1,5 +1,14 @@
 $(document).ready(function(){
-	$('#skip').click(function(){
+	
+
+	$('#skipIntro').mouseover(function(){
+		
+		document.body.style.cursor = 'pointer';
+	}).mouseout(function(){
+		document.body.style.cursor = 'auto';
+	});
+
+	$('#skipIntro').click(function(){
 		$('#landing').fadeOut();
 		$('#everything').fadeIn();
 	});
@@ -52,7 +61,7 @@ $(document).ready(function(){
 		document.body.style.cursor = 'pointer';
 	}).mouseout(function(){
 		document.body.style.cursor = 'auto';
-	})
+	});
 	$('#arrow-down').mouseover(function(){
 		document.body.style.cursor = 'pointer';
 	}).mouseout(function(){
@@ -63,10 +72,6 @@ $(document).ready(function(){
 	}).mouseout(function(){
 		document.body.style.cursor = 'auto';
 	});
-	$('#skip').mouseover(function(){
-		document.body.style.cursor = 'pointer';
-	}).mouseout(function(){
-		document.body.style.cursor = 'auto';
-	})
+	
 
 });
