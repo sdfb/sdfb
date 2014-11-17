@@ -4,18 +4,19 @@
     <%= include_gon %>
  
 
- <%= javascript_include_tag "jquery-2.1.1.min", "bootstrap.min", "insights.standalone", "script", "landing", "accordion", "display2" %>
-  <%= stylesheet_link_tag "jquery-impromptu.min", "bootstrap.min", "accordion", "landing", "insights.standalone", "table", "reset", "style"%>
- 
+ <%= javascript_include_tag "jquery-2.1.1.min", "jquery-ui.min", "bootstrap.min", "insights.standalone", "typeahead", "pace.min", "display2", "script", "accordion" %>
+  <%= stylesheet_link_tag "reset", "jquery-impromptu.min", "bootstrap.min", "accordion",  "table", "style"%>
+ <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1/jquery-ui.min.js"></script>
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/datatables/1.9.4/jquery.dataTables.min.js"></script>
   
   
   </head>
 
   <body>
-
+  <div id="everything">
   <header>Six Degrees of Francis Bacon</header>
-  <div id="loader">rendering...</div>
-  <div id="parent"></div>
+ <div id="results"></div>
+  <div id="graph"></div>c
   <div id="zoom">
     <button class="icon" id="icon-zoomin" name="in"></button>
     <button class="icon" id="icon-zoomout" name="out"></button> 
@@ -199,6 +200,86 @@
       </div>
     </div>
   </aside>
+  </div>
+
+
+<!--<div id="landing">
+    <div id="landing-open">
+      <img id="net" src="assets/net.png" >
+      <div id="wel">Welcome to</div>
+      <div id="title"> Six Degrees of Francis Bacon </div>
+      <img id="arrow" src="assets/landing/arrow-down.png" width="40px">
+    </div>
+    <div id="landing-def">
+      <div id="def-info">
+        <b>Six Degrees of Francis Bacon</b> (SDFB) is a collaborative 
+        reconstruction of the social network of early modern 
+        Britain (1550-1700). SDFB shows who likely knew whom 
+        in the age of Elizabeth, Bacon, Shakespeare, and Hobbes.  
+        <br><br>
+        First, the SDFB team mined the history of scholarship 
+        to estimate and visualize roughly 115,000 relationships. 
+        On this site, scholars, students, and citizen humanists
+         are expanding, curating, and revising early modern 
+         British history.  
+      </div>
+    </div>
+    <div id="landing-what">
+      <div id="threecircles">
+        <h5>What can you do with Six Degrees of Francis Bacon?</h5>
+        <table id="threetable">
+          <tr>
+            <td><img src="assets/landing/learn.png" width="120px"></td>
+            <td><img src="assets/landing/query.png" width="120px"></td>
+            <td><img src="assets/landing/contribute.png" width="120px"></td>
+          </tr>
+          <tr>
+            <td>Explore relationships and see early modern networks </td>
+            <td>Ask how individuals or groups were connected</td>
+            <td>Add names, annotate relationships, flag errors, share knowledge </td>
+          </tr>
+        </table>
+      </div>
+    </div>
+    <div id="landing-features">
+      <h5>Search Feature</h5>
+      <table id="searches">
+        <tr>
+          <td>
+            <img src="assets/landing/f1.png" width="140px">
+            <br><br>
+            The connections of one individual
+          </td>
+          <td>
+            <img src="assets/landing/f2.png" width="140px">
+            <br><br>
+            The mutual connections between two individuals
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <img src="assets/landing/f3.png" width="140px">
+            <br><br>
+            The members of one group
+          </td>
+          <td>
+            <img src="assets/landing/f4.png" width="140px">
+            <br><br>
+            The members of two groups
+          </td>
+        </tr>
+      </table>
+    </div>
+    <div id="landing-sidebar">
+      <h5>Research</h5>
+      <img src="assets/landing/sidebar.png" height="70%">
+    </div>
+    <div id="arrows">
+      <img id="arrow-up" src="assets/landing/arrow-up.png" width="40px">
+      <img id="arrow-down" src="assets/landing/arrow-down.png" width="40px">
+    </div>
+    <div id="skip">Skip Intro</div>
+  </div> --> <!-- closing landing -->
    
 
   </body>

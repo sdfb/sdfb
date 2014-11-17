@@ -5,11 +5,13 @@ aside {
     left: 0;
     top: 34px;
     bottom: 0;
-    width: 300px;
+    width: 15%;
     height:100%;
 }
 
 #accordion {
+    position: fixed;
+    width: 15%;
 	background: #78A7BF;
 }
 
@@ -97,7 +99,7 @@ aside {
 	float: left;
 	cursor: pointer;
     width: 125px;
-    height: 40px;
+    height: 10%;
     line-height: 45px;
     -webkit-transition: all 0.2s;
     -moz-transition: all 0.2s;
