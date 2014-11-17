@@ -1,5 +1,5 @@
 class Relationship < ActiveRecord::Base
-  attr_accessible :max_certainty, :created_by, :is_approved, :original_certainty, :person1_index, :person2_index,
+  attr_accessible :max_certainty, :created_by, :original_certainty, :person1_index, :person2_index,
   :start_date, :end_date, :justification, :approved_by, :approved_on, :created_at
 
   # Relationships
@@ -16,7 +16,6 @@ class Relationship < ActiveRecord::Base
   validates_presence_of :max_certainty
   validates_presence_of :original_certainty
   validates_presence_of :created_by
-  validates_presence_of :is_approved
   validates_presence_of :approved_by
   validates_presence_of :approved_on
   ## approved_on must occur on the same date or after the created at date
@@ -29,7 +28,7 @@ class Relationship < ActiveRecord::Base
 
   # Scope
   # ----------------------------- 
-  scope :all_approved, where(is_approved: true)
+  scope :all_approved, where(approved_by: != nil)
   scope :all_for_person, lambda {|person_index_input| find_by_sql("SELECT relationships.id FROM relationships
   where person1_index = #{person_index_input} OR person2_index = #{person_index_input}")}
 
@@ -71,7 +70,7 @@ class Relationship < ActiveRecord::Base
     person1_index_in = self.person1_index
     person2_index_in = self.person2_index
     max_certainty_in = self.max_certainty
-    if self.is_approved
+    if ! approved_by.nil?
       is_approved_in = 1
     else
       is_approved_in = 0
@@ -121,7 +120,7 @@ class Relationship < ActiveRecord::Base
     person1_index_in = self.person1_index
     person2_index_in = self.person2_index
     max_certainty_in = self.max_certainty
-    if self.is_approved
+    if ! approved_by.nil?
       is_approved_in = 1
     else
       is_approved_in = 0

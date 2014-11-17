@@ -8,24 +8,32 @@
 <table class="table table-striped">
   <thead>
     <tr>
+      <th>User Relationship Contribution id</th>
       <th>Relationship</th>
       <th>Created by</th>
       <th>Confidence type</th>
       <th>Annotation</th>
       <th>Bibliography</th>
       <th>Relationship type</th>
+      <th>Edited by on</th>
+      <th>Reviewd by on</th>
+      <th>Created at</th>
       <th><%=t '.actions', :default => t("helpers.actions") %></th>
     </tr>
   </thead>
   <tbody>
     <% @user_rel_contribs.each do |user_rel_contrib| %>
       <tr>
+        <td><%= user_rel_contrib.id %></td>
         <td><%= link_to user_rel_contrib.get_both_names, relationship_path(user_rel_contrib.relationship_id) %></td>
         <td><%= link_to user_rel_contrib.get_users_name, user_path(user_rel_contrib.created_by) %></td>
         <td><%= user_rel_contrib.confidence_type %></td>
         <td><%= user_rel_contrib.annotation %></td>
         <td><%= user_rel_contrib.bibliography %></td>
         <td><%= user_rel_contrib.relationship_type %></td>
+        <td><%= user_rel_contrib.edited_by_on %></td>
+        <td><%= user_rel_contrib.reviewed_by_on %></td>
+        <td><%= user_rel_contrib.created_at %></td>
         <td>
           <% if can? :show, user_rel_contrib %>
             <%= link_to 'Show', user_rel_contrib %>

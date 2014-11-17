@@ -1,3 +1,5 @@
+:edited_by_on, :reviewed_by_on, 
+
 <%- model_class = UserPersonContrib -%>
 <div class="page-header">
   <h1><%=t '.title', :default => model_class.model_name.human.pluralize.titleize %></h1>
@@ -8,21 +10,28 @@
 <table class="table table-striped">
   <thead>
     <tr>
+      <th>User Person Contribution id</th>
       <th>Person</th>
       <th>Created by</th>
       <th>Annotation</th>
       <th>Bibliography</th>
+      <th>Edited by on</th>
+      <th>Reviewed by on</th>
+      <th>Created at</th>
       <th><%=t '.actions', :default => t("helpers.actions") %></th>
     </tr>
   </thead>
   <tbody>
     <% @user_person_contribs.each do |user_person_contrib| %>
       <tr>
+        <td><%= user_person_contrib.id %></td>
         <td><%= link_to user_person_contrib.id, user_person_contrib_path(user_person_contrib) %></td>
         <td><%= user_person_contrib.person_id %></td>
         <td><%= user_person_contrib.created_by %></td>
         <td><%= user_person_contrib.annotation %></td>
         <td><%= user_person_contrib.bibliography %></td>
+        <td><%=l user_person_contrib.edited_by_on %></td>
+        <td><%=l user_person_contrib.reviewed_by_on %></td>
         <td><%=l user_person_contrib.created_at %></td>
         <td>
           <% if can? :show, user_person_contrib %>

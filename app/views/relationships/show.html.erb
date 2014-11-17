@@ -4,18 +4,30 @@
 </div>
 
 <dl class="dl-horizontal">
+  <dt><strong>Relationship id:</strong></dt>
+  <dd><%= @relationship.id %></dd>
   <dt><strong><%= model_class.human_attribute_name(:max_certainty) %>:</strong></dt>
   <dd><%= @relationship.max_certainty %></dd>
-  <dt><strong><%= model_class.human_attribute_name(:is_approved) %>:</strong></dt>
-  <dd><%= @relationship.is_approved %></dd>
   <dt><strong><%= model_class.human_attribute_name(:original_certainty) %>:</strong></dt>
   <dd><%= @relationship.original_certainty %></dd>
   <dt><strong><%= model_class.human_attribute_name(:person1_index) %>:</strong></dt>
   <dd><%= @relationship.person1_index %></dd>
   <dt><strong><%= model_class.human_attribute_name(:person2_index) %>:</strong></dt>
-  <dd><%= @relationship.person2_index %></dd>
+  <dd><%= @relationship.person2_index %></dd>>
+  <dt><strong>Start date:</strong></dt>
+  <dd><%= @relationship.start_date %></dd>
+  <dt><strong>End date:</strong></dt>
+  <dd><%= @relationship.end_date %></dd>
   <dt><strong><%= model_class.human_attribute_name(:created_by) %>:</strong></dt>
   <dd><%= @relationship.created_by %></dd>
+  <dt><strong>Approved by:</strong></dt>
+  <dd><%= @relationship.approved_by %></dd>
+  <dt><strong>Approved on:</strong></dt>
+  <dd><%= @relationship.approved_on %></dd>
+  <dt><strong>Justification:</strong></dt>
+  <dd><%= @relationship.justification %></dd>
+  <dt><strong>Created at:</strong></dt>
+  <dd><%= @relationship.created_at %></dd>
 </dl>
 
 <div class="form-actions">

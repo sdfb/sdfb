@@ -3,30 +3,38 @@
 <table class="table table-striped">
     <thead>
       <tr>
+        <th>User id</th>
+        <th>ORC id</th>
+        <th>Username</th>
+        <th>Prefix</th>
         <th>First name</th>
         <th>Last name</th>
         <th>About description</th>
         <th>Affiliation</th>
         <th>Email</th>
         <th>User type</th>
-        <th>Is admin</th>
+        <th>Is active?</th>
+        <th>Curator revoked?</th>
+        <th>Created at</th>
         <th><%=t '.actions', :default => t("helpers.actions") %></th>
       </tr>
     </thead>
   <tbody>
         <% @active_users.each do |user| %>
           <tr>
+            <td><%= user.id %></td>
+            <td><%= user.orcid %></td>
+            <td><%= user.prefix %></td>
+            <td><%= user.username %></td>
             <td><%= user.first_name %></td>
             <td><%= user.last_name %></td>
             <td><%= user.about_description %></td>
             <td><%= user.affiliation %></td>
             <td><%= user.email %></td>
             <td><%= user.user_type %></td>
-            <td>
-                <% if user.is_admin %>
-                    Admin
-                <% end %>
-            </td>
+            <td><%= user.is_active %></td>
+            <td><%= user.curator_revoked %></td>
+            <td><%= user.created_at %></td>
             <td>
                 <% if can? :show, user %>
                     <%= link_to 'Show', user %>

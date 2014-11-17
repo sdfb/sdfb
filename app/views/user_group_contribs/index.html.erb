@@ -8,20 +8,28 @@
 <table class="table table-striped">
   <thead>
     <tr>
+      <th>User Group Contribution id</th>
       <th>Group</th>
       <th>Created by</th>
       <th>Annotation</th>
       <th>Bibliography</th>
+      <th>Edited by on</th>
+      <th>Reviewed by on</th>
+      <th>Created at</th>
       <th><%=t '.actions', :default => t("helpers.actions") %></th>
     </tr>
   </thead>
   <tbody>
     <% @user_group_contribs.each do |user_group_contrib| %>
       <tr>
+        <td><%= user_group_contrib.id %></td>
         <td><%= link_to user_group_contrib.get_group_name, group_path(user_group_contrib.group_id) %></td>
         <td><%= link_to user_group_contrib.get_users_name, user_path(user_group_contrib.created_by) %></td>
         <td><%= user_group_contrib.annotation %></td>
         <td><%= user_group_contrib.bibliography %></td>
+        <td><%= user_group_contrib.edited_by_on %></td>
+        <td><%= user_group_contrib.reviewed_by_on %></td>
+        <td><%= user_group_contrib.created_at %></td>
         <td>
           <% if can? :show, user_group_contrib %>
               <%= link_to 'Show', user_group_contrib %>

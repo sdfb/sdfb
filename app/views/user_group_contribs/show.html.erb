@@ -5,6 +5,8 @@
 </div>
 
 <dl class="dl-horizontal">
+  <dt><strong>User Group Contribution id:</strong></dt>
+  <dd><%= @user_group_contrib.id %></dd>
   <dt><strong><%= model_class.human_attribute_name(:group_id) %>:</strong></dt>
   <dd><%= @user_group_contrib.group_id %></dd>
   <dt><strong><%= model_class.human_attribute_name(:created_by) %>:</strong></dt>
@@ -13,6 +15,12 @@
   <dd><%= @user_group_contrib.annotation %></dd>
   <dt><strong><%= model_class.human_attribute_name(:bibliography) %>:</strong></dt>
   <dd><%= @user_group_contrib.bibliography %></dd>
+  <dt><strong>Reviewed by on:</strong></dt>
+  <dd><%= @user_group_contrib.reviewed_by_on %></dd>
+  <dt><strong>Edited by on:</strong></dt>
+  <dd><%= @user_group_contrib.edited_by_on %></dd>
+  <dt><strong>Created at:</strong></dt>
+  <dd><%= @user_group_contrib.created_at %></dd>
 </dl>
 
 <div class="form-actions">
