@@ -255,3 +255,27 @@ header {
 	line-height:34px;
 	padding:0px 10px 0px 10px;
 }
+
+#about{
+	width:800px;
+	margin:auto;
+}
+
+#about h1{
+	line-height:34px;
+	font-size:20px;
+}
+
+#about h2{
+	line-height:22px;
+	font-size:16px;
+}
+
+#about td{
+	vertical-align:middle;
+}
+
+#about p{
+	padding:5px;
+
+}
