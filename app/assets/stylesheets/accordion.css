@@ -40,7 +40,7 @@ aside {
     top: 5px;
 }
 
-#nodeinfo, #contribute, #about{
+#nodeinfo, #add, #about{
 	overflow: auto;
 }
 
