@@ -1,5 +1,3 @@
-:approved_by, :approved_on, :created_at
-
 <div class="row">
   <div class="span12">
     <div class="page-header">
@@ -16,11 +14,6 @@
             <tr>
               <th>Person id</th>
               <th>ODNB id</th>
-              <% if current_user != nil %>
-                  <% if (current_user.user_type == "Admin")  %>
-                      <th>Original ID</th>
-                  <% end %>
-              <% end %>
               <th>Prefix</th>
               <th>First name</th>
               <th>Last name</th>
@@ -50,12 +43,7 @@
             <% @people_approved.each do |person| %>
               <tr>
                 <td><%= person.id %></td>
-                <td><%= person.odnb_id %></td>
-                <% if current_user != nil %>
-                    <% if (current_user.user_type == "Admin")  %>
-                        <td><%= person.original_id %></td>
-                    <% end %>
-                <% end %>
+                <td><%= person.odnb_id %></td>>
                 <td><%= person.prefix %></td>
                 <td><%= person.first_name %></td>
                 <td><%= person.last_name %></td>
@@ -105,7 +93,7 @@
             <% end %>
           </tbody>
         </table>
-        <%= will_paginate @people_approved, :param_name => 'people_approved_page', :previous_label => "Previous&nbsp;", :next_label => "&nbsp;Next" %>
+        
       </div>
   </div>
 </div>

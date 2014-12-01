@@ -7,8 +7,9 @@ class PeopleController < ApplicationController
   authorize_resource
   
   def index
-    gon.people = Person.all_approved
-    @people_approved = Person.all_approved.paginate(:page => params[:people_approved_page]).per_page(20)
+    # gon.people = Person.all_approved
+    # @people_approved = Person.all_approved.paginate(:page => params[:people_approved_page]).per_page(20)
+    @people_approved = Person.all
 
     respond_to do |format|
       format.html # index.html.erb
