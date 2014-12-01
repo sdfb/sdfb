@@ -35,6 +35,22 @@ header {
     float: left;
 }
 
+#filterBar {
+  position: absolute;
+  left: 20%;
+  width: 85%;
+  top: 0%;
+  height: 10%;
+  float: left;
+
+}
+
+.filter {
+  float: left;
+  display:block;
+  line-height:34px;
+  padding:0px 10px 0px 10px;
+}
 #results {
     line-height: 40px;
     color: #555;
@@ -57,7 +73,7 @@ header {
 
 #zoom {
   position: fixed;
-  top: 50px;
+  top: ;
   right: 10px;
   width: 30px;
 }
