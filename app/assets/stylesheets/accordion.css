@@ -131,6 +131,11 @@ aside {
 	padding-bottom: 15px;
 }
 
+#talkPageLink {
+    
+    font-size: 16px;
+}
+
 aside ::-webkit-scrollbar {  
     width: 6px; 
 }  
