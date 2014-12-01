@@ -34,7 +34,7 @@ header {
     letter-spacing: 4px;
     float: left;
 }
-
+/*
 #filterBar {
   position: absolute;
   left: 20%;
@@ -50,7 +50,7 @@ header {
   display:block;
   line-height:34px;
   padding:0px 10px 0px 10px;
-}
+}*/
 #results {
     line-height: 40px;
     color: #555;
@@ -245,7 +245,7 @@ header {
 
 
 /* Navigation Menu */
-
+/*
 #user_nav{
 	background-color:white;
 	display:block;
@@ -294,4 +294,4 @@ header {
 #about p{
 	padding:5px;
 
-}
+}*/
