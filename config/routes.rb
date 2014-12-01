@@ -1,5 +1,7 @@
 Sdfb::Application.routes.draw do
 
+  # get "static_pages/about" => "static#:about"
+  get "about" => "static_pages#about", :as => "about"
   resources :comments
 
 
