@@ -8,13 +8,21 @@
 </head>
 <body>
 	<div id="user_nav">
-	  <% if current_user %>
-	    Logged in as <%= current_user.email %>
-	    <%= link_to "Sign out", sign_out_path %>
-	  <% else %>
-	    <%= link_to "Sign up", sign_up_path %> or 
-	    <%= link_to "Sign in", sign_in_path %>
-	  <% end %>
+		<div id="logo"><%= image_tag "fb.png" %></div>
+		<header>Six Degrees of Francis Bacon</header>
+
+		<div id="sign">
+		  <% if current_user %>
+			Logged in as <%= current_user.email %>
+			<%= link_to "Sign out", sign_out_path %>
+		  <% else %>
+			<%= link_to "Sign up", sign_up_path %> or 
+			<%= link_to "Sign in", sign_in_path %>
+		  <% end %>
+		</div>
+		<div class="links"><a href="#">Help</a></div>
+		<div class="links"><a href="#">Blog</a></div>
+		<div class="links"><a href="#">About</a></div>
 	</div> 
   <% flash.each do |name, msg| %>
     <%= content_tag :div, msg, :id => "flash#{name}" %>

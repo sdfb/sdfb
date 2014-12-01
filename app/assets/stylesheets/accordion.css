@@ -5,13 +5,13 @@ aside {
     left: 0;
     top: 34px;
     bottom: 0;
-    width: 15%;
+    width: 300px;
     height:100%;
 }
 
 #accordion {
     position: fixed;
-    width: 15%;
+    width: 328px;
 	background: #78A7BF;
 }
 

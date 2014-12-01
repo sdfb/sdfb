@@ -24,13 +24,10 @@ b {
 }
 
 header {
-    position: fixed;
-    left: 0;
-    top: 0;
     line-height: 34px;
     color: #CAE4E1;
     background: #555;
-    width: 15%;
+    width:300px;
     text-align: center;
     font-weight: lighter;
     text-transform: uppercase;
@@ -60,7 +57,7 @@ header {
 
 #zoom {
   position: fixed;
-  top: 10px;
+  top: 50px;
   right: 10px;
   width: 30px;
 }
@@ -228,4 +225,33 @@ header {
     position: absolute;
     right: 10px;
     top: 10px;
+}
+
+
+/* Navigation Menu */
+
+#user_nav{
+	background-color:white;
+	display:block;
+	overflow:hidden;
+	padding:0px 10px 0px 0px;
+}
+
+#sign{
+	float:right;
+	display:block;
+	text-transform: uppercase;
+	line-height:34px;
+}
+
+#logo{
+	float:left;
+	height:34px;
+}
+
+.links{
+	float:right;
+	display:block;
+	line-height:34px;
+	padding:0px 10px 0px 10px;
 }
