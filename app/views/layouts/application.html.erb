@@ -5,33 +5,14 @@
   <%= include_gon %>
 	
  <%= javascript_include_tag "jquery-2.1.1.min", "jquery-ui.min", "insights.standalone", "script",  "landing", "pace.min", "typeahead", "display2", "bootstrap.min", "accordion" %>
-  <%= stylesheet_link_tag "reset", "jquery-impromptu.min", "jquery-ui.min", "accordion", "insights.standalone", "table", "landing", "style", "bootstrap.min"%>
+  <%= stylesheet_link_tag "application"%>
   <%= csrf_meta_tags %>
 </head>
 <body>
 
 <!-- Nav Bar Header -->
 
-<div class="navbar">
-  	<ul class="navbar-inner">
-        <a class="brand" href="/">Six Degrees of Francis Bacon</a>
-	  	
-		
-	  	<ul class="nav pull-right">
-			<li class="divider-vertical"></li>
-			<% if current_user %>
-				<li><%= link_to current_user.email, user_path(current_user) %></li>
-				<li><%= link_to "Sign out", sign_out_path %></li>
-			<% else %>
-				<li><%= link_to "Sign Up", sign_up_path %></li>
-				<li><%= link_to "Sign in", sign_in_path %></li>
-			<% end %>
-			<li class="active"><a href="help">Help</a></li>
-		<li class="active"><a href="http://sixdegreesoffrancisbacon.com/">Blog</a></li>
-		<li class="active"><a href="about">About</a></li>
-	  	</ul>
-  	</ul>
-</div>
+<%= render :partial => 'layouts/header'%>
 
   <% flash.each do |name, msg| %>
     <%= content_tag :div, msg, :id => "flash#{name}" %>

@@ -34,6 +34,11 @@ header {
     letter-spacing: 4px;
     float: left;
 }
+
+.center {
+  
+  text-align: center;
+}
 /*
 #filterBar {
   position: absolute;
