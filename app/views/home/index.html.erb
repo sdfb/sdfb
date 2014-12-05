@@ -5,9 +5,7 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 	<%= include_gon %>
-	<link rel="stylesheet" type="text/css" href="http://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/2.2.2/css/bootstrap-responsive.min.css">
- <%= javascript_include_tag "jquery-2.1.1.min", "jquery-ui.min", "bootstrap.min", "insights.standalone", "script", "accordion", "landing", "pace.min", "typeahead", "display2" %>
-  <%= stylesheet_link_tag "reset", "jquery-impromptu.min", "jquery-ui.min", "bootstrap.min", "accordion", "insights.standalone", "table", "landing", "style", "bootstrap.min"%>
+ 
 	<title>Six Degrees of Francis Bacon</title>
 
 </head>
@@ -15,9 +13,10 @@
 <body>
 	<div id="everything">
 
-	<header>Six Degrees of Francis Bacon</header>
+	
 
 	<div id="results"></div>
+ 	 
 	<div id="graph"></div>
 	<div id="zoom">
 		<button class="icon" id="icon-zoomin" name="in"></button>
@@ -50,6 +49,7 @@
 			</div> -->
 
 			<!-- search bar -->
+			<!--
 			<h3 class="accordion_btn on"><span id="icon-search"></span>Search</h3>
 			<div class="accordion_content active" id="search">
 				<ul>
@@ -58,8 +58,9 @@
 					<li id="onegroup">Group</li>
 					<li id="twogroup">Shared groups</li>
 				</ul>
-
+			-->
 				<!-- NODE FORMS -->
+				<!--
 				<section id="onenodeform">
 					<input class="form-control" type="text" id="one" placeholder="Name">
 					<a id="slide1" ><article class="slider" name="1"></article></a>
@@ -77,8 +78,9 @@
 					<input type="checkbox" id="check-shared" value="table">Show table<br>
 					<button class="btn btn-primary" type="button" id="findtwonode" name="node">Find</button>
 				</section>
-
-				<!-- GROUP FORMS -->
+			-->
+			<!-- GROUP FORMS -->
+			<!---
 				<section id="onegroupform">
 					<input 	class="form-control" type="text" id="four" placeholder="Group">
 					<button class="btn btn-primary" type="button" id="findonegroup" name="group">Find</button>
@@ -90,9 +92,51 @@
 					<button class="btn btn-primary" type="button" id="findtwogroup" name="group">Find</button>
 				</section>
 			</div>
+			-->
+
+
+			<!-- person information bar -->
+			<h3 class="accordion_btn"><span id="icon-node"></span>Person</h3>
+			<div  class="accordion_content " id="nodeinfo">
+				<button class="icon" id="icon-tag"  name="group"></button>
+				<button class="icon" id="icon-link" name="edge"></button>
+				<p id="node-name"></p>
+				<b>BIRTH DATE&nbsp;</b> 				<a id="node-bdate"></a><br>
+				<b>DEATH DATE&nbsp;</b> 				<a id="node-ddate"></a><br>
+				<b>HISTORICAL SIGNIFICANCE</b><br>		<a id="node-significance"></a><br>
+				<b>GROUPS&nbsp;</b>						<a id="node-group"></a><br>
+				<b>CITATION</b><br>						<a id="node-cite"></a><br>
+				<b>LINKS&nbsp;</b>
+				<a id="node-DNBlink" target="_blank">Oxford DNB</a> &nbsp;
+				<a id="node-GoogleLink" target="_blank">Google</a> <br><br>
+				<a id="talkPageLink" target="_blank">View the Full Discussion</a>
+			</div>
+
+			<!-- relationship information bar -->
+			<h3 class="accordion_btn"><span id="icon-edge"></span>Relationship</h3>
+			<div  class="accordion_content " id="edgeinfo">
+				<button class="icon" id="icon-annotate" name="edge"></button>
+				<p id="edge-nodes"></p>
+				<b>CONFIDENCE&nbsp;</b> 	<a id="edge-confidence"></a><br>
+				<b>ANNOTATION&nbsp;</b> 	<a id="edge-annotation"></a><br>
+				<b>CREATED BY&nbsp;</b> 	<a id="edge-contributor"></a><br><br>
+				<a id="talkPageLink" target="_blank">View the Full Discussion and Citations</a>
+			</div>
+
+			<!-- group information bar -->
+			<h3 class="accordion_btn"><span id="icon-node"></span>Group</h3>
+			<div  class="accordion_content " id="edgeinfo">
+				<button class="icon" id="icon-annotate" name="edge"></button>
+				<p id="edge-nodes"></p>
+				<b>TITLE&nbsp;</b> 	<a id="group-title"></a><br>
+				<b>DESCRIPTION&nbsp;</b> 	<a id="group-description"></a><br>
+				<b>MEMBERS&nbsp;</b> 	<a id="group-members"></a><br>
+				<b>CREATED BY&nbsp;</b>	<a id="group-contributor"></a><br><br>
+				<a id="talkPageLink" target="_blank">View the Full Discussion and Citations</a>
+			</div>
 
 			<!-- contribution bar -->
-			<h3 class="accordion_btn"><span id="icon-add"></span>Add</h3>
+			<h3 class="accordion_btn"><span id="icon-add"></span>Contribute</h3>
 			<div  class="accordion_content" id="add">
 				<ul>
 					<li id="addnode">Add person</li>
@@ -180,31 +224,7 @@
 				</section>
 			</div>
 
-			<!-- relationship information bar -->
-			<h3 class="accordion_btn"><span id="icon-edge"></span>Relationship</h3>
-			<div  class="accordion_content " id="edgeinfo">
-				<button class="icon" id="icon-annotate" name="edge"></button>
-				<p id="edge-nodes"></p>
-				<b>CONFIDENCE&nbsp;</b> 	<a id="edge-confidence"></a><br>
-				<b>ANNOTATION&nbsp;</b> 	<a id="edge-annotation"></a><br>
-				<b>CONTRIBUTOR&nbsp;</b> 	<a id="edge-contributor"></a><br>
-			</div>
 
-			<!-- person information bar -->
-			<h3 class="accordion_btn"><span id="icon-node"></span>Person</h3>
-			<div  class="accordion_content " id="nodeinfo">
-				<button class="icon" id="icon-tag"  name="group"></button>
-				<button class="icon" id="icon-link" name="edge"></button>
-				<p id="node-name"></p>
-				<b>BIRTH DATE&nbsp;</b> 				<a id="node-bdate"></a><br>
-				<b>DEATH DATE&nbsp;</b> 				<a id="node-ddate"></a><br>
-				<b>HISTORICAL SIGNIFICANCE</b><br>		<a id="node-significance"></a><br>
-				<b>GROUPS&nbsp;</b>						<a id="node-group"></a><br>
-				<b>CITATION</b><br>						<a id="node-cite"></a><br>
-				<b>LINKS&nbsp;</b>
-				<a id="node-DNBlink" target="_blank">Oxford DNB</a> &nbsp;
-				<a id="node-GoogleLink" target="_blank">Google</a>
-			</div>
 		</div>
 	</aside>
 	
