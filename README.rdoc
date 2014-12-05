@@ -1,6 +1,3 @@
-Total records = uncertain+unlikely+possible+likely+certain
-77659 = 19670+20255+24463+9692+3489
-
 To prepare database by creating/clearing it:
 rake db:drop (if database is already created)
 rake db:create
