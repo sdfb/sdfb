@@ -3,15 +3,15 @@
 aside {
     position: fixed;
     left: 0;
-    top: 34px;
+    top: 9%;
     bottom: 0;
-    width: 300px;
+    width: 15%;
     height:100%;
 }
 
 #accordion {
     position: fixed;
-    width: 328px;
+    width: 300px;
 	background: #78A7BF;
 }
 
@@ -129,6 +129,11 @@ aside {
 	text-align: center;
 	font-size:14px;
 	padding-bottom: 15px;
+}
+
+#talkPageLink {
+    
+    font-size: 16px;
 }
 
 aside ::-webkit-scrollbar {  

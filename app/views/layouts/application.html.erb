@@ -3,32 +3,17 @@
 <head>
   <title>Sdfb</title>
   <%= include_gon %>
-	<link rel="stylesheet" type="text/css" href="http://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/2.2.2/css/bootstrap-responsive.min.css">
+	
  <%= javascript_include_tag "jquery-2.1.1.min", "jquery-ui.min", "insights.standalone", "script",  "landing", "pace.min", "typeahead", "display2", "bootstrap.min", "accordion" %>
-  <%= stylesheet_link_tag "reset", "jquery-impromptu.min", "jquery-ui.min", "bootstrap.min", "accordion", "insights.standalone", "table", "landing", "style", "bootstrap.min"%>
+  <%= stylesheet_link_tag "application"%>
   <%= csrf_meta_tags %>
 </head>
 <body>
 
 <!-- Nav Bar Header -->
 
-	<div id="user_nav">
-		<div id="logo"><%= image_tag "fb.png" %></div>
-		<header>Six Degrees of Francis Bacon</header>
+<%= render :partial => 'layouts/header'%>
 
-		<div id="sign">
-		  <% if current_user %>
-			Logged in as <%= current_user.email %>
-			<%= link_to "Sign out", sign_out_path %>
-		  <% else %>
-			<%= link_to "Sign up", sign_up_path %> or 
-			<%= link_to "Sign in", sign_in_path %>
-		  <% end %>
-		</div>
-		<div class="links"><a href="help">Help</a></div>
-		<div class="links"><a href="http://sixdegreesoffrancisbacon.com/">Blog</a></div>
-		<div class="links"><a href="about">About</a></div>
-	</div> 
   <% flash.each do |name, msg| %>
     <%= content_tag :div, msg, :id => "flash#{name}" %>
   <% end %> 
