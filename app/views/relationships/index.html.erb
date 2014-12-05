@@ -17,13 +17,13 @@
               <th>Original Certainty</th>
           <% end %>
       <% end %>
-      <th>Original Certainty</th>
       <th>Maximum Certainty</th>
       <% if current_user != nil %>
           <% if (current_user.user_type == "Admin")  %>
               <th>Created by</th>
           <% end %>
       <% end %>
+      <th>Birth Year Accuracy</th>
       <th>Start Date</th>
       <th>End Date</th>
       <th>Justification</th>
@@ -44,13 +44,13 @@
                 <td><%= relationship.original_certainty %></td>
             <% end %>
         <% end %>
-        <td><%= relationship.original_certainty %></td>
         <td><%= relationship.max_certainty %></td>
         <% if current_user != nil %>
             <% if (current_user.user_type == "Admin")  %>
                 <td><%= relationship.get_users_name %></td>
             <% end %>
         <% end %>
+        <th><%= relationship.edge_birthdate_certainty %></th>
         <td><%= relationship.start_date %></td>
         <td><%= relationship.end_date %></td>
         <td><%= relationship.justification %></td>

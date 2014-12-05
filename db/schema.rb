@@ -125,14 +125,15 @@ ActiveRecord::Schema.define(:version => 20141114024214) do
     t.integer  "person1_index"
     t.integer  "person2_index"
     t.integer  "created_by"
-    t.datetime "created_at",         :null => false
-    t.datetime "updated_at",         :null => false
+    t.datetime "created_at",               :null => false
+    t.datetime "updated_at",               :null => false
     t.decimal  "max_certainty"
     t.date     "start_date"
     t.date     "end_date"
     t.text     "justification"
     t.integer  "approved_by"
     t.date     "approved_on"
+    t.integer  "edge_birthdate_certainty"
   end
 
   create_table "user_group_contribs", :force => true do |t|

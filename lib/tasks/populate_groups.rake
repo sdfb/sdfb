@@ -13,8 +13,12 @@ namespace :db do
         groupData = group.split(",")
         name_input = groupData[1]
         description_input = '-'
+        created_by_input = User.for_email("sdfb_admin@example.com")[0].id
+        approved_by_input = User.for_email("sdfb_admin@example.com")[0].id
+        approved_on_input = Time.now
         count += 1
-        Group.create(name: name_input, description: description_input, is_approved: true)
+        Group.create(name: name_input, description: description_input, created_by: created_by_input,
+          approved_by: approved_by_input, approved_on: approved_on_input)
         puts count
        }
      }

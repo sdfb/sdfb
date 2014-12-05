@@ -8,6 +8,7 @@ class UpdateAttributesRel < ActiveRecord::Migration
   	add_column :relationships, :justification, :text
   	add_column :relationships, :approved_by, :integer
   	add_column :relationships, :approved_on, :datestamp
+    add_column :relationships, :edge_birthdate_certainty, :integer
   end
 
   def down

@@ -43,9 +43,9 @@ namespace :db do
         #puts "alt_death_year_input: " + alt_death_year_input
         historical_sig_input = personData[27]
         #puts "historical_sig_input: " + historical_sig_input
-        created_by_input = User.for_email("admin@example.com")[0].id
+        created_by_input = User.for_email("odnb_admin@example.com")[0].id
         #puts "Created by input: " + created_by_input.to_s
-        approved_by_input  = User.for_email("admin@example.com")[0].id
+        approved_by_input  = User.for_email("odnb_admin@example.com")[0].id
         #puts "approved_by_input: " + approved_by_input.to_s
         approved_on_input = Time.now
         #puts "approved_on_input: " + approved_on_input.to_s

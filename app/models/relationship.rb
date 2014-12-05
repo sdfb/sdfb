@@ -1,6 +1,6 @@
 class Relationship < ActiveRecord::Base
   attr_accessible :max_certainty, :created_by, :original_certainty, :person1_index, :person2_index,
-  :start_date, :end_date, :justification, :approved_by, :approved_on, :created_at
+  :start_date, :end_date, :justification, :approved_by, :approved_on, :created_at, :edge_birthdate_certainty
 
   # Relationships
   # -----------------------------
@@ -24,7 +24,8 @@ class Relationship < ActiveRecord::Base
   validates_numericality_of :max_certainty, :less_than_or_equal_to => 1
   ## justification must be at least 4 characters
   validates_length_of :justification, :minimum => 4, :if => :just_present?
-
+  # edge_birthdate_certainty is one included in the list
+  ##validates_inclusion_of :edge_birthdate_certainty, :in => %w(0 1 2), :allow_blank => true
 
   # Scope
   # ----------------------------- 
