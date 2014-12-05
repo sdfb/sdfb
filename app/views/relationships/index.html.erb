@@ -17,6 +17,7 @@
               <th>Original Certainty</th>
           <% end %>
       <% end %>
+      <th>Original Certainty</th>
       <th>Maximum Certainty</th>
       <% if current_user != nil %>
           <% if (current_user.user_type == "Admin")  %>
@@ -44,6 +45,7 @@
                 <td><%= relationship.original_certainty %></td>
             <% end %>
         <% end %>
+        <td><%= relationship.original_certainty %></td>
         <td><%= relationship.max_certainty %></td>
         <% if current_user != nil %>
             <% if (current_user.user_type == "Admin")  %>
