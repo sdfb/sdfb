@@ -3,6 +3,7 @@ class ApplicationController < ActionController::Base
   
 	private
 	def current_user
+		
 		@current_user ||= User.find(session[:user_id]) if session[:user_id]
 	end
 	helper_method :current_user
@@ -31,6 +32,7 @@ class ApplicationController < ActionController::Base
 		    # person_record.push(all_rels_for_person)
 		    # # once the record is complete, add it to all data
 		    data_table.push(person_record)
+
 	    end
     	return data_table
     end

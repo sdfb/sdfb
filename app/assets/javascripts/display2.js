@@ -1,4 +1,4 @@
-var francisID = 199;
+var francisID = 10000475;
     // group class
 function createGroup() {
   this.id = null;
@@ -21,13 +21,13 @@ function getSize(node) {
   var size = node.size; // default size
 
   if (numRels == 0) {
-    size = 10;
+    size = 14;
   }
   else {
-    size = numRels * 20;
+    size = numRels * 4;
 
-    if (size > 200) {
-      size = 200; // max cap on size
+    if (size > 80) {
+      size = 80; // max cap on size
     }
   }
 
@@ -100,7 +100,7 @@ var node = function() {
 
 function twoDegs(id, data) {
 
-  // francis ID = 968;
+ 
   
   var p = data.nodes[id];
   var keys = {};
@@ -110,7 +110,7 @@ function twoDegs(id, data) {
   if (p.rels.length > 0) {
     $.each(p.rels, function(index, value) {
       
-      if (value[2] == 0 && value[1] > 0.9) {
+      if (value[2] == 0 || value[1] < 0.7) {
         // not approved, move on
       }
       else {
@@ -121,7 +121,7 @@ function twoDegs(id, data) {
         }
               if (q && q.rels.length > 0) {
                 $.each(q.rels, function(index, value) {
-                  if (value[2] != 0) {
+                  if (value[2] != 0 && value[1] >= 0.7) {
                     var r = data.nodes[value[0]];
                     keys[r.id] = createNodeKey(r);
 
@@ -131,7 +131,7 @@ function twoDegs(id, data) {
 
                     if (r && r.rels.length > 0) {
                       $.each(r.rels, function(index, value) {
-                        if (value[2] != 0 && value[1] > 0.9) {
+                        if (value[2] != 0 && value[1] >= 0.7) {
                           var s = data.nodes[value[0]];
                           keys[s.id] = createNodeKey(s);
 
@@ -147,20 +147,19 @@ function twoDegs(id, data) {
             } 
         });
 
-        keys[p.id] = {"text": p.first + " " + p.last, "size": 14, "id": p.id,  "cluster": getCluster(p.birth)};
+        keys[p.id] = {"text": p.first + " " + p.last, "size": 20, "id": p.id,  "cluster": getCluster(p.birth)};
   }  
 
 $.each(keys, function(index, value) {
   nodes.push(value);
 });
 
-  $('#graph').html('');
   $("#results").html("Two degrees of <b>" + p.label);
   
   var options = { width: $("#graph").width(), height: $("#graph").height(), colors: getColors() };
   var graph = new Insights($("#graph")[0], nodes, edges, options).render();
-  graph.center();
-  graph.focus(francisID);
+  graph.focus(francisID).zoom(0.5);
+
 
 
   graph.on("node:click", function(d) {
@@ -176,8 +175,10 @@ $.each(keys, function(index, value) {
   $('#zoom button.icon').click(function(e){
     if (this.name == 'in') {
       graph.zoomIn();
+      graph.center();
     } else if (this.name == 'out') {
       graph.zoomOut();
+      graph.center();
     }
   });
 
@@ -391,6 +392,7 @@ function init() {
     
   });
 
+console.log(data);
 
   twoDegs(francisID, data);
   populateLists(data);
