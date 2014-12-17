@@ -3,7 +3,7 @@
 aside {
     position: fixed;
     left: 0;
-    top: 9%;
+    top: 84px;
     bottom: 0;
     width: 15%;
     height:100%;
@@ -116,6 +116,37 @@ aside {
 	background-color: #185D80;
 }
 
+#relationship-table{
+	display:block;
+	overflow:hidden;
+	width:100%;
+	
+}
+
+.relationship-cell{
+
+}
+
+.relationship-type{
+	float:left;
+	padding:1px 10px 1px 0px;
+}
+
+.relationship-from{
+	float:left;
+	padding:1px 10px 1px 10px;
+}
+
+.relationship-to{
+	float:left;
+	padding:1px 10px 1px 10px;
+}
+
+.relationship-confidence{
+	float:left;
+	padding:1px 0px 1px 10px;
+}
+
 #addedge {
     width: 250px;
 }
@@ -132,8 +163,19 @@ aside {
 }
 
 #talkPageLink {
-    
-    font-size: 16px;
+	text-align:center;
+  display:block;
+  margin:10px 20px 10px 10px;
+  padding:5px 7px;
+  background-color:#666;
+	font-size: 14px;
+	-moz-border-radius: 10px;
+	-webkit-border-radius: 10px;
+	border-radius: 10px;
+	-khtml-border-radius: 10px; 
+	-webkit-box-shadow: 10px 10px 10px 0px rgba(0,0,0,0.75);
+	-moz-box-shadow: 10px 10px 10px 0px rgba(0,0,0,0.75);
+	box-shadow: 10px 10px 10px 0px rgba(0,0,0,0.75);
 }
 
 aside ::-webkit-scrollbar {  
