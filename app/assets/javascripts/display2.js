@@ -1,4 +1,4 @@
-var francisID = 10000475;
+var francisID = 10000473;
     // group class
 function createGroup() {
   this.id = null;
@@ -110,7 +110,7 @@ function twoDegs(id, data) {
   if (p.rels.length > 0) {
     $.each(p.rels, function(index, value) {
       
-      if (value[2] == 0 || value[1] < 0.7) {
+      if (value[2] == 0 || value[1] < 0.75) {
         // not approved, move on
       }
       else {
@@ -121,7 +121,7 @@ function twoDegs(id, data) {
         }
               if (q && q.rels.length > 0) {
                 $.each(q.rels, function(index, value) {
-                  if (value[2] != 0 && value[1] >= 0.7) {
+                  if (value[2] != 0 && value[1] >= 0.75) {
                     var r = data.nodes[value[0]];
                     keys[r.id] = createNodeKey(r);
 
@@ -131,7 +131,7 @@ function twoDegs(id, data) {
 
                     if (r && r.rels.length > 0) {
                       $.each(r.rels, function(index, value) {
-                        if (value[2] != 0 && value[1] >= 0.7) {
+                        if (value[2] != 0 && value[1] >= 0.75) {
                           var s = data.nodes[value[0]];
                           keys[s.id] = createNodeKey(s);
 
@@ -150,15 +150,18 @@ function twoDegs(id, data) {
         keys[p.id] = {"text": p.first + " " + p.last, "size": 20, "id": p.id,  "cluster": getCluster(p.birth)};
   }  
 
+
 $.each(keys, function(index, value) {
   nodes.push(value);
 });
+
+edges.reverse();
 
   $("#results").html("Two degrees of <b>" + p.label);
   
   var options = { width: $("#graph").width(), height: $("#graph").height(), colors: getColors() };
   var graph = new Insights($("#graph")[0], nodes, edges, options).render();
-  graph.focus(francisID).zoom(0.5);
+  graph.focus(francisID);
 
 
 
@@ -375,7 +378,7 @@ function resetInputs(){
 function init() {
   var people = gon.people;
 
-	var data = { nodes: [], edges: [], nodes_names: [], groups_names: [], nodeKeys: []};
+	var data = { nodes: [], edges: [], nodes_names: [], groups_names: [], nodeKeys: [] };
   
   $.each(people, function(index, value) { 
     var n = new node();
