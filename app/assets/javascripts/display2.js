@@ -149,7 +149,18 @@ function twoDegs(id, data) {
 
         keys[p.id] = {"text": p.first + " " + p.last, "size": 20, "id": p.id,  "cluster": getCluster(p.birth)};
   }  
-
+	
+	
+// Returns list of groups that a node belongs to
+function findGroups(node, data){
+	var groups = [];
+	for(var key in data.groups){
+		if ((data.groups[key].nodes).indexOf(node.id)>-1)
+			groups.push(data.groups[key].name);
+	}
+	var strgroups = groups.join(', ')
+	return strgroups;
+}		
 
 $.each(keys, function(index, value) {
   nodes.push(value);
@@ -169,6 +180,7 @@ edges.reverse();
     var clicked = data.nodes[d.id];
     showNodeInfo(clicked, findGroups(clicked, data));
   });
+	
   graph.on("edge:click", function(d) {
     Pace.restart();
     var id1 = parseInt(d.source.id);
@@ -232,10 +244,13 @@ function writeGroupTable(dataSource, title){
     $("#icon-info").tooltip({placement: 'left', title: 'Scroll to zoom, double click on node or edge for more information, single click to reset view'});
     $("#icon-color").tooltip({placement: 'left', title: 'Click to view color legend'});
 
+
+		
 // Displays node information
 function showNodeInfo(data, groups){
   accordion("node");
-  $("#node-name").text(data.first+ " "+ data.last);
+  $("#node-name1").text(data.first+ " "+ data.last);
+	$("#node-name2").text(data.first+ " "+ data.last);
   $("#node-bdate").text(data.birth);
   $("#node-ddate").text(data.death);
   $("#node-significance").text(data.occupation);
@@ -281,7 +296,7 @@ function writeNetworkTable(dataSource, title){
         }
     });
 };
-
+/*
 // Displays edge information 
 function getAnnotation(id1, id2, data) {
   var confidence = findConfidence(id1, id2, data);
@@ -308,7 +323,7 @@ function getAnnotation(id1, id2, data) {
     $("#entry_1321382891").val(data.nodes[id2].name);
   });
  }
-
+*/
  // Takes in the title and data, allows users to download the data
 function downloadData(data, title) {
   var result = title + " \n" + 'First Name,Last Name,Birth Date,Death Date,Historical Significance' + "\n";

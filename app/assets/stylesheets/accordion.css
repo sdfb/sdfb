@@ -48,10 +48,11 @@ aside {
 	display: none;
 	color:#222;
 	font-size:12px;
-	padding: 25px 22px;
+	padding: 20px 10px 20px 10px;
 	line-height: 25px;
 	text-align:left;
 	height: calc(90% - 140px);
+	overflow:hidden;
 }
 
 .accordion_content .active {
@@ -59,8 +60,9 @@ aside {
 }
 
 .accordion_content section {
-    margin-top: 100px;
-    display: none;
+  margin: 60px 0px 20px 0px;
+	padding: 0px 15px 0px 5px;
+  display: none;
 }
 
 .accordion_content section input, 
@@ -90,30 +92,29 @@ aside {
 .accordion_content ul {
     text-align: center;
     display: inline;
-    margin: 0;
+    margin-left: -20px;
     list-style: none;
 }
 
 .accordion_content ul li {
-	background-color: #fff;
+	color:#fff;
+	background-color: #185D80;
 	float: left;
 	cursor: pointer;
-    width: 125px;
-    height: 10%;
+	padding:0px 13px;
+    width: auto;
+    height: 45px;
     line-height: 45px;
     -webkit-transition: all 0.2s;
     -moz-transition: all 0.2s;
     -ms-transition: all 0.2s;
     -o-transition: all 0.2s;
     transition: all 0.2s;
-    -moz-box-shadow: inset #78A7BF 4px 4px 0 0;
-    -webkit-box-shadow: inset #78A7BF 4px 4px 0 0;
-    box-shadow: inset #78A7BF 4px 4px 0 0;
 }
 
 .accordion_content ul li:hover, .accordion_content ul li.clicked {
 	color: #fff;	
-	background-color: #185D80;
+	background-color: #78A7BF;
 }
 
 #relationship-table{
@@ -147,8 +148,16 @@ aside {
 	padding:1px 0px 1px 10px;
 }
 
+.contribute-tab{
+	margin-top:-20px;
+}
+
 #addedge {
-    width: 250px;
+
+}
+
+#addtag button{
+	margin:7px 0px 0px 0px;
 }
 
 #nodeinfo a, #edgeinfo a {
@@ -157,12 +166,12 @@ aside {
 
 #nodeinfo p, #edgeinfo p {
 	color: #fff;
-	text-align: center;
 	font-size:14px;
-	padding-bottom: 15px;
 }
 
-#talkPageLink {
+.talkPageLink {
+	color:#fff;
+	font-size:14px;
 	text-align:center;
   display:block;
   margin:10px 20px 10px 10px;
@@ -176,6 +185,7 @@ aside {
 	-webkit-box-shadow: 10px 10px 10px 0px rgba(0,0,0,0.75);
 	-moz-box-shadow: 10px 10px 10px 0px rgba(0,0,0,0.75);
 	box-shadow: 10px 10px 10px 0px rgba(0,0,0,0.75);
+	border:none;
 }
 
 aside ::-webkit-scrollbar {  

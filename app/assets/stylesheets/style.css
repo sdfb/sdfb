@@ -307,3 +307,9 @@ header {
 	padding:5px;
 
 }*/
+
+.clearfix{
+	clear: both;
+	content: "";
+	display: block;
+}

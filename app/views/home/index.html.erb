@@ -100,7 +100,7 @@
 			<div  class="accordion_content " id="nodeinfo">
 				<button class="icon" id="icon-tag"  name="group"></button>
 				<button class="icon" id="icon-link" name="edge"></button>
-				<p id="node-name"></p>
+				<p id="node-name1" class="node-name"></p>
 				<b>BIRTH DATE&nbsp;</b> 				<a id="node-bdate"></a><br>
 				<b>DEATH DATE&nbsp;</b> 				<a id="node-ddate"></a><br>
 				<b>HISTORICAL SIGNIFICANCE</b><br>		<a id="node-significance"></a><br>
@@ -109,13 +109,14 @@
 				<b>LINKS&nbsp;</b>
 				<a id="node-DNBlink" target="_blank">Oxford DNB</a> &nbsp;
 				<a id="node-GoogleLink" target="_blank">Google</a> <br><br>
-				<a id="talkPageLink" target="_blank">View Entry Discussion</a>
+				<a class="talkPageLink" target="_blank">View Entry Discussion</a>
 			</div>
 
 			<!-- relationship information bar -->
 			<h3 class="accordion_btn"><span id="icon-edge"></span>Relationship</h3>
 			<div  class="accordion_content " id="edgeinfo">
 				<button class="icon" id="icon-annotate" name="edge"></button>
+				<p id="node-name2" class="node-name"></p>
 				<p id="edge-nodes"></p>
 				<b>Enemy of&nbsp;</b> 	<a id="edge-relation"></a><br>
 				<b>CONFIDENCE&nbsp;</b> 	<a id="edge-confidence"></a><br>
@@ -126,7 +127,7 @@
 					<b class="relationship-to relationship-cell">To</b>
 					<b class="relationship-confidence relationship-cell">Confidence</b>
 				</span>
-				<a id="talkPageLink" target="_blank">View Entry Discussion</a>
+				<a class="talkPageLink" target="_blank">View Entry Discussion</a>
 				<b>CONTRIBUTORS: &nbsp;</b> 	<a id="edge-contributor"></a><br><br>
 			</a>
 			</div>
@@ -134,22 +135,25 @@
 			<!-- group information bar -->
 			<h3 class="accordion_btn"><span id="icon-node"></span>Group</h3>
 			<div  class="accordion_content " id="edgeinfo">
+			<select>
+				<option>Virginia Company</option>
+			</select>
 				<button class="icon" id="icon-annotate" name="edge"></button>
 				<p id="edge-nodes"></p>
-				<b>TITLE&nbsp;</b> 	<a id="group-title"></a><br>
 				<b>DESCRIPTION&nbsp;</b> 	<a id="group-description"></a><br>
 				<b>MEMBERS&nbsp;</b> 	<a id="group-members"></a><br>
 				<b>CREATED BY&nbsp;</b>	<a id="group-contributor"></a><br><br>
-				<a id="talkPageLink" target="_blank">View Entry Discussion</a>
+				<a class="talkPageLink" target="_blank">View Entry Discussion</a>
 			</div>
 
 			<!-- contribution bar -->
 			<h3 class="accordion_btn"><span id="icon-add"></span>Contribute</h3>
 			<div  class="accordion_content" id="add">
-				<ul>
-					<li id="addnode">Add person</li>
-					<li id="addgroup">Add group</li>
-					<li id="addedge">Annotate relationship</li>
+				<ul class="clearfix">
+					<li id="addnode">Person</li>
+					<li id="addedge">Relationship</li>
+					<li id="addgroup">Group</li>
+					<li id="addtag"><button class="icon" id="icon-tag" name="group" data-original-title="" title=""></button></li>
 				</ul>
 				
 				<section id="addnodeform">
@@ -160,15 +164,54 @@
 					<form action="https://docs.google.com/forms/d/151VLJDd62rmg_elgMLsiRjwmN0ecuZZbWdFz1QazhtA/formResponse" id="googleaddnode" method="post" target="hidden_iframe1" onsubmit="submitted=true;">
 						<input 	class="form-control" type="text" name="entry.1804360896" id="entry_1804360896" placeholder="First Name">
 						<input 	class="form-control" type="text" name="entry.754797571"  id="entry_754797571"  placeholder="Last Name">
+						<input 	class="form-control" type="text" name="entry.754797571"  id="entry_754797571"  placeholder="Prefix">
+						<input 	class="form-control" type="text" name="entry.754797571"  id="entry_754797571"  placeholder="Suffix">
+						<input 	class="form-control" type="text" name="entry.754797571"  id="entry_754797571"  placeholder="Title">
 						<input 	class="form-control" type="text" name="entry.524366257"  id="entry_524366257"  placeholder="Birth Date">
 						<input 	class="form-control" type="text" name="entry.1810714929" id="entry_1810714929" placeholder="Death Date">
 						<input 	class="form-control" type="text" name="entry.2129738910" id="entry_2129738910" placeholder="Historical Significance">
-						<input 	class="form-control" type="text" name="entry.1201727393" id="entry_1201727393" placeholder="Contributor (Your Name)">
-						<button class="btn btn-primary" type="submit" name="submit" id="submitnode">Submit</button>
+						<input 	class="form-control" type="text" name="entry.1201727393" id="entry_1201727393" style="display:hidden;" placeholder="Contributor (Your Name)">
+						<button class="talkPageLink" type="submit" name="submit" id="submitnode">Submit for Approval</button>
+					</form>
+				</section>
+				
+				<section id="addedgeform">
+					<script type="text/javascript">
+						var submitted = false;
+					</script>
+					<iframe name="hidden_iframe1" id="hidden_iframe2 " style="display:none;" onload=""></iframe>
+					<form action="some google docs thing" id="googleaddnode" method="post" target="hidden_iframe1" onsubmit="submitted=true;">
+						<input 	class="form-control" type="text" name="entry.1804360896" id="entry_1804360896" placeholder="Person 1">
+						<select placeholder="Type">
+							<option>Aunt/Uncle of</option>
+						</select>
+						<input 	class="form-control" type="text" name="entry.1804360896" id="entry_1804360896" placeholder="Person 2">
+						<select placeholder="Confidence">
+							<option>High</option>
+						</select>
+						<input 	class="form-control" type="text" name="entry.524366257"  id="entry_524366257"  placeholder="Start Date">
+						<input 	class="form-control" type="text" name="entry.1810714929" id="entry_1810714929" placeholder="End Date">
+						<input 	class="form-control" type="text" name="entry.1810714929" id="entry_1810714929" placeholder="Justification">
+						<input 	class="form-control" type="text" name="entry.1201727393" id="entry_1201727393" style="display:hidden;" placeholder="Contributor (Your Name)">
+						<button class="talkPageLink" type="submit" name="submit" id="submitnode">Submit for Approval</button>
+					</form>
+				</section>
+				
+				
+				<section id="addgroupform">
+					<script type="text/javascript">
+						var submitted = false;
+					</script>
+					<iframe name="hidden_iframe3" id="hidden_iframe3" style="display:none;" onload=""></iframe>
+					<form action="https://docs.google.com/forms/d/1HbzCpwoLGMxEMVoRFiEA52SZdJa-8QpRO8cXVbe8_8Y/formResponse" id="googleaddgroup" method="post" target="hidden_iframe3" onsubmit="submitted=true;">
+						<input 	class="form-control" type="text" name="entry.110233074"  id="entry_110233074"  placeholder="Description">
+						<input 	class="form-control" type="text" name="entry.1177061505" id="entry_1177061505" placeholder="Justification">
+						<input 	class="form-control" type="text" name="entry.370499701" id="entry_370499701" placeholder="Proposed Members">
+						<button class="talkPageLink" type="submit" name="submit" id="submitgroup">Submit for Approval</button>
 					</form>
 				</section>
 
-				<section id="addedgeform">
+				<!--<section id="addedgeform">
 					<script type="text/javascript">
 						var submitted = false;
 					</script>
@@ -214,22 +257,10 @@
 						<textarea 	class="form-control" type="text" name="entry.837175332" id="entry_837175332" placeholder="Annotation"></textarea>
 						<input		class="form-control" type="text" name="entry.484668707" id="entry_484668707" placeholder="Bibliographical Source(s)">
 						<input 		class="form-control" type="text" name="entry.1767559421" id="entry_1767559421" placeholder="Contributor (Your Name) ">
-						<button 	class="btn btn-primary" type="submit" name="submit" id="submitedge">Submit</button>
+						<button 	class="btn btn-primary" type="submit" name="submit" id="submitedge">Submit for Approval</button>
 					</form>
-				</section>
+				</section>-->
 
-				<section id="addgroupform">
-					<script type="text/javascript">
-						var submitted = false;
-					</script>
-					<iframe name="hidden_iframe3" id="hidden_iframe3" style="display:none;" onload=""></iframe>
-					<form action="https://docs.google.com/forms/d/1HbzCpwoLGMxEMVoRFiEA52SZdJa-8QpRO8cXVbe8_8Y/formResponse" id="googleaddgroup" method="post" target="hidden_iframe3" onsubmit="submitted=true;">
-						<input 	class="form-control" type="text" name="entry.110233074"  id="entry_110233074"  placeholder="Group Name">
-						<input 	class="form-control" type="text" name="entry.1177061505" id="entry_1177061505" placeholder="Person Name">
-						<input 	class="form-control" type="text" name="entry.370499701" id="entry_370499701" placeholder="Contributor (Your Name) ">
-						<button class="btn btn-primary" type="submit" name="submit" id="submitgroup">Submit</button>
-					</form>
-				</section>
 			</div>
 
 

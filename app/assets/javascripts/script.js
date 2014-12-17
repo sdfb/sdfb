@@ -34,9 +34,9 @@ $(document).ready(function() {
 
 	// Shows search bars when click on side menu
 	$('.accordion_content ul li').click(function(e){
-		document.getElementById('googleaddnode').reset();
-		document.getElementById('googleaddedge').reset();
-        document.getElementById('googleaddgroup').reset();
+		//document.getElementById('googleaddnode').reset();
+		//document.getElementById('googleaddedge').reset();
+    //    document.getElementById('googleaddgroup').reset();
         $('.accordion_content ul li').removeClass('clicked');
         $(this).addClass('clicked');
 		$('section').css('display','none');	
