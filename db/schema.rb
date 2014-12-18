@@ -130,6 +130,7 @@ ActiveRecord::Schema.define(:version => 20141103033703) do
     t.date     "end_date"
     t.text     "justification"
     t.integer  "approved_by"
+    t.datetime "approved_on"
     t.integer  "edge_birthdate_certainty"
     t.datetime "created_at",               :null => false
     t.datetime "updated_at",               :null => false

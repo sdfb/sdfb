@@ -10,7 +10,7 @@ class CreateRelationships < ActiveRecord::Migration
       t.date :end_date
       t.text :justification
       t.integer :approved_by
-      t.datetime :approved_by
+      t.datetime :approved_on
       t.integer :edge_birthdate_certainty
 
       t.timestamps
