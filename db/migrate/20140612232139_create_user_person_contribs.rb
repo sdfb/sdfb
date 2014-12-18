@@ -5,7 +5,8 @@ class CreateUserPersonContribs < ActiveRecord::Migration
       t.integer :created_by
       t.text :annotation
       t.text :bibliography
-      t.boolean :is_flagged
+      t.text :edited_by_on, :default => [].to_yaml
+      t.text :reviewed_by_on, :default => [].to_yaml
 
       t.timestamps
     end

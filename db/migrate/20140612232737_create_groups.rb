@@ -4,7 +4,9 @@ class CreateGroups < ActiveRecord::Migration
       t.integer :created_by
       t.string :name
       t.text :description
-      t.boolean :is_approved
+      t.text :justification
+      t.string :approved_by
+      t.string :approved_on
 
       t.timestamps
     end

@@ -15,7 +15,11 @@ namespace :db do
         personData = person.split("\t")
         original_id_input = personData[0]
         puts original_id_input
-        odnb_id_input = personData[2]
+        if personData[2] != "N/A"
+          odnb_id_input = personData[2]
+        else
+          odnb_id_input = nil
+        end
         #puts "ODNB input: " + odnb_id_input
         prefix_input = personData[3]
         #puts "Prefix: " + prefix_input
@@ -29,19 +33,19 @@ namespace :db do
         #puts "search_names_input: " + search_names_input
         title_input = personData[7]
         #puts "title_input: " + title_input
-        birth_year_type_input = personData[20]
+        birth_year_type_input = personData[19]
         #puts "birth_year_type_input: " + birth_year_type_input 
-        death_year_type_input = personData[23]
+        death_year_type_input = personData[22]
         #puts "death_year_type_input: " + death_year_type_input
-        ext_birth_year_input = personData[21]
+        ext_birth_year_input = personData[20]
         #puts "ext_birth_year_input: " + ext_birth_year_input
-        ext_death_year_input = personData[24]
+        ext_death_year_input = personData[23]
         #puts "ext_death_year_input: " + ext_death_year_input
-        alt_birth_year_input = personData[22]
+        alt_birth_year_input = personData[21]
         #puts "alt_birth_year_input" + alt_birth_year_input
-        alt_death_year_input = personData[25]
+        alt_death_year_input = personData[24]
         #puts "alt_death_year_input: " + alt_death_year_input
-        historical_sig_input = personData[27]
+        historical_sig_input = personData[26]
         #puts "historical_sig_input: " + historical_sig_input
         created_by_input = User.for_email("odnb_admin@example.com")[0].id
         #puts "Created by input: " + created_by_input.to_s
@@ -52,20 +56,6 @@ namespace :db do
         rel_sum_input = []
         count += 1
         puts first_name_input + " " + last_name_input
-        # Person.create(odnb_id: odnb_id_input, prefix: prefix_input, first_name: first_name_input, last_name: last_name_input, 
-        #   suffix: suffix_input, title: title_input, search_names_all: search_names_input, 
-        #   birth_year_type: birth_year_type_input, ext_birth_year: ext_birth_year_input, alt_birth_year: alt_birth_year_input,
-        #   death_year_type: death_year_type_input, ext_death_year: ext_death_year_input, alt_death_year: alt_death_year_input, 
-        #   historical_significance: historical_sig_input, rel_sum: rel_sum_input, created_by: created_by_input,
-        #   approved_by: approved_by_input, approved_on: approved_on_input)
-
-
-       # Person.create(:odnb_id => odnb_id_input, :prefix => prefix_input, :first_name => first_name_input, :last_name => last_name_input, 
-       #    :suffix => suffix_input, :title => title_input, :search_names_all => search_names_input, 
-       #    :birth_year_type => birth_year_type_input, :ext_birth_year => ext_birth_year_input, :alt_birth_year => alt_birth_year_input,
-       #    :death_year_type => death_year_type_input, :ext_death_year => ext_death_year_input, :alt_death_year => alt_death_year_input, 
-       #    :historical_significance => historical_sig_input, :rel_sum => rel_sum_input, :created_by => created_by_input,
-       #    :approved_by => approved_by_input, :approved_on => approved_on_input)
 
         a_person = Person.new do |p| 
           p.id = original_id_input
@@ -94,13 +84,6 @@ namespace :db do
         # puts Person.for_odnb_id(odnb_id_input)[0].id;
        }
 
-
-
-        # a_person = Person.new do |p| 
-        #     p.id = original_id_input
-        #     p.save
-        # end
-        #}
     }
     puts count
     inFile.close
