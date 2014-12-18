@@ -72,23 +72,23 @@ $(document).ready(function() {
 	$(".slider").slider({
         animate: true,
         range: "min",
-        value: 3,
+        value: 50,
         min: 0,
-        max: 4,
+        max: 100,
         step: 1,
         // Gets a live reading of the value and prints it on the page
         slide: function( event, ui ) {
         	var result = "Very unlikely";
-        	if (ui.value == 1) {
+        	if (ui.value > 20 && ui.value < 41) {
         		result = "Unlikely";
-        	} else if (ui.value == 2) {
+        	} else if (ui.value > 40 && ui.value < 61) {
         		result = "Possible";
-        	} else if (ui.value == 3) {
+        	} else if (ui.value > 60 && ui.value < 81) {
         		result = "Likely";
-        	} else if (ui.value == 4){
+        	} else if (ui.value > 80){
                 result = "Certain"
             }
-            $("#slider-result" + this.attributes.name.nodeValue).html( result + " relationships");
+            $("#slider-result" + this.attributes.name.nodeValue).html( result + " relationships @ " + ui.value + "%");
         },
 
         // Updates the hidden form field so we can submit the data using a form
@@ -96,4 +96,23 @@ $(document).ready(function() {
             $("#confidence" + this.attributes.name.value).attr('value', ui.value);
         }
     });
- });
+
+
+ 
+		//  Sliding animation
+		$(".slider-date").slider({
+					animate: true,
+					range: "min",
+					value: 3,
+					min: 1500,
+					max: 1700,
+					step: 1,
+					values: [ 1557, 1642 ],
+					slide: function( event, ui ) {
+						$( "#search-date-range" ).val( ui.values[ 0 ] + " - " + ui.values[ 1 ] );
+					}
+		});
+		$( "#search-date-range" ).val( $( ".slider-date" ).slider( "values", 0 ) + " - " + $( ".slider-date" ).slider( "values", 1 ) );
+		
+	
+});

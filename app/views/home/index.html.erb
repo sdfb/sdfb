@@ -41,7 +41,7 @@
 
 			<!-- about bar
 			<h3 class="accordion_btn"><span id="icon-about"></span>About</h3>
-			<div  class="accordion_content " id="about">
+			<div  class="accordion_content" id="about">
 				Six Degrees of Francis Bacon (SDFB) is a digital reconstruction of the early modern social network (EMSN) that scholars and students from all over the world will be able to collaboratively expand, revise, curate, and critique.
 				<a href="http://sixdegreesoffrancisbacon.com/overview" target="_blank" style="color:#aae"> Read blog...</a><br><br>
 				<b>CREDITS</b><br>
@@ -49,24 +49,26 @@
 			</div> -->
 
 			<!-- search bar -->
-			<!--
 			<h3 class="accordion_btn on"><span id="icon-search"></span>Search</h3>
 			<div class="accordion_content active" id="search">
-				<ul>
-					<li id="onenode" class="clicked">Network</li>		
-					<li id="twonode">Shared network</li>
-					<li id="onegroup">Group</li>
-					<li id="twogroup">Shared groups</li>
+				<ul class="search-table">
+					<li id="onenode" class="clicked btnl">Network</li>		
+					<li id="twonode" class="btnl">Shared network</li>
+					<li id="onegroup" class="btnl">Group</li>
+					<li id="twogroup" class="btnl">Shared groups</li>
 				</ul>
-			-->
+
 				<!-- NODE FORMS -->
-				<!--
+
 				<section id="onenodeform">
 					<input class="form-control" type="text" id="one" placeholder="Name">
-					<a id="slide1" ><article class="slider" name="1"></article></a>
+					<span id="slide1" ><article class="slider" name="1"></article></span>
 					<article class="slider-result" id="slider-result1">Likely relationships</article>
 					<input id="confidence1" type="hidden" value="3"/>
-					<button class="btn btn-primary" type="button" id="findonenode" name="node">Find</button>
+					<label for="search-date-range">Date Range:</label><input type="text" id="search-date-range" readonly >
+					<span id="slide2" ><article class="slider-date" name="2"></article></span>
+					<input type="checkbox" name="show-table" value="show-table" id="show-table">Show Table</input>
+					<button class="talkPageLink" type="button" id="findonenode" name="node">Find</button>
 				</section>
 
 				<section id="twonodeform">
@@ -76,23 +78,23 @@
 					<article class="slider-result" id="slider-result2">Likely relationships</article>
 					<input id="confidence2" type="hidden" value="3"/>
 					<input type="checkbox" id="check-shared" value="table">Show table<br>
-					<button class="btn btn-primary" type="button" id="findtwonode" name="node">Find</button>
+					<button class="talkPageLink" type="button" id="findtwonode" name="node">Find</button>
 				</section>
-			-->
+
 			<!-- GROUP FORMS -->
-			<!---
+
 				<section id="onegroupform">
 					<input 	class="form-control" type="text" id="four" placeholder="Group">
-					<button class="btn btn-primary" type="button" id="findonegroup" name="group">Find</button>
+					<button class="talkPageLink" type="button" id="findonegroup" name="group">Find</button>
 				</section>
 
 				<section id="twogroupform">
 					<input 	class="form-control" type="text" id="five" placeholder="Group 1"><br>
 					<input 	class="form-control" type="text" id="six" placeholder="Group 2"><br>
-					<button class="btn btn-primary" type="button" id="findtwogroup" name="group">Find</button>
+					<button class="talkPageLink" type="button" id="findtwogroup" name="group">Find</button>
 				</section>
 			</div>
-			-->
+
 
 
 			<!-- person information bar -->
@@ -148,7 +150,7 @@
 
 			<!-- contribution bar -->
 			<h3 class="accordion_btn"><span id="icon-add"></span>Contribute</h3>
-			<div  class="accordion_content" id="add">
+			<div  class="accordion_content tabs" id="add">
 				<ul class="clearfix">
 					<li id="addnode">Person</li>
 					<li id="addedge">Relationship</li>
