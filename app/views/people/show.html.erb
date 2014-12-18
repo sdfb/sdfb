@@ -6,51 +6,70 @@
 <dl class="dl-horizontal">
   <dt><strong>Person id:</strong></dt>
   <dd><%= @person.id %></dd>
-  <dt><strong>ODNB id:</strong></dt>
-  <dd><%= @person.odnb_id %></dd>
-  <dt><strong>Title:</strong></dt>
-  <dd><%= @person.title %></dd>
-  <dt><strong>Prefix:</strong></dt>
-  <dd><%= @person.prefix %></dd>
+  <% if ! @person.odnb_id.blank? %>
+    <dt><strong>ODNB id:</strong></dt>
+    <dd><%= @person.odnb_id %></dd>
+  <% end %>
+  <% if ! @person.title.blank? %>
+    <dt><strong>Title:</strong></dt>
+    <dd><%= @person.title %></dd>
+  <% end %>
+  <% if ! @person.prefix.blank? %>
+    <dt><strong>Prefix:</strong></dt>
+    <dd><%= @person.prefix %></dd>
+  <% end %>
   <dt><strong>First name:</strong></dt>
   <dd><%= @person.first_name %></dd>
-  <dt><strong>Last Name:</strong></dt>
-  <dd><%= @person.last_name %></dd>
-  <dt><strong>Suffix:</strong></dt>
-  <dd><%= @person.suffix %></dd>
-  <dt><strong>All known identities:</strong></dt>
-  <dd><%= @person.search_names_all %></dd>
+  <% if ! @person.last_name.blank? %>
+    <dt><strong>Last Name:</strong></dt>
+    <dd><%= @person.last_name %></dd>
+  <% end %>
+  <% if ! @person.suffix.blank? %>
+    <dt><strong>Suffix:</strong></dt>
+    <dd><%= @person.suffix %></dd>
+  <% end %>
+  <% if ! @person.search_names_all.blank? %>
+    <dt><strong>All known identities:</strong></dt>
+    <dd><%= @person.search_names_all %></dd>
+  <% end %>
   <dt><strong>Created by:</strong></dt>
-  <dd><%= 
-  if @person.created_by.nil?
-    'ODNB'
-  else
-    @person.created_by
-  end
-  %></dd>
-  <dt><strong>Birth Year Type:</strong></dt>
-  <dd><%= @person.birth_year_type %></dd>
+  <dd><%= link_to User.find(@person.created_by).username,  user_path(@person.created_by) %></dd>
+  <% if ! @person.birth_year_type.blank? %>
+    <dt><strong>Birth Year Type:</strong></dt>
+    <dd><%= @person.birth_year_type %></dd>
+  <% end %>
   <dt><strong>Extant birth year:</strong></dt>
   <dd><%= @person.ext_birth_year %></dd>
-  <dt><strong>Alternate birth year:</strong></dt>
-  <dd><%= @person.alt_birth_year %></dd>
-
+  <% if ! @person.alt_birth_year.blank? %>
+    <dt><strong>Alternate birth year:</strong></dt>
+    <dd><%= @person.alt_birth_year %></dd>
+  <% end %>
   <dt><strong>Death Year Type:</strong></dt>
   <dd><%= @person.death_year_type %></dd>
   <dt><strong>Extant death year:</strong></dt>
   <dd><%= @person.ext_death_year %></dd>
-  <dt><strong>Alternate death year:</strong></dt>
-  <dd><%= @person.alt_death_year %></dd>
-  <dt><strong>Historical Significance:</strong></dt>
-  <dd><%= @person.historical_significance %></dd>
+  <% if ! @person.alt_death_year.blank? %>
+    <dt><strong>Alternate death year:</strong></dt>
+    <dd><%= @person.alt_death_year %></dd>
+  <% end %>
+  <% if ! @person.historical_significance.blank? %>
+    <dt><strong>Historical Significance:</strong></dt>
+    <dd><%= @person.historical_significance %></dd>
+  <% end %>
   <dt><strong>Relationship Summary:</strong></dt>
-  <dd><%= @person.rel_sum %></dd>
+  <% if ! @person.rel_sum.empty? %>
+    <dd><%= @person.rel_sum %></dd>
+  <% else %>
+    <dd>No relationships</dd>
+  <% end %>
   <dt><strong>Approved by:</strong></dt>
-  <dd><%= @person.approved_by %></dd>
+  <dd><%= link_to User.find(@person.approved_by).username,  user_path(@person.approved_by) %></dd>
   <dt><strong>Approved on:</strong></dt>
   <dd><%= @person.approved_on %></dd>
-  <dt><strong>Justification:</strong></dt>
-  <dd><%= @person.justification %></dd>
+  <% if ! @person.justification.blank? %>
+    <dt><strong>Justification:</strong></dt>
+    <dd><%= @person.justification %></dd>
+  <% end %>
   <dt><strong>Created at:</strong></dt>
   <dd><%= @person.created_at %></dd>
 </dl>

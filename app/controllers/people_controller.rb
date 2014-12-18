@@ -5,11 +5,13 @@ class PeopleController < ApplicationController
   # before_filter :check_login
   before_filter :check_login, :only => [:new, :edit]
   authorize_resource
+  require 'will_paginate'
+  require 'will_paginate/array'
   
   def index
     # gon.people = Person.all_approved
     # @people_approved = Person.all_approved.paginate(:page => params[:people_approved_page]).per_page(20)
-    @people_approved = Person.all
+    @people_approved = Person.all_approved.paginate(:page => params[:people_approved_page]).per_page(20)
     gon.people = @people_approved
     respond_to do |format|
       format.html # index.html.erb
@@ -92,8 +94,8 @@ class PeopleController < ApplicationController
     # allows for the admin to search from their dashboard
     @query = params[:query]
     if @query != ""
-      # @all_results = Person.search(@query).paginate(:page => params[:people_approved_page]).per_page(20)
       @all_results = Person.search(@query)
+      @all_results = @all_results.paginate(:page => params[:all_results_page], :per_page => 20)
     end
   end
 end

@@ -1,60 +1,68 @@
-<div class="row">
-  <div class="span12">
-    <div class="page-header">
-      <h2>All search results for "<%= @query %>"</h2>
-    </div>
-    <div class="row">
-      <div class="span4"> 
-        <%= render 'person_search_box' %>
-        <%= link_to 'New Person', new_person_path, :class => 'btn btn-primary' %>
+<div class="container-fluid">
+  <div class="row">
+    <div class="span12">
+      <div class="page-header">
+        <h2>All search results for "<%= @query %>"</h2>
       </div>
-      <div class="span8">
-        <table class="table table-striped">
+      <%= render 'person_search_box' %>
+      <br>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="span12">
+      <div class = "container-box">
+        <table class="table table-condensed">
           <thead>
             <tr>
-              <% if current_user != nil %>
-                  <% if (current_user.user_type == "Admin")  %>
-                      <th>Original ID</th>
-                  <% end %>
-              <% end %>
+              <th>Person id</th>
+              <th>ODNB id</th>
+              <th>Prefix</th>
               <th>First name</th>
               <th>Last name</th>
+              <th>Suffix</th>
+              <th>Title</th>
+              <th>All known identities</th>
               <% if current_user != nil %>
                   <% if (current_user.user_type == "Admin")  %>
                       <th>Created by</th>
                   <% end %>
-              <% end %>
-              <th>Birth year</th>
-              <th>Death year</th>
+              <% end %>  
+              <th>Birth Year Type</th>
+              <th>Extant Birth Year</th>
+              <th>Alternate Birth Year</th>
+              <th>Death Year Type</th>
+              <th>Extant Death Year</th>
+              <th>Alternate Death Year</th>
               <th>Historical significance</th>
+              <th>Approved by</th>
+              <th>Approved on</th>
+              <th>Created at</th>
               <th><%=t '.actions', :default => t("helpers.actions") %></th>
             </tr>
           </thead>
           <tbody>
             <% @all_results.each do |person| %>
               <tr>
-                <% if current_user != nil %>
-                    <% if (current_user.user_type == "Admin")  %>
-                        <td><%= person.original_id %></td>
-                    <% end %>
-                <% end %>
+                <td><%= person.id %></td>
+                <td><%= person.odnb_id %></td>
+                <td><%= person.prefix %></td>
                 <td><%= person.first_name %></td>
                 <td><%= person.last_name %></td>
-                <% if current_user != nil %>
-                    <% if (current_user.user_type == "Admin")  %>
-                        <td>
-                          <% if person.created_by.nil? %>
-                            ODNB
-                          <% else %>
-                            <%= person.created_by %>
-                            <!-- Created by is mixed up with updated by in the system -->
-                          <% end %>
-                        </td>
-                    <% end %>
-                <% end %>
+                <td><%= person.suffix %></td>
+                <td><%= person.title %></td>
+                <td><%= person.search_names_all %></td>
+                <td><%= link_to User.find(person.created_by).username,  user_path(person.created_by) %></td>
+                <td><%= person.birth_year_type %></td>
                 <td><%= person.ext_birth_year %></td>
+                <td><%= person.alt_birth_year %></td>
+                <td><%= person.death_year_type %></td>
                 <td><%= person.ext_death_year %></td>
+                <td><%= person.alt_death_year %></td>
                 <td><%= person.historical_significance %></td>
+                <td><%= link_to User.find(person.approved_by).username,  user_path(person.approved_by) %></td>
+                <td><%= person.approved_on %></td>
+                <td><%= person.created_at %></td>
                 <td>
                   <% if can? :show, person %>
                       <%= link_to 'Show', person %>
@@ -75,6 +83,8 @@
             <% end %>
           </tbody>
         </table>
+        <%= will_paginate @all_results, :param_name => 'all_results_page', :previous_label => "Previous&nbsp;", :next_label => "&nbsp;Next" %>
       </div>
+    </div>
   </div>
 </div>
