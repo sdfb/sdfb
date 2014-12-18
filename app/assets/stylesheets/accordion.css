@@ -60,7 +60,7 @@ aside {
 }
 
 .accordion_content section {
-  margin: 60px 0px 20px 0px;
+  margin: 20px 0px 0px;
 	padding: 0px 15px 0px 5px;
   display: none;
 }
@@ -91,8 +91,7 @@ aside {
 
 .accordion_content ul {
     text-align: center;
-    display: inline;
-    margin-left: -20px;
+    margin:0px -20px 0px -20px;
     list-style: none;
 }
 
@@ -115,6 +114,39 @@ aside {
 .accordion_content ul li:hover, .accordion_content ul li.clicked {
 	color: #fff;	
 	background-color: #78A7BF;
+}
+
+.accordion_content ul .btnl{
+	background-color:#fff;
+	width:95px;
+	margin:3px 4px;
+	color:#222;
+	font-size: 12px;
+	-moz-border-radius: 10px;
+	-webkit-border-radius: 10px;
+	border-radius: 10px;
+	-khtml-border-radius: 10px; 
+	border:none;
+}
+.accordion_content ul .btnl.clicked,
+.accordion_content ul .btnl:hover{
+	background-color:#196B94;
+	color:#fff;
+}
+
+.tabs{
+	overflow:hidden;
+	padding: 0px 20px 10px 20px;
+}
+
+.accordion_content .search-table{
+	margin:0px 10px;
+	width:300px;
+	overflow:hidden;
+}
+
+#show-table{
+	width:auto;
 }
 
 #relationship-table{
