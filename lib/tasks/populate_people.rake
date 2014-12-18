@@ -33,19 +33,19 @@ namespace :db do
         #puts "search_names_input: " + search_names_input
         title_input = personData[7]
         #puts "title_input: " + title_input
-        birth_year_type_input = personData[20]
+        birth_year_type_input = personData[19]
         #puts "birth_year_type_input: " + birth_year_type_input 
-        death_year_type_input = personData[23]
+        death_year_type_input = personData[22]
         #puts "death_year_type_input: " + death_year_type_input
-        ext_birth_year_input = personData[21]
+        ext_birth_year_input = personData[20]
         #puts "ext_birth_year_input: " + ext_birth_year_input
-        ext_death_year_input = personData[24]
+        ext_death_year_input = personData[23]
         #puts "ext_death_year_input: " + ext_death_year_input
-        alt_birth_year_input = personData[22]
+        alt_birth_year_input = personData[21]
         #puts "alt_birth_year_input" + alt_birth_year_input
-        alt_death_year_input = personData[25]
+        alt_death_year_input = personData[24]
         #puts "alt_death_year_input: " + alt_death_year_input
-        historical_sig_input = personData[27]
+        historical_sig_input = personData[26]
         #puts "historical_sig_input: " + historical_sig_input
         created_by_input = User.for_email("odnb_admin@example.com")[0].id
         #puts "Created by input: " + created_by_input.to_s
