@@ -11,15 +11,15 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20141114024214) do
+ActiveRecord::Schema.define(:version => 20141103033703) do
 
   create_table "comments", :force => true do |t|
     t.string   "comment_type"
     t.integer  "associated_contrib"
     t.integer  "created_by"
+    t.text     "content"
     t.datetime "created_at",         :null => false
     t.datetime "updated_at",         :null => false
-    t.text     "content"
   end
 
   create_table "flags", :force => true do |t|
@@ -37,39 +37,39 @@ ActiveRecord::Schema.define(:version => 20141114024214) do
     t.integer  "created_by"
     t.integer  "group_id"
     t.integer  "person_id"
-    t.datetime "created_at",  :null => false
-    t.datetime "updated_at",  :null => false
     t.date     "start_date"
     t.date     "end_date"
     t.integer  "approved_by"
     t.date     "approved_on"
+    t.datetime "created_at",  :null => false
+    t.datetime "updated_at",  :null => false
   end
 
   create_table "group_cat_assigns", :force => true do |t|
     t.integer  "group_id"
     t.integer  "group_category_id"
+    t.integer  "created_by"
     t.datetime "created_at",        :null => false
     t.datetime "updated_at",        :null => false
-    t.integer  "created_by"
   end
 
   create_table "group_categories", :force => true do |t|
     t.string   "name"
     t.text     "description"
+    t.integer  "created_by"
     t.datetime "created_at",  :null => false
     t.datetime "updated_at",  :null => false
-    t.integer  "created_by"
   end
 
   create_table "groups", :force => true do |t|
     t.integer  "created_by"
     t.string   "name"
     t.text     "description"
-    t.datetime "created_at",    :null => false
-    t.datetime "updated_at",    :null => false
     t.text     "justification"
     t.string   "approved_by"
     t.string   "approved_on"
+    t.datetime "created_at",    :null => false
+    t.datetime "updated_at",    :null => false
   end
 
   create_table "people", :force => true do |t|
@@ -77,9 +77,7 @@ ActiveRecord::Schema.define(:version => 20141114024214) do
     t.string   "last_name"
     t.integer  "created_by"
     t.text     "historical_significance"
-    t.datetime "created_at",                               :null => false
-    t.datetime "updated_at",                               :null => false
-    t.text     "rel_sum",                 :default => "'"
+    t.text     "rel_sum",                 :default => "'--- []\n'"
     t.string   "prefix"
     t.string   "suffix"
     t.string   "search_names_all"
@@ -94,6 +92,8 @@ ActiveRecord::Schema.define(:version => 20141114024214) do
     t.integer  "approved_by"
     t.datetime "approved_on"
     t.integer  "odnb_id"
+    t.datetime "created_at",                                        :null => false
+    t.datetime "updated_at",                                        :null => false
   end
 
   create_table "rel_cat_assigns", :force => true do |t|
@@ -125,15 +125,14 @@ ActiveRecord::Schema.define(:version => 20141114024214) do
     t.integer  "person1_index"
     t.integer  "person2_index"
     t.integer  "created_by"
-    t.datetime "created_at",               :null => false
-    t.datetime "updated_at",               :null => false
     t.decimal  "max_certainty"
     t.date     "start_date"
     t.date     "end_date"
     t.text     "justification"
     t.integer  "approved_by"
-    t.date     "approved_on"
     t.integer  "edge_birthdate_certainty"
+    t.datetime "created_at",               :null => false
+    t.datetime "updated_at",               :null => false
   end
 
   create_table "user_group_contribs", :force => true do |t|
@@ -141,10 +140,10 @@ ActiveRecord::Schema.define(:version => 20141114024214) do
     t.integer  "created_by"
     t.text     "annotation"
     t.text     "bibliography"
-    t.datetime "created_at",                               :null => false
-    t.datetime "updated_at",                               :null => false
     t.text     "edited_by_on",   :default => "'--- []\n'"
     t.text     "reviewed_by_on", :default => "'--- []\n'"
+    t.datetime "created_at",                               :null => false
+    t.datetime "updated_at",                               :null => false
   end
 
   create_table "user_person_contribs", :force => true do |t|
@@ -152,10 +151,10 @@ ActiveRecord::Schema.define(:version => 20141114024214) do
     t.integer  "created_by"
     t.text     "annotation"
     t.text     "bibliography"
-    t.datetime "created_at",                               :null => false
-    t.datetime "updated_at",                               :null => false
     t.text     "edited_by_on",   :default => "'--- []\n'"
     t.text     "reviewed_by_on", :default => "'--- []\n'"
+    t.datetime "created_at",                               :null => false
+    t.datetime "updated_at",                               :null => false
   end
 
   create_table "user_rel_contribs", :force => true do |t|
@@ -165,10 +164,10 @@ ActiveRecord::Schema.define(:version => 20141114024214) do
     t.text     "annotation"
     t.text     "bibliography"
     t.string   "relationship_type"
-    t.datetime "created_at",                                  :null => false
-    t.datetime "updated_at",                                  :null => false
     t.text     "edited_by_on",      :default => "'--- []\n'"
     t.text     "reviewed_by_on",    :default => "'--- []\n'"
+    t.datetime "created_at",                                  :null => false
+    t.datetime "updated_at",                                  :null => false
   end
 
   create_table "users", :force => true do |t|
@@ -183,14 +182,14 @@ ActiveRecord::Schema.define(:version => 20141114024214) do
     t.string   "password_hash"
     t.string   "password_salt"
     t.string   "user_type"
-    t.datetime "created_at",                               :null => false
-    t.datetime "updated_at",                               :null => false
     t.string   "prefix"
     t.string   "orcid"
     t.integer  "created_by"
     t.boolean  "is_curator",            :default => false
     t.boolean  "curator_revoked",       :default => false
     t.string   "username"
+    t.datetime "created_at",                               :null => false
+    t.datetime "updated_at",                               :null => false
   end
 
 end

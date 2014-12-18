@@ -4,7 +4,10 @@ class CreateGroupAssignments < ActiveRecord::Migration
       t.integer :created_by
       t.integer :group_id
       t.integer :person_id
-      t.boolean :is_approved
+      t.date :start_date
+      t.date :end_date
+      t.integer :approved_by
+      t.date :approved_on
 
       t.timestamps
     end
