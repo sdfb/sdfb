@@ -2,7 +2,7 @@ class Person < ActiveRecord::Base
   attr_accessible :odnb_id, :first_name, :last_name, :created_by, :historical_significance, :uncertain, :unlikely, :possible,
   :likely, :certain, :rel_sum, :prefix, :suffix, :search_names_all, :title, :birth_year_type, :ext_birth_year, :alt_birth_year, :death_year_type,
   :ext_death_year, :alt_death_year, :justification, :approved_by, :approved_on, :created_at
-  #serialize :rel_sum,Array
+  serialize :rel_sum,Array
   #rel_sum is the relationship summary that is updated whenever a relationship is created or updated
   #rel_sum includes the person the indvidual has a relationship with, the updated average certainty, and whether it has been approved
 
@@ -73,8 +73,8 @@ class Person < ActiveRecord::Base
   # Custom Methods
   # -----------------------------
   def init_array
-    test = "[]"
-    self.rel_sum = test
+    test = "blah"
+    self.rel_sum = nil
   end
 
   def get_person_name

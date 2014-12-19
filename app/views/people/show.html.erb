@@ -58,7 +58,7 @@
   <% end %>
   <dt><strong>Relationship Summary:</strong></dt>
   <% if ! @person.rel_sum.empty? %>
-    <dd>empty</dd>
+    <dd><%= @person.rel_sum %></dd>
   <% else %>
     <dd>No relationships</dd>
   <% end %>

@@ -53,7 +53,7 @@ namespace :db do
         #puts "approved_by_input: " + approved_by_input.to_s
         approved_on_input = Time.now
         #puts "approved_on_input: " + approved_on_input.to_s
-        rel_sum_input = []
+        rel_sum_input = nil
         count += 1
         puts first_name_input + " " + last_name_input
 

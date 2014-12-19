@@ -13,15 +13,15 @@ class Relationship < ActiveRecord::Base
  	validate :check_two_different_people
   validates_presence_of :person1_index
   validates_presence_of :person2_index
-  validates_presence_of :max_certainty
+  #validates_presence_of :max_certainty
   validates_presence_of :original_certainty
   validates_presence_of :created_by
-  validates_presence_of :approved_by
-  validates_presence_of :approved_on
+  #validates_presence_of :approved_by
+  #validates_presence_of :approved_on
   ## approved_on must occur on the same date or after the created at date
-  validates_date :approved_on, :on_or_after => :created_at, :message => "This relationship must be approved on or after the date it was created."
+  #validates_date :approved_on, :on_or_after => :created_at, :message => "This relationship must be approved on or after the date it was created."
   ## max_certainty is less than or equal to one
-  validates_numericality_of :max_certainty, :less_than_or_equal_to => 1
+  #validates_numericality_of :max_certainty, :less_than_or_equal_to => 1
   ## justification must be at least 4 characters
   validates_length_of :justification, :minimum => 4, :if => :just_present?
   # edge_birthdate_certainty is one included in the list
