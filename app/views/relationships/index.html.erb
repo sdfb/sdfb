@@ -35,7 +35,7 @@
     </tr>
   </thead>
   <tbody>
-    <% @relationships_approved.each do |relationship| %>
+    <% @relationships.each do |relationship| %>
       <tr>
         <td><%= relationship.id %></td>
         <td><%= link_to relationship.get_person1_name, person_path(relationship.person1_index) %></td>
@@ -80,4 +80,4 @@
   </tbody>
 </table>
 
-<%= will_paginate @relationships_approved, :param_name => 'relationships_approved_page', :previous_label => "Previous&nbsp;", :next_label => "&nbsp;Next" %>
+<%= will_paginate @relationships, :param_name => 'relationships_page', :previous_label => "Previous&nbsp;", :next_label => "&nbsp;Next" %>

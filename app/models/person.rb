@@ -40,8 +40,8 @@ class Person < ActiveRecord::Base
   validates_presence_of :death_year_type
   validates_presence_of :ext_death_year
   #validates_presence_of :alt_death_year
-  validates_presence_of :approved_by
-  validates_presence_of :approved_on
+  #validates_presence_of :approved_by
+  #validates_presence_of :approved_on
 
 
   ## first_name must be at least 1 character
@@ -59,14 +59,24 @@ class Person < ActiveRecord::Base
   ## justification must be at least 4 characters
   validates_length_of :justification, :minimum => 4, :allow_blank => true
   ## approved_on must occur on the same date or after the created at date
-  validates_date :approved_on, :on_or_after => :created_at, :message => "This person must be approved on or after the date it was created."
+  #validates_date :approved_on, :on_or_after => :created_at, :message => "This person must be approved on or after the date it was created."
   ## birth year type is one included in the list
   # validates_inclusion_of :birth_year_type, :in => DATE_TYPE_LIST
   ## birth year type is one included in the list
   # validates_inclusion_of :death_year_type, :in => DATE_TYPE_LIST
 
+  # Callbacks
+  # ----------------------------- 
+  before_create :init_array
+  #before_update :init_array
+
   # Custom Methods
   # -----------------------------
+  def init_array
+    test = "blah"
+    self.rel_sum = nil
+  end
+
   def get_person_name
     return first_name + " " + last_name 
   end

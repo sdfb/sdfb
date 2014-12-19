@@ -62,10 +62,14 @@
   <% else %>
     <dd>No relationships</dd>
   <% end %>
-  <dt><strong>Approved by:</strong></dt>
-  <dd><%= link_to User.find(@person.approved_by).username,  user_path(@person.approved_by) %></dd>
-  <dt><strong>Approved on:</strong></dt>
-  <dd><%= @person.approved_on %></dd>
+  <% if ! @person.approved_by.blank? %>
+    <dt><strong>Approved by:</strong></dt>
+    <dd><%= link_to User.find(@person.approved_by).username,  user_path(@person.approved_by) %></dd>
+  <% end %>
+  <% if ! @person.approved_on.blank? %>
+    <dt><strong>Approved on:</strong></dt>
+    <dd><%= @person.approved_on %></dd>
+  <% end %>
   <% if ! @person.justification.blank? %>
     <dt><strong>Justification:</strong></dt>
     <dd><%= @person.justification %></dd>

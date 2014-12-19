@@ -11,16 +11,21 @@
     </div>
   <% end %>
   <%= f.input :odnb_id %>
+  <%= f.input :title %>
+  <%= f.input :prefix %>
   <%= f.input :first_name %>
   <%= f.input :last_name %>
+  <%= f.input :suffix %>
   <%= f.hidden_field :created_by, :value => current_user.id %>
-  <%= f.input :ext_birth_year %>
-  <%= f.input :ext_death_year %>
   <%= f.input :birth_year_type %>
+  <%= f.input :ext_birth_year %>
+  <%= f.input :alt_birth_year %>
   <%= f.input :death_year_type %>
+  <%= f.input :ext_death_year %>
+  <%= f.input :alt_death_year %>
+  <%= f.input :search_names_all %>
   <%= f.input :historical_significance %>
-  <%= f.hidden_field :approved_by, :value => current_user.id %>
-  <%= f.hidden_field :approved_on, :value => Time.now %>
+  <%= f.input :justification %>
   <div class="form-actions">
     <%= f.button :submit, :class => 'btn-primary' %>
     <%= link_to t('.cancel', :default => t("helpers.links.cancel")),

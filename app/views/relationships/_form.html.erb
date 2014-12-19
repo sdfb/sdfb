@@ -1,10 +1,38 @@
 <%= simple_form_for @relationship, :html => { :class => 'form-horizontal' } do |f| %>
-  <%= f.input :max_certainty %>
-  <%= f.input :is_approved %>
+  <% if @relationship.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@relationship.errors.count, "error") %> prohibited this person from being saved:</h2>
+
+      <ul>
+      <% @relationship.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
   <%= f.input :original_certainty %>
-  <%= f.input :person1_index %>
-  <%= f.input :person2_index %>
-  <%= f.input :created_by %>
+
+  <%= f.input :person1_index, :collection =>@personOptions.collect{ |p| [p.first_name + " " + p.last_name, p.id] }, label: "Person 1", prompt: "Select Person 1" %>
+
+  <%= f.input :person2_index, :collection =>@personOptions.collect{ |p| [p.first_name + " " + p.last_name, p.id] }, label: "Person 2", prompt: "Select Person 2" %>
+  <!-- <div class="control-group">
+    <%= f.label "Person 1", :class => 'control-label' %>
+    <div class="controls">
+      <%= select_tag('person1_index', options_for_select(@personOptions.collect{ |p| [p.first_name + " " + p.last_name, p.id] }), :'data-placeholder' => 'Select Person 1 to add') %>
+    </div>
+  </div>
+  <div class="control-group">
+    <%= f.label "Person 2", :class => 'control-label' %>
+    <div class="controls">
+      <%= select_tag('person2_index', options_for_select(@personOptions.collect{ |p| [p.first_name + " " + p.last_name, p.id] }), :'data-placeholder' => 'Select Person 2 to add') %>
+    </div>
+  </div> -->
+  <%= f.input :start_date %>
+  <%= f.input :end_date %>
+  <%= f.input :justification %>
+  <%= f.hidden_field :created_by, :value => current_user.id %>
+  <%= f.hidden_field :approved_by, :value => nil %>
+
   <div class="form-actions">
     <%= f.button :submit, :class => 'btn-primary' %>
     <%= link_to t('.cancel', :default => t("helpers.links.cancel")),
