@@ -1,38 +1,23 @@
 <%= include_gon %>
-<div class="navbar">
-  	<ul class="navbar-inner">
-        <a class="brand" href="/">Six Degrees of Francis Bacon</a>
-	  	<ul class="nav pull-left">
+<div class="navbar" id ="head">
+  	<ul>
+        <header>Six Degrees of Francis Bacon Beta</header>
+
+		<ul class="nav pull-right">
 			
-			<li><%= link_to "People", people_path %></li>
-			<li><%= link_to "Relationships", relationships_path %></li>
-			<% if current_user %>
-				<!-- <li><%= link_to "Dashboard", root_url %></li> -->
-			<% end %>
-	  	</ul>
-		
-	  	<ul class="nav pull-right">
-			<li class="divider-vertical"></li>
 			<% if current_user %>
 				<li><%= link_to current_user.email, user_path(current_user) %></li>
 				<li><%= link_to "Sign out", sign_out_path %></li>
 			<% else %>
-				<li><%= link_to "Sign Up", sign_up_path %></li>
 				<li><%= link_to "Sign in", sign_in_path %></li>
 			<% end %>
+			<li><a href="#">About</a></li>
+			<li><a href="#">Help</a></li>
+			<li><a href="#">Blog</a></li>
 
 	  	</ul>
 	
 
   	</ul>
-  	<ul class="navbar-inner">
-  		<ul class = "nav center">
-  			<li><a>Filter By: &nbsp;</a></li>
-			<li><a href="#" id="findonenode">Person</a></li>
-			<li><a href="#" id="findonegroup">Group</a></li>
-			<li><a href="#">Relationship Type</a></li>
-			<li><a href="#">Certaintity</a></li>
-			<li><a href="#">Date</a></li>
-		</ul>
-	</ul>
+
 </div>
