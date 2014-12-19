@@ -9,7 +9,8 @@ class RelationshipsController < ApplicationController
   helper PeopleHelper
 
   def index
-    @relationships_approved = Relationship.all_approved.paginate(:page => params[:relationships_approved_page]).per_page(20)
+    #@relationships_approved = Relationship.all_approved.paginate(:page => params[:relationships_approved_page]).per_page(20)
+    @relationships = Relationship.paginate(:page => params[:relationships_page]).per_page(20)
     @relationships_for_person = Relationship.all_for_person(1)
 
     respond_to do |format|
@@ -33,6 +34,7 @@ class RelationshipsController < ApplicationController
   # GET /relationships/new.json
   def new
     @relationship = Relationship.new
+    @personOptions = Person.all
 
     respond_to do |format|
       format.html # new.html.erb
@@ -43,12 +45,14 @@ class RelationshipsController < ApplicationController
   # GET /relationships/1/edit
   def edit
     @relationship = Relationship.find(params[:id])
+    @personOptions = Person.all
   end
 
   # POST /relationships
   # POST /relationships.json
   def create
     @relationship = Relationship.new(params[:relationship])
+    @personOptions = Person.all
 
     respond_to do |format|
       if @relationship.save
