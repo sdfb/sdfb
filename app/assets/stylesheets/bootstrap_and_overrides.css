@@ -6,6 +6,20 @@
   =require twitter-bootstrap-static/fontawesome
   */
 
+.navbar .nav>li>a {
+	color: #CAE4E1;
+	text-shadow: none;
+}
+
+.navbar .nav>li>a:hover {
+	color: #ffffff;
+	text-shadow: none;
+}
+
+.container-fluid {
+  padding: 30px 15px;
+}
+
   // Core variables and mixins
 @import "twitter/bootstrap/variables.less";
 @import "twitter/bootstrap/mixins.less";
