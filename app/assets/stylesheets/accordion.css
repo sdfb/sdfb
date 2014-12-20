@@ -201,22 +201,26 @@ aside {
 	font-size:14px;
 }
 
+.talkPageLink:hover {
+    background-color:#555;
+}
+
 .talkPageLink {
 	color:#fff;
 	font-size:14px;
 	text-align:center;
-  display:block;
-  margin:10px 20px 10px 10px;
-  padding:5px 7px;
-  background-color:#666;
-	font-size: 14px;
+    display:block;
+    margin:10px 20px 10px 10px;
+    padding:5px 7px;
+    background-color:#666;
+	font-size: 12px;
 	-moz-border-radius: 10px;
 	-webkit-border-radius: 10px;
 	border-radius: 10px;
 	-khtml-border-radius: 10px; 
-	-webkit-box-shadow: 10px 10px 10px 0px rgba(0,0,0,0.75);
+	/*-webkit-box-shadow: 10px 10px 10px 0px rgba(0,0,0,0.75);
 	-moz-box-shadow: 10px 10px 10px 0px rgba(0,0,0,0.75);
-	box-shadow: 10px 10px 10px 0px rgba(0,0,0,0.75);
+	box-shadow: 10px 10px 10px 0px rgba(0,0,0,0.75);*/
 	border:none;
 }
 

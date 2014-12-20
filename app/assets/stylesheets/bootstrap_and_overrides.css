@@ -6,18 +6,85 @@
   =require twitter-bootstrap-static/fontawesome
   */
 
+p, ol, ul, td {
+  font-family: ;
+}
+
+.form-search input {
+  display: block;
+  padding: 6px 10px;
+  color: #555;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
 .navbar .nav>li>a {
-	color: #CAE4E1;
-	text-shadow: none;
+  color: #CAE4E1;
+  text-shadow: none;
 }
 
 .navbar .nav>li>a:hover {
-	color: #ffffff;
-	text-shadow: none;
+  color: #ffffff;
+  text-shadow: none;
 }
 
 .container-fluid {
-  padding: 30px 15px;
+  padding: 50px 15px;
+}
+
+
+.accordion_content ul li:hover, .accordion_content ul li.clicked {
+  color: #fff;  
+  background-color: #78A7BF;
+}
+
+.accordion_content ul .btnl{
+  background-color:#fff;
+  width:95px;
+  margin:3px 4px;
+  color:#222;
+  font-size: 12px;
+  -moz-border-radius: 10px;
+  -webkit-border-radius: 10px;
+  border-radius: 10px;
+  -khtml-border-radius: 10px; 
+  border:none;
+}
+.accordion_content ul .btnl.clicked,
+.accordion_content ul .btnl:hover{
+  background-color:#196B94;
+  color:#fff;
+}
+
+.btn-primary {
+  background-color:#ffffff;
+  background-image: none;
+  text-shadow: none;
+  /*width:95px;*/
+  margin:3px 4px;
+  color:#222;
+  font-size: 12px;
+  -moz-border-radius: 10px;
+  -webkit-border-radius: 10px;
+  border-radius: 10px;
+  -khtml-border-radius: 10px; 
+  border:none;
+}
+
+.btn-primary:hover {
+  background-color:#196B94;
+  color:#fff;
+}
+
+h1, h2 {
+  line-height: 40px;
+  color: #555;
+  background: none;
+  font-weight: lighter;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  font-size: 15px !important;
 }
 
   // Core variables and mixins
