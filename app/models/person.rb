@@ -68,12 +68,10 @@ class Person < ActiveRecord::Base
   # Callbacks
   # ----------------------------- 
   before_create :init_array
-  #before_update :init_array
 
   # Custom Methods
   # -----------------------------
   def init_array
-    test = "blah"
     self.rel_sum = nil
   end
 
