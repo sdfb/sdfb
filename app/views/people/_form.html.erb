@@ -17,10 +17,10 @@
   <%= f.input :last_name %>
   <%= f.input :suffix %>
   <%= f.hidden_field :created_by, :value => current_user.id %>
-  <%= f.input :birth_year_type %>
+  <%= f.input :birth_year_type, :collection =>["BF", "AF","IN","CA","BF/IN","AF/IN","NA"], label: "Birth Year Type", prompt: "Select Birth Year Type" %>
   <%= f.input :ext_birth_year %>
   <%= f.input :alt_birth_year %>
-  <%= f.input :death_year_type %>
+  <%= f.input :death_year_type, :collection =>["BF", "AF","IN","CA","BF/IN","AF/IN","NA"], label: "Death Year Type", prompt: "Select Death Year Type" %>
   <%= f.input :ext_death_year %>
   <%= f.input :alt_death_year %>
   <%= f.input :search_names_all %>

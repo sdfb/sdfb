@@ -22,7 +22,7 @@ class Person < ActiveRecord::Base
   where first_name like '#{name_input}' OR last_name like '#{name_input}'")}
 
   # Misc Constants
-  DATE_TYPE_LIST = ["BF", "AF","IN","CA"]
+  DATE_TYPE_LIST = ["BF", "AF","IN","CA","BF/IN","AF/IN","NA"]
 
   # Validations
   # -----------------------------
@@ -61,9 +61,9 @@ class Person < ActiveRecord::Base
   ## approved_on must occur on the same date or after the created at date
   #validates_date :approved_on, :on_or_after => :created_at, :message => "This person must be approved on or after the date it was created."
   ## birth year type is one included in the list
-  # validates_inclusion_of :birth_year_type, :in => DATE_TYPE_LIST
+  validates_inclusion_of :birth_year_type, :in => DATE_TYPE_LIST
   ## birth year type is one included in the list
-  # validates_inclusion_of :death_year_type, :in => DATE_TYPE_LIST
+  validates_inclusion_of :death_year_type, :in => DATE_TYPE_LIST
 
   # Callbacks
   # ----------------------------- 

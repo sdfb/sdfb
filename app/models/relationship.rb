@@ -35,12 +35,17 @@ class Relationship < ActiveRecord::Base
 
   # Callbacks
   # ----------------------------- 
+  before_create :max_certainty_on_create
   before_create :create_peoples_rel_sum
   before_update :update_peoples_rel_sum
   after_destroy :delete_peoples_rel_sum
 
 	# Custom Methods
-	# -----------------------------
+  # -----------------------------
+  def max_certainty_on_create
+    self.max_certainty = self.original_certainty
+  end
+
   def get_person1_name
     return Person.find(person1_index).first_name + " " + Person.find(person1_index).last_name 
   end
