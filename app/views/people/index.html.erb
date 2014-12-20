@@ -1,8 +1,17 @@
-<h2>All People</h2>
-<%= render 'person_search_box' %>
-<br>
-<%= link_to 'New Person', new_person_path, :class => 'btn btn-primary' %>
-<br>
+<h1>All People</h1><br>
+
+<div class="well">
+  <div class="container">
+    <div class="row">
+      <div class="span4"><%= render 'person_search_box' %></div>
+      <div class="span8">
+        <b>Add a new person</b></br>
+        <%= link_to 'New Person', new_person_path, :class => 'btn btn-primary' %>
+      </div>
+    </div>
+  </div>
+</div>
+
   <table class="table table-condensed">
     <thead>
       <tr>
@@ -75,4 +84,3 @@
     </tbody>
   </table>
   <%= will_paginate @people_approved, :param_name => 'people_approved_page', :previous_label => "Previous&nbsp;", :next_label => "&nbsp;Next" %>
-</div>
