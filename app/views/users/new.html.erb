@@ -3,11 +3,14 @@
 	</div>
 	<div class="span6">
 		<div class = "container-box">
-			<h1>Sign Up</h1>
-
-			<%= render 'new_form' %>
-
-			<%= link_to 'Back', users_path %>
+			<div class = "well">
+				<h1>Sign Up</h1>
+				<br>
+				<b>Already have an account?</b>
+				<%= link_to 'Sign in', new_session_path %>
+				<br><br>
+				<%= render 'new_form' %>
+			</div>
 		</div>
     </div>
 </div>
