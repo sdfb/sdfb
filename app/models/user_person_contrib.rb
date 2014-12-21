@@ -18,9 +18,8 @@ class UserPersonContrib < ActiveRecord::Base
   validates_length_of :bibliography, :minimum => 10, :if => :bib_present?
 
   # Scope
-  # -----------------------------
-  #broken because is_flagged is not an attribute
-  ##scope :not_flagged, where(is_flagged: false)
+  # ----------------------------- 
+  scope :all_approved, where("approved_by is not null")
 
   # Callbacks
   # ----------------------------- 

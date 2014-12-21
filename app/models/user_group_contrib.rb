@@ -17,11 +17,9 @@ class UserGroupContrib < ActiveRecord::Base
   ## bibliography must be at least 10 characters
   validates_length_of :bibliography, :minimum => 10, :if => :bib_present?
 
-
   # Scope
-  # -----------------------------
-  #broken since there is no is_falgged
-  ##scope :not_flagged, where(is_flagged: false)
+  # ----------------------------- 
+  scope :all_approved, where("approved_by is not null")
 
   # Callbacks
   # ----------------------------- 
