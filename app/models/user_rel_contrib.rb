@@ -1,8 +1,6 @@
 class UserRelContrib < ActiveRecord::Base
-  attr_accessible :annotation, :bibliography, :confidence_type, :created_by, :relationship_id, :relationship_type, 
-  :edited_by_on, :reviewed_by_on, :created_at
-  serialize :edited_by_on,Array
-  serialize :reviewed_by_on,Array
+  attr_accessible :annotation, :bibliography, :confidence, :created_by, :relationship_id, :relationship_type, 
+  :approved_by, :approved_on, :created_at, :is_approved
   
   # Relationships
   # -----------------------------
@@ -24,9 +22,9 @@ class UserRelContrib < ActiveRecord::Base
   # Validations
   # -----------------------------
   validates :relationship_type, :inclusion => {:in =>  REL_TYPE_LIST}, :allow_blank => true
-  validates :confidence_type, :inclusion => {:in => USER_EST_CONFIDENCE_LIST}
+  validates :confidence, :inclusion => {:in => USER_EST_CONFIDENCE_LIST}
   validates_presence_of :annotation
-  validates_presence_of :confidence_type
+  validates_presence_of :confidence
   validates_presence_of :created_by
   validates_presence_of :relationship_id
   validates_presence_of :relationship_type

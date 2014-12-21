@@ -4,6 +4,7 @@ class CreateGroupCategories < ActiveRecord::Migration
       t.string :name
       t.text :description
       t.integer :created_by
+      t.boolean :is_approved, :default => false
 
       t.timestamps
     end

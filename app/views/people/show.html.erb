@@ -62,6 +62,8 @@
   <% else %>
     <dd>No relationships</dd>
   <% end %>
+  <dt><strong>Is Approved?:</strong></dt>
+  <dd><%= @person.is_approved %></dd>
   <% if ! @person.approved_by.blank? %>
     <dt><strong>Approved by:</strong></dt>
     <dd><%= link_to User.find(@person.approved_by).username,  user_path(@person.approved_by) %></dd>

@@ -30,6 +30,7 @@ class UserRelContribsController < ApplicationController
   # GET /user_rel_contribs/new.json
   def new
     @user_rel_contrib = UserRelContrib.new
+    @relOptions = Relationship.all_approved
 
     respond_to do |format|
       format.html # new.html.erb
@@ -40,12 +41,14 @@ class UserRelContribsController < ApplicationController
   # GET /user_rel_contribs/1/edit
   def edit
     @user_rel_contrib = UserRelContrib.find(params[:id])
+    @relOptions = Relationship.all_approved
   end
 
   # POST /user_rel_contribs
   # POST /user_rel_contribs.json
   def create
     @user_rel_contrib = UserRelContrib.new(params[:user_rel_contrib])
+    @relOptions = Relationship.all_approved
 
     respond_to do |format|
       if @user_rel_contrib.save

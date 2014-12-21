@@ -17,15 +17,19 @@
   <%= f.input :last_name %>
   <%= f.input :suffix %>
   <%= f.hidden_field :created_by, :value => current_user.id %>
-  <%= f.input :birth_year_type, :collection =>["BF", "AF","IN","CA","BF/IN","AF/IN","NA"], label: "Birth Year Type", prompt: "Select Birth Year Type" %>
+  <%= f.input :birth_year_type, :collection =>["BF", "AF","IN","CA","BF/IN","AF/IN","NA"], label: "Birth Year Type", prompt: "Select" %>
   <%= f.input :ext_birth_year %>
   <%= f.input :alt_birth_year %>
-  <%= f.input :death_year_type, :collection =>["BF", "AF","IN","CA","BF/IN","AF/IN","NA"], label: "Death Year Type", prompt: "Select Death Year Type" %>
+  <%= f.input :death_year_type, :collection =>["BF", "AF","IN","CA","BF/IN","AF/IN","NA"], label: "Death Year Type", prompt: "Select" %>
   <%= f.input :ext_death_year %>
   <%= f.input :alt_death_year %>
   <%= f.input :search_names_all %>
   <%= f.input :historical_significance %>
   <%= f.input :justification %>
+  <% if current_user.user_type == "Admin" %>
+    <%= f.input :is_approved %>
+    <%= f.hidden_field :approved_by, :value => current_user.id %>
+  <% end %>
   <div class="form-actions">
     <%= f.button :submit, :class => 'btn btn-primary' %>
     <%= link_to t('.cancel', :default => t("helpers.links.cancel")),

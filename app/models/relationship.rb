@@ -1,6 +1,7 @@
 class Relationship < ActiveRecord::Base
   attr_accessible :max_certainty, :created_by, :original_certainty, :person1_index, :person2_index,
-  :start_date, :end_date, :justification, :approved_by, :approved_on, :created_at, :edge_birthdate_certainty
+  :start_date, :end_date, :justification, :approved_by, :approved_on, :created_at, :edge_birthdate_certainty,
+  :is_approved
 
   # Relationships
   # -----------------------------

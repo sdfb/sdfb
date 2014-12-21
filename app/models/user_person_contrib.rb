@@ -1,7 +1,7 @@
 class UserPersonContrib < ActiveRecord::Base
-  attr_accessible :annotation, :bibliography, :created_by, :person_id, :edited_by_on, :reviewed_by_on, :created_at
-  serialize :edited_by_on,Array
-  serialize :reviewed_by_on,Array
+  attr_accessible :annotation, :bibliography, :created_by, :person_id, :approved_by,
+  :approved_on, :created_at, :is_approved
+
   # Relationships
   # -----------------------------
   belongs_to :person

@@ -3,12 +3,13 @@ class CreateUserRelContribs < ActiveRecord::Migration
     create_table :user_rel_contribs do |t|
       t.integer :relationship_id
       t.integer :created_by
-      t.string :confidence_type
+      t.decimal :confidence
       t.text :annotation
       t.text :bibliography
       t.string :relationship_type
-      t.text :edited_by_on, :default => [].to_yaml
-      t.text :reviewed_by_on, :default => [].to_yaml
+      t.integer :approved_by
+      t.date :approved_on
+      t.boolean :is_approved, :default => false
 
       t.timestamps
     end

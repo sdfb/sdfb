@@ -1,5 +1,5 @@
 class GroupCategory < ActiveRecord::Base
-  attr_accessible :description, :name, :created_by, :created_at
+  attr_accessible :description, :name, :created_by, :created_at, :is_approved
 
   # Relationships
   # -----------------------------

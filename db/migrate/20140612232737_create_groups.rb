@@ -7,6 +7,7 @@ class CreateGroups < ActiveRecord::Migration
       t.text :justification
       t.string :approved_by
       t.string :approved_on
+      t.boolean :is_approved, :default => false
 
       t.timestamps
     end

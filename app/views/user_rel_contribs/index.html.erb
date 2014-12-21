@@ -15,8 +15,6 @@
       <th>Annotation</th>
       <th>Bibliography</th>
       <th>Relationship type</th>
-      <th>Edited by on</th>
-      <th>Reviewd by on</th>
       <th>Created at</th>
       <th><%=t '.actions', :default => t("helpers.actions") %></th>
     </tr>
@@ -31,8 +29,6 @@
         <td><%= user_rel_contrib.annotation %></td>
         <td><%= user_rel_contrib.bibliography %></td>
         <td><%= user_rel_contrib.relationship_type %></td>
-        <td><%= user_rel_contrib.edited_by_on %></td>
-        <td><%= user_rel_contrib.reviewed_by_on %></td>
         <td><%= user_rel_contrib.created_at %></td>
         <td>
           <% if can? :show, user_rel_contrib %>

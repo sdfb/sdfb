@@ -1,5 +1,5 @@
 class RelationshipCategory < ActiveRecord::Base
-  attr_accessible :description, :name, :created_at
+  attr_accessible :description, :name, :created_at, :is_approved
 
   # Relationships
   # -----------------------------
