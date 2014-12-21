@@ -30,6 +30,7 @@ class UserGroupContribsController < ApplicationController
   # GET /user_group_contribs/new.json
   def new
     @user_group_contrib = UserGroupContrib.new
+    @groupOptions = Group.all
 
     respond_to do |format|
       format.html # new.html.erb
@@ -40,12 +41,14 @@ class UserGroupContribsController < ApplicationController
   # GET /user_group_contribs/1/edit
   def edit
     @user_group_contrib = UserGroupContrib.find(params[:id])
+    @groupOptions = Group.all
   end
 
   # POST /user_group_contribs
   # POST /user_group_contribs.json
   def create
     @user_group_contrib = UserGroupContrib.new(params[:user_group_contrib])
+    @groupOptions = Group.all
 
     respond_to do |format|
       if @user_group_contrib.save

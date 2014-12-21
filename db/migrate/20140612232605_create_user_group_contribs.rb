@@ -6,7 +6,7 @@ class CreateUserGroupContribs < ActiveRecord::Migration
       t.text :annotation
       t.text :bibliography
       t.integer :approved_by
-      t.date :approved_on
+      t.datetime :approved_on
       t.boolean :is_approved, :default => false
 
       t.timestamps

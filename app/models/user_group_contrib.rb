@@ -23,10 +23,24 @@ class UserGroupContrib < ActiveRecord::Base
   #broken since there is no is_falgged
   ##scope :not_flagged, where(is_flagged: false)
 
+  # Callbacks
+  # ----------------------------- 
+  before_create :check_if_approved
+  before_update :check_if_approved
+
   # Custom Methods
   # -----------------------------
   def get_group_name
     return Group.find(group_id)
+  end
+
+  def check_if_approved
+    if (self.is_approved == true)
+      self.approved_on = Time.now
+    else
+      self.approved_by = nil
+      self.approved_on = nil
+    end  
   end
 
   def annot_present?

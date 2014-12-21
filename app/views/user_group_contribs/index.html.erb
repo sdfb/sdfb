@@ -1,11 +1,19 @@
-<%- model_class = UserGroupContrib -%>
-<div class="page-header">
-  <h1><%=t '.title', :default => model_class.model_name.human.pluralize.titleize %></h1>
-</div>
-<%= link_to t('.new', :default => t("helpers.links.new")),
+<h1>All User Group Contributions</h1><br>
+
+<div class="well">
+  <div class="container">
+    <div class="row">
+      <div class="span8">
+        <b>Add a new user group contribution</b></br>
+        <%= link_to 'New User Group Contribution',
             new_user_group_contrib_path,
             :class => 'btn btn-primary' %>
-<table class="table table-striped">
+      </div>
+    </div>
+  </div>
+</div>
+
+<table class="table table-condensed">
   <thead>
     <tr>
       <th>User Group Contribution id</th>
@@ -21,8 +29,8 @@
     <% @user_group_contribs.each do |user_group_contrib| %>
       <tr>
         <td><%= user_group_contrib.id %></td>
-        <td><%= link_to user_group_contrib.get_group_name, group_path(user_group_contrib.group_id) %></td>
-        <td><%= link_to user_group_contrib.get_users_name, user_path(user_group_contrib.created_by) %></td>
+        <td><%= link_to Group.find(user_group_contrib.group_id).name, group_path(user_group_contrib.group_id) %></td>
+        <td><%= link_to User.find(user_group_contrib.created_by).username, user_path(user_group_contrib.created_by) %></td>
         <td><%= user_group_contrib.annotation %></td>
         <td><%= user_group_contrib.bibliography %></td>
         <td><%= user_group_contrib.created_at %></td>

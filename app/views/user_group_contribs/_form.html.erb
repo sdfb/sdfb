@@ -1,8 +1,23 @@
 <%= simple_form_for @user_group_contrib, :html => { :class => 'form-horizontal' } do |f| %>
-  <%= f.input :group_id %>
-  <%= f.input :created_by %>
+  <% if @user_group_contrib.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@user_group_contrib.errors.count, "error") %> prohibited this person from being saved:</h2>
+
+      <ul>
+      <% @user_group_contrib.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+  <%= f.input :group_id, :collection =>@groupOptions.collect{ |g| [g.name, g.id] }, label: "Group", prompt: "Select" %>
+  <%= f.hidden_field :created_by, :value => current_user.id %>
   <%= f.input :annotation %>
   <%= f.input :bibliography %>
+  <% if current_user.user_type == "Admin" %>
+    <%= f.input :is_approved %>
+    <%= f.hidden_field :approved_by, :value => current_user.id %>
+  <% end %>
   <div class="form-actions">
     <%= f.button :submit, :class => 'btn-primary' %>
     <%= link_to t('.cancel', :default => t("helpers.links.cancel")),
