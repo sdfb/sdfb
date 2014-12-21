@@ -10,7 +10,7 @@ class RelationshipsController < ApplicationController
 
   def index
     #@relationships_approved = Relationship.all_approved.paginate(:page => params[:relationships_approved_page]).per_page(20)
-    @relationships = Relationship.paginate(:page => params[:relationships_page]).per_page(20)
+    @approved_relationships = Relationship.all_approved.paginate(:page => params[:approved_relationships_page]).per_page(20)
     @relationships_for_person = Relationship.all_for_person(1)
 
     respond_to do |format|

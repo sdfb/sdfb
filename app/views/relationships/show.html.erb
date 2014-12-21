@@ -20,6 +20,8 @@
   <dd><%= @relationship.end_date %></dd>
   <dt><strong>Created by:</strong></dt>
   <dd><%= link_to User.find(@relationship.created_by).username,  user_path(@relationship.created_by) %></dd>
+  <dt><strong>Is Approved?:</strong></dt>
+  <dd><%= @relationship.is_approved %></dd>
   <% if ! @relationship.approved_by.blank? %>
     <dt><strong>Approved by:</strong></dt>
     <dd><%= link_to User.find(@relationship.approved_by).username,  user_path(@relationship.approved_by) %></dd></dd>

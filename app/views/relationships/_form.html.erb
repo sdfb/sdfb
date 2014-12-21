@@ -19,7 +19,10 @@
   <%= f.input :end_date %>
   <%= f.input :justification %>
   <%= f.hidden_field :created_by, :value => current_user.id %>
-  <%= f.hidden_field :approved_by, :value => nil %>
+  <% if current_user.user_type == "Admin" %>
+    <%= f.input :is_approved %>
+    <%= f.hidden_field :approved_by, :value => current_user.id %>
+  <% end %>
 
   <div class="form-actions">
     <%= f.button :submit, :class => 'btn-primary' %>

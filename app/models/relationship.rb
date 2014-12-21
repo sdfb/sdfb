@@ -40,6 +40,8 @@ class Relationship < ActiveRecord::Base
   before_create :create_peoples_rel_sum
   before_update :update_peoples_rel_sum
   after_destroy :delete_peoples_rel_sum
+  before_create :check_if_approved
+  before_update :check_if_approved
 
 	# Custom Methods
   # -----------------------------
@@ -65,6 +67,15 @@ class Relationship < ActiveRecord::Base
 
   def just_present?
     !justification.nil?
+  end
+
+  def check_if_approved
+    if (self.is_approved == true)
+      self.approved_on = Time.now
+    else
+      self.approved_by = nil
+      self.approved_on = nil
+    end  
   end
 
   # Validation method to check that one person is not in a relationship with themselves
