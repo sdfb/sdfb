@@ -3,23 +3,31 @@
   <h1><%=t '.title', :default => model_class.model_name.human.titleize %></h1>
 </div>
 
-<p id="notice"><%= notice %></p>
-
 <dl class="dl-horizontal">
   <dt><strong><%= model_class.human_attribute_name(:created_by) %>:</strong></dt>
-  <dd><%= @group.created_by %></dd>
+  <dd><%= link_to User.find(@group.created_by).username,  user_path(@group.created_by) %></dd>
   <dt><strong><%= model_class.human_attribute_name(:name) %>:</strong></dt>
   <dd><%= @group.name %></dd>
-  <dt><strong><%= model_class.human_attribute_name(:description) %>:</strong></dt>
-  <dd><%= @group.description %></dd>
-  <dt>Justification</dt>
-  <dd>@group.justification</dd>
-  <dt>Approved by</dt>
-  <dd>@group.approved_by</dd>
-  <dt>Approved on</dt>
-  <dd>@group.approved_on</dd>
+  <% if ! @group.description.blank? %>
+    <dt>Description:</strong></dt>
+    <dd><%= @group.description %></dd>
+  <% end %>
+  <% if ! @group.justification.blank? %>
+    <dt>Justification</dt>
+    <dd><%= @group.justification %></dd>
+  <% end %>
+  <dt><strong>Is Approved?:</strong></dt>
+  <dd><%= @group.is_approved %></dd>
+  <% if ! @group.approved_by.blank? %>
+    <dt><strong>Approved by:</strong></dt>
+    <dd><%= link_to User.find(@group.approved_by).username,  user_path(@group.approved_by) %></dd>
+  <% end %>
+  <% if ! @group.approved_on.blank? %>
+    <dt><strong>Approved on:</strong></dt>
+    <dd><%= @group.approved_on %></dd>
+  <% end %>
   <dt>Created at</dt>
-  <dd>@group.created_at</dd>
+  <dd><%= @group.created_at %></dd>
 </dl>
 
 <div class="form-actions">

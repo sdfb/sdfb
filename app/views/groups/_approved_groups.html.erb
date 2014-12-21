@@ -1,5 +1,5 @@
 <h1>Approved Groups</h1>
-<table class="table table-striped">
+<table class="table table-condensed">
   <thead>
     <tr>
       <% if current_user != nil %>
@@ -23,7 +23,7 @@
           <% if (current_user.user_type == "Admin")  %>
             <td>
               <% if group.created_by != nil %>
-                <%= link_to group.get_users_name, user_path(group.created_by) %>
+                <%= link_to User.find(group.created_by).username, user_path(group.created_by) %>
               <% else %>
                 <%= group.get_users_name %>
               <% end %>
@@ -33,7 +33,9 @@
         <td><%= group.name %></td>
         <td><%= group.description %></td>
         <td><%= group.justification %></td>
-        <td><%= group.approved_by %></td>
+        <% if ! group.approved_by.blank? %>
+          <td><%= link_to User.find(group.approved_by).username, user_path(group.approved_by) %></td>
+        <% end %>
         <td><%= group.approved_on %></td>
         <td><%= group.created_at %></td>
         <td>
