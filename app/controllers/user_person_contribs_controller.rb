@@ -30,6 +30,7 @@ class UserPersonContribsController < ApplicationController
   # GET /user_person_contribs/new.json
   def new
     @user_person_contrib = UserPersonContrib.new
+    @personOptions = Person.all_approved
 
     respond_to do |format|
       format.html # new.html.erb
@@ -40,12 +41,14 @@ class UserPersonContribsController < ApplicationController
   # GET /user_person_contribs/1/edit
   def edit
     @user_person_contrib = UserPersonContrib.find(params[:id])
+    @personOptions = Person.all_approved
   end
 
   # POST /user_person_contribs
   # POST /user_person_contribs.json
   def create
     @user_person_contrib = UserPersonContrib.new(params[:user_person_contrib])
+    @personOptions = Person.all_approved
 
     respond_to do |format|
       if @user_person_contrib.save

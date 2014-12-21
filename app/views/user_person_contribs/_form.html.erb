@@ -10,10 +10,14 @@
       </ul>
     </div>
   <% end %>
-  <%= f.input :person_id %>
+  <%= f.input :person_id, :collection =>@personOptions.collect{ |p| [p.first_name + " " + p.last_name, p.id] }, label: "Person", prompt: "Select" %>
   <%= f.hidden_field :created_by, :value => current_user.id %>
   <%= f.input :annotation %>
   <%= f.input :bibliography %>
+  <% if current_user.user_type == "Admin" %>
+    <%= f.input :is_approved %>
+    <%= f.hidden_field :approved_by, :value => current_user.id %>
+  <% end %>
   <div class="form-actions">
     <%= f.button :submit, :class => 'btn-primary' %>
     <%= link_to t('.cancel', :default => t("helpers.links.cancel")),

@@ -34,7 +34,7 @@ class RelationshipsController < ApplicationController
   # GET /relationships/new.json
   def new
     @relationship = Relationship.new
-    @personOptions = Person.all
+    @personOptions = Person.all_approved
 
     respond_to do |format|
       format.html # new.html.erb
@@ -45,14 +45,14 @@ class RelationshipsController < ApplicationController
   # GET /relationships/1/edit
   def edit
     @relationship = Relationship.find(params[:id])
-    @personOptions = Person.all
+    @personOptions = Person.all_approved
   end
 
   # POST /relationships
   # POST /relationships.json
   def create
     @relationship = Relationship.new(params[:relationship])
-    @personOptions = Person.all
+    @personOptions = Person.all_approved
 
     respond_to do |format|
       if @relationship.save

@@ -1,10 +1,18 @@
-<%- model_class = UserPersonContrib -%>
-<div class="page-header">
-  <h1><%=t '.title', :default => model_class.model_name.human.pluralize.titleize %></h1>
-</div>
-<%= link_to t('.new', :default => t("helpers.links.new")),
+<h1>All User Person Contributions</h1><br>
+
+<div class="well">
+  <div class="container">
+    <div class="row">
+      <div class="span8">
+        <b>Add a new user person contribution</b></br>
+        <%= link_to 'New User Person Contribution',
             new_user_person_contrib_path,
             :class => 'btn btn-primary' %>
+      </div>
+    </div>
+  </div>
+</div>
+
 <table class="table table-striped">
   <thead>
     <tr>

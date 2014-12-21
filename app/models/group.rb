@@ -23,8 +23,8 @@ class Group < ActiveRecord::Base
 
   # Scope
   # ----------------------------- 
-  scope :approved, where("approved_by is not null")
-  scope :unapproved, where("approved_by is null")
+  scope :all_approved, where("approved_by is not null")
+  scope :all_unapproved, where("approved_by is null")
   before_create :check_if_approved
   before_update :check_if_approved
 

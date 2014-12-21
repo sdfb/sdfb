@@ -22,8 +22,22 @@ class UserPersonContrib < ActiveRecord::Base
   #broken because is_flagged is not an attribute
   ##scope :not_flagged, where(is_flagged: false)
 
+  # Callbacks
+  # ----------------------------- 
+  before_create :check_if_approved
+  before_update :check_if_approved
+
+
   # Custom Methods
   # -----------------------------
+  def check_if_approved
+    if (self.is_approved == true)
+      self.approved_on = Time.now
+    else
+      self.approved_by = nil
+      self.approved_on = nil
+    end  
+  end
 
   def annot_present?
     !annotation.nil?
