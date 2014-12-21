@@ -6,6 +6,10 @@
   =require twitter-bootstrap-static/fontawesome
   */
 
+.dl-horizontal dt {
+  font-weight: bold;
+}
+
 p, ol, ul, td {
   font-family: ;
 }
@@ -137,7 +141,7 @@ p, ol, ul, td {
   color:#fff;
 }
 
-h1, h2 {
+h1 {
   line-height: 40px;
   color: #555;
   background: none;
@@ -145,6 +149,16 @@ h1, h2 {
   text-transform: uppercase;
   letter-spacing: 2px;
   font-size: 15px !important;
+}
+
+h2 {
+  line-height: 40px;
+  color: #555;
+  background: none;
+  font-weight: lighter;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  font-size: 12px !important;
 }
 
   // Core variables and mixins
