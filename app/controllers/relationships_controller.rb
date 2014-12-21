@@ -33,6 +33,7 @@ class RelationshipsController < ApplicationController
   # GET /relationships/new
   # GET /relationships/new.json
   def new
+    @person1_id = params[:person1_id]
     @relationship = Relationship.new
     @personOptions = Person.all_approved
 

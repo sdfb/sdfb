@@ -31,8 +31,10 @@ class Relationship < ActiveRecord::Base
   # Scope
   # ----------------------------- 
   scope :all_approved, where("approved_by is not null")
-  scope :all_for_person, lambda {|person_index_input| find_by_sql("SELECT relationships.id FROM relationships
-  where person1_index = #{person_index_input} OR person2_index = #{person_index_input}")}
+  scope :all_for_person, 
+    lambda {|personID| 
+      select('relationships.*')
+      .where('(person1_index = ?) or (person2_index = ?)', personID, personID)}
 
   # Callbacks
   # ----------------------------- 

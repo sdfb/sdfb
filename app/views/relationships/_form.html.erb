@@ -12,7 +12,11 @@
   <% end %>
   <%= f.input :original_certainty %>
 
-  <%= f.input :person1_index, :collection =>@personOptions.collect{ |p| [p.first_name + " " + p.last_name, p.id] }, label: "Person 1", prompt: "Select" %>
+  <% if ! @person1_id.blank? %>
+    <%= f.input :person1_index, :collection =>@personOptions.collect{ |p| [p.first_name + " " + p.last_name, p.id] }, label: "Person 1", prompt: "Select", selected: @person1_id %>
+  <% else %>
+    <%= f.input :person1_index, :collection =>@personOptions.collect{ |p| [p.first_name + " " + p.last_name, p.id] }, label: "Person 1", prompt: "Select" %>
+  <% end %>
 
   <%= f.input :person2_index, :collection =>@personOptions.collect{ |p| [p.first_name + " " + p.last_name, p.id] }, label: "Person 2", prompt: "Select" %>
   <%= f.input :start_date %>

@@ -65,7 +65,7 @@
           <td><%= person.created_at %></td>
           <td>
             <% if can? :show, person %>
-                <%= link_to 'Show', person %>
+                <%= link_to 'Show', person, :class => 'btn btn-mini' %>
             <% end %>
             <% if can? :update, person %>      
                 <%= link_to t('.edit', :default => t("helpers.links.edit")),

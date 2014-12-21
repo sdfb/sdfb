@@ -25,20 +25,9 @@
               <th>Original Certainty</th>
           <% end %>
       <% end %>
-      <th>Original Certainty</th>
       <th>Maximum Certainty</th>
-      <% if current_user != nil %>
-          <% if (current_user.user_type == "Admin")  %>
-              <th>Created by</th>
-          <% end %>
-      <% end %>
-      <th>Birth Year Accuracy</th>
       <th>Start Date</th>
       <th>End Date</th>
-      <th>Justification</th>
-      <th>Approved by</th>
-      <th>Approved on</th>
-      <th>Created at</th>
       <th><%=t '.actions', :default => t("helpers.actions") %></th>
     </tr>
   </thead>
@@ -53,23 +42,12 @@
                 <td><%= relationship.original_certainty %></td>
             <% end %>
         <% end %>
-        <td><%= relationship.original_certainty %></td>
         <td><%= relationship.max_certainty %></td>
-        <% if current_user != nil %>
-            <% if (current_user.user_type == "Admin")  %>
-                <td><%= relationship.get_users_name %></td>
-            <% end %>
-        <% end %>
-        <td><%= relationship.edge_birthdate_certainty %></td>
         <td><%= relationship.start_date %></td>
         <td><%= relationship.end_date %></td>
-        <td><%= relationship.justification %></td>
-        <td><%= relationship.approved_by %></td>
-        <td><%= relationship.approved_on %></td>
-        <td><%= relationship.created_at %></td>
         <td>
           <% if can? :show, relationship %>
-            <%= link_to 'Show', relationship %>
+            <%= link_to 'Show', relationship, :class => 'btn btn-mini'  %>
           <% end %>
           <% if can? :update, relationship %>
             <%= link_to t('.edit', :default => t("helpers.links.edit")),

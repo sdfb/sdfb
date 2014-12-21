@@ -40,7 +40,7 @@
         <td><%= group.created_at %></td>
         <td>
           <% if can? :show, group %>
-            <%= link_to 'Show', group %>
+            <%= link_to 'Show', group, :class => 'btn btn-mini' %>
           <% end %>
           <% if can? :update, group %>
             <%= link_to t('.edit', :default => t("helpers.links.edit")),
