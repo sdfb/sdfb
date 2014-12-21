@@ -31,6 +31,7 @@ namespace :db do
 				r.created_by = created_by_input
 				r.approved_by = approved_by_input
 				r.approved_on = approved_on_input
+				r.is_approved = true
 				r.original_certainty = original_certainty_input
 				r.max_certainty = max_certainty_input
 				r.edge_birthdate_certainty = edge_birthdate_certainty_in
