@@ -1,18 +1,4 @@
-<h1>All Relationships</h1><br>
-
-<div class="well">
-  <div class="container">
-    <div class="row">
-      <!-- <div class="span4"></div> -->
-      <div class="span8">
-        <b>Add a new relationship</b></br>
-        <%= link_to 'New Relationship',
-            new_relationship_path,
-            :class => 'btn btn-primary' %>
-      </div>
-    </div>
-  </div>
-</div>
+<h1>All Relationships <%= link_to 'New Relationship', new_relationship_path, :class => 'btn btn-primary' %></h1><br>
 
 <table class="table table-condensed">
   <thead>
@@ -52,13 +38,6 @@
           <% if can? :update, relationship %>
             <%= link_to t('.edit', :default => t("helpers.links.edit")),
                         edit_relationship_path(relationship), :class => 'btn btn-mini' %>
-          <% end %>
-          <% if can? :destroy, relationship %>
-            <%= link_to t('.destroy', :default => t("helpers.links.destroy")),
-                        relationship_path(relationship),
-                        :method => :delete,
-                        :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')) },
-                        :class => 'btn btn-mini btn-danger' %>
           <% end %>
         </td>
       </tr>
