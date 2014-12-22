@@ -89,7 +89,7 @@ class Relationship < ActiveRecord::Base
   # Validation to check if the relationship already exists
   def check_if_valid
     errors.add(:person2_index, "A person cannot have a relationship with his or herself.") if person1_index == person2_index
-    errors.add(:person2_index, "This relationship already exists") if (! Relationship.for_2_people(10013272, 10013272).empty?)
+    errors.add(:person2_index, "This relationship already exists") if (! Relationship.for_2_people(self.person1_index, self.person2_index).empty?)
   end
 
   # Whenever a relationship is created, the relationship summary (rel_sum) must be updated in both people's records

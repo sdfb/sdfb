@@ -24,6 +24,6 @@ class CreatePeople < ActiveRecord::Migration
       t.timestamps
     end
 
-    execute("ALTER SEQUENCE people_id_seq START with 11000000 RESTART;")
+    execute("ALTER SEQUENCE people_id_seq START with 10050000 RESTART;")
   end
 end
