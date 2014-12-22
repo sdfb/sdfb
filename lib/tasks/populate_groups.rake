@@ -18,7 +18,7 @@ namespace :db do
         approved_on_input = Time.now
         count += 1
         Group.create(name: name_input, description: description_input, created_by: created_by_input,
-          approved_by: approved_by_input, approved_on: approved_on_input)
+          is_approved: true, approved_by: approved_by_input, approved_on: approved_on_input)
         puts count
        }
      }

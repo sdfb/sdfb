@@ -7,7 +7,7 @@ class UserGroupContribsController < ApplicationController
   authorize_resource
 
   def index
-    @user_group_contribs = UserGroupContrib.paginate(:page => params[:user_group_contribs_page]).per_page(20)
+    @user_group_contribs = UserGroupContrib.all_approved.paginate(:page => params[:user_group_contribs_page]).per_page(20)
 
     respond_to do |format|
       format.html # index.html.erb
@@ -30,6 +30,7 @@ class UserGroupContribsController < ApplicationController
   # GET /user_group_contribs/new.json
   def new
     @user_group_contrib = UserGroupContrib.new
+    @groupOptions = Group.all_approved
 
     respond_to do |format|
       format.html # new.html.erb
@@ -40,12 +41,14 @@ class UserGroupContribsController < ApplicationController
   # GET /user_group_contribs/1/edit
   def edit
     @user_group_contrib = UserGroupContrib.find(params[:id])
+    @groupOptions = Group.all_approved
   end
 
   # POST /user_group_contribs
   # POST /user_group_contribs.json
   def create
     @user_group_contrib = UserGroupContrib.new(params[:user_group_contrib])
+    @groupOptions = Group.all_approved
 
     respond_to do |format|
       if @user_group_contrib.save

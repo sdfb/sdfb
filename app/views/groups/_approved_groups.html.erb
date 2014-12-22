@@ -1,55 +1,27 @@
-<h1>Approved Groups</h1>
-<table class="table table-striped">
+<h1>All Groups <%= link_to 'New Group', new_group_path, :class => 'btn btn-primary' %></h1><br>
+
+<table class="table table-condensed">
   <thead>
     <tr>
-      <% if current_user != nil %>
-        <% if (current_user.user_type == "Admin")  %>
-          <th>Created by</th>
-        <% end %>
-      <% end %>
+      <th>Group ID </th>
       <th>Name</th>
       <th>Description</th>
-      <th>Justification</th>
-      <th>Approved by</th>
-      <th>Approved on</th>
-      <th>Created at</th>
       <th><%=t '.actions', :default => t("helpers.actions") %></th>
     </tr>
   </thead>
   <tbody>
     <% @groups_approved.each do |group| %>
       <tr>
-        <% if current_user != nil %>
-          <% if (current_user.user_type == "Admin")  %>
-            <td>
-              <% if group.created_by != nil %>
-                <%= link_to group.get_users_name, user_path(group.created_by) %>
-              <% else %>
-                <%= group.get_users_name %>
-              <% end %>
-            </td>
-          <% end %>
-        <% end %>
+        <td><%= group.id %></td>
         <td><%= group.name %></td>
         <td><%= group.description %></td>
-        <td><%= group.justification %></td>
-        <td><%= group.approved_by %></td>
-        <td><%= group.approved_on %></td>
-        <td><%= group.created_at %></td>
         <td>
           <% if can? :show, group %>
-            <%= link_to 'Show', group %>
+            <%= link_to 'Show', group, :class => 'btn btn-mini' %>
           <% end %>
           <% if can? :update, group %>
             <%= link_to t('.edit', :default => t("helpers.links.edit")),
                             edit_group_path(group), :class => 'btn btn-mini' %>
-          <% end %>
-          <% if can? :destroy, group %>
-            <%= link_to t('.destroy', :default => t("helpers.links.destroy")),
-                            group_path(group),
-                            :method => :delete,
-                            :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')) },
-                            :class => 'btn btn-mini btn-danger' %>
           <% end %>
         </td>
       </tr>

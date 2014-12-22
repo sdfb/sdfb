@@ -5,7 +5,8 @@ class CreateRelationshipTypes < ActiveRecord::Migration
       t.integer :default_rel_category
       t.string :name
       t.text :description
-      t.boolean :is_active
+      t.boolean :is_active, :default => true
+      t.boolean :is_approved, :default => false
 
       t.timestamps
     end

@@ -20,6 +20,7 @@ class CreatePeople < ActiveRecord::Migration
       t.integer :approved_by
       t.datetime :approved_on
       t.integer :odnb_id
+      t.boolean :is_approved, :default => false
       t.timestamps
     end
   end

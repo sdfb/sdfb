@@ -74,6 +74,7 @@ namespace :db do
           p.alt_death_year = alt_death_year_input 
           p.historical_significance = historical_sig_input
           p.rel_sum = rel_sum_input
+          p.is_approved = true
           p.created_by = created_by_input
           p.approved_by = approved_by_input
           p.approved_on = approved_on_input

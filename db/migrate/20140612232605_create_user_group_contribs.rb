@@ -5,8 +5,9 @@ class CreateUserGroupContribs < ActiveRecord::Migration
       t.integer :created_by
       t.text :annotation
       t.text :bibliography
-      t.text :edited_by_on, :default => [].to_yaml
-      t.text :reviewed_by_on, :default => [].to_yaml
+      t.integer :approved_by
+      t.datetime :approved_on
+      t.boolean :is_approved, :default => false
 
       t.timestamps
     end

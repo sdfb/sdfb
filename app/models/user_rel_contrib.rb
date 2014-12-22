@@ -1,8 +1,6 @@
 class UserRelContrib < ActiveRecord::Base
-  attr_accessible :annotation, :bibliography, :confidence_type, :created_by, :relationship_id, :relationship_type, 
-  :edited_by_on, :reviewed_by_on, :created_at
-  serialize :edited_by_on,Array
-  serialize :reviewed_by_on,Array
+  attr_accessible :annotation, :bibliography, :confidence, :created_by, :relationship_id, :relationship_type, 
+  :approved_by, :approved_on, :created_at, :is_approved
   
   # Relationships
   # -----------------------------
@@ -24,9 +22,8 @@ class UserRelContrib < ActiveRecord::Base
   # Validations
   # -----------------------------
   validates :relationship_type, :inclusion => {:in =>  REL_TYPE_LIST}, :allow_blank => true
-  validates :confidence_type, :inclusion => {:in => USER_EST_CONFIDENCE_LIST}
   validates_presence_of :annotation
-  validates_presence_of :confidence_type
+  validates_presence_of :confidence
   validates_presence_of :created_by
   validates_presence_of :relationship_id
   validates_presence_of :relationship_type
@@ -36,13 +33,26 @@ class UserRelContrib < ActiveRecord::Base
   validates_length_of :bibliography, :minimum => 10, :if => :bib_present?
 
   # Scope
-  # -----------------------------
-  #broken because is_flagged is not an attribute
-  #scope :not_flagged, where(is_flagged: false)
+  # ----------------------------- 
+  scope :all_approved, where("approved_by is not null")
+
+  # Callbacks
+  # ----------------------------- 
+  before_create :check_if_approved
+  before_update :check_if_approved
 
 
   # Custom Methods
   # -----------------------------
+  def check_if_approved
+    if (self.is_approved == true)
+      self.approved_on = Time.now
+    else
+      self.approved_by = nil
+      self.approved_on = nil
+    end  
+  end
+
 
   def annot_present?
     !annotation.nil?

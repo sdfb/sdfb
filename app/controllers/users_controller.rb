@@ -7,8 +7,8 @@ class UsersController < ApplicationController
   authorize_resource
 
   def index
-    @inactive_users = User.inactive
-    @active_users = User.active
+    @inactive_users = User.inactive.paginate(:page => params[:inactive_users_page]).per_page(20)
+    @active_users = User.active.paginate(:page => params[:active_users_page]).per_page(20)
 
     respond_to do |format|
       format.html # index.html.erb

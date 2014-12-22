@@ -1,31 +1,35 @@
-<p id="notice"><%= notice %></p>
-
 <%- model_class = UserRelContrib -%>
 <div class="page-header">
-  <h1><%=t '.title', :default => model_class.model_name.human.titleize %></h1>
+  <h1>User Relationship Contribution</h1>
 </div>
 
 <dl class="dl-horizontal">
-  <dt><strong>User Relationship Contribution id:</strong></dt>
+  <dt><strong>Id:</strong></dt>
   <dd><%= @user_rel_contrib.id %></dd>
-  <dt><strong><%= model_class.human_attribute_name(:relationship_id) %>:</strong></dt>
-  <dd><%= @user_rel_contrib.relationship_id %></dd>
+  <dt><strong>Relationship:</strong></dt>
+  <dd><%= link_to Relationship.find(@user_rel_contrib.relationship_id).get_person1_name + " & " + Relationship.find(@user_rel_contrib.relationship_id).get_person2_name ,  relationship_path(@user_rel_contrib.relationship_id) %></dd>
   <dt><strong><%= model_class.human_attribute_name(:created_by) %>:</strong></dt>
-  <dd><%= @user_rel_contrib.created_by %></dd>
-  <dt><strong><%= model_class.human_attribute_name(:confidence_type) %>:</strong></dt>
-  <dd><%= @user_rel_contrib.confidence_type %></dd>
+  <dd><%= link_to User.find(@user_rel_contrib.created_by).username,  user_path(@user_rel_contrib.created_by) %></dd>
+  <dt><strong><%= model_class.human_attribute_name(:confidence) %>:</strong></dt>
+  <dd><%= @user_rel_contrib.confidence %></dd>
   <dt><strong><%= model_class.human_attribute_name(:annotation) %>:</strong></dt>
   <dd><%= @user_rel_contrib.annotation %></dd>
   <dt><strong><%= model_class.human_attribute_name(:bibliography) %>:</strong></dt>
   <dd><%= @user_rel_contrib.bibliography %></dd>
   <dt><strong><%= model_class.human_attribute_name(:relationship_type) %>:</strong></dt>
   <dd><%= @user_rel_contrib.relationship_type %></dd>
-  <dt><strong>Edited by on:</strong></dt>
-  <dd><%= @user_rel_contrib.edited_by_on %></dd>
-  <dt><strong>Reviewed by on:</strong></dt>
-  <dd><%= @user_rel_contrib.reviewed_by_on %></dd>
   <dt><strong>Created at:</strong></dt>
   <dd><%= @user_rel_contrib.created_at %></dd>
+    <dt><strong>Is Approved?:</strong></dt>
+  <dd><%= @user_rel_contrib.is_approved %></dd>
+  <% if ! @user_rel_contrib.approved_by.blank? %>
+    <dt><strong>Approved by:</strong></dt>
+    <dd><%= link_to User.find(@user_rel_contrib.approved_by).username,  user_path(@user_rel_contrib.approved_by) %></dd>
+  <% end %>
+  <% if ! @user_rel_contrib.approved_by.blank? %>
+    <dt><strong>Approved on:</strong></dt>
+    <dd><%= @user_rel_contrib.approved_on %></dd>
+  <% end %>
 </dl>
 
 <div class="form-actions">

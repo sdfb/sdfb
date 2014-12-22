@@ -35,7 +35,16 @@ header {
     float: left;
     position: absolute;
     top: 0;
-    left: 0;
+    left: 15px;
+}
+
+/*Used to change the color of a header with the link*/
+header a {
+  color: #CAE4E1 !important;
+}
+
+header a:hover {
+  color: #ffffff !important;
 }
 
 #head {
@@ -123,7 +132,7 @@ a:hover {
 position: absolute;
   max-height: 100%;
   top: 0;
-  left: 270px;
+  left: 355px;
 }
 
 #zoom {

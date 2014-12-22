@@ -1,6 +1,7 @@
 class Relationship < ActiveRecord::Base
   attr_accessible :max_certainty, :created_by, :original_certainty, :person1_index, :person2_index,
-  :start_date, :end_date, :justification, :approved_by, :approved_on, :created_at, :edge_birthdate_certainty
+  :start_date, :end_date, :justification, :approved_by, :approved_on, :created_at, :edge_birthdate_certainty,
+  :is_approved
 
   # Relationships
   # -----------------------------
@@ -30,17 +31,26 @@ class Relationship < ActiveRecord::Base
   # Scope
   # ----------------------------- 
   scope :all_approved, where("approved_by is not null")
-  scope :all_for_person, lambda {|person_index_input| find_by_sql("SELECT relationships.id FROM relationships
-  where person1_index = #{person_index_input} OR person2_index = #{person_index_input}")}
+  scope :all_for_person, 
+    lambda {|personID| 
+      select('relationships.*')
+      .where('(person1_index = ?) or (person2_index = ?)', personID, personID)}
 
   # Callbacks
   # ----------------------------- 
+  before_create :max_certainty_on_create
   before_create :create_peoples_rel_sum
   before_update :update_peoples_rel_sum
   after_destroy :delete_peoples_rel_sum
+  before_create :check_if_approved
+  before_update :check_if_approved
 
 	# Custom Methods
-	# -----------------------------
+  # -----------------------------
+  def max_certainty_on_create
+    self.max_certainty = self.original_certainty
+  end
+
   def get_person1_name
     return Person.find(person1_index).first_name + " " + Person.find(person1_index).last_name 
   end
@@ -59,6 +69,15 @@ class Relationship < ActiveRecord::Base
 
   def just_present?
     !justification.nil?
+  end
+
+  def check_if_approved
+    if (self.is_approved == true)
+      self.approved_on = Time.now
+    else
+      self.approved_by = nil
+      self.approved_on = nil
+    end  
   end
 
   # Validation method to check that one person is not in a relationship with themselves

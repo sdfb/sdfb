@@ -1,21 +1,14 @@
-<%- model_class = UserGroupContrib -%>
-<div class="page-header">
-  <h1><%=t '.title', :default => model_class.model_name.human.pluralize.titleize %></h1>
-</div>
-<%= link_to t('.new', :default => t("helpers.links.new")),
+<h1>All User Group Contributions <%= link_to 'New User Group Contribution',
             new_user_group_contrib_path,
-            :class => 'btn btn-primary' %>
-<table class="table table-striped">
+            :class => 'btn btn-primary' %></h1><br>
+
+<table class="table table-condensed">
   <thead>
     <tr>
       <th>User Group Contribution id</th>
       <th>Group</th>
-      <th>Created by</th>
       <th>Annotation</th>
       <th>Bibliography</th>
-      <th>Edited by on</th>
-      <th>Reviewed by on</th>
-      <th>Created at</th>
       <th><%=t '.actions', :default => t("helpers.actions") %></th>
     </tr>
   </thead>
@@ -23,28 +16,17 @@
     <% @user_group_contribs.each do |user_group_contrib| %>
       <tr>
         <td><%= user_group_contrib.id %></td>
-        <td><%= link_to user_group_contrib.get_group_name, group_path(user_group_contrib.group_id) %></td>
-        <td><%= link_to user_group_contrib.get_users_name, user_path(user_group_contrib.created_by) %></td>
+        <td><%= link_to Group.find(user_group_contrib.group_id).name, group_path(user_group_contrib.group_id) %></td>
         <td><%= user_group_contrib.annotation %></td>
         <td><%= user_group_contrib.bibliography %></td>
-        <td><%= user_group_contrib.edited_by_on %></td>
-        <td><%= user_group_contrib.reviewed_by_on %></td>
-        <td><%= user_group_contrib.created_at %></td>
         <td>
           <% if can? :show, user_group_contrib %>
-              <%= link_to 'Show', user_group_contrib %>
+              <%= link_to 'Show', user_group_contrib, :class => 'btn btn-mini' %>
           <% end %>
           <% if can? :update, user_group_contrib %>
               <%= link_to t('.edit', :default => t("helpers.links.edit")),
                         edit_user_group_contrib_path(user_group_contrib), :class => 'btn btn-mini' %>
           <% end %>
-          <% if can? :destroy, user_group_contrib %>
-              <%= link_to t('.destroy', :default => t("helpers.links.destroy")),
-                        user_group_contrib_path(user_group_contrib),
-                        :method => :delete,
-                        :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')) },
-                        :class => 'btn btn-mini btn-danger' %>
-          <% end %> 
         </td>
       </tr>
     <% end %>
