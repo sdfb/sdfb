@@ -23,5 +23,7 @@ class CreatePeople < ActiveRecord::Migration
       t.boolean :is_approved, :default => false
       t.timestamps
     end
+
+    execute("ALTER SEQUENCE people_id_seq START with 11000000 RESTART;")
   end
 end

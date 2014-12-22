@@ -16,5 +16,7 @@ class CreateRelationships < ActiveRecord::Migration
 
       t.timestamps
     end
+
+    execute("ALTER SEQUENCE relationships_id_seq START with 200000 RESTART;")
   end
 end
