@@ -410,7 +410,7 @@ function init() {
     
   });
 
-console.log(data);
+  console.log(data);
 
   twoDegs(francisID, data);
   populateLists(data);
