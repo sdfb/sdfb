@@ -12,11 +12,12 @@ gem 'simple_form'
 # Gems used only for assets and not required
 # in production environments by default.
 group :devlopment, :test do
-  gem 'sqlite3'
+  #gem 'sqlite3'
 end
 
 group :production do
-  gem 'pg'
+  gem 'pg', '0.15.1'
+  gem 'rails_12factor'
 end
 
 group :assets do
