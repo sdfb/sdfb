@@ -20,6 +20,7 @@ class Person < ActiveRecord::Base
   scope :for_last_name, lambda {|last_name_input| where('last_name like ?', "%#{last_name_input}")}
   scope :for_first_or_last_name,  lambda {|name_input| find_by_sql("SELECT * FROM people
   where first_name like '#{name_input}' OR last_name like '#{name_input}'")}
+  scope :alphabetical, order('last_name').order('first_name');
 
   # Misc Constants
   DATE_TYPE_LIST = ["BF", "AF","IN","CA","BF/IN","AF/IN","NA"]

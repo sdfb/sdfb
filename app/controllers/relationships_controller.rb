@@ -11,7 +11,6 @@ class RelationshipsController < ApplicationController
   def index
     #@relationships_approved = Relationship.all_approved.paginate(:page => params[:relationships_approved_page]).per_page(20)
     @approved_relationships = Relationship.all_approved.paginate(:page => params[:approved_relationships_page]).per_page(20)
-    @relationships_for_person = Relationship.all_for_person(1)
 
     respond_to do |format|
       format.html # index.html.erb
@@ -36,7 +35,7 @@ class RelationshipsController < ApplicationController
   def new
     @person1_id = params[:person1_id]
     @relationship = Relationship.new
-    @personOptions = Person.all_approved
+    @personOptions = Person.all_approved.alphabetical
 
     respond_to do |format|
       format.html # new.html.erb
@@ -47,14 +46,14 @@ class RelationshipsController < ApplicationController
   # GET /relationships/1/edit
   def edit
     @relationship = Relationship.find(params[:id])
-    @personOptions = Person.all_approved
+    @personOptions = Person.all_approved.alphabetical
   end
 
   # POST /relationships
   # POST /relationships.json
   def create
     @relationship = Relationship.new(params[:relationship])
-    @personOptions = Person.all_approved
+    @personOptions = Person.all_approved.alphabetical
 
     respond_to do |format|
       if @relationship.save

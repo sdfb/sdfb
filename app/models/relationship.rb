@@ -11,7 +11,7 @@ class Relationship < ActiveRecord::Base
 	# Validations
 	# -----------------------------
 	# Validates that a person cannot have a relationship with themselves
- 	validate :check_two_different_people
+ 	validate :check_if_valid
   validates_presence_of :person1_index
   validates_presence_of :person2_index
   #validates_presence_of :max_certainty
@@ -35,6 +35,10 @@ class Relationship < ActiveRecord::Base
     lambda {|personID| 
       select('relationships.*')
       .where('(person1_index = ?) or (person2_index = ?)', personID, personID)}
+  scope :for_2_people,
+    lambda {|person1ID, person2ID| 
+    select('relationships.*')
+    .where('((person1_index = ?) or (person2_index = ?)) and ((person1_index = ?) or (person2_index = ?))', person1ID, person1ID, person2ID, person2ID)}
 
   # Callbacks
   # ----------------------------- 
@@ -44,6 +48,7 @@ class Relationship < ActiveRecord::Base
   after_destroy :delete_peoples_rel_sum
   before_create :check_if_approved
   before_update :check_if_approved
+  before_create :check_if_valid
 
 	# Custom Methods
   # -----------------------------
@@ -81,8 +86,10 @@ class Relationship < ActiveRecord::Base
   end
 
   # Validation method to check that one person is not in a relationship with themselves
-  def check_two_different_people
+  # Validation to check if the relationship already exists
+  def check_if_valid
     errors.add(:person2_index, "A person cannot have a relationship with his or herself.") if person1_index == person2_index
+    errors.add(:person2_index, "This relationship already exists") if (! Relationship.for_2_people(10013272, 10013272).empty?)
   end
 
   # Whenever a relationship is created, the relationship summary (rel_sum) must be updated in both people's records
