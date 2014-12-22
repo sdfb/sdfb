@@ -79,7 +79,7 @@ ActiveRecord::Schema.define(:version => 20141103033703) do
     t.string   "last_name"
     t.integer  "created_by"
     t.text     "historical_significance"
-    t.text     "rel_sum",                 :default => "'--- []\n'"
+    t.text     "rel_sum",                 :default => "--- []\n"
     t.string   "prefix"
     t.string   "suffix"
     t.string   "search_names_all"
@@ -95,8 +95,8 @@ ActiveRecord::Schema.define(:version => 20141103033703) do
     t.datetime "approved_on"
     t.integer  "odnb_id"
     t.boolean  "is_approved",             :default => false
-    t.datetime "created_at",                                        :null => false
-    t.datetime "updated_at",                                        :null => false
+    t.datetime "created_at",                                      :null => false
+    t.datetime "updated_at",                                      :null => false
   end
 
   create_table "rel_cat_assigns", :force => true do |t|
@@ -148,7 +148,7 @@ ActiveRecord::Schema.define(:version => 20141103033703) do
     t.text     "annotation"
     t.text     "bibliography"
     t.integer  "approved_by"
-    t.date     "approved_on"
+    t.datetime "approved_on"
     t.boolean  "is_approved",  :default => false
     t.datetime "created_at",                      :null => false
     t.datetime "updated_at",                      :null => false

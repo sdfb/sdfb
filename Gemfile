@@ -11,14 +11,8 @@ gem 'simple_form'
 
 # Gems used only for assets and not required
 # in production environments by default.
-group :devlopment, :test do
-  #gem 'sqlite3'
-end
+gem 'pg'
 
-group :production do
-  gem 'pg', '0.15.1'
-  gem 'rails_12factor'
-end
 
 group :assets do
   gem 'sass-rails',   '~> 3.2.3'
@@ -46,6 +40,8 @@ gem 'gon'
 
 # Validates dates
 gem 'validates_timeliness'
+
+
 
 # To use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.0.0'
