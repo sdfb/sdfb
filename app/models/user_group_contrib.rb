@@ -20,6 +20,9 @@ class UserGroupContrib < ActiveRecord::Base
   # Scope
   # ----------------------------- 
   scope :all_approved, where("approved_by is not null")
+  scope :all_for_group, lambda {|groupID| 
+      select('user_group_contribs.*')
+      .where('group_id = ?', groupID)}
 
   # Callbacks
   # ----------------------------- 

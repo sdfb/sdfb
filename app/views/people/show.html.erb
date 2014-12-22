@@ -116,8 +116,6 @@
                 <% end %>
             <% end %>
             <th>Maximum Certainty</th>
-            <th>Start Date</th>
-            <th>End Date</th>
             <th><%=t '.actions', :default => t("helpers.actions") %></th>
           </tr>
         </thead>
@@ -133,8 +131,6 @@
                   <% end %>
               <% end %>
               <td><%= relationship.max_certainty %></td>
-              <td><%= relationship.start_date %></td>
-              <td><%= relationship.end_date %></td>
               <td>
                 <% if can? :show, relationship %>
                   <%= link_to 'Show', relationship, :class => 'btn btn-mini'  %>
@@ -150,6 +146,44 @@
       </table>
 
       <%= will_paginate @approved_relationships, :param_name => 'approved_relationships_page', :previous_label => "Previous&nbsp;", :next_label => "&nbsp;Next" %>
+    </div>
+    <div class="well">
+      <h2>All User Person Contibutions for <%= @person.get_person_name %> <%= link_to 'New User Person Contribution',
+                  new_user_person_contrib_path(:person_id => @person.id),
+                  :class => 'btn btn-primary btn-mini' %></h2>
+      <table class="table table-condensed">
+        <table class="table table-condensed">
+          <thead>
+            <tr>
+              <th>User Person Contribution id</th>
+              <th>Person</th>
+              <th>Annotation</th>
+              <th>Bibliography</th>
+              <th><%=t '.actions', :default => t("helpers.actions") %></th>
+            </tr>
+          </thead>
+          <tbody>
+            <% @user_person_contribs.each do |user_person_contrib| %>
+              <tr>
+                <td><%= user_person_contrib.id %></td>
+                <td><%= link_to Person.find(user_person_contrib.person_id).get_person_name, person_path(user_person_contrib.person_id) %></td>
+                <td><%= user_person_contrib.annotation %></td>
+                <td><%= user_person_contrib.bibliography %></td>
+                <td>
+                  <% if can? :show, user_person_contrib %>
+                    <%= link_to 'Show', user_person_contrib, :class => 'btn btn-mini' %>
+                  <% end %>
+                  <% if can? :update, user_person_contrib %>
+                    <%= link_to t('.edit', :default => t("helpers.links.edit")),
+                              edit_user_person_contrib_path(user_person_contrib), :class => 'btn btn-mini' %>
+                  <% end %>
+                </td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+
+        <%= will_paginate @user_person_contribs, :param_name => 'user_person_contribs_page', :previous_label => "Previous&nbsp;", :next_label => "&nbsp;Next" %>
     </div>
   </div>
 </div>

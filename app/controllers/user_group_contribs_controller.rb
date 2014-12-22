@@ -31,6 +31,7 @@ class UserGroupContribsController < ApplicationController
   def new
     @user_group_contrib = UserGroupContrib.new
     @groupOptions = Group.all_approved
+    @group_id = params[:group_id]
 
     respond_to do |format|
       format.html # new.html.erb

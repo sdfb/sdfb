@@ -31,6 +31,7 @@ class UserPersonContribsController < ApplicationController
   def new
     @user_person_contrib = UserPersonContrib.new
     @personOptions = Person.all_approved
+    @person_id = params[:person_id]
 
     respond_to do |format|
       format.html # new.html.erb

@@ -10,7 +10,11 @@
       </ul>
     </div>
   <% end %>
-  <%= f.input :group_id, :collection =>@groupOptions.collect{ |g| [g.name, g.id] }, label: "Group", prompt: "Select" %>
+  <% if ! @group_id.blank? %>
+    <%= f.input :group_id, :collection =>@groupOptions.collect{ |g| [g.name, g.id] }, label: "Group", prompt: "Select", selected: @group_id %>
+  <% else %>
+    <%= f.input :group_id, :collection =>@groupOptions.collect{ |g| [g.name, g.id] }, label: "Group", prompt: "Select" %>
+  <% end %>
   <%= f.hidden_field :created_by, :value => current_user.id %>
   <%= f.input :annotation %>
   <%= f.input :bibliography %>
@@ -19,7 +23,7 @@
     <%= f.hidden_field :approved_by, :value => current_user.id %>
   <% end %>
   <div class="form-actions">
-    <%= f.button :submit, :class => 'btn-primary' %>
+    <%= f.button :submit, :class => 'btn btn-primary' %>
     <%= link_to t('.cancel', :default => t("helpers.links.cancel")),
                 user_group_contribs_path, :class => 'btn' %>
   </div>

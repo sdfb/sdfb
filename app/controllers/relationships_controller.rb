@@ -23,6 +23,7 @@ class RelationshipsController < ApplicationController
   # GET /relationships/1.json
   def show
     @relationship = Relationship.find(params[:id])
+    @user_rel_contribs = UserRelContrib.all_approved.all_for_relationship(params[:id]).paginate(:page => params[:user_rel_contribs_page]).per_page(20)
 
     respond_to do |format|
       format.html # show.html.erb

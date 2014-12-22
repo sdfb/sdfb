@@ -35,6 +35,9 @@ class UserRelContrib < ActiveRecord::Base
   # Scope
   # ----------------------------- 
   scope :all_approved, where("approved_by is not null")
+  scope :all_for_relationship, lambda {|relID| 
+      select('user_rel_contribs.*')
+      .where('relationship_id = ?', relID)}
 
   # Callbacks
   # ----------------------------- 
