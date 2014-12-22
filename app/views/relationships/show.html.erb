@@ -28,10 +28,14 @@
         <dd><%= link_to @relationship.get_person1_name,  person_path(@relationship.person1_index) %></dd>
         <dt><strong>Person 2:</strong></dt>
         <dd><%= link_to @relationship.get_person2_name,  person_path(@relationship.person2_index) %></dd>
-        <dt><strong>Start date:</strong></dt>
-        <dd><%= @relationship.start_date %></dd>
-        <dt><strong>End date:</strong></dt>
-        <dd><%= @relationship.end_date %></dd>
+        <% if ! @relationship.start_date.blank? %>
+          <dt><strong>Start date:</strong></dt>
+          <dd><%= @relationship.start_date %></dd> 
+        <% end %> 
+        <% if ! @relationship.start_date.blank? %>
+          <dt><strong>End date:</strong></dt>
+          <dd><%= @relationship.end_date %></dd>
+        <% end %>
         <dt><strong>Created by:</strong></dt>
         <dd><%= link_to User.find(@relationship.created_by).username,  user_path(@relationship.created_by) %></dd>
         <dt><strong>Is Approved?:</strong></dt>
@@ -44,8 +48,10 @@
           <dt><strong>Approved on:</strong></dt>
           <dd><%= @relationship.approved_on %></dd>
         <% end %>
-        <dt><strong>Justification:</strong></dt>
-        <dd><%= @relationship.justification %></dd>
+        <% if ! @relationship.justification.blank? %>
+          <dt><strong>Justification:</strong></dt>
+          <dd><%= @relationship.justification %></dd>
+        <% end %>
         <dt><strong>Created at:</strong></dt>
         <dd><%= @relationship.created_at %></dd>
       </dl>
