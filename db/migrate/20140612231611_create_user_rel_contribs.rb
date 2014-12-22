@@ -6,7 +6,7 @@ class CreateUserRelContribs < ActiveRecord::Migration
       t.decimal :confidence
       t.text :annotation
       t.text :bibliography
-      t.string :relationship_type
+      t.integer :relationship_type
       t.integer :approved_by
       t.date :approved_on
       t.boolean :is_approved, :default => false

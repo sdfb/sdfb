@@ -16,8 +16,8 @@
   <dd><%= @user_rel_contrib.annotation %></dd>
   <dt><strong><%= model_class.human_attribute_name(:bibliography) %>:</strong></dt>
   <dd><%= @user_rel_contrib.bibliography %></dd>
-  <dt><strong><%= model_class.human_attribute_name(:relationship_type) %>:</strong></dt>
-  <dd><%= @user_rel_contrib.relationship_type %></dd>
+  <dt><strong>Relationship Type:</strong></dt>
+  <dd><%= link_to RelationshipType.find(@user_rel_contrib.relationship_type).name, relationship_type_path(@user_rel_contrib.relationship_type) %></dd>
   <dt><strong>Created at:</strong></dt>
   <dd><%= @user_rel_contrib.created_at %></dd>
     <dt><strong>Is Approved?:</strong></dt>

@@ -1,35 +1,24 @@
-<h1>Listing relationship_types</h1>
+<h1>All Relationship Types <%= link_to 'New Relationship type', new_relationship_type_path, :class => 'btn btn-primary' %></h1><br>
 
-<table>
-  <tr>
+<table class="table table-condensed">
+    <tr>
     <th>Relationship Type id</th>
-    <th>Relationship Type inverse</th>
-    <th>Default rel category</th>
+    <th>Category</th>
     <th>Name</th>
     <th>Description</th>
-    <th>Is active</th>
-    <th>Created at</th>
     <th></th>
-    <th></th>
-    <th></th>
-  </tr>
+    </tr>
 
-<% @relationship_types.each do |relationship_type| %>
-  <tr>
-    <td><%= relationship_type.id %></td>
-    <td><%= relationship_type.relationship_type_inverse_id %></td>
-    <td><%= relationship_type.default_rel_category %></td>
-    <td><%= relationship_type.name %></td>
-    <td><%= relationship_type.description %></td>
-    <td><%= relationship_type.is_active %></td>
-    <td><%= relationship_type.created_at %></td>
-    <td><%= link_to 'Show', relationship_type %></td>
-    <td><%= link_to 'Edit', edit_relationship_type_path(relationship_type) %></td>
-    <td><%= link_to 'Destroy', relationship_type, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-  </tr>
-<% end %>
+    <% @relationship_types.each do |relationship_type| %>
+      <tr>
+        <td><%= relationship_type.id %></td>
+        <td><%= relationship_type.default_rel_category %></td>
+        <td><%= relationship_type.name %></td>
+        <td><%= relationship_type.description %></td>
+        <td><%= link_to 'Show', relationship_type %>
+        <%= link_to 'Edit', edit_relationship_type_path(relationship_type) %></td>
+      </tr>
+    <% end %>
 </table>
 
 <br />
-
-<%= link_to 'New Relationship type', new_relationship_type_path %>

@@ -32,6 +32,7 @@ class UserRelContribsController < ApplicationController
     @user_rel_contrib = UserRelContrib.new
     @relOptions = Relationship.all_approved
     @relationship_id = params[:relationship_id]
+    @relType = RelationshipType.all_approved
 
     respond_to do |format|
       format.html # new.html.erb
@@ -43,6 +44,7 @@ class UserRelContribsController < ApplicationController
   def edit
     @user_rel_contrib = UserRelContrib.find(params[:id])
     @relOptions = Relationship.all_approved
+    @relType = RelationshipType.all_approved
   end
 
   # POST /user_rel_contribs
@@ -50,6 +52,7 @@ class UserRelContribsController < ApplicationController
   def create
     @user_rel_contrib = UserRelContrib.new(params[:user_rel_contrib])
     @relOptions = Relationship.all_approved
+    @relType = RelationshipType.all_approved
 
     respond_to do |format|
       if @user_rel_contrib.save

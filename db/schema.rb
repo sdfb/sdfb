@@ -115,14 +115,17 @@ ActiveRecord::Schema.define(:version => 20141103033703) do
   end
 
   create_table "relationship_types", :force => true do |t|
-    t.integer  "relationship_type_inverse_id"
+    t.string   "relationship_type_inverse"
     t.integer  "default_rel_category"
     t.string   "name"
     t.text     "description"
-    t.boolean  "is_active",                    :default => true
-    t.boolean  "is_approved",                  :default => false
-    t.datetime "created_at",                                      :null => false
-    t.datetime "updated_at",                                      :null => false
+    t.boolean  "is_active",                 :default => true
+    t.integer  "approved_by"
+    t.datetime "approved_on"
+    t.boolean  "is_approved",               :default => false
+    t.integer  "created_by"
+    t.datetime "created_at",                                   :null => false
+    t.datetime "updated_at",                                   :null => false
   end
 
   create_table "relationships", :force => true do |t|
@@ -172,7 +175,7 @@ ActiveRecord::Schema.define(:version => 20141103033703) do
     t.decimal  "confidence"
     t.text     "annotation"
     t.text     "bibliography"
-    t.string   "relationship_type"
+    t.integer  "relationship_type"
     t.integer  "approved_by"
     t.date     "approved_on"
     t.boolean  "is_approved",       :default => false

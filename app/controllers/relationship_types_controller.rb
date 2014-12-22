@@ -2,7 +2,7 @@ class RelationshipTypesController < ApplicationController
   # GET /relationship_types
   # GET /relationship_types.json
   def index
-    @relationship_types = RelationshipType.all
+    @relationship_types = RelationshipType.all_approved
 
     respond_to do |format|
       format.html # index.html.erb

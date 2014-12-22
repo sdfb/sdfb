@@ -9,11 +9,6 @@ class UserRelContrib < ActiveRecord::Base
 
   # Misc Constants
   # -----------------------------
-  REL_TYPE_LIST = ["No relationship exists", "Acquaintances","Ancestor/Descendent","Antagonists","Mentor/Apprentice","Parent/Child","Close Friends","Collaborators",
-    "Colleagues","Employer/Employee","Enemies","Engaged","Friends","Grandparent/Grandchild","Met",
-    "Influenced one another","Knew in passing","Knew of one another","Life partners","Lived with",
-    "Neighbors","Siblings","Spouses","Coworkers"]
-
   USER_EST_CONFIDENCE_LIST = ["Certain", "Highly Likely", "Possible", "Unlikely", "Very Unlikely"]
 
   ###need rel type for directional
@@ -21,7 +16,6 @@ class UserRelContrib < ActiveRecord::Base
 
   # Validations
   # -----------------------------
-  validates :relationship_type, :inclusion => {:in =>  REL_TYPE_LIST}, :allow_blank => true
   validates_presence_of :annotation
   validates_presence_of :confidence
   validates_presence_of :created_by

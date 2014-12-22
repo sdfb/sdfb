@@ -15,14 +15,11 @@
   <% else %>
     <%= f.input :relationship_id, :collection =>@relOptions.collect{ |r| [r.get_person1_name + " & " + r.get_person2_name, r.id] }, label: "Relationship", prompt: "Select" %>
   <% end %>
-  <%= f.hidden_field :created_by, :value => current_user.id %>
+  <%= f.input :relationship_type, :collection =>@relType.collect{ |r| [r.name, r.id] }, label: "Relationship Type", prompt: "Select" %>  
   <%= f.input :confidence %>
   <%= f.input :annotation %>
   <%= f.input :bibliography %>
-  <%= f.input :relationship_type, :collection =>["No relationship exists", "Acquaintances","Ancestor/Descendent","Antagonists","Mentor/Apprentice","Parent/Child","Close Friends","Collaborators",
-    "Colleagues","Employer/Employee","Enemies","Engaged","Friends","Grandparent/Grandchild","Met",
-    "Influenced one another","Knew in passing","Knew of one another","Life partners","Lived with",
-    "Neighbors","Siblings","Spouses","Coworkers"], label: "Relationship type", prompt: "Select" %>
+  <%= f.hidden_field :created_by, :value => current_user.id %>
   <% if current_user.user_type == "Admin" %>
     <%= f.input :is_approved %>
     <%= f.hidden_field :approved_by, :value => current_user.id %>

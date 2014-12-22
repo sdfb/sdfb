@@ -1,40 +1,40 @@
-<p id="notice"><%= notice %></p>
+<div class="page-header">
+  <h1>Relationship Type: <%= @relationship_type.name %></h1>
+</div>
 
-<p>
-  <b>Relationship Type id:</b>
-  <%= @relationship_type.id %>
-</p>
+<dl class="dl-horizontal">
+  <dt><strong>Relationship Type id:</strong></dt>
+  <dd><%= @relationship_type.id  %></dd>
+  <dt><strong>Relationship type inverse:</strong></dt>
+  <dd><%= @relationship_type.relationship_type_inverse %></dd>
+  <dt><strong>Primary Category:</strong></dt>
+  <dd><%= @relationship_type.default_rel_category %></dd>
+  <dt><strong>Name:</strong></dt>
+  <dd><%= @relationship_type.name %></dd>
+  <% if ! @relationship_type.description.blank? %>
+    <dt><strong>Description:</strong></dt>
+    <dd><%= @relationship_type.description %></dd>
+  <% end %>
+  <dt><strong>Created by:</strong></dt>
+  <dd><%= link_to User.find(@relationship_type.created_by).username,  user_path(@relationship_type.created_by) %></dd>
+  <dt><strong>Is active:</strong></dt>
+  <dd><%= @relationship_type.is_active %></dd>
+  <dt><strong>Is Approved?:</strong></dt>
+  <dd><%= @relationship_type.is_approved %></dd>
+  <% if ! @relationship_type.approved_by.blank? %>
+    <dt><strong>Approved by:</strong></dt>
+    <dd><%= link_to User.find(@relationship_type.approved_by).username,  user_path(@relationship_type.approved_by) %></dd>
+  <% end %>
+  <% if ! @relationship_type.approved_by.blank? %>
+    <dt><strong>Approved on:</strong></dt>
+    <dd><%= @relationship_type.approved_on %></dd>
+  <% end %>
+</dl>
 
-<p>
-  <b>Relationship type inverse:</b>
-  <%= @relationship_type.relationship_type_inverse_id %>
-</p>
+<div class="form-actions">
+  <%= link_to 'Back', relationship_types_path %>
+  <% if can? :update, @relationship_type %>
+    <%= link_to 'Edit', edit_relationship_type_path(@relationship_type), :class => 'btn'  %>
+  <% end %>
+</div>
 
-<p>
-  <b>Default rel category:</b>
-  <%= @relationship_type.default_rel_category %>
-</p>
-
-<p>
-  <b>Name:</b>
-  <%= @relationship_type.name %>
-</p>
-
-<p>
-  <b>Description:</b>
-  <%= @relationship_type.description %>
-</p>
-
-<p>
-  <b>Is active:</b>
-  <%= @relationship_type.is_active %>
-</p>
-
-<p>
-  <b>Created at:</b>
-  <%= @relationship_type.created_at %>
-</p>
-
-
-<%= link_to 'Edit', edit_relationship_type_path(@relationship_type) %> |
-<%= link_to 'Back', relationship_types_path %>
