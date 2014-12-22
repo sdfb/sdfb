@@ -43,13 +43,6 @@
           <% if can? :update, group_assignment %>
             <%= link_to 'Edit', edit_group_assignment_path(group_assignment) %>
           <% end %>
-          <% if can? :destroy, group_assignment %>
-            <%= link_to t('.destroy', :default => t("helpers.links.destroy")),
-                        group_assignment_path(group_assignment),
-                        :method => :delete,
-                        :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')) },
-                        :class => 'btn btn-mini btn-danger' %>
-          <% end %>
         </td>
       </tr>
     <% end %>

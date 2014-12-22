@@ -71,13 +71,13 @@ class RelationshipTypesController < ApplicationController
 
   # DELETE /relationship_types/1
   # DELETE /relationship_types/1.json
-  def destroy
-    @relationship_type = RelationshipType.find(params[:id])
-    @relationship_type.destroy
+  # def destroy
+  #   @relationship_type = RelationshipType.find(params[:id])
+  #   @relationship_type.destroy
 
-    respond_to do |format|
-      format.html { redirect_to relationship_types_url }
-      format.json { head :no_content }
-    end
-  end
+  #   respond_to do |format|
+  #     format.html { redirect_to relationship_types_url }
+  #     format.json { head :no_content }
+  #   end
+  # end
 end

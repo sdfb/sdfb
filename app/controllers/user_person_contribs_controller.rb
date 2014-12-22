@@ -80,13 +80,13 @@ class UserPersonContribsController < ApplicationController
 
   # DELETE /user_person_contribs/1
   # DELETE /user_person_contribs/1.json
-  def destroy
-    @user_person_contrib = UserPersonContrib.find(params[:id])
-    @user_person_contrib.destroy
+  # def destroy
+  #   @user_person_contrib = UserPersonContrib.find(params[:id])
+  #   @user_person_contrib.destroy
 
-    respond_to do |format|
-      format.html { redirect_to user_person_contribs_url }
-      format.json { head :no_content }
-    end
-  end
+  #   respond_to do |format|
+  #     format.html { redirect_to user_person_contribs_url }
+  #     format.json { head :no_content }
+  #   end
+  # end
 end

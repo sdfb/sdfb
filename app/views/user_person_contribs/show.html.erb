@@ -35,11 +35,4 @@
     <%= link_to t('.edit', :default => t("helpers.links.edit")),
               edit_user_person_contrib_path(@user_person_contrib), :class => 'btn' %>
   <% end %>
-  <% if can? :destroy, @user_person_contrib %>
-    <%= link_to t('.destroy', :default => t("helpers.links.destroy")),
-              user_person_contrib_path(@user_person_contrib),
-              :method => 'delete',
-              :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')) },
-              :class => 'btn btn-danger' %>
-  <% end %>
 </div>

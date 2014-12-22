@@ -71,13 +71,13 @@ class FlagsController < ApplicationController
 
   # DELETE /flags/1
   # DELETE /flags/1.json
-  def destroy
-    @flag = Flag.find(params[:id])
-    @flag.destroy
+  # def destroy
+  #   @flag = Flag.find(params[:id])
+  #   @flag.destroy
 
-    respond_to do |format|
-      format.html { redirect_to flags_url }
-      format.json { head :no_content }
-    end
-  end
+  #   respond_to do |format|
+  #     format.html { redirect_to flags_url }
+  #     format.json { head :no_content }
+  #   end
+  # end
 end

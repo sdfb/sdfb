@@ -82,15 +82,15 @@ class PeopleController < ApplicationController
 
   # DELETE /people/1
   # DELETE /people/1.json
-  def destroy
-    @person = Person.find(params[:id])
-    @person.destroy
+  # def destroy
+  #   @person = Person.find(params[:id])
+  #   @person.destroy
 
-    respond_to do |format|
-      format.html { redirect_to people_url }
-      format.json { head :no_content }
-    end
-  end
+  #   respond_to do |format|
+  #     format.html { redirect_to people_url }
+  #     format.json { head :no_content }
+  #   end
+  # end
 
   def search 
     # allows for the admin to search from their dashboard

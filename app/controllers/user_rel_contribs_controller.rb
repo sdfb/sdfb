@@ -83,15 +83,15 @@ class UserRelContribsController < ApplicationController
 
   # DELETE /user_rel_contribs/1
   # DELETE /user_rel_contribs/1.json
-  def destroy
-    @user_rel_contrib = UserRelContrib.find(params[:id])
-    @user_rel_contrib.destroy
+  # def destroy
+  #   @user_rel_contrib = UserRelContrib.find(params[:id])
+  #   @user_rel_contrib.destroy
 
-    respond_to do |format|
-      format.html { redirect_to user_rel_contribs_url }
-      format.json { head :no_content }
-    end
-  end
+  #   respond_to do |format|
+  #     format.html { redirect_to user_rel_contribs_url }
+  #     format.json { head :no_content }
+  #   end
+  # end
 
   def require_login
     unless logged_in?
