@@ -2,35 +2,41 @@
             new_user_group_contrib_path,
             :class => 'btn btn-primary' %></h1><br>
 
-<table class="table table-condensed">
-  <thead>
-    <tr>
-      <th>User Group Contribution id</th>
-      <th>Group</th>
-      <th>Annotation</th>
-      <th>Bibliography</th>
-      <th><%=t '.actions', :default => t("helpers.actions") %></th>
-    </tr>
-  </thead>
-  <tbody>
-    <% @user_group_contribs.each do |user_group_contrib| %>
+<% if ! @user_group_contribs.empty? %>
+  <table class="table table-condensed">
+    <thead>
       <tr>
-        <td><%= user_group_contrib.id %></td>
-        <td><%= link_to Group.find(user_group_contrib.group_id).name, group_path(user_group_contrib.group_id) %></td>
-        <td><%= user_group_contrib.annotation %></td>
-        <td><%= user_group_contrib.bibliography %></td>
-        <td>
-          <% if can? :show, user_group_contrib %>
-              <%= link_to 'Show', user_group_contrib, :class => 'btn btn-mini' %>
-          <% end %>
-          <% if can? :update, user_group_contrib %>
-              <%= link_to t('.edit', :default => t("helpers.links.edit")),
-                        edit_user_group_contrib_path(user_group_contrib), :class => 'btn btn-mini' %>
-          <% end %>
-        </td>
+        <th>User Group Contribution id</th>
+        <th>Group</th>
+        <th>Annotation</th>
+        <th>Bibliography</th>
+        <th><%=t '.actions', :default => t("helpers.actions") %></th>
       </tr>
-    <% end %>
-  </tbody>
-</table>
+    </thead>
+    <tbody>
+      <% @user_group_contribs.each do |user_group_contrib| %>
+        <tr>
+          <td><%= user_group_contrib.id %></td>
+          <td><%= link_to Group.find(user_group_contrib.group_id).name, group_path(user_group_contrib.group_id) %></td>
+          <td><%= user_group_contrib.annotation %></td>
+          <td><%= user_group_contrib.bibliography %></td>
+          <td>
+            <% if can? :show, user_group_contrib %>
+                <%= link_to 'Show', user_group_contrib, :class => 'btn btn-mini' %>
+            <% end %>
+            <% if can? :update, user_group_contrib %>
+                <%= link_to t('.edit', :default => t("helpers.links.edit")),
+                          edit_user_group_contrib_path(user_group_contrib), :class => 'btn btn-mini' %>
+            <% end %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
 
-<%= will_paginate @user_group_contribs, :param_name => 'user_group_contribs_page', :previous_label => "Previous&nbsp;", :next_label => "&nbsp;Next" %>
+  <%= will_paginate @user_group_contribs, :param_name => 'user_group_contribs_page', :previous_label => "Previous&nbsp;", :next_label => "&nbsp;Next" %>
+<% else %>
+  <div class = "well">
+    No User Group Contributions exist.
+  </div>
+<% end %>

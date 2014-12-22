@@ -98,7 +98,8 @@
   </div>
 
   <div class="span7">
-    <div class="well">
+    <% if ! @approved_relationships.empty? %>
+      <div class="well">
       
       <h2>All Relationships for <%= @person.get_person_name %> <%= link_to 'New Relationship',
                   new_relationship_path(:person1_id => @person.id),
@@ -146,7 +147,17 @@
       </table>
 
       <%= will_paginate @approved_relationships, :param_name => 'approved_relationships_page', :previous_label => "Previous&nbsp;", :next_label => "&nbsp;Next" %>
-    </div>
+      </div>
+    <% else %>
+      <div class = "well">
+        <h2>All Relationships for <%= @person.get_person_name %> <%= link_to 'New Relationship',
+                  new_relationship_path(:person1_id => @person.id),
+                  :class => 'btn btn-primary btn-mini' %></h2>
+        <br>
+        <b>No Relationships exist.</b>
+      </div>
+    <% end %>
+    <% if ! @user_person_contribs.empty? %>
     <div class="well">
       <h2>All User Person Contibutions for <%= @person.get_person_name %> <%= link_to 'New User Person Contribution',
                   new_user_person_contrib_path(:person_id => @person.id),
@@ -184,7 +195,16 @@
         </table>
 
         <%= will_paginate @user_person_contribs, :param_name => 'user_person_contribs_page', :previous_label => "Previous&nbsp;", :next_label => "&nbsp;Next" %>
+      </div>
+    <% else %>
+    <div class = "well">
+      <h2>All User Person Contibutions for <%= @person.get_person_name %> <%= link_to 'New User Person Contribution',
+                new_user_person_contrib_path(:person_id => @person.id),
+                :class => 'btn btn-primary btn-mini' %></h2>
+      <br>
+      <b>No User People Contributions exist.</b>
     </div>
+    <% end %>
   </div>
 </div>
 

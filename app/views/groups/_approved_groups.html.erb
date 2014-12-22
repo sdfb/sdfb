@@ -1,32 +1,32 @@
 <h1>All Groups <%= link_to 'New Group', new_group_path, :class => 'btn btn-primary' %></h1><br>
 
-<table class="table table-condensed">
-  <thead>
-    <tr>
-      <th>Group ID </th>
-      <th>Name</th>
-      <th>Description</th>
-      <th><%=t '.actions', :default => t("helpers.actions") %></th>
-    </tr>
-  </thead>
-  <tbody>
-    <% @groups_approved.each do |group| %>
+  <table class="table table-condensed">
+    <thead>
       <tr>
-        <td><%= group.id %></td>
-        <td><%= group.name %></td>
-        <td><%= group.description %></td>
-        <td>
-          <% if can? :show, group %>
-            <%= link_to 'Show', group, :class => 'btn btn-mini' %>
-          <% end %>
-          <% if can? :update, group %>
-            <%= link_to t('.edit', :default => t("helpers.links.edit")),
-                            edit_group_path(group), :class => 'btn btn-mini' %>
-          <% end %>
-        </td>
+        <th>Group ID </th>
+        <th>Name</th>
+        <th>Description</th>
+        <th><%=t '.actions', :default => t("helpers.actions") %></th>
       </tr>
-    <% end %>
-  </tbody>
-</table>
+    </thead>
+    <tbody>
+      <% @groups_approved.each do |group| %>
+        <tr>
+          <td><%= group.id %></td>
+          <td><%= group.name %></td>
+          <td><%= group.description %></td>
+          <td>
+            <% if can? :show, group %>
+              <%= link_to 'Show', group, :class => 'btn btn-mini' %>
+            <% end %>
+            <% if can? :update, group %>
+              <%= link_to t('.edit', :default => t("helpers.links.edit")),
+                              edit_group_path(group), :class => 'btn btn-mini' %>
+            <% end %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
 
-<%= will_paginate @groups_approved, :param_name => 'groups_approved_page', :previous_label => "Previous&nbsp;", :next_label => "&nbsp;Next" %>
+  <%= will_paginate @groups_approved, :param_name => 'groups_approved_page', :previous_label => "Previous&nbsp;", :next_label => "&nbsp;Next" %>

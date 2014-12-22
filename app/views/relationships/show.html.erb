@@ -59,7 +59,8 @@
   </div>
 
   <div class="span7">
-    <div class="well">
+    <% if ! @user_rel_contribs.empty? %>
+      <div class="well">
       <h2>All User Relationship Contibutions for <%= @relationship.get_person1_name + " & " + @relationship.get_person2_name%> <%= link_to 'New User Relationship Contribution',
                   new_user_rel_contrib_path(:relationship_id => @relationship.id),
                   :class => 'btn btn-primary btn-mini' %></h2>
@@ -96,7 +97,16 @@
 
       <%= will_paginate @user_rel_contribs, :param_name => 'user_rel_contribs_page', :previous_label => "Previous&nbsp;", :next_label => "&nbsp;Next" %>
 
-    </div>
+      </div>
+    <% else %>
+      <div class="well">
+        <h2>All User Relationship Contibutions for <%= @relationship.get_person1_name + " & " + @relationship.get_person2_name%> <%= link_to 'New User Relationship Contribution',
+                  new_user_rel_contrib_path(:relationship_id => @relationship.id),
+                  :class => 'btn btn-primary btn-mini' %></h2>
+        <br>
+        <b>No User Relationship Contributions exist</b>
+      </div>
+    <% end %>
   </div>
 
 </div>
