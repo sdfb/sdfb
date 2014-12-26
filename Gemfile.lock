@@ -49,7 +49,7 @@ GEM
       multi_json
       request_store (>= 1.0.5)
     hike (1.2.3)
-    i18n (0.6.11)
+    i18n (0.7.0)
     journey (1.0.4)
     jquery-rails (3.1.2)
       railties (>= 3.0, < 5.0)
@@ -68,6 +68,7 @@ GEM
     mime-types (1.25.1)
     multi_json (1.10.1)
     pg (0.17.1)
+    pg (0.17.1-x86-mingw32)
     polyglot (0.3.5)
     rack (1.4.5)
     rack-cache (1.2)
@@ -118,10 +119,9 @@ GEM
     treetop (1.4.15)
       polyglot
       polyglot (>= 0.3.1)
-    twitter-bootstrap-rails (2.2.8)
+    twitter-bootstrap-rails (2.1.7)
       actionpack (>= 3.1)
       execjs
-      rails (>= 3.1)
       railties (>= 3.1)
     tzinfo (0.3.42)
     uglifier (2.6.0)
@@ -147,7 +147,7 @@ DEPENDENCIES
   sass-rails (~> 3.2.3)
   simple_form
   therubyracer
-  twitter-bootstrap-rails
+  twitter-bootstrap-rails (= 2.1.7)
   uglifier (>= 1.0.3)
   validates_timeliness
   will_paginate

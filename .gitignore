@@ -1,2 +1,4 @@
 log/development.log
 tmp/**/*
+**/.sass-cache
+**/.sass-cache/*

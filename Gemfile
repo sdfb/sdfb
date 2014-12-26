@@ -7,7 +7,7 @@ gem 'rails', '3.2.11'
 
    gem "therubyracer"
    gem "less-rails" #Sprockets (what Rails 3.1 uses for its asset pipeline) supports LESS
-   gem "twitter-bootstrap-rails"
+   gem "twitter-bootstrap-rails", '2.1.7'
 
 gem 'will_paginate'
 gem 'simple_form'
@@ -17,7 +17,7 @@ gem 'simple_form'
 gem 'pg'
 
 
-group :assets do
+
   gem 'sass-rails',   '~> 3.2.3'
   gem 'coffee-rails', '~> 3.2.1'
 
@@ -25,7 +25,7 @@ group :assets do
  
 
   gem 'uglifier', '>= 1.0.3'
-end
+
 
 gem 'jquery-rails'
 
