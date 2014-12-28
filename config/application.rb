@@ -55,11 +55,13 @@ module Sdfb
     # Enable the asset pipeline
     config.assets.enabled = true
 
+    config.assets.initialize_on_precompile = false
+
     # Version of your assets, change this if you want to expire all your assets
     config.assets.version = '1.0'
 		require 'active_support/core_ext/numeric/bytes'
 		config.cache_store = :memory_store, {:size => 2048.megabytes}
   end
 
-  config.assets.initialize_on_precompile = false
+
 end
