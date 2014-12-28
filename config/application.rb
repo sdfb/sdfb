@@ -60,4 +60,6 @@ module Sdfb
 		require 'active_support/core_ext/numeric/bytes'
 		config.cache_store = :memory_store, {:size => 2048.megabytes}
   end
+
+  config.assets.initialize_on_precompile = false
 end
