@@ -11,10 +11,6 @@ function createNodeKey(node) {
   return nodeKey;
 }
 
-
-
-
-
 function getSize(node) {
 	// base off number of connections the node has 
   var numRels = node.size;
@@ -98,14 +94,15 @@ var node = function() {
 
 };
 
-function twoDegs(id, data) {
 
- 
-  
+
+function twoDegs(id, data) {
   var p = data.nodes[id];
   var keys = {};
   var nodes = [];
   var edges = [];
+
+
 
   if (p.rels.length > 0) {
     $.each(p.rels, function(index, value) {
@@ -150,17 +147,16 @@ function twoDegs(id, data) {
         keys[p.id] = {"text": p.first + " " + p.last, "size": 20, "id": p.id,  "cluster": getCluster(p.birth)};
   }  
 	
-	
 // Returns list of groups that a node belongs to
 function findGroups(node, data){
-	var groups = [];
-	for(var key in data.groups){
-		if ((data.groups[key].nodes).indexOf(node.id)>-1)
-			groups.push(data.groups[key].name);
-	}
-	var strgroups = groups.join(', ')
-	return strgroups;
-}		
+  var groups = [];
+  for(var key in data.groups){
+    if ((data.groups[key].nodes).indexOf(node.id)>-1)
+      groups.push(data.groups[key].name);
+  }
+  var strgroups = groups.join(', ')
+  return strgroups;
+}   
 
 $.each(keys, function(index, value) {
   nodes.push(value);
@@ -172,9 +168,21 @@ edges.reverse();
   
   var options = { width: $("#graph").width(), height: $("#graph").height(), colors: getColors() };
   var graph = new Insights($("#graph")[0], nodes, edges, options).render();
-  graph.focus(francisID);
+  //graph.focus(francisID);
 
-
+  var queryString = window.location.search;
+  if (queryString != null && queryString.substring(1,3) == "id"){
+    $('#landing').fadeOut();
+    $('#everything').fadeIn();
+    var ID = queryString.substring(4);
+    var clicked = data.nodes[ID];
+    showNodeInfo(clicked, findGroups(clicked, data));
+    //graph.focus({ text: "Richard Bagot" }).filter({ text: "Bagot" }).update();
+    //graph.reset();
+    //graph.filter({ id: 10000473 }).update();
+    graph.focus(ID).update();
+    console.log("node was selected");
+  }
 
   graph.on("node:click", function(d) {
     var clicked = data.nodes[d.id];
@@ -296,7 +304,7 @@ function writeNetworkTable(dataSource, title){
         }
     });
 };
-/*
+
 // Displays edge information 
 function getAnnotation(id1, id2, data) {
   var confidence = findConfidence(id1, id2, data);
@@ -323,7 +331,7 @@ function getAnnotation(id1, id2, data) {
     $("#entry_1321382891").val(data.nodes[id2].name);
   });
  }
-*/
+
  // Takes in the title and data, allows users to download the data
 function downloadData(data, title) {
   var result = title + " \n" + 'First Name,Last Name,Birth Date,Death Date,Historical Significance' + "\n";
@@ -410,12 +418,14 @@ function init() {
     
   });
 
-  console.log(data);
+  //console.log(data);
 
   twoDegs(francisID, data);
   populateLists(data);
 
-}
+
+  }
+
 
 
 
