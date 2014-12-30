@@ -43,8 +43,8 @@ class Relationship < ActiveRecord::Base
   # Callbacks
   # ----------------------------- 
   before_create :max_certainty_on_create
-  before_create :create_peoples_rel_sum
-  before_update :update_peoples_rel_sum
+  after_create :create_peoples_rel_sum
+  after_update :update_peoples_rel_sum
   after_destroy :delete_peoples_rel_sum
   before_create :check_if_approved
   before_update :check_if_approved
@@ -97,6 +97,7 @@ class Relationship < ActiveRecord::Base
     person1_index_in = self.person1_index
     person2_index_in = self.person2_index
     max_certainty_in = self.max_certainty
+    id_in = self.id
     if ! approved_by.nil?
       is_approved_in = 1
     else
@@ -106,6 +107,7 @@ class Relationship < ActiveRecord::Base
     new_rel_record.push(person2_index)
     new_rel_record.push(max_certainty)
     new_rel_record.push(is_approved_in)
+    new_rel_record.push(id_in)
     person1_current_rel_sum = Person.find(person1_index_in).rel_sum
     person1_current_rel_sum.push(new_rel_record)
     Person.update(person1_index, rel_sum: person1_current_rel_sum)
@@ -147,6 +149,7 @@ class Relationship < ActiveRecord::Base
     person1_index_in = self.person1_index
     person2_index_in = self.person2_index
     max_certainty_in = self.max_certainty
+    id_in = self.id
     if ! approved_by.nil?
       is_approved_in = 1
     else

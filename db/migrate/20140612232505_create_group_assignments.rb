@@ -8,6 +8,7 @@ class CreateGroupAssignments < ActiveRecord::Migration
       t.date :end_date
       t.integer :approved_by
       t.date :approved_on
+      t.boolean :is_approved
 
       t.timestamps
     end

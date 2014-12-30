@@ -41,6 +41,7 @@ ActiveRecord::Schema.define(:version => 20141103033703) do
     t.date     "end_date"
     t.integer  "approved_by"
     t.date     "approved_on"
+    t.boolean  "is_approved"
     t.datetime "created_at",  :null => false
     t.datetime "updated_at",  :null => false
   end

@@ -1,5 +1,6 @@
 class GroupAssignment < ActiveRecord::Base
-  attr_accessible :created_by, :group_id, :approved_by, :approved_on, :person_id, :start_date, :end_date, :created_at
+  attr_accessible :created_by, :group_id, :approved_by, :approved_on, :person_id, :start_date, :end_date, :created_at,
+  :is_approved
   
   # Relationships
   # -----------------------------
