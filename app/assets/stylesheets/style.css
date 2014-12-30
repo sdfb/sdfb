@@ -80,22 +80,25 @@ header a:hover {
 }*/
 
 #everything {
-  position: relative;
 
 }
 li {
   display: inline;
 }
 
+.navbar .nav>li>a {
+  color: #fff;
+  text-shadow: none;
+}
 #filterBar {
   position: absolute;
   top: 38px;
-  left: 300px;
+  left: 0px;
   width: 100%;
   background-color: #FBF3E1;
   line-height: 34px;
   height: 34px;
-  padding-top: 10px;
+  padding: 10px 0px 0px 320px;
   font-weight: lighter;
   text-transform: uppercase;
   letter-spacing: 2px;
@@ -111,6 +114,7 @@ a:hover {
 
 
 #results {
+    display:none;
     line-height: 40px;
     color: #555;
     background: none;

@@ -140,7 +140,7 @@ aside {
 }
 
 .accordion_content .search-table{
-	margin:0px 10px;
+	margin:0px -8px;
 	width:300px;
 	overflow:hidden;
 }
