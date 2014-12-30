@@ -8,6 +8,7 @@ class CreateGroups < ActiveRecord::Migration
       t.string :approved_by
       t.string :approved_on
       t.boolean :is_approved, :default => false
+      t.text :person_list, :default => [].to_yaml
 
       t.timestamps
     end

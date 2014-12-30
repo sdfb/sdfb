@@ -40,7 +40,7 @@ ActiveRecord::Schema.define(:version => 20141103033703) do
     t.date     "start_date"
     t.date     "end_date"
     t.integer  "approved_by"
-    t.date     "approved_on"
+    t.datetime "approved_on"
     t.boolean  "is_approved"
     t.datetime "created_at",  :null => false
     t.datetime "updated_at",  :null => false
@@ -71,8 +71,9 @@ ActiveRecord::Schema.define(:version => 20141103033703) do
     t.string   "approved_by"
     t.string   "approved_on"
     t.boolean  "is_approved",   :default => false
-    t.datetime "created_at",                       :null => false
-    t.datetime "updated_at",                       :null => false
+    t.text     "person_list",   :default => "--- []\n"
+    t.datetime "created_at",                            :null => false
+    t.datetime "updated_at",                            :null => false
   end
 
   create_table "people", :force => true do |t|
@@ -96,6 +97,7 @@ ActiveRecord::Schema.define(:version => 20141103033703) do
     t.datetime "approved_on"
     t.integer  "odnb_id"
     t.boolean  "is_approved",             :default => false
+    t.text     "group_list",              :default => "--- []\n"
     t.datetime "created_at",                                      :null => false
     t.datetime "updated_at",                                      :null => false
   end

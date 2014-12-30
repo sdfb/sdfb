@@ -42,6 +42,10 @@
         <% end %>
         <dt>Created at</dt>
         <dd><%= @group.created_at %></dd>
+        <% if ! @group.person_list.blank? %>
+          <dt>Members</dt>
+          <dd><%= @group.person_list %></dd>
+        <% end %>
       </dl>
     </div>
   </div>

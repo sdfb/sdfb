@@ -76,6 +76,12 @@
         <% else %>
           <dd>No relationships</dd>
         <% end %>
+        <dt><strong>Group Summary:</strong></dt>
+        <% if ! @person.group_list.empty? %>
+          <dd><%= @person.group_list %></dd>
+        <% else %>
+          <dd>No groups</dd>
+        <% end %>
         <dt><strong>Is Approved?:</strong></dt>
         <dd><%= @person.is_approved %></dd>
         <% if ! @person.approved_by.blank? %>
