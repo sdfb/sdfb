@@ -213,9 +213,9 @@
     <% end %>
 
     <div class = "well">
-      <h1>All Group Assignments for <%= @person.get_person_name %><%= link_to 'New Group Assignment',
+      <h2>All Group Assignments for <%= @person.get_person_name %><%= link_to 'New Group Assignment',
                     new_group_assignment_path(:person_id => @person.id),
-                    :class => 'btn btn-primary btn-mini' %></h1>
+                    :class => 'btn btn-primary btn-mini' %></h2>
       <% if ! @groups.empty? %>
         <table class="table table-condensed">
           <thead>
