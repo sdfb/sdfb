@@ -211,6 +211,48 @@
       <b>No User People Contributions exist.</b>
     </div>
     <% end %>
+
+    <div class = "well">
+      <h1>All Group Assignments for <%= @person.get_person_name %><%= link_to 'New Group Assignment',
+                    new_group_assignment_path(:person_id => @person.id),
+                    :class => 'btn btn-primary btn-mini' %></h1>
+      <% if ! @groups.empty? %>
+        <table class="table table-condensed">
+          <thead>
+          <tr>
+            <th>Group Assignment id</th>
+            <th>Group</th>
+            <th>Start date</th>
+            <th>End date</th>
+            <th><%=t '.actions', :default => t("helpers.actions") %></th>
+          </tr>
+          </thead>
+          <tbody>
+            <% @groups.each do |group_assignment| %>
+              <tr>
+                <td><%= group_assignment.id %></td>
+                <td><%= link_to group_assignment.get_group_name, group_path(group_assignment.group_id) %></td>
+                <td><%= group_assignment.start_date %></td>
+                <td><%= group_assignment.end_date %></td>
+                <td>
+                  <% if can? :show, group_assignment %>
+                    <%= link_to 'Show', group_assignment, :class => 'btn btn-mini' %>
+                  <% end %>
+                  <% if can? :update, group_assignment %>
+                    <%= link_to 'Edit', edit_group_assignment_path(group_assignment), :class => 'btn btn-mini' %>
+                  <% end %>
+                </td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+
+        <%= will_paginate @groups, :param_name => 'groups_page', :previous_label => "Previous&nbsp;", :next_label => "&nbsp;Next" %>
+      <% else %>
+        <br>
+        <b>No Groups exist.</b>
+      <% end %>
+    </div>
   </div>
 </div>
 

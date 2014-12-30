@@ -25,6 +25,7 @@ class PeopleController < ApplicationController
     @person = Person.find(params[:id])
     @approved_relationships = Relationship.all_for_person(params[:id]).all_approved.paginate(:page => params[:approved_relationships_page]).per_page(20)
     @user_person_contribs = UserPersonContrib.all_for_person(params[:id]).all_approved.paginate(:page => params[:user_person_contribs_page]).per_page(20)
+    @groups = GroupAssignment.all_for_person(params[:id]).all_approved.paginate(:page => params[:groups_page]).per_page(20)
 
     respond_to do |format|
       format.html # show.html.erb

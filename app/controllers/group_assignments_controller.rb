@@ -32,6 +32,8 @@ class GroupAssignmentsController < ApplicationController
     @group_assignment = GroupAssignment.new
     @personOptions = Person.all_approved.alphabetical
     @groupOptions = Group.all_approved
+    @person_id = params[:person_id]
+    @group_id = params[:group_id]
 
     respond_to do |format|
       format.html # new.html.erb
