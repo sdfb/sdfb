@@ -124,7 +124,8 @@ a:hover {
 
 #graph {
     position: absolute;
-    top: 5%;
+    top: 84px;
+    left:0px;
 
 }
 

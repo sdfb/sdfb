@@ -7,7 +7,7 @@ $(document).ready(function() {
 	$("#twogroup").tooltip({placement: 	'right', title: 'Mutual members of two groups'});
 
     $("#addnode").tooltip({placement:   'right', title: 'Add a new individual to the database'});
-    $("#addgroup").tooltip({placement:  'right', title: 'Add a member to an existing or new group'});
+    $("#addgroup").tooltip({placement:  'right', title: 'Add a new group to the database'});
     $("#addedge").tooltip({placement:   'right', title: 'Add and annotate a relationship between two individuals'});
 
     $("#icon-tag").tooltip({placement:  'right', title: 'Tag group'});

@@ -41,10 +41,10 @@
  	 
 	<div id="graph"></div>
 	<div id="zoom">
-		<button class="icon" id="icon-zoomin" name="in"></button>
-		<button class="icon" id="icon-zoomout" name="out"></button>	
-		<button class="icon" id="icon-color"></button>
-		<button class="icon" id="icon-info"></button>
+		<button class="icon icon-zoomin" name="in"></button>
+		<button class="icon icon-zoomout" name="out"></button>	
+		<button class="icon icon-color"></button>
+		<button class="icon icon-info"></button>
 	</div>
 	<div id="twogroupsmenu">
 		<button type="button" class="btn btn-primary" id="group1" ></button>
@@ -71,7 +71,7 @@
 			</div> -->
 
 			<!-- search bar -->
-			<h3 class="accordion_btn on"><span id="icon-search"></span>Search</h3>
+			<h3 class="accordion_btn on"><span class="icon-magnify"></span>Search</h3>
 			<div class="accordion_content active" id="search">
 				<ul class="search-table">
 					<li id="onenode" class="clicked btnl">Network</li>		
@@ -120,10 +120,10 @@
 
 
 			<!-- person information bar -->
-			<h3 class="accordion_btn"><span id="icon-node"></span>Person</h3>
+			<h3 class="accordion_btn"><span class="icon-node"></span>Person</h3>
 			<div  class="accordion_content " id="nodeinfo">
-				<button class="icon" id="icon-tag"  name="group"></button>
-				<button class="icon" id="icon-link" name="edge"></button>
+				<a class="icon icon-annotate" id="node-icon-annotate"  name="group"></a>
+				<a class="icon icon-chain" id="node-icon-chain" name="edge"></a>
 				<p id="node-name1" class="node-name"></p>
 				<b>BIRTH DATE&nbsp;</b> 				<a id="node-bdate"></a><br>
 				<b>DEATH DATE&nbsp;</b> 				<a id="node-ddate"></a><br>
@@ -133,16 +133,14 @@
 				<b>LINKS&nbsp;</b>
 				<a id="node-DNBlink" target="_blank">Oxford DNB</a> &nbsp;
 				<a id="node-GoogleLink" target="_blank">Google</a> <br><br>
-				<a class="talkPageLink" target="_blank">View Entry Discussion</a>
+				<a id="node-discussion" class="talkPageLink" target="_blank">View Entry Discussion</a>
 			</div>
 
 			<!-- relationship information bar -->
-			<h3 class="accordion_btn"><span id="icon-edge"></span>Relationship</h3>
+			<h3 class="accordion_btn"><span class="icon-edge"></span>Relationship</h3>
 			<div  class="accordion_content " id="edgeinfo">
-				<button class="icon" id="icon-annotate" name="edge"></button>
-				<p id="node-name2" class="node-name"></p>
+				<a class="icon icon-annotate" id="edge-annotate" name="edge"></a>
 				<p id="edge-nodes"></p>
-				<b>Enemy of&nbsp;</b> 	<a id="edge-relation"></a><br>
 				<b>CONFIDENCE&nbsp;</b> 	<a id="edge-confidence"></a><br>
 				<b>DATE RANGE&nbsp;</b> 	<a id="edge-daterange"></a><br>
 				<span id="relationship-table">
@@ -151,18 +149,17 @@
 					<b class="relationship-to relationship-cell">To</b>
 					<b class="relationship-confidence relationship-cell">Confidence</b>
 				</span>
-				<a class="talkPageLink" target="_blank">View Entry Discussion</a>
+				<a class="talkPageLink" target="_blank" id="edge-discussion">View Entry Discussion</a>
 				<b>CONTRIBUTORS: &nbsp;</b> 	<a id="edge-contributor"></a><br><br>
 			</a>
 			</div>
 
 			<!-- group information bar -->
-			<h3 class="accordion_btn"><span id="icon-node"></span>Group</h3>
+			<h3 class="accordion_btn"><span class="icon-node"></span>Group</h3>
 			<div  class="accordion_content " id="edgeinfo">
-			<select>
-				<option>Virginia Company</option>
-			</select>
-				<button class="icon" id="icon-annotate" name="edge"></button>
+				<a class="icon icon-chain" href="/group_assignments/new" name="edge"></a>
+				<input  type="text" id="group_name" placeholder="Group">
+				<a class="icon icon-annotate" id="" name="edge"></a>
 				<p id="edge-nodes"></p>
 				<b>DESCRIPTION&nbsp;</b> 	<a id="group-description"></a><br>
 				<b>MEMBERS&nbsp;</b> 	<a id="group-members"></a><br>
@@ -171,16 +168,15 @@
 			</div>
 
 			<!-- contribution bar -->
-			<h3 class="accordion_btn"><span id="icon-add"></span>Contribute</h3>
+			<h3 class="accordion_btn"><span class="icon-add"></span>Contribute</h3>
 			<div  class="accordion_content tabs" id="add">
 				<ul class="clearfix">
-					<li id="addnode">Person</li>
-					<li id="addedge">Relationship</li>
-					<li id="addgroup">Group</li>
-					<li id="addtag"><button class="icon" id="icon-tag" name="group" data-original-title="" title=""></button></li>
+					<a href="/people/new"><li id="addnode">Person</li></a>
+					<a href="/relationships/new"><li id="addedge">Relationship</li></a>
+					<a href="/groups/new"><li id="addgroup">Group</li></a>
 				</ul>
 				
-				<section id="addnodeform">
+				<!--<section id="addnodeform">
 					<script type="text/javascript">
 						var submitted = false;
 					</script>
@@ -233,7 +229,7 @@
 						<input 	class="form-control" type="text" name="entry.370499701" id="entry_370499701" placeholder="Proposed Members">
 						<button class="talkPageLink" type="submit" name="submit" id="submitgroup">Submit for Approval</button>
 					</form>
-				</section>
+				</section>-->
 
 				<!--<section id="addedgeform">
 					<script type="text/javascript">

@@ -1,5 +1,6 @@
 var francisID = 10000473;
     // group class
+    
 function createGroup() {
   this.id = null;
   this.name = null;
@@ -76,6 +77,9 @@ function showNodeInfo(data, groups){
  $("#node-cite").text( data.first+ " "+ data.last + " Network Visualization. \n Six Degrees of Francis Bacon: Reassembling the Early Modern Social Network. Gen. eds. Daniel Shore and Christopher Warren. "+d.getMonth()+"/"+d.getDate()+"/"+d.getFullYear()+" <http://sixdegreesoffrancisbacon.com/>");
  $("#node-DNBlink").attr("href", "http://www.oxforddnb.com/search/quick/?quicksearch=quicksearch&docPos=1&searchTarget=people&simpleName="+data.first+"-"+data.last+"&imageField.x=0&imageField.y=0&imageField=Go");//"http://www.oxforddnb.com/view/article/"+data.id);
  $("#node-GoogleLink").attr("href", "http://www.google.com/search?q="+data.first+"+"+ data.last);
+ $("#node-discussion").attr("href", "/people/" + data.id);
+ $("#node-icon-chain").attr("href", "/relationships/new?person1_id=" + data.id);
+ $("#node-icon-annotate").attr("href", "/user_person_contribs/new?person_id=" + data.id);
 }
 
 var node = function() {
@@ -177,11 +181,7 @@ edges.reverse();
     var ID = queryString.substring(4);
     var clicked = data.nodes[ID];
     showNodeInfo(clicked, findGroups(clicked, data));
-    //graph.focus({ text: "Richard Bagot" }).filter({ text: "Bagot" }).update();
-    //graph.reset();
-    //graph.filter({ id: 10000473 }).update();
     graph.focus(ID).update();
-    console.log("node was selected");
   }
 
   graph.on("node:click", function(d) {
@@ -194,6 +194,7 @@ edges.reverse();
     var id1 = parseInt(d.source.id);
     var id2 = parseInt(d.target.id);
     getAnnotation(id1 < id2 ? id1 : id2, id1 > id2 ? id1 : id2, data);
+    console.log("edge clicked")
   });
   $('#zoom button.icon').click(function(e){
     if (this.name == 'in') {
@@ -243,7 +244,7 @@ function writeGroupTable(dataSource, title){
   $("#twogroup").tooltip({placement:  'right', title: 'Mutual members of two groups'});
 
     $("#addnode").tooltip({placement:   'right', title: 'Add a new individual to the database'});
-    $("#addgroup").tooltip({placement:  'right', title: 'Add a member to an existing or new group'});
+    $("#addgroup").tooltip({placement:  'right', title: 'Add a new group to the database'});
     $("#addedge").tooltip({placement:   'right', title: 'Add and annotate a relationship between two individuals'});
 
     $("#icon-tag").tooltip({placement:  'right', title: 'Tag group'});
@@ -253,21 +254,7 @@ function writeGroupTable(dataSource, title){
     $("#icon-color").tooltip({placement: 'left', title: 'Click to view color legend'});
 
 
-		
-// Displays node information
-function showNodeInfo(data, groups){
-  accordion("node");
-  $("#node-name1").text(data.first+ " "+ data.last);
-	$("#node-name2").text(data.first+ " "+ data.last);
-  $("#node-bdate").text(data.birth);
-  $("#node-ddate").text(data.death);
-  $("#node-significance").text(data.occupation);
-  $("#node-group").text(groups);
-  var d = new Date();
-  $("#node-cite").text( data.first+ " "+ data.last + " Network Visualization. \n Six Degrees of Francis Bacon: Reassembling the Early Modern Social Network. Gen. eds. Daniel Shore and Christopher Warren. "+d.getMonth()+"/"+d.getDate()+"/"+d.getFullYear()+" <http://sixdegreesoffrancisbacon.com/>");
-  $("#node-DNBlink").attr("href", "http://www.oxforddnb.com/search/quick/?quicksearch=quicksearch&docPos=1&searchTarget=people&simpleName="+data.first+"-"+data.last+"&imageField.x=0&imageField.y=0&imageField=Go");//"http://www.oxforddnb.com/view/article/"+data.id);
-  $("#node-GoogleLink").attr("href", "http://www.google.com/search?q="+data.first+"+"+ data.last);
-}
+	
 
 // Creates the table container, used for group and shared group
 function writeGroupTable(dataSource, title){
@@ -305,32 +292,44 @@ function writeNetworkTable(dataSource, title){
     });
 };
 
+// // Finds and returns correct confidence on the 0-4 scale
+ function findConfidence(id1, id2, data) {
+  var p1 = data.nodes[id1];
+  var p2 = data.nodes[id2];
+  var i = -1;
+  p1.edges.forEach(function (list, index){
+   if (list.indexOf(p2.id) > -1) { i = index; return; }
+  });
+  if (i == 0) return "very unlikely";
+ else if (i == 1) return "unlikely";
+  else if (i == 2) return "possible";
+  else if (i == 3) return "likely";
+  else return "certain";
+ }
+
+ function getConfidence(n) {
+  if (n == 0) return "at very unlikely to certain confidence";
+  else if (n == 1) return "at unlikely to certain confidence";
+ else if (n == 2) return "at possible to certain confidence";
+ else if (n == 3) return "at likely to certain confidence";
+  else return "at certain confidence";
+ }
+
 // Displays edge information 
 function getAnnotation(id1, id2, data) {
-  var confidence = findConfidence(id1, id2, data);
-  console.log(id1 + ' ' + id2 + ' ' + confidence);
-  Tabletop.init({
-    key: keys.annot,
-    query: 'source= ' + id1 + ' and target= ' + id2,
-    wanted: [confidence],
-    simpleSheet: true,
-    callback: function(result) {
-      result.forEach(function (row){
-        accordion("edge");
-        $("#edge-nodes").html(data.nodes[id1].first +" "+data.nodes[id1].last + " & " + data.nodes[id2].first+" "+data.nodes[id2].last);
-        $("#edge-confidence").html(confidence);
-        $("#edge-annotation").html(row.annotation);
-        $("#edge-contributor").html(row.contributor);
-        return true;
-      });
-    }
-  });
-  $("#icon-annotate").click(function(){
-    resetInputs();
-    $("#entry_768090773").val(data.nodes[id1].name);
-    $("#entry_1321382891").val(data.nodes[id2].name);
-  });
- }
+  //var confidence = findConfidence(id1, id2, data);
+  //console.log(id1 + ' ' + id2 + ' ' + confidence);
+  var confidence = ""
+  accordion("edge");
+  $("#edge-nodes").html(data.nodes[id1].first +" "+data.nodes[id1].last + " & " + data.nodes[id2].first+" "+data.nodes[id2].last);
+  $("#edge-confidence").html(confidence);
+  $("#edge-discussion").attr("href", "/relationships/" + data.nodes[id1].id + "+" + data.nodes[id2].id );
+  $("#edge-annotate").attr("href", "/user_rel_contribs/new?relationship_id=" + data.nodes[id1].id + "+" + data.nodes[id2].id );
+  //$("#edge-annotation").html(row.annotation);
+  //$("#edge-contributor").html(row.contributor);
+  return true;
+    };
+
 
  // Takes in the title and data, allows users to download the data
 function downloadData(data, title) {

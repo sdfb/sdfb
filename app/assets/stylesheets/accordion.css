@@ -100,7 +100,7 @@ aside {
 	background-color: #185D80;
 	float: left;
 	cursor: pointer;
-	padding:0px 13px;
+	padding: 0px 22px 0px 23px;
     width: auto;
     height: 45px;
     line-height: 45px;
@@ -136,7 +136,7 @@ aside {
 
 .tabs{
 	overflow:hidden;
-	padding: 0px 20px 10px 20px;
+	padding: 0px 20px 0px 20px;
 }
 
 .accordion_content .search-table{
@@ -262,7 +262,7 @@ aside ::-webkit-scrollbar-thumb:hover {
     background-color: #ccc;
 }
 
-button.icon {
+a.icon, button.icon, a.icon:hover {
     background-repeat: no-repeat;
     background-size: 15px;
     width: 30px;
@@ -274,50 +274,51 @@ button.icon {
     background-color: transparent;
 }
 
-#icon-about {
+
+.icon-about {
     background-image: url(us.png);
 }
 
-#icon-search {
+.icon-magnify {
     background-image: url(search.png);
 }
 
-#icon-node {
+.icon-node {
     background-image: url(node.png);
 }
 
-#icon-edge {
+.icon-edge {
     background-image: url(edge.png);
 }
 
-#icon-add {
+.icon-add {
     background-image: url(add.png);
 }
 
-#icon-annotate {
+.icon-annotate, .icon-annotate:hover {
     background-image: url(annotate.png);
 }
 
-#icon-tag {
+.icon-tag, .icon-tag:hover {
     background-image: url(tag.png);
 }
 
-#icon-link {
+.icon-chain, .icon-chain:hover {
     background-image: url(link.png);
 }
 
-#icon-zoomin {
+.icon-zoomin {
     background-image: url(zoomin.png);
 }
 
-#icon-zoomout {
+.icon-zoomout {
     background-image: url(zoomout.png);
 }
 
-#icon-info {
+.icon-info {
     background-image: url(info.png);
 }
 
-#icon-color {
+.icon-color {
     background-image: url(colors.png);
 }
