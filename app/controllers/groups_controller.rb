@@ -3,8 +3,10 @@ class GroupsController < ApplicationController
   # GET /groups.json
 
   # before_filter :check_login
-  before_filter :check_login, :only => [:new, :edit]
-  authorize_resource
+  # before_filter :check_login, :only => [:new, :edit]
+  # authorize_resource
+
+  load_and_authorize_resource
   
   def index
     @groups_approved = Group.all_approved.paginate(:page => params[:groups_approved_page]).per_page(20)
@@ -44,6 +46,7 @@ class GroupsController < ApplicationController
   # GET /groups/1/edit
   def edit
     @group = Group.find(params[:id])
+    #authorize! :edit, @group
   end
 
   # POST /groups

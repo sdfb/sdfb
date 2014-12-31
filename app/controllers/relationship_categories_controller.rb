@@ -1,6 +1,9 @@
 class RelationshipCategoriesController < ApplicationController
   # GET /relationship_categories
   # GET /relationship_categories.json
+
+  load_and_authorize_resource
+  
   def index
     @relationship_categories = RelationshipCategory.all
 
@@ -35,6 +38,7 @@ class RelationshipCategoriesController < ApplicationController
   # GET /relationship_categories/1/edit
   def edit
     @relationship_category = RelationshipCategory.find(params[:id])
+    #authorize! :edit, @relationship_category
   end
 
   # POST /relationship_categories

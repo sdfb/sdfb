@@ -1,6 +1,9 @@
 class RelCatAssignsController < ApplicationController
   # GET /rel_cat_assigns
   # GET /rel_cat_assigns.json
+
+  load_and_authorize_resource
+  
   def index
     @rel_cat_assigns = RelCatAssign.all
 
@@ -35,6 +38,7 @@ class RelCatAssignsController < ApplicationController
   # GET /rel_cat_assigns/1/edit
   def edit
     @rel_cat_assign = RelCatAssign.find(params[:id])
+    #authorize! :edit, @rel_cat_assign
   end
 
   # POST /rel_cat_assigns

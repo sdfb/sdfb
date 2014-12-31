@@ -3,8 +3,10 @@ class UserGroupContribsController < ApplicationController
   # GET /user_group_contribs.json
 
   # before_filter :check_login
-  before_filter :check_login, :only => [:index, :new, :edit]
-  authorize_resource
+  # before_filter :check_login, :only => [:index, :new, :edit]
+  # authorize_resource
+
+  load_and_authorize_resource
 
   def index
     @user_group_contribs = UserGroupContrib.all_approved.paginate(:page => params[:user_group_contribs_page]).per_page(20)
@@ -43,6 +45,7 @@ class UserGroupContribsController < ApplicationController
   def edit
     @user_group_contrib = UserGroupContrib.find(params[:id])
     @groupOptions = Group.all_approved
+    #authorize! :edit, @user_group_contrib
   end
 
   # POST /user_group_contribs

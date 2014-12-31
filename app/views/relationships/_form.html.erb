@@ -25,7 +25,7 @@
                               end_year: 1900 %>
   <%= f.input :justification %>
   <%= f.hidden_field :created_by, :value => current_user.id %>
-  <% if current_user.user_type == "Admin" %>
+  <% if (current_user.user_type == "Admin") || (current_user.user_type == "Curator") %>
     <%= f.input :is_approved %>
     <%= f.hidden_field :approved_by, :value => current_user.id %>
   <% end %>

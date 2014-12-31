@@ -2,9 +2,11 @@ class RelationshipsController < ApplicationController
   # GET /relationships
   # GET /relationships.json
   
-  # before_filter :check_login
-  before_filter :check_login, :only => [:new, :edit]
-  authorize_resource
+  #before_filter :check_login
+  # before_filter :check_login, :only => [:index, :new, :edit]
+  # authorize_resource
+
+  load_and_authorize_resource
 
   helper PeopleHelper
 
@@ -47,6 +49,7 @@ class RelationshipsController < ApplicationController
   def edit
     @relationship = Relationship.find(params[:id])
     @personOptions = Person.all_approved.alphabetical
+    #authorize! :edit, @relationship
   end
 
   # POST /relationships

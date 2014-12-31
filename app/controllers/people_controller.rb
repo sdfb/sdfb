@@ -3,10 +3,11 @@ class PeopleController < ApplicationController
   # GET /people.json
 
   # before_filter :check_login
-  before_filter :check_login, :only => [:new, :edit]
-  authorize_resource
-  require 'will_paginate'
-  require 'will_paginate/array'
+  # before_filter :check_login
+  # authorize_resource
+  # require 'will_paginate'
+  # require 'will_paginate/array'
+  load_and_authorize_resource
   
   def index
     # gon.people = Person.all_approved
@@ -47,6 +48,7 @@ class PeopleController < ApplicationController
   # GET /people/1/edit
   def edit
     @person = Person.find(params[:id])
+    #authorize! :edit, @person
   end
 
   # POST /people

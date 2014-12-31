@@ -1,6 +1,9 @@
 class GroupCatAssignsController < ApplicationController
   # GET /group_cat_assigns
   # GET /group_cat_assigns.json
+
+  load_and_authorize_resource
+  
   def index
     @group_cat_assigns = GroupCatAssign.all
 
@@ -35,6 +38,7 @@ class GroupCatAssignsController < ApplicationController
   # GET /group_cat_assigns/1/edit
   def edit
     @group_cat_assign = GroupCatAssign.find(params[:id])
+    #authorize! :edit, @group_cat_assign
   end
 
   # POST /group_cat_assigns

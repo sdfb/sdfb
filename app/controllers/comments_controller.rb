@@ -1,6 +1,8 @@
 class CommentsController < ApplicationController
   # GET /comments
   # GET /comments.json
+  load_and_authorize_resource
+
   def index
     @comments = Comment.all
 
@@ -35,6 +37,7 @@ class CommentsController < ApplicationController
   # GET /comments/1/edit
   def edit
     @comment = Comment.find(params[:id])
+    #authorize! :edit, @comment
   end
 
   # POST /comments

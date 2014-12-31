@@ -12,7 +12,7 @@
     <div class="well">
       <h2>Information
         <% if can? :update, @people %> 
-        <%= link_to t('.edit', :default => t("helpers.links.edit")),
+          <%= link_to t('.edit', :default => t("helpers.links.edit")),
                   edit_person_path(@person), :class => 'btn btn-mini' %>
         <% end %>
       </h2>

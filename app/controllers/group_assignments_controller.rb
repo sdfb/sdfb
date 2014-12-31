@@ -3,8 +3,10 @@ class GroupAssignmentsController < ApplicationController
   # GET /group_assignments.json
 
   # before_filter :check_login
-  before_filter :check_login, :only => [:new, :edit]
-  authorize_resource
+  # before_filter :check_login, :only => [:new, :edit]
+  # authorize_resource
+
+  load_and_authorize_resource
   
   def index
     @group_assignments_approved = GroupAssignment.all_approved.paginate(:page => params[:group_assignments_page]).per_page(20)
@@ -46,6 +48,7 @@ class GroupAssignmentsController < ApplicationController
     @group_assignment = GroupAssignment.find(params[:id])
     @personOptions = Person.all_approved.alphabetical
     @groupOptions = Group.all_approved
+    #authorize! :edit, @group_assignment
   end
 
   # POST /group_assignments

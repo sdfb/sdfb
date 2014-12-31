@@ -3,8 +3,10 @@ class UsersController < ApplicationController
   # GET /users.json
 
   # before_filter :check_login
-  before_filter :check_login, :only => [:index, :show, :edit]
-  authorize_resource
+  # before_filter :check_login, :only => [:index, :show, :edit]
+  # authorize_resource
+  
+  load_and_authorize_resource
 
   def index
     @inactive_users = User.inactive.paginate(:page => params[:inactive_users_page]).per_page(20)
@@ -41,6 +43,7 @@ class UsersController < ApplicationController
   # GET /users/1/edit
   def edit
     @user = User.find(params[:id])
+    #authorize! :edit, @user
   end
 
   # POST /users

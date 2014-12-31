@@ -3,8 +3,9 @@ class UserRelContribsController < ApplicationController
   # GET /user_rel_contribs.json
 
   # before_filter :check_login
-  before_filter :check_login, :only => [:index, :new, :edit]
-  authorize_resource
+  #before_filter :check_login, :only => [:index, :new, :edit]
+  
+  load_and_authorize_resource
 
   def index
     @user_rel_contribs = UserRelContrib.all_approved.paginate(:page => params[:user_rel_contribs_page]).per_page(20)
@@ -45,6 +46,7 @@ class UserRelContribsController < ApplicationController
     @user_rel_contrib = UserRelContrib.find(params[:id])
     @relOptions = Relationship.all_approved
     @relType = RelationshipType.all_approved
+    #authorize! :edit, @user_rel_contrib
   end
 
   # POST /user_rel_contribs

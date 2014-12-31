@@ -3,8 +3,10 @@ class UserPersonContribsController < ApplicationController
   # GET /user_person_contribs.json
 
   # before_filter :check_login
-  before_filter :check_login, :only => [:index, :new, :edit]
-  authorize_resource
+  # before_filter :check_login, :only => [:index, :new, :edit]
+  # authorize_resource
+  
+  load_and_authorize_resource
 
   def index
     @user_person_contribs = UserPersonContrib.all_approved.paginate(:page => params[:user_person_contribs_page]).per_page(20)
@@ -43,6 +45,7 @@ class UserPersonContribsController < ApplicationController
   def edit
     @user_person_contrib = UserPersonContrib.find(params[:id])
     @personOptions = Person.all_approved
+    # authorize! :edit, @user_person_contrib
   end
 
   # POST /user_person_contribs

@@ -1,6 +1,9 @@
 class GroupCategoriesController < ApplicationController
   # GET /group_categories
   # GET /group_categories.json
+
+  load_and_authorize_resource
+
   def index
     @group_categories = GroupCategory.all
 
@@ -35,6 +38,7 @@ class GroupCategoriesController < ApplicationController
   # GET /group_categories/1/edit
   def edit
     @group_category = GroupCategory.find(params[:id])
+    #authorize! :edit, @group_category
   end
 
   # POST /group_categories

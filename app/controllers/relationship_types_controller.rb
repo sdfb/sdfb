@@ -1,6 +1,9 @@
 class RelationshipTypesController < ApplicationController
   # GET /relationship_types
   # GET /relationship_types.json
+  
+  load_and_authorize_resource
+  
   def index
     @relationship_types = RelationshipType.all_approved
 
@@ -35,6 +38,7 @@ class RelationshipTypesController < ApplicationController
   # GET /relationship_types/1/edit
   def edit
     @relationship_type = RelationshipType.find(params[:id])
+    #authorize! :edit, @relationship_type
   end
 
   # POST /relationship_types

@@ -1,6 +1,8 @@
 class FlagsController < ApplicationController
   # GET /flags
   # GET /flags.json
+  load_and_authorize_resource
+  
   def index
     @flags = Flag.all
 
@@ -35,6 +37,7 @@ class FlagsController < ApplicationController
   # GET /flags/1/edit
   def edit
     @flag = Flag.find(params[:id])
+    #authorize! :edit, @flag
   end
 
   # POST /flags
