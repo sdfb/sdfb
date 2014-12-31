@@ -7,7 +7,7 @@ $(document).ready(function(){
 			$(this).next().slideDown();
 			var h = $( window ).height();
 			
-			$("#accordion div").css("max-height", h - 227 + 'px');
+			$("#accordion div").css("max-height", h - 203 + 'px');
 		}
 	});
 });

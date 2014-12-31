@@ -48,7 +48,7 @@
 				<ul class="search-table">
 					<li id="onenode" class="clicked btnl">Network</li>		
 					<li id="twonode" class="btnl">Shared network</li>
-					<li id="onegroup" class="btnl">Group</li>
+					<li id="onegroup" class="btnl" onclick="$('#tab-group').click();">Group</li>
 					<li id="twogroup" class="btnl">Shared groups</li>
 				</ul>
 
@@ -59,28 +59,25 @@
 					<span id="slide1" ><article class="slider" name="1"></article></span>
 					<article class="slider-result" id="slider-result1">Likely relationships</article>
 					<input id="confidence1" type="hidden" value="3"/>
-					<label for="search-date-range">Date Range:</label><input type="text" id="search-date-range" readonly >
+					<label for="search-date-range">Date Range:</label><input type="text" id="search-date-range">
 					<span id="slide2" ><article class="slider-date" name="2"></article></span>
 					<input type="checkbox" name="show-table" value="show-table" id="show-table">Show Table</input>
-					<button class="talkPageLink" type="button" id="findonenode" name="node">Find</button>
+					<a class="talkPageLink" type="button" id="findonenode" name="node">Find</a>
 				</section>
 
 				<section id="twonodeform">
 					<input class="form-control" type="text" id="two" placeholder="Name 1"><br>
 					<input class="form-control" type="text" id="three" placeholder="Name 2"><br>
-					<a id="slide2" ><article class="slider" name="2"></article></a>
+					<a id="slide3" ><article class="slider" name="2"></article></a>
 					<article class="slider-result" id="slider-result2">Likely relationships</article>
 					<input id="confidence2" type="hidden" value="3"/>
+					<label for="search-date-range2">Date Range:</label><input type="text" id="search-date-range2">
+					<span id="slide4" ><article class="slider-date2" name="3"></article></span>
 					<input type="checkbox" id="check-shared" value="table">Show table<br>
-					<button class="talkPageLink" type="button" id="findtwonode" name="node">Find</button>
+					<a class="talkPageLink" type="button" id="findtwonode" name="node">Find</a>
 				</section>
 
 			<!-- GROUP FORMS -->
-
-				<section id="onegroupform">
-					<input 	class="form-control" type="text" id="four" placeholder="Group">
-					<button class="talkPageLink" type="button" id="findonegroup" name="group">Find</button>
-				</section>
 
 				<section id="twogroupform">
 					<input 	class="form-control" type="text" id="five" placeholder="Group 1"><br>
@@ -111,7 +108,7 @@
 			<!-- relationship information bar -->
 			<h3 class="accordion_btn"><span class="icon-edge"></span>Relationship</h3>
 			<div  class="accordion_content " id="edgeinfo">
-				<a class="icon icon-annotate" id="edge-annotate" name="edge"></a>
+				<a class="icon icon-annotate" id="edge-icon-annotate" name="edge"></a>
 				<p id="edge-nodes"></p>
 				<b>CONFIDENCE&nbsp;</b> 	<a id="edge-confidence"></a><br>
 				<b>DATE RANGE&nbsp;</b> 	<a id="edge-daterange"></a><br>
@@ -127,11 +124,11 @@
 			</div>
 
 			<!-- group information bar -->
-			<h3 class="accordion_btn"><span class="icon-node"></span>Group</h3>
+			<h3 class="accordion_btn" id="tab-group"><span class="icon-node"></span>Group</h3>
 			<div  class="accordion_content " id="groupinfo">
-				<a class="icon icon-chain" href="/group_assignments/new" name="edge"></a>
+				<a class="icon icon-label" id="group-icon-label" href="/group_assignments/new" name="edge"></a>
+				<a class="icon icon-annotate" id="group-icon-annotate" name="edge"></a>
 				<input  type="text" id="group_name" placeholder="Group">
-				<a class="icon icon-annotate" id="" name="edge"></a>
 				<p id="edge-nodes"></p>
 				<b>DESCRIPTION&nbsp;</b> 	<a id="group-description"></a><br>
 				<b>MEMBERS&nbsp;</b> 	<a id="group-members"></a><br>

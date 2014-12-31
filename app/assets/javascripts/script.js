@@ -4,7 +4,7 @@ $(document).ready(function() {
 	$("#onenode").tooltip({placement: 	'right', title: 'Connections of one individual'});
 	$("#twonode").tooltip({placement: 	'right', title: 'Mutual connections between two individuals'});
 	$("#onegroup").tooltip({placement: 	'right', title: 'Members of one group'});
-	$("#twogroup").tooltip({placement: 	'right', title: 'Mutual members of two groups'});
+	$("#twogroup").tooltip({placement: 	'left', title: 'Mutual members of two groups'});
 
     $("#addnode").tooltip({placement:   'right', title: 'Add a new individual to the database'});
     $("#addgroup").tooltip({placement:  'right', title: 'Add a new group to the database'});
@@ -15,6 +15,12 @@ $(document).ready(function() {
     $("#icon-annotate").tooltip({placement: 'right', title: 'Annotate relationship'});
     $("#icon-info").tooltip({placement: 'left', title: 'Scroll to zoom, double click on node or edge for more information, single click to reset view'});
     $("#icon-color").tooltip({placement: 'left', title: 'Click to view color legend'});
+
+    $("#node-icon-chain").tooltip({placement: 'right', title: 'Add relationship'});
+    $("#node-icon-annotate").tooltip({placement: 'right', title: 'Edit person'});
+    $("#edge-icon-annotate").tooltip({placement: 'right', title: 'Edit relationship'});
+    $("#group-icon-label").tooltip({placement: 'right', title: 'Add person to group'});
+    $("#group-icon-annotate").tooltip({placement: 'right', title: 'Edit group'});
 
     $(".slider").tooltip({placement: 'right', title: 'Choose the certainty of relationship'});
 	$('#onenodeform').css('display','block');
@@ -114,5 +120,19 @@ $(document).ready(function() {
 		});
 		$( "#search-date-range" ).val( $( ".slider-date" ).slider( "values", 0 ) + " - " + $( ".slider-date" ).slider( "values", 1 ) );
 		
+                //  Sliding animation
+        $(".slider-date2").slider({
+                    animate: true,
+                    range: "min",
+                    value: 3,
+                    min: 1500,
+                    max: 1700,
+                    step: 1,
+                    values: [ 1557, 1642 ],
+                    slide: function( event, ui ) {
+                        $( "#search-date-range2" ).val( ui.values[ 0 ] + " - " + ui.values[ 1 ] );
+                    }
+        });
+        $( "#search-date-range2" ).val( $( ".slider-date2" ).slider( "values", 0 ) + " - " + $( ".slider-date2" ).slider( "values", 1 ) );
 	
 });

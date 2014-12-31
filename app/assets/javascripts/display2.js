@@ -75,7 +75,7 @@ function showNodeInfo(data, groups){
  $("#node-group").text(groups);
  var d = new Date();
  $("#node-cite").text( data.first+ " "+ data.last + " Network Visualization. \n Six Degrees of Francis Bacon: Reassembling the Early Modern Social Network. Gen. eds. Daniel Shore and Christopher Warren. "+d.getMonth()+"/"+d.getDate()+"/"+d.getFullYear()+" <http://sixdegreesoffrancisbacon.com/>");
- $("#node-DNBlink").attr("href", "www.oxforddnb.com/view/article/"+data.id);//"http://www.oxforddnb.com/view/article/"+data.id);
+ $("#node-DNBlink").attr("href", "http://www.oxforddnb.com/view/article/"+data.id);
  $("#node-GoogleLink").attr("href", "http://www.google.com/search?q="+data.first+"+"+ data.last);
  $("#node-discussion").attr("href", "/people/" + data.id);
  $("#node-icon-chain").attr("href", "/relationships/new?person1_id=" + data.id);
@@ -241,6 +241,7 @@ function writeGroupTable(dataSource, title){
 };
 
     //Tooltips
+    /*
   $("#onenode").tooltip({placement:   'right', title: 'Connections of one individual'});
   $("#twonode").tooltip({placement:   'right', title: 'Mutual connections between two individuals'});
   $("#onegroup").tooltip({placement:  'right', title: 'Members of one group'});
@@ -255,7 +256,7 @@ function writeGroupTable(dataSource, title){
     $("#icon-annotate").tooltip({placement: 'right', title: 'Annotate relationship'});
     $("#icon-info").tooltip({placement: 'left', title: 'Scroll to zoom, double click on node or edge for more information, single click to reset view'});
     $("#icon-color").tooltip({placement: 'left', title: 'Click to view color legend'});
-
+  */
 
 	
 
