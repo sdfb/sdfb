@@ -7,6 +7,7 @@ aside {
     bottom: 0;
     width: 300px;
     height:100%;
+    overflow:visible;
 }
 
 #accordion {
@@ -52,7 +53,7 @@ aside {
 	padding: 20px 10px 20px 10px;
 	line-height: 25px;
 	text-align:left;
-	height: calc(90% - 140px);
+	height: auto;
 	overflow:scroll;
 }
 
@@ -92,7 +93,7 @@ aside {
 
 .accordion_content ul {
     text-align: center;
-    margin:0px -20px 0px -20px;
+    margin:0px;
     list-style: none;
 }
 
@@ -101,7 +102,7 @@ aside {
 	background-color: #185D80;
 	float: left;
 	cursor: pointer;
-	padding: 0px 22px 0px 23px;
+	padding: 0px 23px 0px 23px;
     width: auto;
     height: 45px;
     line-height: 45px;
@@ -144,6 +145,21 @@ aside {
 	margin:0px -8px;
 	width:300px;
 	overflow:hidden;
+}
+
+#search, #edgeinfo, #groupinfo{
+
+    margin:0px 0px -15px 0px;
+}
+
+#add{
+
+    padding: 0px;
+}
+
+#addnode, #addedge, #addgroup{
+
+    padding: 0px 25px;
 }
 
 #show-table{
