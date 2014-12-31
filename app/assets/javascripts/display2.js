@@ -75,7 +75,7 @@ function showNodeInfo(data, groups){
  $("#node-group").text(groups);
  var d = new Date();
  $("#node-cite").text( data.first+ " "+ data.last + " Network Visualization. \n Six Degrees of Francis Bacon: Reassembling the Early Modern Social Network. Gen. eds. Daniel Shore and Christopher Warren. "+d.getMonth()+"/"+d.getDate()+"/"+d.getFullYear()+" <http://sixdegreesoffrancisbacon.com/>");
- $("#node-DNBlink").attr("href", "www.oxforddnb.com/view/article/"+data.id);//"http://www.oxforddnb.com/view/article/"+data.id);
+ $("#node-DNBlink").attr("href", "http://www.oxforddnb.com/view/article/"+data.id);
  $("#node-GoogleLink").attr("href", "http://www.google.com/search?q="+data.first+"+"+ data.last);
  $("#node-discussion").attr("href", "/people/" + data.id);
  $("#node-icon-chain").attr("href", "/relationships/new?person1_id=" + data.id);
@@ -197,8 +197,10 @@ edges.reverse();
     var id1 = parseInt(d.source.id);
     var id2 = parseInt(d.target.id);
     getAnnotation(id1 < id2 ? id1 : id2, id1 > id2 ? id1 : id2, data);
-    console.log("edge clicked")
   });
+
+  graph.tooltip("<div class='btn' >{{text}}</div>");
+
   $('#zoom button.icon').click(function(e){
     if (this.name == 'in') {
       graph.zoomIn();
@@ -240,25 +242,6 @@ function writeGroupTable(dataSource, title){
     downloadData(dataSource, title);
 };
 
-    //Tooltips
-  $("#onenode").tooltip({placement:   'right', title: 'Connections of one individual'});
-  $("#twonode").tooltip({placement:   'right', title: 'Mutual connections between two individuals'});
-  $("#onegroup").tooltip({placement:  'right', title: 'Members of one group'});
-  $("#twogroup").tooltip({placement:  'right', title: 'Mutual members of two groups'});
-
-    $("#addnode").tooltip({placement:   'right', title: 'Add a new individual to the database'});
-    $("#addgroup").tooltip({placement:  'right', title: 'Add a new group to the database'});
-    $("#addedge").tooltip({placement:   'right', title: 'Add and annotate a relationship between two individuals'});
-
-    $("#icon-tag").tooltip({placement:  'right', title: 'Tag group'});
-    $("#icon-link").tooltip({placement: 'right', title: 'Add a relationship'});
-    $("#icon-annotate").tooltip({placement: 'right', title: 'Annotate relationship'});
-    $("#icon-info").tooltip({placement: 'left', title: 'Scroll to zoom, double click on node or edge for more information, single click to reset view'});
-    $("#icon-color").tooltip({placement: 'left', title: 'Click to view color legend'});
-
-
-	
-
 // Creates the table container, used for group and shared group
 function writeGroupTable(dataSource, title){
     $('#graph').html('<table cellpadding="0" cellspacing="0" border="0" class="display table table-bordered table-striped" id="data-table-container"></table>');
@@ -295,39 +278,31 @@ function writeNetworkTable(dataSource, title){
     });
 };
 
-// // Finds and returns correct confidence on the 0-4 scale
- function findConfidence(id1, id2, data) {
-  var p1 = data.nodes[id1];
-  var p2 = data.nodes[id2];
-  var i = -1;
-  p1.edges.forEach(function (list, index){
-   if (list.indexOf(p2.id) > -1) { i = index; return; }
-  });
-  if (i == 0) return "very unlikely";
- else if (i == 1) return "unlikely";
-  else if (i == 2) return "possible";
-  else if (i == 3) return "likely";
-  else return "certain";
- }
-
  function getConfidence(n) {
-  if (n == 0) return "at very unlikely to certain confidence";
-  else if (n == 1) return "at unlikely to certain confidence";
- else if (n == 2) return "at possible to certain confidence";
- else if (n == 3) return "at likely to certain confidence";
-  else return "at certain confidence";
+  if (0.00 <= n <= 0.19) return "very unlikely";
+  if (0.20 <= n <= 0.39) return "unlikely";
+  if (0.40 <= n <= 0.59) return "possible";
+  if (0.60 <= n <= 0.79) return "likely";
+  if (0.80 <= n <= 1.00) return "certain";
  }
 
 // Displays edge information 
 function getAnnotation(id1, id2, data) {
-  //var confidence = findConfidence(id1, id2, data);
-  //console.log(id1 + ' ' + id2 + ' ' + confidence);
-  var confidence = ""
+  var id1_rel_array = data.nodes[id1].rels;
+  var confidence = "";
+  var rel_id = "";
+  $.each(id1_rel_array, function(index, value) {                    
+    if (value[0] == id2){
+       confidence = getConfidence(value[1]) + " @ " + value[1] * 100 + "%";
+       rel_id = value[3];
+    }
+  });
+
   accordion("edge");
   $("#edge-nodes").html(data.nodes[id1].first +" "+data.nodes[id1].last + " & " + data.nodes[id2].first+" "+data.nodes[id2].last);
   $("#edge-confidence").html(confidence);
-  $("#edge-discussion").attr("href", "/relationships/" + data.nodes[id1].id + "+" + data.nodes[id2].id );
-  $("#edge-annotate").attr("href", "/user_rel_contribs/new?relationship_id=" + data.nodes[id1].id + "+" + data.nodes[id2].id );
+  $("#edge-discussion").attr("href", "/relationships/" + rel_id );
+  $("#edge-icon-annotate").attr("href", "/user_rel_contribs/new?relationship_id=" + rel_id );
   //$("#edge-annotation").html(row.annotation);
   //$("#edge-contributor").html(row.contributor);
   return true;

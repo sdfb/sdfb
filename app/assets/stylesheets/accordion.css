@@ -7,6 +7,7 @@ aside {
     bottom: 0;
     width: 300px;
     height:100%;
+    overflow:visible;
 }
 
 #accordion {
@@ -49,10 +50,10 @@ aside {
 	display: none;
 	color:#222;
 	font-size:12px;
-	padding: 20px 10px 20px 10px;
+	padding: 5px 10px 5px 10px;
 	line-height: 25px;
 	text-align:left;
-	height: calc(90% - 140px);
+	height: auto;
 	overflow:scroll;
 }
 
@@ -70,10 +71,10 @@ aside {
 .accordion_content section button, 
 .accordion_content section select,
 .accordion_content section textarea {
-    width: 246px;
-    height: 30px;
-    margin-bottom: 5px;
-    margin-left: 4px;
+    width: 200px;
+    height: 20px;
+    margin-bottom: 10px;
+    margin-left: 22px;
     font-size: 11px;
 }
 
@@ -92,7 +93,7 @@ aside {
 
 .accordion_content ul {
     text-align: center;
-    margin:0px -20px 0px -20px;
+    margin:0px;
     list-style: none;
 }
 
@@ -101,7 +102,7 @@ aside {
 	background-color: #185D80;
 	float: left;
 	cursor: pointer;
-	padding: 0px 22px 0px 23px;
+	padding: 0px 23px 0px 23px;
     width: auto;
     height: 45px;
     line-height: 45px;
@@ -128,6 +129,9 @@ aside {
 	border-radius: 10px;
 	-khtml-border-radius: 10px; 
 	border:none;
+    padding:0px 3px;
+    height: 36px;
+    line-height: 36px;
 }
 .accordion_content ul .btnl.clicked,
 .accordion_content ul .btnl:hover{
@@ -141,9 +145,29 @@ aside {
 }
 
 .accordion_content .search-table{
-	margin:0px -8px;
+	margin: 0px 0px 0px 25px;
 	width:300px;
 	overflow:hidden;
+}
+
+#search, #edgeinfo, #groupinfo{
+
+    margin:0px 0px -15px 0px;
+}
+
+#group_name{
+
+    width:200px;
+}
+
+#add{
+
+    padding: 0px;
+}
+
+#addnode, #addedge, #addgroup{
+
+    padding: 0px 25px;
 }
 
 #show-table{
@@ -211,7 +235,7 @@ aside {
 	font-size:14px;
 	text-align:center;
     display:block;
-    margin:10px 20px 10px 10px;
+    margin:5px 20px 10px 20px;
     padding:5px 7px;
     background-color:#666;
 	font-size: 12px;
@@ -219,6 +243,7 @@ aside {
 	-webkit-border-radius: 10px;
 	border-radius: 10px;
 	-khtml-border-radius: 10px; 
+    height:25px !important;
 	/*-webkit-box-shadow: 10px 10px 10px 0px rgba(0,0,0,0.75);
 	-moz-box-shadow: 10px 10px 10px 0px rgba(0,0,0,0.75);
 	box-shadow: 10px 10px 10px 0px rgba(0,0,0,0.75);*/
@@ -275,7 +300,6 @@ a.icon, button.icon, a.icon:hover {
     background-color: transparent;
 }
 
-
 .icon-about {
     background-image: url(us.png);
 }
@@ -300,7 +324,7 @@ a.icon, button.icon, a.icon:hover {
     background-image: url(annotate.png);
 }
 
-.icon-tag, .icon-tag:hover {
+.icon-label, .icon-label:hover {
     background-image: url(tag.png);
 }
 
