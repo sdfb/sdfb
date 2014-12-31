@@ -178,7 +178,7 @@ edges.reverse();
   var w = window.innerWidth;
   var h = window.innerHeight;
   
-  var options = { width: w, height: h, collisionAlpha: 0.75, colors: getColors() };
+  var options = { width: w, height: h, collisionAlpha: 1, colors: getColors() };
   var graph = new Insights($("#graph")[0], nodes, edges, options).render();
   //graph.focus(francisID);
 

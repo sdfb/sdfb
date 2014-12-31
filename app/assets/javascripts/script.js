@@ -22,6 +22,11 @@ $(document).ready(function() {
     $("#group-icon-label").tooltip({placement: 'right', title: 'Add person to group'});
     $("#group-icon-annotate").tooltip({placement: 'right', title: 'Edit group'});
 
+    $(".icon-zoomin").tooltip({placement:  'left', title: 'Zoom In'});
+    $(".icon-zoomout").tooltip({placement:  'left', title: 'Zoom Out'});
+    $(".icon-color").tooltip({placement:  'left', title: 'Colors'});
+    $(".icon-info").tooltip({placement:  'left', title: 'Info'});
+
     $(".slider").tooltip({placement: 'right', title: 'Choose the certainty of relationship'});
 	$('#onenodeform').css('display','block');
 
