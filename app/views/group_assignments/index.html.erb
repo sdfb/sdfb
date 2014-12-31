@@ -5,46 +5,36 @@
 <%= link_to 'New Group Assignment',
             new_group_assignment_path,
             :class => 'btn btn-primary' %>
-<table class="table table-striped">
+<table class="table table-condensed">
   <thead>
   <tr>
     <th>Group Assignment id</th>
-    <% if ! current_user.nil? && (current_user.user_type == "Admin") %>
-      <th>Created by</th>
-    <% end %>
     <th>Group</th>
     <th>Person</th>
-    <th>Approved by</th>
-    <th>Approved on</th>
     <th>Start date</th>
     <th>End date</th>
-    <th>Created at</th>
     <th><%=t '.actions', :default => t("helpers.actions") %></th>
   </tr>
   </thead>
   <tbody>
     <% @group_assignments_approved.each do |group_assignment| %>
       <tr>
-        <td>group_assignment.id</td>
-        <% if (current_user.user_type == "Admin")  %>
-          <td><%= link_to group_assignment.get_users_name, user_path(group_assignment.created_by) %></td>
-        <% end %>
+        <td><%= group_assignment.id %></td>
         <td><%= link_to group_assignment.get_group_name, group_path(group_assignment.group_id) %></td>
         <td><%= link_to group_assignment.get_person_name, person_path(group_assignment.person_id) %></td>
-        <td>group_assignment.approved_by</td>
-        <td>group_assignment.approved_on</td>
-        <td>group_assignment.start_date</td>
-        <td>group_assignment.end_date</td>
-        <td>group_assignment.created_at</td>
+        <td><%= group_assignment.start_date %></td>
+        <td><%= group_assignment.end_date %></td>
         <td>
           <% if can? :show, group_assignment %>
-            <%= link_to 'Show', group_assignment %>
+            <%= link_to 'Show', group_assignment, :class => 'btn btn-mini' %>
           <% end %>
           <% if can? :update, group_assignment %>
-            <%= link_to 'Edit', edit_group_assignment_path(group_assignment) %>
+            <%= link_to 'Edit', edit_group_assignment_path(group_assignment), :class => 'btn btn-mini' %>
           <% end %>
         </td>
       </tr>
     <% end %>
   </tbody>
 </table>
+
+<%= will_paginate @group_assignments_approved, :param_name => 'group_assignments_page', :previous_label => "Previous&nbsp;", :next_label => "&nbsp;Next" %>

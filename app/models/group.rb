@@ -1,6 +1,7 @@
 class Group < ActiveRecord::Base
   attr_accessible :created_by, :description, :name, :justification, :approved_by, :approved_on, 
-  :created_at, :is_approved
+  :created_at, :is_approved, :person_list
+  serialize :person_list,Array
   
   # Relationships
   # -----------------------------
@@ -25,11 +26,17 @@ class Group < ActiveRecord::Base
   # ----------------------------- 
   scope :all_approved, where("approved_by is not null")
   scope :all_unapproved, where("approved_by is null")
+  before_create :init_array
   before_create :check_if_approved
   before_update :check_if_approved
 
   # Custom Methods
   # -----------------------------
+
+  def init_array
+    self.person_list = nil
+  end
+
   def get_users_name
     if (created_by != nil)
       return User.find(created_by).first_name + " " + User.find(created_by).last_name

@@ -7,7 +7,7 @@ class GroupAssignmentsController < ApplicationController
   authorize_resource
   
   def index
-    @group_assignments_approved = GroupAssignment.all_approved
+    @group_assignments_approved = GroupAssignment.all_approved.paginate(:page => params[:group_assignments_page]).per_page(20)
 
     respond_to do |format|
       format.html # index.html.erb
@@ -30,6 +30,10 @@ class GroupAssignmentsController < ApplicationController
   # GET /group_assignments/new.json
   def new
     @group_assignment = GroupAssignment.new
+    @personOptions = Person.all_approved.alphabetical
+    @groupOptions = Group.all_approved
+    @person_id = params[:person_id]
+    @group_id = params[:group_id]
 
     respond_to do |format|
       format.html # new.html.erb
@@ -40,12 +44,16 @@ class GroupAssignmentsController < ApplicationController
   # GET /group_assignments/1/edit
   def edit
     @group_assignment = GroupAssignment.find(params[:id])
+    @personOptions = Person.all_approved.alphabetical
+    @groupOptions = Group.all_approved
   end
 
   # POST /group_assignments
   # POST /group_assignments.json
   def create
     @group_assignment = GroupAssignment.new(params[:group_assignment])
+    @personOptions = Person.all_approved.alphabetical
+    @groupOptions = Group.all_approved
 
     respond_to do |format|
       if @group_assignment.save

@@ -22,6 +22,7 @@ class GroupsController < ApplicationController
   def show
     @group = Group.find(params[:id])
     @user_group_contribs = UserGroupContrib.all_for_group(params[:id]).all_approved.paginate(:page => params[:user_group_contribs_page]).per_page(20)
+    @people = GroupAssignment.all_for_group(params[:id]).all_approved.paginate(:page => params[:people_page]).per_page(20)
 
     respond_to do |format|
       format.html # show.html.erb
