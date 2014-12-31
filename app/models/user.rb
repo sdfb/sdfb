@@ -31,7 +31,7 @@ class User < ActiveRecord::Base
   validates_presence_of :first_name
   validates :is_active, :inclusion => {:in => [true, false]}
   validates_presence_of :last_name
-  validates_presence_of :password_confirmation
+  validates_presence_of :password_confirmation, :on => :create
   validates_presence_of :user_type
   validates :curator_revoked, :inclusion => {:in => [true, false]}
   validates_presence_of :username
@@ -72,7 +72,7 @@ class User < ActiveRecord::Base
   end
 
   def password_present?
-    !password.nil?
+    !password.blank?
   end
 
   def username_present?
