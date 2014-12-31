@@ -25,6 +25,8 @@ $(document).ready(function() {
     $(".slider").tooltip({placement: 'right', title: 'Choose the certainty of relationship'});
 	$('#onenodeform').css('display','block');
 
+    $('.node-name').tooltip({placement: 'right'});
+
     // Color guide
     $("#icon-color").click(function(){
         if( $('#guide').css('display') == 'none' ){

@@ -199,6 +199,9 @@ edges.reverse();
     getAnnotation(id1 < id2 ? id1 : id2, id1 > id2 ? id1 : id2, data);
     console.log("edge clicked")
   });
+
+  graph.tooltip("<div class='btn' >{{text}}</div>");
+
   $('#zoom button.icon').click(function(e){
     if (this.name == 'in') {
       graph.zoomIn();
@@ -239,26 +242,6 @@ function writeGroupTable(dataSource, title){
     });
     downloadData(dataSource, title);
 };
-
-    //Tooltips
-    /*
-  $("#onenode").tooltip({placement:   'right', title: 'Connections of one individual'});
-  $("#twonode").tooltip({placement:   'right', title: 'Mutual connections between two individuals'});
-  $("#onegroup").tooltip({placement:  'right', title: 'Members of one group'});
-  $("#twogroup").tooltip({placement:  'right', title: 'Mutual members of two groups'});
-
-    $("#addnode").tooltip({placement:   'right', title: 'Add a new individual to the database'});
-    $("#addgroup").tooltip({placement:  'right', title: 'Add a new group to the database'});
-    $("#addedge").tooltip({placement:   'right', title: 'Add and annotate a relationship between two individuals'});
-
-    $("#icon-tag").tooltip({placement:  'right', title: 'Tag group'});
-    $("#icon-link").tooltip({placement: 'right', title: 'Add a relationship'});
-    $("#icon-annotate").tooltip({placement: 'right', title: 'Annotate relationship'});
-    $("#icon-info").tooltip({placement: 'left', title: 'Scroll to zoom, double click on node or edge for more information, single click to reset view'});
-    $("#icon-color").tooltip({placement: 'left', title: 'Click to view color legend'});
-  */
-
-	
 
 // Creates the table container, used for group and shared group
 function writeGroupTable(dataSource, title){
