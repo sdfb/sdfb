@@ -53,6 +53,7 @@ header a:hover {
   left: 0;
   width: 100%;
   background: #555;
+  z-index:10;
 }
 
 
@@ -128,9 +129,12 @@ a:hover {
 
 #graph {
     position: absolute;
-    top: 84px;
+    top: 0px;
     left:0px;
-
+    overflow: hidden;
+    height:100%;
+    width:100%;
+    z-index:-1;
 }
 
 #bacon {

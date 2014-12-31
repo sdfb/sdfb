@@ -75,7 +75,7 @@ function showNodeInfo(data, groups){
  $("#node-group").text(groups);
  var d = new Date();
  $("#node-cite").text( data.first+ " "+ data.last + " Network Visualization. \n Six Degrees of Francis Bacon: Reassembling the Early Modern Social Network. Gen. eds. Daniel Shore and Christopher Warren. "+d.getMonth()+"/"+d.getDate()+"/"+d.getFullYear()+" <http://sixdegreesoffrancisbacon.com/>");
- $("#node-DNBlink").attr("href", "http://www.oxforddnb.com/search/quick/?quicksearch=quicksearch&docPos=1&searchTarget=people&simpleName="+data.first+"-"+data.last+"&imageField.x=0&imageField.y=0&imageField=Go");//"http://www.oxforddnb.com/view/article/"+data.id);
+ $("#node-DNBlink").attr("href", "www.oxforddnb.com/view/article/"+data.id);//"http://www.oxforddnb.com/view/article/"+data.id);
  $("#node-GoogleLink").attr("href", "http://www.google.com/search?q="+data.first+"+"+ data.last);
  $("#node-discussion").attr("href", "/people/" + data.id);
  $("#node-icon-chain").attr("href", "/relationships/new?person1_id=" + data.id);
@@ -169,8 +169,11 @@ $.each(keys, function(index, value) {
 edges.reverse();
 
   $("#results").html("Two degrees of <b>" + p.label);
+
+  var w = window.innerWidth;
+  var h = window.innerHeight;
   
-  var options = { width: $("#graph").width(), height: $("#graph").height(), colors: getColors() };
+  var options = { width: w, height: h, collisionAlpha: 0.75, colors: getColors() };
   var graph = new Insights($("#graph")[0], nodes, edges, options).render();
   //graph.focus(francisID);
 

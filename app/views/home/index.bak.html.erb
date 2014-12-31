@@ -1,13 +1,31 @@
 <html>
+
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
+ 
 	<title>Six Degrees of Francis Bacon</title>
+
 </head>
 
 <body>
 	<div id="everything">
+
+<!-- 	<div class = "navbar" id="filterBar">
+		<ul class="navbar-inner">
+				<ul class = "nav center">
+					<li><a>Filter By: &nbsp;</a></li>
+				<li><a href="#" id="findonenode">Person</a></li>
+				<li><a href="#" id="findonegroup">Group</a></li>
+				<li><a href="#">Relationship Type</a></li>
+				<li><a href="#">Certaintity</a></li>
+				<li><a href="#">Date</a></li>
+			</ul>
+		</ul>
+	</div> -->
+
 	<div id="filterBar">
 		<ul>
 			<li><a>Filter By: &nbsp;</a></li>
@@ -42,6 +60,16 @@
 
 	<aside>
 		<div id="accordion">
+
+			<!-- about bar
+			<h3 class="accordion_btn"><span id="icon-about"></span>About</h3>
+			<div  class="accordion_content" id="about">
+				Six Degrees of Francis Bacon (SDFB) is a digital reconstruction of the early modern social network (EMSN) that scholars and students from all over the world will be able to collaboratively expand, revise, curate, and critique.
+				<a href="http://sixdegreesoffrancisbacon.com/overview" target="_blank" style="color:#aae"> Read blog...</a><br><br>
+				<b>CREDITS</b><br>
+				User interface designed and implemented by Carnegie Mellon University Information Systems team members Ivy Chung, Sama Kanbour, Angela Qiu and Chanamon Ratanalert, under the supervision of advisor Raja Sooriamurthi. © 2014
+			</div> -->
+
 			<!-- search bar -->
 			<h3 class="accordion_btn on"><span class="icon-magnify"></span>Search</h3>
 			<div class="accordion_content active" id="search">
@@ -147,6 +175,112 @@
 					<a href="/relationships/new"><li id="addedge">Relationship</li></a>
 					<a href="/groups/new"><li id="addgroup">Group</li></a>
 				</ul>
+				
+				<!--<section id="addnodeform">
+					<script type="text/javascript">
+						var submitted = false;
+					</script>
+					<iframe name="hidden_iframe1" id="hidden_iframe1" style="display:none;" onload=""></iframe>
+					<form action="https://docs.google.com/forms/d/151VLJDd62rmg_elgMLsiRjwmN0ecuZZbWdFz1QazhtA/formResponse" id="googleaddnode" method="post" target="hidden_iframe1" onsubmit="submitted=true;">
+						<input 	class="form-control" type="text" name="entry.1804360896" id="entry_1804360896" placeholder="First Name">
+						<input 	class="form-control" type="text" name="entry.754797571"  id="entry_754797571"  placeholder="Last Name">
+						<input 	class="form-control" type="text" name="entry.754797571"  id="entry_754797571"  placeholder="Prefix">
+						<input 	class="form-control" type="text" name="entry.754797571"  id="entry_754797571"  placeholder="Suffix">
+						<input 	class="form-control" type="text" name="entry.754797571"  id="entry_754797571"  placeholder="Title">
+						<input 	class="form-control" type="text" name="entry.524366257"  id="entry_524366257"  placeholder="Birth Date">
+						<input 	class="form-control" type="text" name="entry.1810714929" id="entry_1810714929" placeholder="Death Date">
+						<input 	class="form-control" type="text" name="entry.2129738910" id="entry_2129738910" placeholder="Historical Significance">
+						<input 	class="form-control" type="text" name="entry.1201727393" id="entry_1201727393" style="display:hidden;" placeholder="Contributor (Your Name)">
+						<button class="talkPageLink" type="submit" name="submit" id="submitnode">Submit for Approval</button>
+					</form>
+				</section>
+				
+				<section id="addedgeform">
+					<script type="text/javascript">
+						var submitted = false;
+					</script>
+					<iframe name="hidden_iframe1" id="hidden_iframe2 " style="display:none;" onload=""></iframe>
+					<form action="some google docs thing" id="googleaddnode" method="post" target="hidden_iframe1" onsubmit="submitted=true;">
+						<input 	class="form-control" type="text" name="entry.1804360896" id="entry_1804360896" placeholder="Person 1">
+						<select placeholder="Type">
+							<option>Aunt/Uncle of</option>
+						</select>
+						<input 	class="form-control" type="text" name="entry.1804360896" id="entry_1804360896" placeholder="Person 2">
+						<select placeholder="Confidence">
+							<option>High</option>
+						</select>
+						<input 	class="form-control" type="text" name="entry.524366257"  id="entry_524366257"  placeholder="Start Date">
+						<input 	class="form-control" type="text" name="entry.1810714929" id="entry_1810714929" placeholder="End Date">
+						<input 	class="form-control" type="text" name="entry.1810714929" id="entry_1810714929" placeholder="Justification">
+						<input 	class="form-control" type="text" name="entry.1201727393" id="entry_1201727393" style="display:hidden;" placeholder="Contributor (Your Name)">
+						<button class="talkPageLink" type="submit" name="submit" id="submitnode">Submit for Approval</button>
+					</form>
+				</section>
+				
+				
+				<section id="addgroupform">
+					<script type="text/javascript">
+						var submitted = false;
+					</script>
+					<iframe name="hidden_iframe3" id="hidden_iframe3" style="display:none;" onload=""></iframe>
+					<form action="https://docs.google.com/forms/d/1HbzCpwoLGMxEMVoRFiEA52SZdJa-8QpRO8cXVbe8_8Y/formResponse" id="googleaddgroup" method="post" target="hidden_iframe3" onsubmit="submitted=true;">
+						<input 	class="form-control" type="text" name="entry.110233074"  id="entry_110233074"  placeholder="Description">
+						<input 	class="form-control" type="text" name="entry.1177061505" id="entry_1177061505" placeholder="Justification">
+						<input 	class="form-control" type="text" name="entry.370499701" id="entry_370499701" placeholder="Proposed Members">
+						<button class="talkPageLink" type="submit" name="submit" id="submitgroup">Submit for Approval</button>
+					</form>
+				</section>-->
+
+				<!--<section id="addedgeform">
+					<script type="text/javascript">
+						var submitted = false;
+					</script>
+					<iframe name="hidden_iframe2" id="hidden_iframe2" style="display:none;" onload=""></iframe>
+					<form action="https://docs.google.com/forms/d/10Gfo4lX_iEArcffCxd5SqP9b-lEttdW5ymOTwX5-t5A/formResponse" id="googleaddedge" method="post" target="hidden_iframe2" onsubmit="submitted=true;">
+						<input class="form-control" type="text" name="entry.768090773" id="entry_768090773" placeholder="Name 1">
+						<input class="form-control" type="text" name="entry.1321382891" id="entry_1321382891" placeholder="Name 2">
+						<select class="form-control" name="entry.1695736706" id="entry_1695736706">
+							<option value="">Relationship type</option>
+							<option value="No relationship exists">No relationship exists</option>
+							<option value="Acquaintances">Acquaintances</option>
+							<option value="Ancestor/Descendent">Ancestor/Descendent</option>
+							<option value="Antagonists">Antagonists</option>
+							<option value="Mentor/Apprentice">Mentor/Apprentice</option>
+							<option value="Parent/Child">Parent/Child</option>
+							<option value="Close Friends">Close Friends</option>
+							<option value="Collaborators">Collaborators</option>
+							<option value="Colleagues">Colleagues</option>
+							<option value="Employer/Employee">Employer/Employee</option>
+							<option value="Enemies">Enemies</option>
+							<option value="Engaged">Engaged</option>
+							<option value="Friends">Friends</option>
+							<option value="Grandparent/Grandchild">Grandparent/Grandchild</option>
+							<option value="Met">Met</option>
+							<option value="Influenced one another">Influenced one another</option>
+							<option value="Knew in passing">Knew in passing</option>
+							<option value="Knew of one another">Knew of one another</option>
+							<option value="Life partners">Life partners</option>
+							<option value="Lived with">Lived with</option>
+							<option value="Neighbors">Neighbors</option>
+							<option value="Siblings">Siblings</option>
+							<option value="Spouses">Spouses</option>
+							<option value="Coworkers">Coworkers</option>
+						</select>
+						<select class="form-control" name="entry.875203595" id="entry_875203595">
+							<option value="">Confidence</option>
+							<option value="Very unlikely">Very unlikely</option>
+							<option value="Unlikely">Unlikely</option>
+							<option value="Possible">Possible</option>
+							<option value="Likely">Likely</option>
+							<option value="Certain">Certain</option>
+						</select>
+						<textarea 	class="form-control" type="text" name="entry.837175332" id="entry_837175332" placeholder="Annotation"></textarea>
+						<input		class="form-control" type="text" name="entry.484668707" id="entry_484668707" placeholder="Bibliographical Source(s)">
+						<input 		class="form-control" type="text" name="entry.1767559421" id="entry_1767559421" placeholder="Contributor (Your Name) ">
+						<button 	class="btn btn-primary" type="submit" name="submit" id="submitedge">Submit for Approval</button>
+					</form>
+				</section>-->
+
 			</div>
 
 
@@ -167,11 +301,11 @@
 			<div id="def-info">
 				<b>Six Degrees of Francis Bacon</b> (SDFB) is a collaborative 
 				reconstruction of the social network of early modern 
-				Britain (1500-1700). SDFB shows who likely knew whom 
+				Britain (1550-1700). SDFB shows who likely knew whom 
 				in the age of Elizabeth, Bacon, Shakespeare, and Hobbes.  
 				<br><br>
 				First, the SDFB team mined the history of scholarship 
-				to estimate and visualize roughly 170,000 relationships. 
+				to estimate and visualize roughly 115,000 relationships. 
 				On this site, scholars, students, and citizen humanists
 				 are expanding, curating, and revising early modern 
 				 British history.  
