@@ -75,6 +75,40 @@ class Person < ActiveRecord::Base
 
   # Custom Methods
   # -----------------------------
+  # make a method that returns all of the two degrees for a person
+  # use a array to track what people were added
+  # have an array for the people records
+  def self.find_2_degrees_for_person(id)
+    peopleRecordsForReturn = []
+    if id
+      peopleIDArray = []
+      searchedPersonRecord = Person.select("id, first_name, last_name, ext_birth_year, ext_death_year, rel_sum, group_list, historical_significance, odnb_id, prefix, suffix, title").find(id)
+      #Add the id and record for the searched person
+      peopleIDArray.push(id)
+      peopleRecordsForReturn.push(searchedPersonRecord)
+      searchedPersonRecord.rel_sum.each do |firstDegreePerson|
+        firstDegreePersonID = firstDegreePerson[0]
+        firstDegreePersonRecord = Person.select("id, first_name, last_name, ext_birth_year, ext_death_year, rel_sum, group_list, historical_significance, odnb_id, prefix, suffix, title").find(firstDegreePersonID)
+        #Add the id and record for the first degree connection
+        peopleIDArray.push(firstDegreePersonID)
+        peopleRecordsForReturn.push(firstDegreePersonRecord)
+
+        #for each person who has a first degree relationship with the searched person
+        #loop through the first degree person's relationships so that we can find the second degree relationships
+        firstDegreePersonRecord.rel_sum.each do |secondDegreePerson|
+          secondDegreePersonID = secondDegreePerson[0]
+          #check if the person is already in the array and if not, add the array and the record
+          if (! peopleIDArray.include?(secondDegreePersonID))
+            peopleIDArray.push(secondDegreePersonID)
+            secondDegreePersonRecord = Person.select("id, first_name, last_name, ext_birth_year, ext_death_year, rel_sum, group_list, historical_significance, odnb_id, prefix, suffix, title").find(secondDegreePersonID)
+            peopleRecordsForReturn.push(secondDegreePersonRecord)
+          end
+        end
+      end
+    end
+    return peopleRecordsForReturn
+  end
+
   def init_array
     self.rel_sum = nil
     self.group_list = nil
