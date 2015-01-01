@@ -73,6 +73,7 @@ class RelationshipsController < ApplicationController
   # PUT /relationships/1.json
   def update
     @relationship = Relationship.find(params[:id])
+    @personOptions = Person.all_approved.alphabetical
     
     respond_to do |format|
       if @relationship.update_attributes(params[:relationship])
