@@ -155,9 +155,9 @@ ActiveRecord::Schema.define(:version => 20141103033703) do
     t.text     "bibliography"
     t.integer  "approved_by"
     t.datetime "approved_on"
-    t.boolean  "is_approved",  :default => false
-    t.datetime "created_at",                      :null => false
-    t.datetime "updated_at",                      :null => false
+    t.boolean  "is_approved",  :default => true
+    t.datetime "created_at",                     :null => false
+    t.datetime "updated_at",                     :null => false
   end
 
   create_table "user_person_contribs", :force => true do |t|
@@ -167,9 +167,9 @@ ActiveRecord::Schema.define(:version => 20141103033703) do
     t.text     "bibliography"
     t.integer  "approved_by"
     t.date     "approved_on"
-    t.boolean  "is_approved",  :default => false
-    t.datetime "created_at",                      :null => false
-    t.datetime "updated_at",                      :null => false
+    t.boolean  "is_approved",  :default => true
+    t.datetime "created_at",                     :null => false
+    t.datetime "updated_at",                     :null => false
   end
 
   create_table "user_rel_contribs", :force => true do |t|
@@ -181,9 +181,9 @@ ActiveRecord::Schema.define(:version => 20141103033703) do
     t.integer  "relationship_type"
     t.integer  "approved_by"
     t.date     "approved_on"
-    t.boolean  "is_approved",       :default => false
-    t.datetime "created_at",                           :null => false
-    t.datetime "updated_at",                           :null => false
+    t.boolean  "is_approved",       :default => true
+    t.datetime "created_at",                          :null => false
+    t.datetime "updated_at",                          :null => false
   end
 
   create_table "users", :force => true do |t|
