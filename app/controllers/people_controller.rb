@@ -5,15 +5,15 @@ class PeopleController < ApplicationController
   # before_filter :check_login
   # before_filter :check_login
   # authorize_resource
-  # require 'will_paginate'
-  # require 'will_paginate/array'
+  require 'will_paginate'
+  require 'will_paginate/array'
   load_and_authorize_resource
   
   def index
     # gon.people = Person.all_approved
     # @people_approved = Person.all_approved.paginate(:page => params[:people_approved_page]).per_page(20)
     @people_approved = Person.all_approved.paginate(:page => params[:people_approved_page]).per_page(20)
-    gon.people = Person.all_approved
+    #gon.people = Person.all_approved
     respond_to do |format|
       format.html # index.html.erb
       format.json { render json: @people }
