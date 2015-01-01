@@ -83,20 +83,20 @@ $(document).ready(function() {
 	$(".slider").slider({
         animate: true,
         range: "min",
-        value: 50,
+        value: 70,
         min: 0,
         max: 100,
         step: 1,
         // Gets a live reading of the value and prints it on the page
         slide: function( event, ui ) {
         	var result = "Very unlikely";
-        	if (ui.value > 20 && ui.value < 41) {
+        	if (ui.value > 19 && ui.value < 40) {
         		result = "Unlikely";
-        	} else if (ui.value > 40 && ui.value < 61) {
+        	} else if (ui.value > 39 && ui.value < 60) {
         		result = "Possible";
-        	} else if (ui.value > 60 && ui.value < 81) {
+        	} else if (ui.value > 59 && ui.value < 80) {
         		result = "Likely";
-        	} else if (ui.value > 80){
+        	} else if (ui.value > 79){
                 result = "Certain"
             }
             $("#slider-result" + this.attributes.name.nodeValue).html( result + " relationships @ " + ui.value + "%");
