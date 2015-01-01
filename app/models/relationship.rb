@@ -24,7 +24,7 @@ class Relationship < ActiveRecord::Base
   ## max_certainty is less than or equal to one
   #validates_numericality_of :max_certainty, :less_than_or_equal_to => 1
   ## justification must be at least 4 characters
-  validates_length_of :justification, :minimum => 4, on: :create
+  validates_length_of :justification, :minimum => 4, on: :create, :if => :just_present?
   # edge_birthdate_certainty is one included in the list
   ##validates_inclusion_of :edge_birthdate_certainty, :in => %w(0 1 2), :allow_blank => true
 
