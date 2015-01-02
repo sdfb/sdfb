@@ -2,7 +2,7 @@
 <html>
 <head>
   <title>Six Degrees of Francis Bacon</title>
-  <%= include_gon %>
+
  <%= javascript_include_tag "jquery-2.1.1.min", "jquery-ui.min", "insights.standalone", "script",  "landing", "pace.min", "typeahead", "display2", "bootstrap.min", "accordion" %>
 	
 
@@ -15,20 +15,13 @@
 
 <%= render :partial => 'layouts/header'%>
 
-
-<div class="container-fluid">
-  <div class="row">
-  	<div class="span12">
-		<% flash.each do |name, msg| %>
-			<div class="alert alert-<%= name == :notice ? "success" : "error" %>">
-				<a class="close" data-dismiss="alert">x</a>
-				<%= msg %>
-			</div>
-		<% end %>
-		<%= yield %>
-	  </div>
-  </div>
-</div>
+<% flash.each do |name, msg| %>
+	<div class="alert alert-<%= name == :notice ? "success" : "error" %>">
+		<a class="close" data-dismiss="alert">x</a>
+		<%= msg %>
+	</div>
+<% end %>
+<%= yield %>
 
 <!-- Footer -->
 <%= render :partial => 'layouts/footer'%>

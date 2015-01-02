@@ -242,6 +242,10 @@ a:hover {
 #container {
   display: inline-block;
   padding: 100px 50px 0px 50px;
+  position: absolute;
+  left: 0;
+  right: 0;
+  margin:auto;
 }
 
 .slider, .slider-date {
@@ -349,53 +353,53 @@ a:hover {
 
 */
 
-#about{
+#container{
 	width:800px;
 	margin:auto;
 }
 
-#about h1{
+#container h1{
 	line-height:34px;
 	font-size:20px;
 }
 
-#about h2{
+#container h2{
 	line-height:22px;
 	font-size:16px;
 }
 
-#about td{
+#container td{
 	vertical-align:middle;
 }
 
-#about p{
+#container p{
 	padding:5px;
 }
 
-#about .row{
+#container .row{
   margin:0px;
 
 }
 
-#about .col{
+#container .col{
   display:block;
   float:left;
   max-width:390px;
   padding:0px 5px;
 }
 
-#about .container{
+#container .container{
   width:inherit;
 }
 
-#about ul li{
+#container ul li{
   display:list-item;
   list-style-type: circle;
   list-style-position: inside;
   margin-left: 7px;
 }
 
-#about h2{
+#container h2{
   font-weight: bold;
   font-size: 16px;
 }

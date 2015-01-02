@@ -27,6 +27,10 @@ p, ol, ul, td {
   border-radius: 4px;
 }
 
+.navbar{
+   margin-bottom: 0px;
+}
+
 .navbar .nav>li>a {
   color: #CAE4E1;
   text-shadow: none;

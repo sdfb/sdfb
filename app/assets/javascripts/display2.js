@@ -69,13 +69,14 @@ function getClusterRels(node){
 	if (size > 11){
 		return 6;
 	}else{
-		return Math.floor(size / 2));
+		return Math.floor(size / 2);
 	}
 
 }
 
 function getColorsRels(){
    return { 0: "#f56046", 1: "#ffbb12", 2: "#73cab5", 3: "#1d7578", 4: "#b6dcf2", 5: "#ff00ff", 6: "#9954e2"}
+}
 
 // Checks if a value is in an array
 function notInArray(arr, val) {
