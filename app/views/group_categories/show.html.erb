@@ -1,30 +1,42 @@
-<p id="notice"><%= notice %></p>
+<div class="row">
+  <div class="span12">
+    <h1>Group: <%= @group_category.name %>
+    </h1>
+  </div>
+</div>
+<br>
+<div class="row">
+  <div class="span5">
+    <div class="well">
+      <h2>Information
+        <% if can? :update, @group_category %> 
+        <%= link_to t('.edit', :default => t("helpers.links.edit")),
+                  edit_group_category_path(@group_category), :class => 'btn btn-mini' %>
+        <% end %>
+      </h2>
+      <br>
+      <dl class="dl-horizontal">
 
-<p>
-  <b>Group Category id:</b>
-  <%= @group_category.id %>
-</p>
-
-<p>
-  <b>Name:</b>
-  <%= @group_category.name %>
-</p>
-
-<p>
-  <b>Description:</b>
-  <%= @group_category.description %>
-</p>
-
-<p>
-  <b>Created by:</b>
-  <%= @group_category.created_by %>
-</p>
-
-<p>
-  <b>Created at:</b>
-  <%= @group_category.created_at %>
-</p>
-
-
-<%= link_to 'Edit', edit_group_category_path(@group_category) %> |
-<%= link_to 'Back', group_categories_path %>
+        <dt><strong>Name:</strong></dt>
+        <dd><%= @group_category.name %></dd>
+        <% if ! @group_category.description.blank? %>
+          <dt>Description:</strong></dt>
+          <dd><%= @group_category.description %></dd>
+        <% end %>
+        <dt><strong>Created by:</strong></dt>
+        <dd><%= link_to User.find(@group_category.created_by).username,  user_path(@group_category.created_by) %></dd>
+        <dt><strong>Is Approved?:</strong></dt>
+        <dd><%= @group_category.is_approved %></dd>
+        <% if ! @group_category.approved_by.blank? %>
+          <dt><strong>Approved by:</strong></dt>
+          <dd><%= link_to User.find(@group_category.approved_by).username,  user_path(@group_category.approved_by) %></dd>
+        <% end %>
+        <% if ! @group_category.approved_on.blank? %>
+          <dt><strong>Approved on:</strong></dt>
+          <dd><%= @group_category.approved_on %></dd>
+        <% end %>
+        <dt>Created at</dt>
+        <dd><%= @group_category.created_at %></dd>
+      </dl>
+    </div>
+  </div>

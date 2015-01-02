@@ -26,6 +26,9 @@ class Group < ActiveRecord::Base
   # ----------------------------- 
   scope :all_approved, where("approved_by is not null")
   scope :all_unapproved, where("approved_by is null")
+
+  # Callbacks
+  # ----------------------------- 
   before_create :init_array
   before_create :check_if_approved
   before_update :check_if_approved

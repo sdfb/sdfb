@@ -50,14 +50,19 @@ ActiveRecord::Schema.define(:version => 20141103033703) do
     t.integer  "group_id"
     t.integer  "group_category_id"
     t.integer  "created_by"
-    t.datetime "created_at",        :null => false
-    t.datetime "updated_at",        :null => false
+    t.string   "approved_by"
+    t.string   "approved_on"
+    t.boolean  "is_approved",       :default => false
+    t.datetime "created_at",                           :null => false
+    t.datetime "updated_at",                           :null => false
   end
 
   create_table "group_categories", :force => true do |t|
     t.string   "name"
     t.text     "description"
     t.integer  "created_by"
+    t.string   "approved_by"
+    t.string   "approved_on"
     t.boolean  "is_approved", :default => false
     t.datetime "created_at",                     :null => false
     t.datetime "updated_at",                     :null => false

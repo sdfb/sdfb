@@ -5,7 +5,7 @@ class GroupCategoriesController < ApplicationController
   load_and_authorize_resource
 
   def index
-    @group_categories = GroupCategory.all
+    @group_categories_approved = GroupCategory.all_approved.paginate(:page => params[:group_category_approved_page]).per_page(20)
 
     respond_to do |format|
       format.html # index.html.erb

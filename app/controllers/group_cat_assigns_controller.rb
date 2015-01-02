@@ -5,7 +5,7 @@ class GroupCatAssignsController < ApplicationController
   load_and_authorize_resource
   
   def index
-    @group_cat_assigns = GroupCatAssign.all
+    @group_cat_assigns_approved = GroupCatAssign.all_approved.paginate(:page => params[:group_cat_assigns_approved_page]).per_page(20)
 
     respond_to do |format|
       format.html # index.html.erb
@@ -28,6 +28,10 @@ class GroupCatAssignsController < ApplicationController
   # GET /group_cat_assigns/new.json
   def new
     @group_cat_assign = GroupCatAssign.new
+    @groupOptions = Group.all_approved
+    @group_id = params[:group_id]
+    @groupCatOptions = GroupCategory.all_approved
+    @group_cat_id = params[:group_cat_id]
 
     respond_to do |format|
       format.html # new.html.erb
@@ -38,6 +42,10 @@ class GroupCatAssignsController < ApplicationController
   # GET /group_cat_assigns/1/edit
   def edit
     @group_cat_assign = GroupCatAssign.find(params[:id])
+    @groupOptions = Group.all_approved
+    @group_id = params[:group_id]
+    @groupCatOptions = GroupCategory.all_approved
+    @group_cat_id = params[:group_cat_id]
     #authorize! :edit, @group_cat_assign
   end
 
@@ -45,6 +53,10 @@ class GroupCatAssignsController < ApplicationController
   # POST /group_cat_assigns.json
   def create
     @group_cat_assign = GroupCatAssign.new(params[:group_cat_assign])
+    @groupOptions = Group.all_approved
+    @group_id = params[:group_id]
+    @groupCatOptions = GroupCategory.all_approved
+    @group_cat_id = params[:group_cat_id]
 
     respond_to do |format|
       if @group_cat_assign.save
@@ -61,6 +73,10 @@ class GroupCatAssignsController < ApplicationController
   # PUT /group_cat_assigns/1.json
   def update
     @group_cat_assign = GroupCatAssign.find(params[:id])
+    @groupOptions = Group.all_approved
+    @group_id = params[:group_id]
+    @groupCatOptions = GroupCategory.all_approved
+    @group_cat_id = params[:group_cat_id]
 
     respond_to do |format|
       if @group_cat_assign.update_attributes(params[:group_cat_assign])

@@ -1,28 +1,32 @@
-<h1>Listing group_cat_assigns</h1>
+<h1>All Group Category Assignments <%= link_to 'New Group Category Assignments', new_group_cat_assign_path, :class => 'btn btn-primary' %></h1><br>
 
-<table>
-  <tr>
-    <th>Group Category Assignment id</th>
-    <th>Group</th>
-    <th>Group category</th>
-    <th>Created by</th>
-    <th>Created at</th>
-    <th></th>
-  </tr>
-
-<% @group_cat_assigns.each do |group_cat_assign| %>
-  <tr>
-    <td><%= group_cat_assign.id %></td>
-    <td><%= group_cat_assign.group_id %></td>
-    <td><%= group_cat_assign.group_category_id %></td>
-    <td><%= group_cat_assign.created_by %></td>
-    <td><%= group_cat_assign.created_at %></td>
-    <td><%= link_to 'Show', group_cat_assign %></td>
-    <td><%= link_to 'Edit', edit_group_cat_assign_path(group_cat_assign) %></td>
-  </tr>
-<% end %>
+<table class="table table-condensed">
+  <thead>
+    <tr>
+      <th>Group Category Assignment ID </th>
+      <th>Group</th>
+      <th>Category</th>
+      <th><%=t '.actions', :default => t("helpers.actions") %></th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @group_cat_assigns_approved.each do |group_cat_assign| %>
+      <tr>
+        <td><%= group_cat_assign.id %></td>
+        <td><%= link_to Group.find(group_cat_assign.group_id).name, group_path(group_cat_assign.group_id) %></td>
+        <td><%= link_to GroupCategory.find(group_cat_assign.group_category_id).name, group_category_path(group_cat_assign.group_category_id) %></td>
+        <td>
+          <% if can? :show, group_cat_assign %>
+            <%= link_to 'Show', group_cat_assign, :class => 'btn btn-mini' %>
+          <% end %>
+          <% if can? :update, group_cat_assign %>
+            <%= link_to t('.edit', :default => t("helpers.links.edit")),
+                            edit_group_path(group_cat_assign), :class => 'btn btn-mini' %>
+          <% end %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
 </table>
 
-<br />
-
-<%= link_to 'New Group cat assign', new_group_cat_assign_path %>
+<%= will_paginate @group_cat_assigns_approved, :param_name => 'group_cat_assigns_approved_page', :previous_label => "Previous&nbsp;", :next_label => "&nbsp;Next" %>
