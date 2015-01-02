@@ -8,7 +8,8 @@ function createGroup() {
 }
 
 function createNodeKey(node) {
-  var nodeKey = {"text": node.first + " " + node.last, "size": 4, "id": node.id,  "cluster": getCluster(node.birth)};
+  //var nodeKey = {"text": node.first + " " + node.last, "size": 4, "id": node.id,  "cluster": getCluster(node.birth)};
+  var nodeKey = {"text": node.first + " " + node.last, "size": 4, "id": node.id,  "cluster": getCluster(node)};
   return nodeKey;
 }
 
@@ -32,15 +33,15 @@ function getSize(node) {
 }
 
 // Returns the color id based on birth year
-function getCluster(year){
+function getClusterBirth(year){
   if (parseInt(year) < 1550) {return 0}
   if (parseInt(year) > 1700) {return 1}
   var cluster = Math.round((parseInt(year) - 1550) / 5);
   return (2 + cluster);
 }
 
-// Returns hash of colors for nodes
-function getColors(){
+// Returns hash of colors for nodes based on birthday
+function getColorsBirth(){
    return { 0:  "#A6D9CA", 1:  "#F0623E", 2:  "#B99CCA", 3:  "#B8DCF4", 
              4:  "#F9F39C", 5:  "#339998", 6:  "#6566AD", 7:  "#F89939", 
              8:  "#558FCB", 9:  "#04A287", 10: "#B53C84", 11: "#F2805C",
@@ -49,6 +50,32 @@ function getColors(){
              20: "#FABC3E", 21: "#EE6096", 22: "#DADC44", 23: "#B177B3",
              24: "#A573B1", 25: "#78CDD6", 26: "#60BD6D", 27: "#3EA7C0",
              28: "#F59485", 29: "#3F6FB6", 30: "#F8EC49", 31: "#1C57A7", }
+}
+
+/*
+Num_rels Cluster
+ 0-1		0
+ 2-3		1
+ 4-5		2
+ 6-7		3
+ 8-9		4
+ 10-11		5
+ 12+		6
+
+*/
+
+function getClusterRels(node){
+	var size = getSize(node);
+	if (size > 11){
+		return 6;
+	}else{
+		return Math.floor(size / 2);
+	}
+
+}
+
+function getColorsRels(){
+   return { 0: "#f56046", 1: "#ffbb12", 2: "#73cab5", 3: "#1d7578", 4: "#b6dcf2", 5: "#ff00ff", 6: "#9954e2"}
 }
 
 // Checks if a value is in an array
@@ -153,7 +180,7 @@ function twoDegs(id, data) {
             } 
         });
 
-        keys[p.id] = {"text": p.first + " " + p.last, "size": 20, "id": p.id,  "cluster": getCluster(p.birth)};
+        keys[p.id] = {"text": p.first + " " + p.last, "size": 20, "id": p.id,  "cluster": getCluster(p)};
   }  
 	
 // Returns list of groups that a node belongs to
@@ -178,7 +205,7 @@ edges.reverse();
   var w = window.innerWidth;
   var h = window.innerHeight;
   
-  var options = { width: w, height: h, collisionAlpha: 1, colors: getColors() };
+  var options = { width: w, height: h, collisionAlpha: 10, colors: getColorsRels() };
   var graph = new Insights($("#graph")[0], nodes, edges, options).render();
   //graph.focus(francisID);
 
