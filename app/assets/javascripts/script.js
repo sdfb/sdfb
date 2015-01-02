@@ -108,8 +108,6 @@ $(document).ready(function() {
         }
     });
 
-
- 
 		//  Sliding animation
 		$(".slider-date").slider({
 					animate: true,

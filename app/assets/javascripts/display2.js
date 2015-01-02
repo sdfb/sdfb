@@ -9,7 +9,7 @@ function createGroup() {
 
 function createNodeKey(node) {
   //var nodeKey = {"text": node.first + " " + node.last, "size": 4, "id": node.id,  "cluster": getCluster(node.birth)};
-  var nodeKey = {"text": node.first + " " + node.last, "size": 4, "id": node.id,  "cluster": getCluster(node)};
+  var nodeKey = {"text": node.first + " " + node.last, "size": 4, "id": node.id,  "cluster": getClusterRels(node)};
   return nodeKey;
 }
 
@@ -180,7 +180,7 @@ function twoDegs(id, data) {
             } 
         });
 
-        keys[p.id] = {"text": p.first + " " + p.last, "size": 20, "id": p.id,  "cluster": getCluster(p)};
+        keys[p.id] = {"text": p.first + " " + p.last, "size": 20, "id": p.id,  "cluster": getClusterRels(p)};
   }  
 	
 // Returns list of groups that a node belongs to
