@@ -83,7 +83,7 @@ $(document).ready(function() {
 	$(".slider").slider({
         animate: true,
         range: "min",
-        value: 70,
+        value: 60,
         min: 0,
         max: 100,
         step: 1,
