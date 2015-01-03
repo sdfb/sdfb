@@ -4,6 +4,9 @@ class CreateRelationshipCategories < ActiveRecord::Migration
       t.string :name
       t.text :description
       t.boolean :is_approved, :default => false
+      t.integer :approved_by
+      t.datetime :approved_on
+      t.integer :created_by
 
       t.timestamps
     end

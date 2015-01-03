@@ -5,6 +5,8 @@ class CreateGroups < ActiveRecord::Migration
       t.string :name
       t.text :description
       t.text :justification
+      t.integer :start_year
+      t.integer :end_year
       t.string :approved_by
       t.string :approved_on
       t.boolean :is_approved, :default => false

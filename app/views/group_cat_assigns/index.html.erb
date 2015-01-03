@@ -21,7 +21,7 @@
           <% end %>
           <% if can? :update, group_cat_assign %>
             <%= link_to t('.edit', :default => t("helpers.links.edit")),
-                            edit_group_path(group_cat_assign), :class => 'btn btn-mini' %>
+                            edit_group_cat_assign_path(group_cat_assign), :class => 'btn btn-mini' %>
           <% end %>
         </td>
       </tr>

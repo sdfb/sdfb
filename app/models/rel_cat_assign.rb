@@ -1,5 +1,6 @@
 class RelCatAssign < ActiveRecord::Base
-  attr_accessible :relationship_category_id, :relationship_type_id, :created_at
+  attr_accessible :relationship_category_id, :relationship_type_id, :created_at, :approved_by,
+  :approved_on, :is_approved, :created_by
 
   # Relationships
   # -----------------------------
@@ -13,6 +14,7 @@ class RelCatAssign < ActiveRecord::Base
 
   # Scope
   # ----------------------------- 
+  scope :all_approved, where("approved_by is not null")
 
   # Custom Methods
   # -----------------------------

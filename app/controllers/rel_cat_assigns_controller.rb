@@ -5,7 +5,7 @@ class RelCatAssignsController < ApplicationController
   load_and_authorize_resource
   
   def index
-    @rel_cat_assigns = RelCatAssign.all
+    @rel_cat_assigns_approved = RelCatAssign.all_approved.paginate(:page => params[:rel_cat_assigns_approved_page]).per_page(20)
 
     respond_to do |format|
       format.html # index.html.erb
@@ -28,6 +28,10 @@ class RelCatAssignsController < ApplicationController
   # GET /rel_cat_assigns/new.json
   def new
     @rel_cat_assign = RelCatAssign.new
+    @relTypeOptions = RelationshipType.all_approved
+    @rel_type_id = params[:rel_type_id]
+    @relCatOptions = RelationshipCategory.all_approved
+    @rel_cat_id = params[:rel_cat_id]
 
     respond_to do |format|
       format.html # new.html.erb
@@ -38,6 +42,10 @@ class RelCatAssignsController < ApplicationController
   # GET /rel_cat_assigns/1/edit
   def edit
     @rel_cat_assign = RelCatAssign.find(params[:id])
+    @relTypeOptions = RelationshipType.all_approved
+    @rel_type_id = params[:rel_type_id]
+    @relCatOptions = RelationshipCategory.all_approved
+    @rel_cat_id = params[:rel_cat_id]
     #authorize! :edit, @rel_cat_assign
   end
 
@@ -45,6 +53,10 @@ class RelCatAssignsController < ApplicationController
   # POST /rel_cat_assigns.json
   def create
     @rel_cat_assign = RelCatAssign.new(params[:rel_cat_assign])
+    @relTypeOptions = RelationshipType.all_approved
+    @rel_type_id = params[:rel_type_id]
+    @relCatOptions = RelationshipCategory.all_approved
+    @rel_cat_id = params[:rel_cat_id]
 
     respond_to do |format|
       if @rel_cat_assign.save
@@ -61,6 +73,10 @@ class RelCatAssignsController < ApplicationController
   # PUT /rel_cat_assigns/1.json
   def update
     @rel_cat_assign = RelCatAssign.find(params[:id])
+    @relTypeOptions = RelationshipType.all_approved
+    @rel_type_id = params[:rel_type_id]
+    @relCatOptions = RelationshipCategory.all_approved
+    @rel_cat_id = params[:rel_cat_id]
 
     respond_to do |format|
       if @rel_cat_assign.update_attributes(params[:rel_cat_assign])

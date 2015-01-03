@@ -5,7 +5,7 @@ class RelationshipCategoriesController < ApplicationController
   load_and_authorize_resource
   
   def index
-    @relationship_categories = RelationshipCategory.all
+    @relationship_categories = RelationshipCategory.all_approved
 
     respond_to do |format|
       format.html # index.html.erb

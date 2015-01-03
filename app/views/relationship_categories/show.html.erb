@@ -1,25 +1,42 @@
-<p id="notice"><%= notice %></p>
+<div class="row">
+  <div class="span12">
+    <h1>Relationship Category: <%= @relationship_category.name %>
+    </h1>
+  </div>
+</div>
+<br>
+<div class="row">
+  <div class="span5">
+    <div class="well">
+      <h2>Information
+        <% if can? :update, @relationship_category %> 
+        <%= link_to t('.edit', :default => t("helpers.links.edit")),
+                  edit_relationship_category_path(@relationship_category), :class => 'btn btn-mini' %>
+        <% end %>
+      </h2>
+      <br>
+      <dl class="dl-horizontal">
 
-<p>
-  <b>Relationship Category id:</b>
-  <%= @relationship_category.name %>
-</p>
-
-<p>
-  <b>Name:</b>
-  <%= @relationship_category.name %>
-</p>
-
-<p>
-  <b>Description:</b>
-  <%= @relationship_category.description %>
-</p>
-
-<p>
-  <b>Created at:</b>
-  <%= @relationship_category.created_at %>
-</p>
-
-
-<%= link_to 'Edit', edit_relationship_category_path(@relationship_category) %> |
-<%= link_to 'Back', relationship_categories_path %>
+        <dt><strong>Name:</strong></dt>
+        <dd><%= @relationship_category.name %></dd>
+        <% if ! @relationship_category.description.blank? %>
+          <dt>Description:</strong></dt>
+          <dd><%= @relationship_category.description %></dd>
+        <% end %>
+        <dt><strong>Created by:</strong></dt>
+        <dd><%= link_to User.find(@relationship_category.created_by).username,  user_path(@relationship_category.created_by) %></dd>
+        <dt><strong>Is Approved?:</strong></dt>
+        <dd><%= @relationship_category.is_approved %></dd>
+        <% if ! @relationship_category.approved_by.blank? %>
+          <dt><strong>Approved by:</strong></dt>
+          <dd><%= link_to User.find(@relationship_category.approved_by).username,  user_path(@relationship_category.approved_by) %></dd>
+        <% end %>
+        <% if ! @relationship_category.approved_on.blank? %>
+          <dt><strong>Approved on:</strong></dt>
+          <dd><%= @relationship_category.approved_on %></dd>
+        <% end %>
+        <dt>Created at</dt>
+        <dd><%= @relationship_category.created_at %></dd>
+      </dl>
+    </div>
+  </div>

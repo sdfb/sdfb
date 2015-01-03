@@ -73,6 +73,8 @@ ActiveRecord::Schema.define(:version => 20141103033703) do
     t.string   "name"
     t.text     "description"
     t.text     "justification"
+    t.integer  "start_year"
+    t.integer  "end_year"
     t.string   "approved_by"
     t.string   "approved_on"
     t.boolean  "is_approved",   :default => false
@@ -110,14 +112,21 @@ ActiveRecord::Schema.define(:version => 20141103033703) do
   create_table "rel_cat_assigns", :force => true do |t|
     t.integer  "relationship_category_id"
     t.integer  "relationship_type_id"
-    t.datetime "created_at",               :null => false
-    t.datetime "updated_at",               :null => false
+    t.integer  "created_by"
+    t.string   "approved_by"
+    t.string   "approved_on"
+    t.boolean  "is_approved",              :default => false
+    t.datetime "created_at",                                  :null => false
+    t.datetime "updated_at",                                  :null => false
   end
 
   create_table "relationship_categories", :force => true do |t|
     t.string   "name"
     t.text     "description"
     t.boolean  "is_approved", :default => false
+    t.integer  "approved_by"
+    t.datetime "approved_on"
+    t.integer  "created_by"
     t.datetime "created_at",                     :null => false
     t.datetime "updated_at",                     :null => false
   end

@@ -1,24 +1,50 @@
 namespace :db do
-  # creating a rake task within db namespace called 'populate_rel_unlikely'
-  # executing 'rake db:populate_rel_unlikely' will cause this script to run
-  task :populate_groups => :environment do
-    # Read in unlikely relationships    
+  # creating a rake task within db namespace called 'populate_groups'
+  # executing 'rake db:populate_groups' will cause this script to run
+  task :populate_groups => :environment do 
     puts "Adding groups..."
-    inFile = File.new("lib/data/groups.csv",'r')
+    inFile = File.new("lib/data/groups.tsv",'r')
     count = 0
     puts inFile
     inFile.each { |line|
       data = line.split('\n')
       data.each { |group|
-        groupData = group.split(",")
+        groupData = group.split("\t")
+        id_input = groupData[0]
         name_input = groupData[1]
-        description_input = '-'
+        if (! groupData[2].blank?)
+           description_input = groupData[2]
+        else  
+          description_input = '-'
+        end
+        if (! groupData[3].blank?)
+          start_year_input = groupData[3]
+        else
+          start_year_input = nil
+        end
+        if (! groupData[4].blank?)
+          end_year_input = groupData[4]
+        else
+          end_year_input = nil
+        end
         created_by_input = User.for_email("sdfb_admin@example.com")[0].id
         approved_by_input = User.for_email("sdfb_admin@example.com")[0].id
         approved_on_input = Time.now
         count += 1
-        Group.create(name: name_input, description: description_input, created_by: created_by_input,
-          is_approved: true, approved_by: approved_by_input, approved_on: approved_on_input)
+
+        a_group = Group.new do |g| 
+          g.id = id_input
+          g.name = name_input
+          g.is_approved = true
+          g.description = description_input
+          g.start_year = start_year_input
+          g.end_year = end_year_input
+          g.created_by = created_by_input
+          g.approved_by = approved_by_input
+          g.approved_on = approved_on_input
+          g.save!
+        end
+        puts name_input
         puts count
        }
      }

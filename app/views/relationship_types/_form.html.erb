@@ -14,7 +14,6 @@
   <%= f.input :name %>
   <%= f.input :description %>
   <%= f.input :relationship_type_inverse %>
-  <%= f.input :default_rel_category, label: "Primary Category" %>
   <%= f.hidden_field :created_by, :value => current_user.id %>
   <% if current_user.user_type == "Admin" %>
     <%= f.input :is_active %>
@@ -26,7 +25,5 @@
 
   <div class="form-actions">
     <%= f.button :submit, :class => 'btn btn-primary' %>
-    <%= link_to t('.cancel', :default => t("helpers.links.cancel")),
-                relationship_types_path, :class => 'btn' %>
   </div>
 <% end %>

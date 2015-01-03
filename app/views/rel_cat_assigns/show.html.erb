@@ -1,24 +1,38 @@
-<p id="notice"><%= notice %></p>
-
-<p>
-  <b>Relationship Category Assignment id:</b>
-  <%= @rel_cat_assign.id %>
-</p>
-
-<p>
-  <b>Relationship category:</b>
-  <%= @rel_cat_assign.relationship_category_id %>
-</p>
-
-<p>
-  <b>Relationship type:</b>
-  <%= @rel_cat_assign.relationship_type_id %>
-</p>
-
-<p>
-  <b>Created at:</b>
-  <%= @rel_cat_assign.created_at %>
-</p>
-
-<%= link_to 'Edit', edit_rel_cat_assign_path(@rel_cat_assign) %> |
-<%= link_to 'Back', rel_cat_assigns_path %>
+<div class="row">
+  <div class="span12">
+    <h1>Relationship Category Assignment</h1>
+  </div>
+</div>
+<br>
+<div class="row">
+  <div class="span5">
+    <div class="well">
+      <h2>Information
+        <% if can? :update, @rel_cat_assign %> 
+        <%= link_to t('.edit', :default => t("helpers.links.edit")),
+                  edit_rel_cat_assign_path(@rel_cat_assign), :class => 'btn btn-mini' %>
+        <% end %>
+      </h2>
+      <br>
+      <dl class="dl-horizontal">
+        <dt><strong>Relationship Type:</strong></dt>
+        <dd><%= link_to RelationshipType.find(@rel_cat_assign.relationship_type_id).name, relationship_type_path(@rel_cat_assign.relationship_type_id) %></dd>
+        <dt><strong>Relationship Category:</strong></dt>
+        <dd><%= link_to RelationshipCategory.find(@rel_cat_assign.relationship_category_id).name, relationship_category_path(@rel_cat_assign.relationship_category_id) %></dd>
+        <dt><strong>Created by:</strong></dt>
+        <dd><%= link_to User.find(@rel_cat_assign.created_by).username,  user_path(@rel_cat_assign.created_by) %></dd>
+        <dt><strong>Is Approved?:</strong></dt>
+        <dd><%= @rel_cat_assign.is_approved %></dd>
+        <% if ! @rel_cat_assign.approved_by.blank? %>
+          <dt><strong>Approved by:</strong></dt>
+          <dd><%= link_to User.find(@rel_cat_assign.approved_by).username,  user_path(@rel_cat_assign.approved_by) %></dd>
+        <% end %>
+        <% if ! @rel_cat_assign.approved_on.blank? %>
+          <dt><strong>Approved on:</strong></dt>
+          <dd><%= @rel_cat_assign.approved_on %></dd>
+        <% end %>
+        <dt>Created at</dt>
+        <dd><%= @rel_cat_assign.created_at %></dd>
+      </dl>
+    </div>
+  </div>

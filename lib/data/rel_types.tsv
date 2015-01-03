@@ -1,0 +1,51 @@
+1	Enemy of	Enemy of
+2	Rival of	Rival of
+3	Acquaintance of	Acquaintance of
+4	Has met	Has met
+5	Knows in passing	Knows in passing
+6	Close friend of	Close friend of
+7	Friend of	Friend of
+8	Attracted to	Is admired by
+9	Has child with	Has child with
+10	Sexual partner of	Sexual partner of
+11	Mentee/Student of	Mentor/Teacher of
+12	Mentor/Teacher of	Mentee/Student of
+13	Aunt/Uncle of	Niece/Nephew of
+14	Cousin of	Cousin of
+15	Niece/Nephew of	Aunt/Uncle of
+16	Child-in-law of	Parent-in-law of
+17	Guardian of	Ward of
+18	Heir(ess) of	Testator to
+19	Other-in-law of	Other-in-law of
+20	Parent-in-law of	Child-in-law of
+21	Sibling-in-law of	Sibling-in-law of
+22	Testator to	Heir(ess) of
+23	Ward of	Guardian of
+24	Great-grandparent of	Great-grandchild of
+25	Child of	Parent of
+26	Great-grandchild of	Great-grandparent of
+27	Grandchild of	Grandparent of
+28	Grandparent of	Grandchild of
+29	Parent of	Child of
+30	Sibling of	Sibling of
+31	Godchild of	Godparent of
+32	Godparent of	Godchild of
+33	Godsibling of	Godsibling of
+34	Client of	Patron of
+35	Collaborates with	Collaborates with
+36	Colleague of	Colleague of
+37	Coworker of	Coworker of
+38	Patron of	Client of
+39	Apprentice of	Master of
+40	Employed by	Employer of
+41	Employer of	Employed by
+42	Master of	Apprentice of
+43	Rents from	Rents to
+44	Rents to	Rents from
+45	Engaged to	Engaged to
+46	Spouse of	Spouse of
+47	Parishoner of	Priest of
+48	Priest of	Parishoner of
+49	Other religious	Other religious
+50	Lives with	Lives with
+51	Neighbor of	Neighbor of

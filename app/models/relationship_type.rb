@@ -8,7 +8,7 @@ class RelationshipType < ActiveRecord::Base
 
   # Validations
   # -----------------------------
-  validates_presence_of :default_rel_category
+  #validates_presence_of :default_rel_category
   validates :is_active, :inclusion => {:in => [true, false]}
   validates_presence_of :name
   #validates_presence_of :relationship_type_inverse

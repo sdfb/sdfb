@@ -1,6 +1,6 @@
 class Group < ActiveRecord::Base
   attr_accessible :created_by, :description, :name, :justification, :approved_by, :approved_on, 
-  :created_at, :is_approved, :person_list
+  :created_at, :is_approved, :person_list, :start_year, :end_year
   serialize :person_list,Array
   
   # Relationships

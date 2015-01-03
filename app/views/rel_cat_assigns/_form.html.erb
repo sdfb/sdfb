@@ -1,7 +1,7 @@
-<%= form_for(@rel_cat_assign) do |f| %>
+<%= simple_form_for @rel_cat_assign, :html => { :class => 'form-horizontal' } do |f| %>
   <% if @rel_cat_assign.errors.any? %>
     <div id="error_explanation">
-      <h2><%= pluralize(@rel_cat_assign.errors.count, "error") %> prohibited this rel_cat_assign from being saved:</h2>
+      <h2><%= pluralize(@rel_cat_assign.errors.count, "error") %> prohibited this relationship category assignment from being saved:</h2>
 
       <ul>
       <% @rel_cat_assign.errors.full_messages.each do |msg| %>
@@ -11,15 +11,22 @@
     </div>
   <% end %>
 
-  <div class="field">
-    <%= f.label :relationship_category_id %><br />
-    <%= f.number_field :relationship_category_id %>
-  </div>
-  <div class="field">
-    <%= f.label :relationship_type_id %><br />
-    <%= f.number_field :relationship_type_id %>
-  </div>
-  <div class="actions">
-    <%= f.submit %>
+  <%= f.hidden_field :created_by, :value => current_user.id %>
+  <% if ! @rel_type_id.blank? %>
+    <%= f.input :relationship_type_id, :collection =>@relTypeOptions.collect{ |g| [g.name, g.id] }, label: "Relationship Type", prompt: "Select", selected: @rel_type_id %>
+  <% else %>
+    <%= f.input :relationship_type_id, :collection =>@relTypeOptions.collect{ |g| [g.name, g.id] }, label: "Relationship Type", prompt: "Select" %>
+  <% end %>
+  <% if ! @rel_cat_id.blank? %>
+    <%= f.input :relationship_category_id, :collection =>@relCatOptions.collect{ |g| [g.name, g.id] }, label: "Relationship Category", prompt: "Select", selected: @rel_cat_id %>
+  <% else %>
+    <%= f.input :relationship_category_id, :collection =>@relCatOptions.collect{ |g| [g.name, g.id] }, label: "Relationship Category", prompt: "Select" %>
+  <% end %>
+  <% if current_user.user_type == "Admin" %>
+    <%= f.input :is_approved %>
+    <%= f.hidden_field :approved_by, :value => current_user.id %>
+  <% end %>
+  <div class="form-actions">
+    <%= f.button :submit, :class => 'btn btn-primary' %>
   </div>
 <% end %>
