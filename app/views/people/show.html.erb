@@ -42,6 +42,8 @@
           <dt><strong>Suffix:</strong></dt>
           <dd><%= @person.suffix %></dd>
         <% end %>
+        <dt><strong>Gender:</strong></dt>
+        <dd><%= @person.gender %></dd>
         <% if ! @person.search_names_all.blank? %>
           <dt><strong>All known identities:</strong></dt>
           <dd><%= @person.search_names_all %></dd>

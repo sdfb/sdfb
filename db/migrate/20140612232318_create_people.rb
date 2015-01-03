@@ -16,6 +16,7 @@ class CreatePeople < ActiveRecord::Migration
       t.string :death_year_type
       t.string :ext_death_year
       t.string :alt_death_year
+      t.string :gender
       t.text :justification
       t.integer :approved_by
       t.datetime :approved_on

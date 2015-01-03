@@ -1,7 +1,7 @@
 class Person < ActiveRecord::Base
   attr_accessible :odnb_id, :first_name, :last_name, :created_by, :historical_significance, :uncertain, :unlikely, :possible,
   :likely, :certain, :rel_sum, :prefix, :suffix, :search_names_all, :title, :birth_year_type, :ext_birth_year, :alt_birth_year, :death_year_type,
-  :ext_death_year, :alt_death_year, :justification, :approved_by, :approved_on, :created_at, :is_approved, :group_list
+  :ext_death_year, :alt_death_year, :justification, :approved_by, :approved_on, :created_at, :is_approved, :group_list, :gender
   serialize :rel_sum,Array
   serialize :group_list,Array
   #rel_sum is the relationship summary that is updated whenever a relationship is created or updated
@@ -31,6 +31,7 @@ class Person < ActiveRecord::Base
   validates_presence_of :first_name
   # validates_presence_of :last_name
   validates_presence_of :created_by
+  validates_presence_of :gender
   # validates_presence_of :uncertain
   # validates_presence_of :unlikely
   # validates_presence_of :possible
