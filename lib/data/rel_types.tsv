@@ -1,51 +1,102 @@
-1	Enemy of	Enemy of
-2	Rival of	Rival of
-3	Acquaintance of	Acquaintance of
-4	Has met	Has met
-5	Knows in passing	Knows in passing
-6	Close friend of	Close friend of
-7	Friend of	Friend of
-8	Attracted to	Is admired by
-9	Has child with	Has child with
-10	Sexual partner of	Sexual partner of
-11	Mentee/Student of	Mentor/Teacher of
-12	Mentor/Teacher of	Mentee/Student of
-13	Aunt/Uncle of	Niece/Nephew of
-14	Cousin of	Cousin of
-15	Niece/Nephew of	Aunt/Uncle of
-16	Child-in-law of	Parent-in-law of
-17	Guardian of	Ward of
-18	Heir(ess) of	Testator to
-19	Other-in-law of	Other-in-law of
-20	Parent-in-law of	Child-in-law of
-21	Sibling-in-law of	Sibling-in-law of
-22	Testator to	Heir(ess) of
-23	Ward of	Guardian of
-24	Great-grandparent of	Great-grandchild of
-25	Child of	Parent of
-26	Great-grandchild of	Great-grandparent of
-27	Grandchild of	Grandparent of
-28	Grandparent of	Grandchild of
-29	Parent of	Child of
-30	Sibling of	Sibling of
-31	Godchild of	Godparent of
-32	Godparent of	Godchild of
-33	Godsibling of	Godsibling of
-34	Client of	Patron of
-35	Collaborates with	Collaborates with
-36	Colleague of	Colleague of
-37	Coworker of	Coworker of
-38	Patron of	Client of
-39	Apprentice of	Master of
-40	Employed by	Employer of
-41	Employer of	Employed by
-42	Master of	Apprentice of
-43	Rents from	Rents to
-44	Rents to	Rents from
-45	Engaged to	Engaged to
-46	Spouse of	Spouse of
-47	Parishoner of	Priest of
-48	Priest of	Parishoner of
-49	Other religious	Other religious
-50	Lives with	Lives with
-51	Neighbor of	Neighbor of
+1	Enemy of	52
+2	Rival of	53
+3	Acquaintance of	54
+4	Has met	55
+5	Knows in passing	56
+6	Close friend of	57
+7	Friend of	58
+8	Attracted to	59
+9	Has child with	60
+10	Sexual partner of	61
+11	Mentee/Student of	62
+12	Mentor/Teacher of	63
+13	Aunt/Uncle of	64
+14	Cousin of	65
+15	Niece/Nephew of	66
+16	Child-in-law of	67
+17	Guardian of	68
+18	Heir(ess) of	69
+19	Other-in-law of	70
+20	Parent-in-law of	71
+21	Sibling-in-law of	72
+22	Testator to	73
+23	Ward of	74
+24	Great-grandparent of	75
+25	Child of	76
+26	Great-grandchild of	77
+27	Grandchild of	78
+28	Grandparent of	79
+29	Parent of	80
+30	Sibling of	81
+31	Godchild of	82
+32	Godparent of	83
+33	Godsibling of	84
+34	Client of	85
+35	Collaborates with	86
+36	Colleague of	87
+37	Coworker of	88
+38	Patron of	89
+39	Apprentice of	90
+40	Employed by	91
+41	Employer of	92
+42	Master of	93
+43	Rents from	94
+44	Rents to	95
+45	Engaged to	96
+46	Spouse of	97
+47	Parishoner of	98
+48	Priest of	99
+49	Other religious	100
+50	Lives with	101
+51	Neighbor of	102
+52	Enemy of	1
+53	Rival of	2
+54	Acquaintance of	3
+55	Has met	4
+56	Knows in passing	5
+57	Close friend of	6
+58	Friend of	7
+59	Is admired by	8
+60	Has child with	9
+61	Sexual partner of	10
+62	Mentor/Teacher of	11
+63	Mentee/Student of	12
+64	Niece/Nephew of	13
+65	Cousin of	14
+66	Aunt/Uncle of	15
+67	Parent-in-law of	16
+68	Ward of	17
+69	Testator to	18
+70	Other-in-law of	19
+71	Child-in-law of	20
+72	Sibling-in-law of	21
+73	Heir(ess) of	22
+74	Guardian of	23
+75	Great-grandchild of	24
+76	Parent of	25
+77	Great-grandparent of	26
+78	Grandparent of	27
+79	Grandchild of	28
+80	Child of	29
+81	Sibling of	30
+82	Godparent of	31
+83	Godchild of	32
+84	Godsibling of	33
+85	Patron of	34
+86	Collaborates with	35
+87	Colleague of	36
+88	Coworker of	37
+89	Client of	38
+90	Master of	39
+91	Employer of	40
+92	Employed by	41
+93	Apprentice of	42
+94	Rents to	43
+95	Rents from	44
+96	Engaged to	45
+97	Spouse of	46
+98	Priest of	47
+99	Parishoner of	48
+100	Other religious	49
+101	Lives with	50
+102	Neighbor of	51

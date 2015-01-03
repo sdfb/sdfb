@@ -21,6 +21,7 @@ namespace :db do
         a_rel_type = RelationshipType.new do |rt| 
           rt.id = id_input
           rt.name = name_input
+          puts rt_inverse_input
           rt.relationship_type_inverse = rt_inverse_input
           rt.is_approved = true
           rt.created_by = created_by_input

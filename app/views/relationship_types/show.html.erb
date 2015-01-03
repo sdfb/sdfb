@@ -21,10 +21,10 @@
         <dd><%= @relationship_type.name %></dd>
         <% if ! @relationship_type.description.blank? %>
           <dt>Description:</strong></dt>
-          <dd><%= @@relationship_type.description %></dd>
+          <dd><%= @relationship_type.description %></dd>
         <% end %>
         <dt><strong>Relationship Inverse:</strong></dt>
-        <dd><%= @relationship_type.relationship_type_inverse %></dd>
+        <dd><%= link_to RelationshipType.find(@relationship_type.relationship_type_inverse).name, relationship_type_path(@relationship_type.relationship_type_inverse) %></dd>
         <dt><strong>Created by:</strong></dt>
         <dd><%= link_to User.find(@relationship_type.created_by).username,  user_path(@relationship_type.created_by) %></dd>
         <dt><strong>Is Approved?:</strong></dt>

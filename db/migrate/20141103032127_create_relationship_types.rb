@@ -1,7 +1,7 @@
 class CreateRelationshipTypes < ActiveRecord::Migration
   def change
     create_table :relationship_types do |t|
-      t.string :relationship_type_inverse
+      t.integer :relationship_type_inverse
       t.integer :default_rel_category
       t.string :name
       t.text :description

@@ -12,7 +12,7 @@
       <tr>
         <td><%= relationship_type.id %></td>
         <td><%= relationship_type.name %></td>
-        <td><%= relationship_type.relationship_type_inverse %></td>
+        <td><%= link_to RelationshipType.find(relationship_type.relationship_type_inverse).name, relationship_type_path(relationship_type.relationship_type_inverse) %></td>
         <td><%= link_to 'Show', relationship_type, :class => 'btn btn-mini' %>
         <%= link_to 'Edit', edit_relationship_type_path(relationship_type), :class => 'btn btn-mini' %></td>
       </tr>
