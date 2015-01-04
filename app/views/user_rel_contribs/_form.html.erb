@@ -20,7 +20,11 @@
   <%= f.label :confidence %>
   <%= f.range_field :confidence, :min=>0, :max=>100, :class=>"slide", :id=>"slider1"%>
   <br>
-  <text id="formConfidence">Possible relationships @ <%= @user_rel_contrib.confidence %>%</text><br>
+  <% if ! @user_rel_contrib.confidence.blank? %>
+    <text id="formConfidence">Possible relationships @ <%= @user_rel_contrib.confidence %>%</text><br>
+  <% else %>
+    <text id="formConfidence">Possible relationships @ 50%</text><br>
+  <% end %>
   <%= f.input :annotation %>
   <%= f.input :bibliography %>
   <%= f.hidden_field :created_by, :value => current_user.id %>
