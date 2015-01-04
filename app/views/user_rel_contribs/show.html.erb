@@ -1,6 +1,6 @@
 <%- model_class = UserRelContrib -%>
 <div class="page-header">
-  <h1>User Relationship Contribution</h1>
+  <h1>Relationship Type Assignment</h1>
 </div>
 
 <dl class="dl-horizontal">
@@ -11,7 +11,7 @@
   <dt><strong><%= model_class.human_attribute_name(:created_by) %>:</strong></dt>
   <dd><%= link_to User.find(@user_rel_contrib.created_by).username,  user_path(@user_rel_contrib.created_by) %></dd>
   <dt><strong><%= model_class.human_attribute_name(:confidence) %>:</strong></dt>
-  <dd><%= @user_rel_contrib.confidence %></dd>
+  <dd><%= @user_rel_contrib.confidence %>%</dd>
   <dt><strong><%= model_class.human_attribute_name(:annotation) %>:</strong></dt>
   <dd><%= @user_rel_contrib.annotation %></dd>
   <dt><strong><%= model_class.human_attribute_name(:bibliography) %>:</strong></dt>

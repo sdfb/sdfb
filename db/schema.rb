@@ -147,13 +147,17 @@ ActiveRecord::Schema.define(:version => 20141103033703) do
   end
 
   create_table "relationships", :force => true do |t|
-    t.decimal  "original_certainty"
+    t.integer  "original_certainty"
     t.integer  "person1_index"
     t.integer  "person2_index"
     t.integer  "created_by"
-    t.decimal  "max_certainty"
-    t.date     "start_date"
-    t.date     "end_date"
+    t.integer  "max_certainty"
+    t.integer  "start_year"
+    t.string   "start_month"
+    t.integer  "start_day"
+    t.integer  "end_year"
+    t.string   "end_month"
+    t.integer  "end_day"
     t.text     "justification"
     t.integer  "approved_by"
     t.datetime "approved_on"
@@ -190,7 +194,7 @@ ActiveRecord::Schema.define(:version => 20141103033703) do
   create_table "user_rel_contribs", :force => true do |t|
     t.integer  "relationship_id"
     t.integer  "created_by"
-    t.decimal  "confidence"
+    t.integer  "confidence"
     t.text     "annotation"
     t.text     "bibliography"
     t.integer  "relationship_type"

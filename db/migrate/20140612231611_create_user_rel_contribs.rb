@@ -3,7 +3,7 @@ class CreateUserRelContribs < ActiveRecord::Migration
     create_table :user_rel_contribs do |t|
       t.integer :relationship_id
       t.integer :created_by
-      t.decimal :confidence
+      t.integer :confidence
       t.text :annotation
       t.text :bibliography
       t.integer :relationship_type

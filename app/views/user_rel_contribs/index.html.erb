@@ -1,10 +1,10 @@
-<h1>All User Relationship Contributions <%= link_to 'New User Relationship Contribution', new_user_rel_contrib_path, :class => 'btn btn-primary' %></h1><br>
+<h1>All Relationship Type Assignments <%= link_to 'Assign Relationship Types', new_user_rel_contrib_path, :class => 'btn btn-primary' %></h1><br>
 
 <% if ! @user_rel_contribs.empty? %>
   <table class="table table-condensed">
     <thead>
       <tr>
-        <th>User Relationship Contribution id</th>
+        <th>Id</th>
         <th>Relationship</th>
         <th>Relationship type</th>
         <th>Confidence</th>
@@ -19,7 +19,7 @@
           <td><%= user_rel_contrib.id %></td>
           <td><%= link_to user_rel_contrib.get_both_names, relationship_path(user_rel_contrib.relationship_id) %></td>
           <td><%= user_rel_contrib.relationship_type %></td>
-          <td><%= user_rel_contrib.confidence %></td>
+          <td><%= user_rel_contrib.confidence %>%</td>
           <td><%= user_rel_contrib.annotation %></td>
           <td><%= user_rel_contrib.bibliography %></td>
           <td>
@@ -39,6 +39,6 @@
   <%= will_paginate @user_rel_contribs, :param_name => 'user_rel_contribs_page', :previous_label => "Previous&nbsp;", :next_label => "&nbsp;Next" %>
 <% else %>
   <div class = "well">
-    No User Relationship Contributions exist.
+    No relationship type assignments exists.
   </div>
 <% end %>

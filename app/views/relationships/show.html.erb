@@ -21,20 +21,36 @@
         <dt><strong>Relationship id:</strong></dt>
         <dd><%= @relationship.id %></dd>
         <dt><strong>Max Certainty:</strong></dt>
-        <dd><%= @relationship.max_certainty %></dd>
+        <dd><%= @relationship.max_certainty %>%</dd>
         <dt><strong>Original Certainty:</strong></dt>
-        <dd><%= @relationship.original_certainty %></dd>
+        <dd><%= @relationship.original_certainty %>%</dd>
         <dt><strong>Person 1:</strong></dt>
         <dd><%= link_to @relationship.get_person1_name,  person_path(@relationship.person1_index) %></dd>
         <dt><strong>Person 2:</strong></dt>
         <dd><%= link_to @relationship.get_person2_name,  person_path(@relationship.person2_index) %></dd>
-        <% if ! @relationship.start_date.blank? %>
+        <% if ((! @relationship.start_month.nil?) || (! @relationship.start_day.nil?) || (! @relationship.start_year.nil?)) %>
           <dt><strong>Start date:</strong></dt>
-          <dd><%= @relationship.start_date %></dd> 
-        <% end %> 
-        <% if ! @relationship.start_date.blank? %>
+          <dd><% if ! @relationship.start_month.nil? %>
+            <%= @relationship.start_month %>
+          <% end %>  
+          <% if ! @relationship.start_day.nil? %>
+            <%= @relationship.start_day %>,
+          <% end %>
+          <% if ! @relationship.start_year.nil? %>
+            <%= @relationship.start_year %>
+          <% end %></dd>
+        <% end %>
+        <% if ((! @relationship.start_month.nil?) || (! @relationship.start_day.nil?) || (! @relationship.start_year.nil?)) %>
           <dt><strong>End date:</strong></dt>
-          <dd><%= @relationship.end_date %></dd>
+          <dd><% if ! @relationship.end_month.nil? %>
+            <%= @relationship.end_month %>
+          <% end %>  
+          <% if ! @relationship.end_day.nil? %>
+            <%= @relationship.end_day %>,
+          <% end %>
+          <% if ! @relationship.end_year.nil? %>
+            <%= @relationship.end_year %>
+          <% end %></dd>
         <% end %>
         <dt><strong>Created by:</strong></dt>
         <dd><%= link_to User.find(@relationship.created_by).username,  user_path(@relationship.created_by) %></dd>
@@ -61,13 +77,13 @@
   <div class="span7">
     <% if ! @user_rel_contribs.empty? %>
       <div class="well">
-      <h2>All User Relationship Contibutions for <%= @relationship.get_person1_name + " & " + @relationship.get_person2_name%> <%= link_to 'New User Relationship Contribution',
+      <h2>Relationship Types for <%= @relationship.get_person1_name + " & " + @relationship.get_person2_name%> <%= link_to 'Assign New Relationship Type',
                   new_user_rel_contrib_path(:relationship_id => @relationship.id),
                   :class => 'btn btn-primary btn-mini' %></h2>
       <table class="table table-condensed">
         <thead>
           <tr>
-            <th>User Relationship Contribution id</th>
+            <th>Id</th>
             <th>Relationship</th>
             <th>Relationship type</th>
             <th>Confidence</th>
@@ -79,8 +95,8 @@
             <tr>
               <td><%= user_rel_contrib.id %></td>
               <td><%= link_to user_rel_contrib.get_both_names, relationship_path(user_rel_contrib.relationship_id) %></td>
-              <td><%= user_rel_contrib.relationship_type %></td>
-              <td><%= user_rel_contrib.confidence %></td>
+              <td><%= link_to RelationshipType.find(user_rel_contrib.relationship_type).name, relationship_type_path(user_rel_contrib.relationship_type) %></td>
+              <td><%= user_rel_contrib.confidence %>%</td>
               <td>
                 <% if can? :show, user_rel_contrib %>
                   <%= link_to 'Show', user_rel_contrib, :class => 'btn btn-mini' %>
@@ -100,11 +116,11 @@
       </div>
     <% else %>
       <div class="well">
-        <h2>All User Relationship Contibutions for <%= @relationship.get_person1_name + " & " + @relationship.get_person2_name%> <%= link_to 'New User Relationship Contribution',
+        <h2>Relationship Types for <%= @relationship.get_person1_name + " & " + @relationship.get_person2_name%> <%= link_to 'Assign New Relationship Type',
                   new_user_rel_contrib_path(:relationship_id => @relationship.id),
                   :class => 'btn btn-primary btn-mini' %></h2>
         <br>
-        <b>No User Relationship Contributions exist</b>
+        <b>No relationship types have been assigned to this relationship.</b>
       </div>
     <% end %>
   </div>

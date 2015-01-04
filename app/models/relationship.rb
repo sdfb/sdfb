@@ -1,7 +1,7 @@
 class Relationship < ActiveRecord::Base
   attr_accessible :max_certainty, :created_by, :original_certainty, :person1_index, :person2_index,
-  :start_date, :end_date, :justification, :approved_by, :approved_on, :created_at, :edge_birthdate_certainty,
-  :is_approved
+  :justification, :approved_by, :approved_on, :created_at, :edge_birthdate_certainty,
+  :is_approved, :start_year, :start_month, :start_day, :end_year, :end_month, :end_day
 
   # Relationships
   # -----------------------------
@@ -27,6 +27,8 @@ class Relationship < ActiveRecord::Base
   validates_length_of :justification, :minimum => 4, on: :create, :if => :just_present?
   # edge_birthdate_certainty is one included in the list
   ##validates_inclusion_of :edge_birthdate_certainty, :in => %w(0 1 2), :allow_blank => true
+  #validate :check_if_start_date_complete
+  #validate :check_if_end_date_complete
 
   # Scope
   # ----------------------------- 
@@ -49,9 +51,29 @@ class Relationship < ActiveRecord::Base
   before_create :check_if_approved
   before_update :check_if_approved
   before_create :check_if_valid
+  #before_create :check_if_start_date_complete
+  #before_update :check_if_start_date_complete
+  #before_create :check_if_end_date_complete
+  #before_update :check_if_end_date_complete
 
 	# Custom Methods
   # -----------------------------
+  # def check_if_start_date_complete
+  #   if ((!((! self.start_day.blank?) && (! self.start_month.blank?) && (! self.start_year.blank?))) || (!((self.start_day.blank?) && (self.start_month.blank?) && (self.start_year.blank?))))
+  #     errors.add(:start_day, "The start date is incomplete without the start day.") if self.start_day.blank?
+  #     errors.add(:start_month, "The start date is incomplete without the start month.") if self.start_month.blank?
+  #     errors.add(:start_year, "The start date is incomplete without the start year.") if self.start_year.blank?
+  #   end
+  # end
+
+  # def check_if_end_date_complete
+  #   if ((!((! self.end_day.blank?) && (! self.end_month.blank?) && (! self.end_year.blank?))) || (!((self.end_day.blank?) && (self.end_month.blank?) && (self.end_year.blank?))))
+  #     errors.add(:end_day, "The end date is incomplete without the end day.") if self.end_day.blank?
+  #     errors.add(:end_month, "The end date is incomplete without the end month.") if self.end_month.blank?
+  #     errors.add(:end_year, "The end date is incomplete without the end year.") if self.end_year.blank?
+  #   end
+  # end
+
   def max_certainty_on_create
     self.max_certainty = self.original_certainty
   end
@@ -201,7 +223,7 @@ class Relationship < ActiveRecord::Base
         if self.is_approved == true  
           rel_record_2[1] = max_certainty_in
           rel_record_2[2] = is_approved_in
-          rel_record_1[3] = id_in
+          rel_record_2[3] = id_in
           person2_updated_flag = true
         else
           # delete the record

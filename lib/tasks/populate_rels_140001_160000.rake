@@ -15,11 +15,9 @@ namespace :db do
 	        created_by_input = User.for_email("odnb_admin@example.com")[0].id
 	        approved_by_input = User.for_email("odnb_admin@example.com")[0].id
 	        approved_on_input = Time.now
-	        max_certainty_input = relData[2]
-			puts "max_certainty_input" + max_certainty_input
-	        original_certainty_input = relData[2]
-	        edge_birthdate_certainty_in = relData[3]
-	        puts "edge_birthdate_certainty" + edge_birthdate_certainty_in   
+	        max_certainty_input = (0.0 + relData[2].to_f * 100.00).to_i
+	        original_certainty_input = (0.0 + relData[2].to_f * 100.00).to_i
+	        edge_birthdate_certainty_in = relData[3]   
 	        puts count
 	        count += 1
 	        puts "next_id1 = " + next_id.to_s

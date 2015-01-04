@@ -1,19 +1,13 @@
 <h1>All Relationships <%= link_to 'New Relationship', new_relationship_path, :class => 'btn btn-primary' %></h1><br>
-
 <table class="table table-condensed">
   <thead>
     <tr>
       <th>Relationship id</th>
       <th>Person 1</th>
       <th>Person 2</th>
-      <% if current_user != nil %>
-          <% if (current_user.user_type == "Admin")  %>
-              <th>Original Certainty</th>
-          <% end %>
-      <% end %>
       <th>Maximum Certainty</th>
-      <th>Start Date</th>
-      <th>End Date</th>
+<!--       <th>Start Date</th>
+      <th>End Date</th> -->
       <th><%=t '.actions', :default => t("helpers.actions") %></th>
     </tr>
   </thead>
@@ -23,14 +17,29 @@
         <td><%= relationship.id %></td>
         <td><%= link_to relationship.get_person1_name, person_path(relationship.person1_index) %></td>
         <td><%= link_to relationship.get_person2_name, person_path(relationship.person2_index) %></td>
-        <% if current_user != nil %>
-            <% if (current_user.user_type == "Admin")  %>
-                <td><%= relationship.original_certainty %></td>
-            <% end %>
-        <% end %>
-        <td><%= relationship.max_certainty %></td>
-        <td><%= relationship.start_date %></td>
-        <td><%= relationship.end_date %></td>
+        <td><%= relationship.max_certainty %>%</td>
+<!--         <td>
+          <% if ! relationship.start_month.nil? %>
+            <%= relationship.start_month %>
+          <% end %>  
+          <% if ! relationship.start_day.nil? %>
+            <%=relationship.start_day %>,
+          <% end %>
+          <% if ! relationship.start_year.nil? %>
+            <%= relationship.start_year %>
+          <% end %>
+        </td>
+        <td>
+          <% if ! relationship.end_month.nil? %>
+            <%= relationship.end_month %>
+          <% end %>  
+          <% if ! relationship.end_day.nil? %>
+            <%=relationship.end_day %>,
+          <% end %>
+          <% if ! relationship.end_year.nil? %>
+            <%= relationship.end_year %>
+          <% end %>
+        </td> -->
         <td>
           <% if can? :show, relationship %>
             <%= link_to 'Show', relationship, :class => 'btn btn-mini'  %>

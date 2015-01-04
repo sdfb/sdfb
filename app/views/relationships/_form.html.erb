@@ -10,20 +10,34 @@
       </ul>
     </div>
   <% end %>
-  <%= f.input :original_certainty %>
-
   <% if ! @person1_id.blank? %>
     <%= f.input :person1_index, :collection =>@personOptions.collect{ |p| [p.first_name + " " + p.last_name, p.id] }, label: "Person 1", prompt: "Select", selected: @person1_id %>
   <% else %>
     <%= f.input :person1_index, :collection =>@personOptions.collect{ |p| [p.first_name + " " + p.last_name, p.id] }, label: "Person 1", prompt: "Select" %>
   <% end %>
-
   <%= f.input :person2_index, :collection =>@personOptions.collect{ |p| [p.first_name + " " + p.last_name, p.id] }, label: "Person 2", prompt: "Select" %>
-  <%= f.input :start_date, start_year: 1200,
-                              end_year: 1900 %>
-  <%= f.input :end_date, start_year: 1200,
-                              end_year: 1900 %>
-  <%= f.input :justification %>
+  <br>
+  <%= f.label :original_certainty, label: "Estimated Certainty" %>
+  <%= f.range_field :original_certainty, :min=>0, :max=>100, :class=>"slide", :id=>"slider1"%>
+  <br>
+  <% if ! @relationship.original_certainty.blank? %>
+    <text id="formConfidence">Possible relationships @ <%= @relationship.original_certainty %>%</text><br>
+  <% else %>
+    <text id="formConfidence">Possible relationships @ 50%</text><br>
+  <% end %>
+  <br>
+
+  <%= f.label :start_month, label: "Start Date" %>
+  <%= f.input :start_month, label: "Start Date", :collection =>["January","February","March","April","May","June","July","August","September","October","November","December"], label: false, prompt: "Month", :include_blank => true %>
+  <%= f.input :start_day, label: false, :collection => 1..31, prompt: "Day", :include_blank => true %>
+  <%= f.input :start_year, as: :string, label: false, placeholder: "Year"%>
+
+  <%= f.label :end_month, label: "End Date" %>
+  <%= f.input :end_month, :collection =>["January","February","March","April","May","June","July","August","September","October","November","December"], label: false, prompt: "Month", :include_blank => true %>
+  <%= f.input :end_day, label: false, :collection => 1..31, prompt: "Day", :include_blank => true %>
+  <%= f.input :end_year, label: false, as: :string, placeholder: "Year" %>
+
+  <%= f.input :justification, input_html: { rows:"5" } %>
   <%= f.hidden_field :created_by, :value => current_user.id %>
   <% if (current_user.user_type == "Admin") || (current_user.user_type == "Curator") %>
     <%= f.input :is_approved %>
@@ -32,7 +46,5 @@
 
   <div class="form-actions">
     <%= f.button :submit, :class => 'btn btn-primary' %>
-    <%= link_to t('.cancel', :default => t("helpers.links.cancel")),
-                relationships_path, :class => 'btn' %>
   </div>
 <% end %>

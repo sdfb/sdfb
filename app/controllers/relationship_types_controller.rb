@@ -28,6 +28,7 @@ class RelationshipTypesController < ApplicationController
   # GET /relationship_types/new.json
   def new
     @relationship_type = RelationshipType.new
+    @relTypeOptions = RelationshipType.all
 
     respond_to do |format|
       format.html # new.html.erb
@@ -38,6 +39,7 @@ class RelationshipTypesController < ApplicationController
   # GET /relationship_types/1/edit
   def edit
     @relationship_type = RelationshipType.find(params[:id])
+    @relTypeOptions = RelationshipType.all
     #authorize! :edit, @relationship_type
   end
 
@@ -45,6 +47,7 @@ class RelationshipTypesController < ApplicationController
   # POST /relationship_types.json
   def create
     @relationship_type = RelationshipType.new(params[:relationship_type])
+    @relTypeOptions = RelationshipType.all
 
     respond_to do |format|
       if @relationship_type.save
@@ -61,6 +64,7 @@ class RelationshipTypesController < ApplicationController
   # PUT /relationship_types/1.json
   def update
     @relationship_type = RelationshipType.find(params[:id])
+    @relTypeOptions = RelationshipType.all
 
     respond_to do |format|
       if @relationship_type.update_attributes(params[:relationship_type])
