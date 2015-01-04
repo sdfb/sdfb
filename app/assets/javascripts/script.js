@@ -138,4 +138,18 @@ $(document).ready(function() {
         });
         $( "#search-date-range2" ).val( $( ".slider-date2" ).slider( "values", 0 ) + " - " + $( ".slider-date2" ).slider( "values", 1 ) );
 	
+        $("#slider1").change(function () {                    
+        var newValue = $('#slider1').val();
+        var result = "Very unlikely";
+            if (newValue > 19 && newValue < 40) {
+                result = "Unlikely";
+            } else if (newValue > 39 && newValue < 60) {
+                result = "Possible";
+            } else if (newValue > 59 && newValue < 80) {
+                result = "Likely";
+            } else if (newValue > 79){
+                result = "Certain"
+            }
+        $("#formConfidence").html(result + " relationships @ " + newValue + "%");
+    });
 });

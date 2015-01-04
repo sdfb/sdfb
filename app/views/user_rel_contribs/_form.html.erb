@@ -16,7 +16,11 @@
     <%= f.input :relationship_id, :collection =>@relOptions.collect{ |r| [r.get_person1_name + " & " + r.get_person2_name, r.id] }, label: "Relationship", prompt: "Select" %>
   <% end %>
   <%= f.input :relationship_type, :collection =>@relType.collect{ |r| [r.name, r.id] }, label: "Relationship Type", prompt: "Select" %>  
-  <%= f.input :confidence %>
+
+  <%= f.label :confidence %>
+  <%= f.range_field :confidence, :min=>0, :max=>100, :class=>"slide", :id=>"slider1"%>
+  <br>
+  <text id="formConfidence">Possible relationships @ <%= @user_rel_contrib.confidence %>%</text><br>
   <%= f.input :annotation %>
   <%= f.input :bibliography %>
   <%= f.hidden_field :created_by, :value => current_user.id %>
@@ -30,3 +34,11 @@
                 user_rel_contribs_path, :class => 'btn' %>
   </div>
 <% end %>
+
+
+
+          
+
+
+
+
