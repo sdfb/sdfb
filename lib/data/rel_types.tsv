@@ -1,12 +1,12 @@
 1	Enemy of	52
 2	Rival of	53
 3	Acquaintance of	54
-4	Has met	55
-5	Knows in passing	56
+4	Met	55
+5	Knew in passing	56
 6	Close friend of	57
 7	Friend of	58
 8	Attracted to	59
-9	Has child with	60
+9	Had child with	60
 10	Sexual partner of	61
 11	Mentee/Student of	62
 12	Mentor/Teacher of	63
@@ -32,7 +32,7 @@
 32	Godparent of	83
 33	Godsibling of	84
 34	Client of	85
-35	Collaborates with	86
+35	Collaborated with	86
 36	Colleague of	87
 37	Coworker of	88
 38	Patron of	89
@@ -40,24 +40,24 @@
 40	Employed by	91
 41	Employer of	92
 42	Master of	93
-43	Rents from	94
-44	Rents to	95
+43	Rented from	94
+44	Rented to	95
 45	Engaged to	96
 46	Spouse of	97
 47	Parishoner of	98
 48	Priest of	99
-49	Other religious	100
-50	Lives with	101
+49	Had an other religious relationship with	100
+50	Lived with	101
 51	Neighbor of	102
 52	Enemy of	1
 53	Rival of	2
 54	Acquaintance of	3
-55	Has met	4
-56	Knows in passing	5
+55	Met	4
+56	Knew in passing	5
 57	Close friend of	6
 58	Friend of	7
-59	Is admired by	8
-60	Has child with	9
+59	Was admired by	8
+60	Had child with	9
 61	Sexual partner of	10
 62	Mentor/Teacher of	11
 63	Mentee/Student of	12
@@ -83,7 +83,7 @@
 83	Godchild of	32
 84	Godsibling of	33
 85	Patron of	34
-86	Collaborates with	35
+86	Collaborated with	35
 87	Colleague of	36
 88	Coworker of	37
 89	Client of	38
@@ -91,12 +91,12 @@
 91	Employer of	40
 92	Employed by	41
 93	Apprentice of	42
-94	Rents to	43
-95	Rents from	44
+94	Rented to	43
+95	Rented from	44
 96	Engaged to	45
 97	Spouse of	46
 98	Priest of	47
 99	Parishoner of	48
 100	Other religious	49
-101	Lives with	50
+101	Lived with	50
 102	Neighbor of	51
