@@ -99,8 +99,8 @@ class PeopleController < ApplicationController
     # allows for the admin to search from their dashboard
     @query = params[:query]
     if @query != ""
-      @all_results = Person.search(@query)
-      @all_results = @all_results.paginate(:page => params[:all_results_page], :per_page => 20)
+      @all_results1 = Person.search(@query)
+      @all_results = @all_results1.paginate(:page => params[:all_results_page], :per_page => 20)
     end
   end
 end

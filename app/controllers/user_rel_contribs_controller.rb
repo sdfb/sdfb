@@ -45,6 +45,7 @@ class UserRelContribsController < ApplicationController
   def edit
     @user_rel_contrib = UserRelContrib.find(params[:id])
     @relOptions = Relationship.all_approved
+    @relationship_id = params[:relationship_id]
     @relType = RelationshipType.all_approved
     #authorize! :edit, @user_rel_contrib
   end
@@ -54,6 +55,7 @@ class UserRelContribsController < ApplicationController
   def create
     @user_rel_contrib = UserRelContrib.new(params[:user_rel_contrib])
     @relOptions = Relationship.all_approved
+    @relationship_id = params[:relationship_id]
     @relType = RelationshipType.all_approved
 
     respond_to do |format|
@@ -71,6 +73,9 @@ class UserRelContribsController < ApplicationController
   # PUT /user_rel_contribs/1.json
   def update
     @user_rel_contrib = UserRelContrib.find(params[:id])
+    @relOptions = Relationship.all_approved
+    @relationship_id = params[:relationship_id]
+    @relType = RelationshipType.all_approved
 
     respond_to do |format|
       if @user_rel_contrib.update_attributes(params[:user_rel_contrib])

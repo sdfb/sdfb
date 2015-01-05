@@ -28,27 +28,27 @@
         <dd><%= link_to @relationship.get_person1_name,  person_path(@relationship.person1_index) %></dd>
         <dt><strong>Person 2:</strong></dt>
         <dd><%= link_to @relationship.get_person2_name,  person_path(@relationship.person2_index) %></dd>
-        <% if ((! @relationship.start_month.nil?) || (! @relationship.start_day.nil?) || (! @relationship.start_year.nil?)) %>
+        <% if ((! @relationship.start_month.blank?) || (! @relationship.start_day.blank?) || (! @relationship.start_year.blank?)) %>
           <dt><strong>Start date:</strong></dt>
-          <dd><% if ! @relationship.start_month.nil? %>
+          <dd><% if ! @relationship.start_month.blank? %>
             <%= @relationship.start_month %>
           <% end %>  
-          <% if ! @relationship.start_day.nil? %>
+          <% if ! @relationship.start_day.blank? %>
             <%= @relationship.start_day %>,
           <% end %>
-          <% if ! @relationship.start_year.nil? %>
+          <% if ! @relationship.start_year.blank? %>
             <%= @relationship.start_year %>
           <% end %></dd>
         <% end %>
-        <% if ((! @relationship.start_month.nil?) || (! @relationship.start_day.nil?) || (! @relationship.start_year.nil?)) %>
+        <% if ((! @relationship.start_month.blank?) || (! @relationship.start_day.blank?) || (! @relationship.start_year.blank?)) %>
           <dt><strong>End date:</strong></dt>
-          <dd><% if ! @relationship.end_month.nil? %>
+          <dd><% if ! @relationship.end_month.blank? %>
             <%= @relationship.end_month %>
           <% end %>  
-          <% if ! @relationship.end_day.nil? %>
+          <% if ! @relationship.end_day.blank? %>
             <%= @relationship.end_day %>,
           <% end %>
-          <% if ! @relationship.end_year.nil? %>
+          <% if ! @relationship.end_year.blank? %>
             <%= @relationship.end_year %>
           <% end %></dd>
         <% end %>

@@ -1,10 +1,12 @@
 class UserRelContrib < ActiveRecord::Base
-  attr_accessible :annotation, :bibliography, :confidence, :created_by, :relationship_id, :relationship_type, 
-  :approved_by, :approved_on, :created_at, :is_approved
+  attr_accessible :annotation, :bibliography, :confidence, :created_by, :relationship_id, :relationship_type_id, 
+  :approved_by, :approved_on, :created_at, :is_approved, :start_year, :start_month, 
+  :start_day, :end_year, :end_month, :end_day
   
   # Relationships
   # -----------------------------
   belongs_to :relationship
+  belongs_to :relationship_type
   belongs_to :user
 
   # Misc Constants
@@ -20,11 +22,15 @@ class UserRelContrib < ActiveRecord::Base
   validates_presence_of :confidence
   validates_presence_of :created_by
   validates_presence_of :relationship_id
-  validates_presence_of :relationship_type
+  validates_presence_of :relationship_type_id
   ## annotation must be at least 10 characters
   validates_length_of :annotation, :minimum => 10, :if => :annot_present?
   ## bibliography must be at least 10 characters
   validates_length_of :bibliography, :minimum => 10, :if => :bib_present?
+  validates :start_year, :numericality => { :greater_than_or_equal_to => 1400 }, :if => :start_year_present?
+  validates :start_year, :numericality => { :less_than_or_equal_to => 1800 }, :if => :start_year_present?
+  validates :end_year, :numericality => { :greater_than_or_equal_to => 1400 }, :if => :end_year_present?
+  validates :end_year, :numericality => { :less_than_or_equal_to => 1800 }, :if => :end_year_present?
 
   # Scope
   # ----------------------------- 
@@ -41,6 +47,14 @@ class UserRelContrib < ActiveRecord::Base
 
   # Custom Methods
   # -----------------------------
+  def start_year_present?
+    ! self.start_year.nil?
+  end
+
+  def end_year_present?
+    ! self.end_year.nil?
+  end
+
   def check_if_approved
     if (self.is_approved == true)
       self.approved_on = Time.now
@@ -52,11 +66,11 @@ class UserRelContrib < ActiveRecord::Base
 
 
   def annot_present?
-    !annotation.nil?
+    ! self.annotation.blank?
   end
 
   def bib_present?
-    !bibliography.nil?
+    ! self.bibliography.blank?
   end
 
   def get_person1_name

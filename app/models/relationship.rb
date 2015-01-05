@@ -29,6 +29,10 @@ class Relationship < ActiveRecord::Base
   ##validates_inclusion_of :edge_birthdate_certainty, :in => %w(0 1 2), :allow_blank => true
   #validate :check_if_start_date_complete
   #validate :check_if_end_date_complete
+  validates :start_year, :numericality => { :greater_than_or_equal_to => 1400 }, :if => :start_year_present?
+  validates :start_year, :numericality => { :less_than_or_equal_to => 1800 }, :if => :start_year_present?
+  validates :end_year, :numericality => { :greater_than_or_equal_to => 1400 }, :if => :end_year_present?
+  validates :end_year, :numericality => { :less_than_or_equal_to => 1800 }, :if => :end_year_present?
 
   # Scope
   # ----------------------------- 
@@ -73,6 +77,13 @@ class Relationship < ActiveRecord::Base
   #     errors.add(:end_year, "The end date is incomplete without the end year.") if self.end_year.blank?
   #   end
   # end
+  def start_year_present?
+    ! self.start_year.nil?
+  end
+
+  def end_year_present?
+    ! self.end_year.nil?
+  end
 
   def max_certainty_on_create
     self.max_certainty = self.original_certainty

@@ -14,7 +14,7 @@ class RelationshipType < ActiveRecord::Base
   validates_presence_of :name
   #validates_presence_of :relationship_type_inverse
   ## name must be at least 4 character
-  validates_length_of :name, :minimum => 4, :if => :name_present?
+  validates_length_of :name, :minimum => 3, :if => :name_present?
 
   # Scope
   # ----------------------------- 
