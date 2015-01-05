@@ -22,6 +22,10 @@ class Person < ActiveRecord::Base
   scope :for_first_or_last_name,  lambda {|name_input| find_by_sql("SELECT * FROM people
   where first_name like '#{name_input}' OR last_name like '#{name_input}'")}
   scope :alphabetical, order('last_name').order('first_name');
+  scope :for_id, lambda {|id_input| where('id = ?', "#{id_input}") }
+  scope :for_first_and_last_name,  lambda {|first_name_input, last_name_input| find_by_sql("SELECT * FROM people
+  where first_name like '#{first_name_input}' AND last_name like '#{last_name_input}'")}
+
 
   # Misc Constants
   DATE_TYPE_LIST = ["BF", "AF","IN","CA","BF/IN","AF/IN","NA"]
@@ -130,8 +134,47 @@ class Person < ActiveRecord::Base
 
   # searches for people by name
   def self.search(search)
-    if search  
-      return for_first_or_last_name(search)
+    if search 
+      #check that each result in the array is unique
+      uniqueArray = []
+
+      searchResultArray = [] 
+      #allow searches by person id
+      searchIdResult = Person.for_id(search.to_i)
+      if (! searchIdResult.blank?)
+        if (! uniqueArray.include?(searchIdResult[0].id))
+          searchResultArray.push(searchIdResult[0])
+          uniqueArray.push(searchIdResult[0].id)
+        end
+      end
+
+      #separate search into several words
+      searchArray = search.split(" ")
+
+      #Add exact search for first two words
+      if (searchArray.length >= 2)
+        exactResult = for_first_and_last_name(searchArray[0].capitalize, searchArray[1].capitalize)
+        if (! exactResult.blank?)
+          if (! uniqueArray.include?(exactResult[0].id))
+            searchResultArray.push(exactResult[0])
+            uniqueArray.push(exactResult[0].id)
+          end
+        end
+      end
+
+      #for each word add search results
+      searchArray.each do |searchWord|
+        searchResult = for_first_or_last_name(searchWord.capitalize)
+        if (! searchResult.blank?)
+          searchResult.each do |searchResultRecord|
+            if (! uniqueArray.include?(searchResultRecord.id))
+              searchResultArray.push(searchResultRecord)
+              uniqueArray.push(searchResultRecord.id)
+            end
+          end
+        end
+      end
+      return searchResultArray
     end
   end
 end

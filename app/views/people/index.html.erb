@@ -30,7 +30,11 @@
       <% @people_approved.each do |person| %>
         <tr>
           <td><%= person.id %></td>
-          <td><%= person.odnb_id %></td>
+          <% if ! (person.odnb_id == 0) %>  
+            <td><%= person.odnb_id %></td>
+          <% else %>
+            <td></td>
+          <% end %>
           <td><%= person.prefix %></td>
           <td><%= person.first_name %></td>
           <td><%= person.last_name %></td>

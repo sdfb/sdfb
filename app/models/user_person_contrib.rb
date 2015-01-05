@@ -42,11 +42,11 @@ class UserPersonContrib < ActiveRecord::Base
   end
 
   def annot_present?
-    !annotation.nil?
+    !annotation.blank?
   end
 
   def bib_present?
-    !bibliography.nil?
+    !bibliography.blank?
   end
 
   def get_person_name

@@ -197,12 +197,18 @@ ActiveRecord::Schema.define(:version => 20141103033703) do
     t.integer  "confidence"
     t.text     "annotation"
     t.text     "bibliography"
-    t.integer  "relationship_type"
+    t.integer  "relationship_type_id"
+    t.integer  "start_year"
+    t.string   "start_month"
+    t.integer  "start_day"
+    t.integer  "end_year"
+    t.string   "end_month"
+    t.integer  "end_day"
     t.integer  "approved_by"
     t.date     "approved_on"
-    t.boolean  "is_approved",       :default => true
-    t.datetime "created_at",                          :null => false
-    t.datetime "updated_at",                          :null => false
+    t.boolean  "is_approved",          :default => true
+    t.datetime "created_at",                             :null => false
+    t.datetime "updated_at",                             :null => false
   end
 
   create_table "users", :force => true do |t|

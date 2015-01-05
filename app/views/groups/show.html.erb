@@ -26,6 +26,14 @@
           <dt>Description:</strong></dt>
           <dd><%= @group.description %></dd>
         <% end %>
+        <% if ! @group.start_year.blank? %>
+          <dt>Start Year</dt>
+          <dd><%= @group.start_year %></dd>
+        <% end %>
+        <% if ! @group.end_year.blank? %>
+          <dt>End Year</dt>
+          <dd><%= @group.end_year %></dd>
+        <% end %>
         <% if ! @group.justification.blank? %>
           <dt>Justification</dt>
           <dd><%= @group.justification %></dd>
@@ -52,13 +60,13 @@
     <div class="span7">
       <% if ! @user_group_contribs.empty? %>
         <div class="well">
-        <h2>All User Group Contibutions for <%= @group.name%> <%= link_to 'New User Group Contribution',
+        <h2>All Annotations for <%= @group.name%> <%= link_to 'New Annotations',
                     new_user_group_contrib_path(:group_id => @group.id),
                     :class => 'btn btn-primary btn-mini' %></h2>
         <table class="table table-condensed">
           <thead>
             <tr>
-              <th>User Group Contribution id</th>
+              <th>Id</th>
               <th>Group</th>
               <th>Annotation</th>
               <th>Bibliography</th>

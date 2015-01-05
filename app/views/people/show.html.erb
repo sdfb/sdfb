@@ -167,14 +167,14 @@
     <% end %>
     <% if ! @user_person_contribs.empty? %>
     <div class="well">
-      <h2>All User Person Contibutions for <%= @person.get_person_name %> <%= link_to 'New User Person Contribution',
+      <h2>All Annotations for <%= @person.get_person_name %> <%= link_to 'New annotation',
                   new_user_person_contrib_path(:person_id => @person.id),
                   :class => 'btn btn-primary btn-mini' %></h2>
       <table class="table table-condensed">
         <table class="table table-condensed">
           <thead>
             <tr>
-              <th>User Person Contribution id</th>
+              <th>Id</th>
               <th>Person</th>
               <th>Annotation</th>
               <th>Bibliography</th>

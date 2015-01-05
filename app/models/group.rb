@@ -18,9 +18,13 @@ class Group < ActiveRecord::Base
   #validates_presence_of :approved_by
   #validates_presence_of :approved_on
   ## name must be at least 3 characters
-  validates_length_of :name, :minimum => 3, :if => :name_present?
+  validates_length_of :name, :minimum => 3
   ## approved_on must occur on the same date or after the created at date
   #validates_date :approved_on, :on_or_after => :created_at, :message => "This group must be approved on or after the date it was created."
+  validates :start_year, :numericality => { :greater_than_or_equal_to => 1400 }, :if => :start_year_present?
+  validates :start_year, :numericality => { :less_than_or_equal_to => 1800 }, :if => :start_year_present?
+  validates :end_year, :numericality => { :greater_than_or_equal_to => 1400 }, :if => :end_year_present?
+  validates :end_year, :numericality => { :less_than_or_equal_to => 1800 }, :if => :end_year_present?
 
   # Scope
   # ----------------------------- 
@@ -57,7 +61,11 @@ class Group < ActiveRecord::Base
     end  
   end
 
-  def name_present?
-    !name.nil?
+  def start_year_present?
+    ! self.start_year.nil?
+  end
+
+  def end_year_present?
+    ! self.end_year.nil?
   end
 end
