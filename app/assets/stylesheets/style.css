@@ -248,7 +248,7 @@ a:hover {
   margin:auto;
 }
 
-.slider, .slider-date {
+.slider, .slider-date, .slider-date2 {
   display: inline-block;
   width: 246px;
   height: 11px;
