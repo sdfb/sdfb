@@ -33,6 +33,9 @@ class Ability
 
 			# Curators can view search results
 			can :search, Person
+
+			# A user can download data
+			can :export_people, Person
 		elsif (user.user_type == "Standard") 
 			#  A user can create users, groups, group assignments, people, relationships, user group contributions, user person contributions, and user relationship contributions
 			can [:new, :create], [User, Group, GroupAssignment, Person, Relationship, UserGroupContrib, UserPersonContrib, UserRelContrib]
@@ -102,9 +105,12 @@ class Ability
 			# A user can view search results
 			can :search, Person
 
+			# A user can download data
+			can :export_people, Person
+
 		else
 			# Anyone can sign up
-			can :create, User
+			can [:new, :create], User
 			
 			# Anyone can list all groups, people, and relationships
 			can :index, [Group, Person, Relationship]
