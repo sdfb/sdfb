@@ -5,7 +5,7 @@ class Person < ActiveRecord::Base
   serialize :rel_sum,Array
   serialize :group_list,Array
   #rel_sum is the relationship summary that is updated whenever a relationship is created or updated
-  #rel_sum includes the person the indvidual has a relationship with, the updated average certainty, whether it has been approved, and the relationship id
+  #rel_sum includes the person the indvidual has a relationship with, the updated max certainty, whether it has been approved, and the relationship id
 
   # Relationships
   # -----------------------------
