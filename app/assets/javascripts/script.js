@@ -100,7 +100,7 @@ $(document).ready(function() {
                 result = "Certain"
             }
             $("#slider-result1").html( result + " relationships @ " + ui.value + "%");
-            $("#slider-result1").val(ui.value);
+            $("#slider-result-hidden1").val(ui.value);
         }
     });
 
