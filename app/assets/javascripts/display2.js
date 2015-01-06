@@ -7,32 +7,7 @@ function createGroup() {
   this.nodes = null;
 }
 
-function createNodeKey(node) {
-  //var nodeKey = {"text": node.first + " " + node.last, "size": 4, "id": node.id,  "cluster": getCluster(node.birth)};
-  var nodeKey = {"text": node.first + " " + node.last, "size": 4, "id": node.id,  "cluster": getClusterRels(node)};
-  return nodeKey;
-}
-
-function getSize(node) {
-	// base off number of connections the node has 
-  var numRels = node.size;
-  var size = node.size; // default size
-
-  if (numRels == 0) {
-    size = 14;
-  }
-  else {
-    size = numRels * 4;
-
-    if (size > 80) {
-      size = 80; // max cap on size
-    }
-  }
-
-  return size;
-}
-
-// Returns the color id based on birth year
+// Returns the cluster id based on birth year
 function getClusterBirth(year){
   if (parseInt(year) < 1550) {return 0}
   if (parseInt(year) > 1700) {return 1}
@@ -53,19 +28,19 @@ function getColorsBirth(){
 }
 
 /*
-Num_rels Cluster
- 0-1		0
- 2-3		1
- 4-5		2
- 6-7		3
- 8-9		4
- 10-11		5
- 12+		6
+Num_rels Cluster    Color
+ 0-1		0        orange
+ 2-3		1        yellow
+ 4-5		2        aqua blue
+ 6-7		3        marine blue
+ 8-9		4        light blue
+ 10-11		5      hot pink
+ 12+		6        purple
 
 */
-
+//returns cluster number based on number of relationships the cluster has
 function getClusterRels(node){
-	var size = getSize(node);
+	var size = node.size;
 	if (size > 11){
 		return 6;
 	}else{
@@ -73,7 +48,7 @@ function getClusterRels(node){
 	}
 
 }
-
+//returns colors based on cluster group number
 function getColorsRels(){
    return { 0: "#f56046", 1: "#ffbb12", 2: "#73cab5", 3: "#1d7578", 4: "#b6dcf2", 5: "#ff00ff", 6: "#9954e2"}
 }
@@ -102,7 +77,6 @@ function showNodeInfo(data, groups){
  $("#node-group").text(groups);
  var d = new Date();
  $("#node-cite").text( data.first+ " "+ data.last + " Network Visualization. \n Six Degrees of Francis Bacon: Reassembling the Early Modern Social Network. Gen. eds. Daniel Shore and Christopher Warren. "+d.getMonth()+"/"+d.getDate()+"/"+d.getFullYear()+" <http://sixdegreesoffrancisbacon.com/>");
- console.log(data.odnb_id);
  if (data.odnb_id > 0){
   $("#node-DNBlink").attr("href", "http://www.oxforddnb.com/view/article/"+data.odnb_id);
  }else{
@@ -130,44 +104,42 @@ var node = function() {
 
 };
 
-
+//creates a nodekey associative array with node info
+function createNodeKey(node) {
+  //var nodeKey = {"text": node.first + " " + node.last, "size": 4, "id": node.id,  "cluster": getCluster(node.birth)};
+  var nodeKey = {"text": node.first + " " + node.last, "size": 4, "id": node.id,  "cluster": getClusterRels(node)};
+  return nodeKey;
+}
 
 function twoDegs(id, data) {
   var p = data.nodes[id];
   var keys = {};
   var nodes = [];
   var edges = [];
-
-
-
-  if (p.rels.length > 0) {
+  if (p.rels.length > 0) { //tests to make sure main person has relationships
     $.each(p.rels, function(index, value) {
-      
       if (value[2] == 0 || value[1] < 0.75) {
-        // not approved, move on
+        // not approved, move on or if confidence is less than 0.75
       }
       else {
         var q = data.nodes[value[0]]; // find person object in data by id
-        keys[q.id] = createNodeKey(q);
+        keys[q.id] = createNodeKey(q); //puts nodekey into keys array
         if (notInArray(edges, [p.id, q.id])) {
           edges.push([p.id, q.id]);
         }
               if (q && q.rels.length > 0) {
                 $.each(q.rels, function(index, value) {
-                  if (value[2] != 0 && value[1] >= 0.75) {
-                    var r = data.nodes[value[0]];
-                    keys[r.id] = createNodeKey(r);
-
+                  if (value[2] != 0 && value[1] >= 0.75) { //checks again if relationship id is not zero and confidence is greater than 0.75
+                    var r = data.nodes[value[0]]; //sets r as data from person id referenced in relationship array
+                    keys[r.id] = createNodeKey(r); //puts nodekey in array for person 2's id
                     if (notInArray(edges, [q.id, r.id])) {
                         edges.push([q.id, r.id]);
                     }
-
-                    if (r && r.rels.length > 0) {
+                    if (r && r.rels.length > 0) { //repeats above code for person 2, finding 2nd deg relationships
                       $.each(r.rels, function(index, value) {
                         if (value[2] != 0 && value[1] >= 0.75) {
                           var s = data.nodes[value[0]];
                           keys[s.id] = createNodeKey(s);
-
                           if (s && (s.id in keys) && notInArray(edges, [r.id, s.id])) {
                             edges.push([r.id, s.id]);
                           }
@@ -179,8 +151,9 @@ function twoDegs(id, data) {
               }
             } 
         });
+		//adds main person's id referenced to keys associative array. Keys represent all data in graph
+        keys[p.id] = {"text": p.first + " " + p.last, "size": 20, "id": p.id,  "cluster": getClusterRels(p)}; 
 
-        keys[p.id] = {"text": p.first + " " + p.last, "size": 20, "id": p.id,  "cluster": getClusterRels(p)};
   }  
 	
 // Returns list of groups that a node belongs to
@@ -195,7 +168,7 @@ function findGroups(node, data){
 }   
 
 $.each(keys, function(index, value) {
-  nodes.push(value);
+  nodes.push(value); //adds each key to nodes array
 });
 
 edges.reverse();
@@ -207,7 +180,7 @@ edges.reverse();
   
   var options = { width: w, height: h, collisionAlpha: 10, colors: getColorsRels() };
   var graph = new Insights($("#graph")[0], nodes, edges, options).render();
-  //graph.focus(francisID);
+  graph.focus(francisID);
 
   var queryString = window.location.search;
   if (queryString != null && queryString.substring(1,3) == "id"){
@@ -242,7 +215,6 @@ edges.reverse();
       graph.center();
     }
   });
-
 }
 
 $('#zoom button.icon').click(function(e){
@@ -253,63 +225,7 @@ $('#zoom button.icon').click(function(e){
     }
   });
 
-// Creates the table container, used for group and shared group
-function writeGroupTable(dataSource, title){
-    $('#graph').html('<table cellpadding="0" cellspacing="0" border="0" class="display table table-bordered table-striped" id="data-table-container"></table>');
-    $('#data-table-container').dataTable({
-    'sPaginationType': 'bootstrap',
-    'iDisplayLength': 100,
-        'aaData': dataSource,
-        'aoColumns': [
-            {'mDataProp': 'first', 'sTitle': 'First Name'},
-            {'mDataProp': 'last', 'sTitle': 'Last Name'},
-            {'mDataProp': 'birth', 'sTitle': 'Birth Date'},
-            {'mDataProp': 'death', 'sTitle': 'Death Date'},
-            {'mDataProp': 'occupation', 'sTitle': 'Historical Significance'}
-        ],
-        'oLanguage': {
-            'sLengthMenu': '_MENU_ records per page'
-        }
-    });
-    downloadData(dataSource, title);
-};
-
-// Creates the table container, used for group and shared group
-function writeGroupTable(dataSource, title){
-    $('#graph').html('<table cellpadding="0" cellspacing="0" border="0" class="display table table-bordered table-striped" id="data-table-container"></table>');
-    $('#data-table-container').dataTable({
-    'sPaginationType': 'bootstrap',
-    'iDisplayLength': 100,
-        'aaData': dataSource,
-        'aoColumns': [
-            {'mDataProp': 'first', 'sTitle': 'First Name'},
-            {'mDataProp': 'last', 'sTitle': 'Last Name'},
-            {'mDataProp': 'birth', 'sTitle': 'Birth Date'},
-            {'mDataProp': 'death', 'sTitle': 'Death Date'},
-            {'mDataProp': 'occupation', 'sTitle': 'Historical Significance'}
-        ],
-        'oLanguage': {
-            'sLengthMenu': '_MENU_ records per page'
-        }
-    });
-    downloadData(dataSource, title);
-};
-
-function writeNetworkTable(dataSource, title){
-    $('#graph').html('<table cellpadding="0" cellspacing="0" border="0" class="display table table-bordered table-striped" id="data-table-container"></table>');
-    $('#data-table-container').dataTable({
-    'sPaginationType': 'bootstrap',
-    'iDisplayLength': 100,
-        'aaData': dataSource,
-        'aoColumns': [
-            {'mDataProp': 'network', 'sTitle': 'Network'},
-        ],
-        'oLanguage': {
-            'sLengthMenu': '_MENU_ records per page'
-        }
-    });
-};
-
+// Returns string stating confidence based on input decimal (0<n1.00)
  function getConfidence(n) {
   if (0.00 <= n <= 0.19) return "very unlikely";
   if (0.20 <= n <= 0.39) return "unlikely";
@@ -340,36 +256,44 @@ function getAnnotation(id1, id2, data) {
   return true;
     };
 
-
- // Takes in the title and data, allows users to download the data
-function downloadData(data, title) {
-  var result = title + " \n" + 'First Name,Last Name,Birth Date,Death Date,Historical Significance' + "\n";
-  data.forEach(function (cell) {
-    result += cell["first"] + ',' + cell["last"] + ',' + cell["birth"] + ',' + cell["death"] + ',' + cell["occupation"] + "\n";
-  });
-  var dwnbtn = $('<a href="data:text/csv;charset=utf-8,' + encodeURIComponent(result) + ' "download="' + title + '.csv"><div id="download"></div></a>');
-  $(dwnbtn).appendTo('#graph');
+function peopletoarray(data){
+	keys = []
+	//console.log(data.nodes[10000099])
+	for (var key in data.nodes) {
+  		keys.push(data.nodes[key].first + " " + data.nodes[key].last + " (" + data.nodes[key].birth + ")");
+  	}
+  	return keys
 }
 
- // Populates dropdowns
+function idstoarray(data){
+	keys = []
+	//console.log(data.nodes[10000099])
+	for (var key in data.nodes) {
+  		keys.push(data.nodes[key].id);
+  	}
+  	return keys
+}
+
+  // Populates dropdowns
 function populateLists(data){
+  var names = peopletoarray(data);
   $('#one').typeahead({
-    local: Object.keys(data.nodes_names).sort()
+    local: names.sort()
   });
   $('#two').typeahead({
-    local: Object.keys(data.nodes_names).sort()
+    local: names.sort()
   });
   $('#three').typeahead({
-    local: Object.keys(data.nodes_names).sort()
+    local: names.sort()
   });
   $('#entry_768090773').typeahead({
-    local: Object.keys(data.nodes_names).sort()
+    local: names.sort()
   });
   $('#entry_1321382891').typeahead({
-    local: Object.keys(data.nodes_names).sort()
+    local: names.sort()
   });
   $('#entry_1177061505').typeahead({
-    local: Object.keys(data.nodes_names).sort()
+    local: names.sort()
   });
   $('#four').typeahead({
     local: Object.keys(data.groups_names).sort()
@@ -383,6 +307,7 @@ function populateLists(data){
   $('#entry_110233074').typeahead({
     local: Object.keys(data.groups_names).sort()
   });
+
 }
 
 
@@ -400,17 +325,123 @@ function resetInputs(){
   $("#five").typeahead('setQuery', '');
   $("#six").val('');
   $("#six").typeahead('setQuery', '');
-
-  document.getElementById('googleaddnode').reset();
-  document.getElementById('googleaddedge').reset();
-  document.getElementById('googleaddgroup').reset();
 }
 
+function initGraph(data){
+  var names = peopletoarray(data);
+  var ids = idstoarray(data);
+  //click methods for all the 'find' buttons in the search bar
+  $("#findonenode").click(function () {
+  	var table = 'no'
+    if ($("#one").val()) {
+      Pace.restart();
+      var index = names.indexOf($("#one").val())
+    }
+    if ($("#show-table").val() == 1) {
+    	table = 'yes'
+    }
+    var confidence = $("#slider-result1").val();
+    var date = $("#search-date-range1").val().split(" - ");
+    // '/?person_id=' + ids[index] + '&confidence=' + confidence + '&date=' + $("search-date-range1").val(); + '&table=' + table;
+  	window.location.href = '/?person_id=' + ids[index] + '&confidence=' + confidence + '&date=' + date + '&table=' + table;
+  });
+
+  $("#findtwonode").click(function () {
+    if ($("#two").val() && $("#three").val()) {
+      Pace.restart();
+      showTwoNodes(data.nodes_names[$("#two").val()], data.nodes_names[$("#three").val()], parseInt($('#confidence2')[0].value), data);     
+      $('#twogroupsmenu').css('display','none');
+    }
+    resetInputs();
+  });
+
+  $("#findonegroup").click(function () {
+    if ($("#four").val()) {
+      Pace.restart();
+      showOneGroup($("#four").val(), data);
+      $('#twogroupsmenu').css('display','none');
+    }
+    resetInputs();
+  });
+
+  $("#findtwogroup").click(function () {
+    if ($("#five").val() && $("#six").val()) {
+      Pace.restart();
+      $('#group1').html($("#five").val());
+      $('#group3').html($("#six").val());
+      findInterGroup($("#group1").html(), $("#group3").html(), data);
+    }
+    resetInputs();
+  });
+
+  //click functions for the buttons inside shared groups
+  $("#group1").click(function () {
+    showOneGroup($("#group1").html(), data);
+  });
+
+  $("#group3").click(function () {
+    showOneGroup($("#group3").html(), data);
+  });
+
+  $("#group2").click(function () {
+    findInterGroup($("#group1").html(), $("#group3").html(), data);
+  });
+
+  //submission buttons for contributions
+  $('#submitnode').click(function(){
+    Pace.restart();
+    var name = $('#entry_1804360896').val() + ' ' + $('#entry_754797571').val();
+    var date = $('#entry_524366257').val();
+    $('section').css('display','none');
+    $('#addedgeform').css('display','block');
+    $('#entry_768090773').val(name + ' (' + date + ')');
+    $('#graph').html('');
+    $("#results").html('');
+    addNodes = [];
+    addEdges = [];
+    addNodes.push({ "id": 0, "text": name, "size": 14, "cluster": getCluster(date) });
+    var options = { width: $("#graph").width(), height: $("#graph").height(), colors: getColors() };
+    var graph = new Insights($("#graph")[0], addNodes, [], options).render();
+    var link = 'https://docs.google.com/spreadsheets/d/1-faviCW5k2v7DVOHpSQT-grRqNU1lBVkUjJEVfOvSs8/edit#gid=688870062';
+    $.prompt("Thank you for your person contribution! You can review your submission by going to <a href='"+link+"' target='_blank'>link</a>");
+  });
+
+  $('#submitedge').click(function(){
+    Pace.restart();
+    var target = data.nodes_names[$('#entry_1321382891').val()];
+    var node = data.nodes[target];
+    if (!node.id) { window.alert("Incorrect information. Please try again."); return;}
+    if (addNodes.length == 0) {return;}
+    $('#graph').html('');
+    $("#results").html('');
+    addNodes.push({ "id": node.id, "text": node.label, "size": 4, "cluster": getCluster(node.birth) });
+    addEdges.push([0, node.id]);
+    var options = { width: $("#graph").width(), height: $("#graph").height(), colors: getColors() };
+    var graph = new Insights($("#graph")[0], addNodes, addEdges, options).render();
+    var link = 'https://docs.google.com/spreadsheets/d/1cu7hpYQMWTO8C7F8V34BEbdB2NrUe1xsslWKoai3BWE/edit#gid=51712082';
+    $.prompt("Thank you for your annotated relationship contribution! You can review your submission by going to <a href='"+link+"' target='_blank'>link</a>");
+  });
+
+
+  $("aside button.icon").click(function(){
+    addNodes = [];
+    addEdges = [];
+    resetInputs();
+    var name = $('#node-name').html() + " (" + $('#node-bdate').html() + ")";
+        if (this.id == "icon-tag") {
+          $("#entry_1177061505").val(name);
+        } else if (this.id == "icon-link") {
+          $("#entry_768090773").val(name);
+        }
+  });
+
+  
+}
 
 function init() {
   var people = gon.people;
 
-	var data = { nodes: [], edges: [], nodes_names: [], groups_names: [], nodeKeys: [] };
+	var data = { nodes: [], edges: [], groups_names: [], nodeKeys: [] };
   
   $.each(people, function(index, value) { 
     var n = new node();
@@ -427,17 +458,10 @@ function init() {
     data.nodes[n.id] = n;
     
   });
-
-  //console.log(data);
-
   twoDegs(francisID, data);
   populateLists(data);
-
-
+  initGraph(data);
   }
-
-
-
 
 $(document).ready(function() {
     init();
