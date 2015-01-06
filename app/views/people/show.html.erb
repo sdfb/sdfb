@@ -116,7 +116,7 @@
       <table class="table table-condensed">
         <thead>
           <tr>
-            <th>Relationship id</th>
+            <th>Id</th>
             <th>Person 1</th>
             <th>Person 2</th>
             <% if current_user != nil %>
@@ -162,7 +162,7 @@
                   new_relationship_path(:person1_id => @person.id),
                   :class => 'btn btn-primary btn-mini' %></h2>
         <br>
-        <b>No Relationships exist.</b>
+        <b>No relationships exist.</b>
       </div>
     <% end %>
     <% if ! @user_person_contribs.empty? %>
@@ -206,11 +206,11 @@
       </div>
     <% else %>
     <div class = "well">
-      <h2>All User Person Contibutions for <%= @person.get_person_name %> <%= link_to 'New User Person Contribution',
+      <h2>All annotations for <%= @person.get_person_name %> <%= link_to 'New User Person Contribution',
                 new_user_person_contrib_path(:person_id => @person.id),
                 :class => 'btn btn-primary btn-mini' %></h2>
       <br>
-      <b>No User People Contributions exist.</b>
+      <b>No annotations exist.</b>
     </div>
     <% end %>
 
@@ -252,7 +252,7 @@
         <%= will_paginate @groups, :param_name => 'groups_page', :previous_label => "Previous&nbsp;", :next_label => "&nbsp;Next" %>
       <% else %>
         <br>
-        <b>No Groups exist.</b>
+        <b>No groups have been assigned to this person.</b>
       <% end %>
     </div>
   </div>

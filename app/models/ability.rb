@@ -34,8 +34,25 @@ class Ability
 			# Curators can view search results
 			can :search, Person
 
-			# A user can download data
+			# A user can download groups data
+			can :export_groups, Group
+
+			# A user can download people data
 			can :export_people, Person
+
+			# A user can download relationship data
+			can :export_relationships, Relationship
+			can :export_rels_for_rels_100000000_100020000, Relationship
+			can :export_rels_for_rels_100020001_100040000, Relationship
+			can :export_rels_for_rels_100040001_100060000, Relationship
+			can :export_rels_for_rels_100060001_100080000, Relationship
+			can :export_rels_for_rels_100080001_100100000, Relationship
+			can :export_rels_for_rels_100100001_100120000, Relationship
+			can :export_rels_for_rels_100120001_100140000, Relationship
+			can :export_rels_for_rels_100140001_100160000, Relationship
+			can :export_rels_for_rels_100160001_100180000, Relationship
+			can :export_rels_for_rels_greater_than_100180000, Relationship
+
 		elsif (user.user_type == "Standard") 
 			#  A user can create users, groups, group assignments, people, relationships, user group contributions, user person contributions, and user relationship contributions
 			can [:new, :create], [User, Group, GroupAssignment, Person, Relationship, UserGroupContrib, UserPersonContrib, UserRelContrib]
@@ -105,8 +122,24 @@ class Ability
 			# A user can view search results
 			can :search, Person
 
-			# A user can download data
+			# A user can download groups data
+			can :export_groups, Group
+
+			# A user can download people data
 			can :export_people, Person
+
+			# A user can download relationship data
+			can :export_relationships, Relationship
+			can :export_rels_for_rels_100000000_100020000, Relationship
+			can :export_rels_for_rels_100020001_100040000, Relationship
+			can :export_rels_for_rels_100040001_100060000, Relationship
+			can :export_rels_for_rels_100060001_100080000, Relationship
+			can :export_rels_for_rels_100080001_100100000, Relationship
+			can :export_rels_for_rels_100100001_100120000, Relationship
+			can :export_rels_for_rels_100120001_100140000, Relationship
+			can :export_rels_for_rels_100140001_100160000, Relationship
+			can :export_rels_for_rels_100160001_100180000, Relationship
+			can :export_rels_for_rels_greater_than_100180000, Relationship
 
 		else
 			# Anyone can sign up
