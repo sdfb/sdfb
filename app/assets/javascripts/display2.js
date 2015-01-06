@@ -118,7 +118,7 @@ function twoDegs(id, data) {
   var edges = [];
   if (p.rels.length > 0) { //tests to make sure main person has relationships
     $.each(p.rels, function(index, value) {
-      if (value[2] == 0 || value[1] < 0.75) {
+      if (value[2] == 0 || value[1] < 75) {
         // not approved, move on or if confidence is less than 0.75
       }
       else {
@@ -129,7 +129,7 @@ function twoDegs(id, data) {
         }
               if (q && q.rels.length > 0) {
                 $.each(q.rels, function(index, value) {
-                  if (value[2] != 0 && value[1] >= 0.75) { //checks again if relationship id is not zero and confidence is greater than 0.75
+                  if (value[2] != 0 && value[1] >= 75) { //checks again if relationship id is not zero and confidence is greater than 0.75
                     var r = data.nodes[value[0]]; //sets r as data from person id referenced in relationship array
                     keys[r.id] = createNodeKey(r); //puts nodekey in array for person 2's id
                     if (notInArray(edges, [q.id, r.id])) {
@@ -137,7 +137,7 @@ function twoDegs(id, data) {
                     }
                     if (r && r.rels.length > 0) { //repeats above code for person 2, finding 2nd deg relationships
                       $.each(r.rels, function(index, value) {
-                        if (value[2] != 0 && value[1] >= 0.75) {
+                        if (value[2] != 0 && value[1] >= 75) {
                           var s = data.nodes[value[0]];
                           keys[s.id] = createNodeKey(s);
                           if (s && (s.id in keys) && notInArray(edges, [r.id, s.id])) {
@@ -241,7 +241,7 @@ function getAnnotation(id1, id2, data) {
   var rel_id = "";
   $.each(id1_rel_array, function(index, value) {                    
     if (value[0] == id2){
-       confidence = getConfidence(value[1]) + " @ " + value[1] * 100 + "%";
+       confidence = getConfidence(value[1]) + " @ " + value[1] + "%";
        rel_id = value[3];
     }
   });
@@ -340,7 +340,7 @@ function initGraph(data){
     if ($("#show-table").val() == 1) {
     	table = 'yes'
     }
-    var confidence = $("#slider-result1").val();
+    var confidence = $("#slider-result-hidden1").val();
     var date = $("#search-date-range1").val().split(" - ");
     // '/?person_id=' + ids[index] + '&confidence=' + confidence + '&date=' + $("search-date-range1").val(); + '&table=' + table;
   	window.location.href = '/?person_id=' + ids[index] + '&confidence=' + confidence + '&date=' + date + '&table=' + table;
