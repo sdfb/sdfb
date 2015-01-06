@@ -12,16 +12,15 @@ class Ability
 			# If you're an admin, you have the power to create and edit everything
 			can :manage, :all
 		elsif (user.user_type == "Curator")
-			# Curators can create users, groups, group assignments, people, relationships, user group contributions, user person contributions, and user relationship contributions
-			can :create, [User, Group, GroupAssignment, Person, Relationship, UserGroupContrib, UserPersonContrib, UserRelContrib]
+			# Curators can create users, groups, group assignments, people, relationships, user group contributions, user person contributions, user relationship contributions, group category assignments
+			can :create, [User, Group, GroupAssignment, Person, Relationship, UserGroupContrib, UserPersonContrib, UserRelContrib, GroupCatAssign, GroupCategory]
 
 			# Curators can view all elements regardless of whether they are approved
-			can :show, [User, Group, GroupAssignment, Person, Relationship, UserGroupContrib, UserPersonContrib, UserRelContrib]
+			can :show, :all
 			
 			# Curators can edit everything except other users.
-			##TODO: # Curators can only approve user_group_contribs, user_person_contribs, and user_rel_contribs
-			# Curators can edit and approve groups, relationships, people, and group assignments
-			can [:edit, :update], [Group, GroupAssignment, Person, Relationship, UserGroupContrib, UserPersonContrib, UserRelContrib]
+			# Curators can edit and approve groups, relationships, people, and group assignments, user group contributions, user person contributions, and user relationship contributions, group category assignments
+			can [:edit, :update], [Group, GroupAssignment, Person, Relationship, UserGroupContrib, UserPersonContrib, UserRelContrib, GroupCatAssign]
 
 			# Curators can only edit their own information
 			can [:edit, :update], User do |x|  
@@ -29,7 +28,7 @@ class Ability
 			end
 
 			# Curators can list all groups, people, and relationships
-			can :index, [Group, Person, Relationship]
+			can :index, [Group, GroupAssignment, Person, Relationship, UserGroupContrib, UserPersonContrib, UserRelContrib, GroupCatAssign, RelCatAssign]
 
 			# Curators can view search results
 			can :search, Person
@@ -59,7 +58,7 @@ class Ability
 
 			# A user can view all elements that are approved
 			can :show, User
-			can :show, [Group, GroupAssignment, Person, Relationship, UserGroupContrib, UserPersonContrib, UserRelContrib], :is_approved => true
+			can :show, [Group, GroupAssignment, Person, Relationship, UserGroupContrib, UserPersonContrib, UserRelContrib, RelationshipType, RelationshipCategory, GroupCategory, RelCatAssign, GroupCatAssign], :is_approved => true
 			
 			# A user can see the group that they created even if it was not approved
 			can :show, Group do |x|
@@ -112,11 +111,11 @@ class Ability
 			end
 
 			# A user can only edit their own information
-			can [:edit, :update], User do |x|  
+			can [:show, :edit, :update], User do |x|  
 				x.id == user.id
 			end
 
-			# A user can list all groups, people, and relationships
+			# A user can list all groups, people, relationships
 			can :index, [Group, Person, Relationship]
 
 			# A user can view search results
