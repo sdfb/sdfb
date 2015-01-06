@@ -62,6 +62,8 @@ Sdfb::Application.routes.draw do
 
   resources :user_rel_contribs
 
+  match '/people_export' => 'people#export_people'
+
 
   # main resources  # The priority is based upon order of creation:
   # first created -> highest priority.
