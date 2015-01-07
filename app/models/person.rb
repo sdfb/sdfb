@@ -25,7 +25,8 @@ class Person < ActiveRecord::Base
   scope :for_id, lambda {|id_input| where('id = ?', "#{id_input}") }
   scope :for_first_and_last_name,  lambda {|first_name_input, last_name_input| find_by_sql("SELECT * FROM people
   where first_name like '#{first_name_input}' AND last_name like '#{last_name_input}'")}
-
+  scope :for_similar_first_and_last_name,  lambda {|first_name_input, last_name_input| find_by_sql("SELECT * FROM people
+  where first_name like '%#{first_name_input}%' AND last_name like '%#{last_name_input}%'")}
 
   # Misc Constants
   DATE_TYPE_LIST = ["BF", "AF","IN","CA","BF/IN","AF/IN","NA"]
@@ -154,6 +155,17 @@ class Person < ActiveRecord::Base
       #Add exact search for first two words
       if (searchArray.length >= 2)
         exactResult = for_first_and_last_name(searchArray[0].capitalize, searchArray[1].capitalize)
+        if (! exactResult.blank?)
+          if (! uniqueArray.include?(exactResult[0].id))
+            searchResultArray.push(exactResult[0])
+            uniqueArray.push(exactResult[0].id)
+          end
+        end
+      end
+      
+      #Add similar search for first two words
+      if (searchArray.length >= 2)
+        exactResult = for_similar_first_and_last_name(searchArray[0].capitalize, searchArray[1].capitalize)
         if (! exactResult.blank?)
           if (! uniqueArray.include?(exactResult[0].id))
             searchResultArray.push(exactResult[0])
