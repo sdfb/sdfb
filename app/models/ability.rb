@@ -30,6 +30,9 @@ class Ability
 			# Curators can list all groups, people, and relationships
 			can :index, [Group, GroupAssignment, Person, Relationship, UserGroupContrib, UserPersonContrib, UserRelContrib, GroupCatAssign, RelCatAssign]
 
+			# A user can view search results
+			can :search, Group
+
 			# Curators can view search results
 			can :search, Person
 
@@ -119,6 +122,9 @@ class Ability
 			can :index, [Group, Person, Relationship]
 
 			# A user can view search results
+			can :search, Group
+
+			# A user can view search results
 			can :search, Person
 
 			# A user can download groups data
@@ -146,6 +152,9 @@ class Ability
 			
 			# Anyone can list all groups, people, and relationships
 			can :index, [Group, Person, Relationship]
+
+			# Anyone can view search results
+			can :search, Group
 
 			# Anyone can view search results
 			can :search, Person

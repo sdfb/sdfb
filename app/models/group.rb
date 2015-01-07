@@ -30,6 +30,9 @@ class Group < ActiveRecord::Base
   # ----------------------------- 
   scope :all_approved, where("approved_by is not null")
   scope :all_unapproved, where("approved_by is null")
+  scope :for_id, lambda {|id_input| where('id = ?', "#{id_input}") }
+  scope :exact_name_match, lambda {|search_input| where('name like ?', "#{search_input}") }
+  scope :similar_name_match, lambda {|search_input| where('name like ?', "%#{search_input}%") }
 
   # Callbacks
   # ----------------------------- 
@@ -67,5 +70,155 @@ class Group < ActiveRecord::Base
 
   def end_year_present?
     ! self.end_year.nil?
+  end
+
+  # searches for people by name
+  def self.search_approved(search)
+    if search 
+      #check that each result in the array is unique
+      uniqueArray = []
+
+      searchResultArray = [] 
+      #allow searches by group id
+      searchIdResult = Group.for_id(search.to_i).all_approved
+      if (! searchIdResult.blank?)
+        if (! uniqueArray.include?(searchIdResult[0].id))
+          searchResultArray.push(searchIdResult[0])
+          uniqueArray.push(searchIdResult[0].id)
+        end
+      end
+
+      #separate search into several words
+      searchArray = search.split(" ")
+
+      #for each word add exact search results
+      searchArray.each do |searchWord|
+        searchResult = exact_name_match(searchWord.capitalize).all_approved
+        if (! searchResult.blank?)
+          searchResult.each do |searchResultRecord|
+            if (! uniqueArray.include?(searchResultRecord.id))
+              searchResultArray.push(searchResultRecord)
+              uniqueArray.push(searchResultRecord.id)
+            end
+          end
+        end
+      end
+
+      #for each word add exact search results
+      searchArray.each do |searchWord|
+        searchResult = exact_name_match(searchWord).all_approved
+        if (! searchResult.blank?)
+          searchResult.each do |searchResultRecord|
+            if (! uniqueArray.include?(searchResultRecord.id))
+              searchResultArray.push(searchResultRecord)
+              uniqueArray.push(searchResultRecord.id)
+            end
+          end
+        end
+      end
+
+      #for each word add similar search results
+      searchArray.each do |searchWord|
+        searchResult = similar_name_match(searchWord.capitalize).all_approved
+        if (! searchResult.blank?)
+          searchResult.each do |searchResultRecord|
+            if (! uniqueArray.include?(searchResultRecord.id))
+              searchResultArray.push(searchResultRecord)
+              uniqueArray.push(searchResultRecord.id)
+            end
+          end
+        end
+      end
+
+      #for each word add similar search results
+      searchArray.each do |searchWord|
+        searchResult = similar_name_match(searchWord).all_approved
+        if (! searchResult.blank?)
+          searchResult.each do |searchResultRecord|
+            if (! uniqueArray.include?(searchResultRecord.id))
+              searchResultArray.push(searchResultRecord)
+              uniqueArray.push(searchResultRecord.id)
+            end
+          end
+        end
+      end
+      #return searchResultArray.size
+      return searchResultArray
+    end
+  end
+
+  # searches for people by name
+  def self.search_all(search)
+    if search 
+      #check that each result in the array is unique
+      uniqueArray = []
+
+      searchResultArray = [] 
+      #allow searches by group id
+      searchIdResult = Group.for_id(search.to_i)
+      if (! searchIdResult.blank?)
+        if (! uniqueArray.include?(searchIdResult[0].id))
+          searchResultArray.push(searchIdResult[0])
+          uniqueArray.push(searchIdResult[0].id)
+        end
+      end
+
+      #separate search into several words
+      searchArray = search.split(" ")
+
+      #for each word add exact search results
+      searchArray.each do |searchWord|
+        searchResult = exact_name_match(searchWord.capitalize)
+        if (! searchResult.blank?)
+          searchResult.each do |searchResultRecord|
+            if (! uniqueArray.include?(searchResultRecord.id))
+              searchResultArray.push(searchResultRecord)
+              uniqueArray.push(searchResultRecord.id)
+            end
+          end
+        end
+      end
+
+      #for each word add exact search results
+      searchArray.each do |searchWord|
+        searchResult = exact_name_match(searchWord)
+        if (! searchResult.blank?)
+          searchResult.each do |searchResultRecord|
+            if (! uniqueArray.include?(searchResultRecord.id))
+              searchResultArray.push(searchResultRecord)
+              uniqueArray.push(searchResultRecord.id)
+            end
+          end
+        end
+      end
+
+      #for each word add similar search results
+      searchArray.each do |searchWord|
+        searchResult = similar_name_match(searchWord.capitalize)
+        if (! searchResult.blank?)
+          searchResult.each do |searchResultRecord|
+            if (! uniqueArray.include?(searchResultRecord.id))
+              searchResultArray.push(searchResultRecord)
+              uniqueArray.push(searchResultRecord.id)
+            end
+          end
+        end
+      end
+
+      #for each word add similar search results
+      searchArray.each do |searchWord|
+        searchResult = similar_name_match(searchWord)
+        if (! searchResult.blank?)
+          searchResult.each do |searchResultRecord|
+            if (! uniqueArray.include?(searchResultRecord.id))
+              searchResultArray.push(searchResultRecord)
+              uniqueArray.push(searchResultRecord.id)
+            end
+          end
+        end
+      end
+      #return searchResultArray.size
+      return searchResultArray
+    end
   end
 end

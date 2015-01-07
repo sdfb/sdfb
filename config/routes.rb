@@ -34,7 +34,9 @@ Sdfb::Application.routes.draw do
   root :to => "home#index"
 
 
-  match '/search', :to => 'people#search'
+  match '/people_search', :to => 'people#search'
+
+  match '/group_search', :to => 'groups#search'
   
   resources :users
   

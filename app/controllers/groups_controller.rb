@@ -93,6 +93,18 @@ class GroupsController < ApplicationController
   #   end
   # end
 
+  def search
+    @query = params[:query]
+    if @query != "" 
+      if ((current_user.user_type == "Admin") || (current_user.user_type == "Curator"))
+        @all_results1 = Group.search_all(@query)
+      else
+        @all_results1 = Group.search_approved(@query)
+      end
+      @all_results = @all_results1.paginate(:page => params[:all_results_page], :per_page => 20)
+    end
+  end
+
   def export_groups
     @all_groups_approved = Group.all_approved
     @all_groups = Group.all
