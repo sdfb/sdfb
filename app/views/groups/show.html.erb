@@ -18,9 +18,7 @@
       </h2>
       <br>
       <dl class="dl-horizontal">
-        <dt><strong><%= model_class.human_attribute_name(:created_by) %>:</strong></dt>
-        <dd><%= link_to User.find(@group.created_by).username,  user_path(@group.created_by) %></dd>
-        <dt><strong><%= model_class.human_attribute_name(:name) %>:</strong></dt>
+        <dt>Name:</dt>
         <dd><%= @group.name %></dd>
         <% if ! @group.description.blank? %>
           <dt>Description:</strong></dt>
@@ -34,10 +32,18 @@
           <dt>End Year</dt>
           <dd><%= @group.end_year %></dd>
         <% end %>
+        <% if ! @group.person_list.blank? %>
+          <dt>Members</dt>
+          <dd><%= @group.person_list %></dd>
+        <% end %>
         <% if ! @group.justification.blank? %>
           <dt>Justification</dt>
           <dd><%= @group.justification %></dd>
         <% end %>
+        <dt>Created by</dt>
+          <dd><%= link_to User.find(@group.created_by).username,  user_path(@group.created_by) %></dd>
+        <dt>Created at</dt>
+        <dd><%= @group.created_at %></dd>
         <dt><strong>Is Approved?:</strong></dt>
         <dd><%= @group.is_approved %></dd>
         <% if ! @group.approved_by.blank? %>
@@ -48,19 +54,13 @@
           <dt><strong>Approved on:</strong></dt>
           <dd><%= @group.approved_on %></dd>
         <% end %>
-        <dt>Created at</dt>
-        <dd><%= @group.created_at %></dd>
-        <% if ! @group.person_list.blank? %>
-          <dt>Members</dt>
-          <dd><%= @group.person_list %></dd>
-        <% end %>
       </dl>
     </div>
   </div>
     <div class="span7">
       <% if ! @user_group_contribs.empty? %>
         <div class="well">
-        <h2>All Annotations for <%= @group.name%> <%= link_to 'New Annotations',
+        <h2>All Annotations for <%= @group.name%> <%= link_to 'New Annotation',
                     new_user_group_contrib_path(:group_id => @group.id),
                     :class => 'btn btn-primary btn-mini' %></h2>
         <table class="table table-condensed">
@@ -98,11 +98,11 @@
         </div>
       <% else %>
         <div class = "well">
-          <h2>All User Group Contibutions for <%= @group.name%> <%= link_to 'New User Group Contribution',
+          <h2>All Annotations for <%= @group.name%> <%= link_to 'New Annotation',
                     new_user_group_contrib_path(:group_id => @group.id),
                     :class => 'btn btn-primary btn-mini' %></h2>
           <br>
-          <b>No User Group Contributions exist.</b>
+          <b>No annotations exist.</b>
         </div>
       <% end %>
 

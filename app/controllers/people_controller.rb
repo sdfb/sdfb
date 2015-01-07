@@ -97,7 +97,11 @@ class PeopleController < ApplicationController
     # allows for the admin to search from their dashboard
     @query = params[:query]
     if @query != ""
-      @all_results1 = Person.search(@query)
+      if ((current_user.user_type == "Admin") || (current_user.user_type == "Curator"))
+        @all_results1 = Person.search_all(@query)
+      else
+        @all_results1 = Person.search_approved(@query)
+      end
       @all_results = @all_results1.paginate(:page => params[:all_results_page], :per_page => 20)
     end
   end
@@ -113,7 +117,7 @@ class PeopleController < ApplicationController
           "Group List", "Justification", "Created By ID", "Created By", "Created At", "Is approved?",
           "Approved By ID", "Approved By", "Approved On"]
         @all_people.each do |person|
-          csv << [person.id, person.odnb_id, person.prefix, person.first_name, person.last_name, person.suffix,
+          csv << [person.id, person.prefix, person.first_name, person.last_name, person.suffix,
             person.title, person.search_names_all, person.gender, person.historical_significance, person.birth_year_type,
             person.ext_birth_year, person.alt_birth_year, person.death_year_type, person.ext_death_year, person.alt_death_year, person.rel_sum,
             person.group_list, person.justification, person.created_by, User.find(person.created_by).get_person_name, person.created_at,
@@ -134,6 +138,6 @@ class PeopleController < ApplicationController
         end
       end
     end
-    send_data(people_csv, :type => 'text/csv', :filename => 'all_people.csv')
+    send_data(people_csv, :type => 'text/csv', :filename => 'SDFB_people.csv')
   end
 end

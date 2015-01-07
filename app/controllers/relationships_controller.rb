@@ -52,6 +52,9 @@ class RelationshipsController < ApplicationController
     #authorize! :edit, @relationship
   end
 
+  def export_rels
+  end
+
   # POST /relationships
   # POST /relationships.json
   def create
@@ -97,4 +100,324 @@ class RelationshipsController < ApplicationController
   #     format.json { head :no_content }
   #   end
   # end
+
+  def export_rels_for_rels_100000000_100020000
+    @all_relationships_approved = Relationship.for_rels_100000000_100020000.all_approved
+    @all_relationships = Relationship.for_rels_100000000_100020000
+    if (current_user.user_type == "Admin")
+      relationship_csv = CSV.generate do |csv|
+        csv << ["SDFB Relationship ID", "Person 1 ID", "Person 1 Name", "Person 2 ID", "Person 2 Name",
+          "Original Certainty", "Maximum Certainty", "Start Month", "Start Day", "Start Year",  "End Month",
+          "End Day", "End Year", "Edge Birthdate Certainty", "Justification", "Created By ID", "Created By", "Created At", "Is approved?",
+          "Approved By ID", "Approved By", "Approved On"]
+        @all_relationships.each do |relationship|
+          csv << [relationship.id, relationship.person1_index, Person.find(relationship.person1_index).get_person_name, relationship.person2_index,
+            Person.find(relationship.person2_index).get_person_name, relationship.original_certainty, relationship.max_certainty, 
+            relationship.start_month, relationship.start_day, relationship.start_year, relationship.end_month, relationship.end_day, relationship.end_year,
+            relationship.edge_birthdate_certainty, relationship.justification,
+            relationship.created_by, User.find(relationship.created_by).get_person_name, relationship.created_at,
+            relationship.is_approved, relationship.approved_by, User.find(relationship.approved_by).get_person_name, relationship.approved_on]
+        end
+      end
+    else
+    relationship_csv = CSV.generate do |csv|
+        csv << ["SDFB Relationship ID","Person 1 ID", "Person 1 Name", "Person 2 ID", "Person 2 Name", "Original Certainty", "Maximum Certainty",
+          "Start Day", "Start Year",  "End Month", "End Day", "End Year"]
+        @all_relationships_approved.each do |relationship|
+          csv << [relationship.id, relationship.person1_index, Person.find(relationship.person1_index).get_person_name, relationship.person2_index,
+            Person.find(relationship.person2_index).get_person_name, relationship.original_certainty, relationship.max_certainty,
+            relationship.start_month, relationship.start_day, relationship.start_year, relationship.end_month, relationship.end_day, relationship.end_year]
+        end
+      end
+    end
+    send_data(relationship_csv, :type => 'text/csv', :filename => 'SDFB_relationships_100000000_100020000.csv')
+  end
+
+    def export_rels_for_rels_100020001_100040000
+    @all_relationships_approved = Relationship.for_rels_100020001_100040000.all_approved
+    @all_relationships = Relationship.for_rels_100020001_100040000
+    if (current_user.user_type == "Admin")
+      relationship_csv = CSV.generate do |csv|
+        csv << ["SDFB Relationship ID", "Person 1 ID", "Person 1 Name", "Person 2 ID", "Person 2 Name",
+          "Original Certainty", "Maximum Certainty", "Start Month", "Start Day", "Start Year",  "End Month",
+          "End Day", "End Year", "Edge Birthdate Certainty", "Justification", "Created By ID", "Created By", "Created At", "Is approved?",
+          "Approved By ID", "Approved By", "Approved On"]
+        @all_relationships.each do |relationship|
+          csv << [relationship.id, relationship.person1_index, Person.find(relationship.person1_index).get_person_name, relationship.person2_index,
+            Person.find(relationship.person2_index).get_person_name, relationship.original_certainty, relationship.max_certainty, 
+            relationship.start_month, relationship.start_day, relationship.start_year, relationship.end_month, relationship.end_day, relationship.end_year,
+            relationship.edge_birthdate_certainty, relationship.justification,
+            relationship.created_by, User.find(relationship.created_by).get_person_name, relationship.created_at,
+            relationship.is_approved, relationship.approved_by, User.find(relationship.approved_by).get_person_name, relationship.approved_on]
+        end
+      end
+    else
+    relationship_csv = CSV.generate do |csv|
+        csv << ["SDFB Relationship ID","Person 1 ID", "Person 1 Name", "Person 2 ID", "Person 2 Name", "Original Certainty", "Maximum Certainty",
+          "Start Day", "Start Year",  "End Month", "End Day", "End Year"]
+        @all_relationships_approved.each do |relationship|
+          csv << [relationship.id, relationship.person1_index, Person.find(relationship.person1_index).get_person_name, relationship.person2_index,
+            Person.find(relationship.person2_index).get_person_name, relationship.original_certainty, relationship.max_certainty,
+            relationship.start_month, relationship.start_day, relationship.start_year, relationship.end_month, relationship.end_day, relationship.end_year]
+        end
+      end
+    end
+    send_data(relationship_csv, :type => 'text/csv', :filename => 'SDFB_relationships_100020001_100040000.csv')
+  end
+
+    def export_rels_for_rels_100040001_100060000
+    @all_relationships_approved = Relationship.for_rels_100040001_100060000.all_approved
+    @all_relationships = Relationship.for_rels_100040001_100060000
+    if (current_user.user_type == "Admin")
+      relationship_csv = CSV.generate do |csv|
+        csv << ["SDFB Relationship ID", "Person 1 ID", "Person 1 Name", "Person 2 ID", "Person 2 Name",
+          "Original Certainty", "Maximum Certainty", "Start Month", "Start Day", "Start Year",  "End Month",
+          "End Day", "End Year", "Edge Birthdate Certainty", "Justification", "Created By ID", "Created By", "Created At", "Is approved?",
+          "Approved By ID", "Approved By", "Approved On"]
+        @all_relationships.each do |relationship|
+          csv << [relationship.id, relationship.person1_index, Person.find(relationship.person1_index).get_person_name, relationship.person2_index,
+            Person.find(relationship.person2_index).get_person_name, relationship.original_certainty, relationship.max_certainty, 
+            relationship.start_month, relationship.start_day, relationship.start_year, relationship.end_month, relationship.end_day, relationship.end_year,
+            relationship.edge_birthdate_certainty, relationship.justification,
+            relationship.created_by, User.find(relationship.created_by).get_person_name, relationship.created_at,
+            relationship.is_approved, relationship.approved_by, User.find(relationship.approved_by).get_person_name, relationship.approved_on]
+        end
+      end
+    else
+    relationship_csv = CSV.generate do |csv|
+        csv << ["SDFB Relationship ID","Person 1 ID", "Person 1 Name", "Person 2 ID", "Person 2 Name", "Original Certainty", "Maximum Certainty",
+          "Start Day", "Start Year",  "End Month", "End Day", "End Year"]
+        @all_relationships_approved.each do |relationship|
+          csv << [relationship.id, relationship.person1_index, Person.find(relationship.person1_index).get_person_name, relationship.person2_index,
+            Person.find(relationship.person2_index).get_person_name, relationship.original_certainty, relationship.max_certainty,
+            relationship.start_month, relationship.start_day, relationship.start_year, relationship.end_month, relationship.end_day, relationship.end_year]
+        end
+      end
+    end
+    send_data(relationship_csv, :type => 'text/csv', :filename => 'SDFB_relationships_100040001_100060000.csv')
+  end
+
+    def export_rels_for_rels_100060001_100080000
+    @all_relationships_approved = Relationship.for_rels_100060001_100080000.all_approved
+    @all_relationships = Relationship.for_rels_100060001_100080000
+    if (current_user.user_type == "Admin")
+      relationship_csv = CSV.generate do |csv|
+        csv << ["SDFB Relationship ID", "Person 1 ID", "Person 1 Name", "Person 2 ID", "Person 2 Name",
+          "Original Certainty", "Maximum Certainty", "Start Month", "Start Day", "Start Year",  "End Month",
+          "End Day", "End Year", "Edge Birthdate Certainty", "Justification", "Created By ID", "Created By", "Created At", "Is approved?",
+          "Approved By ID", "Approved By", "Approved On"]
+        @all_relationships.each do |relationship|
+          csv << [relationship.id, relationship.person1_index, Person.find(relationship.person1_index).get_person_name, relationship.person2_index,
+            Person.find(relationship.person2_index).get_person_name, relationship.original_certainty, relationship.max_certainty, 
+            relationship.start_month, relationship.start_day, relationship.start_year, relationship.end_month, relationship.end_day, relationship.end_year,
+            relationship.edge_birthdate_certainty, relationship.justification,
+            relationship.created_by, User.find(relationship.created_by).get_person_name, relationship.created_at,
+            relationship.is_approved, relationship.approved_by, User.find(relationship.approved_by).get_person_name, relationship.approved_on]
+        end
+      end
+    else
+    relationship_csv = CSV.generate do |csv|
+        csv << ["SDFB Relationship ID","Person 1 ID", "Person 1 Name", "Person 2 ID", "Person 2 Name", "Original Certainty", "Maximum Certainty",
+          "Start Day", "Start Year",  "End Month", "End Day", "End Year"]
+        @all_relationships_approved.each do |relationship|
+          csv << [relationship.id, relationship.person1_index, Person.find(relationship.person1_index).get_person_name, relationship.person2_index,
+            Person.find(relationship.person2_index).get_person_name, relationship.original_certainty, relationship.max_certainty,
+            relationship.start_month, relationship.start_day, relationship.start_year, relationship.end_month, relationship.end_day, relationship.end_year]
+        end
+      end
+    end
+    send_data(relationship_csv, :type => 'text/csv', :filename => 'SDFB_relationships_100060001_100080000.csv')
+  end
+
+    def export_rels_for_rels_100080001_100100000
+    @all_relationships_approved = Relationship.for_rels_100080001_100100000.all_approved
+    @all_relationships = Relationship.for_rels_100080001_100100000
+    if (current_user.user_type == "Admin")
+      relationship_csv = CSV.generate do |csv|
+        csv << ["SDFB Relationship ID", "Person 1 ID", "Person 1 Name", "Person 2 ID", "Person 2 Name",
+          "Original Certainty", "Maximum Certainty", "Start Month", "Start Day", "Start Year",  "End Month",
+          "End Day", "End Year", "Edge Birthdate Certainty", "Justification", "Created By ID", "Created By", "Created At", "Is approved?",
+          "Approved By ID", "Approved By", "Approved On"]
+        @all_relationships.each do |relationship|
+          csv << [relationship.id, relationship.person1_index, Person.find(relationship.person1_index).get_person_name, relationship.person2_index,
+            Person.find(relationship.person2_index).get_person_name, relationship.original_certainty, relationship.max_certainty, 
+            relationship.start_month, relationship.start_day, relationship.start_year, relationship.end_month, relationship.end_day, relationship.end_year,
+            relationship.edge_birthdate_certainty, relationship.justification,
+            relationship.created_by, User.find(relationship.created_by).get_person_name, relationship.created_at,
+            relationship.is_approved, relationship.approved_by, User.find(relationship.approved_by).get_person_name, relationship.approved_on]
+        end
+      end
+    else
+    relationship_csv = CSV.generate do |csv|
+        csv << ["SDFB Relationship ID","Person 1 ID", "Person 1 Name", "Person 2 ID", "Person 2 Name", "Original Certainty", "Maximum Certainty",
+          "Start Day", "Start Year",  "End Month", "End Day", "End Year"]
+        @all_relationships_approved.each do |relationship|
+          csv << [relationship.id, relationship.person1_index, Person.find(relationship.person1_index).get_person_name, relationship.person2_index,
+            Person.find(relationship.person2_index).get_person_name, relationship.original_certainty, relationship.max_certainty,
+            relationship.start_month, relationship.start_day, relationship.start_year, relationship.end_month, relationship.end_day, relationship.end_year]
+        end
+      end
+    end
+    send_data(relationship_csv, :type => 'text/csv', :filename => 'SDFB_relationships_100080001_100100000.csv')
+  end
+
+    def export_rels_for_rels_100100001_100120000
+    @all_relationships_approved = Relationship.for_rels_100100001_100120000.all_approved
+    @all_relationships = Relationship.for_rels_100100001_100120000
+    if (current_user.user_type == "Admin")
+      relationship_csv = CSV.generate do |csv|
+        csv << ["SDFB Relationship ID", "Person 1 ID", "Person 1 Name", "Person 2 ID", "Person 2 Name",
+          "Original Certainty", "Maximum Certainty", "Start Month", "Start Day", "Start Year",  "End Month",
+          "End Day", "End Year", "Edge Birthdate Certainty", "Justification", "Created By ID", "Created By", "Created At", "Is approved?",
+          "Approved By ID", "Approved By", "Approved On"]
+        @all_relationships.each do |relationship|
+          csv << [relationship.id, relationship.person1_index, Person.find(relationship.person1_index).get_person_name, relationship.person2_index,
+            Person.find(relationship.person2_index).get_person_name, relationship.original_certainty, relationship.max_certainty, 
+            relationship.start_month, relationship.start_day, relationship.start_year, relationship.end_month, relationship.end_day, relationship.end_year,
+            relationship.edge_birthdate_certainty, relationship.justification,
+            relationship.created_by, User.find(relationship.created_by).get_person_name, relationship.created_at,
+            relationship.is_approved, relationship.approved_by, User.find(relationship.approved_by).get_person_name, relationship.approved_on]
+        end
+      end
+    else
+    relationship_csv = CSV.generate do |csv|
+        csv << ["SDFB Relationship ID","Person 1 ID", "Person 1 Name", "Person 2 ID", "Person 2 Name", "Original Certainty", "Maximum Certainty",
+          "Start Day", "Start Year",  "End Month", "End Day", "End Year"]
+        @all_relationships_approved.each do |relationship|
+          csv << [relationship.id, relationship.person1_index, Person.find(relationship.person1_index).get_person_name, relationship.person2_index,
+            Person.find(relationship.person2_index).get_person_name, relationship.original_certainty, relationship.max_certainty,
+            relationship.start_month, relationship.start_day, relationship.start_year, relationship.end_month, relationship.end_day, relationship.end_year]
+        end
+      end
+    end
+    send_data(relationship_csv, :type => 'text/csv', :filename => 'SDFB_relationships_100100001_100120000.csv')
+  end
+
+    def export_rels_for_rels_100120001_100140000
+    @all_relationships_approved = Relationship.for_rels_100120001_100140000.all_approved
+    @all_relationships = Relationship.for_rels_100120001_100140000
+    if (current_user.user_type == "Admin")
+      relationship_csv = CSV.generate do |csv|
+        csv << ["SDFB Relationship ID", "Person 1 ID", "Person 1 Name", "Person 2 ID", "Person 2 Name",
+          "Original Certainty", "Maximum Certainty", "Start Month", "Start Day", "Start Year",  "End Month",
+          "End Day", "End Year", "Edge Birthdate Certainty", "Justification", "Created By ID", "Created By", "Created At", "Is approved?",
+          "Approved By ID", "Approved By", "Approved On"]
+        @all_relationships.each do |relationship|
+          csv << [relationship.id, relationship.person1_index, Person.find(relationship.person1_index).get_person_name, relationship.person2_index,
+            Person.find(relationship.person2_index).get_person_name, relationship.original_certainty, relationship.max_certainty, 
+            relationship.start_month, relationship.start_day, relationship.start_year, relationship.end_month, relationship.end_day, relationship.end_year,
+            relationship.edge_birthdate_certainty, relationship.justification,
+            relationship.created_by, User.find(relationship.created_by).get_person_name, relationship.created_at,
+            relationship.is_approved, relationship.approved_by, User.find(relationship.approved_by).get_person_name, relationship.approved_on]
+        end
+      end
+    else
+    relationship_csv = CSV.generate do |csv|
+        csv << ["SDFB Relationship ID","Person 1 ID", "Person 1 Name", "Person 2 ID", "Person 2 Name", "Original Certainty", "Maximum Certainty",
+          "Start Day", "Start Year",  "End Month", "End Day", "End Year"]
+        @all_relationships_approved.each do |relationship|
+          csv << [relationship.id, relationship.person1_index, Person.find(relationship.person1_index).get_person_name, relationship.person2_index,
+            Person.find(relationship.person2_index).get_person_name, relationship.original_certainty, relationship.max_certainty,
+            relationship.start_month, relationship.start_day, relationship.start_year, relationship.end_month, relationship.end_day, relationship.end_year]
+        end
+      end
+    end
+    send_data(relationship_csv, :type => 'text/csv', :filename => 'SDFB_relationships_100120001_100140000.csv')
+  end
+
+    def export_rels_for_rels_100140001_100160000
+    @all_relationships_approved = Relationship.for_rels_100140001_100160000.all_approved
+    @all_relationships = Relationship.for_rels_100140001_100160000
+    if (current_user.user_type == "Admin")
+      relationship_csv = CSV.generate do |csv|
+        csv << ["SDFB Relationship ID", "Person 1 ID", "Person 1 Name", "Person 2 ID", "Person 2 Name",
+          "Original Certainty", "Maximum Certainty", "Start Month", "Start Day", "Start Year",  "End Month",
+          "End Day", "End Year", "Edge Birthdate Certainty", "Justification", "Created By ID", "Created By", "Created At", "Is approved?",
+          "Approved By ID", "Approved By", "Approved On"]
+        @all_relationships.each do |relationship|
+          csv << [relationship.id, relationship.person1_index, Person.find(relationship.person1_index).get_person_name, relationship.person2_index,
+            Person.find(relationship.person2_index).get_person_name, relationship.original_certainty, relationship.max_certainty, 
+            relationship.start_month, relationship.start_day, relationship.start_year, relationship.end_month, relationship.end_day, relationship.end_year,
+            relationship.edge_birthdate_certainty, relationship.justification,
+            relationship.created_by, User.find(relationship.created_by).get_person_name, relationship.created_at,
+            relationship.is_approved, relationship.approved_by, User.find(relationship.approved_by).get_person_name, relationship.approved_on]
+        end
+      end
+    else
+    relationship_csv = CSV.generate do |csv|
+        csv << ["SDFB Relationship ID","Person 1 ID", "Person 1 Name", "Person 2 ID", "Person 2 Name", "Original Certainty", "Maximum Certainty",
+          "Start Day", "Start Year",  "End Month", "End Day", "End Year"]
+        @all_relationships_approved.each do |relationship|
+          csv << [relationship.id, relationship.person1_index, Person.find(relationship.person1_index).get_person_name, relationship.person2_index,
+            Person.find(relationship.person2_index).get_person_name, relationship.original_certainty, relationship.max_certainty,
+            relationship.start_month, relationship.start_day, relationship.start_year, relationship.end_month, relationship.end_day, relationship.end_year]
+        end
+      end
+    end
+    send_data(relationship_csv, :type => 'text/csv', :filename => 'SDFB_relationships_100140001_100160000.csv')
+  end
+
+    def export_rels_for_rels_100160001_100180000
+    @all_relationships_approved = Relationship.for_rels_100000000_100020000.all_approved
+    @all_relationships = Relationship.for_rels_100160001_100180000
+    if (current_user.user_type == "Admin")
+      relationship_csv = CSV.generate do |csv|
+        csv << ["SDFB Relationship ID", "Person 1 ID", "Person 1 Name", "Person 2 ID", "Person 2 Name",
+          "Original Certainty", "Maximum Certainty", "Start Month", "Start Day", "Start Year",  "End Month",
+          "End Day", "End Year", "Edge Birthdate Certainty", "Justification", "Created By ID", "Created By", "Created At", "Is approved?",
+          "Approved By ID", "Approved By", "Approved On"]
+        @all_relationships.each do |relationship|
+          csv << [relationship.id, relationship.person1_index, Person.find(relationship.person1_index).get_person_name, relationship.person2_index,
+            Person.find(relationship.person2_index).get_person_name, relationship.original_certainty, relationship.max_certainty, 
+            relationship.start_month, relationship.start_day, relationship.start_year, relationship.end_month, relationship.end_day, relationship.end_year,
+            relationship.edge_birthdate_certainty, relationship.justification,
+            relationship.created_by, User.find(relationship.created_by).get_person_name, relationship.created_at,
+            relationship.is_approved, relationship.approved_by, User.find(relationship.approved_by).get_person_name, relationship.approved_on]
+        end
+      end
+    else
+    relationship_csv = CSV.generate do |csv|
+        csv << ["SDFB Relationship ID","Person 1 ID", "Person 1 Name", "Person 2 ID", "Person 2 Name", "Original Certainty", "Maximum Certainty",
+          "Start Day", "Start Year",  "End Month", "End Day", "End Year"]
+        @all_relationships_approved.each do |relationship|
+          csv << [relationship.id, relationship.person1_index, Person.find(relationship.person1_index).get_person_name, relationship.person2_index,
+            Person.find(relationship.person2_index).get_person_name, relationship.original_certainty, relationship.max_certainty,
+            relationship.start_month, relationship.start_day, relationship.start_year, relationship.end_month, relationship.end_day, relationship.end_year]
+        end
+      end
+    end
+    send_data(relationship_csv, :type => 'text/csv', :filename => 'SDFB_relationships_100160001_100180000.csv')
+  end
+
+    def export_rels_for_rels_greater_than_100180000
+    @all_relationships_approved = Relationship.for_rels_greater_than_100180000.all_approved
+    @all_relationships = Relationship.for_rels_greater_than_100180000
+    if (current_user.user_type == "Admin")
+      relationship_csv = CSV.generate do |csv|
+        csv << ["SDFB Relationship ID", "Person 1 ID", "Person 1 Name", "Person 2 ID", "Person 2 Name",
+          "Original Certainty", "Maximum Certainty", "Start Month", "Start Day", "Start Year",  "End Month",
+          "End Day", "End Year", "Edge Birthdate Certainty", "Justification", "Created By ID", "Created By", "Created At", "Is approved?",
+          "Approved By ID", "Approved By", "Approved On"]
+        @all_relationships.each do |relationship|
+          csv << [relationship.id, relationship.person1_index, Person.find(relationship.person1_index).get_person_name, relationship.person2_index,
+            Person.find(relationship.person2_index).get_person_name, relationship.original_certainty, relationship.max_certainty, 
+            relationship.start_month, relationship.start_day, relationship.start_year, relationship.end_month, relationship.end_day, relationship.end_year,
+            relationship.edge_birthdate_certainty, relationship.justification,
+            relationship.created_by, User.find(relationship.created_by).get_person_name, relationship.created_at,
+            relationship.is_approved, relationship.approved_by, User.find(relationship.approved_by).get_person_name, relationship.approved_on]
+        end
+      end
+    else
+    relationship_csv = CSV.generate do |csv|
+        csv << ["SDFB Relationship ID","Person 1 ID", "Person 1 Name", "Person 2 ID", "Person 2 Name", "Original Certainty", "Maximum Certainty",
+          "Start Day", "Start Year",  "End Month", "End Day", "End Year"]
+        @all_relationships_approved.each do |relationship|
+          csv << [relationship.id, relationship.person1_index, Person.find(relationship.person1_index).get_person_name, relationship.person2_index,
+            Person.find(relationship.person2_index).get_person_name, relationship.original_certainty, relationship.max_certainty,
+            relationship.start_month, relationship.start_day, relationship.start_year, relationship.end_month, relationship.end_day, relationship.end_year]
+        end
+      end
+    end
+    send_data(relationship_csv, :type => 'text/csv', :filename => 'SDFB_relationships_greater_than_100180000.csv')
+  end
 end

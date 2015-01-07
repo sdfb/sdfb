@@ -4,7 +4,9 @@
       <h2><%= pluralize(@user.errors.count, "error") %> prohibited this user from being saved:</h2>
       <ul>
       <% @user.errors.full_messages.each do |msg| %>
-        <li><%= msg %></li>
+        <br>
+          <li>- <%= msg %></li>
+        <br>
       <% end %>
       </ul>
     </div>
@@ -20,9 +22,6 @@
   <%= f.hidden_field :curator_revoked, :value => false %>
   <%= f.hidden_field :is_active, :value => true %>
   <%= f.hidden_field :user_type, :value => "Standard" %>
-  <div class="form-actions">
-    <%= f.button :submit, :class => 'btn btn-primary' %>
-    <%= link_to t('.cancel', :default => t("helpers.links.cancel")),
-                root_path, :class => 'btn' %>
-  </div>
+  <br>
+  <%= f.button :submit, :class => 'btn btn-primary' %>
 <% end %>

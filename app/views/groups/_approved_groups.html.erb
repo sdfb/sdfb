@@ -1,4 +1,12 @@
-<h1>All Groups <%= link_to 'New Group', new_group_path, :class => 'btn btn-primary' %></h1><br>
+<h1>All Groups <%= link_to 'New Group', new_group_path, :class => 'btn btn-primary' %><%=link_to 'Export Groups', '/export_groups', :class => 'btn btn-primary'%></h1>
+
+<div class="well">
+  <div class="container">
+    <div class="row">
+      <div class="span4"><%= render 'group_search_box' %></div>
+    </div>
+  </div>
+</div>
 
   <table class="table table-condensed">
     <thead>

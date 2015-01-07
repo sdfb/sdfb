@@ -12,16 +12,15 @@ class Ability
 			# If you're an admin, you have the power to create and edit everything
 			can :manage, :all
 		elsif (user.user_type == "Curator")
-			# Curators can create users, groups, group assignments, people, relationships, user group contributions, user person contributions, and user relationship contributions
-			can :create, [User, Group, GroupAssignment, Person, Relationship, UserGroupContrib, UserPersonContrib, UserRelContrib]
+			# Curators can create users, groups, group assignments, people, relationships, user group contributions, user person contributions, user relationship contributions, group category assignments
+			can :create, [User, Group, GroupAssignment, Person, Relationship, UserGroupContrib, UserPersonContrib, UserRelContrib, GroupCatAssign, GroupCategory]
 
 			# Curators can view all elements regardless of whether they are approved
-			can :show, [User, Group, GroupAssignment, Person, Relationship, UserGroupContrib, UserPersonContrib, UserRelContrib]
+			can :show, :all
 			
 			# Curators can edit everything except other users.
-			##TODO: # Curators can only approve user_group_contribs, user_person_contribs, and user_rel_contribs
-			# Curators can edit and approve groups, relationships, people, and group assignments
-			can [:edit, :update], [Group, GroupAssignment, Person, Relationship, UserGroupContrib, UserPersonContrib, UserRelContrib]
+			# Curators can edit and approve groups, relationships, people, and group assignments, user group contributions, user person contributions, and user relationship contributions, group category assignments
+			can [:edit, :update], [Group, GroupAssignment, Person, Relationship, UserGroupContrib, UserPersonContrib, UserRelContrib, GroupCatAssign]
 
 			# Curators can only edit their own information
 			can [:edit, :update], User do |x|  
@@ -29,20 +28,40 @@ class Ability
 			end
 
 			# Curators can list all groups, people, and relationships
-			can :index, [Group, Person, Relationship]
+			can :index, [Group, GroupAssignment, Person, Relationship, UserGroupContrib, UserPersonContrib, UserRelContrib, GroupCatAssign, RelCatAssign]
+
+			# A user can view search results
+			can :search, Group
 
 			# Curators can view search results
 			can :search, Person
 
-			# A user can download data
+			# A user can download groups data
+			can :export_groups, Group
+
+			# A user can download people data
 			can :export_people, Person
+
+			# A user can download relationship data
+			can :export_relationships, Relationship
+			can :export_rels_for_rels_100000000_100020000, Relationship
+			can :export_rels_for_rels_100020001_100040000, Relationship
+			can :export_rels_for_rels_100040001_100060000, Relationship
+			can :export_rels_for_rels_100060001_100080000, Relationship
+			can :export_rels_for_rels_100080001_100100000, Relationship
+			can :export_rels_for_rels_100100001_100120000, Relationship
+			can :export_rels_for_rels_100120001_100140000, Relationship
+			can :export_rels_for_rels_100140001_100160000, Relationship
+			can :export_rels_for_rels_100160001_100180000, Relationship
+			can :export_rels_for_rels_greater_than_100180000, Relationship
+
 		elsif (user.user_type == "Standard") 
 			#  A user can create users, groups, group assignments, people, relationships, user group contributions, user person contributions, and user relationship contributions
 			can [:new, :create], [User, Group, GroupAssignment, Person, Relationship, UserGroupContrib, UserPersonContrib, UserRelContrib]
 
 			# A user can view all elements that are approved
 			can :show, User
-			can :show, [Group, GroupAssignment, Person, Relationship, UserGroupContrib, UserPersonContrib, UserRelContrib], :is_approved => true
+			can :show, [Group, GroupAssignment, Person, Relationship, UserGroupContrib, UserPersonContrib, UserRelContrib, RelationshipType, RelationshipCategory, GroupCategory, RelCatAssign, GroupCatAssign], :is_approved => true
 			
 			# A user can see the group that they created even if it was not approved
 			can :show, Group do |x|
@@ -95,18 +114,37 @@ class Ability
 			end
 
 			# A user can only edit their own information
-			can [:edit, :update], User do |x|  
+			can [:show, :edit, :update], User do |x|  
 				x.id == user.id
 			end
 
-			# A user can list all groups, people, and relationships
+			# A user can list all groups, people, relationships
 			can :index, [Group, Person, Relationship]
+
+			# A user can view search results
+			can :search, Group
 
 			# A user can view search results
 			can :search, Person
 
-			# A user can download data
+			# A user can download groups data
+			can :export_groups, Group
+
+			# A user can download people data
 			can :export_people, Person
+
+			# A user can download relationship data
+			can :export_relationships, Relationship
+			can :export_rels_for_rels_100000000_100020000, Relationship
+			can :export_rels_for_rels_100020001_100040000, Relationship
+			can :export_rels_for_rels_100040001_100060000, Relationship
+			can :export_rels_for_rels_100060001_100080000, Relationship
+			can :export_rels_for_rels_100080001_100100000, Relationship
+			can :export_rels_for_rels_100100001_100120000, Relationship
+			can :export_rels_for_rels_100120001_100140000, Relationship
+			can :export_rels_for_rels_100140001_100160000, Relationship
+			can :export_rels_for_rels_100160001_100180000, Relationship
+			can :export_rels_for_rels_greater_than_100180000, Relationship
 
 		else
 			# Anyone can sign up
@@ -114,6 +152,9 @@ class Ability
 			
 			# Anyone can list all groups, people, and relationships
 			can :index, [Group, Person, Relationship]
+
+			# Anyone can view search results
+			can :search, Group
 
 			# Anyone can view search results
 			can :search, Person

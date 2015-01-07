@@ -34,7 +34,9 @@ Sdfb::Application.routes.draw do
   root :to => "home#index"
 
 
-  match '/search', :to => 'people#search'
+  match '/people_search', :to => 'people#search'
+
+  match '/group_search', :to => 'groups#search'
   
   resources :users
   
@@ -62,8 +64,24 @@ Sdfb::Application.routes.draw do
 
   resources :user_rel_contribs
 
-  match '/people_export' => 'people#export_people'
+  # Routing for people record export
+  match '/export_groups' => 'groups#export_groups'
 
+  # Routing for people record export
+  match '/export_people' => 'people#export_people'
+
+  # Routing for relationship record export
+  get "export_relationships" => "relationships#export_relationships", :as => "export_relationships"
+  match '/relationships_100000000_100020000' => 'relationships#export_rels_for_rels_100000000_100020000'
+  match '/relationships_100020001_100040000' => 'relationships#export_rels_for_rels_100020001_100040000'
+  match '/relationships_100040001_100060000' => 'relationships#export_rels_for_rels_100040001_100060000'
+  match '/relationships_100060001_100080000' => 'relationships#export_rels_for_rels_100060001_100080000'
+  match '/relationships_100080001_100100000' => 'relationships#export_rels_for_rels_100080001_100100000'
+  match '/relationships_100100001_100120000' => 'relationships#export_rels_for_rels_100100001_100120000'
+  match '/relationships_100120001_100140000' => 'relationships#export_rels_for_rels_100120001_100140000'
+  match '/relationships_100140001_100160000' => 'relationships#export_rels_for_rels_100140001_100160000'
+  match '/relationships_100160001_100180000' => 'relationships#export_rels_for_rels_100160001_100180000'
+  match '/relationships_greater_than_100180000' => 'relationships#export_rels_for_rels_greater_than_100180000'
 
   # main resources  # The priority is based upon order of creation:
   # first created -> highest priority.
