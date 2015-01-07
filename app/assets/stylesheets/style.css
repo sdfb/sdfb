@@ -80,6 +80,11 @@ header a:hover {
   padding:0px 10px 0px 10px;
 }*/
 
+#filterBar .talkPageLink{
+  max-width: 30px;
+  display:inline;
+}
+
 #everything {
 
 }
@@ -321,37 +326,36 @@ a:hover {
 }
 
 
+.nav-hover{
+  position:absolute;
+  top:40px;
+  left:400px;
+  z-index:10;
+  background-color:#FBF3E1; 
+  max-width:250px; 
+  padding: 5px 10px;
+  display:none;
+}
 
+.nav-hover article{
+  line-height: 14px;
+  text-transform: capitalize;
+  font-height: 14px;
+  letter-spacing: normal;
+  text-align: center;
+  width: 100%;
+}
+
+.nav-hover .slider-result{
+  width:auto;
+}
+
+.nav-hover .slider{
+  margin:0px;
+}
 
 /* Navigation Menu */
-/*
-#user_nav{
-	background-color:white;
-	display:block;
-	overflow:hidden;
-	padding:0px 10px 0px 0px;
-}
 
-#sign{
-	float:right;
-	display:block;
-	text-transform: uppercase;
-	line-height:34px;
-}
-
-#logo{
-	float:left;
-	height:34px;
-}
-
-.links{
-	float:right;
-	display:block;
-	line-height:34px;
-	padding:0px 10px 0px 10px;
-}
-
-*/
 
 #container{
 	width:800px;

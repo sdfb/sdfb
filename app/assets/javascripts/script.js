@@ -80,7 +80,7 @@ $(document).ready(function() {
     });
 
  //  Sliding animation
-	$(".slider").slider({
+	$("#node-slider").slider({
         animate: true,
         range: "min",
         value: 60,
@@ -101,6 +101,30 @@ $(document).ready(function() {
             }
             $("#slider-result1").html( result + " relationships @ " + ui.value + "%");
             $("#slider-result-hidden1").val(ui.value);
+        }
+    });
+
+    $("#nav-slider").slider({
+        animate: true,
+        range: "min",
+        value: 60,
+        min: 0,
+        max: 100,
+        step: 1,
+        // Gets a live reading of the value and prints it on the page
+        slide: function( event, ui ) {
+            var result = "Very unlikely";
+            if (ui.value > 19 && ui.value < 40) {
+                result = "Unlikely";
+            } else if (ui.value > 39 && ui.value < 60) {
+                result = "Possible";
+            } else if (ui.value > 59 && ui.value < 80) {
+                result = "Likely";
+            } else if (ui.value > 79){
+                result = "Certain"
+            }
+            $("#slidenav-result1").html( result + " relationships @ " + ui.value + "%");
+            $("#slidenav-result-hidden1").val(ui.value);
         }
     });
 
@@ -133,6 +157,21 @@ $(document).ready(function() {
                     }
         });
         $( "#search-date-range2" ).val( $( ".slider-date2" ).slider( "values", 0 ) + " - " + $( ".slider-date2" ).slider( "values", 1 ) );
+
+        //  Sliding animation
+        $("#navslider2").slider({
+                    animate: true,
+                    range: "min",
+                    value: 3,
+                    min: 1500,
+                    max: 1700,
+                    step: 1,
+                    values: [ 1557, 1642 ],
+                    slide: function( event, ui ) {
+                        $( "#nav-date-range2" ).val( ui.values[ 0 ] + " - " + ui.values[ 1 ] );
+                    }
+        });
+        $( "#nav-date-range2" ).val( $( "#navslider2" ).slider( "values", 0 ) + " - " + $( "#navslider2" ).slider( "values", 1 ) );
 	
         $("#slider1").change(function () {                    
         var newValue = $('#slider1').val();
@@ -147,5 +186,15 @@ $(document).ready(function() {
                 result = "Certain"
             }
         $("#formConfidence").html(result + " relationships @ " + newValue + "%");
-    });
+        });
+
+        $("#certainty-anchor").click(function() {
+            $("#nav-certainty-slider").toggle( "slow", function() {
+            });
+        });
+
+        $("#date-anchor").click(function() {
+            $("#nav-date").toggle( "slow", function() {
+            });
+        });
 });
