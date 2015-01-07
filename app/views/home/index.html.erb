@@ -11,9 +11,19 @@
 	<div id="filterBar">
 		<ul>
 			<li>Filter By: &nbsp;</li>
-				<li>Certainty&nbsp;</li>
-				<li>Date&nbsp;</li>
+			<li><a id="certainty-anchor">Certainty&nbsp;</a></li>
+			<li><a id="date-anchor">Date&nbsp;</a></li>
+			<li><a class="talkPageLink" type="button" id="nav-filter" name="nav-node">Find</a></li>
 		</ul>
+		<div id="nav-certainty-slider" class="nav-hover">
+			<span id="slidenav" ><article id="nav-slider" class="slider" name="1"></article></span>
+			<article class="slider-result" id="slidenav-result1">Likely relationships @ 70%</article>
+			<input id="slidenav-result-hidden1" type="hidden" value="70"/>
+		</div>
+		<div id="nav-date" class="nav-hover">
+			<label for="nav-date-range">Date Range:</label><input type="text" id="nav-date-range2">
+			<span id="slidenav2" ><article id="navslider2"class="slider-date" name="2"></article></span>
+		</div>
 	</div>
 
 
@@ -54,7 +64,7 @@
 
 				<section id="onenodeform">
 					<input class="form-control" type="text" id="one" placeholder="Name">
-					<span id="slide1" ><article class="slider" name="1"></article></span>
+					<span id="slide1" ><article id="node-slider"class="slider" name="1"></article></span>
 					<article class="slider-result" id="slider-result1">Likely relationships @ 70%</article>
 					<input id="slider-result-hidden1" type="hidden" value="70"/>
 					<label for="search-date-range">Date Range:</label><input type="text" id="search-date-range1">
