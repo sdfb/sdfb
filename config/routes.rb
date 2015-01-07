@@ -33,10 +33,11 @@ Sdfb::Application.routes.draw do
   # set the root
   root :to => "home#index"
 
-
   match '/people_search', :to => 'people#search'
 
   match '/group_search', :to => 'groups#search'
+
+  match '/relationship_search', :to => 'relationships#search'
   
   resources :users
   

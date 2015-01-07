@@ -45,6 +45,56 @@ class Relationship < ActiveRecord::Base
     lambda {|person1ID, person2ID| 
     select('relationships.*')
     .where('((person1_index = ?) or (person2_index = ?)) and ((person1_index = ?) or (person2_index = ?))', person1ID, person1ID, person2ID, person2ID)}
+  scope :for_2_people_first_last_name_exact_approved,
+    lambda {|person1FirstName, person1LastName, person2FirstName, person2LastName| 
+      select('relationships.*')
+      .joins('join people p1 on relationships.person1_index = p1.id')
+      .joins('join people p2 on relationships.person2_index = p2.id')
+      .where("((p1.first_name like '#{person1FirstName}' AND p1.last_name like '#{person1LastName}')
+        or
+          (p2.first_name like '#{person1FirstName}' AND p2.last_name like '#{person1LastName}'))
+        and
+          ((p1.first_name like '#{person2FirstName}' AND p1.last_name like '#{person2LastName}')
+        or
+          (p2.first_name like '#{person2FirstName}' AND p2.last_name like '#{person2LastName}'))")
+      .where("relationships.approved_by is not null")}
+  scope :for_2_people_first_last_name_exact,
+    lambda {|person1FirstName, person1LastName, person2FirstName, person2LastName| 
+      select('relationships.*')
+      .joins('join people p1 on relationships.person1_index = p1.id')
+      .joins('join people p2 on relationships.person2_index = p2.id')
+      .where("((p1.first_name like '#{person1FirstName}' AND p1.last_name like '#{person1LastName}')
+        or
+          (p2.first_name like '#{person1FirstName}' AND p2.last_name like '#{person1LastName}'))
+        and
+          ((p1.first_name like '#{person2FirstName}' AND p1.last_name like '#{person2LastName}')
+        or
+          (p2.first_name like '#{person2FirstName}' AND p2.last_name like '#{person2LastName}'))")}
+  scope :for_2_people_first_last_name_similar_approved,
+    lambda {|person1FirstName, person1LastName, person2FirstName, person2LastName| 
+      select('relationships.*')
+      .joins('join people p1 on relationships.person1_index = p1.id')
+      .joins('join people p2 on relationships.person2_index = p2.id')
+      .where("((p1.first_name like '%#{person1FirstName}%' AND p1.last_name like '%#{person1LastName}%')
+        or
+          (p2.first_name like '%#{person1FirstName}%' AND p2.last_name like '%#{person1LastName}%'))
+        and
+          ((p1.first_name like '%#{person2FirstName}%' AND p1.last_name like '%#{person2LastName}%')
+        or
+          (p2.first_name like '%#{person2FirstName}%' AND p2.last_name like '%#{person2LastName}%'))")
+      .where("relationships.approved_by is not null")}
+  scope :for_2_people_first_last_name_similar,
+    lambda {|person1FirstName, person1LastName, person2FirstName, person2LastName| 
+      select('relationships.*')
+      .joins('join people p1 on relationships.person1_index = p1.id')
+      .joins('join people p2 on relationships.person2_index = p2.id')
+      .where("((p1.first_name like '%#{person1FirstName}%' AND p1.last_name like '%#{person1LastName}%')
+        or
+          (p2.first_name like '%#{person1FirstName}%' AND p2.last_name like '%#{person1LastName}%'))
+        and
+          ((p1.first_name like '%#{person2FirstName}%' AND p1.last_name like '%#{person2LastName}%')
+        or
+          (p2.first_name like '%#{person2FirstName}%' AND p2.last_name like '%#{person2LastName}%'))")}
   scope :for_rels_100000000_100020000, where("id between 100000000 and 100020000")
   scope :for_rels_100020001_100040000, where("id between 100020001 and 100040000")
   scope :for_rels_100040001_100060000, where("id between 100040001 and 100060000")
@@ -266,5 +316,143 @@ class Relationship < ActiveRecord::Base
       end
     end
     Person.update(person2_index, rel_sum: person2_current_rel_sum)
+  end
+
+
+
+  # searches for people by name
+  def self.search_approved(person1Query, person2Query)
+    if person1Query && person2Query
+      #check that each result in the array is unique
+      uniqueArray = []
+
+      searchResultArray = [] 
+      #allow searches by person id
+      searchIdResult = Relationship.all_approved.for_2_people(person1Query.to_i, person2Query.to_i)
+      if (! searchIdResult.blank?)
+        if (! uniqueArray.include?(searchIdResult[0].id))
+          searchResultArray.push(searchIdResult[0])
+          uniqueArray.push(searchIdResult[0].id)
+        end
+      end
+
+      #separate search into several words
+      person1Array = person1Query.split(" ")
+      person2Array = person2Query.split(" ")
+
+      #Add exact search for first person and second person first two words
+      if ((person1Array.length >= 2) && (person2Array.length >= 2))
+        exactResult = Relationship.for_2_people_first_last_name_exact_approved(person1Array[0].capitalize, person1Array[1].capitalize, person2Array[0].capitalize, person2Array[1].capitalize)
+        if (! exactResult.blank?)
+          if (! uniqueArray.include?(exactResult[0].id))
+            searchResultArray.push(exactResult[0])
+            uniqueArray.push(exactResult[0].id)
+          end
+        end
+      end
+
+      #Add exact search for first person and second person first two words
+      if ((person1Array.length >= 2) && (person2Array.length >= 2))
+        exactResult = Relationship.for_2_people_first_last_name_exact_approved(person1Array[0], person1Array[1], person2Array[0], person2Array[1])
+        if (! exactResult.blank?)
+          if (! uniqueArray.include?(exactResult[0].id))
+            searchResultArray.push(exactResult[0])
+            uniqueArray.push(exactResult[0].id)
+          end
+        end
+      end
+
+      #Add similar search for first person and second person first two words
+      if ((person1Array.length >= 2) && (person2Array.length >= 2))
+        exactResult = Relationship.for_2_people_first_last_name_similar_approved(person1Array[0].capitalize, person1Array[1].capitalize, person2Array[0].capitalize, person2Array[1].capitalize)
+        if (! exactResult.blank?)
+          if (! uniqueArray.include?(exactResult[0].id))
+            searchResultArray.push(exactResult[0])
+            uniqueArray.push(exactResult[0].id)
+          end
+        end
+      end
+
+      #Add similar search for first person and second person first two words
+      if ((person1Array.length >= 2) && (person2Array.length >= 2))
+        exactResult = Relationship.for_2_people_first_last_name_similar_approved(person1Array[0], person1Array[1], person2Array[0], person2Array[1])
+        if (! exactResult.blank?)
+          if (! uniqueArray.include?(exactResult[0].id))
+            searchResultArray.push(exactResult[0])
+            uniqueArray.push(exactResult[0].id)
+          end
+        end
+      end
+
+      return searchResultArray
+    end
+  end
+
+  # searches for people by name
+  def self.search_all(person1Query, person2Query)
+    if person1Query && person2Query
+      #check that each result in the array is unique
+      uniqueArray = []
+
+      searchResultArray = [] 
+      #allow searches by person id
+      searchIdResult = Relationship.for_2_people(person1Query.to_i, person2Query.to_i)
+      if (! searchIdResult.blank?)
+        if (! uniqueArray.include?(searchIdResult[0].id))
+          searchResultArray.push(searchIdResult[0])
+          uniqueArray.push(searchIdResult[0].id)
+        end
+      end
+
+      #separate search into several words
+      person1Array = person1Query.split(" ")
+      person2Array = person2Query.split(" ")
+
+      #Add exact search for first person and second person first two words
+      if ((person1Array.length >= 2) && (person2Array.length >= 2))
+        exactResult = Relationship.for_2_people_first_last_name_exact(person1Array[0].capitalize, person1Array[1].capitalize, person2Array[0].capitalize, person2Array[1].capitalize)
+        if (! exactResult.blank?)
+          if (! uniqueArray.include?(exactResult[0].id))
+            searchResultArray.push(exactResult[0])
+            uniqueArray.push(exactResult[0].id)
+          end
+        end
+      end
+
+      #Add exact search for first person and second person first two words
+      if ((person1Array.length >= 2) && (person2Array.length >= 2))
+        exactResult = Relationship.for_2_people_first_last_name_exact(person1Array[0], person1Array[1], person2Array[0], person2Array[1])
+        if (! exactResult.blank?)
+          if (! uniqueArray.include?(exactResult[0].id))
+            searchResultArray.push(exactResult[0])
+            uniqueArray.push(exactResult[0].id)
+          end
+        end
+      end
+
+      #Add similar search for first person and second person first two words
+      if ((person1Array.length >= 2) && (person2Array.length >= 2))
+        exactResult = Relationship.for_2_people_first_last_name_similar(person1Array[0].capitalize, person1Array[1].capitalize, person2Array[0].capitalize, person2Array[1].capitalize)
+        if (! exactResult.blank?)
+          if (! uniqueArray.include?(exactResult[0].id))
+            searchResultArray.push(exactResult[0])
+            uniqueArray.push(exactResult[0].id)
+          end
+        end
+      end
+
+      #Add similar search for first person and second person first two words
+      if ((person1Array.length >= 2) && (person2Array.length >= 2))
+        exactResult = Relationship.for_2_people_first_last_name_similar(person1Array[0], person1Array[1], person2Array[0], person2Array[1])
+        if (! exactResult.blank?)
+          if (! uniqueArray.include?(exactResult[0].id))
+            searchResultArray.push(exactResult[0])
+            uniqueArray.push(exactResult[0].id)
+          end
+        end
+      end
+
+      return searchResultArray
+    end
   end
 end

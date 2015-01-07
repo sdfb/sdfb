@@ -1,0 +1,44 @@
+<h1>All relationship search results for "<%= @person1Query %>" and "<%= @person2Query %>"</h1>
+
+<div class="well">
+  <%= render 'rel_search_box' %>
+</div>
+<br>
+<%if ((@person1Query != "") && (@person2Query != "")) %>
+  	<% if ! @all_results.empty? %>
+		<table class="table table-condensed">
+		  <thead>
+		    <tr>
+		      <th>Relationship id</th>
+		      <th>Person 1</th>
+		      <th>Person 2</th>
+		      <th>Maximum Certainty</th>
+		      <th><%=t '.actions', :default => t("helpers.actions") %></th>
+		    </tr>
+		  </thead>
+		  <tbody>
+		    <% @all_results.each do |relationship| %>
+		      <tr>
+		        <td><%= relationship.id %></td>
+		        <td><%= link_to relationship.get_person1_name, person_path(relationship.person1_index) %></td>
+		        <td><%= link_to relationship.get_person2_name, person_path(relationship.person2_index) %></td>
+		        <td><%= relationship.max_certainty %>%</td>
+		        <td>
+		          <% if can? :show, relationship %>
+		            <%= link_to 'Show', relationship, :class => 'btn btn-mini'  %>
+		          <% end %>
+		          <% if can? :update, relationship %>
+		            <%= link_to t('.edit', :default => t("helpers.links.edit")),
+		                        edit_relationship_path(relationship), :class => 'btn btn-mini' %>
+		          <% end %>
+		        </td>
+		      </tr>
+		    <% end %>
+		  </tbody>
+		</table>
+
+		<%= will_paginate @all_results, :param_name => 'all_results_page', :previous_label => "Previous&nbsp;", :next_label => "&nbsp;Next" %>
+	<% else %>
+		No relationship search results.
+	<% end %>
+<% end %>

@@ -36,6 +36,9 @@ class Ability
 			# Curators can view search results
 			can :search, Person
 
+			# Curators can view search results
+			can :search, Relationship
+
 			# A user can download groups data
 			can :export_groups, Group
 
@@ -127,6 +130,9 @@ class Ability
 			# A user can view search results
 			can :search, Person
 
+			# Curators can view search results
+			can :search, Relationship
+
 			# A user can download groups data
 			can :export_groups, Group
 
@@ -158,6 +164,9 @@ class Ability
 
 			# Anyone can view search results
 			can :search, Person
+
+			# Curators can view search results
+			can :search, Relationship
 
 			# Anyone can view the details of a groups, people, and relationships
 			can :show, [Group, Person, Relationship], :is_approved => true

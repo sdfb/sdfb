@@ -1,4 +1,8 @@
-<h1>All Relationships <%= link_to 'New Relationship', new_relationship_path, :class => 'btn btn-primary' %><%=link_to 'Export Relationships', '/export_relationships', :class => 'btn btn-primary'%></h1><br>
+<h1>All Relationships <%= link_to 'New Relationship', new_relationship_path, :class => 'btn btn-primary' %><%=link_to 'Export Relationships', '/export_relationships', :class => 'btn btn-primary'%></h1>
+<div class="well">
+  <%= render 'rel_search_box' %>
+</div>
+<br>
 <table class="table table-condensed">
   <thead>
     <tr>
