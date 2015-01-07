@@ -5,7 +5,9 @@
 
       <ul>
       <% @group_category.errors.full_messages.each do |msg| %>
-        <li><%= msg %></li>
+        <br>
+          <li>- <%= msg %></li>
+        <br>
       <% end %>
       </ul>
     </div>

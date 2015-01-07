@@ -3,7 +3,7 @@ namespace :db do
   # executing 'rake db:populate_user_rel_contribs_samples' will cause this script to run
   task :populate_user_rel_contribs_samples => :environment do 
     puts "Adding user relationship contribution samples..."
-    inFile = File.new("lib/data/user_rel_contrib_samples2.tsv",'r')
+    inFile = File.new("lib/data/user_rel_contrib_samples.tsv",'r')
     count = 0
     puts inFile
     inFile.each { |line|
