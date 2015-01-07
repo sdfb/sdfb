@@ -141,7 +141,7 @@ class Person < ActiveRecord::Base
 
       searchResultArray = [] 
       #allow searches by person id
-      searchIdResult = Person.for_id(search.to_i).all_approved
+      searchIdResult = Person.all_approved.for_id(search.to_i)
       if (! searchIdResult.blank?)
         if (! uniqueArray.include?(searchIdResult[0].id))
           searchResultArray.push(searchIdResult[0])
@@ -154,7 +154,7 @@ class Person < ActiveRecord::Base
 
       #Add exact search for first two words
       if (searchArray.length >= 2)
-        exactResult = for_first_and_last_name(searchArray[0].capitalize, searchArray[1].capitalize).all_approved
+        exactResult = Person.all_approved.for_first_and_last_name(searchArray[0].capitalize, searchArray[1].capitalize)
         if (! exactResult.blank?)
           if (! uniqueArray.include?(exactResult[0].id))
             searchResultArray.push(exactResult[0])
@@ -165,7 +165,7 @@ class Person < ActiveRecord::Base
 
       #Add exact search for first two words
       if (searchArray.length >= 2)
-        exactResult = for_first_and_last_name(searchArray[0], searchArray[1]).all_approved
+        exactResult = Person.all_approved.for_first_and_last_name(searchArray[0], searchArray[1])
         if (! exactResult.blank?)
           if (! uniqueArray.include?(exactResult[0].id))
             searchResultArray.push(exactResult[0])
@@ -176,7 +176,7 @@ class Person < ActiveRecord::Base
       
       #Add similar search for first two words
       if (searchArray.length >= 2)
-        exactResult = for_similar_first_and_last_name(searchArray[0].capitalize, searchArray[1].capitalize).all_approved
+        exactResult = Person.all_approved.for_similar_first_and_last_name(searchArray[0].capitalize, searchArray[1].capitalize)
         if (! exactResult.blank?)
           if (! uniqueArray.include?(exactResult[0].id))
             searchResultArray.push(exactResult[0])
@@ -187,7 +187,7 @@ class Person < ActiveRecord::Base
 
       #Add similar search for first two words
       if (searchArray.length >= 2)
-        exactResult = for_similar_first_and_last_name(searchArray[0], searchArray[1]).all_approved
+        exactResult = Person.all_approved.for_similar_first_and_last_name(searchArray[0], searchArray[1])
         if (! exactResult.blank?)
           if (! uniqueArray.include?(exactResult[0].id))
             searchResultArray.push(exactResult[0])
@@ -198,7 +198,7 @@ class Person < ActiveRecord::Base
 
       #for each word add search results
       searchArray.each do |searchWord|
-        searchResult = for_first_or_last_name(searchWord.capitalize).all_approved
+        searchResult = Person.all_approved.for_first_or_last_name(searchWord.capitalize)
         if (! searchResult.blank?)
           searchResult.each do |searchResultRecord|
             if (! uniqueArray.include?(searchResultRecord.id))

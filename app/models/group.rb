@@ -93,7 +93,7 @@ class Group < ActiveRecord::Base
 
       #for each word add exact search results
       searchArray.each do |searchWord|
-        searchResult = exact_name_match(searchWord.capitalize).all_approved
+        searchResult = Group.all_approved.exact_name_match(searchWord.capitalize)
         if (! searchResult.blank?)
           searchResult.each do |searchResultRecord|
             if (! uniqueArray.include?(searchResultRecord.id))
@@ -106,7 +106,7 @@ class Group < ActiveRecord::Base
 
       #for each word add exact search results
       searchArray.each do |searchWord|
-        searchResult = exact_name_match(searchWord).all_approved
+        searchResult = Group.all_approved.exact_name_match(searchWord)
         if (! searchResult.blank?)
           searchResult.each do |searchResultRecord|
             if (! uniqueArray.include?(searchResultRecord.id))
@@ -119,7 +119,7 @@ class Group < ActiveRecord::Base
 
       #for each word add similar search results
       searchArray.each do |searchWord|
-        searchResult = similar_name_match(searchWord.capitalize).all_approved
+        searchResult = Group.all_approved.similar_name_match(searchWord.capitalize)
         if (! searchResult.blank?)
           searchResult.each do |searchResultRecord|
             if (! uniqueArray.include?(searchResultRecord.id))
@@ -132,7 +132,7 @@ class Group < ActiveRecord::Base
 
       #for each word add similar search results
       searchArray.each do |searchWord|
-        searchResult = similar_name_match(searchWord).all_approved
+        searchResult = Group.all_approved.similar_name_match(searchWord)
         if (! searchResult.blank?)
           searchResult.each do |searchResultRecord|
             if (! uniqueArray.include?(searchResultRecord.id))
