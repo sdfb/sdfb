@@ -12,7 +12,11 @@
 }
 
 .navbar .nav>li>a:visited {
-  color: #CAE4E1 important!;
+  color: #CAE4E1;
+}
+
+.navbar .nav>li>a:focus { 
+  color: #CAE4E1;
 }
 
 body {
