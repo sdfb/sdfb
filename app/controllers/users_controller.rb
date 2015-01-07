@@ -78,6 +78,16 @@ class UsersController < ApplicationController
     end
   end
 
+  def dashboard
+    @unapproved_people = Person.all_unapproved.paginate(:page => params[:unapproved_people_page]).per_page(5)
+    @unapproved_groups = Group.all_unapproved.paginate(:page => params[:unapproved_groups_page]).per_page(5)
+    @unapproved_relationships = Relationship.all_unapproved.paginate(:page => params[:unapproved_relationships_page]).per_page(5)
+    @unapproved_group_assigns = GroupAssignment.all_unapproved.paginate(:page => params[:unapproved_group_assigns_page]).per_page(5)
+    @unapproved_user_group_contribs = UserGroupContrib.all_unapproved.paginate(:page => params[:unapproved_user_group_contribs_page]).per_page(5)
+    @unapproved_user_rel_contribs = UserRelContrib.all_unapproved.paginate(:page => params[:unapproved_user_rel_contribs_page]).per_page(5)
+    @unapproved_user_person_contribs = UserPersonContrib.all_unapproved.paginate(:page => params[:unapproved_user_person_contribs_page]).per_page(5)
+  end
+
   # DELETE /users/1
   # DELETE /users/1.json
   # def destroy

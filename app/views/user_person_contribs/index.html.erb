@@ -1,4 +1,4 @@
-<h1>All User Person Contributions <%= link_to 'New User Person Contribution', new_user_person_contrib_path, :class => 'btn btn-primary' %></h1><br>
+<h1>All People Annotations <%= link_to 'New User Person Contribution', new_user_person_contrib_path, :class => 'btn btn-primary' %></h1><br>
 
 <% if ! @user_person_contribs.empty? %>
   <table class="table table-condensed">
@@ -35,6 +35,6 @@
   <%= will_paginate @user_person_contribs, :param_name => 'user_person_contribs_page', :previous_label => "Previous&nbsp;", :next_label => "&nbsp;Next" %>
 <% else %>
   <div class = "well">
-    No User Person Contributions exist.
+    No people annotations exist.
   </div>
 <% end %>

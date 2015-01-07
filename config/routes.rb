@@ -30,6 +30,8 @@ Sdfb::Application.routes.draw do
   get "test" => "home#test", :as => "test"
   get "home/index"
 
+  get "dashboard" => "users#dashboard", :as => "dashboard"
+
   # set the root
   root :to => "home#index"
 

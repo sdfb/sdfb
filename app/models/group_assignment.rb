@@ -11,6 +11,7 @@ class GroupAssignment < ActiveRecord::Base
   # Scope
   # ----------------------------- 
   scope :all_approved, where("approved_by is not null")
+  scope :all_unapproved, where("approved_by is null")
   scope :all_for_person, 
     lambda {|personID| 
       select('group_assignments.*')

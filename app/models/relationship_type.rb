@@ -19,6 +19,7 @@ class RelationshipType < ActiveRecord::Base
   # Scope
   # ----------------------------- 
   scope :all_approved, where("approved_by is not null")
+  scope :all_unapproved, where("approved_by is null")
 
   # Callbacks
   # ----------------------------- 
