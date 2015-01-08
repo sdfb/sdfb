@@ -18,6 +18,7 @@ class GroupCatAssign < ActiveRecord::Base
   scope :all_approved, where("approved_by is not null")
   scope :all_unapproved, where("approved_by is null")
   scope :for_group, lambda {|group_id_input| where('group_id = ?', "#{group_id_input}") }
+  scope :for_group_category, lambda {|group_category_id_input| where('group_category_id = ?', "#{group_category_id_input}") }
 
   # Callbacks
   # ----------------------------- 
