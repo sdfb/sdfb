@@ -246,7 +246,7 @@ a:hover {
 /*CONFIDENCE SLIDER*/
 #container {
   display: inline-block;
-  padding: 100px 50px 0px 50px;
+  padding: 0px;
   position: absolute;
   left: 0;
   right: 0;
