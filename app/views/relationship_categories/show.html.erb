@@ -40,3 +40,43 @@
       </dl>
     </div>
   </div>
+  <div class = "span7">
+    <div class="well">
+      <h2>All Relationship Type Assignments for <%= @relationship_category.name %><% if ! current_user.nil? && (current_user.user_type == "Admin")%><%= link_to 'New Relationship Type Assignment', new_rel_cat_assign_path(:rel_cat_id => @relationship_category.id), :class => 'btn btn-primary btn-mini' %><% end %></h2><br>
+      <% if ! @rel_cat_assigns_approved.empty? %>
+        <table class="table table-condensed">
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Relationship</th>
+              <th>Category</th>
+              <th><%=t '.actions', :default => t("helpers.actions") %></th>
+            </tr>
+          </thead>
+          <tbody>
+            <% @rel_cat_assigns_approved.each do |rel_cat_assign| %>
+              <tr>
+                <td><%= rel_cat_assign.id %></td>
+                <td><%= link_to RelationshipType.find(rel_cat_assign.relationship_type_id).name, relationship_type_path(rel_cat_assign.relationship_type_id) %></td>
+                <td><%= link_to RelationshipCategory.find(rel_cat_assign.relationship_category_id).name, relationship_category_path(rel_cat_assign.relationship_category_id) %></td>
+                <td>
+                  <% if can? :show, rel_cat_assign %>
+                    <%= link_to 'Show', rel_cat_assign, :class => 'btn btn-mini' %>
+                  <% end %>
+                  <% if can? :update, rel_cat_assign %>
+                    <%= link_to t('.edit', :default => t("helpers.links.edit")),
+                                    edit_rel_cat_assign_path(rel_cat_assign), :class => 'btn btn-mini' %>
+                  <% end %>
+                </td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+
+        <%= will_paginate @rel_cat_assigns_approved, :param_name => 'rel_cat_assigns_approved_page', :previous_label => "Previous&nbsp;", :next_label => "&nbsp;Next" %>
+      <% else %>
+        No relationship type assignments exist.
+      <% end %>
+    </div>
+  </div>
+</div>

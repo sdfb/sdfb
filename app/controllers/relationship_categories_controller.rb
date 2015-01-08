@@ -17,6 +17,7 @@ class RelationshipCategoriesController < ApplicationController
   # GET /relationship_categories/1.json
   def show
     @relationship_category = RelationshipCategory.find(params[:id])
+    @rel_cat_assigns_approved = RelCatAssign.all_approved.for_rel_cat(params[:id]).paginate(:page => params[:rel_cat_assigns_approved_page]).per_page(20)
 
     respond_to do |format|
       format.html # show.html.erb
