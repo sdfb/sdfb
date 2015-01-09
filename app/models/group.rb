@@ -88,6 +88,15 @@ class Group < ActiveRecord::Base
         end
       end
 
+      #check for exact matches for the entire string
+      searchExactResult = Group.all_approved.exact_name_match(search)
+      if (! searchExactResult.blank?)
+        if (! uniqueArray.include?(searchExactResult[0].id))
+          searchResultArray.push(searchExactResult[0])
+          uniqueArray.push(searchExactResult[0].id)
+        end
+      end
+
       #separate search into several words
       searchArray = search.split(" ")
 

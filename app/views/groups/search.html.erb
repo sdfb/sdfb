@@ -7,36 +7,36 @@
 <% if ! @query.blank? %>
   	<% if ! @all_results.empty? %>
 		<table class="table table-condensed">
-		<thead>
-		  <tr>
-		    <th>Group ID </th>
-		    <th>Name</th>
-		    <th>Description</th>
-		    <th>Start Year</th>
-		    <th>End Year</th>
-		    <th><%=t '.actions', :default => t("helpers.actions") %></th>
-		  </tr>
-		</thead>
-		<tbody>
-		  <% @all_results.each do |group| %>
-		    <tr>
-		      <td><%= group.id %></td>
-		      <td><%= group.name %></td>
-		      <td><%= group.description %></td>
-		      <td><%= group.start_year %></td>
-		      <td><%= group.end_year %></td>
-		      <td>
-		        <% if can? :show, group %>
-		          <%= link_to 'Show', group, :class => 'btn btn-mini' %>
-		        <% end %>
-		        <% if can? :update, group %>
-		          <%= link_to t('.edit', :default => t("helpers.links.edit")),
-		                          edit_group_path(group), :class => 'btn btn-mini' %>
-		        <% end %>
-		      </td>
-		    </tr>
-		  <% end %>
-		</tbody>
+			<thead>
+			  <tr>
+			    <th>Group ID </th>
+			    <th>Name</th>
+			    <th>Description</th>
+			    <th>Start Year</th>
+			    <th>End Year</th>
+			    <th><%=t '.actions', :default => t("helpers.actions") %></th>
+			  </tr>
+			</thead>
+			<tbody>
+			  <% @all_results.each do |group| %>
+			    <tr>
+			      <td><%= group.id %></td>
+			      <td><%= group.name %></td>
+			      <td><%= group.description %></td>
+			      <td><%= group.start_year %></td>
+			      <td><%= group.end_year %></td>
+			      <td>
+			        <% if can? :show, group %>
+			          <%= link_to 'Show', group, :class => 'btn btn-mini' %>
+			        <% end %>
+			        <% if can? :update, group %>
+			          <%= link_to t('.edit', :default => t("helpers.links.edit")),
+			                          edit_group_path(group), :class => 'btn btn-mini' %>
+			        <% end %>
+			      </td>
+			    </tr>
+			  <% end %>
+			</tbody>
 		</table>
 
 		<%= will_paginate @all_results, :param_name => 'all_results_page', :previous_label => "Previous&nbsp;", :next_label => "&nbsp;Next" %>
