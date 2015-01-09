@@ -1,8 +1,10 @@
 //var francisID = 10000473;
 var francisID = 10000473;
-var default_confidence = 75;
-var default_sdate = 1500;
-var default_edate = 1700;
+//var default_confidence = 75;
+//showing all relationships with a confidence of at least 1%
+var default_confidence = 40;
+var default_sdate = 1400;
+var default_edate = 1800;
     // group class
     
 function createGroup() {
@@ -159,30 +161,30 @@ function twoDegs(id, data, confidence, sdate, edate) {
         if (notInArray(edges, [p.id, q.id])) {
           edges.push([p.id, q.id]);
         }
-              if (q && q.rels.length > 0) {
-                $.each(q.rels, function(index, value) {
-                  if (value[2] != 0 && value[1] >= confidence && sdate < births[ids.indexOf(value[0])] && edate > births[ids.indexOf(value[0])]) { //checks again if relationship id is not zero and confidence is greater than 0.75
-                    console.log("q");
-                    var r = data.nodes[value[0]]; //sets r as data from person id referenced in relationship array
-                    keys[r.id] = createNodeKey(r); //puts nodekey in array for person 2's id
-                    if (notInArray(edges, [q.id, r.id])) {
-                        edges.push([q.id, r.id]);
-                    }
-                    if (r && r.rels.length > 0) { //repeats above code for person 2, finding 2nd deg relationships
-                      $.each(r.rels, function(index, value) {
-                        if (value[2] != 0 && value[1] >= confidence && sdate < births[ids.indexOf(value[0])] && edate > births[ids.indexOf(value[0])]) {
-                          console.log("r");
-                          var s = data.nodes[value[0]];
-                          keys[s.id] = createNodeKey(s);
-                          if (s && (s.id in keys) && notInArray(edges, [r.id, s.id])) {
-                            edges.push([r.id, s.id]);
-                          }
-                        }
-                      });
-                    }
-                  }
-                });  
-              }
+              // if (q && q.rels.length > 0) {
+              //   $.each(q.rels, function(index, value) {
+              //     if (value[2] != 0 && value[1] >= confidence && sdate < births[ids.indexOf(value[0])] && edate > births[ids.indexOf(value[0])]) { //checks again if relationship id is not zero and confidence is greater than 0.75
+              //       console.log("q");
+              //       var r = data.nodes[value[0]]; //sets r as data from person id referenced in relationship array
+              //       keys[r.id] = createNodeKey(r); //puts nodekey in array for person 2's id
+              //       if (notInArray(edges, [q.id, r.id])) {
+              //           edges.push([q.id, r.id]);
+              //       }
+              //       if (r && r.rels.length > 0) { //repeats above code for person 2, finding 2nd deg relationships
+              //         $.each(r.rels, function(index, value) {
+              //           if (value[2] != 0 && value[1] >= confidence && sdate < births[ids.indexOf(value[0])] && edate > births[ids.indexOf(value[0])]) {
+              //             console.log("r");
+              //             var s = data.nodes[value[0]];
+              //             keys[s.id] = createNodeKey(s);
+              //             if (s && (s.id in keys) && notInArray(edges, [r.id, s.id])) {
+              //               edges.push([r.id, s.id]);
+              //             }
+              //           }
+              //         });
+              //       }
+              //     }
+              //   });  
+              // }
             } 
         });
 		//adds main person's id referenced to keys associative array. Keys represent all data in graph
@@ -371,9 +373,11 @@ function filterGraph(data){
 
 }
 
-function initGraph(data){
-  var names = peopletoarray(data);
-  var ids = idstoarray(data);
+function initGraph(data, allPeopleNamesData){
+  //var names = peopletoarray(data);
+  //var ids = idstoarray(data);
+  var names = peopletoarray(allPeopleNamesData);
+  var ids = idstoarray(allPeopleNamesData);
   //click methods for all the 'find' buttons in the search bar
   $("#findonenode").click(function () {
   	var table = 'no'
@@ -498,10 +502,16 @@ function initGraph(data){
 }
 
 function init() {
+  //This file only contains the data for the searched person and 1st degree relationships
   var people = gon.people;
+  //This file contains all the id, first_name, last_name, ext_birth_year, prefix, suffix, and title for every person in the database
+  var all_people = gon.people_list;
 
 	var data = { nodes: [], edges: [], groups_names: [], nodeKeys: [] };
-  
+
+  var allPeopleNamesData = { nodes: [], edges: [], groups_names: [], nodeKeys: [] };
+
+  //This function only converts gon to all data for the searched person and 1st degree relationships
   $.each(people, function(index, value) { 
     var n = new node();
     n.id = value.id;
@@ -517,10 +527,29 @@ function init() {
     data.nodes[n.id] = n;
     
   });
-  populateLists(data);
+
+  //This function converts gon to name data for all people in the database
+  $.each(all_people, function(index, value) { 
+    var n = new node();
+    n.id = value.id;
+    n.first = value.first_name;
+    n.last = value.last_name;
+    n.prefix = value.prefix;
+    n.suffix = value.suffix;
+    n.title = value.title
+    n.label = n.first + " " + n.last;
+    n.birth = value.ext_birth_year;
+    n.death = value.ext_death_year;
+    allPeopleNamesData.nodes[n.id] = n;   
+  });
+
+  populateLists(allPeopleNamesData);
   filterGraph(data);
-  initGraph(data);
+  initGraph(data, allPeopleNamesData);
+
+  console.log(data);
   }
+
 
 $(document).ready(function() {
     init();

@@ -11,7 +11,7 @@ class PeopleController < ApplicationController
   
   def index
     @people_approved = Person.all_approved.paginate(:page => params[:people_approved_page]).per_page(20)
-    
+
     respond_to do |format|
       format.html # index.html.erb
       format.json { render json: @people }

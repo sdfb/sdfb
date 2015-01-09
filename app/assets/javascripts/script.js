@@ -83,7 +83,7 @@ $(document).ready(function() {
 	$("#node-slider").slider({
         animate: true,
         range: "min",
-        value: 60,
+        value: 40,
         min: 0,
         max: 100,
         step: 1,
@@ -107,7 +107,7 @@ $(document).ready(function() {
     $("#nav-slider").slider({
         animate: true,
         range: "min",
-        value: 60,
+        value: 40,
         min: 0,
         max: 100,
         step: 1,
@@ -133,10 +133,10 @@ $(document).ready(function() {
 					animate: true,
 					range: "min",
 					value: 3,
-					min: 1500,
-					max: 1700,
+					min: 1400,
+					max: 1800,
 					step: 1,
-					values: [ 1557, 1642 ],
+					values: [ 1400, 1800 ],
 					slide: function( event, ui ) {
 						$( "#search-date-range1" ).val( ui.values[ 0 ] + " - " + ui.values[ 1 ] );
 					}
@@ -148,10 +148,10 @@ $(document).ready(function() {
                     animate: true,
                     range: "min",
                     value: 3,
-                    min: 1500,
-                    max: 1700,
+                    min: 1400,
+                    max: 1800,
                     step: 1,
-                    values: [ 1557, 1642 ],
+                    values: [ 1400, 1800 ],
                     slide: function( event, ui ) {
                         $( "#search-date-range2" ).val( ui.values[ 0 ] + " - " + ui.values[ 1 ] );
                     }
@@ -163,10 +163,10 @@ $(document).ready(function() {
                     animate: true,
                     range: "min",
                     value: 3,
-                    min: 1500,
-                    max: 1700,
+                    min: 1400,
+                    max: 1800,
                     step: 1,
-                    values: [ 1557, 1642 ],
+                    values: [ 1400, 1800 ],
                     slide: function( event, ui ) {
                         $( "#nav-date-range2" ).val( ui.values[ 0 ] + " - " + ui.values[ 1 ] );
                     }

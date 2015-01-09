@@ -28,6 +28,25 @@ class Person < ActiveRecord::Base
   where first_name like '#{first_name_input}' AND last_name like '#{last_name_input}'")}
   scope :for_similar_first_and_last_name,  lambda {|first_name_input, last_name_input| find_by_sql("SELECT * FROM people
   where first_name like '%#{first_name_input}%' AND last_name like '%#{last_name_input}%'")}
+  scope :first_degree_for, lambda {|id_input| 
+      select('people.*')
+      .joins('join relationships r1 on ((r1.person1_index = people.id) or (r1.person2_index = people.id))')
+      .where("people.approved_by is not null and ((r1.person1_index = '#{id_input}') or (r1.person2_index = '#{id_input}'))")
+      }
+
+  scope :for_2_people_first_last_name_exact_approved,
+    lambda {|person1FirstName, person1LastName, person2FirstName, person2LastName| 
+      select('relationships.*')
+      .joins('join people p1 on relationships.person1_index = p1.id')
+      .joins('join people p2 on relationships.person2_index = p2.id')
+      .where("((p1.first_name like '#{person1FirstName}' AND p1.last_name like '#{person1LastName}')
+        or
+          (p2.first_name like '#{person1FirstName}' AND p2.last_name like '#{person1LastName}'))
+        and
+          ((p1.first_name like '#{person2FirstName}' AND p1.last_name like '#{person2LastName}')
+        or
+          (p2.first_name like '#{person2FirstName}' AND p2.last_name like '#{person2LastName}'))")
+      .where("relationships.approved_by is not null")}
 
   # Misc Constants
   DATE_TYPE_LIST = ["BF", "AF","IN","CA","BF/IN","AF/IN","NA"]
@@ -85,6 +104,14 @@ class Person < ActiveRecord::Base
   # make a method that returns all of the two degrees for a person
   # use a array to track what people were added
   # have an array for the people records
+  def self.find_first_degree_for(person_id)
+    if person_id
+      return Person.first_degree_for(person_id)
+    else
+      return Person.first_degree_for(10000473)
+    end
+  end
+
   def self.find_2_degrees_for_person(id)
     peopleRecordsForReturn = []
     if id
