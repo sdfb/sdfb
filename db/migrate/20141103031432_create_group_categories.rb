@@ -9,5 +9,6 @@ class CreateGroupCategories < ActiveRecord::Migration
 		t.boolean :is_approved, :default => false
 		t.timestamps
     end
+    execute("ALTER SEQUENCE group_categories_id_seq START with 7 RESTART;")
   end
 end

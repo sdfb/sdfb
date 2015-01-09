@@ -14,5 +14,6 @@ class CreateGroups < ActiveRecord::Migration
 
       t.timestamps
     end
+    execute("ALTER SEQUENCE groups_id_seq START with 76 RESTART;")
   end
 end

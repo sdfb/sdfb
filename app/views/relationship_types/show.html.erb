@@ -23,8 +23,10 @@
           <dt>Description:</strong></dt>
           <dd><%= @relationship_type.description %></dd>
         <% end %>
-        <dt><strong>Relationship Inverse:</strong></dt>
-        <dd><%= link_to RelationshipType.find(@relationship_type.relationship_type_inverse).name, relationship_type_path(@relationship_type.relationship_type_inverse) %></dd>
+        <% if ! @relationship_type.relationship_type_inverse.blank? %>
+          <dt><strong>Relationship Inverse:</strong></dt>
+          <dd><%= link_to RelationshipType.find(@relationship_type.relationship_type_inverse).name, relationship_type_path(@relationship_type.relationship_type_inverse) %></dd>
+        <% end %>
         <dt><strong>Created by:</strong></dt>
         <dd><%= link_to User.find(@relationship_type.created_by).username,  user_path(@relationship_type.created_by) %></dd>
         <dt><strong>Is Approved?:</strong></dt>

@@ -13,5 +13,6 @@ class CreateRelationshipTypes < ActiveRecord::Migration
 
       t.timestamps
     end
+    execute("ALTER SEQUENCE relationship_types_id_seq START with 103 RESTART;")
   end
 end

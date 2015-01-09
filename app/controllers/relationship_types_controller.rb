@@ -5,7 +5,7 @@ class RelationshipTypesController < ApplicationController
   load_and_authorize_resource
   
   def index
-    @relationship_types = RelationshipType.all_approved
+    @relationship_types = RelationshipType.all_approved.paginate(:page => params[:rel_types_approved_page]).per_page(20)
 
     respond_to do |format|
       format.html # index.html.erb

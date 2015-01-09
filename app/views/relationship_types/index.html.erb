@@ -12,11 +12,14 @@
       <tr>
         <td><%= relationship_type.id %></td>
         <td><%= relationship_type.name %></td>
-        <td><%= link_to RelationshipType.find(relationship_type.relationship_type_inverse).name, relationship_type_path(relationship_type.relationship_type_inverse) %></td>
+        <% if ! relationship_type.relationship_type_inverse.blank? %>
+            <td><%= link_to RelationshipType.find(relationship_type.relationship_type_inverse).name, relationship_type_path(relationship_type.relationship_type_inverse) %></td>
+        <% else %>
+            <td></td>
+        <% end %>
         <td><%= link_to 'Show', relationship_type, :class => 'btn btn-mini' %>
         <%= link_to 'Edit', edit_relationship_type_path(relationship_type), :class => 'btn btn-mini' %></td>
       </tr>
     <% end %>
 </table>
-
-<br />
+<%= will_paginate @relationship_types, :param_name => 'rel_types_approved_page', :previous_label => "Previous&nbsp;", :next_label => "&nbsp;Next" %>
