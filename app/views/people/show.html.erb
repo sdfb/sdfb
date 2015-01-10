@@ -52,7 +52,21 @@
         <dd><%= link_to User.find(@person.created_by).username,  user_path(@person.created_by) %></dd>
         <% if ! @person.birth_year_type.blank? %>
           <dt><strong>Birth Year Type:</strong></dt>
-          <dd><%= @person.birth_year_type %></dd>
+          <dd>
+            <% if @person.birth_year_type == "BF" %>
+              <dd>Before</dd>
+            <% elsif @person.birth_year_type == "AF" %>
+              <dd>After</dd>
+            <% elsif @person.birth_year_type == "IN" %>
+              <dd>In</dd>
+            <% elsif @person.birth_year_type == "CA" %>
+              <dd>Circa</dd>
+            <% elsif @person.birth_year_type == "BF/IN" %>
+              <dd>Before or In</dd>
+            <% elsif @person.birth_year_type == "AF/IN" %>
+              <dd>After or In</dd>
+            <% end %>
+          </dd>
         <% end %>
         <dt><strong>Extant birth year:</strong></dt>
         <dd><%= @person.ext_birth_year %></dd>
@@ -61,7 +75,21 @@
           <dd><%= @person.alt_birth_year %></dd>
         <% end %>
         <dt><strong>Death Year Type:</strong></dt>
-        <dd><%= @person.death_year_type %></dd>
+        <dd>
+          <% if @person.death_year_type == "BF" %>
+            <dd>Before</dd>
+          <% elsif @person.death_year_type == "AF" %>
+            <dd>After</dd>
+          <% elsif @person.death_year_type == "IN" %>
+            <dd>In</dd>
+          <% elsif @person.death_year_type == "CA" %>
+            <dd>Circa</dd>
+          <% elsif @person.death_year_type == "BF/IN" %>
+            <dd>Before or In</dd>
+          <% elsif @person.death_year_type == "AF/IN" %>
+            <dd>After or In</dd>
+          <% end %>
+        </dd>
         <dt><strong>Extant death year:</strong></dt>
         <dd><%= @person.ext_death_year %></dd>
         <% if ! @person.alt_death_year.blank? %>

@@ -19,10 +19,10 @@
   <%= f.input :suffix %>
   <%= f.input :gender, :collection =>["female", "male","unknown"], label: "Gender", prompt: "Select" %>
   <%= f.input :odnb_id, label: "ODNB ID", as: :string %>
-  <%= f.input :birth_year_type, :collection =>["BF", "AF","IN","CA","BF/IN","AF/IN"], label: "Birth Year Type", prompt: "Select" %>
+  <%= f.input :birth_year_type, :collection =>["BF", "AF","IN","CA","BF/IN","AF/IN"], label: "Birth Year Type", prompt: "Select", hint: " BF = Before, AF = After, IN = In, CA = Circa, BF/IN = Before or In, AF/IN = After or In" %>
   <%= f.input :ext_birth_year %>
   <%= f.input :alt_birth_year %>
-  <%= f.input :death_year_type, :collection =>["BF", "AF","IN","CA","BF/IN","AF/IN"], label: "Death Year Type", prompt: "Select" %>
+  <%= f.input :death_year_type, :collection =>["BF", "AF","IN","CA","BF/IN","AF/IN"], label: "Death Year Type", prompt: "Select", hint: " BF = Before, AF = After, IN = In, CA = Circa, BF/IN = Before or In, AF/IN = After or In" %>
   <%= f.input :ext_death_year %>
   <%= f.input :alt_death_year %>
   <%= f.input :search_names_all %>
