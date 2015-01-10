@@ -1,4 +1,3 @@
-//var francisID = 10000473;
 var francisID = 10000473;
 //var default_confidence = 75;
 //showing all relationships with a confidence of at least 1%
@@ -142,56 +141,64 @@ function birthtoarray(data){
     return keys
 }
 
-function twoDegs(id, data, confidence, sdate, edate) {
-  var p = data.nodes[id];
+function twoDegs(id, id2, data, confidence, sdate, edate) {
   var keys = {};
   var nodes = [];
   var edges = [];
   var ids = idstoarray(data);
   var births = birthtoarray(data);
-  if (p.rels.length > 0) { //tests to make sure main person has relationships
-    $.each(p.rels, function(index, value) {
-      if (value[2] == 0 || value[1] < confidence || sdate > births[ids.indexOf(value[0])] || edate < births[ids.indexOf(value[0])]) {
-        // not approved, move on or if confidence is less than 0.75
-        console.log("merp");
-      }
-      else {
-        var q = data.nodes[value[0]]; // find person object in data by id
-        keys[q.id] = createNodeKey(q); //puts nodekey into keys array
-        if (notInArray(edges, [p.id, q.id])) {
-          edges.push([p.id, q.id]);
-        }
-              // if (q && q.rels.length > 0) {
-              //   $.each(q.rels, function(index, value) {
-              //     if (value[2] != 0 && value[1] >= confidence && sdate < births[ids.indexOf(value[0])] && edate > births[ids.indexOf(value[0])]) { //checks again if relationship id is not zero and confidence is greater than 0.75
-              //       console.log("q");
-              //       var r = data.nodes[value[0]]; //sets r as data from person id referenced in relationship array
-              //       keys[r.id] = createNodeKey(r); //puts nodekey in array for person 2's id
-              //       if (notInArray(edges, [q.id, r.id])) {
-              //           edges.push([q.id, r.id]);
-              //       }
-              //       if (r && r.rels.length > 0) { //repeats above code for person 2, finding 2nd deg relationships
-              //         $.each(r.rels, function(index, value) {
-              //           if (value[2] != 0 && value[1] >= confidence && sdate < births[ids.indexOf(value[0])] && edate > births[ids.indexOf(value[0])]) {
-              //             console.log("r");
-              //             var s = data.nodes[value[0]];
-              //             keys[s.id] = createNodeKey(s);
-              //             if (s && (s.id in keys) && notInArray(edges, [r.id, s.id])) {
-              //               edges.push([r.id, s.id]);
-              //             }
-              //           }
-              //         });
-              //       }
-              //     }
-              //   });  
-              // }
-            } 
-        });
-		//adds main person's id referenced to keys associative array. Keys represent all data in graph
-        keys[p.id] = {"text": p.first + " " + p.last, "size": 20, "id": p.id,  "cluster": getClusterRels(p)}; 
 
-  }  
-	
+  function createGraph(id, data, confidence, sdate, edate) {
+    var p = data.nodes[id];
+    if (p.rels.length > 0) { //tests to make sure main person has relationships
+      $.each(p.rels, function(index, value) {
+        if (value[2] == 0 || value[1] < confidence || sdate > births[ids.indexOf(value[0])] || edate < births[ids.indexOf(value[0])]) {
+          // not approved, move on or if confidence is less than 0.75
+          console.log("merp");
+        }
+        else {
+          var q = data.nodes[value[0]]; // find person object in data by id
+          keys[q.id] = createNodeKey(q); //puts nodekey into keys array
+          if (notInArray(edges, [p.id, q.id])) {
+            edges.push([p.id, q.id]);
+          }
+                // if (q && q.rels.length > 0) {
+                //   $.each(q.rels, function(index, value) {
+                //     if (value[2] != 0 && value[1] >= confidence && sdate < births[ids.indexOf(value[0])] && edate > births[ids.indexOf(value[0])]) { //checks again if relationship id is not zero and confidence is greater than 0.75
+                //       console.log("q");
+                //       var r = data.nodes[value[0]]; //sets r as data from person id referenced in relationship array
+                //       keys[r.id] = createNodeKey(r); //puts nodekey in array for person 2's id
+                //       if (notInArray(edges, [q.id, r.id])) {
+                //           edges.push([q.id, r.id]);
+                //       }
+                //       if (r && r.rels.length > 0) { //repeats above code for person 2, finding 2nd deg relationships
+                //         $.each(r.rels, function(index, value) {
+                //           if (value[2] != 0 && value[1] >= confidence && sdate < births[ids.indexOf(value[0])] && edate > births[ids.indexOf(value[0])]) {
+                //             console.log("r");
+                //             var s = data.nodes[value[0]];
+                //             keys[s.id] = createNodeKey(s);
+                //             if (s && (s.id in keys) && notInArray(edges, [r.id, s.id])) {
+                //               edges.push([r.id, s.id]);
+                //             }
+                //           }
+                //         });
+                //       }
+                //     }
+                //   });  
+                // }
+              } 
+          });
+      //adds main person's id referenced to keys associative array. Keys represent all data in graph
+          keys[p.id] = {"text": p.first + " " + p.last, "size": 20, "id": p.id,  "cluster": getClusterRels(p)}; 
+
+    }  
+  }
+  
+  createGraph(id, data, confidence, sdate, edate);
+  if (id2 != 0 && id2 != ""){
+    createGraph(id2, data, confidence, sdate, edate);
+  }
+  
 // Returns list of groups that a node belongs to
 function findGroups(node, data){
   var groups = [];
@@ -209,14 +216,14 @@ $.each(keys, function(index, value) {
 
 edges.reverse();
 
-  $("#results").html("Two degrees of <b>" + p.label);
+  //$("#results").html("Two degrees of <b>" + p.label);
 
   var w = window.innerWidth;
   var h = window.innerHeight;
   
   var options = { width: w, height: h, collisionAlpha: 10, colors: getColorsRels() };
   var graph = new Insights($("#graph")[0], nodes, edges, options).render();
-  graph.focus(francisID);
+  graph.focus(id);
   graph.on("node:click", function(d) {
     var clicked = data.nodes[d.id];
     showNodeInfo(clicked, findGroups(clicked, data));
@@ -318,22 +325,6 @@ function populateLists(data){
 }
 
 
-// Resets all input values and forms
-function resetInputs(){
-  $("#one").val('');
-  $("#one").typeahead('setQuery', '');
-  $("#two").val('');
-  $("#two").typeahead('setQuery', '');
-  $("#three").val('');
-  $("#three").typeahead('setQuery', '');
-  $("#four").val('');
-  $("#four").typeahead('setQuery', '');
-  $("#five").val('');
-  $("#five").typeahead('setQuery', '');
-  $("#six").val('');
-  $("#six").typeahead('setQuery', '');
-}
-
 function getParam ( sname )
 {
   var params = location.search.substr(location.search.indexOf("?")+1);
@@ -350,39 +341,35 @@ function getParam ( sname )
 
 function filterGraph(data){
   var ID = getParam("id");
+  var ID2 = getParam("id2");
   var conf = getParam("confidence");
   var date = getParam("date");
   var sdate = date.substring(0, 3);
   var edate = date.substring(5, 8);
-  if(ID == "" && conf == "" && date ==  ""){
-    twoDegs(francisID,data, default_confidence, default_sdate, default_edate);
+  if(ID2 == "" || ID2 == "0"){
+    ID2 = 0;
+  } 
+  if(date == ""){
+    sdate = default_sdate;
+    edate = default_edate;
   }
-  if(ID != "" && conf == "" && date == ""){
-    twoDegs(ID,data, default_confidence, default_sdate, default_edate);
+  if(ID == ""){
+    ID = francisID;
   }
-  if(ID != "" && conf != "" && date == ""){
-    twoDegs(ID,data, conf, default_sdate, default_edate);
+  if(conf == ""){
+    conf = default_confidence;
   }
-  if(ID != "" && conf == "" && date != ""){
-    twoDegs(ID,data, default_confidence, sdate, edate);
-  }
-  if(ID != "" && conf != "" && date != ""){
-    twoDegs(ID,data, conf, sdate, edate);
-
-    }
-
+  twoDegs(ID, ID2, data, conf, sdate, edate);
 }
 
 function initGraph(data, allPeopleNamesData){
-  //var names = peopletoarray(data);
-  //var ids = idstoarray(data);
   var names = peopletoarray(allPeopleNamesData);
   var ids = idstoarray(allPeopleNamesData);
   //click methods for all the 'find' buttons in the search bar
   $("#findonenode").click(function () {
-  	var table = 'no'
+  	var table = 'no';
+    Pace.restart();
     if ($("#one").val()) {
-      Pace.restart();
       var index = names.indexOf($("#one").val())
     }
     if ($("#show-table").val() == 1) {
@@ -394,6 +381,23 @@ function initGraph(data, allPeopleNamesData){
   	//window.location.href = '/?person_id=' + ids[index] + '&confidence=' + confidence + '&date=' + date + '&table=' + table;
     window.location.href = '/?id=' + ids[index] + '&confidence=' + confidence + '&date=' + date + '&table=' + table;
   });
+
+   $("#findtwonode").click(function () {
+      var table = 'no';
+      Pace.restart();
+      if ($("#two").val()) {
+        var index = names.indexOf($("#two").val())
+      }
+      if ($("#three").val()) {
+        var index2 = names.indexOf($("#three").val())
+      }
+      if ($("#show-table").val() == 1) {
+        table = 'yes'
+      }
+      var confidence = $("#slideredge-result-hidden2").val();
+      var date = $("#searchedge-date-range2").val().split(" - ");
+      window.location.href = '/?id=' + ids[index] + '&id2=' + ids[index2] + '&confidence=' + confidence + '&date=' + date + '&table=' + table;
+    });
 
   $("#nav-filter").click(function (){
     var ID = getParam("id");
@@ -409,22 +413,12 @@ function initGraph(data, allPeopleNamesData){
 
   });
 
-  $("#findtwonode").click(function () {
-    if ($("#two").val() && $("#three").val()) {
-      Pace.restart();
-      showTwoNodes(data.nodes_names[$("#two").val()], data.nodes_names[$("#three").val()], parseInt($('#confidence2')[0].value), data);     
-      $('#twogroupsmenu').css('display','none');
-    }
-    resetInputs();
-  });
-
   $("#findonegroup").click(function () {
     if ($("#four").val()) {
       Pace.restart();
       showOneGroup($("#four").val(), data);
       $('#twogroupsmenu').css('display','none');
     }
-    resetInputs();
   });
 
   $("#findtwogroup").click(function () {
@@ -434,7 +428,6 @@ function initGraph(data, allPeopleNamesData){
       $('#group3').html($("#six").val());
       findInterGroup($("#group1").html(), $("#group3").html(), data);
     }
-    resetInputs();
   });
 
   //click functions for the buttons inside shared groups
@@ -489,7 +482,6 @@ function initGraph(data, allPeopleNamesData){
   $("aside button.icon").click(function(){
     addNodes = [];
     addEdges = [];
-    resetInputs();
     var name = $('#node-name').html() + " (" + $('#node-bdate').html() + ")";
         if (this.id == "icon-tag") {
           $("#entry_1177061505").val(name);
@@ -546,8 +538,6 @@ function init() {
   populateLists(allPeopleNamesData);
   filterGraph(data);
   initGraph(data, allPeopleNamesData);
-
-  console.log(data);
   }
 
 
