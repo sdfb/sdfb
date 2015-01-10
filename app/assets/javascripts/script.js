@@ -123,8 +123,8 @@ $(document).ready(function() {
             } else if (ui.value > 79){
                 result = "Certain"
             }
-            $("#slider-result1").html( result + " relationships @ " + ui.value + "%");
-            $("#slider-result-hidden1").val(ui.value);
+            $("#slideredge-result1").html( result + " relationships @ " + ui.value + "%");
+            $("#slideredge-result-hidden1").val(ui.value);
         }
     });
 
@@ -177,10 +177,10 @@ $(document).ready(function() {
                     step: 1,
                     values: [ 1400, 1800 ],
                     slide: function( event, ui ) {
-                        $( "#search-date-range2" ).val( ui.values[ 0 ] + " - " + ui.values[ 1 ] );
+                        $( "#searchedge-date-range2" ).val( ui.values[ 0 ] + " - " + ui.values[ 1 ] );
                     }
         });
-        $( "#search-date-range2" ).val( $( ".slider-date2" ).slider( "values", 0 ) + " - " + $( ".slider-date2" ).slider( "values", 1 ) );
+        $( "#searchedge-date-range2" ).val( $( ".slider-date2" ).slider( "values", 0 ) + " - " + $( ".slider-date2" ).slider( "values", 1 ) );
 
         //  Sliding animation
         $("#navslider2").slider({
