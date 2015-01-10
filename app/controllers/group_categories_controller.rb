@@ -39,6 +39,7 @@ class GroupCategoriesController < ApplicationController
   # GET /group_categories/1/edit
   def edit
     @group_category = GroupCategory.find(params[:id])
+    @is_approved = @group_category.is_approved
     #authorize! :edit, @group_category
   end
 

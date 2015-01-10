@@ -42,8 +42,11 @@ ActiveRecord::Schema.define(:version => 20141103033703) do
     t.integer  "approved_by"
     t.datetime "approved_on"
     t.boolean  "is_approved"
-    t.datetime "created_at",  :null => false
-    t.datetime "updated_at",  :null => false
+    t.boolean  "is_active",    :default => true
+    t.boolean  "is_rejected"
+    t.text     "edited_by_on", :default => "--- []\n"
+    t.datetime "created_at",                           :null => false
+    t.datetime "updated_at",                           :null => false
   end
 
   create_table "group_cat_assigns", :force => true do |t|
@@ -53,8 +56,11 @@ ActiveRecord::Schema.define(:version => 20141103033703) do
     t.string   "approved_by"
     t.string   "approved_on"
     t.boolean  "is_approved",       :default => false
-    t.datetime "created_at",                           :null => false
-    t.datetime "updated_at",                           :null => false
+    t.boolean  "is_active",         :default => true
+    t.boolean  "is_rejected"
+    t.text     "edited_by_on",      :default => "--- []\n"
+    t.datetime "created_at",                                :null => false
+    t.datetime "updated_at",                                :null => false
   end
 
   create_table "group_categories", :force => true do |t|
@@ -63,9 +69,12 @@ ActiveRecord::Schema.define(:version => 20141103033703) do
     t.integer  "created_by"
     t.string   "approved_by"
     t.string   "approved_on"
-    t.boolean  "is_approved", :default => false
-    t.datetime "created_at",                     :null => false
-    t.datetime "updated_at",                     :null => false
+    t.boolean  "is_approved",  :default => false
+    t.boolean  "is_active",    :default => true
+    t.boolean  "is_rejected"
+    t.text     "edited_by_on", :default => "--- []\n"
+    t.datetime "created_at",                           :null => false
+    t.datetime "updated_at",                           :null => false
   end
 
   create_table "groups", :force => true do |t|
@@ -79,6 +88,9 @@ ActiveRecord::Schema.define(:version => 20141103033703) do
     t.string   "approved_on"
     t.boolean  "is_approved",   :default => false
     t.text     "person_list",   :default => "--- []\n"
+    t.boolean  "is_active",     :default => true
+    t.boolean  "is_rejected"
+    t.text     "edited_by_on",  :default => "--- []\n"
     t.datetime "created_at",                            :null => false
     t.datetime "updated_at",                            :null => false
   end
@@ -106,6 +118,9 @@ ActiveRecord::Schema.define(:version => 20141103033703) do
     t.integer  "odnb_id"
     t.boolean  "is_approved",             :default => false
     t.text     "group_list",              :default => "--- []\n"
+    t.boolean  "is_active",               :default => true
+    t.boolean  "is_rejected"
+    t.text     "edited_by_on",            :default => "--- []\n"
     t.datetime "created_at",                                      :null => false
     t.datetime "updated_at",                                      :null => false
   end
@@ -117,19 +132,25 @@ ActiveRecord::Schema.define(:version => 20141103033703) do
     t.string   "approved_by"
     t.string   "approved_on"
     t.boolean  "is_approved",              :default => false
-    t.datetime "created_at",                                  :null => false
-    t.datetime "updated_at",                                  :null => false
+    t.boolean  "is_active",                :default => true
+    t.boolean  "is_rejected"
+    t.text     "edited_by_on",             :default => "--- []\n"
+    t.datetime "created_at",                                       :null => false
+    t.datetime "updated_at",                                       :null => false
   end
 
   create_table "relationship_categories", :force => true do |t|
     t.string   "name"
     t.text     "description"
-    t.boolean  "is_approved", :default => false
+    t.boolean  "is_approved",  :default => false
     t.integer  "approved_by"
     t.datetime "approved_on"
     t.integer  "created_by"
-    t.datetime "created_at",                     :null => false
-    t.datetime "updated_at",                     :null => false
+    t.boolean  "is_active",    :default => true
+    t.boolean  "is_rejected"
+    t.text     "edited_by_on", :default => "--- []\n"
+    t.datetime "created_at",                           :null => false
+    t.datetime "updated_at",                           :null => false
   end
 
   create_table "relationship_types", :force => true do |t|
@@ -142,8 +163,10 @@ ActiveRecord::Schema.define(:version => 20141103033703) do
     t.datetime "approved_on"
     t.boolean  "is_approved",               :default => false
     t.integer  "created_by"
-    t.datetime "created_at",                                   :null => false
-    t.datetime "updated_at",                                   :null => false
+    t.boolean  "is_rejected"
+    t.text     "edited_by_on",              :default => "--- []\n"
+    t.datetime "created_at",                                        :null => false
+    t.datetime "updated_at",                                        :null => false
   end
 
   create_table "relationships", :force => true do |t|
@@ -163,8 +186,11 @@ ActiveRecord::Schema.define(:version => 20141103033703) do
     t.datetime "approved_on"
     t.integer  "edge_birthdate_certainty"
     t.boolean  "is_approved",              :default => false
-    t.datetime "created_at",                                  :null => false
-    t.datetime "updated_at",                                  :null => false
+    t.boolean  "is_active",                :default => true
+    t.boolean  "is_rejected"
+    t.text     "edited_by_on",             :default => "--- []\n"
+    t.datetime "created_at",                                       :null => false
+    t.datetime "updated_at",                                       :null => false
   end
 
   create_table "user_group_contribs", :force => true do |t|
@@ -175,8 +201,11 @@ ActiveRecord::Schema.define(:version => 20141103033703) do
     t.integer  "approved_by"
     t.datetime "approved_on"
     t.boolean  "is_approved",  :default => true
-    t.datetime "created_at",                     :null => false
-    t.datetime "updated_at",                     :null => false
+    t.boolean  "is_active",    :default => true
+    t.boolean  "is_rejected"
+    t.text     "edited_by_on", :default => "--- []\n"
+    t.datetime "created_at",                           :null => false
+    t.datetime "updated_at",                           :null => false
   end
 
   create_table "user_person_contribs", :force => true do |t|
@@ -187,8 +216,11 @@ ActiveRecord::Schema.define(:version => 20141103033703) do
     t.integer  "approved_by"
     t.date     "approved_on"
     t.boolean  "is_approved",  :default => true
-    t.datetime "created_at",                     :null => false
-    t.datetime "updated_at",                     :null => false
+    t.boolean  "is_active",    :default => true
+    t.boolean  "is_rejected"
+    t.text     "edited_by_on", :default => "--- []\n"
+    t.datetime "created_at",                           :null => false
+    t.datetime "updated_at",                           :null => false
   end
 
   create_table "user_rel_contribs", :force => true do |t|
@@ -207,8 +239,11 @@ ActiveRecord::Schema.define(:version => 20141103033703) do
     t.integer  "approved_by"
     t.date     "approved_on"
     t.boolean  "is_approved",          :default => true
-    t.datetime "created_at",                             :null => false
-    t.datetime "updated_at",                             :null => false
+    t.boolean  "is_active",            :default => true
+    t.boolean  "is_rejected"
+    t.text     "edited_by_on",         :default => "--- []\n"
+    t.datetime "created_at",                                   :null => false
+    t.datetime "updated_at",                                   :null => false
   end
 
   create_table "users", :force => true do |t|

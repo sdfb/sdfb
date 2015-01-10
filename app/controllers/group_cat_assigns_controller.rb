@@ -46,6 +46,7 @@ class GroupCatAssignsController < ApplicationController
     @group_id = params[:group_id]
     @groupCatOptions = GroupCategory.all_approved
     @group_cat_id = params[:group_cat_id]
+    @is_approved = @group_cat_assign.is_approved
     #authorize! :edit, @group_cat_assign
   end
 

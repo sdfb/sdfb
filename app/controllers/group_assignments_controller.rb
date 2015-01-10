@@ -48,6 +48,7 @@ class GroupAssignmentsController < ApplicationController
     @group_assignment = GroupAssignment.find(params[:id])
     @personOptions = Person.all_approved.alphabetical
     @groupOptions = Group.all_approved
+    @is_approved = @group_assignment.is_approved
     #authorize! :edit, @group_assignment
   end
 

@@ -49,6 +49,7 @@ class RelationshipsController < ApplicationController
   def edit
     @relationship = Relationship.find(params[:id])
     @personOptions = Person.all_approved.alphabetical
+    @is_approved = @relationship.is_approved
     #authorize! :edit, @relationship
   end
 

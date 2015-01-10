@@ -47,6 +47,7 @@ class UserRelContribsController < ApplicationController
     @relOptions = Relationship.all_approved
     @relationship_id = params[:relationship_id]
     @relType = RelationshipType.all_approved
+    @is_approved = @user_rel_contrib.is_approved
     #authorize! :edit, @user_rel_contrib
   end
 

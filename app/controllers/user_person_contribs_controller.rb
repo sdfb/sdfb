@@ -45,6 +45,7 @@ class UserPersonContribsController < ApplicationController
   def edit
     @user_person_contrib = UserPersonContrib.find(params[:id])
     @personOptions = Person.all_approved
+    @is_approved = @user_person_contrib.is_approved
     # authorize! :edit, @user_person_contrib
   end
 

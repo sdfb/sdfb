@@ -41,6 +41,7 @@ class RelationshipTypesController < ApplicationController
   def edit
     @relationship_type = RelationshipType.find(params[:id])
     @relTypeOptions = RelationshipType.all
+    @is_approved = @relationship_type.is_approved
     #authorize! :edit, @relationship_type
   end
 

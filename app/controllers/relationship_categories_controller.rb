@@ -39,6 +39,7 @@ class RelationshipCategoriesController < ApplicationController
   # GET /relationship_categories/1/edit
   def edit
     @relationship_category = RelationshipCategory.find(params[:id])
+    @is_approved = @relationship_category.is_approved
     #authorize! :edit, @relationship_category
   end
 

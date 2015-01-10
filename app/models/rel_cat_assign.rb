@@ -23,10 +23,19 @@ class RelCatAssign < ActiveRecord::Base
   # Callbacks
   # -----------------------------
   before_create :init_array
+  before_create :check_if_approved
+  before_update :check_if_approved
 
   # Custom Methods
   # -----------------------------
   def init_array
     self.edited_by_on = nil
+  end
+
+  def check_if_approved
+    if (self.is_approved != true)
+      self.approved_by = nil
+      self.approved_on = nil
+    end  
   end
 end

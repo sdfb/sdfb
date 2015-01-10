@@ -46,6 +46,7 @@ class RelCatAssignsController < ApplicationController
     @rel_type_id = params[:rel_type_id]
     @relCatOptions = RelationshipCategory.all_approved
     @rel_cat_id = params[:rel_cat_id]
+    @is_approved = @rel_cat_assign.is_approved
     #authorize! :edit, @rel_cat_assign
   end
 

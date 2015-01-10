@@ -45,6 +45,7 @@ class UserGroupContribsController < ApplicationController
   def edit
     @user_group_contrib = UserGroupContrib.find(params[:id])
     @groupOptions = Group.all_approved
+    @is_approved = @user_group_contrib.is_approved
     #authorize! :edit, @user_group_contrib
   end
 

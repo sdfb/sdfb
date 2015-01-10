@@ -46,6 +46,7 @@ class PeopleController < ApplicationController
   # GET /people/1/edit
   def edit
     @person = Person.find(params[:id])
+    @is_approved = @person.is_approved
     #authorize! :edit, @person
   end
 

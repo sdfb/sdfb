@@ -25,9 +25,7 @@ class RelationshipCategory < ActiveRecord::Base
   # Custom Methods
   # -----------------------------
   def check_if_approved
-    if (self.is_approved == true)
-      self.approved_on = Time.now
-    else
+    if (self.is_approved != true)
       self.approved_by = nil
       self.approved_on = nil
     end  
