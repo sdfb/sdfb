@@ -27,9 +27,22 @@ class GroupCatAssign < ActiveRecord::Base
   before_create :check_if_approved
   before_update :check_if_approved
   before_create :init_array
+  before_update :add_editor_to_edit_by_on
 
   # Custom Methods
   # -----------------------------
+  def add_editor_to_edit_by_on
+    previous_edited_by_on = GroupCatAssign.find(self.id).edited_by_on
+    if previous_edited_by_on.nil?
+      previous_edited_by_on = []
+    end
+    newEditRecord = []
+    newEditRecord.push(self.edited_by_on)
+    newEditRecord.push(Time.now)
+    previous_edited_by_on.push(newEditRecord)
+    self.edited_by_on = previous_edited_by_on
+  end
+
   def init_array
     self.edited_by_on = nil
   end

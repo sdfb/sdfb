@@ -41,6 +41,18 @@
         <% end %>
         <dt>Created at</dt>
         <dd><%= @relationship_type.created_at %></dd>
+        <dt>Edit History</dt>
+        <% if ! @relationship_type.edited_by_on.blank? %>
+          <dd><%= @relationship_type.edited_by_on %></dd>
+        <% else %>
+          <dd>No edits have been made.</dd>
+        <% end %>
+        <% if (! current_user.blank?) && ((current_user.user_type == "Admin")) %>
+          <dt>Is Active</dt>
+          <dd><%= @relationship_type.is_active %></dd>
+          <dt>Is Rejected</dt>
+          <dd><%= @relationship_type.is_rejected %></dd>
+        <% end %>
       </dl>
     </div>
   </div>

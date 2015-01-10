@@ -36,8 +36,21 @@
           <dt>Approved on</dt>
           <dd><%= @group_assignment.approved_on%></dd>
         <% end %>
+        <dt>Edit History</dt>
+        <% if ! @group_assignment.edited_by_on.blank? %>
+          <dd><%= @group_assignment.edited_by_on %></dd>
+        <% else %>
+          <dd>No edits have been made.</dd>
+        <% end %>
+        <% if (! current_user.blank?) && (current_user.user_type == "Admin") %>
+          <dt>Is Active</dt>
+          <dd><%= @group_assignment.is_active %></dd>
+          <dt>Is Rejected</dt>
+          <dd><%= @group_assignment.is_rejected %></dd>
+        <% end %>
       </dl>
     </div>
   </div>
 </div>
+
 

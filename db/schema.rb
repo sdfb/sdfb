@@ -43,7 +43,7 @@ ActiveRecord::Schema.define(:version => 20141103033703) do
     t.datetime "approved_on"
     t.boolean  "is_approved"
     t.boolean  "is_active",    :default => true
-    t.boolean  "is_rejected"
+    t.boolean  "is_rejected",  :default => false
     t.text     "edited_by_on", :default => "--- []\n"
     t.datetime "created_at",                           :null => false
     t.datetime "updated_at",                           :null => false
@@ -57,7 +57,7 @@ ActiveRecord::Schema.define(:version => 20141103033703) do
     t.string   "approved_on"
     t.boolean  "is_approved",       :default => false
     t.boolean  "is_active",         :default => true
-    t.boolean  "is_rejected"
+    t.boolean  "is_rejected",       :default => false
     t.text     "edited_by_on",      :default => "--- []\n"
     t.datetime "created_at",                                :null => false
     t.datetime "updated_at",                                :null => false
@@ -71,7 +71,7 @@ ActiveRecord::Schema.define(:version => 20141103033703) do
     t.string   "approved_on"
     t.boolean  "is_approved",  :default => false
     t.boolean  "is_active",    :default => true
-    t.boolean  "is_rejected"
+    t.boolean  "is_rejected",  :default => false
     t.text     "edited_by_on", :default => "--- []\n"
     t.datetime "created_at",                           :null => false
     t.datetime "updated_at",                           :null => false
@@ -89,7 +89,7 @@ ActiveRecord::Schema.define(:version => 20141103033703) do
     t.boolean  "is_approved",   :default => false
     t.text     "person_list",   :default => "--- []\n"
     t.boolean  "is_active",     :default => true
-    t.boolean  "is_rejected"
+    t.boolean  "is_rejected",   :default => false
     t.text     "edited_by_on",  :default => "--- []\n"
     t.datetime "created_at",                            :null => false
     t.datetime "updated_at",                            :null => false
@@ -119,7 +119,7 @@ ActiveRecord::Schema.define(:version => 20141103033703) do
     t.boolean  "is_approved",             :default => false
     t.text     "group_list",              :default => "--- []\n"
     t.boolean  "is_active",               :default => true
-    t.boolean  "is_rejected"
+    t.boolean  "is_rejected",             :default => false
     t.text     "edited_by_on",            :default => "--- []\n"
     t.datetime "created_at",                                      :null => false
     t.datetime "updated_at",                                      :null => false
@@ -133,7 +133,7 @@ ActiveRecord::Schema.define(:version => 20141103033703) do
     t.string   "approved_on"
     t.boolean  "is_approved",              :default => false
     t.boolean  "is_active",                :default => true
-    t.boolean  "is_rejected"
+    t.boolean  "is_rejected",              :default => false
     t.text     "edited_by_on",             :default => "--- []\n"
     t.datetime "created_at",                                       :null => false
     t.datetime "updated_at",                                       :null => false
@@ -147,7 +147,7 @@ ActiveRecord::Schema.define(:version => 20141103033703) do
     t.datetime "approved_on"
     t.integer  "created_by"
     t.boolean  "is_active",    :default => true
-    t.boolean  "is_rejected"
+    t.boolean  "is_rejected",  :default => false
     t.text     "edited_by_on", :default => "--- []\n"
     t.datetime "created_at",                           :null => false
     t.datetime "updated_at",                           :null => false
@@ -163,7 +163,7 @@ ActiveRecord::Schema.define(:version => 20141103033703) do
     t.datetime "approved_on"
     t.boolean  "is_approved",               :default => false
     t.integer  "created_by"
-    t.boolean  "is_rejected"
+    t.boolean  "is_rejected",               :default => false
     t.text     "edited_by_on",              :default => "--- []\n"
     t.datetime "created_at",                                        :null => false
     t.datetime "updated_at",                                        :null => false
@@ -187,7 +187,7 @@ ActiveRecord::Schema.define(:version => 20141103033703) do
     t.integer  "edge_birthdate_certainty"
     t.boolean  "is_approved",              :default => false
     t.boolean  "is_active",                :default => true
-    t.boolean  "is_rejected"
+    t.boolean  "is_rejected",              :default => false
     t.text     "edited_by_on",             :default => "--- []\n"
     t.datetime "created_at",                                       :null => false
     t.datetime "updated_at",                                       :null => false
@@ -202,7 +202,7 @@ ActiveRecord::Schema.define(:version => 20141103033703) do
     t.datetime "approved_on"
     t.boolean  "is_approved",  :default => true
     t.boolean  "is_active",    :default => true
-    t.boolean  "is_rejected"
+    t.boolean  "is_rejected",  :default => false
     t.text     "edited_by_on", :default => "--- []\n"
     t.datetime "created_at",                           :null => false
     t.datetime "updated_at",                           :null => false
@@ -217,7 +217,7 @@ ActiveRecord::Schema.define(:version => 20141103033703) do
     t.date     "approved_on"
     t.boolean  "is_approved",  :default => true
     t.boolean  "is_active",    :default => true
-    t.boolean  "is_rejected"
+    t.boolean  "is_rejected",  :default => false
     t.text     "edited_by_on", :default => "--- []\n"
     t.datetime "created_at",                           :null => false
     t.datetime "updated_at",                           :null => false
@@ -240,7 +240,7 @@ ActiveRecord::Schema.define(:version => 20141103033703) do
     t.date     "approved_on"
     t.boolean  "is_approved",          :default => true
     t.boolean  "is_active",            :default => true
-    t.boolean  "is_rejected"
+    t.boolean  "is_rejected",          :default => false
     t.text     "edited_by_on",         :default => "--- []\n"
     t.datetime "created_at",                                   :null => false
     t.datetime "updated_at",                                   :null => false

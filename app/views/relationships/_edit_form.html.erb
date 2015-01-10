@@ -47,7 +47,7 @@
       <%= f.hidden_field :approved_on, :value => Time.now %>
     <% end %>
   <% end %>
-
+  <%= f.hidden_field :edited_by_on, :value => current_user.id %>
   <div class="form-actions">
     <%= f.button :submit, :class => 'btn btn-primary' %>
   </div>

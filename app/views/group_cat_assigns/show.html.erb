@@ -34,6 +34,18 @@
         <% end %>
         <dt>Created at</dt>
         <dd><%= @group_cat_assign.created_at %></dd>
+        <dt>Edit History</dt>
+        <% if ! @group_cat_assign.edited_by_on.blank? %>
+          <dd><%= @group_cat_assign.edited_by_on %></dd>
+        <% else %>
+          <dd>No edits have been made.</dd>
+        <% end %>
+        <% if (! current_user.blank?) && ((current_user.user_type == "Admin")) %>
+          <dt>Is Active</dt>
+          <dd><%= @group_cat_assign.is_active %></dd>
+          <dt>Is Rejected</dt>
+          <dd><%= @group_cat_assign.is_rejected %></dd>
+        <% end %>
       </dl>
     </div>
   </div>

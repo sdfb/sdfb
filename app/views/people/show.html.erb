@@ -100,6 +100,18 @@
         <% end %>
         <dt><strong>Created at:</strong></dt>
         <dd><%= @person.created_at %></dd>
+        <dt>Edit History</dt>
+        <% if ! @person.edited_by_on.blank? %>
+          <dd><%= @person.edited_by_on %></dd>
+        <% else %>
+          <dd>No edits have been made.</dd>
+        <% end %>
+        <% if (! current_user.blank?) && ((current_user.user_type == "Admin") || (current_user.user_type == "Curator")) %>
+          <dt>Is Active</dt>
+          <dd><%= @person.is_active %></dd>
+          <dt>Is Rejected</dt>
+          <dd><%= @person.is_rejected %></dd>
+        <% end %>
       </dl>
     </div>
     

@@ -39,6 +39,7 @@ class GroupAssignment < ActiveRecord::Base
   # ----------------------------- 
   after_create :create_group_person_list
   after_update :update_group_person_list
+  before_update :add_editor_to_edit_by_on
   before_create :check_if_approved
   before_update :check_if_approved
   before_create :init_array
@@ -47,6 +48,18 @@ class GroupAssignment < ActiveRecord::Base
   # -----------------------------
   def init_array
     self.edited_by_on = nil
+  end
+
+  def add_editor_to_edit_by_on
+    previous_edited_by_on = GroupAssignment.find(self.id).edited_by_on
+    if previous_edited_by_on.nil?
+      previous_edited_by_on = []
+    end
+    newEditRecord = []
+    newEditRecord.push(self.edited_by_on)
+    newEditRecord.push(Time.now)
+    previous_edited_by_on.push(newEditRecord)
+    self.edited_by_on = previous_edited_by_on
   end
 
   def create_group_person_list

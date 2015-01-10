@@ -119,6 +119,7 @@ class Relationship < ActiveRecord::Base
   before_update :check_if_approved
   before_create :check_if_valid
   before_create :init_array
+  before_update :add_editor_to_edit_by_on
   #before_create :check_if_start_date_complete
   #before_update :check_if_start_date_complete
   #before_create :check_if_end_date_complete
@@ -141,6 +142,18 @@ class Relationship < ActiveRecord::Base
   #     errors.add(:end_year, "The end date is incomplete without the end year.") if self.end_year.blank?
   #   end
   # end
+  def add_editor_to_edit_by_on
+    previous_edited_by_on = Relationship.find(self.id).edited_by_on
+    if previous_edited_by_on.nil?
+      previous_edited_by_on = []
+    end
+    newEditRecord = []
+    newEditRecord.push(self.edited_by_on)
+    newEditRecord.push(Time.now)
+    previous_edited_by_on.push(newEditRecord)
+    self.edited_by_on = previous_edited_by_on
+  end
+
   def init_array
     self.edited_by_on = nil
   end

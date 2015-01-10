@@ -70,6 +70,18 @@
         <% end %>
         <dt><strong>Created at:</strong></dt>
         <dd><%= @relationship.created_at %></dd>
+        <dt>Edit History</dt>
+        <% if ! @relationship.edited_by_on.blank? %>
+          <dd><%= @relationship.edited_by_on %></dd>
+        <% else %>
+          <dd>No edits have been made.</dd>
+        <% end %>
+        <% if (! current_user.blank?) && ((current_user.user_type == "Admin") || (current_user.user_type == "Curator")) %>
+          <dt>Is Active</dt>
+          <dd><%= @relationship.is_active %></dd>
+          <dt>Is Rejected</dt>
+          <dd><%= @relationship.is_rejected %></dd>
+        <% end %>
       </dl>
     </div>
   </div>

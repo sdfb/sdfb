@@ -12,8 +12,10 @@
   <dd><%= @user_group_contrib.created_by %></dd>
   <dt><strong><%= model_class.human_attribute_name(:annotation) %>:</strong></dt>
   <dd><%= @user_group_contrib.annotation %></dd>
-  <dt><strong><%= model_class.human_attribute_name(:bibliography) %>:</strong></dt>
-  <dd><%= @user_group_contrib.bibliography %></dd>
+  <% if ! @user_group_contrib.bibliography.blank? %>
+    <dt><strong>Bibliography:</strong></dt>
+    <dd><%= @user_group_contrib.bibliography %></dd>
+  <% end %>
   <dt><strong>Created at:</strong></dt>
   <dd><%= @user_group_contrib.created_at %></dd>
   <dt><strong>Is Approved?:</strong></dt>
@@ -25,6 +27,18 @@
   <% if ! @user_group_contrib.approved_by.blank? %>
     <dt><strong>Approved on:</strong></dt>
     <dd><%= @user_group_contrib.approved_on %></dd>
+  <% end %>
+  <dt>Edit History</dt>
+  <% if ! @user_group_contrib.edited_by_on.blank? %>
+    <dd><%= @user_group_contrib.edited_by_on %></dd>
+  <% else %>
+    <dd>No edits have been made.</dd>
+  <% end %>
+  <% if (! current_user.blank?) && ((current_user.user_type == "Admin") || (current_user.user_type == "Curator")) %>
+    <dt>Is Active</dt>
+    <dd><%= @user_group_contrib.is_active %></dd>
+    <dt>Is Rejected</dt>
+    <dd><%= @user_group_contrib.is_rejected %></dd>
   <% end %>
 </dl>
 

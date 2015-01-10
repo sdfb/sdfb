@@ -54,6 +54,18 @@
           <dt><strong>Approved on:</strong></dt>
           <dd><%= @group.approved_on %></dd>
         <% end %>
+        <dt>Edit History</dt>
+        <% if ! @group.edited_by_on.blank? %>
+          <dd><%= @group.edited_by_on %></dd>
+        <% else %>
+          <dd>No edits have been made.</dd>
+        <% end %>
+        <% if (! current_user.blank?) && ((current_user.user_type == "Admin") || (current_user.user_type == "Curator")) %>
+          <dt>Is Active</dt>
+          <dd><%= @group.is_active %></dd>
+          <dt>Is Rejected</dt>
+          <dd><%= @group.is_rejected %></dd>
+        <% end %>
       </dl>
     </div>
   </div>

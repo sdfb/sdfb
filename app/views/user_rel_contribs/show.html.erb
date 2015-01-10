@@ -43,7 +43,7 @@
             <%= @user_rel_contrib.start_year %>
           <% end %></dd>
         <% end %>
-        <% if ((! @user_rel_contrib.start_month.blank?) || (! @user_rel_contrib.start_day.blank?) || (! @user_rel_contrib.start_year.blank?)) %>
+        <% if ((! @user_rel_contrib.end_month.blank?) || (! @user_rel_contrib.end_day.blank?) || (! @user_rel_contrib.end_year.blank?)) %>
           <dt><strong>End date:</strong></dt>
           <dd><% if ! @user_rel_contrib.end_month.blank? %>
             <%= @user_rel_contrib.end_month %>
@@ -68,6 +68,18 @@
         <% if ! @user_rel_contrib.approved_by.blank? %>
           <dt><strong>Approved on:</strong></dt>
           <dd><%= @user_rel_contrib.approved_on %></dd>
+        <% end %>
+        <dt>Edit History</dt>
+        <% if ! @user_rel_contrib.edited_by_on.blank? %>
+          <dd><%= @user_rel_contrib.edited_by_on %></dd>
+        <% else %>
+          <dd>No edits have been made.</dd>
+        <% end %>
+        <% if (! current_user.blank?) && ((current_user.user_type == "Admin") || (current_user.user_type == "Curator")) %>
+          <dt>Is Active</dt>
+          <dd><%= @user_rel_contrib.is_active %></dd>
+          <dt>Is Rejected</dt>
+          <dd><%= @user_rel_contrib.is_rejected %></dd>
         <% end %>
       </dl>
 

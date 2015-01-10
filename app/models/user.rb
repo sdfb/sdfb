@@ -6,6 +6,7 @@ class User < ActiveRecord::Base
   # Callbacks
   # -----------------------------
   before_save :encrypt_password
+  before_update :add_editor_to_edit_by_on
 
   # Relationships
   # -----------------------------

@@ -40,6 +40,18 @@
           <dt><strong>Approved on:</strong></dt>
           <dd><%= @user_person_contrib.approved_on %></dd>
         <% end %>
+        <dt>Edit History</dt>
+        <% if ! @user_person_contrib.edited_by_on.blank? %>
+          <dd><%= @user_person_contrib.edited_by_on %></dd>
+        <% else %>
+          <dd>No edits have been made.</dd>
+        <% end %>
+        <% if (! current_user.blank?) && ((current_user.user_type == "Admin") || (current_user.user_type == "Curator")) %>
+          <dt>Is Active</dt>
+          <dd><%= @user_person_contrib.is_active %></dd>
+          <dt>Is Rejected</dt>
+          <dd><%= @user_person_contrib.is_rejected %></dd>
+        <% end %>
       </dl>
     </div>
   </div>

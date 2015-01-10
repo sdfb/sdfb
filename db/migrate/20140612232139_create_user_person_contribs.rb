@@ -9,7 +9,7 @@ class CreateUserPersonContribs < ActiveRecord::Migration
       t.date :approved_on
       t.boolean :is_approved, :default => true
       t.boolean :is_active, :default => true
-      t.boolean :is_rejected, :defailt => false
+      t.boolean :is_rejected, :default => false
       t.text :edited_by_on, :default => [].to_yaml
 
       t.timestamps
