@@ -1,6 +1,7 @@
 class UserPersonContrib < ActiveRecord::Base
   attr_accessible :annotation, :bibliography, :created_by, :person_id, :approved_by,
-  :approved_on, :created_at, :is_approved
+  :approved_on, :created_at, :is_approved, :is_active, :is_rejected, :edited_by_on
+  serialize :edited_by_on,Array
 
   # Relationships
   # -----------------------------
@@ -29,10 +30,15 @@ class UserPersonContrib < ActiveRecord::Base
   # ----------------------------- 
   before_create :check_if_approved
   before_update :check_if_approved
+  before_create :init_array
 
 
   # Custom Methods
   # -----------------------------
+  def init_array
+    self.edited_by_on = nil
+  end
+  
   def check_if_approved
     if (self.is_approved == true)
       self.approved_on = Time.now

@@ -1,5 +1,7 @@
 class GroupCatAssign < ActiveRecord::Base
-  attr_accessible :group_category_id, :group_id, :created_by, :created_at, :approved_by, :approved_on, :is_approved
+  attr_accessible :group_category_id, :group_id, :created_by, :created_at, :approved_by, :approved_on, :is_approved,
+  :is_active, :is_rejected, :edited_by_on
+  serialize :edited_by_on,Array
 
   # Relationships
   # -----------------------------
@@ -24,9 +26,14 @@ class GroupCatAssign < ActiveRecord::Base
   # ----------------------------- 
   before_create :check_if_approved
   before_update :check_if_approved
+  before_create :init_array
 
   # Custom Methods
   # -----------------------------
+  def init_array
+    self.edited_by_on = nil
+  end
+  
   def check_if_approved
     if (self.is_approved == true)
       self.approved_on = Time.now

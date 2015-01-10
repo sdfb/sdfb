@@ -1,6 +1,7 @@
 class GroupAssignment < ActiveRecord::Base
   attr_accessible :created_by, :group_id, :approved_by, :approved_on, :person_id, :start_date, :end_date, :created_at,
-  :is_approved
+  :is_approved, :is_active, :is_rejected, :edited_by_on
+  serialize :edited_by_on,Array
   
   # Relationships
   # -----------------------------
@@ -40,10 +41,14 @@ class GroupAssignment < ActiveRecord::Base
   after_update :update_group_person_list
   before_create :check_if_approved
   before_update :check_if_approved
+  before_create :init_array
 
   # Custom Methods
   # -----------------------------
-  
+  def init_array
+    self.edited_by_on = nil
+  end
+
   def create_group_person_list
     if (self.is_approved == true)
       #adds the person's id to the Group

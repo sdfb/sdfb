@@ -1,7 +1,8 @@
 class Group < ActiveRecord::Base
   attr_accessible :created_by, :description, :name, :justification, :approved_by, :approved_on, 
-  :created_at, :is_approved, :person_list, :start_year, :end_year
+  :created_at, :is_approved, :person_list, :start_year, :end_year, :is_active, :is_rejected, :edited_by_on
   serialize :person_list,Array
+  serialize :edited_by_on,Array
   
   # Relationships
   # -----------------------------
@@ -45,6 +46,7 @@ class Group < ActiveRecord::Base
 
   def init_array
     self.person_list = nil
+    self.edited_by_on = nil
   end
 
   def get_users_name

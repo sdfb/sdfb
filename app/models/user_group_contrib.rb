@@ -1,6 +1,7 @@
 class UserGroupContrib < ActiveRecord::Base
   attr_accessible :annotation, :bibliography, :group_id, :created_by, :approved_by,
-  :approved_on, :created_at, :is_approved
+  :approved_on, :created_at, :is_approved, :is_active, :is_rejected, :edited_by_on
+  serialize :edited_by_on,Array
 
   # Relationships
   # -----------------------------
@@ -29,9 +30,14 @@ class UserGroupContrib < ActiveRecord::Base
   # ----------------------------- 
   before_create :check_if_approved
   before_update :check_if_approved
+  before_create :init_array
 
   # Custom Methods
   # -----------------------------
+  def init_array
+    self.edited_by_on = nil
+  end
+
   def get_group_name
     return Group.find(group_id)
   end

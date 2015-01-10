@@ -10,6 +10,9 @@ class CreateRelationshipTypes < ActiveRecord::Migration
       t.datetime :approved_on
       t.boolean :is_approved, :default => false
       t.integer :created_by
+      t.boolean :is_active, :default => true
+      t.boolean :is_rejected, :defailt => false
+      t.text :edited_by_on, :default => [].to_yaml
 
       t.timestamps
     end

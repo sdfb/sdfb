@@ -1,5 +1,7 @@
 class RelationshipCategory < ActiveRecord::Base
-  attr_accessible :description, :name, :created_at, :is_approved, :created_by, :approved_by, :approved_on
+  attr_accessible :description, :name, :created_at, :is_approved, :created_by, :approved_by, :approved_on,
+  :is_active, :is_rejected, :edited_by_on
+  serialize :edited_by_on,Array
 
   # Relationships
   # -----------------------------
@@ -18,6 +20,7 @@ class RelationshipCategory < ActiveRecord::Base
   # ----------------------------- 
   before_create :check_if_approved
   before_update :check_if_approved
+  before_create :init_array
 
   # Custom Methods
   # -----------------------------
@@ -28,5 +31,9 @@ class RelationshipCategory < ActiveRecord::Base
       self.approved_by = nil
       self.approved_on = nil
     end  
+  end
+
+  def init_array
+    self.edited_by_on = nil
   end
 end

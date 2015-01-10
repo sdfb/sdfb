@@ -1,6 +1,7 @@
 class RelationshipType < ActiveRecord::Base
   attr_accessible :default_rel_category, :description, :is_active, :name, :relationship_type_inverse, 
-  :created_at, :is_approved, :approved_by, :approved_on, :created_by
+  :created_at, :is_approved, :approved_by, :approved_on, :created_by, :is_active, :is_rejected, :edited_by_on
+  serialize :edited_by_on,Array
 
   # Relationships
   # -----------------------------
@@ -25,9 +26,13 @@ class RelationshipType < ActiveRecord::Base
   # ----------------------------- 
   before_create :check_if_approved
   before_update :check_if_approved
+  before_create :init_array
 
   # Custom Methods
   # -----------------------------
+  def init_array
+    self.edited_by_on = nil
+  end
 
   def name_present?
     !name.nil?

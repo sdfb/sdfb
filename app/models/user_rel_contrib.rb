@@ -1,7 +1,8 @@
 class UserRelContrib < ActiveRecord::Base
   attr_accessible :annotation, :bibliography, :confidence, :created_by, :relationship_id, :relationship_type_id, 
   :approved_by, :approved_on, :created_at, :is_approved, :start_year, :start_month, 
-  :start_day, :end_year, :end_month, :end_day
+  :start_day, :end_year, :end_month, :end_day, :is_active, :is_rejected, :edited_by_on
+  serialize :edited_by_on,Array
   
   # Relationships
   # -----------------------------
@@ -44,10 +45,15 @@ class UserRelContrib < ActiveRecord::Base
   # ----------------------------- 
   before_create :check_if_approved
   before_update :check_if_approved
+  before_create :init_array
 
 
   # Custom Methods
   # -----------------------------
+  def init_array
+    self.edited_by_on = nil
+  end
+  
   def start_year_present?
     ! self.start_year.nil?
   end
