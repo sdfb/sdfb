@@ -1,0 +1,31 @@
+<%= simple_form_for @user_group_contrib, :html => { :class => 'form-horizontal' } do |f| %>
+  <% if @user_group_contrib.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@user_group_contrib.errors.count, "error") %> prohibited this person from being saved:</h2>
+
+      <ul>
+      <% @user_group_contrib.errors.full_messages.each do |msg| %>
+        <br>
+          <li>- <%= msg %></li>
+        <br>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+  <% if ! @group_id.blank? %>
+    <%= f.input :group_id, :collection =>@groupOptions.collect{ |g| [g.name, g.id] }, label: "Group", prompt: "Select", selected: @group_id %>
+  <% else %>
+    <%= f.input :group_id, :collection =>@groupOptions.collect{ |g| [g.name, g.id] }, label: "Group", prompt: "Select" %>
+  <% end %>
+  <%= f.input :annotation %>
+  <%= f.input :bibliography %>
+  <% if (current_user.user_type == "Admin") || (current_user.user_type == "Curator") %>
+    <%= f.input :is_approved %>
+    <%= f.hidden_field :approved_by, :value => current_user.id %>
+  <% end %>
+  <div class="form-actions">
+    <%= f.button :submit, :class => 'btn btn-primary' %>
+    <%= link_to t('.cancel', :default => t("helpers.links.cancel")),
+                user_group_contribs_path, :class => 'btn' %>
+  </div>
+<% end %>

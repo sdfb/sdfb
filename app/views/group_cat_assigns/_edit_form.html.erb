@@ -1,0 +1,35 @@
+<%= simple_form_for @group_cat_assign, :html => { :class => 'form-horizontal' } do |f| %>
+  <% if @group_cat_assign.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@group_cat_assign.errors.count, "error") %> prohibited this group_cat_assign from being saved:</h2>
+
+      <ul>
+      <% @group_cat_assign.errors.full_messages.each do |msg| %>
+        <br>
+          <li>- <%= msg %></li>
+        <br>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <% if ! @group_id.blank? %>
+    <%= f.input :group_id, :collection =>@groupOptions.collect{ |g| [g.name, g.id] }, label: "Group", prompt: "Select", selected: @group_id %>
+  <% else %>
+    <%= f.input :group_id, :collection =>@groupOptions.collect{ |g| [g.name, g.id] }, label: "Group", prompt: "Select" %>
+  <% end %>
+  <% if ! @group_cat_id.blank? %>
+    <%= f.input :group_category_id, :collection =>@groupCatOptions.collect{ |g| [g.name, g.id] }, label: "Group Category", prompt: "Select", selected: @group_cat_id %>
+  <% else %>
+    <%= f.input :group_category_id, :collection =>@groupCatOptions.collect{ |g| [g.name, g.id] }, label: "Group Category", prompt: "Select" %>
+  <% end %>
+  <% if current_user.user_type == "Admin" %>
+    <%= f.input :is_approved %>
+    <%= f.hidden_field :approved_by, :value => current_user.id %>
+  <% end %>
+  <div class="form-actions">
+    <%= f.button :submit, :class => 'btn btn-primary' %>
+    <%= link_to t('.cancel', :default => t("helpers.links.cancel")),
+                people_path, :class => 'btn' %>
+  </div>
+<% end %>

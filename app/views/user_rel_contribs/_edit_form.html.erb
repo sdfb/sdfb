@@ -1,0 +1,57 @@
+<%= simple_form_for @user_rel_contrib, :html => { :class => 'form-horizontal' } do |f| %>
+  <% if @user_rel_contrib.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@user_rel_contrib.errors.count, "error") %> prohibited this user_rel_contrib from being saved:</h2>
+
+      <ul>
+      <% @user_rel_contrib.errors.full_messages.each do |msg| %>
+        <br>
+          <li>- <%= msg %></li>
+        <br>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+  <% if ! @relationship_id.blank? %>
+    <%= f.input :relationship_id, :collection =>@relOptions.collect{ |r| [r.get_person1_name + " & " + r.get_person2_name, r.id] }, label: "Relationship", prompt: "Select", selected: @relationship_id %>
+  <% else %>
+    <%= f.input :relationship_id, :collection =>@relOptions.collect{ |r| [r.get_person1_name + " & " + r.get_person2_name, r.id] }, label: "Relationship", prompt: "Select" %>
+  <% end %>
+  <%= f.input :relationship_type_id, :collection =>@relType.collect{ |r| [r.name, r.id] }, label: "Relationship Type", prompt: "Select" %>  
+
+  <%= f.label :confidence %>
+  <%= f.range_field :confidence, :min=>0, :max=>100, :class=>"slide", :id=>"slider1"%>
+  <br>
+  <% if ! @user_rel_contrib.confidence.blank? %>
+    <text id="formConfidence">Possible relationships @ <%= @user_rel_contrib.confidence %>%</text><br>
+  <% else %>
+    <text id="formConfidence">Possible relationships @ 50%</text><br>
+  <% end %>
+  <%= f.label :start_month, label: "Start Date" %>
+  <%= f.input :start_month, label: "Start Date", :collection =>["January","February","March","April","May","June","July","August","September","October","November","December"], label: false, prompt: "Month", :include_blank => true %>
+  <%= f.input :start_day, label: false, :collection => 1..31, prompt: "Day", :include_blank => true %>
+  <%= f.input :start_year, as: :string, label: false, placeholder: "Year"%>
+
+  <%= f.label :end_month, label: "End Date" %>
+  <%= f.input :end_month, :collection =>["January","February","March","April","May","June","July","August","September","October","November","December"], label: false, prompt: "Month", :include_blank => true %>
+  <%= f.input :end_day, label: false, :collection => 1..31, prompt: "Day", :include_blank => true %>
+  <%= f.input :end_year, label: false, as: :string, placeholder: "Year" %>
+  <%= f.input :annotation, input_html: { rows:"5" } %>
+  <%= f.input :bibliography, input_html: { rows:"5" } %>
+  <% if (current_user.user_type == "Admin") || (current_user.user_type == "Curator") %>
+    <%= f.input :is_approved %>
+    <%= f.hidden_field :approved_by, :value => current_user.id %>
+  <% end %>
+  <div class="form-actions">
+    <%= f.button :submit, :class => 'btn btn-primary' %>
+    <%= link_to t('.cancel', :default => t("helpers.links.cancel")),
+                user_rel_contribs_path, :class => 'btn' %>
+  </div>
+<% end %>
+
+
+          
+
+
+
+
