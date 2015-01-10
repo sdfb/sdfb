@@ -104,6 +104,30 @@ $(document).ready(function() {
         }
     });
 
+    $("#edge-slider").slider({
+        animate: true,
+        range: "min",
+        value: 40,
+        min: 0,
+        max: 100,
+        step: 1,
+        // Gets a live reading of the value and prints it on the page
+        slide: function( event, ui ) {
+            var result = "Very unlikely";
+            if (ui.value > 19 && ui.value < 40) {
+                result = "Unlikely";
+            } else if (ui.value > 39 && ui.value < 60) {
+                result = "Possible";
+            } else if (ui.value > 59 && ui.value < 80) {
+                result = "Likely";
+            } else if (ui.value > 79){
+                result = "Certain"
+            }
+            $("#slider-result1").html( result + " relationships @ " + ui.value + "%");
+            $("#slider-result-hidden1").val(ui.value);
+        }
+    });
+
     $("#nav-slider").slider({
         animate: true,
         range: "min",
