@@ -19,13 +19,13 @@
   <% end %>
   <%= f.input :relationship_type_id, :collection =>@relType.collect{ |r| [r.name, r.id] }, label: "Relationship Type", prompt: "Select" %>  
 
-  <%= f.label :confidence %>
-  <%= f.range_field :confidence, :min=>0, :max=>100, :class=>"slide", :id=>"slider1"%>
+  <%= f.label :certainty %>
+  <%= f.range_field :certainty, :min=>0, :max=>100, :class=>"slide", :id=>"slider1"%>
   <br>
-  <% if ! @user_rel_contrib.confidence.blank? %>
-    <text id="formConfidence">Possible relationships @ <%= @user_rel_contrib.confidence %>%</text><br>
+  <% if ! @user_rel_contrib.certainty.blank? %>
+    <text id="formCertainty">Possible relationships @ <%= @user_rel_contrib.certainty %>%</text><br>
   <% else %>
-    <text id="formConfidence">Possible relationships @ 50%</text><br>
+    <text id="formCertainty">Possible relationships @ 50%</text><br>
   <% end %>
   <%= f.label :start_month, label: "Start Date" %>
   <%= f.input :start_month, label: "Start Date", :collection =>["January","February","March","April","May","June","July","August","September","October","November","December"], label: false, prompt: "Month", :include_blank => true %>

@@ -19,7 +19,7 @@ namespace :db do
         end_month_input = userRelContribData[7]
         end_year_input = userRelContribData[8].to_i
         annotation_input  = userRelContribData[9]
-        confidence_input = userRelContribData[10]
+        certainty_input = userRelContribData[10]
         created_by_input = User.for_email("sdfb_admin@example.com")[0].id
         approved_by_input = User.for_email("sdfb_admin@example.com")[0].id
         approved_on_input = Time.now
@@ -35,7 +35,7 @@ namespace :db do
           urc.end_month = end_month_input
           urc.end_year = end_year_input
           urc.annotation = annotation_input
-          urc.confidence = confidence_input
+          urc.certainty = certainty_input
           urc.is_approved = true
           urc.created_by = created_by_input
           urc.approved_by = approved_by_input

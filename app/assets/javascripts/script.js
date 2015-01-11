@@ -209,7 +209,7 @@ $(document).ready(function() {
             } else if (newValue > 79){
                 result = "Certain"
             }
-        $("#formConfidence").html(result + " relationships @ " + newValue + "%");
+        $("#formCertainty").html(result + " relationships @ " + newValue + "%");
         });
 
         $("#certainty-anchor").click(function() {

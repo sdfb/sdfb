@@ -1,5 +1,5 @@
 class UserRelContrib < ActiveRecord::Base
-  attr_accessible :annotation, :bibliography, :confidence, :created_by, :relationship_id, :relationship_type_id, 
+  attr_accessible :annotation, :bibliography, :certainty, :created_by, :relationship_id, :relationship_type_id, 
   :approved_by, :approved_on, :created_at, :is_approved, :start_year, :start_month, 
   :start_day, :end_year, :end_month, :end_day, :is_active, :is_rejected, :edited_by_on
   serialize :edited_by_on,Array
@@ -12,7 +12,7 @@ class UserRelContrib < ActiveRecord::Base
 
   # Misc Constants
   # -----------------------------
-  USER_EST_CONFIDENCE_LIST = ["Certain", "Highly Likely", "Possible", "Unlikely", "Very Unlikely"]
+  USER_EST_CERTAINTY_LIST = ["Certain", "Highly Likely", "Possible", "Unlikely", "Very Unlikely"]
 
   ###need rel type for directional
   ###need inverse rel type for directional
@@ -20,7 +20,7 @@ class UserRelContrib < ActiveRecord::Base
   # Validations
   # -----------------------------
   validates_presence_of :annotation
-  validates_presence_of :confidence
+  validates_presence_of :certainty
   validates_presence_of :created_by
   validates_presence_of :relationship_id
   validates_presence_of :relationship_type_id
@@ -80,6 +80,16 @@ class UserRelContrib < ActiveRecord::Base
       self.approved_by = nil
       self.approved_on = nil
     end  
+  end
+
+  def update_max_certainty
+    max_certainty_calculation = 0
+    # find all user_rel_contribs for a specific relationship
+    all_user_rel_contribs = UserRelContrib.all_for_relationship(self.relationship_id).select("certainty"),
+
+    # for each 
+
+    Relationship.update(self.relationship_id, max_certainty: max_certainty_calculation)
   end
 
   def annot_present?

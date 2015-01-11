@@ -23,9 +23,9 @@
   <%= f.range_field :original_certainty, :min=>0, :max=>100, :class=>"slide", :id=>"slider1"%>
   <br>
   <% if ! @relationship.original_certainty.blank? %>
-    <text id="formConfidence">Possible relationships @ <%= @relationship.original_certainty %>%</text><br>
+    <text id="formCertainty">Possible relationships @ <%= @relationship.original_certainty %>%</text><br>
   <% else %>
-    <text id="formConfidence">Possible relationships @ 50%</text><br>
+    <text id="formCertainty">Possible relationships @ 50%</text><br>
   <% end %>
   <br>
 

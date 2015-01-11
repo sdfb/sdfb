@@ -226,7 +226,7 @@ ActiveRecord::Schema.define(:version => 20141103033703) do
   create_table "user_rel_contribs", :force => true do |t|
     t.integer  "relationship_id"
     t.integer  "created_by"
-    t.integer  "confidence"
+    t.integer  "certainty"
     t.text     "annotation"
     t.text     "bibliography"
     t.integer  "relationship_type_id"
