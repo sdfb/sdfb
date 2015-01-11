@@ -45,15 +45,17 @@ class Group < ActiveRecord::Base
   # Custom Methods
   # -----------------------------
   def add_editor_to_edit_by_on
-    previous_edited_by_on = Group.find(self.id).edited_by_on
-    if previous_edited_by_on.nil?
-      previous_edited_by_on = []
+    if (! self.edited_by_on.blank?)
+      previous_edited_by_on = Group.find(self.id).edited_by_on
+      if previous_edited_by_on.nil?
+        previous_edited_by_on = []
+      end
+      newEditRecord = []
+      newEditRecord.push(self.edited_by_on)
+      newEditRecord.push(Time.now)
+      previous_edited_by_on.push(newEditRecord)
+      self.edited_by_on = previous_edited_by_on
     end
-    newEditRecord = []
-    newEditRecord.push(self.edited_by_on)
-    newEditRecord.push(Time.now)
-    previous_edited_by_on.push(newEditRecord)
-    self.edited_by_on = previous_edited_by_on
   end
 
   def init_array

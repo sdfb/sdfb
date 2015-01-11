@@ -119,7 +119,7 @@ class Relationship < ActiveRecord::Base
   before_update :check_if_approved
   before_create :check_if_valid
   before_create :init_array
-  before_update :add_editor_to_edit_by_on
+  before_update :add_editor_to_edit_by_on_max_certainty
   #before_create :check_if_start_date_complete
   #before_update :check_if_start_date_complete
   #before_create :check_if_end_date_complete
@@ -142,16 +142,50 @@ class Relationship < ActiveRecord::Base
   #     errors.add(:end_year, "The end date is incomplete without the end year.") if self.end_year.blank?
   #   end
   # end
-  def add_editor_to_edit_by_on
-    previous_edited_by_on = Relationship.find(self.id).edited_by_on
-    if previous_edited_by_on.nil?
-      previous_edited_by_on = []
+  def add_editor_to_edit_by_on_max_certainty
+    # Add editor to edit_by_on
+    if (! self.edited_by_on.blank?)
+      previous_edited_by_on = Relationship.find(self.id).edited_by_on
+      if previous_edited_by_on.nil?
+        previous_edited_by_on = []
+      end
+      newEditRecord = []
+      newEditRecord.push(self.edited_by_on)
+      newEditRecord.push(Time.now)
+      previous_edited_by_on.push(newEditRecord)
+      self.edited_by_on = previous_edited_by_on
     end
-    newEditRecord = []
-    newEditRecord.push(self.edited_by_on)
-    newEditRecord.push(Time.now)
-    previous_edited_by_on.push(newEditRecord)
-    self.edited_by_on = previous_edited_by_on
+
+    # update max certainty
+    # Only update max_certainty if there are no User_rel_edits
+    user_rel_contribs = UserRelContrib.all_for_relationship(self.id)
+
+    if (user_rel_contribs.blank?)
+      # update the relationship's max certainty
+      self.max_certainty = self.original_certainty
+    
+      # update the max certainty of the relationship in the people's rel_sum
+      # find the existing rel_sums for person 1 and person 2
+      person1_id = self.person1_index
+      rel_sum_person_1 = Person.find(person1_id).rel_sum
+
+      person2_id = self.person2_index
+      rel_sum_person_2 = Person.find(person2_id).rel_sum
+
+      # locate the record for the specific relationship for person 1
+      rel_sum_person_1.each do |rel|
+        if rel[3] == self.id
+          rel[1] = self.original_certainty
+        end
+      end
+      Person.update(person1_id, rel_sum: rel_sum_person_1)
+      rel_sum_person_2.each do |rel|
+        if rel[3] == self.id
+          rel[1] = self.original_certainty
+        end
+      end
+      Person.update(person2_id, rel_sum: rel_sum_person_2)
+    end
   end
 
   def init_array
@@ -161,6 +195,39 @@ class Relationship < ActiveRecord::Base
   def start_year_present?
     ! self.start_year.nil?
   end
+
+  # def update_max_certainty
+  #   # update max certainty
+  #   # Only update max_certainty if there are no User_rel_edits
+  #   user_rel_contribs = UserRelContrib.all_for_relationship(self.id)
+
+  #   if (user_rel_contribs.blank?)
+  #     # update the relationship's max certainty
+  #     Relationship.update(self.id, max_certainty: self.original_certainty)
+    
+  #     # update the max certainty of the relationship in the people's rel_sum
+  #     # find the existing rel_sums for person 1 and person 2
+  #     person1_id = self.person1_index
+  #     rel_sum_person_1 = Person.find(person1_id).rel_sum
+
+  #     person2_id = self.person2_index
+  #     rel_sum_person_2 = Person.find(person2_id).rel_sum
+
+  #     # locate the record for the specific relationship for person 1
+  #     rel_sum_person_1.each do |rel|
+  #       if rel[3] == self.id
+  #         rel[1] = self.original_certainty
+  #       end
+  #     end
+  #     Person.update(person1_id, rel_sum: rel_sum_person_1)
+  #     rel_sum_person_2.each do |rel|
+  #       if rel[3] == self.id
+  #         rel[1] = self.original_certainty
+  #       end
+  #     end
+  #     Person.update(person2_id, rel_sum: rel_sum_person_2)
+  #   end
+  # end
 
   def end_year_present?
     ! self.end_year.nil?
@@ -260,6 +327,7 @@ class Relationship < ActiveRecord::Base
 
   # Whenever a relationship is updated, the relationship summary (rel_sum) must be updated in both people's records
   def update_peoples_rel_sum
+    # update people_rel_sum
     person1_index_in = self.person1_index
     person2_index_in = self.person2_index
     max_certainty_in = self.max_certainty
