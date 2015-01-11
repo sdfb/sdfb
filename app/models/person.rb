@@ -18,8 +18,8 @@ class Person < ActiveRecord::Base
 
   # Scope
   # ----------------------------- 
-  scope :all_approved, where("approved_by is not null")
-  scope :all_unapproved, where("approved_by is null")
+  scope :all_approved, where("approved_by is not null and is_active is true and is_rejected is false")
+  scope :all_unapproved, where("approved_by is null and is_rejected is false")
   scope :for_odnb_id, lambda {|odnb_id_input| where('odnb_id like ?', "%#{odnb_id_input}%") }
   scope :for_first_name, lambda {|first_name_input| where('first_name like ?', "%#{first_name_input}")}
   scope :for_last_name, lambda {|last_name_input| where('last_name like ?', "%#{last_name_input}")}

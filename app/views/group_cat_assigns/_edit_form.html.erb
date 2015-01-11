@@ -25,7 +25,9 @@
   <% end %>
   <% if current_user.user_type == "Admin" %>
     <%= f.input :is_approved %>
+    <%= f.input :is_active %>
     <% if @is_approved == false %>
+      <%= f.input :is_rejected %>
       <%= f.hidden_field :approved_by, :value => current_user.id %>
       <%= f.hidden_field :approved_on, :value => Time.now %>
     <% end %>
