@@ -196,39 +196,6 @@ class Relationship < ActiveRecord::Base
     ! self.start_year.nil?
   end
 
-  # def update_max_certainty
-  #   # update max certainty
-  #   # Only update max_certainty if there are no User_rel_edits
-  #   user_rel_contribs = UserRelContrib.all_for_relationship(self.id)
-
-  #   if (user_rel_contribs.blank?)
-  #     # update the relationship's max certainty
-  #     Relationship.update(self.id, max_certainty: self.original_certainty)
-    
-  #     # update the max certainty of the relationship in the people's rel_sum
-  #     # find the existing rel_sums for person 1 and person 2
-  #     person1_id = self.person1_index
-  #     rel_sum_person_1 = Person.find(person1_id).rel_sum
-
-  #     person2_id = self.person2_index
-  #     rel_sum_person_2 = Person.find(person2_id).rel_sum
-
-  #     # locate the record for the specific relationship for person 1
-  #     rel_sum_person_1.each do |rel|
-  #       if rel[3] == self.id
-  #         rel[1] = self.original_certainty
-  #       end
-  #     end
-  #     Person.update(person1_id, rel_sum: rel_sum_person_1)
-  #     rel_sum_person_2.each do |rel|
-  #       if rel[3] == self.id
-  #         rel[1] = self.original_certainty
-  #       end
-  #     end
-  #     Person.update(person2_id, rel_sum: rel_sum_person_2)
-  #   end
-  # end
-
   def end_year_present?
     ! self.end_year.nil?
   end

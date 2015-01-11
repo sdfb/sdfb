@@ -47,7 +47,6 @@ class UserRelContrib < ActiveRecord::Base
   before_update :add_editor_update_max_cert_check_approved
   before_create :update_max_certainty
   after_create :check_if_approved
-  #after_update :update_max_certainty
 
 
   # Custom Methods
