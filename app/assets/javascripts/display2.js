@@ -497,11 +497,11 @@ function init() {
   //This file only contains the data for the searched person and 1st degree relationships
   var people = gon.people;
   //This file contains all the id, first_name, last_name, ext_birth_year, prefix, suffix, and title for every person in the database
-  var all_people = gon.people_list;
+  // var all_people = gon.people_list;
 
 	var data = { nodes: [], edges: [], groups_names: [], nodeKeys: [] };
 
-  var allPeopleNamesData = { nodes: [], edges: [], groups_names: [], nodeKeys: [] };
+  //var allPeopleNamesData = { nodes: [], edges: [], groups_names: [], nodeKeys: [] };
 
   //This function only converts gon to all data for the searched person and 1st degree relationships
   $.each(people, function(index, value) { 
@@ -521,23 +521,23 @@ function init() {
   });
 
   //This function converts gon to name data for all people in the database
-  $.each(all_people, function(index, value) { 
-    var n = new node();
-    n.id = value.id;
-    n.first = value.first_name;
-    n.last = value.last_name;
-    n.prefix = value.prefix;
-    n.suffix = value.suffix;
-    n.title = value.title
-    n.label = n.first + " " + n.last;
-    n.birth = value.ext_birth_year;
-    n.death = value.ext_death_year;
-    allPeopleNamesData.nodes[n.id] = n;   
-  });
+  // $.each(all_people, function(index, value) { 
+  //   var n = new node();
+  //   n.id = value.id;
+  //   n.first = value.first_name;
+  //   n.last = value.last_name;
+  //   n.prefix = value.prefix;
+  //   n.suffix = value.suffix;
+  //   n.title = value.title
+  //   n.label = n.first + " " + n.last;
+  //   n.birth = value.ext_birth_year;
+  //   n.death = value.ext_death_year;
+  //   allPeopleNamesData.nodes[n.id] = n;   
+  // });
 
-  populateLists(allPeopleNamesData);
+ // populateLists(allPeopleNamesData);
   filterGraph(data);
-  initGraph(data, allPeopleNamesData);
+  // initGraph(data, allPeopleNamesData);
   }
 
 
