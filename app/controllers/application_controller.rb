@@ -1,7 +1,11 @@
 class ApplicationController < ActionController::Base
   	protect_from_forgery
+  	before_filter :expire_hsts
   
 	private
+	def expire_hsts
+    	response.headers["Strict-Transport-Security"] = 'max-age=0'
+  	end
 	def current_user
 		@current_user ||= User.find(session[:user_id]) if session[:user_id]
 	end
@@ -41,4 +45,6 @@ class ApplicationController < ActionController::Base
 	 	flash[:error] = "Access Denied"
 	 	redirect_to sign_in_url
 	end
+
+
 end
