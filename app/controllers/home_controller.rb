@@ -1,6 +1,7 @@
 class HomeController < ApplicationController
   def index
-    
+    gon.people = Person.find(1)
+    gon.people_list = Person.find(1)
   	#gon.people = Person.find_first_degree_for(params[:id])
   	#gon.people_list = Person.select("id, first_name, last_name, ext_birth_year, prefix, suffix, title")
   end
