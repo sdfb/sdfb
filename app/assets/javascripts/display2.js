@@ -542,6 +542,7 @@ function init() {
 
 
 $(document).ready(function() {
+  console.log(gon.people);
   //  init();
 });
 
