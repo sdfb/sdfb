@@ -3,6 +3,8 @@ class UserPersonContrib < ActiveRecord::Base
   :approved_on, :created_at, :is_approved, :is_active, :is_rejected, :edited_by_on
   serialize :edited_by_on,Array
 
+  delegate :first_name, to: :person, prefix: true
+
   # Relationships
   # -----------------------------
   belongs_to :person

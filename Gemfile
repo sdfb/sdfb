@@ -12,6 +12,8 @@ gem 'rails', '3.2.11'
 gem 'will_paginate'
 gem 'simple_form'
 
+gem 'rails3-jquery-autocomplete'
+
 # Gems used only for assets and not required
 # in production environments by default.
 gem 'pg'

@@ -6,6 +6,7 @@ class UserPersonContribsController < ApplicationController
   # before_filter :check_login, :only => [:index, :new, :edit]
   # authorize_resource
   
+  autocomplete :person, :first_name, full: true
   load_and_authorize_resource
 
   def index

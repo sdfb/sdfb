@@ -62,7 +62,9 @@ Sdfb::Application.routes.draw do
   resources :people
 
 
-  resources :user_person_contribs
+  resources :user_person_contribs do
+    get :autocomplete_person_first_name, on: :collection
+  end
 
 
   resources :user_rel_contribs
