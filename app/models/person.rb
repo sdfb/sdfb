@@ -167,6 +167,10 @@ class Person < ActiveRecord::Base
     self.edited_by_on = nil
   end
 
+  def autocomplete_name
+    "#{self.first_name} #{self.last_name} (#{self.ext_birth_year})"
+  end
+
   def check_if_approved
     if (self.is_approved != true)
       self.approved_by = nil

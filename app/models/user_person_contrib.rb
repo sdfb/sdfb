@@ -1,9 +1,7 @@
 class UserPersonContrib < ActiveRecord::Base
   attr_accessible :annotation, :bibliography, :created_by, :person_id, :approved_by,
-  :approved_on, :created_at, :is_approved, :is_active, :is_rejected, :edited_by_on
+  :approved_on, :created_at, :is_approved, :is_active, :is_rejected, :edited_by_on, :person_autocomplete
   serialize :edited_by_on,Array
-
-  delegate :first_name, to: :person, prefix: true
 
   # Relationships
   # -----------------------------

@@ -16,7 +16,10 @@
     <%= f.input :person_id, :collection =>@personOptions.collect{ |p| [p.first_name + " " + p.last_name, p.id] }, label: "Person", prompt: "Select", selected: @person_id %>
   <% else %>
 <!--     <%= f.input :person_id, :collection =>@personOptions.collect{ |p| [p.first_name + " " + p.last_name, p.id] }, label: "Person", prompt: "Select" %> -->
-    <%= f.input :person_id, as: :autocomplete, url: autocomplete_person_first_name_user_person_contribs_path %>
+    
+  <%= f.input :person_id, as: :hidden %>
+  <%= f.input :person_autocomplete, as: :autocomplete, url: autocomplete_person_search_names_all_user_person_contribs_path, input_html: { 'data-id-element' => '#user_person_contrib_person_id' }, label: "Person" %>
+
   <% end %>
   <%= f.hidden_field :created_by, :value => current_user.id %>
   <%= f.input :annotation %>

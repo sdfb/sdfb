@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20141103033703) do
+ActiveRecord::Schema.define(:version => 20150118052942) do
 
   create_table "comments", :force => true do |t|
     t.string   "comment_type"
@@ -215,12 +215,13 @@ ActiveRecord::Schema.define(:version => 20141103033703) do
     t.text     "bibliography"
     t.integer  "approved_by"
     t.date     "approved_on"
-    t.boolean  "is_approved",  :default => true
-    t.boolean  "is_active",    :default => true
-    t.boolean  "is_rejected",  :default => false
-    t.text     "edited_by_on", :default => "--- []\n"
-    t.datetime "created_at",                           :null => false
-    t.datetime "updated_at",                           :null => false
+    t.boolean  "is_approved",         :default => true
+    t.boolean  "is_active",           :default => true
+    t.boolean  "is_rejected",         :default => false
+    t.text     "edited_by_on",        :default => "--- []\n"
+    t.datetime "created_at",                                  :null => false
+    t.datetime "updated_at",                                  :null => false
+    t.string   "person_autocomplete"
   end
 
   create_table "user_rel_contribs", :force => true do |t|
