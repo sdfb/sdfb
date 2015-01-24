@@ -154,7 +154,7 @@ function twoDegs(id, id2, data, confidence, sdate, edate) {
       $.each(p.rels, function(index, value) {
         if (value[2] == 0 || value[1] < confidence || sdate > births[ids.indexOf(value[0])] || edate < births[ids.indexOf(value[0])]) {
           // not approved, move on or if confidence is less than 0.75
-          console.log("merp");
+          //console.log("merp");
         }
         else {
           var q = data.nodes[value[0]]; // find person object in data by id
@@ -535,14 +535,15 @@ function init() {
     allPeopleNamesData.nodes[n.id] = n;   
   });
 
-  populateLists(allPeopleNamesData);
+ populateLists(allPeopleNamesData);
   filterGraph(data);
   initGraph(data, allPeopleNamesData);
   }
 
 
 $(document).ready(function() {
-    init();
+  //console.log(gon.people);
+  init();
 });
 
       
