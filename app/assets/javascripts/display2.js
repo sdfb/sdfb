@@ -1,6 +1,6 @@
 var francisID = 10000473;
 //var default_confidence = 75;
-//showing all relationships with a confidence of at least 1%
+//showing all relationships with a confidence of at least 40 %
 var default_confidence = 40;
 var default_sdate = 1400;
 var default_edate = 1800;
@@ -14,9 +14,9 @@ function createGroup() {
 
 // Returns the cluster id based on birth year
 function getClusterBirth(year){
-  if (parseInt(year) < 1550) {return 0}
-  if (parseInt(year) > 1700) {return 1}
-  var cluster = Math.round((parseInt(year) - 1550) / 5);
+  if (parseInt(year) < default_sdate) {return 0}
+  if (parseInt(year) > default_edate) {return 1}
+  var cluster = Math.round((parseInt(year) - default_sdate) / 5);
   return (2 + cluster);
 }
 

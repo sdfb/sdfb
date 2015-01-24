@@ -19,5 +19,5 @@
 //= require typeahead
 //= require display2
 //= require bootstrap.min
-//= require landing
 //= require accordion
+//= require landing
