@@ -34,6 +34,7 @@ class Group < ActiveRecord::Base
   scope :for_id, lambda {|id_input| where('id = ?', "#{id_input}") }
   scope :exact_name_match, lambda {|search_input| where('name like ?', "#{search_input}") }
   scope :similar_name_match, lambda {|search_input| where('name like ?', "%#{search_input}%") }
+  scope :for_user, lambda {|user_input| where('created_by = ?', "#{user_input}") }
 
   # Callbacks
   # ----------------------------- 

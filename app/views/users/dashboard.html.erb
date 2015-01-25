@@ -1,7 +1,17 @@
 <h1> Dashboard </h1>
 
 <% if logged_in? %>
+	<h1>My Contributions</h1>
+	<%= render 'user_rel_contribs_for_user' %>
+	<%= render 'user_person_contribs_for_user' %>
+	<%= render 'user_group_contribs_for_user' %>
+	<%= render 'group_assignments_for_user' %>
+	<%= render 'new_rel_for_user' %>
+	<%= render 'new_people_for_user' %>
+	<%= render 'new_group_for_user' %>
+	
 	<% if (current_user.user_type == "Admin") || (current_user.user_type == "Curator") %>
+		<h1>For Approval</h1>
 		<%= render 'unapproved_people' %>
 		<%= render 'unapproved_relationships' %>
 		<%= render 'unapproved_groups' %>

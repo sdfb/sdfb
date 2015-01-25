@@ -86,6 +86,13 @@ class UsersController < ApplicationController
     @unapproved_user_group_contribs = UserGroupContrib.all_unapproved.paginate(:page => params[:unapproved_user_group_contribs_page]).per_page(5)
     @unapproved_user_rel_contribs = UserRelContrib.all_unapproved.paginate(:page => params[:unapproved_user_rel_contribs_page]).per_page(5)
     @unapproved_user_person_contribs = UserPersonContrib.all_unapproved.paginate(:page => params[:unapproved_user_person_contribs_page]).per_page(5)
+    @user_rel_contribs = UserRelContrib.for_user(current_user.id).paginate(:page => params[:user_rel_contribs_page]).per_page(5)
+    @user_person_contribs = UserPersonContrib.for_user(current_user.id).paginate(:page => params[:user_person_contribs_page]).per_page(5)
+    @user_group_contribs = UserGroupContrib.for_user(current_user.id).paginate(:page => params[:user_group_contribs_page]).per_page(5)
+    @new_people = Person.for_user(current_user.id).paginate(:page => params[:people_page]).per_page(5)
+    @new_groups = Group.for_user(current_user.id).paginate(:page => params[:groups_page]).per_page(5)
+    @new_relationships = Relationship.for_user(current_user.id).paginate(:page => params[:relationships_page]).per_page(5)
+    @group_assignments = GroupAssignment.for_user(current_user.id).paginate(:page => params[:group_assignments_page]).per_page(5)
   end
 
   # DELETE /users/1

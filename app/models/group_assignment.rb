@@ -21,6 +21,7 @@ class GroupAssignment < ActiveRecord::Base
     lambda {|groupID| 
       select('group_assignments.*')
       .where('(group_id = ?)', groupID)}
+  scope :for_user, lambda {|user_input| where('created_by = ?', "#{user_input}") }
 
   # Validations
   # -----------------------------

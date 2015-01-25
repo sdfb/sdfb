@@ -58,7 +58,7 @@ class Ability
 			can :export_rels_for_rels_100160001_100180000, Relationship
 			can :export_rels_for_rels_greater_than_100180000, Relationship
 
-			# A usr can view their dashboard
+			# A user can view their dashboard
 			can :dashboard, User
 
 		elsif (user.user_type == "Standard") 
@@ -154,6 +154,9 @@ class Ability
 			can :export_rels_for_rels_100140001_100160000, Relationship
 			can :export_rels_for_rels_100160001_100180000, Relationship
 			can :export_rels_for_rels_greater_than_100180000, Relationship
+
+			# A user can view their dashboard
+			can :dashboard, User
 		else
 			# Anyone can sign up
 			can [:new, :create], User

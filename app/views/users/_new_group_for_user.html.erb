@@ -1,0 +1,41 @@
+<h2>Groups</h2>
+<div class = "well">
+  <% if ! @new_groups.empty? %>
+    <table class="table table-condensed">
+      <thead>
+        <tr>
+          <th>Group ID </th>
+          <th>Name</th>
+          <th>Description</th>
+          <th>Start Year</th>
+          <th>End Year</th>
+          <th><%=t '.actions', :default => t("helpers.actions") %></th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @new_groups.each do |group| %>
+          <tr>
+            <td><%= group.id %></td>
+            <td><%= group.name %></td>
+            <td><%= group.description %></td>
+            <td><%= group.start_year %></td>
+            <td><%= group.end_year %></td>
+            <td>
+              <% if can? :show, group %>
+                <%= link_to 'Show', group, :class => 'btn btn-mini' %>
+              <% end %>
+              <% if can? :update, group %>
+                <%= link_to t('.edit', :default => t("helpers.links.edit")),
+                                edit_group_path(group), :class => 'btn btn-mini' %>
+              <% end %>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+
+    <%= will_paginate @new_groups, :param_name => 'groups_page', :previous_label => "Previous&nbsp;", :next_label => "&nbsp;Next" %>
+  <% else %>
+    You have not contributed any groups.
+  <% end %>
+</div>
