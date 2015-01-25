@@ -191,6 +191,8 @@ ActiveRecord::Schema.define(:version => 20150118052942) do
     t.text     "edited_by_on",             :default => "--- []\n"
     t.datetime "created_at",                                       :null => false
     t.datetime "updated_at",                                       :null => false
+    t.string   "person1_autocomplete"
+    t.string   "person2_autocomplete"
   end
 
   create_table "user_group_contribs", :force => true do |t|

@@ -2,7 +2,7 @@ class Relationship < ActiveRecord::Base
   attr_accessible :max_certainty, :created_by, :original_certainty, :person1_index, :person2_index,
   :justification, :approved_by, :approved_on, :created_at, :edge_birthdate_certainty,
   :is_approved, :start_year, :start_month, :start_day, :end_year, :end_month, :end_day,
-  :is_active, :is_rejected, :edited_by_on
+  :is_active, :is_rejected, :edited_by_on, :person1_autocomplete, :person2_autocomplete
   serialize :edited_by_on,Array
 
   # Relationships

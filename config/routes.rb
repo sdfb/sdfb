@@ -47,7 +47,9 @@ Sdfb::Application.routes.draw do
   resources :sessions
 
 
-  resources :relationships
+  resources :relationships do
+    get :autocomplete_person_search_names_all, on: :collection
+  end
 
 
   resources :groups

@@ -21,6 +21,7 @@
   <%= f.input :about_description %>
   <%= f.hidden_field :curator_revoked, :value => false %>
   <% if current_user != nil %>
+    <%= current_user.username %>
     <% if (current_user.user_type == "Admin") %>
       <%= f.input :user_type, :collection => ["Standard", "Curator","Admin"], prompt: "Select" %>
       <div class="field">
@@ -29,7 +30,6 @@
       </div>
     <% end %>
   <% end %>
-  <%= f.hidden_field :edited_by_on, :value => current_user.id %>
   <div class="form-actions">
     <%= f.button :submit, :class => 'btn btn-primary' %>
     <%= link_to t('.cancel', :default => t("helpers.links.cancel")),

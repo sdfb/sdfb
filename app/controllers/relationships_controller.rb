@@ -6,6 +6,7 @@ class RelationshipsController < ApplicationController
   # before_filter :check_login, :only => [:index, :new, :edit]
   # authorize_resource
 
+  autocomplete :person, :search_names_all, full: true, :extra_data => [:first_name, :last_name, :ext_birth_year], :display_value => :autocomplete_name
   load_and_authorize_resource
 
   helper PeopleHelper
@@ -18,6 +19,10 @@ class RelationshipsController < ApplicationController
       format.html # index.html.erb
       format.json { render json: @relationships }
     end
+  end
+
+  def get_autocomplete_items(parameters)
+    active_record_get_autocomplete_items(parameters).where("approved_by is not null and is_active is true and is_rejected is false")
   end
 
   # GET /relationships/1

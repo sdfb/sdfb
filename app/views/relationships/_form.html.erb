@@ -13,11 +13,15 @@
     </div>
   <% end %>
   <% if ! @person1_id.blank? %>
-    <%= f.input :person1_index, :collection =>@personOptions.collect{ |p| [p.first_name + " " + p.last_name, p.id] }, label: "Person 1", prompt: "Select", selected: @person1_id %>
+    <%= f.label :person1_index, label: "Person 1"%> 
+    <%= Person.find(@person1_id).first_name + " " + Person.find(@person1_id).last_name %>
+    <%= f.hidden_field :person1_index, :value => @person1_id %>
   <% else %>
-    <%= f.input :person1_index, :collection =>@personOptions.collect{ |p| [p.first_name + " " + p.last_name, p.id] }, label: "Person 1", prompt: "Select" %>
+    <%= f.input :person1_index, as: :hidden %>
+    <%= f.input :person1_autocomplete, as: :autocomplete, url: autocomplete_person_search_names_all_relationships_path, input_html: { 'data-id-element' => '#relationship_person1_index' }, label: "Person 1", placeholder: "name" %>
   <% end %>
-  <%= f.input :person2_index, :collection =>@personOptions.collect{ |p| [p.first_name + " " + p.last_name, p.id] }, label: "Person 2", prompt: "Select" %>
+    <%= f.input :person2_index, as: :hidden %>
+    <%= f.input :person2_autocomplete, as: :autocomplete, url: autocomplete_person_search_names_all_relationships_path, input_html: { 'data-id-element' => '#relationship_person2_index' }, label: "Person 2", placeholder: "name" %>
   <br>
   <%= f.label :original_certainty, label: "Estimated Certainty" %>
   <%= f.range_field :original_certainty, :min=>0, :max=>100, :class=>"slide", :id=>"slider1"%>

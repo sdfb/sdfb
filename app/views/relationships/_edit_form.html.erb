@@ -12,13 +12,10 @@
       </ul>
     </div>
   <% end %>
-  <% if ! @person1_id.blank? %>
-    <%= f.input :person1_index, :collection =>@personOptions.collect{ |p| [p.first_name + " " + p.last_name, p.id] }, label: "Person 1", prompt: "Select", selected: @person1_id %>
-  <% else %>
-    <%= f.input :person1_index, :collection =>@personOptions.collect{ |p| [p.first_name + " " + p.last_name, p.id] }, label: "Person 1", prompt: "Select" %>
-  <% end %>
-  <%= f.input :person2_index, :collection =>@personOptions.collect{ |p| [p.first_name + " " + p.last_name, p.id] }, label: "Person 2", prompt: "Select" %>
-  <br>
+  <%= f.label :person1_index, label: "Person 1" %>
+  <%= Person.find(@relationship.person1_index).get_person_name %>
+  <%= f.label :person2_index, label: "Person 2" %>
+  <%= Person.find(@relationship.person2_index).get_person_name %>
   <%= f.label :original_certainty, label: "Estimated Certainty" %>
   <%= f.range_field :original_certainty, :min=>0, :max=>100, :class=>"slide", :id=>"slider1"%>
   <br>
