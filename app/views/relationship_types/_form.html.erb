@@ -18,15 +18,14 @@
   <%= f.input :relationship_type_inverse, :collection =>@relTypeOptions.collect{ |r| [r.name, r.id] }, label: "Relationship Type Inverse", prompt: "Select" %>
   <%= f.hidden_field :created_by, :value => current_user.id %>
   <% if current_user.user_type == "Admin" %>
-    <%= f.input :is_active %>
-  <% end %>
     <%= f.input :is_approved %>
     <%= f.input :is_active %>
-    <%= f.input :is_rejected %>
-    <%= f.hidden_field :approved_by, :value => current_user.id %>
-    <%= f.hidden_field :approved_on, :value => Time.now %>
+    <% if @is_approved == false %>
+      <%= f.input :is_rejected %>
+      <%= f.hidden_field :approved_by, :value => current_user.id %>
+      <%= f.hidden_field :approved_on, :value => Time.now %>
+    <% end %>
   <% end %>
-
   <div class="form-actions">
     <%= f.button :submit, :class => 'btn btn-primary' %>
   </div>
