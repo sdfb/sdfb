@@ -1,7 +1,8 @@
 class UserRelContrib < ActiveRecord::Base
   attr_accessible :annotation, :bibliography, :certainty, :created_by, :relationship_id, :relationship_type_id, 
   :approved_by, :approved_on, :created_at, :is_approved, :start_year, :start_month, 
-  :start_day, :end_year, :end_month, :end_day, :is_active, :is_rejected, :edited_by_on, :person1_autocomplete, :person2_autocomplete
+  :start_day, :end_year, :end_month, :end_day, :is_active, :is_rejected, :edited_by_on, :person1_autocomplete,
+  :person2_autocomplete, :person1_selection, :person2_selection
   serialize :edited_by_on,Array
   
   # Relationships
@@ -44,13 +45,32 @@ class UserRelContrib < ActiveRecord::Base
   # Callbacks
   # ----------------------------- 
   before_create :init_array
+  before_create :autocomplete_to_rel
   before_update :add_editor_update_max_cert_check_approved
   before_create :update_max_certainty
   after_create :check_if_approved
 
-
   # Custom Methods
   # -----------------------------
+  
+  #This converts the person1_selected and the person2_selected into the relationship_id foreign key
+  def autocomplete_to_rel
+    #find the relationship_id given the two people
+    found_rel_id = Relationship.for_2_people(self.person1_selection, self.person2_selection)[0]
+    if (found_rel_id.nil?)
+      #if the relationship does not exist, then through an error
+      errors.add(:person2_autocomplete, "This relationship does not exist.")
+    else
+      self.relationship_id = found_rel_id.id
+    end
+
+    #set person1_autocomplete, person2_autocomplete, person1_selected, person2_selected to nil to save room in the database
+    self.person1_autocomplete = nil
+    self.person2_autocomplete = nil
+    self.person1_selection = nil
+    self.person2_selection = nil
+  end
+
   def add_editor_update_max_cert_check_approved
     # update edit_by_on
     if (! self.edited_by_on.blank?)

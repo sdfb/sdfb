@@ -18,7 +18,7 @@
     <%= f.hidden_field :person_id, :value => @person_id %>
   <% else %>    
     <%= f.input :person_id, as: :hidden %>
-    <%= f.input :person_autocomplete, as: :autocomplete, url: autocomplete_person_search_names_all_user_person_contribs_path, input_html: { 'data-id-element' => '#user_person_contrib_person_id' }, label: "Person" %>
+    <%= f.input :person_autocomplete, as: :autocomplete, url: autocomplete_person_search_names_all_user_person_contribs_path, input_html: { 'data-id-element' => '#user_person_contrib_person_id' }, label: "Person", placeholder: "name" %>
   <% end %>
   <%= f.hidden_field :created_by, :value => current_user.id %>
   <%= f.input :annotation %>

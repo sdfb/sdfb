@@ -12,11 +12,8 @@
       </ul>
     </div>
   <% end %>
-  <% if ! @relationship_id.blank? %>
-    <%= f.input :relationship_id, :collection =>@relOptions.collect{ |r| [r.get_person1_name + " & " + r.get_person2_name, r.id] }, label: "Relationship", prompt: "Select", selected: @relationship_id %>
-  <% else %>
-    <%= f.input :relationship_id, :collection =>@relOptions.collect{ |r| [r.get_person1_name + " & " + r.get_person2_name, r.id] }, label: "Relationship", prompt: "Select" %>
-  <% end %>
+  <%= f.label :relationship_id %>
+  <%= Relationship.find(@user_rel_contrib.relationship_id).get_both_names %>
   <%= f.input :relationship_type_id, :collection =>@relType.collect{ |r| [r.name, r.id] }, label: "Relationship Type", prompt: "Select" %>  
 
   <%= f.label :certainty %>

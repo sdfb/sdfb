@@ -2,7 +2,6 @@
   <% if @user_rel_contrib.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(@user_rel_contrib.errors.count, "error") %> prohibited this user_rel_contrib from being saved:</h2>
-
       <ul>
       <% @user_rel_contrib.errors.full_messages.each do |msg| %>
         <br>
@@ -13,9 +12,15 @@
     </div>
   <% end %>
   <% if ! @relationship_id.blank? %>
-    <%= f.input :relationship_id, :collection =>@relOptions.collect{ |r| [r.get_person1_name + " & " + r.get_person2_name, r.id] }, label: "Relationship", prompt: "Select", selected: @relationship_id %>
+    <%= f.label :relationship_id %>
+    <%= Relationship.find(@relationship_id).get_both_names %>
+    <%= f.hidden_field :relationship_id, :value => @relationship_id %>
   <% else %>
-    <%= f.input :relationship_id, :collection =>@relOptions.collect{ |r| [r.get_person1_name + " & " + r.get_person2_name, r.id] }, label: "Relationship", prompt: "Select" %>
+    <%= f.hidden_field :relationship_id, value: 0 %>
+    <%= f.hidden_field :person1_selection %>
+    <%= f.hidden_field :person2_selection %>
+    <%= f.input :person1_autocomplete, as: :autocomplete, url: autocomplete_person_search_names_all_user_rel_contribs_path, input_html: { 'data-id-element' => '#user_rel_contrib_person1_selection' }, label: "Person 1", placeholder: "name" %>
+    <%= f.input :person2_autocomplete, as: :autocomplete, url: autocomplete_person_search_names_all_user_rel_contribs_path, input_html: { 'data-id-element' => '#user_rel_contrib_person2_selection' }, label: "Person 2", placeholder: "name" %>
   <% end %>
   <%= f.input :relationship_type_id, :collection =>@relType.collect{ |r| [r.name, r.id] }, label: "Relationship Type", prompt: "Select" %>  
 
