@@ -5,6 +5,7 @@ class UserRelContribsController < ApplicationController
   # before_filter :check_login
   #before_filter :check_login, :only => [:index, :new, :edit]
   
+  autocomplete :person, :search_names_all, full: true, :extra_data => [:first_name, :last_name, :ext_birth_year], :display_value => :autocomplete_name
   load_and_authorize_resource
 
   def index
@@ -14,6 +15,10 @@ class UserRelContribsController < ApplicationController
       format.html # index.html.erb
       format.json { render json: @user_rel_contribs }
     end
+  end
+
+  def get_autocomplete_items(parameters)
+    active_record_get_autocomplete_items(parameters).where("approved_by is not null and is_active is true and is_rejected is false")
   end
 
   # GET /user_rel_contribs/1

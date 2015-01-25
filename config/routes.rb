@@ -67,7 +67,9 @@ Sdfb::Application.routes.draw do
   end
 
 
-  resources :user_rel_contribs
+  resources :user_rel_contribs do
+    get :autocomplete_person_search_names_all, on: :collection
+  end
 
   # Routing for people record export
   match '/export_groups' => 'groups#export_groups'

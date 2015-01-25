@@ -1,7 +1,7 @@
 class UserRelContrib < ActiveRecord::Base
   attr_accessible :annotation, :bibliography, :certainty, :created_by, :relationship_id, :relationship_type_id, 
   :approved_by, :approved_on, :created_at, :is_approved, :start_year, :start_month, 
-  :start_day, :end_year, :end_month, :end_day, :is_active, :is_rejected, :edited_by_on
+  :start_day, :end_year, :end_month, :end_day, :is_active, :is_rejected, :edited_by_on, :person1_autocomplete, :person2_autocomplete
   serialize :edited_by_on,Array
   
   # Relationships
