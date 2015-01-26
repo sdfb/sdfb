@@ -274,8 +274,32 @@
               <tr>
                 <td><%= group_assignment.id %></td>
                 <td><%= link_to group_assignment.get_group_name, group_path(group_assignment.group_id) %></td>
-                <td><%= group_assignment.start_date %></td>
-                <td><%= group_assignment.end_date %></td>
+                <td>
+                  <% if ((! group_assignment.start_month.blank?) || (! group_assignment.start_day.blank?) || (! group_assignment.start_year.blank?)) %>
+                    <% if ! group_assignment.start_month.blank? %>
+                      <%= group_assignment.start_month %>
+                    <% end %>  
+                    <% if ! group_assignment.start_day.blank? %>
+                      <%= group_assignment.start_day %>,
+                    <% end %>
+                    <% if ! group_assignment.start_year.blank? %>
+                      <%= group_assignment.start_year %>
+                    <% end %>
+                  <% end %>
+                </td>
+                <td>
+                  <% if ((! group_assignment.end_month.blank?) || (! group_assignment.end_day.blank?) || (! group_assignment.end_year.blank?)) %>
+                    <% if ! group_assignment.end_month.blank? %>
+                      <%= group_assignment.end_month %>
+                    <% end %>  
+                    <% if ! group_assignment.end_day.blank? %>
+                      <%= group_assignment.end_day %>,
+                    <% end %>
+                    <% if ! group_assignment.end_year.blank? %>
+                      <%= group_assignment.end_year %>
+                    <% end %>
+                  <% end %>
+                </td>
                 <td>
                   <% if can? :show, group_assignment %>
                     <%= link_to 'Show', group_assignment, :class => 'btn btn-mini' %>

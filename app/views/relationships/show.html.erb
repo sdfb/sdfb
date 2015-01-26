@@ -40,7 +40,7 @@
             <%= @relationship.start_year %>
           <% end %></dd>
         <% end %>
-        <% if ((! @relationship.start_month.blank?) || (! @relationship.start_day.blank?) || (! @relationship.start_year.blank?)) %>
+        <% if ((! @relationship.end_month.blank?) || (! @relationship.end_day.blank?) || (! @relationship.end_year.blank?)) %>
           <dt><strong>End date:</strong></dt>
           <dd><% if ! @relationship.end_month.blank? %>
             <%= @relationship.end_month %>

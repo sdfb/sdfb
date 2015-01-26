@@ -1,6 +1,6 @@
 class GroupAssignment < ActiveRecord::Base
   attr_accessible :created_by, :group_id, :approved_by, :approved_on, :person_id, :start_date, :end_date, :created_at,
-  :is_approved, :is_active, :is_rejected, :edited_by_on
+  :is_approved, :is_active, :is_rejected, :edited_by_on, :start_year, :start_month, :start_day, :end_year, :end_month, :end_day
   serialize :edited_by_on,Array
   
   # Relationships
@@ -34,12 +34,11 @@ class GroupAssignment < ActiveRecord::Base
   #validates_date :approved_on, :on_or_after => :created_at, :message => "This group assignment must be approved on or after the date it was created."
 
   ## approved_on must occur on the same date or after the created at date
-  validates_date :end_date, :on_or_after => :start_date, :message => "End date must be on or after the start date."
 
   # Callbacks
   # ----------------------------- 
   after_create :create_group_person_list
-  after_update :update_group_person_list
+  after_update :create_group_person_list
   before_update :add_editor_to_edit_by_on
   before_create :check_if_approved
   before_update :check_if_approved
@@ -68,64 +67,18 @@ class GroupAssignment < ActiveRecord::Base
   def create_group_person_list
     if (self.is_approved == true)
       #adds the person's id to the Group
-      current_group_person_list = Group.find(self.group_id).person_list
-      person = Person.find(self.person_id)
-      person_record_input = person.get_person_name + " (" + person.id.to_s + ")" 
-      current_group_person_list.push(person_record_input)
-      Group.update(self.group_id, person_list: current_group_person_list)
+        #find all approved group_assignments for that group
+        #map by first name last name (birth year)
+        updated_group_person_list = GroupAssignment.all_approved.all_for_group(self.group_id).map{|ga| Person.find(ga.person_id).first_name + " " + Person.find(ga.person_id).last_name + " (" + Person.find(ga.person_id).ext_birth_year + ")"}
+        Group.update(self.group_id, person_list: updated_group_person_list)
+        
 
       #adds the group to the person
-      current_person_groups_list = Person.find(self.person_id).group_list
-      group = Group.find(self.group_id)
-      current_person_groups_list.push(group.name)
-      Person.update(self.person_id, group_list: current_person_groups_list)
-    end
-  end
+        #find all approved group_assignments for that person
+        #map by gorup name
+        updated_person_groups_list = GroupAssignment.all_approved.all_for_person(self.person_id).map{|ga| Group.find(ga.group_id).name }
+        Person.update(self.person_id, group_list: updated_person_groups_list)
 
-  def update_group_person_list
-    current_group_person_list = Group.find(self.group_id).person_list
-    person = Person.find(self.person_id)
-    person_record_input = person.get_person_name + " (" + person.id.to_s + ")"
-    already_in_list = false
-    current_person_groups_list = Person.find(self.person_id).group_list
-    group = Group.find(self.group_id)
-    group_input = group.name
-
-    if (self.is_approved == true)
-      #if approved, checks that the person's name is in the Group, this also indicates whether the group names are in
-      #the person's group list
-      current_group_person_list.each do |person_record|
-        if (person_record == person_record_input)
-          already_in_list = true
-        end
-      end
-
-      #if the person's name is not in the Group, then add it
-      if (already_in_list == false) 
-        current_group_person_list.push(person_record_input)
-        Group.update(self.group_id, person_list: current_group_person_list)
-
-        #adds the group to the person
-        current_person_groups_list.push(group_input)
-        Person.update(self.person_id, group_list: current_person_groups_list)
-      end    
-    else
-      # if it is not approved, check if the person's name is in the group
-      current_group_person_list.each_with_index do |person_record, i|
-        if (person_record == person_record_input)
-          #if the person's name is already in the group, then delete it
-
-          current_group_person_list.delete_at(i)
-          Group.update(self.group_id, person_list: current_group_person_list)
-          break
-        end
-      end
-      current_person_groups_list.each_with_index do |group_record, i|
-        if (group_record == group_input)
-          current_person_groups_list.delete_at(i)
-          Person.update(self.person_id, group_list: current_person_groups_list)
-        end
-      end
     end
   end
 

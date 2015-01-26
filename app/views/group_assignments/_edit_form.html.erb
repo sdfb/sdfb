@@ -22,8 +22,15 @@
   <% else %>
     <%= f.input :person_id, :collection =>@personOptions.collect{ |p| [p.first_name + " " + p.last_name, p.id] }, label: "Person", prompt: "Select" %>
   <% end %>
-  <%= f.input :start_date, start_year: 1200, end_year: 1900 %>
-  <%= f.input :end_date, start_year: 1200, end_year: 1900 %>
+  <%= f.label :start_month, label: "Start Date" %>
+  <%= f.input :start_month, label: "Start Date", :collection =>["January","February","March","April","May","June","July","August","September","October","November","December"], label: false, prompt: "Month", :include_blank => true %>
+  <%= f.input :start_day, label: false, :collection => 1..31, prompt: "Day", :include_blank => true %>
+  <%= f.input :start_year, as: :string, label: false, placeholder: "Year"%>
+
+  <%= f.label :end_month, label: "End Date" %>
+  <%= f.input :end_month, :collection =>["January","February","March","April","May","June","July","August","September","October","November","December"], label: false, prompt: "Month", :include_blank => true %>
+  <%= f.input :end_day, label: false, :collection => 1..31, prompt: "Day", :include_blank => true %>
+  <%= f.input :end_year, label: false, as: :string, placeholder: "Year" %>
   <% if current_user.user_type == "Admin" %>
     <%= f.input :is_approved %>
     <%= f.input :is_active %>
