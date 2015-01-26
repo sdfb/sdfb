@@ -58,7 +58,9 @@ Sdfb::Application.routes.draw do
   resources :user_group_contribs
 
 
-  resources :group_assignments
+  resources :group_assignments do
+    get :autocomplete_person_search_names_all, on: :collection
+  end
 
 
   resources :people

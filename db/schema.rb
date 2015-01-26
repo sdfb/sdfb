@@ -46,11 +46,12 @@ ActiveRecord::Schema.define(:version => 20150118052942) do
     t.integer  "approved_by"
     t.datetime "approved_on"
     t.boolean  "is_approved"
-    t.boolean  "is_active",    :default => true
-    t.boolean  "is_rejected",  :default => false
-    t.text     "edited_by_on", :default => "--- []\n"
-    t.datetime "created_at",                           :null => false
-    t.datetime "updated_at",                           :null => false
+    t.boolean  "is_active",           :default => true
+    t.boolean  "is_rejected",         :default => false
+    t.text     "edited_by_on",        :default => "--- []\n"
+    t.datetime "created_at",                                  :null => false
+    t.datetime "updated_at",                                  :null => false
+    t.string   "person_autocomplete"
   end
 
   create_table "group_cat_assigns", :force => true do |t|

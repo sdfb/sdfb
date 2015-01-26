@@ -13,14 +13,19 @@
     </div>
   <% end %>
   <% if ! @group_id.blank? %>
-    <%= f.input :group_id, :collection =>@groupOptions.collect{ |g| [g.name, g.id] }, label: "Group", prompt: "Select", selected: @group_id %>
+    <%= f.label :group_id %>
+    <%= Group.find(@group_id).name %>
+    <%= f.hidden_field :group_id, :value => @group_id %>
   <% else %>
     <%= f.input :group_id, :collection =>@groupOptions.collect{ |g| [g.name, g.id] }, label: "Group", prompt: "Select" %>
   <% end %>
   <% if ! @person_id.blank? %>
-    <%= f.input :person_id, :collection =>@personOptions.collect{ |p| [p.first_name + " " + p.last_name, p.id] }, label: "Person", prompt: "Select", selected: @person_id %>
-  <% else %>
-    <%= f.input :person_id, :collection =>@personOptions.collect{ |p| [p.first_name + " " + p.last_name, p.id] }, label: "Person", prompt: "Select" %>
+    <%= f.label :person_id %>
+    <%= Person.find(@person_id).first_name + " " + Person.find(@person_id).last_name %>
+    <%= f.hidden_field :person_id, :value => @person_id %>
+  <% else %>    
+    <%= f.input :person_id, as: :hidden %>
+    <%= f.input :person_autocomplete, as: :autocomplete, url: autocomplete_person_search_names_all_user_person_contribs_path, input_html: { 'data-id-element' => '#group_assignment_person_id' }, label: "Person", placeholder: "name" %>
   <% end %>
   <%= f.label :start_month, label: "Start Date" %>
   <%= f.input :start_month, label: "Start Date", :collection =>["January","February","March","April","May","June","July","August","September","October","November","December"], label: false, prompt: "Month", :include_blank => true %>

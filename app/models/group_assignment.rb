@@ -1,6 +1,6 @@
 class GroupAssignment < ActiveRecord::Base
   attr_accessible :created_by, :group_id, :approved_by, :approved_on, :person_id, :start_date, :end_date, :created_at,
-  :is_approved, :is_active, :is_rejected, :edited_by_on, :start_year, :start_month, :start_day, :end_year, :end_month, :end_day
+  :is_approved, :is_active, :is_rejected, :edited_by_on, :start_year, :start_month, :start_day, :end_year, :end_month, :end_day, :person_autocomplete
   serialize :edited_by_on,Array
   
   # Relationships
@@ -78,7 +78,6 @@ class GroupAssignment < ActiveRecord::Base
         #map by gorup name
         updated_person_groups_list = GroupAssignment.all_approved.all_for_person(self.person_id).map{|ga| Group.find(ga.group_id).name }
         Person.update(self.person_id, group_list: updated_person_groups_list)
-
     end
   end
 
