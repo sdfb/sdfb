@@ -4,10 +4,9 @@
     <table class="table table-condensed">
       <thead>
         <tr>
-          <th>User Person Contribution id</th>
+          <th>ID</th>
           <th>Person</th>
-          <th>Annotation</th>
-          <th>Bibliography</th>
+          <th>Status</th>
           <th><%=t '.actions', :default => t("helpers.actions") %></th>
         </tr>
       </thead>
@@ -16,8 +15,21 @@
           <tr>
             <td><%= user_person_contrib.id %></td>
             <td><%= link_to Person.find(user_person_contrib.person_id).get_person_name, person_path(user_person_contrib.person_id) %></td>
-            <td><%= user_person_contrib.annotation %></td>
-            <td><%= user_person_contrib.bibliography %></td>
+            <td>
+              <% if (user_person_contrib.is_active == true) %>
+                <% if ((user_person_contrib.is_approved == true) && (user_person_contrib.is_rejected == false)) %>
+                  Approved
+                <% elsif ((user_person_contrib.is_approved == false) && (user_person_contrib.is_rejected == false)) %>
+                  Pending
+                <% elsif ((user_person_contrib.is_approved == false) && (user_person_contrib.is_rejected == true)) %>
+                  Rejected
+                <% elsif ((user_person_contrib.is_approved == true) && (user_person_contrib.is_rejected == true)) %>
+                  Rejected
+                <% end %>
+              <% else %>
+                Inactive
+              <% end %>
+            </td>
             <td>
               <% if can? :show, user_person_contrib %>
                 <%= link_to 'Show', user_person_contrib, :class => 'btn btn-mini' %>

@@ -4,10 +4,11 @@
     <table class="table table-condensed">
       <thead>
         <tr>
-          <th>Relationship id</th>
+          <th>ID</th>
           <th>Person 1</th>
           <th>Person 2</th>
           <th>Maximum Certainty</th>
+          <th>Status</th>
           <th><%=t '.actions', :default => t("helpers.actions") %></th>
         </tr>
       </thead>
@@ -18,6 +19,21 @@
             <td><%= link_to relationship.get_person1_name, person_path(relationship.person1_index) %></td>
             <td><%= link_to relationship.get_person2_name, person_path(relationship.person2_index) %></td>
             <td><%= relationship.max_certainty %>%</td>
+            <td>
+              <% if (relationship.is_active == true) %>
+                <% if ((relationship.is_approved == true) && (relationship.is_rejected == false)) %>
+                  Approved
+                <% elsif ((relationship.is_approved == false) && (relationship.is_rejected == false)) %>
+                  Pending
+                <% elsif ((relationship.is_approved == false) && (relationship.is_rejected == true)) %>
+                  Rejected
+                <% elsif ((relationship.is_approved == true) && (relationship.is_rejected == true)) %>
+                  Rejected
+                <% end %>
+              <% else %>
+                Inactive
+              <% end %>
+            </td>
             <td>
               <% if can? :show, relationship %>
                 <%= link_to 'Show', relationship, :class => 'btn btn-mini'  %>

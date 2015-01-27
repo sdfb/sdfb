@@ -9,8 +9,6 @@
         <th>ID</th>
         <th>Group</th>
         <th>Person</th>
-        <th>Start date</th>
-        <th>End date</th>
         <th><%=t '.actions', :default => t("helpers.actions") %></th>
       </tr>
       </thead>
@@ -20,8 +18,6 @@
             <td><%= group_assignment.id %></td>
             <td><%= link_to group_assignment.get_group_name, group_path(group_assignment.group_id) %></td>
             <td><%= link_to group_assignment.get_person_name, person_path(group_assignment.person_id) %></td>
-            <td><%= group_assignment.start_date %></td>
-            <td><%= group_assignment.end_date %></td>
             <td>
               <% if can? :show, group_assignment %>
                 <%= link_to 'Show', group_assignment, :class => 'btn btn-mini' %>

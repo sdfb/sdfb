@@ -4,12 +4,11 @@
     <table class="table table-condensed">
       <thead>
         <tr>
-          <th>Id</th>
+          <th>ID</th>
           <th>Relationship</th>
           <th>Relationship type</th>
           <th>Certainty</th>
-          <th>Annotation</th>
-          <th>Bibliography</th>
+          <th>Status</th>
           <th><%=t '.actions', :default => t("helpers.actions") %></th>
         </tr>
       </thead>
@@ -20,8 +19,21 @@
             <td><%= link_to user_rel_contrib.get_both_names, relationship_path(user_rel_contrib.relationship_id) %></td>
             <td><%= link_to RelationshipType.find(user_rel_contrib.relationship_type_id).name, relationship_type_path(user_rel_contrib.relationship_type_id) %></td>
             <td><%= user_rel_contrib.certainty %>%</td>
-            <td><%= user_rel_contrib.annotation %></td>
-            <td><%= user_rel_contrib.bibliography %></td>
+            <td>
+              <% if (user_rel_contrib.is_active == true) %>
+                <% if ((user_rel_contrib.is_approved == true) && (user_rel_contrib.is_rejected == false)) %>
+                  Approved
+                <% elsif ((user_rel_contrib.is_approved == false) && (user_rel_contrib.is_rejected == false)) %>
+                  Pending
+                <% elsif ((user_rel_contrib.is_approved == false) && (user_rel_contrib.is_rejected == true)) %>
+                  Rejected
+                <% elsif ((user_rel_contrib.is_approved == true) && (user_rel_contrib.is_rejected == true)) %>
+                  Rejected
+                <% end %>
+              <% else %>
+                Inactive
+              <% end %>
+            </td>
             <td>
               <% if can? :show, user_rel_contrib %>
                 <%= link_to 'Show', user_rel_contrib, :class => 'btn btn-mini' %>

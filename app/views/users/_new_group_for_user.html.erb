@@ -4,11 +4,12 @@
     <table class="table table-condensed">
       <thead>
         <tr>
-          <th>Group ID </th>
+          <th>ID</th>
           <th>Name</th>
           <th>Description</th>
           <th>Start Year</th>
           <th>End Year</th>
+          <th>Status</th>
           <th><%=t '.actions', :default => t("helpers.actions") %></th>
         </tr>
       </thead>
@@ -20,6 +21,21 @@
             <td><%= group.description %></td>
             <td><%= group.start_year %></td>
             <td><%= group.end_year %></td>
+            <td>
+              <% if (group.is_active == true) %>
+                <% if ((group.is_approved == true) && (group.is_rejected == false)) %>
+                  Approved
+                <% elsif ((group.is_approved == false) && (group.is_rejected == false)) %>
+                  Pending
+                <% elsif ((group.is_approved == false) && (group.is_rejected == true)) %>
+                  Rejected
+                <% elsif ((group.is_approved == true) && (group.is_rejected == true)) %>
+                  Rejected
+                <% end %>
+              <% else %>
+                Inactive
+              <% end %>
+            </td>
             <td>
               <% if can? :show, group %>
                 <%= link_to 'Show', group, :class => 'btn btn-mini' %>
