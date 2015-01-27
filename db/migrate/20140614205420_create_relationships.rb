@@ -15,6 +15,7 @@ class CreateRelationships < ActiveRecord::Migration
       t.text :justification
       t.integer :approved_by
       t.datetime :approved_on
+      t.text :types_list, :default => [].to_yaml
       t.integer :edge_birthdate_certainty
       t.boolean :is_approved, :default => false
       t.boolean :is_active, :default => true

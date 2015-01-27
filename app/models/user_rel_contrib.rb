@@ -50,6 +50,8 @@ class UserRelContrib < ActiveRecord::Base
   before_update :add_editor_update_max_cert_check_approved
   before_create :update_max_certainty
   after_create :check_if_approved
+  after_create :create_relationship_types_list
+  after_update :create_relationship_types_list
 
   # Custom Methods
   # -----------------------------
@@ -70,6 +72,16 @@ class UserRelContrib < ActiveRecord::Base
     self.person2_autocomplete = nil
     self.person1_selection = nil
     self.person2_selection = nil
+  end
+
+  #This adds the relationship types to a summary list under the relationship
+  def create_relationship_types_list
+    if (self.is_approved == true)
+        #find all approved user_rel_contribs for that relationship
+        #map by type name
+        updated_rel_types_list = UserRelContrib.all_approved.all_for_relationship(self.relationship_id).map{|urc| RelationshipType.find(urc.relationship_type_id).name}
+        Relationship.update(self.relationship_id, types_list: updated_rel_types_list)
+    end
   end
 
   def add_editor_update_max_cert_check_approved

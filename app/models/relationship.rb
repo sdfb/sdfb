@@ -2,8 +2,9 @@ class Relationship < ActiveRecord::Base
   attr_accessible :max_certainty, :created_by, :original_certainty, :person1_index, :person2_index,
   :justification, :approved_by, :approved_on, :created_at, :edge_birthdate_certainty,
   :is_approved, :start_year, :start_month, :start_day, :end_year, :end_month, :end_day,
-  :is_active, :is_rejected, :edited_by_on, :person1_autocomplete, :person2_autocomplete
+  :is_active, :is_rejected, :edited_by_on, :person1_autocomplete, :person2_autocomplete, :types_list
   serialize :edited_by_on,Array
+  serialize :types_list,Array
 
   # Relationships
   # -----------------------------
@@ -249,6 +250,9 @@ class Relationship < ActiveRecord::Base
       person1_index_in = self.person1_index
       person2_index_in = self.person2_index
       max_certainty_in = self.max_certainty
+      start_date_in = self.start_year
+      end_date_in = self.end_year
+      types_list_in = self.types_list
       id_in = self.id
       if ! approved_by.nil?
         is_approved_in = 1
@@ -260,6 +264,9 @@ class Relationship < ActiveRecord::Base
       new_rel_record.push(max_certainty)
       new_rel_record.push(is_approved_in)
       new_rel_record.push(id_in)
+      new_rel_record.push(start_date_in)
+      new_rel_record.push(end_date_in)
+      new_rel_record.push(types_list_in)
       person1_current_rel_sum = Person.find(person1_index_in).rel_sum
       person1_current_rel_sum.push(new_rel_record)
       Person.update(person1_index, rel_sum: person1_current_rel_sum)
@@ -303,7 +310,10 @@ class Relationship < ActiveRecord::Base
     person1_index_in = self.person1_index
     person2_index_in = self.person2_index
     max_certainty_in = self.max_certainty
+    start_date_in = self.start_year
+    end_date_in = self.end_year
     id_in = self.id
+    types_list_in = self.types_list
     if ! approved_by.nil?
       is_approved_in = 1
     else
@@ -322,6 +332,9 @@ class Relationship < ActiveRecord::Base
           rel_record_1[1] = max_certainty_in
           rel_record_1[2] = is_approved_in
           rel_record_1[3] = id_in
+          rel_record_1[4] = start_date_in
+          rel_record_1[5] = end_date_in
+          rel_record_1[6] = types_list_in
           person1_updated_flag = true
         else
           # delete the record
@@ -354,6 +367,9 @@ class Relationship < ActiveRecord::Base
           rel_record_2[1] = max_certainty_in
           rel_record_2[2] = is_approved_in
           rel_record_2[3] = id_in
+          rel_record_2[4] = start_date_in
+          rel_record_2[5] = end_date_in
+          rel_record_2[5] = types_list_in
           person2_updated_flag = true
         else
           # delete the record

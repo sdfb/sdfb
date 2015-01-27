@@ -189,6 +189,7 @@ ActiveRecord::Schema.define(:version => 20150118052942) do
     t.text     "justification"
     t.integer  "approved_by"
     t.datetime "approved_on"
+    t.text     "types_list",               :default => "--- []\n"
     t.integer  "edge_birthdate_certainty"
     t.boolean  "is_approved",              :default => false
     t.boolean  "is_active",                :default => true
