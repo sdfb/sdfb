@@ -20,4 +20,3 @@
 //= require display2
 //= require bootstrap.min
 //= require accordion
-//= require landing
