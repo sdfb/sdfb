@@ -6,12 +6,6 @@ var default_sdate = 1400;
 var default_edate = 1800;
     // group class
     
-function createGroup() {
-  this.id = null;
-  this.name = null;
-  this.nodes = null;
-}
-
 // Returns the cluster id based on birth year
 function getClusterBirth(year){
   if (parseInt(year) < default_sdate) {return 0}
@@ -73,13 +67,14 @@ function notInArray(arr, val) {
 }
 
 // Displays node information
-function showNodeInfo(data, groups){
+function showNodeInfo(data){
  accordion("node");
  $("#node-name").text(data.first+ " "+ data.last);
  $("#node-bdate").text(data.birth);
  $("#node-ddate").text(data.death);
  $("#node-significance").text(data.occupation);
- $("#node-group").text(groups);
+ $("#node-group").text(data.groups.join(","));
+ console.log("HI" + data.groups);
  var d = new Date();
  $("#node-cite").text( data.first+ " "+ data.last + " Network Visualization. \n Six Degrees of Francis Bacon: Reassembling the Early Modern Social Network. Gen. eds. Daniel Shore and Christopher Warren. "+d.getMonth()+"/"+d.getDate()+"/"+d.getFullYear()+" <http://sixdegreesoffrancisbacon.com/>");
  if (data.odnb_id > 0){
@@ -99,6 +94,7 @@ var node = function() {
   this.last = null;
   this.birth = null;
   this.death = null;
+  this.groups = null;
   this.label = null;
   this.name = null;
   this.occupation = null;
@@ -198,7 +194,7 @@ function twoDegs(id, id2, data, confidence, sdate, edate) {
   if (id2 != 0 && id2 != ""){
     createGraph(id2, data, confidence, sdate, edate);
   }
-  
+ /* 
 // Returns list of groups that a node belongs to
 function findGroups(node, data){
   var groups = [];
@@ -209,7 +205,7 @@ function findGroups(node, data){
   var strgroups = groups.join(', ')
   return strgroups;
 }   
-
+*/
 $.each(keys, function(index, value) {
   nodes.push(value); //adds each key to nodes array
 });
@@ -226,7 +222,7 @@ edges.reverse();
   graph.focus(id);
   graph.on("node:click", function(d) {
     var clicked = data.nodes[d.id];
-    showNodeInfo(clicked, findGroups(clicked, data));
+    showNodeInfo(clicked);
   });
 	
   graph.on("edge:click", function(d) {
@@ -300,6 +296,10 @@ function populateLists(data){
   $('#three').typeahead({
     local: names.sort()
   });
+  $('#group_name').typeahead({
+    local: data.groups_names.sort()
+  });
+  /*
   $('#entry_768090773').typeahead({
     local: names.sort()
   });
@@ -308,9 +308,6 @@ function populateLists(data){
   });
   $('#entry_1177061505').typeahead({
     local: names.sort()
-  });
-  $('#four').typeahead({
-    local: Object.keys(data.groups_names).sort()
   });
   $('#five').typeahead({
     local: Object.keys(data.groups_names).sort()
@@ -321,7 +318,7 @@ function populateLists(data){
   $('#entry_110233074').typeahead({
     local: Object.keys(data.groups_names).sort()
   });
-
+  */
 }
 
 
@@ -497,6 +494,9 @@ function init() {
   //This file only contains the data for the searched person and 1st degree relationships
   var people = gon.people;
   //This file contains all the id, first_name, last_name, ext_birth_year, prefix, suffix, and title for every person in the database
+  
+  var group_data = gon.group_data;
+
   var all_people = gon.people_list;
 
 	var data = { nodes: [], edges: [], groups_names: [], nodeKeys: [] };
@@ -516,6 +516,7 @@ function init() {
     n.rels = value.rel_sum;
     n.size = n.rels.length;
     n.odnb_id = value.odnb_id;
+    n.groups = value.group_list;
     data.nodes[n.id] = n;
     
   });
@@ -535,6 +536,12 @@ function init() {
     allPeopleNamesData.nodes[n.id] = n;   
   });
 
+  //This function converts the gon for groups into readable information for groups
+  $.each(group_data, function(index, value){
+    allPeopleNamesData.groups_names.push(value.name);
+  });
+
+
  populateLists(allPeopleNamesData);
   filterGraph(data);
   initGraph(data, allPeopleNamesData);
@@ -542,7 +549,6 @@ function init() {
 
 
 $(document).ready(function() {
-  //console.log(gon.people);
   init();
 });
 
