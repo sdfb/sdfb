@@ -1,0 +1,46 @@
+<h2>Unapproved Relationship Type Assignments</h2>
+
+<% if ! @unapproved_user_rel_contribs.empty? %>
+  <div class = "well">
+    <table class="table table-condensed">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Relationship</th>
+          <th>Relationship type</th>
+          <th>Certainty</th>
+          <th>Annotation</th>
+          <th>Bibliography</th>
+          <th><%=t '.actions', :default => t("helpers.actions") %></th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @unapproved_user_rel_contribs.each do |user_rel_contrib| %>
+          <tr>
+            <td><%= user_rel_contrib.id %></td>
+            <td><%= link_to user_rel_contrib.get_both_names, relationship_path(user_rel_contrib.relationship_id) %></td>
+            <td><%= link_to RelationshipType.find(user_rel_contrib.relationship_type_id).name, relationship_type_path(user_rel_contrib.relationship_type_id) %></td>
+            <td><%= user_rel_contrib.certainty %>%</td>
+            <td><%= user_rel_contrib.annotation %></td>
+            <td><%= user_rel_contrib.bibliography %></td>
+            <td>
+              <% if can? :show, user_rel_contrib %>
+                <%= link_to 'Show', user_rel_contrib, :class => 'btn btn-mini' %>
+              <% end %>
+              <% if can? :update, user_rel_contrib %>
+                <%= link_to t('.edit', :default => t("helpers.links.edit")),
+                          edit_user_rel_contrib_path(user_rel_contrib), :class => 'btn btn-mini' %>
+              <% end %>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+
+    <%= will_paginate @unapproved_user_rel_contribs, :param_name => 'unapproved_user_rel_contribs_page', :previous_label => "Previous&nbsp;", :next_label => "&nbsp;Next" %>
+  </div>
+<% else %>
+  <div class = "well">
+    No unapproved relationship type assignments exist.
+  </div>
+<% end %>

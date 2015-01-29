@@ -1,40 +1,30 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Sdfb</title>
-  <%= include_gon %>
+  <title>Six Degrees of Francis Bacon</title>
 
+  <%= javascript_include_tag "application" %>
+
+  <%= stylesheet_link_tag "accordion", "application", "bootstrap_and_overrides", "jquery-ui.min" %>
   <%= csrf_meta_tags %>
 </head>
 <body>
-<!-- 	<div id="user_nav">
-	  <% if current_user %>
-	    Logged in as <%= current_user.email %>
-	    <%= link_to "Sign out", sign_out_path %>
-	  <% else %>
-	    <%= link_to "Sign up", sign_up_path %> or 
-	    <%= link_to "Sign in", sign_in_path %>
-	  <% end %>
-	</div> -->
-<!--   <% flash.each do |name, msg| %>
-    <%= content_tag :div, msg, :id => "flash#{name}" %>
-  <% end %>
-<%= yield %> -->
 
 <!-- Nav Bar Header -->
 
-
-<!-- Home Page Content -->
-<div class="container">
-  <div class="row">
-  	<% flash.each do |name, msg| %>
-			<div class="alert alert-<%= name == :notice ? "success" : "error" %>">
-				<a class="close" data-dismiss="alert">x</a>
-				<%= msg %>
-			</div>
-    <% end %>
-    <%= yield %>
-  </div>
+<%= render :partial => 'layouts/header'%>
+<div class="container-fluid">
+	<div class="row">
+		<div class="span12">
+			<% flash.each do |name, msg| %>
+				<div class="alert alert-<%= name == :notice ? "success" : "error" %>">
+					<a class="close" data-dismiss="alert">x</a>
+					<%= msg %>
+				</div>
+			<% end %>
+			<%= yield %>
+		</div>
+	</div>
 </div>
 
 <!-- Footer -->

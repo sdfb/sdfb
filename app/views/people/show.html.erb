@@ -1,47 +1,324 @@
 <%- model_class = Person -%>
-<div class="page-header">
-  <h1><%=t '.title', :default => model_class.model_name.human.titleize %></h1>
+
+<div class="row">
+  <div class="span12">
+    <h1><%= @person.get_person_name %>
+    </h1>
+  </div>
+</div>
+<br>
+<div class="row">
+  <div class="span5">
+    <div class="well">
+      <h2>Information
+        <% if can? :update, @people %> 
+          <%= link_to t('.edit', :default => t("helpers.links.edit")),
+                  edit_person_path(@person), :class => 'btn btn-mini' %>
+        <% end %>
+      </h2>
+      <br>
+      <dl class="dl-horizontal">
+        <dt><strong>Person id:</strong></dt>
+        <dd><%= @person.id %></dd>
+        <% if ! @person.odnb_id.blank? %>
+          <dt><strong>ODNB id:</strong></dt>
+          <dd><%= @person.odnb_id %></dd>
+        <% end %>
+        <% if ! @person.title.blank? %>
+          <dt><strong>Title:</strong></dt>
+          <dd><%= @person.title %></dd>
+        <% end %>
+        <% if ! @person.prefix.blank? %>
+          <dt><strong>Prefix:</strong></dt>
+          <dd><%= @person.prefix %></dd>
+        <% end %>
+        <dt><strong>First name:</strong></dt>
+        <dd><%= @person.first_name %></dd>
+        <% if ! @person.last_name.blank? %>
+          <dt><strong>Last Name:</strong></dt>
+          <dd><%= @person.last_name %></dd>
+        <% end %>
+        <% if ! @person.suffix.blank? %>
+          <dt><strong>Suffix:</strong></dt>
+          <dd><%= @person.suffix %></dd>
+        <% end %>
+        <dt><strong>Gender:</strong></dt>
+        <dd><%= @person.gender %></dd>
+        <% if ! @person.search_names_all.blank? %>
+          <dt><strong>All known identities:</strong></dt>
+          <dd><%= @person.search_names_all %></dd>
+        <% end %>
+        <dt><strong>Created by:</strong></dt>
+        <dd><%= link_to User.find(@person.created_by).username,  user_path(@person.created_by) %></dd>
+        <% if ! @person.birth_year_type.blank? %>
+          <dt><strong>Birth Year Type:</strong></dt>
+          <dd>
+            <% if @person.birth_year_type == "BF" %>
+              <dd>Before</dd>
+            <% elsif @person.birth_year_type == "AF" %>
+              <dd>After</dd>
+            <% elsif @person.birth_year_type == "IN" %>
+              <dd>In</dd>
+            <% elsif @person.birth_year_type == "CA" %>
+              <dd>Circa</dd>
+            <% elsif @person.birth_year_type == "BF/IN" %>
+              <dd>Before or In</dd>
+            <% elsif @person.birth_year_type == "AF/IN" %>
+              <dd>After or In</dd>
+            <% end %>
+          </dd>
+        <% end %>
+        <dt><strong>Extant birth year:</strong></dt>
+        <dd><%= @person.ext_birth_year %></dd>
+        <% if ! @person.alt_birth_year.blank? %>
+          <dt><strong>Alternate birth year:</strong></dt>
+          <dd><%= @person.alt_birth_year %></dd>
+        <% end %>
+        <dt><strong>Death Year Type:</strong></dt>
+        <dd>
+          <% if @person.death_year_type == "BF" %>
+            <dd>Before</dd>
+          <% elsif @person.death_year_type == "AF" %>
+            <dd>After</dd>
+          <% elsif @person.death_year_type == "IN" %>
+            <dd>In</dd>
+          <% elsif @person.death_year_type == "CA" %>
+            <dd>Circa</dd>
+          <% elsif @person.death_year_type == "BF/IN" %>
+            <dd>Before or In</dd>
+          <% elsif @person.death_year_type == "AF/IN" %>
+            <dd>After or In</dd>
+          <% end %>
+        </dd>
+        <dt><strong>Extant death year:</strong></dt>
+        <dd><%= @person.ext_death_year %></dd>
+        <% if ! @person.alt_death_year.blank? %>
+          <dt><strong>Alternate death year:</strong></dt>
+          <dd><%= @person.alt_death_year %></dd>
+        <% end %>
+        <% if ! @person.historical_significance.blank? %>
+          <dt><strong>Historical Significance:</strong></dt>
+          <dd><%= @person.historical_significance %></dd>
+        <% end %>
+        <dt><strong>Relationship Summary:</strong></dt>
+        <% if ! @person.rel_sum.empty? %>
+          <dd><%= @person.rel_sum %></dd>
+        <% else %>
+          <dd>No relationships</dd>
+        <% end %>
+        <dt><strong>Group Summary:</strong></dt>
+        <% if ! @person.group_list.empty? %>
+          <dd><%= @person.group_list %></dd>
+        <% else %>
+          <dd>No groups</dd>
+        <% end %>
+        <dt><strong>Is Approved?:</strong></dt>
+        <dd><%= @person.is_approved %></dd>
+        <% if ! @person.approved_by.blank? %>
+          <dt><strong>Approved by:</strong></dt>
+          <dd><%= link_to User.find(@person.approved_by).username,  user_path(@person.approved_by) %></dd>
+        <% end %>
+        <% if ! @person.approved_on.blank? %>
+          <dt><strong>Approved on:</strong></dt>
+          <dd><%= @person.approved_on %></dd>
+        <% end %>
+        <% if ! @person.justification.blank? %>
+          <dt><strong>Justification:</strong></dt>
+          <dd><%= @person.justification %></dd>
+        <% end %>
+        <dt><strong>Created at:</strong></dt>
+        <dd><%= @person.created_at %></dd>
+        <dt>Edit History</dt>
+        <% if ! @person.edited_by_on.blank? %>
+          <dd><%= @person.edited_by_on %></dd>
+        <% else %>
+          <dd>No edits have been made.</dd>
+        <% end %>
+        <% if (! current_user.blank?) && ((current_user.user_type == "Admin") || (current_user.user_type == "Curator")) %>
+          <dt>Is Active</dt>
+          <dd><%= @person.is_active %></dd>
+          <dt>Is Rejected</dt>
+          <dd><%= @person.is_rejected %></dd>
+        <% end %>
+      </dl>
+    </div>
+    
+  </div>
+
+  <div class="span7">
+    <% if ! @approved_relationships.empty? %>
+      <div class="well">
+      
+      <h2>All Relationships for <%= @person.get_person_name %> <%= link_to 'New Relationship',
+                  new_relationship_path(:person1_id => @person.id),
+                  :class => 'btn btn-primary btn-mini' %></h2><br>
+
+      <table class="table table-condensed">
+        <thead>
+          <tr>
+            <th>Id</th>
+            <th>Person 1</th>
+            <th>Person 2</th>
+            <% if current_user != nil %>
+                <% if (current_user.user_type == "Admin")  %>
+                    <th>Original Certainty</th>
+                <% end %>
+            <% end %>
+            <th>Maximum Certainty</th>
+            <th><%=t '.actions', :default => t("helpers.actions") %></th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @approved_relationships.each do |relationship| %>
+            <tr>
+              <td><%= relationship.id %></td>
+              <td><%= link_to relationship.get_person1_name, person_path(relationship.person1_index) %></td>
+              <td><%= link_to relationship.get_person2_name, person_path(relationship.person2_index) %></td>
+              <% if current_user != nil %>
+                  <% if (current_user.user_type == "Admin")  %>
+                      <td><%= relationship.original_certainty %></td>
+                  <% end %>
+              <% end %>
+              <td><%= relationship.max_certainty %></td>
+              <td>
+                <% if can? :show, relationship %>
+                  <%= link_to 'Show', relationship, :class => 'btn btn-mini'  %>
+                <% end %>
+                <% if can? :update, relationship %>
+                  <%= link_to t('.edit', :default => t("helpers.links.edit")),
+                              edit_relationship_path(relationship), :class => 'btn btn-mini' %>
+                <% end %>
+              </td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+
+      <%= will_paginate @approved_relationships, :param_name => 'approved_relationships_page', :previous_label => "Previous&nbsp;", :next_label => "&nbsp;Next" %>
+      </div>
+    <% else %>
+      <div class = "well">
+        <h2>All Relationships for <%= @person.get_person_name %> <%= link_to 'New Relationship',
+                  new_relationship_path(:person1_id => @person.id),
+                  :class => 'btn btn-primary btn-mini' %></h2>
+        <br>
+        <b>No relationships exist.</b>
+      </div>
+    <% end %>
+    <% if ! @user_person_contribs.empty? %>
+    <div class="well">
+      <h2>All Annotations for <%= @person.get_person_name %> <%= link_to 'New annotation',
+                  new_user_person_contrib_path(:person_id => @person.id),
+                  :class => 'btn btn-primary btn-mini' %></h2>
+      <table class="table table-condensed">
+        <table class="table table-condensed">
+          <thead>
+            <tr>
+              <th>Id</th>
+              <th>Person</th>
+              <th>Annotation</th>
+              <th>Bibliography</th>
+              <th><%=t '.actions', :default => t("helpers.actions") %></th>
+            </tr>
+          </thead>
+          <tbody>
+            <% @user_person_contribs.each do |user_person_contrib| %>
+              <tr>
+                <td><%= user_person_contrib.id %></td>
+                <td><%= link_to Person.find(user_person_contrib.person_id).get_person_name, person_path(user_person_contrib.person_id) %></td>
+                <td><%= user_person_contrib.annotation %></td>
+                <td><%= user_person_contrib.bibliography %></td>
+                <td>
+                  <% if can? :show, user_person_contrib %>
+                    <%= link_to 'Show', user_person_contrib, :class => 'btn btn-mini' %>
+                  <% end %>
+                  <% if can? :update, user_person_contrib %>
+                    <%= link_to t('.edit', :default => t("helpers.links.edit")),
+                              edit_user_person_contrib_path(user_person_contrib), :class => 'btn btn-mini' %>
+                  <% end %>
+                </td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+
+        <%= will_paginate @user_person_contribs, :param_name => 'user_person_contribs_page', :previous_label => "Previous&nbsp;", :next_label => "&nbsp;Next" %>
+      </div>
+    <% else %>
+    <div class = "well">
+      <h2>All annotations for <%= @person.get_person_name %> <%= link_to 'New User Person Contribution',
+                new_user_person_contrib_path(:person_id => @person.id),
+                :class => 'btn btn-primary btn-mini' %></h2>
+      <br>
+      <b>No annotations exist.</b>
+    </div>
+    <% end %>
+
+    <div class = "well">
+      <h2>All Group Assignments for <%= @person.get_person_name %><%= link_to 'New Group Assignment',
+                    new_group_assignment_path(:person_id => @person.id),
+                    :class => 'btn btn-primary btn-mini' %></h2>
+      <% if ! @groups.empty? %>
+        <table class="table table-condensed">
+          <thead>
+          <tr>
+            <th>Group Assignment id</th>
+            <th>Group</th>
+            <th>Start date</th>
+            <th>End date</th>
+            <th><%=t '.actions', :default => t("helpers.actions") %></th>
+          </tr>
+          </thead>
+          <tbody>
+            <% @groups.each do |group_assignment| %>
+              <tr>
+                <td><%= group_assignment.id %></td>
+                <td><%= link_to group_assignment.get_group_name, group_path(group_assignment.group_id) %></td>
+                <td>
+                  <% if ((! group_assignment.start_month.blank?) || (! group_assignment.start_day.blank?) || (! group_assignment.start_year.blank?)) %>
+                    <% if ! group_assignment.start_month.blank? %>
+                      <%= group_assignment.start_month %>
+                    <% end %>  
+                    <% if ! group_assignment.start_day.blank? %>
+                      <%= group_assignment.start_day %>,
+                    <% end %>
+                    <% if ! group_assignment.start_year.blank? %>
+                      <%= group_assignment.start_year %>
+                    <% end %>
+                  <% end %>
+                </td>
+                <td>
+                  <% if ((! group_assignment.end_month.blank?) || (! group_assignment.end_day.blank?) || (! group_assignment.end_year.blank?)) %>
+                    <% if ! group_assignment.end_month.blank? %>
+                      <%= group_assignment.end_month %>
+                    <% end %>  
+                    <% if ! group_assignment.end_day.blank? %>
+                      <%= group_assignment.end_day %>,
+                    <% end %>
+                    <% if ! group_assignment.end_year.blank? %>
+                      <%= group_assignment.end_year %>
+                    <% end %>
+                  <% end %>
+                </td>
+                <td>
+                  <% if can? :show, group_assignment %>
+                    <%= link_to 'Show', group_assignment, :class => 'btn btn-mini' %>
+                  <% end %>
+                  <% if can? :update, group_assignment %>
+                    <%= link_to 'Edit', edit_group_assignment_path(group_assignment), :class => 'btn btn-mini' %>
+                  <% end %>
+                </td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+
+        <%= will_paginate @groups, :param_name => 'groups_page', :previous_label => "Previous&nbsp;", :next_label => "&nbsp;Next" %>
+      <% else %>
+        <br>
+        <b>No groups have been assigned to this person.</b>
+      <% end %>
+    </div>
+  </div>
 </div>
 
-<dl class="dl-horizontal">
-  <dt><strong><%= model_class.human_attribute_name(:original_id) %>:</strong></dt>
-  <dd><%= @person.original_id %></dd>
-  <dt><strong><%= model_class.human_attribute_name(:first_name) %>:</strong></dt>
-  <dd><%= @person.first_name %></dd>
-  <dt><strong><%= model_class.human_attribute_name(:last_name) %>:</strong></dt>
-  <dd><%= @person.last_name %></dd>
-  <dt><strong><%= model_class.human_attribute_name(:created_by) %>:</strong></dt>
-  <dd><%= 
-  if @person.created_by.nil?
-    'ODNB'
-  else
-    @person.created_by
-  end
-  %></dd>
-  <dt><strong><%= model_class.human_attribute_name(:birth_year) %>:</strong></dt>
-  <dd><%= @person.birth_year %></dd>
-  <dt><strong><%= model_class.human_attribute_name(:death_year) %>:</strong></dt>
-  <dd><%= @person.death_year %></dd>
-  <dt><strong><%= model_class.human_attribute_name(:historical_significance) %>:</strong></dt>
-  <dd><%= @person.historical_significance %></dd>
-  <dt><strong><%= model_class.human_attribute_name(:is_approved) %>:</strong></dt>
-  <dd><%= @person.is_approved.to_s %></dd>
-  <dt><strong>Relationship Summary:</strong></dt>
-  <dd><%= @person.rel_sum %></dd>
-</dl>
-
-<div class="form-actions">
-  <%= link_to t('.back', :default => t("helpers.links.back")),
-              people_path, :class => 'btn'  %>
-  <% if can? :update, @people %> 
-    <%= link_to t('.edit', :default => t("helpers.links.edit")),
-              edit_person_path(@person), :class => 'btn' %>
-  <% end %>
-  <% if can? :destroy, @people %> 
-    <%= link_to t('.destroy', :default => t("helpers.links.destroy")),
-              person_path(@person),
-              :method => 'delete',
-              :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')) },
-              :class => 'btn btn-danger' %>
-  <% end %>
-</div>

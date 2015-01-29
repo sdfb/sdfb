@@ -3,11 +3,13 @@ class GroupAssignmentsController < ApplicationController
   # GET /group_assignments.json
 
   # before_filter :check_login
-  before_filter :check_login, :only => [:new, :edit]
-  authorize_resource
+  # before_filter :check_login, :only => [:new, :edit]
+  # authorize_resource
+
+  load_and_authorize_resource
   
   def index
-    @group_assignments_approved = GroupAssignment.all_approved
+    @group_assignments_approved = GroupAssignment.all_approved.paginate(:page => params[:group_assignments_page]).per_page(20)
 
     respond_to do |format|
       format.html # index.html.erb
@@ -30,6 +32,10 @@ class GroupAssignmentsController < ApplicationController
   # GET /group_assignments/new.json
   def new
     @group_assignment = GroupAssignment.new
+    @personOptions = Person.all_approved.alphabetical
+    @groupOptions = Group.all_approved
+    @person_id = params[:person_id]
+    @group_id = params[:group_id]
 
     respond_to do |format|
       format.html # new.html.erb
@@ -40,12 +46,18 @@ class GroupAssignmentsController < ApplicationController
   # GET /group_assignments/1/edit
   def edit
     @group_assignment = GroupAssignment.find(params[:id])
+    @personOptions = Person.all_approved.alphabetical
+    @groupOptions = Group.all_approved
+    @is_approved = @group_assignment.is_approved
+    #authorize! :edit, @group_assignment
   end
 
   # POST /group_assignments
   # POST /group_assignments.json
   def create
     @group_assignment = GroupAssignment.new(params[:group_assignment])
+    @personOptions = Person.all_approved.alphabetical
+    @groupOptions = Group.all_approved
 
     respond_to do |format|
       if @group_assignment.save
@@ -76,13 +88,13 @@ class GroupAssignmentsController < ApplicationController
 
   # DELETE /group_assignments/1
   # DELETE /group_assignments/1.json
-  def destroy
-    @group_assignment = GroupAssignment.find(params[:id])
-    @group_assignment.destroy
+  # def destroy
+  #   @group_assignment = GroupAssignment.find(params[:id])
+  #   @group_assignment.destroy
 
-    respond_to do |format|
-      format.html { redirect_to group_assignments_url }
-      format.json { head :no_content }
-    end
-  end
+  #   respond_to do |format|
+  #     format.html { redirect_to group_assignments_url }
+  #     format.json { head :no_content }
+  #   end
+  # end
 end

@@ -3,12 +3,14 @@ class UsersController < ApplicationController
   # GET /users.json
 
   # before_filter :check_login
-  before_filter :check_login, :only => [:index, :show, :edit]
-  authorize_resource
+  # before_filter :check_login, :only => [:index, :show, :edit]
+  # authorize_resource
+  
+  load_and_authorize_resource
 
   def index
-    @inactive_users = User.inactive
-    @active_users = User.active
+    @inactive_users = User.inactive.paginate(:page => params[:inactive_users_page]).per_page(20)
+    @active_users = User.active.paginate(:page => params[:active_users_page]).per_page(20)
 
     respond_to do |format|
       format.html # index.html.erb
@@ -41,6 +43,7 @@ class UsersController < ApplicationController
   # GET /users/1/edit
   def edit
     @user = User.find(params[:id])
+    #authorize! :edit, @user
   end
 
   # POST /users
@@ -50,7 +53,7 @@ class UsersController < ApplicationController
 
     respond_to do |format|
       if @user.save
-        format.html { redirect_to @user, notice: 'Signed up!' }
+        format.html { redirect_to new_session_path, notice: 'Signed up!' }
         format.json { render json: @user, status: :created, location: @user }
       else
         format.html { render action: "new" }
@@ -75,15 +78,32 @@ class UsersController < ApplicationController
     end
   end
 
+  def dashboard
+    @unapproved_people = Person.all_unapproved.paginate(:page => params[:unapproved_people_page]).per_page(5)
+    @unapproved_groups = Group.all_unapproved.paginate(:page => params[:unapproved_groups_page]).per_page(5)
+    @unapproved_relationships = Relationship.all_unapproved.paginate(:page => params[:unapproved_relationships_page]).per_page(5)
+    @unapproved_group_assigns = GroupAssignment.all_unapproved.paginate(:page => params[:unapproved_group_assigns_page]).per_page(5)
+    @unapproved_user_group_contribs = UserGroupContrib.all_unapproved.paginate(:page => params[:unapproved_user_group_contribs_page]).per_page(5)
+    @unapproved_user_rel_contribs = UserRelContrib.all_unapproved.paginate(:page => params[:unapproved_user_rel_contribs_page]).per_page(5)
+    @unapproved_user_person_contribs = UserPersonContrib.all_unapproved.paginate(:page => params[:unapproved_user_person_contribs_page]).per_page(5)
+    @user_rel_contribs = UserRelContrib.for_user(current_user.id).paginate(:page => params[:user_rel_contribs_page]).per_page(5)
+    @user_person_contribs = UserPersonContrib.for_user(current_user.id).paginate(:page => params[:user_person_contribs_page]).per_page(5)
+    @user_group_contribs = UserGroupContrib.for_user(current_user.id).paginate(:page => params[:user_group_contribs_page]).per_page(5)
+    @new_people = Person.for_user(current_user.id).paginate(:page => params[:people_page]).per_page(5)
+    @new_groups = Group.for_user(current_user.id).paginate(:page => params[:groups_page]).per_page(5)
+    @new_relationships = Relationship.for_user(current_user.id).paginate(:page => params[:relationships_page]).per_page(5)
+    @group_assignments = GroupAssignment.for_user(current_user.id).paginate(:page => params[:group_assignments_page]).per_page(5)
+  end
+
   # DELETE /users/1
   # DELETE /users/1.json
-  def destroy
-    @user = User.find(params[:id])
-    @user.destroy
+  # def destroy
+  #   @user = User.find(params[:id])
+  #   @user.destroy
 
-    respond_to do |format|
-      format.html { redirect_to users_url }
-      format.json { head :no_content }
-    end
-  end
+  #   respond_to do |format|
+  #     format.html { redirect_to users_url }
+  #     format.json { head :no_content }
+  #   end
+  # end
 end

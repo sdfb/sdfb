@@ -1,0 +1,49 @@
+<%= simple_form_for @group_assignment, :html => { :class => 'form-horizontal' } do |f| %>
+  <% if @group_assignment.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@group_assignment.errors.count, "error") %> prohibited this group_assignment from being saved:</h2>
+
+      <ul>
+      <% @group_assignment.errors.full_messages.each do |msg| %>
+        <br>
+          <li>- <%= msg %></li>
+        <br>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+  <% if ! @group_id.blank? %>
+    <%= f.input :group_id, :collection =>@groupOptions.collect{ |g| [g.name, g.id] }, label: "Group", prompt: "Select", selected: @group_id %>
+  <% else %>
+    <%= f.input :group_id, :collection =>@groupOptions.collect{ |g| [g.name, g.id] }, label: "Group", prompt: "Select" %>
+  <% end %>
+  <% if ! @person_id.blank? %>
+    <%= f.input :person_id, :collection =>@personOptions.collect{ |p| [p.first_name + " " + p.last_name, p.id] }, label: "Person", prompt: "Select", selected: @person_id %>
+  <% else %>
+    <%= f.input :person_id, :collection =>@personOptions.collect{ |p| [p.first_name + " " + p.last_name, p.id] }, label: "Person", prompt: "Select" %>
+  <% end %>
+  <%= f.label :start_month, label: "Start Date" %>
+  <%= f.input :start_month, label: "Start Date", :collection =>["January","February","March","April","May","June","July","August","September","October","November","December"], label: false, prompt: "Month", :include_blank => true %>
+  <%= f.input :start_day, label: false, :collection => 1..31, prompt: "Day", :include_blank => true %>
+  <%= f.input :start_year, as: :string, label: false, placeholder: "Year"%>
+
+  <%= f.label :end_month, label: "End Date" %>
+  <%= f.input :end_month, :collection =>["January","February","March","April","May","June","July","August","September","October","November","December"], label: false, prompt: "Month", :include_blank => true %>
+  <%= f.input :end_day, label: false, :collection => 1..31, prompt: "Day", :include_blank => true %>
+  <%= f.input :end_year, label: false, as: :string, placeholder: "Year" %>
+  <% if current_user.user_type == "Admin" %>
+    <%= f.input :is_approved %>
+    <%= f.input :is_active %>
+    <% if @is_approved == false %>
+      <%= f.input :is_rejected %>
+      <%= f.hidden_field :approved_by, :value => current_user.id %>
+      <%= f.hidden_field :approved_on, :value => Time.now %>
+    <% end %>
+  <% end %>
+  <%= f.hidden_field :edited_by_on, :value => current_user.id %>
+  <div class="form-actions">
+    <%= f.button :submit, :class => 'btn' %>
+    <%= link_to t('.cancel', :default => t("helpers.links.cancel")),
+                group_assignments_path, :class => 'btn' %>
+  </div>
+<% end %>

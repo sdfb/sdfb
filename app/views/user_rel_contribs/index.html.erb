@@ -1,51 +1,44 @@
-<%- model_class = UserRelContrib -%>
-<div class="page-header">
-  <h1><%=t '.title', :default => model_class.model_name.human.pluralize.titleize %></h1>
-</div>
-<%= link_to t('.new', :default => t("helpers.links.new")),
-            new_user_rel_contrib_path,
-            :class => 'btn btn-primary' %>
-<table class="table table-striped">
-  <thead>
-    <tr>
-      <th>Relationship</th>
-      <th>Created by</th>
-      <th>Confidence type</th>
-      <th>Annotation</th>
-      <th>Bibliography</th>
-      <th>Relationship type</th>
-      <th><%=t '.actions', :default => t("helpers.actions") %></th>
-    </tr>
-  </thead>
-  <tbody>
-    <% @user_rel_contribs.each do |user_rel_contrib| %>
-      <tr>
-        <td><%= link_to user_rel_contrib.get_both_names, relationship_path(user_rel_contrib.relationship_id) %></td>
-        <td><%= link_to user_rel_contrib.get_users_name, user_path(user_rel_contrib.created_by) %></td>
-        <td><%= user_rel_contrib.confidence_type %></td>
-        <td><%= user_rel_contrib.annotation %></td>
-        <td><%= user_rel_contrib.bibliography %></td>
-        <td><%= user_rel_contrib.relationship_type %></td>
-        <!-- <td><%= user_rel_contrib.is_flagged %></td> -->
-        <td>
-          <% if can? :show, user_rel_contrib %>
-            <%= link_to 'Show', user_rel_contrib %>
-          <% end %>
-          <% if can? :update, user_rel_contrib %>
-            <%= link_to t('.edit', :default => t("helpers.links.edit")),
-                      edit_user_rel_contrib_path(user_rel_contrib), :class => 'btn btn-mini' %>
-          <% end %>
-          <% if can? :destroy, user_rel_contrib %>
-            <%= link_to t('.destroy', :default => t("helpers.links.destroy")),
-                      user_rel_contrib_path(user_rel_contrib),
-                      :method => :delete,
-                      :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')) },
-                      :class => 'btn btn-mini btn-danger' %>
-          <% end %>
-        </td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
+<h1>All Relationship Type Assignments <%= link_to 'Assign Relationship Types', new_user_rel_contrib_path, :class => 'btn btn-primary' %></h1><br>
 
-<%= will_paginate @user_rel_contribs, :param_name => 'user_rel_contribs_page', :previous_label => "Previous&nbsp;", :next_label => "&nbsp;Next" %>
+<% if ! @user_rel_contribs.empty? %>
+  <table class="table table-condensed">
+    <thead>
+      <tr>
+        <th>Id</th>
+        <th>Relationship</th>
+        <th>Relationship type</th>
+        <th>Certainty</th>
+        <th>Annotation</th>
+        <th>Bibliography</th>
+        <th><%=t '.actions', :default => t("helpers.actions") %></th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @user_rel_contribs.each do |user_rel_contrib| %>
+        <tr>
+          <td><%= user_rel_contrib.id %></td>
+          <td><%= link_to user_rel_contrib.get_both_names, relationship_path(user_rel_contrib.relationship_id) %></td>
+          <td><%= link_to RelationshipType.find(user_rel_contrib.relationship_type_id).name, relationship_type_path(user_rel_contrib.relationship_type_id) %></td>
+          <td><%= user_rel_contrib.certainty %>%</td>
+          <td><%= user_rel_contrib.annotation %></td>
+          <td><%= user_rel_contrib.bibliography %></td>
+          <td>
+            <% if can? :show, user_rel_contrib %>
+              <%= link_to 'Show', user_rel_contrib, :class => 'btn btn-mini' %>
+            <% end %>
+            <% if can? :update, user_rel_contrib %>
+              <%= link_to t('.edit', :default => t("helpers.links.edit")),
+                        edit_user_rel_contrib_path(user_rel_contrib), :class => 'btn btn-mini' %>
+            <% end %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+
+  <%= will_paginate @user_rel_contribs, :param_name => 'user_rel_contribs_page', :previous_label => "Previous&nbsp;", :next_label => "&nbsp;Next" %>
+<% else %>
+  <div class = "well">
+    No relationship type assignments exists.
+  </div>
+<% end %>

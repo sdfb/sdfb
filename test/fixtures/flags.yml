@@ -1,0 +1,19 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  assoc_object_type: MyString
+  assoc_object_id: 1
+  flag_type: MyString
+  flag_description: MyText
+  created_by: 1
+  resolved_by: 
+  resolved_at: 
+
+two:
+  assoc_object_type: MyString
+  assoc_object_id: 1
+  flag_type: MyString
+  flag_description: MyText
+  created_by: 1
+  resolved_by: 
+  resolved_at: 

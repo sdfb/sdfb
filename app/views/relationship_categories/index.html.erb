@@ -1,0 +1,22 @@
+<h1>All Relationship Categories <%= link_to 'New Relationship Category', new_relationship_category_path, :class => 'btn btn-primary' %></h1><br>
+
+<table class="table table-condensed">
+    <tr>
+    <th>Relationship Category id</th>
+    <th>Name</th>
+    <th>Description</th>
+    <th></th>
+    </tr>
+
+    <% @relationship_categories.each do |relationship_category| %>
+      <tr>
+        <td><%= relationship_category.id %></td>
+        <td><%= relationship_category.name %></td>
+        <td><%= relationship_category.description %></td>
+        <td><%= link_to 'Show', relationship_category, :class => 'btn btn-mini' %>
+        <%= link_to 'Edit', edit_relationship_category_path(relationship_category), :class => 'btn btn-mini' %></td>
+      </tr>
+    <% end %>
+</table>
+
+<%= will_paginate @relationship_categories, :param_name => 'rel_category_approved_page', :previous_label => "Previous&nbsp;", :next_label => "&nbsp;Next" %>

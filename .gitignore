@@ -1,2 +1,8 @@
 log/development.log
-log/development.log
+tmp/**/*
+**/.sass-cache
+**/.sass-cache/*
+app/assets/stylesheets/bootstrap_and_overrides.css.less
+tmp
+tmp
+tmp

@@ -1,46 +1,39 @@
-<h1>Inactive Users</h1>
-
-<table class="table table-striped">
+<table class="table table-condensed">
     <thead>
       <tr>
+        <th>User id</th>
+        <th>ORC id</th>
+        <th>Username</th>
+        <th>Prefix</th>
         <th>First name</th>
         <th>Last name</th>
-        <th>About description</th>
-        <th>Affiliation</th>
-        <th>Email</th>
         <th>User type</th>
-        <th>Is admin</th>
         <th><%=t '.actions', :default => t("helpers.actions") %></th>
       </tr>
     </thead>
   <tbody>
-    <% @inactive_users.each do |user| %>
-      <tr>
-        <td><%= user.first_name %></td>
-        <td><%= user.last_name %></td>
-        <td><%= user.about_description %></td>
-        <td><%= user.affiliation %></td>
-        <td><%= user.email %></td>
-        <td><%= user.user_type %></td>
-        <td>
-            <% if user.is_admin %>
-                Admin
-            <% end %>
-        </td>
-        <td>
-            <% if can? :show, user %>
-                <%= link_to 'Show', user %>
-            <% end %>
-            <% if can? :update, user %>
-                <%= link_to 'Edit', edit_user_path(user) %>
-            <% end %>
-            <% if can? :destroy, user %>
-                <%= link_to 'Destroy', user, method: :delete, data: { confirm: 'Are you sure?' } %>
-            <% end %>
-        </td>
-      </tr>
-    <% end %>
+        <% @inactive_users.each do |user| %>
+          <tr>
+            <td><%= user.id %></td>
+            <td><%= user.orcid %></td>
+            <td><%= user.username %></td>
+            <td><%= user.prefix %></td>
+            <td><%= user.first_name %></td>
+            <td><%= user.last_name %></td>
+            <td><%= user.user_type %></td>
+            <td>
+                <% if can? :show, user %>
+                    <%= link_to 'Show', user, :class => 'btn btn-mini' %>
+                <% end %>
+                <% if can? :update, user %>
+                    <%= link_to 'Edit', edit_user_path(user), :class => 'btn btn-mini' %>
+                <% end %>
+            </td>
+          </tr>
+        <% end %>
     </tbody>
 </table>
+
+<%= will_paginate @inactive_users, :param_name => 'inactive_users_page', :previous_label => "Previous&nbsp;", :next_label => "&nbsp;Next" %>
 
 <br />

@@ -1,65 +1,38 @@
-<%= form_for(@user) do |f| %>
+<%= simple_form_for @user, :html => { :class => 'form-horizontal' } do |f| %>
   <% if @user.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(@user.errors.count, "error") %> prohibited this user from being saved:</h2>
-
       <ul>
       <% @user.errors.full_messages.each do |msg| %>
-        <li><%= msg %></li>
+        <br>
+          <li>- <%= msg %></li>
+        <br>
       <% end %>
       </ul>
     </div>
   <% end %>
-
-  <div class="field">
-    <%= f.label :first_name %><br />
-    <%= f.text_field :first_name %>
-  </div>
-  <div class="field">
-    <%= f.label :last_name %><br />
-    <%= f.text_field :last_name %>
-  </div>
-  <div class="field">
-    <%= f.label :email %><br />
-    <%= f.text_field :email %>
-  </div>
-  <div class="field">
-    <%= f.label :password %><br />
-    <%= f.text_field :password %>
-  </div>
-  <div class="field">
-    <%= f.label :password_confirmation %><br />
-    <%= f.text_field :password_confirmation %>
-  </div>
-  <div class="field">
-    <%= f.label :user_type %><br />
-    <%= f.text_field :user_type %>
-  </div>
-  <div class="field">
-    <%= f.label :affiliation %><br />
-    <%= f.text_field :affiliation %>
-  </div>
-  <div class="field">
-    <%= f.label :about_description %><br />
-    <%= f.text_area :about_description %>
-  </div>
+  <%= f.input :first_name %>
+  <%= f.input :last_name %>
+  <%= f.input :username %>
+  <%= f.input :email %>
+  <%= f.input :password %>
+  <%= f.input :password_confirmation %>
+  <%= f.input :affiliation %>
+  <%= f.input :about_description %>
+  <%= f.hidden_field :curator_revoked, :value => false %>
   <% if current_user != nil %>
-    <% if current_user.is_admin %>
+    <%= current_user.username %>
+    <% if (current_user.user_type == "Admin") %>
+      <%= f.input :user_type, :collection => ["Standard", "Curator","Admin"], prompt: "Select" %>
       <div class="field">
-        <%= f.label :is_active %><br />
+        <%= f.label :is_active %>
         <%= f.check_box :is_active %>
       </div>
     <% end %>
   <% end %>
-  <% if current_user != nil %>
-    <% if current_user.is_admin %>
-      <div class="field">
-        <%= f.label :is_admin %><br />
-        <%= f.check_box :is_admin %>
-      </div>
-    <% end %>
-  <% end %>
-  <div class="actions">
-    <%= f.submit %>
+  <div class="form-actions">
+    <%= f.button :submit, :class => 'btn btn-primary' %>
+    <%= link_to t('.cancel', :default => t("helpers.links.cancel")),
+                root_path, :class => 'btn' %>
   </div>
 <% end %>

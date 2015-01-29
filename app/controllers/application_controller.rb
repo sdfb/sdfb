@@ -1,7 +1,11 @@
 class ApplicationController < ActionController::Base
-  protect_from_forgery
+  	protect_from_forgery
+  	before_filter :expire_hsts
   
 	private
+	def expire_hsts
+    	response.headers["Strict-Transport-Security"] = 'max-age=0'
+  	end
 	def current_user
 		@current_user ||= User.find(session[:user_id]) if session[:user_id]
 	end
@@ -13,7 +17,7 @@ class ApplicationController < ActionController::Base
 	helper_method :logged_in?
 
 	def check_login
-		redirect_to sign_in_url, alert: "You need to log in to view this page." if current_user.nil?
+		redirect_to sign_in_url, alert: "You need to sign in to view this page." if current_user.nil?
 	end
 
 	def get_data_for_visualization
@@ -31,6 +35,7 @@ class ApplicationController < ActionController::Base
 		    # person_record.push(all_rels_for_person)
 		    # # once the record is complete, add it to all data
 		    data_table.push(person_record)
+
 	    end
     	return data_table
     end
@@ -38,6 +43,8 @@ class ApplicationController < ActionController::Base
 
 	rescue_from  CanCan::AccessDenied do |exception|
 	 	flash[:error] = "Access Denied"
-	 	# redirect_to root_url
+	 	redirect_to sign_in_url
 	end
+
+
 end

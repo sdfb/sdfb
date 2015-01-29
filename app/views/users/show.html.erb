@@ -1,59 +1,66 @@
-<p id="notice"><%= notice %></p>
-
 <%- model_class = User -%>
-<div class="page-header">
-  <h1><%=t '.title', :default => model_class.model_name.human.titleize %></h1>
+<div class="row">
+  <div class="span12">
+    <h1>Account</h1>
+  </div>
 </div>
-
-<dl class="dl-horizontal">
-  <dt><strong><%= model_class.human_attribute_name(:about_description) %>:</strong></dt>
-  <dd>
-    <% if @user.about_description != "" %>
-      <%= @user.about_description %>
-    <% else %>
-      None
-    <% end %>
-  </dd>
-  <dt><strong><%= model_class.human_attribute_name(:affiliation) %>:</strong></dt>
-  <dd><%= @user.affiliation %></dd>
-  <dt><strong><%= model_class.human_attribute_name(:email) %>:</strong></dt>
-  <dd><%= @user.email %></dd>
-  <dt><strong><%= model_class.human_attribute_name(:first_name) %>:</strong></dt>
-  <dd><%= @user.first_name %></dd>
-  <dt><strong><%= model_class.human_attribute_name(:is_active) %>:</strong></dt>
-  <dd><%= @user.is_active %></dd>
-  <dt><strong><%= model_class.human_attribute_name(:last_name) %>:</strong></dt>
-  <dd><%= @user.last_name %></dd>
-  <dt><strong><%= model_class.human_attribute_name(:password) %>:</strong></dt>
-  <dd><%= @user.password %></dd>
-  <dt><strong><%= model_class.human_attribute_name(:password_confirmation) %>:</strong></dt>
-  <dd><%= @user.password_confirmation %></dd>
-  <dt><strong><%= model_class.human_attribute_name(:password_hash) %>:</strong></dt>
-  <dd><%= @user.password_hash %></dd>
-  <dt><strong><%= model_class.human_attribute_name(:password_salt) %>:</strong></dt>
-  <dd><%= @user.password_salt %></dd>
-  <dt><strong><%= model_class.human_attribute_name(:user_type) %>:</strong></dt>
-  <dd><%= @user.user_type %></dd>
-  <% if current_user != nil %>
-    <% if current_user.is_admin %>
-      <dt><strong><%= model_class.human_attribute_name(:is_admin) %>:</strong></dt>
-      <dd>
-        <% if @user.is_admin %>
-          true
+<br>
+<div class="row">
+  <div class="span7">
+    <div class="well">
+      <h2>Information
+        <% if can? :update, @user %> 
+        <%= link_to t('.edit', :default => t("helpers.links.edit")),
+                  edit_user_path(@user), :class => 'btn btn-mini' %>
         <% end %>
-      </dd>
-    <% end %>
-  <% end %>
-</dl>
-
-<div class="form-actions">
-  <%= link_to t('.back', :default => t("helpers.links.back")),
-              users_path, :class => 'btn'  %>
-  <%= link_to t('.edit', :default => t("helpers.links.edit")),
-              edit_user_path(@user), :class => 'btn' %>
-  <%= link_to t('.destroy', :default => t("helpers.links.destroy")),
-              user_path(@user),
-              :method => 'delete',
-              :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')) },
-              :class => 'btn btn-danger' %>
+      </h2>
+      <br>
+      <dl class="dl-horizontal">
+        <% if ! current_user.nil? && (current_user.user_type == "Admin") %>
+          <dt><strong>User id:</strong></dt>
+          <dd><%= @user.id %></dd>
+        <% end %>
+        <dt><strong>Username:</strong></dt>
+        <dd><%= @user.username %></dd>
+        <% if ! @user.orcid.blank? %>
+          <dt><strong>ORC id:</strong></dt>
+          <dd><%= @user.orcid %></dd>
+        <% end %>
+        <dt><strong><%= model_class.human_attribute_name(:about_description) %>:</strong></dt>
+        <dd>
+          <% if ! @user.about_description.blank? %>
+            <%= @user.about_description %>
+          <% else %>
+            No description was provided by this user.
+          <% end %>
+        </dd>
+        <% if ! current_user.nil? && (current_user.user_type == "Admin") %>
+          <% if ! @user.affiliation.blank? %>
+            <dt><strong>Affiliation:</strong></dt>
+            <dd><%= @user.affiliation %></dd>
+          <% end %>
+          <dt><strong><%= model_class.human_attribute_name(:email) %>:</strong></dt>
+          <dd><%= @user.email %></dd>
+          <% if ! @user.prefix.blank? %>
+            <dt><strong>Prefix:</strong></dt>
+            <dd><%= @user.prefix %></dd>
+          <% end %>
+          <dt><strong><%= model_class.human_attribute_name(:first_name) %>:</strong></dt>
+          <dd><%= @user.first_name %></dd>
+          <dt><strong><%= model_class.human_attribute_name(:last_name) %>:</strong></dt>
+          <dd><%= @user.last_name %></dd>
+          <dt><strong><%= model_class.human_attribute_name(:is_active) %>:</strong></dt>
+          <dd><%= @user.is_active %></dd>
+          <% if ! @user.user_type.blank? %>
+            <dt><strong>User type:</strong></dt>
+            <dd><%= @user.user_type %></dd>
+          <% end %>
+          <dt><strong>Curator revoked?:</strong></dt>
+          <dd><%= @user.curator_revoked %></dd>
+        <% end %>
+        <dt><strong>User since:</strong></dt>
+        <dd><%= @user.created_at %></dd>
+      </dl>
+    </div>
+  </div>
 </div>

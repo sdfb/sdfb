@@ -1,60 +1,32 @@
-<%- model_class = Relationship -%>
-<div class="page-header">
-  <h1>All Relationships</h1>
+<h1>All Relationships <%= link_to 'New Relationship', new_relationship_path, :class => 'btn btn-primary' %><%=link_to 'Export Data', '/export_relationships', :class => 'btn btn-primary'%></h1>
+<div class="well">
+  <%= render 'rel_search_box' %>
 </div>
-<%= link_to 'New Relationship',
-            new_relationship_path,
-            :class => 'btn btn-primary' %>
-
-<table class="table table-striped">
+<br>
+<table class="table table-condensed">
   <thead>
     <tr>
+      <th>Relationship id</th>
       <th>Person 1</th>
       <th>Person 2</th>
-      <% if current_user != nil %>
-          <% if current_user.is_admin %>
-              <th>Original Certainty</th>
-          <% end %>
-      <% end %>
-      <th>Average Certainty</th>
-      <% if current_user != nil %>
-          <% if current_user.is_admin %>
-              <th>Created by</th>
-          <% end %>
-      <% end %>
+      <th>Maximum Certainty</th>
       <th><%=t '.actions', :default => t("helpers.actions") %></th>
     </tr>
   </thead>
   <tbody>
-    <% @relationships_approved.each do |relationship| %>
+    <% @approved_relationships.each do |relationship| %>
       <tr>
+        <td><%= relationship.id %></td>
         <td><%= link_to relationship.get_person1_name, person_path(relationship.person1_index) %></td>
         <td><%= link_to relationship.get_person2_name, person_path(relationship.person2_index) %></td>
-        <% if current_user != nil %>
-            <% if current_user.is_admin %>
-                <td><%= relationship.original_certainty %></td>
-            <% end %>
-        <% end %>
-        <td><%= relationship.average_certainty %></td>
-        <% if current_user != nil %>
-            <% if current_user.is_admin %>
-                <td><%= relationship.get_users_name %></td>
-            <% end %>
-        <% end %>
+        <td><%= relationship.max_certainty %>%</td>
         <td>
           <% if can? :show, relationship %>
-            <%= link_to 'Show', relationship %>
+            <%= link_to 'Show', relationship, :class => 'btn btn-mini'  %>
           <% end %>
           <% if can? :update, relationship %>
             <%= link_to t('.edit', :default => t("helpers.links.edit")),
                         edit_relationship_path(relationship), :class => 'btn btn-mini' %>
-          <% end %>
-          <% if can? :destroy, relationship %>
-            <%= link_to t('.destroy', :default => t("helpers.links.destroy")),
-                        relationship_path(relationship),
-                        :method => :delete,
-                        :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')) },
-                        :class => 'btn btn-mini btn-danger' %>
           <% end %>
         </td>
       </tr>
@@ -62,4 +34,4 @@
   </tbody>
 </table>
 
-<%= will_paginate @relationships_approved, :param_name => 'relationships_approved_page', :previous_label => "Previous&nbsp;", :next_label => "&nbsp;Next" %>
+<%= will_paginate @approved_relationships, :param_name => 'approved_relationships_page', :previous_label => "Previous&nbsp;", :next_label => "&nbsp;Next" %>

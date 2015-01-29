@@ -1,16 +1,20 @@
 @import url(http://fonts.googleapis.com/css?family=Open+Sans:400,700);
 
 aside {
-    position: fixed;
+    position: absolute;
     left: 0;
-    top: 34px;
+    top: 0px;
     bottom: 0;
     width: 300px;
     height:100%;
+    overflow:visible;
 }
 
 #accordion {
+    position: absolute;
+    width: 300px;
 	background: #78A7BF;
+    margin:38px 0px 0px 0px;
 }
 
 #accordion h3 {
@@ -38,7 +42,7 @@ aside {
     top: 5px;
 }
 
-#nodeinfo, #contribute, #about{
+#nodeinfo, #add, #about{
 	overflow: auto;
 }
 
@@ -46,10 +50,11 @@ aside {
 	display: none;
 	color:#222;
 	font-size:12px;
-	padding: 25px 22px;
+	padding: 5px 10px 5px 10px;
 	line-height: 25px;
 	text-align:left;
-	height: calc(90% - 140px);
+	height: auto;
+	overflow:scroll;
 }
 
 .accordion_content .active {
@@ -57,18 +62,19 @@ aside {
 }
 
 .accordion_content section {
-    margin-top: 100px;
-    display: none;
+  margin: 20px 0px 0px;
+	padding: 0px 15px 0px 5px;
+  display: none;
 }
 
 .accordion_content section input, 
 .accordion_content section button, 
 .accordion_content section select,
 .accordion_content section textarea {
-    width: 246px;
-    height: 30px;
-    margin-bottom: 5px;
-    margin-left: 4px;
+    width: 200px;
+    height: 20px;
+    margin-bottom: 10px;
+    margin-left: 22px;
     font-size: 11px;
 }
 
@@ -87,35 +93,128 @@ aside {
 
 .accordion_content ul {
     text-align: center;
-    display: inline;
-    margin: 0;
+    margin:0px;
     list-style: none;
 }
 
 .accordion_content ul li {
-	background-color: #fff;
+	color:#fff;
+	background-color: #185D80;
 	float: left;
 	cursor: pointer;
-    width: 125px;
-    height: 40px;
+	padding: 0px 23px 0px 23px;
+    width: auto;
+    height: 45px;
     line-height: 45px;
     -webkit-transition: all 0.2s;
     -moz-transition: all 0.2s;
     -ms-transition: all 0.2s;
     -o-transition: all 0.2s;
     transition: all 0.2s;
-    -moz-box-shadow: inset #78A7BF 4px 4px 0 0;
-    -webkit-box-shadow: inset #78A7BF 4px 4px 0 0;
-    box-shadow: inset #78A7BF 4px 4px 0 0;
 }
 
 .accordion_content ul li:hover, .accordion_content ul li.clicked {
 	color: #fff;	
-	background-color: #185D80;
+	background-color: #78A7BF;
+}
+
+.accordion_content ul .btnl{
+	background-color:#fff;
+	width:95px;
+	margin:3px 4px;
+	color:#222;
+	font-size: 12px;
+	-moz-border-radius: 10px;
+	-webkit-border-radius: 10px;
+	border-radius: 10px;
+	-khtml-border-radius: 10px; 
+	border:none;
+    padding:0px 3px;
+    height: 36px;
+    line-height: 36px;
+}
+.accordion_content ul .btnl.clicked,
+.accordion_content ul .btnl:hover{
+	background-color:#196B94;
+	color:#fff;
+}
+
+.tabs{
+	overflow:hidden;
+	padding: 0px 20px 0px 20px;
+}
+
+.accordion_content .search-table{
+	margin: 0px 0px 0px 25px;
+	width:300px;
+	overflow:hidden;
+}
+
+#search, #edgeinfo, #groupinfo{
+
+    margin:0px 0px -15px 0px;
+}
+
+#group_name{
+
+    width:200px;
+}
+
+#add{
+
+    padding: 0px;
+}
+
+#addnode, #addedge, #addgroup{
+
+    padding: 0px 25px;
+}
+
+#show-table{
+	width:auto;
+}
+
+#relationship-table{
+	display:block;
+	overflow:hidden;
+	width:100%;
+	
+}
+
+.relationship-cell{
+
+}
+
+.relationship-type{
+	float:left;
+	padding:1px 10px 1px 0px;
+}
+
+.relationship-from{
+	float:left;
+	padding:1px 10px 1px 10px;
+}
+
+.relationship-to{
+	float:left;
+	padding:1px 10px 1px 10px;
+}
+
+.relationship-confidence{
+	float:left;
+	padding:1px 0px 1px 10px;
+}
+
+.contribute-tab{
+	margin-top:-20px;
 }
 
 #addedge {
-    width: 250px;
+
+}
+
+#addtag button{
+	margin:7px 0px 0px 0px;
 }
 
 #nodeinfo a, #edgeinfo a {
@@ -124,9 +223,31 @@ aside {
 
 #nodeinfo p, #edgeinfo p {
 	color: #fff;
-	text-align: center;
 	font-size:14px;
-	padding-bottom: 15px;
+}
+
+.talkPageLink:hover {
+    background-color:#555;
+}
+
+.talkPageLink {
+	color:#fff;
+	font-size:14px;
+	text-align:center;
+    display:block;
+    margin:5px 20px 10px 20px;
+    padding:5px 7px;
+    background-color:#666;
+	font-size: 12px;
+	-moz-border-radius: 10px;
+	-webkit-border-radius: 10px;
+	border-radius: 10px;
+	-khtml-border-radius: 10px; 
+    height:25px !important;
+	/*-webkit-box-shadow: 10px 10px 10px 0px rgba(0,0,0,0.75);
+	-moz-box-shadow: 10px 10px 10px 0px rgba(0,0,0,0.75);
+	box-shadow: 10px 10px 10px 0px rgba(0,0,0,0.75);*/
+	border:none;
 }
 
 aside ::-webkit-scrollbar {  
@@ -167,7 +288,7 @@ aside ::-webkit-scrollbar-thumb:hover {
     background-color: #ccc;
 }
 
-button.icon {
+a.icon, button.icon, a.icon:hover {
     background-repeat: no-repeat;
     background-size: 15px;
     width: 30px;
@@ -179,50 +300,50 @@ button.icon {
     background-color: transparent;
 }
 
-#icon-about {
+.icon-about {
     background-image: url(us.png);
 }
 
-#icon-search {
+.icon-magnify {
     background-image: url(search.png);
 }
 
-#icon-node {
+.icon-node {
     background-image: url(node.png);
 }
 
-#icon-edge {
+.icon-edge {
     background-image: url(edge.png);
 }
 
-#icon-add {
+.icon-add {
     background-image: url(add.png);
 }
 
-#icon-annotate {
+.icon-annotate, .icon-annotate:hover {
     background-image: url(annotate.png);
 }
 
-#icon-tag {
+.icon-label, .icon-label:hover {
     background-image: url(tag.png);
 }
 
-#icon-link {
+.icon-chain, .icon-chain:hover {
     background-image: url(link.png);
 }
 
-#icon-zoomin {
+.icon-zoomin {
     background-image: url(zoomin.png);
 }
 
-#icon-zoomout {
+.icon-zoomout {
     background-image: url(zoomout.png);
 }
 
-#icon-info {
+.icon-info {
     background-image: url(info.png);
 }
 
-#icon-color {
+.icon-color {
     background-image: url(colors.png);
 }

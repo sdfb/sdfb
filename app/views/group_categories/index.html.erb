@@ -1,0 +1,32 @@
+<h1>All Group Categories <%= link_to 'New Group Categories', new_group_category_path, :class => 'btn btn-primary' %></h1><br>
+
+<table class="table table-condensed">
+  <thead>
+    <tr>
+      <th>Group Category ID </th>
+      <th>Name</th>
+      <th>Description</th>
+      <th><%=t '.actions', :default => t("helpers.actions") %></th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @group_categories_approved.each do |group_category| %>
+      <tr>
+        <td><%= group_category.id %></td>
+        <td><%= group_category.name %></td>
+        <td><%= group_category.description %></td>
+        <td>
+          <% if can? :show, group_category %>
+            <%= link_to 'Show', group_category, :class => 'btn btn-mini' %>
+          <% end %>
+          <% if can? :update, group_category %>
+            <%= link_to t('.edit', :default => t("helpers.links.edit")),
+                            edit_group_category_path(group_category), :class => 'btn btn-mini' %>
+          <% end %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<%= will_paginate @group_categories_approved, :param_name => 'group_category_approved_page', :previous_label => "Previous&nbsp;", :next_label => "&nbsp;Next" %>

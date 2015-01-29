@@ -12,13 +12,13 @@
       <th>Person 1</th>
       <th>Person 2</th>
       <% if current_user != nil %>
-          <% if current_user.is_admin %>
+          <% if (current_user.user_type == "Admin")  %>
               <th>Original Certainty</th>
           <% end %>
       <% end %>
-      <th>Average Certainty</th>
+      <th>Maximum Certainty</th>
       <% if current_user != nil %>
-          <% if current_user.is_admin %>
+          <% if (current_user.user_type == "Admin")  %>
               <th>Created by</th>
           <% end %>
       <% end %>
@@ -31,13 +31,13 @@
         <td><%= link_to relationship.get_person1_name, person_path(relationship.person1_index) %></td>
         <td><%= link_to relationship.get_person2_name, person_path(relationship.person2_index) %></td>
         <% if current_user != nil %>
-            <% if current_user.is_admin %>
+            <% if (current_user.user_type == "Admin")  %>
                 <td><%= relationship.original_certainty %></td>
             <% end %>
         <% end %>
-        <td><%= relationship.average_certainty %></td>
+        <td><%= relationship.max_certainty %></td>
         <% if current_user != nil %>
-            <% if current_user.is_admin %>
+            <% if (current_user.user_type == "Admin")  %>
                 <td><%= relationship.get_users_name %></td>
             <% end %>
         <% end %>

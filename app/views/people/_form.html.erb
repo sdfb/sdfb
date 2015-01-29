@@ -5,21 +5,39 @@
 
       <ul>
       <% @person.errors.full_messages.each do |msg| %>
-        <li><%= msg %></li>
+        <br>
+          <li>- <%= msg %></li>
+        <br>
       <% end %>
       </ul>
     </div>
   <% end %>
-  <%= f.input :original_id %>
+  <%= f.input :title %>
+  <%= f.input :prefix %>
   <%= f.input :first_name %>
   <%= f.input :last_name %>
+  <%= f.input :suffix %>
   <%= f.hidden_field :created_by, :value => current_user.id %>
-  <%= f.input :birth_year %>
-  <%= f.input :death_year %>
-  <%= f.input :historical_significance %>
-  <%= f.input :is_approved %>
+  <%= f.input :gender, :collection =>["female", "male","unknown"], label: "Gender", prompt: "Select" %>
+  <%= f.input :odnb_id, label: "ODNB ID", as: :string %>
+  <%= f.input :birth_year_type, :collection =>["BF", "AF","IN","CA","BF/IN","AF/IN"], label: "Birth Year Type", prompt: "Select", hint: " BF = Before, AF = After, IN = In, CA = Circa, BF/IN = Before or In, AF/IN = After or In" %>
+  <%= f.input :ext_birth_year %>
+  <%= f.input :alt_birth_year %>
+  <%= f.input :death_year_type, :collection =>["BF", "AF","IN","CA","BF/IN","AF/IN"], label: "Death Year Type", prompt: "Select", hint: " BF = Before, AF = After, IN = In, CA = Circa, BF/IN = Before or In, AF/IN = After or In" %>
+  <%= f.input :ext_death_year %>
+  <%= f.input :alt_death_year %>
+  <%= f.input :search_names_all %>
+  <%= f.input :historical_significance, input_html: { rows:"5" } %>
+  <%= f.input :justification, input_html: { rows:"5" } %>
+  <% if (current_user.user_type == "Admin") || (current_user.user_type == "Curator") %>
+    <%= f.input :is_approved %>
+    <%= f.input :is_active %>
+    <%= f.input :is_rejected %>
+    <%= f.hidden_field :approved_by, :value => current_user.id %>
+    <%= f.hidden_field :approved_on, :value => Time.now %>
+  <% end %>
   <div class="form-actions">
-    <%= f.button :submit, :class => 'btn-primary' %>
+    <%= f.button :submit, :class => 'btn btn-primary' %>
     <%= link_to t('.cancel', :default => t("helpers.links.cancel")),
                 people_path, :class => 'btn' %>
   </div>

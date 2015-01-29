@@ -5,17 +5,28 @@
 
       <ul>
       <% @group.errors.full_messages.each do |msg| %>
-        <li><%= msg %></li>
+        <br>
+          <li>- <%= msg %></li>
+        <br>
       <% end %>
       </ul>
     </div>
   <% end %>
-  <%= f.input :created_by %>
+  <%= f.hidden_field :created_by, :value => current_user.id %>
   <%= f.input :name %>
-  <%= f.input :description %>
-  <%= f.input :is_approved %>
+  <%= f.input :description, input_html: { rows:"5" } %>
+  <%= f.input :start_year, as: :string %>
+  <%= f.input :end_year, as: :string %>
+  <%= f.input :justification, input_html: { rows:"5" }, required: true %>
+  <% if (current_user.user_type == "Admin") || (current_user.user_type == "Curator") %>
+    <%= f.input :is_approved %>
+    <%= f.input :is_active %>
+    <%= f.input :is_rejected %>
+    <%= f.hidden_field :approved_by, :value => current_user.id %>
+    <%= f.hidden_field :approved_on, :value => Time.now %>
+  <% end %>
   <div class="form-actions">
-    <%= f.button :submit, :class => 'btn-primary' %>
+    <%= f.button :submit, :class => 'btn btn-primary' %>
     <%= link_to t('.cancel', :default => t("helpers.links.cancel")),
                 groups_path, :class => 'btn' %>
   </div>

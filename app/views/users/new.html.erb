@@ -1,13 +1,12 @@
-<div class="row">
-	<div class="span3">
-	</div>
-	<div class="span6">
-		<div class = "container-box">
-			<h1>Sign Up</h1>
-
+<div class="span6">
+	<h1>Sign Up</h1>
+	<div class = "container-box">
+		<div class = "well">
+			<b>Already have an account?</b>
+			<%= link_to 'Sign in', new_session_path %>
+			<br><br>
 			<%= render 'new_form' %>
-
-			<%= link_to 'Back', users_path %>
+			<p><a href="/tos">Terms of Service</a></p>
 		</div>
-    </div>
+	</div>
 </div>

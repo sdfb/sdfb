@@ -11,7 +11,7 @@ Sdfb::Application.configure do
 
   # Show full error reports and disable caching
   config.consider_all_requests_local       = true
-  config.action_controller.perform_caching = false
+  config.action_controller.perform_caching = true
 
   # Don't care if the mailer can't send
   config.action_mailer.raise_delivery_errors = false
@@ -31,7 +31,7 @@ Sdfb::Application.configure do
 
   # Do not compress assets
   config.assets.compress = false
-
+  config.serve_static_assets = false
   # Expands the lines which load the assets
-  config.assets.debug = true
+  config.assets.debug = false
 end

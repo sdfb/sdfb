@@ -3,11 +3,13 @@ class UserGroupContribsController < ApplicationController
   # GET /user_group_contribs.json
 
   # before_filter :check_login
-  before_filter :check_login, :only => [:index, :new, :edit]
-  authorize_resource
+  # before_filter :check_login, :only => [:index, :new, :edit]
+  # authorize_resource
+
+  load_and_authorize_resource
 
   def index
-    @user_group_contribs = UserGroupContrib.not_flagged.paginate(:page => params[:user_group_contribs_page]).per_page(20)
+    @user_group_contribs = UserGroupContrib.all_approved.paginate(:page => params[:user_group_contribs_page]).per_page(20)
 
     respond_to do |format|
       format.html # index.html.erb
@@ -30,6 +32,8 @@ class UserGroupContribsController < ApplicationController
   # GET /user_group_contribs/new.json
   def new
     @user_group_contrib = UserGroupContrib.new
+    @groupOptions = Group.all_approved
+    @group_id = params[:group_id]
 
     respond_to do |format|
       format.html # new.html.erb
@@ -40,12 +44,16 @@ class UserGroupContribsController < ApplicationController
   # GET /user_group_contribs/1/edit
   def edit
     @user_group_contrib = UserGroupContrib.find(params[:id])
+    @groupOptions = Group.all_approved
+    @is_approved = @user_group_contrib.is_approved
+    #authorize! :edit, @user_group_contrib
   end
 
   # POST /user_group_contribs
   # POST /user_group_contribs.json
   def create
     @user_group_contrib = UserGroupContrib.new(params[:user_group_contrib])
+    @groupOptions = Group.all_approved
 
     respond_to do |format|
       if @user_group_contrib.save
@@ -76,13 +84,13 @@ class UserGroupContribsController < ApplicationController
 
   # DELETE /user_group_contribs/1
   # DELETE /user_group_contribs/1.json
-  def destroy
-    @user_group_contrib = UserGroupContrib.find(params[:id])
-    @user_group_contrib.destroy
+  # def destroy
+  #   @user_group_contrib = UserGroupContrib.find(params[:id])
+  #   @user_group_contrib.destroy
 
-    respond_to do |format|
-      format.html { redirect_to user_group_contribs_url }
-      format.json { head :no_content }
-    end
-  end
+  #   respond_to do |format|
+  #     format.html { redirect_to user_group_contribs_url }
+  #     format.json { head :no_content }
+  #   end
+  # end
 end

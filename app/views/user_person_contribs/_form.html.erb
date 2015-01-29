@@ -5,18 +5,33 @@
 
       <ul>
       <% @user_person_contrib.errors.full_messages.each do |msg| %>
-        <li><%= msg %></li>
+        <br>
+          <li>- <%= msg %></li>
+        <br>
       <% end %>
       </ul>
     </div>
   <% end %>
-  <%= f.input :person_id %>
+  <% if ! @person_id.blank? %>
+    <%= f.label :person_id %>
+    <%= Person.find(@person_id).first_name + " " + Person.find(@person_id).last_name %>
+    <%= f.hidden_field :person_id, :value => @person_id %>
+  <% else %>    
+    <%= f.input :person_id, as: :hidden %>
+    <%= f.input :person_autocomplete, as: :autocomplete, url: autocomplete_person_search_names_all_user_person_contribs_path, input_html: { 'data-id-element' => '#user_person_contrib_person_id' }, label: "Person", placeholder: "name" %>
+  <% end %>
   <%= f.hidden_field :created_by, :value => current_user.id %>
   <%= f.input :annotation %>
   <%= f.input :bibliography %>
-  <%= f.input :is_flagged %>
+  <% if (current_user.user_type == "Admin") || (current_user.user_type == "Curator") %>
+    <%= f.input :is_approved %>
+    <%= f.input :is_active %>
+    <%= f.input :is_rejected %>
+    <%= f.hidden_field :approved_by, :value => current_user.id %>
+    <%= f.hidden_field :approved_on, :value => Time.now %>
+  <% end %>
   <div class="form-actions">
-    <%= f.button :submit, :class => 'btn-primary' %>
+    <%= f.button :submit, :class => 'btn btn-primary' %>
     <%= link_to t('.cancel', :default => t("helpers.links.cancel")),
                 user_person_contribs_path, :class => 'btn' %>
   </div>

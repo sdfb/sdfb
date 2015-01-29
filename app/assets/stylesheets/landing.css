@@ -1,4 +1,4 @@
-@import url(http://fonts.googleapis.com/css?family=Open+Sans:400,700);
+/*@import url(http://fonts.googleapis.com/css?family=Open+Sans:400,700);
 
 #everything{
   display: none;
@@ -22,9 +22,9 @@
   padding-top: 5%;
   text-align: center;
   background: #4281a0;
-}
+}*/
 
-#landing-open img {
+/*#landing-open img {
   margin: 5%;
 }
 
@@ -52,9 +52,9 @@
   height: 85px;
   width: 45px;
   position: fixed;
-}
+}*/
 
-#arrow-down{
+/*#arrow-down{
   bottom: 0;
   display: block;
   margin: 0 auto;
@@ -72,15 +72,14 @@
   padding: 5px;
 }
 
-#skip{
+#skipIntro{
   color: #043b54;
   font-size: 20px;
   display: block;
-  margin-right: 0;
-  /*float: right;*/
+  margin:0px 20px 20px 0px;
   position: absolute;
-  top:95%;
-  right: 10;
+  bottom:0px;
+  right:0px;
 }
 
 #landing-def{
@@ -91,7 +90,7 @@
   background-position: center top;
   background-color: #ecebe9;
   height: 100%;
-  /*width: 100%;*/
+  /*width: 100%;
   padding-top: 15%;
   overflow: hidden;
 }
@@ -175,4 +174,4 @@ h5{
 
 #landing-sidebar img{
   padding-top: 20px;
-}
+}*/

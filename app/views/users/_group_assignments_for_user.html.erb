@@ -1,0 +1,51 @@
+<h2>Group Assignments</h2>
+<div class = "well">
+  <% if ! @group_assignments.empty? %>
+    <table class="table table-condensed">
+      <thead>
+      <tr>
+        <th>ID</th>
+        <th>Group</th>
+        <th>Person</th>
+        <th><%=t '.actions', :default => t("helpers.actions") %></th>
+      </tr>
+      </thead>
+      <tbody>
+        <% @group_assignments.each do |group_assignment| %>
+          <tr>
+            <td><%= group_assignment.id %></td>
+            <td><%= link_to group_assignment.get_group_name, group_path(group_assignment.group_id) %></td>
+            <td><%= link_to group_assignment.get_person_name, person_path(group_assignment.person_id) %></td>
+            <td>
+              <% if (group_assignment.is_active == true) %>
+                <% if ((group_assignment.is_approved == true) && (group_assignment.is_rejected == false)) %>
+                  Approved
+                <% elsif ((group_assignment.is_approved == false) && (group_assignment.is_rejected == false)) %>
+                  Pending
+                <% elsif ((group_assignment.is_approved == false) && (group_assignment.is_rejected == true)) %>
+                  Rejected
+                <% elsif ((group_assignment.is_approved == true) && (group_assignment.is_rejected == true)) %>
+                  Rejected
+                <% end %>
+              <% else %>
+                Inactive
+              <% end %>
+            </td>
+            <td>
+              <% if can? :show, group_assignment %>
+                <%= link_to 'Show', group_assignment, :class => 'btn btn-mini' %>
+              <% end %>
+              <% if can? :update, group_assignment %>
+                <%= link_to 'Edit', edit_group_assignment_path(group_assignment), :class => 'btn btn-mini' %>
+              <% end %>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+
+    <%= will_paginate @group_assignments, :param_name => 'group_assignments_page', :previous_label => "Previous&nbsp;", :next_label => "&nbsp;Next" %>
+  <% else %>
+    You have not contributed any group assignments.
+  <% end %>
+</div>

@@ -1,0 +1,64 @@
+<h2>People</h2>
+<div class = "well">
+  <% if ! @new_people.empty? %>
+    <table class="table table-condensed">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>ODNB ID</th>
+          <th>Prefix</th>
+          <th>First name</th>
+          <th>Last name</th>
+          <th>Suffix</th>
+          <th>Title</th>
+          <th>Status</th>
+          <th><%=t '.actions', :default => t("helpers.actions") %></th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @new_people.each do |person| %>
+          <tr>
+            <td><%= person.id %></td>
+            <% if ! (person.odnb_id == 0) %>  
+              <td><%= person.odnb_id %></td>
+            <% else %>
+              <td></td>
+            <% end %>
+            <td><%= person.prefix %></td>
+            <td><%= person.first_name %></td>
+            <td><%= person.last_name %></td>
+            <td><%= person.suffix %></td>
+            <td><%= person.title %></td>
+            <td>
+              <% if (person.is_active == true) %>
+                <% if ((person.is_approved == true) && (person.is_rejected == false)) %>
+                  Approved
+                <% elsif ((person.is_approved == false) && (person.is_rejected == false)) %>
+                  Pending
+                <% elsif ((person.is_approved == false) && (person.is_rejected == true)) %>
+                  Rejected
+                <% elsif ((person.is_approved == true) && (person.is_rejected == true)) %>
+                  Rejected
+                <% end %>
+              <% else %>
+                Inactive
+              <% end %>
+            </td>
+            <td>
+              <% if can? :show, person %>
+                  <%= link_to 'Show', person, :class => 'btn btn-mini' %>
+              <% end %>
+              <% if can? :update, person %>      
+                  <%= link_to t('.edit', :default => t("helpers.links.edit")),
+                              edit_person_path(person), :class => 'btn btn-mini' %>
+              <% end %>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+    <%= will_paginate @new_people, :param_name => 'people_page', :previous_label => "Previous&nbsp;", :next_label => "&nbsp;Next" %>
+  <% else %>
+    You have not contributed new people.
+  <% end %>
+</div>

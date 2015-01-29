@@ -12,7 +12,12 @@ class CreateUsers < ActiveRecord::Migration
       t.string :password_hash
       t.string :password_salt
       t.string :user_type
-      t.boolean :is_admin
+      t.string :prefix
+      t.string :orcid
+      t.integer :created_by
+      t.boolean :is_curator, :default => false
+      t.boolean :curator_revoked, :default => false
+      t.string :username
 
       t.timestamps
     end

@@ -1,33 +1,80 @@
-<%- model_class = GroupAssignment -%>
-<div class="page-header">
-  <h1><%=t '.title', :default => model_class.model_name.human.titleize %></h1>
+<div class="row">
+  <div class="span12">
+    <h1>Group Assignment
+    </h1>
+  </div>
+</div>
+<br>
+<div class="row">
+  <div class="span5">
+    <div class="well">
+      <h2>Information
+        <% if can? :update, @group_assignment %> 
+          <%= link_to t('.edit', :default => t("helpers.links.edit")),
+                  edit_group_assignment_path(@group_assignment), :class => 'btn btn-mini' %>
+        <% end %>
+      </h2>
+      <br>
+      <dl class="dl-horizontal">
+        <dt>Id</dt>
+        <dd><%= @group_assignment.id %></dd>
+        <dt>Created by:</dt>
+        <dd><%= link_to User.find(@group_assignment.created_by).username,  user_path(@group_assignment.created_by) %></dd>
+        <dt>Group:</dt>
+        <dd><%= link_to Group.find(@group_assignment.group_id).name,  group_path(@group_assignment.group_id) %></dd>
+        <dt>Person:</dt>
+        <dd><%= link_to Person.find(@group_assignment.person_id).first_name + " " + Person.find(@group_assignment.person_id).last_name,  person_path(@group_assignment.person_id) %></dd>
+        <% if ((! @group_assignment.start_month.blank?) || (! @group_assignment.start_day.blank?) || (! @group_assignment.start_year.blank?)) %>
+            <dt>Start date</dt>
+          <dd>
+            <% if ! @group_assignment.start_month.blank? %>
+              <%= @group_assignment.start_month %>
+            <% end %>  
+            <% if ! @group_assignment.start_day.blank? %>
+              <%= @group_assignment.start_day %>,
+            <% end %>
+            <% if ! @group_assignment.start_year.blank? %>
+              <%= @group_assignment.start_year %>
+            <% end %>
+          </dd> 
+        <% end %>
+        <% if ((! @group_assignment.end_month.blank?) || (! @group_assignment.end_day.blank?) || (! @group_assignment.end_year.blank?)) %>
+            <dt>End date</dt>
+            <dd>
+              <% if ! @group_assignment.end_month.blank? %>
+                <%= @group_assignment.end_month %>
+              <% end %>  
+              <% if ! @group_assignment.end_day.blank? %>
+                <%= @group_assignment.end_day %>,
+              <% end %>
+              <% if ! @group_assignment.end_year.blank? %>
+                <%= @group_assignment.end_year %>
+              <% end %>
+            </dd>
+        <% end %>
+        <dt>Created at</dt>
+        <dd><%= @group_assignment.created_at %></dd>
+        <% if ! @group_assignment.approved_by.blank? %>
+          <dt>Approved by</dt>
+          <dd><%= link_to User.find(@group_assignment.approved_by).username,  user_path(@group_assignment.approved_by) %></dd>
+          <dt>Approved on</dt>
+          <dd><%= @group_assignment.approved_on%></dd>
+        <% end %>
+        <dt>Edit History</dt>
+        <% if ! @group_assignment.edited_by_on.blank? %>
+          <dd><%= @group_assignment.edited_by_on %></dd>
+        <% else %>
+          <dd>No edits have been made.</dd>
+        <% end %>
+        <% if (! current_user.blank?) && (current_user.user_type == "Admin") %>
+          <dt>Is Active</dt>
+          <dd><%= @group_assignment.is_active %></dd>
+          <dt>Is Rejected</dt>
+          <dd><%= @group_assignment.is_rejected %></dd>
+        <% end %>
+      </dl>
+    </div>
+  </div>
 </div>
 
-<p id="notice"><%= notice %></p>
 
-<dl class="dl-horizontal">
-  <dt><strong><%= model_class.human_attribute_name(:created_by) %>:</strong></dt>
-  <dd><%= @group_assignment.created_by %></dd>
-  <dt><strong><%= model_class.human_attribute_name(:group_id) %>:</strong></dt>
-  <dd><%= @group_assignment.group_id %></dd>
-  <dt><strong><%= model_class.human_attribute_name(:person_id) %>:</strong></dt>
-  <dd><%= @group_assignment.person_id %></dd>
-  <dt><strong><%= model_class.human_attribute_name(:is_approved) %>:</strong></dt>
-  <dd><%= @group_assignment.is_approved %></dd>
-</dl>
-
-<div class="form-actions">
-  <%= link_to t('.back', :default => t("helpers.links.back")),
-              group_assignments_path, :class => 'btn'  %>
-  <% if can? :update, @group_assignment %>
-    <%= link_to t('.edit', :default => t("helpers.links.edit")),
-              edit_group_assignment_path(@group_assignment), :class => 'btn' %>
-  <% end %>
-  <% if can? :destroy, @group_assignment %>
-    <%= link_to t('.destroy', :default => t("helpers.links.destroy")),
-              group_assignment_path(@group_assignment),
-              :method => 'delete',
-              :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')) },
-              :class => 'btn btn-danger' %>
-  <% end %>
-</div>

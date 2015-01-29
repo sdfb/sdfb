@@ -1,0 +1,51 @@
+<h2>People Annotations</h2>
+<div class = "well">
+  <% if ! @user_person_contribs.empty? %>
+    <table class="table table-condensed">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Person</th>
+          <th>Status</th>
+          <th><%=t '.actions', :default => t("helpers.actions") %></th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @user_person_contribs.each do |user_person_contrib| %>
+          <tr>
+            <td><%= user_person_contrib.id %></td>
+            <td><%= link_to Person.find(user_person_contrib.person_id).get_person_name, person_path(user_person_contrib.person_id) %></td>
+            <td>
+              <% if (user_person_contrib.is_active == true) %>
+                <% if ((user_person_contrib.is_approved == true) && (user_person_contrib.is_rejected == false)) %>
+                  Approved
+                <% elsif ((user_person_contrib.is_approved == false) && (user_person_contrib.is_rejected == false)) %>
+                  Pending
+                <% elsif ((user_person_contrib.is_approved == false) && (user_person_contrib.is_rejected == true)) %>
+                  Rejected
+                <% elsif ((user_person_contrib.is_approved == true) && (user_person_contrib.is_rejected == true)) %>
+                  Rejected
+                <% end %>
+              <% else %>
+                Inactive
+              <% end %>
+            </td>
+            <td>
+              <% if can? :show, user_person_contrib %>
+                <%= link_to 'Show', user_person_contrib, :class => 'btn btn-mini' %>
+              <% end %>
+              <% if can? :update, user_person_contrib %>
+                <%= link_to t('.edit', :default => t("helpers.links.edit")),
+                          edit_user_person_contrib_path(user_person_contrib), :class => 'btn btn-mini' %>
+              <% end %>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+
+    <%= will_paginate @user_person_contribs, :param_name => 'user_person_contribs_page', :previous_label => "Previous&nbsp;", :next_label => "&nbsp;Next" %>
+  <% else %>
+    You have not contributed any people annotations.
+  <% end %>
+</div>

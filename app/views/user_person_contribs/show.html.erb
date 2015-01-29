@@ -1,35 +1,58 @@
-<p id="notice"><%= notice %></p>
-
 <%- model_class = UserPersonContrib -%>
-<div class="page-header">
-  <h1><%=t '.title', :default => model_class.model_name.human.titleize %></h1>
+<div class="row">
+  <div class="span12">
+    <h1>Person Annotation</h1>
+  </div>
 </div>
-
-<dl class="dl-horizontal">
-  <dt><strong><%= model_class.human_attribute_name(:person_id) %>:</strong></dt>
-  <dd><%= @user_person_contrib.person_id %></dd>
-  <dt><strong><%= model_class.human_attribute_name(:created_by) %>:</strong></dt>
-  <dd><%= @user_person_contrib.created_by %></dd>
-  <dt><strong><%= model_class.human_attribute_name(:annotation) %>:</strong></dt>
-  <dd><%= @user_person_contrib.annotation %></dd>
-  <dt><strong><%= model_class.human_attribute_name(:bibliography) %>:</strong></dt>
-  <dd><%= @user_person_contrib.bibliography %></dd>
-  <dt><strong><%= model_class.human_attribute_name(:is_flagged) %>:</strong></dt>
-  <dd><%= @user_person_contrib.is_flagged %></dd>
-</dl>
-
-<div class="form-actions">
-  <%= link_to t('.back', :default => t("helpers.links.back")),
-              user_person_contribs_path, :class => 'btn'  %>
-  <% if can? :update, @user_person_contrib %>
-    <%= link_to t('.edit', :default => t("helpers.links.edit")),
-              edit_user_person_contrib_path(@user_person_contrib), :class => 'btn' %>
-  <% end %>
-  <% if can? :destroy, @user_person_contrib %>
-    <%= link_to t('.destroy', :default => t("helpers.links.destroy")),
-              user_person_contrib_path(@user_person_contrib),
-              :method => 'delete',
-              :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')) },
-              :class => 'btn btn-danger' %>
-  <% end %>
+<br>
+<div class="row">
+  <div class="span5">
+    <div class="well">
+      <h2>Information
+        <% if can? :update, @user_person_contrib %> 
+        <%= link_to t('.edit', :default => t("helpers.links.edit")),
+                  edit_user_person_contrib_path(@user_person_contrib), :class => 'btn btn-mini' %>
+        <% end %>
+      </h2>
+      <br>
+      <dl class="dl-horizontal">
+        <dt><strong>Id:</strong></dt>
+        <dd><%= @user_person_contrib.id %></dd>
+        <dt><strong>Person:</strong></dt>
+        <dd><%= link_to Person.find(@user_person_contrib.person_id).get_person_name,  person_path(@user_person_contrib.person_id) %></dd>
+        <dt><strong>Created by:</strong></dt>
+        <dd><%= link_to User.find(@user_person_contrib.created_by).username,  user_path(@user_person_contrib.created_by) %></dd>
+        <dt><strong>Annotation:</strong></dt>
+        <dd><%= @user_person_contrib.annotation %></dd>
+        <% if ! @user_person_contrib.bibliography.blank? %>
+          <dt><strong>Bibliography:</strong></dt>
+          <dd><%= @user_person_contrib.bibliography %></dd>
+        <% end %>
+        <dt><strong>Created at:</strong></dt>
+        <dd><%= @user_person_contrib.created_at %></dd>
+        <dt><strong>Is Approved?:</strong></dt>
+        <dd><%= @user_person_contrib.is_approved %></dd>
+        <% if ! @user_person_contrib.approved_by.blank? %>
+          <dt><strong>Approved by:</strong></dt>
+          <dd><%= link_to User.find(@user_person_contrib.approved_by).username,  user_path(@user_person_contrib.approved_by) %></dd>
+        <% end %>
+        <% if ! @user_person_contrib.approved_by.blank? %>
+          <dt><strong>Approved on:</strong></dt>
+          <dd><%= @user_person_contrib.approved_on %></dd>
+        <% end %>
+        <dt>Edit History</dt>
+        <% if ! @user_person_contrib.edited_by_on.blank? %>
+          <dd><%= @user_person_contrib.edited_by_on %></dd>
+        <% else %>
+          <dd>No edits have been made.</dd>
+        <% end %>
+        <% if (! current_user.blank?) && ((current_user.user_type == "Admin") || (current_user.user_type == "Curator")) %>
+          <dt>Is Active</dt>
+          <dd><%= @user_person_contrib.is_active %></dd>
+          <dt>Is Rejected</dt>
+          <dd><%= @user_person_contrib.is_rejected %></dd>
+        <% end %>
+      </dl>
+    </div>
+  </div>
 </div>

@@ -3,16 +3,23 @@ class UserPersonContribsController < ApplicationController
   # GET /user_person_contribs.json
 
   # before_filter :check_login
-  before_filter :check_login, :only => [:index, :new, :edit]
-  authorize_resource
+  # before_filter :check_login, :only => [:index, :new, :edit]
+  # authorize_resource
+  
+  autocomplete :person, :search_names_all, full: true, :extra_data => [:first_name, :last_name, :ext_birth_year], :display_value => :autocomplete_name
+  load_and_authorize_resource
 
   def index
-    @user_person_contribs = UserPersonContrib.not_flagged.paginate(:page => params[:user_person_contribs_page]).per_page(20)
+    @user_person_contribs = UserPersonContrib.all_approved.paginate(:page => params[:user_person_contribs_page]).per_page(20)
 
     respond_to do |format|
       format.html # index.html.erb
       format.json { render json: @user_person_contribs }
     end
+  end
+
+  def get_autocomplete_items(parameters)
+    active_record_get_autocomplete_items(parameters).where("approved_by is not null and is_active is true and is_rejected is false")
   end
 
   # GET /user_person_contribs/1
@@ -30,6 +37,8 @@ class UserPersonContribsController < ApplicationController
   # GET /user_person_contribs/new.json
   def new
     @user_person_contrib = UserPersonContrib.new
+    @personOptions = Person.all_approved
+    @person_id = params[:person_id]
 
     respond_to do |format|
       format.html # new.html.erb
@@ -40,12 +49,16 @@ class UserPersonContribsController < ApplicationController
   # GET /user_person_contribs/1/edit
   def edit
     @user_person_contrib = UserPersonContrib.find(params[:id])
+    @personOptions = Person.all_approved
+    @is_approved = @user_person_contrib.is_approved
+    # authorize! :edit, @user_person_contrib
   end
 
   # POST /user_person_contribs
   # POST /user_person_contribs.json
   def create
     @user_person_contrib = UserPersonContrib.new(params[:user_person_contrib])
+    @personOptions = Person.all_approved
 
     respond_to do |format|
       if @user_person_contrib.save
@@ -76,13 +89,13 @@ class UserPersonContribsController < ApplicationController
 
   # DELETE /user_person_contribs/1
   # DELETE /user_person_contribs/1.json
-  def destroy
-    @user_person_contrib = UserPersonContrib.find(params[:id])
-    @user_person_contrib.destroy
+  # def destroy
+  #   @user_person_contrib = UserPersonContrib.find(params[:id])
+  #   @user_person_contrib.destroy
 
-    respond_to do |format|
-      format.html { redirect_to user_person_contribs_url }
-      format.json { head :no_content }
-    end
-  end
+  #   respond_to do |format|
+  #     format.html { redirect_to user_person_contribs_url }
+  #     format.json { head :no_content }
+  #   end
+  # end
 end

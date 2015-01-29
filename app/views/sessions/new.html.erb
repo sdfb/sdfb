@@ -1,21 +1,24 @@
-<div class="row">
-	<div class="span3">
-	</div>
-	<div class="span6">
-		<div class = "container-box">
-			<h1>Log in</h1>
-
+<div class="span6">
+	<h1>Sign in</h1>
+	<div class = "container-box">
+		<div class = "well">
 			<%= form_tag sessions_path do %>
 			  <p>
-			    <%= label_tag :email %><br />
+			    <%= label_tag :email %>
 			    <%= text_field_tag :email, params[:email] %>
 			  </p>
 			  <p>
-			    <%= label_tag :password %><br />
+			    <%= label_tag :password %>
 			    <%= password_field_tag :password %>
 			  </p>
-			  <p class="button"><%= submit_tag %></p>
+
+			  <button type="submit" class="btn btn-primary">Sign in</button>
 			<% end %>
+
+			  <b>Don't have an account?</b>
+			  <%= link_to 'Sign up', new_user_path %>
+			  <br><br>
+			  <p><a href="/tos">Terms of Service</a></p>
 		</div>
-    </div>
+	</div>
 </div>
