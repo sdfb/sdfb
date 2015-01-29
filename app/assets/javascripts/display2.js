@@ -213,9 +213,10 @@ edges.reverse();
   });
 	
   graph.on("edge:click", function(d) {
-    Pace.restart();
+    //Pace.restart();
     var id1 = parseInt(d.source.id);
     var id2 = parseInt(d.target.id);
+    //window.location.href = '/?id=' + id1 + '&id2=' + id2;
     getAnnotation(id1 < id2 ? id1 : id2, id1 > id2 ? id1 : id2, data);
   });
 
@@ -242,11 +243,16 @@ $('#zoom button.icon').click(function(e){
 
 // Returns string stating confidence based on input decimal (0<n1.00)
  function getConfidence(n) {
-  if (00 <= n <= 19) return "very unlikely";
-  if (20 <= n <= 39) return "unlikely";
-  if (40 <= n <= 59) return "possible";
-  if (60 <= n <= 79) return "likely";
-  if (80 <= n <= 100) return "certain";
+  if (0 <= n &&  n<= 19) {
+    return "very unlikely";}
+  else if (20 <= n &&  n<= 39) {
+    return "unlikely";}
+  else if (40 <= n &&  n<= 59) {
+    return "possible";}
+  else if (60 <= n && n<= 79) {
+    return "likely";}
+  else {
+    return "certain";}
  }
 
 // Displays edge information 
