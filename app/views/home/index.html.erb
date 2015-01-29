@@ -10,6 +10,9 @@
 	<div id="everything">
 	<div id="filterBar">
 		<ul>
+			<li id="results"></li>
+		</ul>
+		<ul>
 			<li>Filter By: &nbsp;</li>
 			<li><a id="certainty-anchor">Certainty&nbsp;</a></li>
 			<li><a id="date-anchor">Date&nbsp;</a></li>
@@ -27,7 +30,7 @@
 	</div>
 
 
-	<div id="results"></div>
+
  	 
 	<div id="graph"></div>
 	<div id="zoom">
@@ -64,11 +67,16 @@
 
 				<section id="onenodeform">
 					<input class="form-control" type="text" id="one" placeholder="Name">
+					<label for="search-date-range">Confidence Level:</label>
 					<span id="slide1" ><article id="node-slider" class="slider" name="1"></article></span>
 					<article class="slider-result" id="slider-result1">Possible Relationships @ 40%</article>
 					<input id="slider-result-hidden1" type="hidden" value="40"/>
-					<label for="search-date-range">Date Range:</label><input type="text" id="search-date-range1">
+
+					<label for="search-date-range">Date Range:</label>
 					<span id="slide2" ><article class="slider-date" name="2"></article></span>
+					<article class="slider-result" id="search-date-range1">Date Range: 1400 - 1600</article>
+					<input id="search-date-hidden1" type="hidden" value="1400 - 1600"/>
+
 					<input type="checkbox" name="show-table" value="show-table" id="show-table">Show Table</input>
 					<a class="talkPageLink" type="button" id="findonenode" name="node">Find</a>
 				</section>
@@ -76,11 +84,16 @@
 				<section id="twonodeform">
 					<input class="form-control" type="text" id="two" placeholder="Name 1"><br>
 					<input class="form-control" type="text" id="three" placeholder="Name 2"><br>
+					<label for="search-date-range">Confidence Level:</label>
 					<span id="slide3" ><article id="edge-slider" class="slider" name="2"></article></span>
 					<article class="slider-result" id="slideredge-result1">Possible Relationships @ 40%</article>
 					<input id="slideredge-result-hidden2" type="hidden" value="40"/>
-					<label for="searchedge-date-range2">Date Range:</label><input type="text" id="searchedge-date-range2">
+
+					<label for="searchedge-date-range2">Date Range:</label>
 					<span id="slide4" ><article class="slider-date2" name="3"></article></span>
+					<article class="slider-result" id="searchedge-date-range2">Date Range: 1400 - 1600</article>
+					<input id="searchedge-date-hidden2" type="hidden" value="1400 - 1600"/>
+
 					<input type="checkbox" id="check-shared" value="table">Show table<br>
 					<a class="talkPageLink" type="button" id="findtwonode" name="node">Find</a>
 				</section>
@@ -136,11 +149,10 @@
 			<div  class="accordion_content " id="groupinfo">
 				<a class="icon icon-label" id="group-icon-label" href="/group_assignments/new" name="edge"></a>
 				<a class="icon icon-annotate" id="group-icon-annotate" name="edge"></a>
-				<input  type="text" id="group_name" placeholder="Group">
+				<input type="text" id="group_name" placeholder="Group">
 				<p id="edge-nodes"></p>
-				<b>DESCRIPTION&nbsp;</b> 	<a id="group-description"></a><br>
-				<b>MEMBERS&nbsp;</b> 	<a id="group-members"></a><br>
-				<!--<b>CREATED BY&nbsp;</b>	<a id="group-contributor"></a><br>--><br>
+				<b>DESCRIPTION&nbsp;</b> 	<span id="group-description"></span><br>
+				<b>MEMBERS&nbsp;</b> 	<span id="group-members"></span><br>
 				<a class="talkPageLink" target="_blank">View Entry History</a>
 			</div>
 

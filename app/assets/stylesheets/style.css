@@ -56,29 +56,10 @@ header a:hover {
   z-index:10;
 }
 
-
-
 .center {
 
   text-align: center;
 }
-/*
-#filterBar {
-  position: absolute;
-  left: 20%;
-  width: 85%;
-  top: 0%;
-  height: 10%;
-  float: left;
-
-}
-
-.filter {
-  float: left;
-  display:block;
-  line-height:34px;
-  padding:0px 10px 0px 10px;
-}*/
 
 #filterBar .talkPageLink{
   max-width: 30px;
@@ -103,7 +84,7 @@ li {
   width: 100%;
   background-color: #FBF3E1;
   line-height: 34px;
-  height: 34px;
+  height: 68px;
   padding: 10px 0px 0px 320px;
   font-weight: lighter;
   text-transform: uppercase;
@@ -120,11 +101,8 @@ a:hover {
 
 
 #results {
-    display:none;
-    line-height: 40px;
     color: #555;
     background: none;
-    margin-left: 260px;
     text-align: center;
     font-weight: lighter;
     text-transform: uppercase;
