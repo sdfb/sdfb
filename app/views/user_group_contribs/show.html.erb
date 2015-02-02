@@ -1,52 +1,59 @@
 <%- model_class = UserGroupContrib -%>
-<div class="page-header">
-  <h1>Group Annotation</h1>
+
+<div class="row">
+  <div class="span12">
+    <h1>Group Annotation</h1>
+  </div>
 </div>
-
-<dl class="dl-horizontal">
-  <dt><strong>Id:</strong></dt>
-  <dd><%= @user_group_contrib.id %></dd>
-  <dt><strong>Group:</strong></dt>
-  <dd><%= link_to Group.find(@user_group_contrib.group_id).name,  group_path(@user_group_contrib.group_id) %></dd>
-  <dt><strong><%= model_class.human_attribute_name(:created_by) %>:</strong></dt>
-  <dd><%= @user_group_contrib.created_by %></dd>
-  <dt><strong><%= model_class.human_attribute_name(:annotation) %>:</strong></dt>
-  <dd><%= @user_group_contrib.annotation %></dd>
-  <% if ! @user_group_contrib.bibliography.blank? %>
-    <dt><strong>Bibliography:</strong></dt>
-    <dd><%= @user_group_contrib.bibliography %></dd>
-  <% end %>
-  <dt><strong>Created at:</strong></dt>
-  <dd><%= @user_group_contrib.created_at %></dd>
-  <dt><strong>Is Approved?:</strong></dt>
-  <dd><%= @user_group_contrib.is_approved %></dd>
-  <% if ! @user_group_contrib.approved_by.blank? %>
-    <dt><strong>Approved by:</strong></dt>
-    <dd><%= link_to User.find(@user_group_contrib.approved_by).username,  user_path(@user_group_contrib.approved_by) %></dd>
-  <% end %>
-  <% if ! @user_group_contrib.approved_by.blank? %>
-    <dt><strong>Approved on:</strong></dt>
-    <dd><%= @user_group_contrib.approved_on %></dd>
-  <% end %>
-  <dt>Edit History</dt>
-  <% if ! @user_group_contrib.edited_by_on.blank? %>
-    <dd><%= @user_group_contrib.edited_by_on %></dd>
-  <% else %>
-    <dd>No edits have been made.</dd>
-  <% end %>
-  <% if (! current_user.blank?) && ((current_user.user_type == "Admin") || (current_user.user_type == "Curator")) %>
-    <dt>Is Active</dt>
-    <dd><%= @user_group_contrib.is_active %></dd>
-    <dt>Is Rejected</dt>
-    <dd><%= @user_group_contrib.is_rejected %></dd>
-  <% end %>
-</dl>
-
-<div class="form-actions">
-  <%= link_to t('.back', :default => t("helpers.links.back")),
-              user_group_contribs_path, :class => 'btn'  %>
-  <% if can? :update, @user_group_contrib %>
-    <%= link_to t('.edit', :default => t("helpers.links.edit")),
-              edit_user_group_contrib_path(@user_group_contrib), :class => 'btn' %>
-  <% end %>
+<br>
+<div class="row">
+  <div class="span5">
+    <div class="well">
+      <h2>Information
+        <% if can? :update, @user_rel_contrib %> 
+        <%= link_to t('.edit', :default => t("helpers.links.edit")),
+                edit_user_group_contrib_path(@user_group_contrib), :class => 'btn btn-mini' %>
+        <% end %>
+      </h2>
+      <br>
+      <dl class="dl-horizontal">
+        <dt><strong>Id:</strong></dt>
+        <dd><%= @user_group_contrib.id %></dd>
+        <dt><strong>Group:</strong></dt>
+        <dd><%= link_to Group.find(@user_group_contrib.group_id).name,  group_path(@user_group_contrib.group_id) %></dd>
+        <dt><strong><%= model_class.human_attribute_name(:created_by) %>:</strong></dt>
+        <dd><%= @user_group_contrib.created_by %></dd>
+        <dt><strong><%= model_class.human_attribute_name(:annotation) %>:</strong></dt>
+        <dd><%= @user_group_contrib.annotation %></dd>
+        <% if ! @user_group_contrib.bibliography.blank? %>
+          <dt><strong>Bibliography:</strong></dt>
+          <dd><%= @user_group_contrib.bibliography %></dd>
+        <% end %>
+        <dt><strong>Created at:</strong></dt>
+        <dd><%= @user_group_contrib.created_at %></dd>
+        <dt><strong>Is Approved?:</strong></dt>
+        <dd><%= @user_group_contrib.is_approved %></dd>
+        <% if ! @user_group_contrib.approved_by.blank? %>
+          <dt><strong>Approved by:</strong></dt>
+          <dd><%= link_to User.find(@user_group_contrib.approved_by).username,  user_path(@user_group_contrib.approved_by) %></dd>
+        <% end %>
+        <% if ! @user_group_contrib.approved_by.blank? %>
+          <dt><strong>Approved on:</strong></dt>
+          <dd><%= @user_group_contrib.approved_on %></dd>
+        <% end %>
+        <dt>Edit History</dt>
+        <% if ! @user_group_contrib.edited_by_on.blank? %>
+          <dd><%= @user_group_contrib.edited_by_on %></dd>
+        <% else %>
+          <dd>No edits have been made.</dd>
+        <% end %>
+        <% if (! current_user.blank?) && ((current_user.user_type == "Admin") || (current_user.user_type == "Curator")) %>
+          <dt>Is Active</dt>
+          <dd><%= @user_group_contrib.is_active %></dd>
+          <dt>Is Rejected</dt>
+          <dd><%= @user_group_contrib.is_rejected %></dd>
+        <% end %>
+      </dl>
+    </div>
+  </div>
 </div>
