@@ -40,10 +40,10 @@ Num_rels Cluster    Color
 //returns cluster number based on number of relationships the cluster has
 function getClusterRels(node){
 	var size = node.size;
-	if (size > 11){
-		return 6;
+	if (size > 100){
+		return 10;
 	}else{
-		return Math.floor(size / 2);
+		return (Math.floor(size / 2)) / 10;
 	}
 
 }
