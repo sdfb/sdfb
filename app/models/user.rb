@@ -44,8 +44,6 @@ class User < ActiveRecord::Base
   validates_length_of :last_name, :minimum => 1, :if => :last_name_present?
   # password must be present and at least 4 characters long, with a confirmation
   validates_presence_of :password, :on => :create
-  validates_confirmation_of :password
-  validates_length_of :password, :minimum => 4, :if => :password_present?
 
   #user must be one of three types: standard, curator, admin
   validates :user_type, :inclusion => {:in => USER_TYPES_LIST}
@@ -53,7 +51,10 @@ class User < ActiveRecord::Base
   # email must be present and be a valid email format
   validates_presence_of :email
   validates_uniqueness_of :email
+  validates_format_of :username, :with => /^[-\w\._@]+$/i, :message => "Your username should only contain letters, numbers, or .-_@"
   validates_format_of :email, :with => /^[\w]([^@\s,;]+)@(([a-z0-9.-]+\.)+(com|edu|org|net|gov|mil|biz|info))$/i
+  # password must have one number, one letter, and be at least 6 characters
+  validates_format_of :password, :with => /^(?=.*\d)(?=.*([a-z]|[A-Z]))([\x20-\x7E]){8,40}$/, :message => "Your password must include at least one number, at least one letter, and 6-16 characters.", :if => :password_present?
 
   # Scope
   # ----------------------------- 
