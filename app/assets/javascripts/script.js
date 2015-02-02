@@ -45,9 +45,6 @@ $(document).ready(function() {
 
 	// Shows search bars when click on side menu
 	$('.accordion_content ul li').click(function(e){
-		//document.getElementById('googleaddnode').reset();
-		//document.getElementById('googleaddedge').reset();
-    //    document.getElementById('googleaddgroup').reset();
         $('.accordion_content ul li').removeClass('clicked');
         $(this).addClass('clicked');
 		$('section').css('display','none');	
@@ -162,10 +159,11 @@ $(document).ready(function() {
 					step: 1,
 					values: [ 1400, 1800 ],
 					slide: function( event, ui ) {
-						$( "#search-date-range1" ).val( ui.values[ 0 ] + " - " + ui.values[ 1 ] );
+						$( "#search-date-range1" ).html("Date Range: " + ui.values[ 0 ] + " - " + ui.values[ 1 ] );
+                        $("#search-date-hidden1").val(ui.values[ 0 ] + " - " + ui.values[ 1 ]);
 					}
 		});
-		$( "#search-date-range1" ).val( $( ".slider-date" ).slider( "values", 0 ) + " - " + $( ".slider-date" ).slider( "values", 1 ) );
+		$( "#search-date-range1" ).html( "Date Range: " + $( ".slider-date" ).slider( "values", 0 ) + " - " + $( ".slider-date" ).slider( "values", 1 ) );
 		
                 //  Sliding animation
         $(".slider-date2").slider({
@@ -177,10 +175,12 @@ $(document).ready(function() {
                     step: 1,
                     values: [ 1400, 1800 ],
                     slide: function( event, ui ) {
-                        $( "#searchedge-date-range2" ).val( ui.values[ 0 ] + " - " + ui.values[ 1 ] );
+                       
+                        $( "#searchedge-date-range2" ).html("Date Range: " +  ui.values[ 0 ] + " - " + ui.values[ 1 ] );
+                        $("#searchedge-date-hidden2").val(ui.values[ 0 ] + " - " + ui.values[ 1 ]);
                     }
         });
-        $( "#searchedge-date-range2" ).val( $( ".slider-date2" ).slider( "values", 0 ) + " - " + $( ".slider-date2" ).slider( "values", 1 ) );
+        $( "#searchedge-date-range2" ).html("Date Range: " +  $( ".slider-date2" ).slider( "values", 0 ) + " - " + $( ".slider-date2" ).slider( "values", 1 ) );
 
         //  Sliding animation
         $("#navslider2").slider({
@@ -192,7 +192,7 @@ $(document).ready(function() {
                     step: 1,
                     values: [ 1400, 1800 ],
                     slide: function( event, ui ) {
-                        $( "#nav-date-range2" ).val( ui.values[ 0 ] + " - " + ui.values[ 1 ] );
+                        $( "#nav-date-range2" ).val( "Date Range: " + ui.values[ 0 ] + " - " + ui.values[ 1 ] );
                     }
         });
         $( "#nav-date-range2" ).val( $( "#navslider2" ).slider( "values", 0 ) + " - " + $( "#navslider2" ).slider( "values", 1 ) );

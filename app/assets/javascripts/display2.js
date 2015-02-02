@@ -6,12 +6,6 @@ var default_sdate = 1400;
 var default_edate = 1800;
     // group class
     
-function createGroup() {
-  this.id = null;
-  this.name = null;
-  this.nodes = null;
-}
-
 // Returns the cluster id based on birth year
 function getClusterBirth(year){
   if (parseInt(year) < default_sdate) {return 0}
@@ -73,13 +67,14 @@ function notInArray(arr, val) {
 }
 
 // Displays node information
-function showNodeInfo(data, groups){
+function showNodeInfo(data){
  accordion("node");
  $("#node-name").text(data.first+ " "+ data.last);
  $("#node-bdate").text(data.birth);
  $("#node-ddate").text(data.death);
  $("#node-significance").text(data.occupation);
- $("#node-group").text(groups);
+ $("#node-group").text(data.groups.join(","));
+ console.log("HI" + data.groups);
  var d = new Date();
  $("#node-cite").text( data.first+ " "+ data.last + " Network Visualization. \n Six Degrees of Francis Bacon: Reassembling the Early Modern Social Network. Gen. eds. Daniel Shore and Christopher Warren. "+d.getMonth()+"/"+d.getDate()+"/"+d.getFullYear()+" <http://sixdegreesoffrancisbacon.com/>");
  if (data.odnb_id > 0){
@@ -99,6 +94,7 @@ var node = function() {
   this.last = null;
   this.birth = null;
   this.death = null;
+  this.groups = null;
   this.label = null;
   this.name = null;
   this.occupation = null;
@@ -198,25 +194,12 @@ function twoDegs(id, id2, data, confidence, sdate, edate) {
   if (id2 != 0 && id2 != ""){
     createGraph(id2, data, confidence, sdate, edate);
   }
-  
-// Returns list of groups that a node belongs to
-function findGroups(node, data){
-  var groups = [];
-  for(var key in data.groups){
-    if ((data.groups[key].nodes).indexOf(node.id)>-1)
-      groups.push(data.groups[key].name);
-  }
-  var strgroups = groups.join(', ')
-  return strgroups;
-}   
 
 $.each(keys, function(index, value) {
   nodes.push(value); //adds each key to nodes array
 });
 
 edges.reverse();
-
-  //$("#results").html("Two degrees of <b>" + p.label);
 
   var w = window.innerWidth;
   var h = window.innerHeight;
@@ -226,13 +209,14 @@ edges.reverse();
   graph.focus(id);
   graph.on("node:click", function(d) {
     var clicked = data.nodes[d.id];
-    showNodeInfo(clicked, findGroups(clicked, data));
+    showNodeInfo(clicked);
   });
 	
   graph.on("edge:click", function(d) {
-    Pace.restart();
+    //Pace.restart();
     var id1 = parseInt(d.source.id);
     var id2 = parseInt(d.target.id);
+    //window.location.href = '/?id=' + id1 + '&id2=' + id2;
     getAnnotation(id1 < id2 ? id1 : id2, id1 > id2 ? id1 : id2, data);
   });
 
@@ -259,11 +243,16 @@ $('#zoom button.icon').click(function(e){
 
 // Returns string stating confidence based on input decimal (0<n1.00)
  function getConfidence(n) {
-  if (00 <= n <= 19) return "very unlikely";
-  if (20 <= n <= 39) return "unlikely";
-  if (40 <= n <= 59) return "possible";
-  if (60 <= n <= 79) return "likely";
-  if (80 <= n <= 100) return "certain";
+  if (0 <= n &&  n<= 19) {
+    return "very unlikely";}
+  else if (20 <= n &&  n<= 39) {
+    return "unlikely";}
+  else if (40 <= n &&  n<= 59) {
+    return "possible";}
+  else if (60 <= n && n<= 79) {
+    return "likely";}
+  else {
+    return "certain";}
  }
 
 // Displays edge information 
@@ -300,28 +289,12 @@ function populateLists(data){
   $('#three').typeahead({
     local: names.sort()
   });
-  $('#entry_768090773').typeahead({
-    local: names.sort()
-  });
-  $('#entry_1321382891').typeahead({
-    local: names.sort()
-  });
-  $('#entry_1177061505').typeahead({
-    local: names.sort()
-  });
-  $('#four').typeahead({
-    local: Object.keys(data.groups_names).sort()
-  });
-  $('#five').typeahead({
-    local: Object.keys(data.groups_names).sort()
-  });
-  $('#six').typeahead({
-    local: Object.keys(data.groups_names).sort()
-  });
-  $('#entry_110233074').typeahead({
-    local: Object.keys(data.groups_names).sort()
-  });
-
+  $('#group_name').typeahead({
+    local: data.groups_names
+  }).on('typeahead:selected', function (obj, datum) {
+    $('#group-description').html(data.groups_desc[data.groups_names.indexOf(datum.value)]);
+    $('#group-members').html(data.groups_people[data.groups_names.indexOf(datum.value)].toString());
+    });
 }
 
 
@@ -365,6 +338,11 @@ function filterGraph(data){
 function initGraph(data, allPeopleNamesData){
   var names = peopletoarray(allPeopleNamesData);
   var ids = idstoarray(allPeopleNamesData);
+
+  if (getParam('id') > 0){
+    $("#results").html("Two degrees of " + names[ids.indexOf(parseInt(getParam('id')))] + " at " + getParam('confidence') + "% from " + getParam('date').replace(',', ' to '));
+    }
+
   //click methods for all the 'find' buttons in the search bar
   $("#findonenode").click(function () {
   	var table = 'no';
@@ -376,7 +354,7 @@ function initGraph(data, allPeopleNamesData){
     	table = 'yes'
     }
     var confidence = $("#slider-result-hidden1").val();
-    var date = $("#search-date-range1").val().split(" - ");
+    var date = $("#search-date-hidden1").val().split(" - ");
     // '/?person_id=' + ids[index] + '&confidence=' + confidence + '&date=' + $("search-date-range1").val(); + '&table=' + table;
   	//window.location.href = '/?person_id=' + ids[index] + '&confidence=' + confidence + '&date=' + date + '&table=' + table;
     window.location.href = '/?id=' + ids[index] + '&confidence=' + confidence + '&date=' + date + '&table=' + table;
@@ -395,7 +373,7 @@ function initGraph(data, allPeopleNamesData){
         table = 'yes'
       }
       var confidence = $("#slideredge-result-hidden2").val();
-      var date = $("#searchedge-date-range2").val().split(" - ");
+      var date = $("#searchedge-date-hidden2").val().split(" - ");
       window.location.href = '/?id=' + ids[index] + '&id2=' + ids[index2] + '&confidence=' + confidence + '&date=' + date + '&table=' + table;
     });
 
@@ -413,72 +391,6 @@ function initGraph(data, allPeopleNamesData){
 
   });
 
-  $("#findonegroup").click(function () {
-    if ($("#four").val()) {
-      Pace.restart();
-      showOneGroup($("#four").val(), data);
-      $('#twogroupsmenu').css('display','none');
-    }
-  });
-
-  $("#findtwogroup").click(function () {
-    if ($("#five").val() && $("#six").val()) {
-      Pace.restart();
-      $('#group1').html($("#five").val());
-      $('#group3').html($("#six").val());
-      findInterGroup($("#group1").html(), $("#group3").html(), data);
-    }
-  });
-
-  //click functions for the buttons inside shared groups
-  $("#group1").click(function () {
-    showOneGroup($("#group1").html(), data);
-  });
-
-  $("#group3").click(function () {
-    showOneGroup($("#group3").html(), data);
-  });
-
-  $("#group2").click(function () {
-    findInterGroup($("#group1").html(), $("#group3").html(), data);
-  });
-
-  //submission buttons for contributions
-  $('#submitnode').click(function(){
-    Pace.restart();
-    var name = $('#entry_1804360896').val() + ' ' + $('#entry_754797571').val();
-    var date = $('#entry_524366257').val();
-    $('section').css('display','none');
-    $('#addedgeform').css('display','block');
-    $('#entry_768090773').val(name + ' (' + date + ')');
-    $('#graph').html('');
-    $("#results").html('');
-    addNodes = [];
-    addEdges = [];
-    addNodes.push({ "id": 0, "text": name, "size": 14, "cluster": getCluster(date) });
-    var options = { width: $("#graph").width(), height: $("#graph").height(), colors: getColors() };
-    var graph = new Insights($("#graph")[0], addNodes, [], options).render();
-    var link = 'https://docs.google.com/spreadsheets/d/1-faviCW5k2v7DVOHpSQT-grRqNU1lBVkUjJEVfOvSs8/edit#gid=688870062';
-    $.prompt("Thank you for your person contribution! You can review your submission by going to <a href='"+link+"' target='_blank'>link</a>");
-  });
-
-  $('#submitedge').click(function(){
-    Pace.restart();
-    var target = data.nodes_names[$('#entry_1321382891').val()];
-    var node = data.nodes[target];
-    if (!node.id) { window.alert("Incorrect information. Please try again."); return;}
-    if (addNodes.length == 0) {return;}
-    $('#graph').html('');
-    $("#results").html('');
-    addNodes.push({ "id": node.id, "text": node.label, "size": 4, "cluster": getCluster(node.birth) });
-    addEdges.push([0, node.id]);
-    var options = { width: $("#graph").width(), height: $("#graph").height(), colors: getColors() };
-    var graph = new Insights($("#graph")[0], addNodes, addEdges, options).render();
-    var link = 'https://docs.google.com/spreadsheets/d/1cu7hpYQMWTO8C7F8V34BEbdB2NrUe1xsslWKoai3BWE/edit#gid=51712082';
-    $.prompt("Thank you for your annotated relationship contribution! You can review your submission by going to <a href='"+link+"' target='_blank'>link</a>");
-  });
-
-
   $("aside button.icon").click(function(){
     addNodes = [];
     addEdges = [];
@@ -489,19 +401,16 @@ function initGraph(data, allPeopleNamesData){
           $("#entry_768090773").val(name);
         }
   });
-
-  
 }
 
 function init() {
   //This file only contains the data for the searched person and 1st degree relationships
   var people = gon.people;
   //This file contains all the id, first_name, last_name, ext_birth_year, prefix, suffix, and title for every person in the database
+  var group_data = gon.group_data;
   var all_people = gon.people_list;
-
 	var data = { nodes: [], edges: [], groups_names: [], nodeKeys: [] };
-
-  var allPeopleNamesData = { nodes: [], edges: [], groups_names: [], nodeKeys: [] };
+  var allPeopleNamesData = { nodes: [], edges: [], groups_names: [], groups_desc: [], groups_people: [], nodeKeys: [] };
 
   //This function only converts gon to all data for the searched person and 1st degree relationships
   $.each(people, function(index, value) { 
@@ -516,6 +425,7 @@ function init() {
     n.rels = value.rel_sum;
     n.size = n.rels.length;
     n.odnb_id = value.odnb_id;
+    n.groups = value.group_list;
     data.nodes[n.id] = n;
     
   });
@@ -535,14 +445,23 @@ function init() {
     allPeopleNamesData.nodes[n.id] = n;   
   });
 
+  //This function converts the gon for groups into readable information for groups
+  $.each(group_data, function(index, value){
+    allPeopleNamesData.groups_names.push(value.name);
+    allPeopleNamesData.groups_desc.push(value.description);
+    allPeopleNamesData.groups_people.push(value.person_list);
+  });
+
+
+
  populateLists(allPeopleNamesData);
   filterGraph(data);
   initGraph(data, allPeopleNamesData);
-  }
+
+   }
 
 
 $(document).ready(function() {
-  //console.log(gon.people);
   init();
 });
 
