@@ -1,5 +1,6 @@
 class HomeController < ApplicationController
   def index
+    #If there are no relationships, only return the person node
     @people = Person.find_first_degree_for(params[:id])
     if (! @people.empty?) 
     	gon.people = @people 
