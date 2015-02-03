@@ -54,7 +54,9 @@ class User < ActiveRecord::Base
   validates_format_of :username, :with => /^[-\w\._@]+$/i, :message => "Your username should only contain letters, numbers, or .-_@"
   validates_format_of :email, :with => /^[\w]([^@\s,;]+)@(([a-z0-9.-]+\.)+(com|edu|org|net|gov|mil|biz|info))$/i
   # password must have one number, one letter, and be at least 6 characters
-  #validates_format_of :password, :with => /^(?=.*\d)(?=.*([a-z]|[A-Z]))([\x20-\x7E]){7,16}$/, :message => "Your password must include at least one number, at least one letter, and 7-16 characters.", :if => :password_present?
+  #validates_format_of :password, :with =>  /^(?=.\d)(?=.([a-z]|[A-Z]))([\x20-\x7E]){7,40}$/, :message => "Your password must include at least one number, at least one letter, and at least 7 characters.", :if => :password_present?
+  validates :password, confirmation: true, :if => :password_present?
+  validates :password_confirmation, presence: true, :if => :password_present?
 
   # Scope
   # ----------------------------- 
@@ -62,8 +64,13 @@ class User < ActiveRecord::Base
   scope :inactive, where(is_active: false)
   scope :for_email, lambda {|email_input| where('email like ?', "%#{email_input}%") }
 
+  # Callbacks
+  # -----------------------------
+  before_save :encrypt_password
+
   # Custom methods
   # -----------------------------
+
   def first_name_present?
     !first_name.nil?
   end
@@ -73,7 +80,7 @@ class User < ActiveRecord::Base
   end
 
   def password_present?
-    !password.blank?
+    !self.password.blank?
   end
 
   def username_present?
