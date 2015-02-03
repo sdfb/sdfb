@@ -12,7 +12,7 @@ class HomeController < ApplicationController
       end
     end
     # gon.people = Person.find(10000473)
-  	gon.people_list = Person.select("id, first_name, last_name, ext_birth_year, prefix, suffix, title")
+  	gon.people_list = Person.all_approved.select("id, first_name, last_name, ext_birth_year, prefix, suffix, title")
   	gon.group_data = Group.all_approved.select("id, name, description, person_list")
   end
   def test
