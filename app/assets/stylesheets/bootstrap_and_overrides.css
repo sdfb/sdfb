@@ -6,6 +6,7 @@
   =require twitter-bootstrap-static/fontawesome
   */
 
+
 .navbar .nav li.dropdown.open>.dropdown-toggle {
   background-color: #ecebe9;
   color: #555;
