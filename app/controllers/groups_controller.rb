@@ -98,8 +98,12 @@ class GroupsController < ApplicationController
   def search
     @query = params[:query]
     if @query != "" 
-      if ((current_user.user_type == "Admin") || (current_user.user_type == "Curator"))
-        @all_results = Group.search_all(@query)
+      if (logged_in? == true)
+        if ((current_user.user_type == "Admin") || (current_user.user_type == "Curator"))
+          @all_results = Group.search_all(@query)
+        else
+          @all_results = Group.search_approved(@query)
+        end
       else
         @all_results = Group.search_approved(@query)
       end

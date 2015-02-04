@@ -42,6 +42,9 @@
           <% if ! @user_rel_contrib.start_year.blank? %>
             <%= @user_rel_contrib.start_year %>
           <% end %></dd>
+        <% else %>
+          <dt><strong>Start date:</strong></dt>
+          <dd>Unknown</dd>
         <% end %>
         <% if ((! @user_rel_contrib.end_month.blank?) || (! @user_rel_contrib.end_day.blank?) || (! @user_rel_contrib.end_year.blank?)) %>
           <dt><strong>End date:</strong></dt>
@@ -54,6 +57,9 @@
           <% if ! @user_rel_contrib.end_year.blank? %>
             <%= @user_rel_contrib.end_year %>
           <% end %></dd>
+        <% else %>
+          <dt><strong>End date:</strong></dt>
+          <dd>Unknown</dd>
         <% end %>
         <dt><strong><%= model_class.human_attribute_name(:created_by) %>:</strong></dt>
         <dd><%= link_to User.find(@user_rel_contrib.created_by).username,  user_path(@user_rel_contrib.created_by) %></dd>

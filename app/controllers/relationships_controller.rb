@@ -99,8 +99,12 @@ class RelationshipsController < ApplicationController
     @person1Query = params[:person1Query]
     @person2Query = params[:person2Query]
     if ((@person1Query != "") && (@person2Query != ""))
-      if ((current_user.user_type == "Admin") || (current_user.user_type == "Curator"))
-        @all_results1 = Relationship.search_all(@person1Query, @person2Query)
+      if (logged_in? == true)
+        if ((current_user.user_type == "Admin") || (current_user.user_type == "Curator"))
+          @all_results1 = Relationship.search_all(@person1Query, @person2Query)
+        else
+          @all_results1 = Relationship.search_approved(@person1Query, @person2Query)
+        end
       else
         @all_results1 = Relationship.search_approved(@person1Query, @person2Query)
       end

@@ -39,6 +39,9 @@
           <% if ! @relationship.start_year.blank? %>
             <%= @relationship.start_year %>
           <% end %></dd>
+        <% else %>
+          <dt><strong>Start date:</strong></dt>
+          <dd>Unknown</dd>
         <% end %>
         <% if ((! @relationship.end_month.blank?) || (! @relationship.end_day.blank?) || (! @relationship.end_year.blank?)) %>
           <dt><strong>End date:</strong></dt>
@@ -51,6 +54,9 @@
           <% if ! @relationship.end_year.blank? %>
             <%= @relationship.end_year %>
           <% end %></dd>
+        <% else %>
+          <dt><strong>End date:</strong></dt>
+          <dd>Unknown</dd>
         <% end %>
         <dt><strong>Created by:</strong></dt>
         <dd><%= link_to User.find(@relationship.created_by).username,  user_path(@relationship.created_by) %></dd>
