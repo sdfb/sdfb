@@ -146,11 +146,12 @@ function twoDegs(id, id2, data, confidence, sdate, edate) {
 
   function createGraph(id, data, confidence, sdate, edate) {
     var p = data.nodes[id];
-    if (p.rels.length > 0) { //tests to make sure main person has relationships
+
+    //if (p.rels.length > 0) { //tests to make sure main person has relationships
       $.each(p.rels, function(index, value) {
         if (value[2] == 0 || value[1] < confidence || sdate > births[ids.indexOf(value[0])] || edate < births[ids.indexOf(value[0])]) {
           // not approved, move on or if confidence is less than 0.75
-          //console.log("merp");
+          
         }
         else {
           var q = data.nodes[value[0]]; // find person object in data by id
@@ -187,8 +188,9 @@ function twoDegs(id, id2, data, confidence, sdate, edate) {
       //adds main person's id referenced to keys associative array. Keys represent all data in graph
           keys[p.id] = {"text": p.first + " " + p.last, "size": 20, "id": p.id,  "cluster": getClusterRels(p)}; 
 
-    }  
+    //}  
   }
+  console.log("merp");
   
   createGraph(id, data, confidence, sdate, edate);
   if (id2 != 0 && id2 != ""){
@@ -413,23 +415,39 @@ function init() {
   var allPeopleNamesData = { nodes: [], edges: [], groups_names: [], groups_desc: [], groups_people: [], nodeKeys: [] };
 
   //This function only converts gon to all data for the searched person and 1st degree relationships
-  $.each(people, function(index, value) { 
+  
+  if (jQuery.type(people) === "object"){
     var n = new node();
-    n.id = value.id;
-    n.first = value.first_name;
-    n.last = value.last_name;
+    n.id = people.id;
+    n.first = people.first_name;
+    n.last = people.last_name;
     n.label = n.first + " " + n.last;
-    n.birth = value.ext_birth_year;
-    n.death = value.ext_death_year;
-    n.occupation = value.historical_significance;
-    n.rels = value.rel_sum;
+    n.birth = people.ext_birth_year;
+    n.death = people.ext_death_year;
+    n.occupation = people.historical_significance;
+    n.rels = people.rel_sum;
     n.size = n.rels.length;
-    n.odnb_id = value.odnb_id;
-    n.groups = value.group_list;
+    n.odnb_id = people.odnb_id;
+    n.groups = people.group_list;
     data.nodes[n.id] = n;
-    
-  });
-
+  }else{
+    $.each(people, function(index, value) { 
+      var n = new node();
+      n.id = value.id;
+      n.first = value.first_name;
+      n.last = value.last_name;
+      n.label = n.first + " " + n.last;
+      n.birth = value.ext_birth_year;
+      n.death = value.ext_death_year;
+      n.occupation = value.historical_significance;
+      n.rels = value.rel_sum;
+      n.size = n.rels.length;
+      n.odnb_id = value.odnb_id;
+      n.groups = value.group_list;
+      data.nodes[n.id] = n;
+    });
+  }
+  
   //This function converts gon to name data for all people in the database
   $.each(all_people, function(index, value) { 
     var n = new node();
