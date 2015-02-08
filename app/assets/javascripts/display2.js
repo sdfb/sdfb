@@ -148,6 +148,7 @@ function twoDegs(id, id2, data, confidence, sdate, edate) {
     var p = data.nodes[id];
 
     //if (p.rels.length > 0) { //tests to make sure main person has relationships
+      console.log(data,id, confidence, sdate, edate)
       $.each(p.rels, function(index, value) {
         if (value[2] == 0 || value[1] < confidence || sdate > births[ids.indexOf(value[0])] || edate < births[ids.indexOf(value[0])]) {
           // not approved, move on or if confidence is less than 0.75
@@ -407,13 +408,18 @@ function initGraph(data, allPeopleNamesData){
 
 function init() {
   //This file only contains the data for the searched person and 1st degree relationships
-  var people = gon.people;
+
   //This file contains all the id, first_name, last_name, ext_birth_year, prefix, suffix, and title for every person in the database
-  var group_data = gon.group_data;
-  var all_people = gon.people_list;
+
+
 	var data = { nodes: [], edges: [], groups_names: [], nodeKeys: [] };
   var allPeopleNamesData = { nodes: [], edges: [], groups_names: [], groups_desc: [], groups_people: [], nodeKeys: [] };
 
+  var people = window.gon.people
+  var group_data = window.gon.group_data
+  var all_people = window.gon.all_people
+  // var data= window.gon.data
+  // var allPeopleNamesData= window.gon.allPeopleNamesData
   //This function only converts gon to all data for the searched person and 1st degree relationships
   
   if (jQuery.type(people) === "object"){
@@ -431,6 +437,7 @@ function init() {
     n.groups = people.group_list;
     data.nodes[n.id] = n;
   }else{
+    console.log(people)
     $.each(people, function(index, value) { 
       var n = new node();
       n.id = value.id;
