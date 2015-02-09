@@ -34,4 +34,7 @@ Sdfb::Application.configure do
   config.serve_static_assets = false
   # Expands the lines which load the assets
   config.assets.debug = false
+
+  # Precompile additional assets (application.js, application.css, and all non-JS/CSS are already added)
+  # config.assets.precompile += %w( search.js )
 end
