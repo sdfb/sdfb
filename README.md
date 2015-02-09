@@ -1,3 +1,38 @@
+## Status
+Had to roll back populate changes because there 
+is more logic in the models than I thought.
+ 
+Currently, the nodes and relationships are 
+individually read from the tsv 
+files, then fields are added, one by one 
+they are inserted into Postgres. Each record is 
+then passed through to the rails controllers 
+where it performs around 250,000 queries each of 
+which result in K update operations to the text 
+field that contains "rel_sum". This text field 
+contains aggregated Ids of all of the nodes that 
+each person has references to in the 
+relationships table to. The array of node ids is
+serialized to a single string and each person is 
+then updated with the field "rel_sum".Every time 
+a person is queried, the field is parsed and 
+serialized back into an array, changed, and then 
+converted back into a string and stored.
+
+
+### Alternatively, I think the query below runs in O(n)
+```
+SELECT t1.person1_index as pid, ARRAY(( select 
+t2.person2_index from relationships t2 where 
+t2.person1_index=t1.person1_index)) as rels from 
+relationships t1 group by t1.person1_index;
+```
+And if we must store this field, 
+this runs almost as fast.
+```
+update people as p set rel_sum = t3.rels from (select t1.person1_index as pid, array(( select t2.person2_index from relationships t2 where t2.person1_index=t1.person1_index)) as rels from relationships t1 group by t1.person1_index) t3 where p.id=t3.pid;
+```
+
 ## To prepare database by creating/clearing it:
 
 ```
