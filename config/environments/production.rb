@@ -4,7 +4,7 @@ Sdfb::Application.configure do
   # In the development environment your application's code is reloaded on
   # every request. This slows down response time but is perfect for development
   # since you don't have to restart the web server when you make code changes.
-  config.cache_classes = false
+  config.cache_classes = true
 
   # Log error messages when you accidentally call methods on nil.
   config.whiny_nils = true
@@ -30,11 +30,11 @@ Sdfb::Application.configure do
   config.active_record.auto_explain_threshold_in_seconds = 0.5
 
   # Do not compress assets
-  config.assets.compress = false
+  config.assets.compress = true
   config.serve_static_assets = false
   # Expands the lines which load the assets
   config.assets.debug = false
 
   # Precompile additional assets (application.js, application.css, and all non-JS/CSS are already added)
-  # config.assets.precompile += %w( search.js )
+ config.assets.precompile += %w( accordion.js autocomplete-rails.js bootstrap.min display2.js jquery-2.1.1.min jquery-impromptu.min.js jquery-ui.min.js insights.standalone.js script.js pace.js typeahead.js )
 end

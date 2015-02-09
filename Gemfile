@@ -8,6 +8,8 @@ gem 'rails', '3.2.11'
 ######################## We need to specify the platform for this to work with Passenger
 
 
+gem "less-rails" #Sprockets (what Rails 3.1 uses for its asset pipeline) supports LESS
+
 
 gem 'will_paginate'
 gem 'simple_form'
@@ -24,7 +26,6 @@ gem 'pg'
 	  gem 'therubyracer', :platforms => :ruby
 	  gem 'uglifier', '>= 1.0.3'
 	  gem "twitter-bootstrap-rails", '2.1.7'
-
 
 
 
