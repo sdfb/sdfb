@@ -20,17 +20,31 @@ serialized back into an array, changed, and then
 converted back into a string and stored.
 
 
-### Alternatively, I think the query below runs in O(n)
+## Alternatively, I think the query below runs in O(n), 
+I'm also not sompletely sure the way above converges.
 ```
-SELECT t1.person1_index as pid, ARRAY(( select 
-t2.person2_index from relationships t2 where 
-t2.person1_index=t1.person1_index)) as rels from 
-relationships t1 group by t1.person1_index;
+ SELECT t1.person1_index AS pid, 
+   ARRAY(( 
+    SELECT t2.person2_index 
+    FROM relationships t2 
+    WHERE t2.person1_index = t1.person1_index
+   )) AS rels 
+FROM relationships t1 
+GROUP BY t1.person1_index;
 ```
 And if we must store this field, 
 this runs almost as fast.
-```
-update people as p set rel_sum = t3.rels from (select t1.person1_index as pid, array(( select t2.person2_index from relationships t2 where t2.person1_index=t1.person1_index)) as rels from relationships t1 group by t1.person1_index) t3 where p.id=t3.pid;
+```sql
+UPDATE people AS p SET rel_sum = t3.rels FROM (
+    SELECT t1.person1_index as pid, 
+    ARRAY(( 
+       SELECT t2.person2_index 
+       FROM relationships t2 
+       WHERE t2.person1_index = t1.person1_index
+    )) AS rels 
+    FROM relationships t1 
+    GROUP BY t1.person1_index
+ ) t3 WHERE p.id = t3.pid;
 ```
 
 ## To prepare database by creating/clearing it:
