@@ -6,25 +6,7 @@ var default_sdate = 1400;
 var default_edate = 1800;
     // group class
     
-// Returns the cluster id based on birth year
-function getClusterBirth(year){
-  if (parseInt(year) < default_sdate) {return 0}
-  if (parseInt(year) > default_edate) {return 1}
-  var cluster = Math.round((parseInt(year) - default_sdate) / 5);
-  return (2 + cluster);
-}
 
-// Returns hash of colors for nodes based on birthday
-function getColorsBirth(){
-   return { 0:  "#A6D9CA", 1:  "#F0623E", 2:  "#B99CCA", 3:  "#B8DCF4", 
-             4:  "#F9F39C", 5:  "#339998", 6:  "#6566AD", 7:  "#F89939", 
-             8:  "#558FCB", 9:  "#04A287", 10: "#B53C84", 11: "#F2805C",
-             12: "#79BD90", 13: "#654B9E", 14: "#DD88B8", 15: "#3D58A6",
-             16: "#EF4C3A", 17: "#99CC7D", 18: "#4D6AB2", 19: "#A1D7D0",
-             20: "#FABC3E", 21: "#EE6096", 22: "#DADC44", 23: "#B177B3",
-             24: "#A573B1", 25: "#78CDD6", 26: "#60BD6D", 27: "#3EA7C0",
-             28: "#F59485", 29: "#3F6FB6", 30: "#F8EC49", 31: "#1C57A7", }
-}
 
 /*
 Num_rels Cluster    Color
