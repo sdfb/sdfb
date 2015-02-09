@@ -22,7 +22,7 @@ converted back into a string and stored.
 
 ## Alternatively, I think the query below runs in O(n), 
 I'm also not sompletely sure the way above converges.
-```
+```sql
  SELECT t1.person1_index AS pid, 
    ARRAY(( 
     SELECT t2.person2_index 
