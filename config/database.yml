@@ -1,9 +1,11 @@
 
 development:
   adapter: postgresql
-  database: my_database_development
+  database: sixdfbor_sdfb
   pool: 5
   timeout: 5000
+  username: sixdfbor_admin
+  password: NovumOrganum1620
 
 # Warning: The database defined as "test" will be erased and
 # re-generated from your development database when you run "rake".
@@ -16,6 +18,8 @@ test:
 
 production:
   adapter: postgresql
-  database: my_database_production
+  database: sixdfbor_sdfb
   pool: 5
   timeout: 5000
+  username: sixdfbor_admin
+  password: NovumOrganum1620

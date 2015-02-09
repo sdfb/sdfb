@@ -5,9 +5,11 @@ gem 'rails', '3.2.11'
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
 
-   gem "therubyracer"
-   gem "less-rails" #Sprockets (what Rails 3.1 uses for its asset pipeline) supports LESS
-   gem "twitter-bootstrap-rails", '2.1.7'
+######################## We need to specify the platform for this to work with Passenger
+gem 'therubyracer', :platforms => :ruby
+
+gem "less-rails" #Sprockets (what Rails 3.1 uses for its asset pipeline) supports LESS
+gem "twitter-bootstrap-rails", '2.1.7'
 
 gem 'will_paginate'
 gem 'simple_form'
