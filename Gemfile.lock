@@ -33,13 +33,6 @@ GEM
     bcrypt (3.1.9-x86-mingw32)
     builder (3.0.4)
     cancan (1.6.10)
-    coffee-rails (3.2.2)
-      coffee-script (>= 2.2.0)
-      railties (~> 3.2.0)
-    coffee-script (2.3.0)
-      coffee-script-source
-      execjs
-    coffee-script-source (1.8.0)
     commonjs (0.2.7)
     erubis (2.7.0)
     execjs (2.2.2)
@@ -140,7 +133,6 @@ PLATFORMS
 DEPENDENCIES
   bcrypt
   cancan
-  coffee-rails (~> 3.2.1)
   gon
   jquery-rails
   less-rails
