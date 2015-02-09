@@ -19,7 +19,7 @@ gem 'rails3-jquery-autocomplete'
 gem 'pg'
 
 
-group :asssets do
+group :assets do
 	  gem 'sass-rails',   '~> 3.2.3'
 	  gem 'therubyracer', :platforms => :ruby
 	  gem 'uglifier', '>= 1.0.3'
