@@ -6,10 +6,8 @@ gem 'rails', '3.2.11'
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
 
 ######################## We need to specify the platform for this to work with Passenger
-gem 'therubyracer', :platforms => :ruby
 
-gem "less-rails" #Sprockets (what Rails 3.1 uses for its asset pipeline) supports LESS
-gem "twitter-bootstrap-rails", '2.1.7'
+
 
 gem 'will_paginate'
 gem 'simple_form'
@@ -21,14 +19,23 @@ gem 'rails3-jquery-autocomplete'
 gem 'pg'
 
 
+group :asssets do
+	  gem 'sass-rails',   '~> 3.2.3'
+	  gem 'therubyracer', :platforms => :ruby
+	  gem 'uglifier', '>= 1.0.3'
+	  gem "twitter-bootstrap-rails", '2.1.7'
 
-  gem 'sass-rails',   '~> 3.2.3'
+end
+
+
+
+
   #gem 'coffee-rails', '~> 3.2.1'
 
   # See https://github.com/sstephenson/execjs#readme for more supported runtimes
  
 
-  gem 'uglifier', '>= 1.0.3'
+  
 
 
 gem 'jquery-rails'
