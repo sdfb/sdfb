@@ -265,9 +265,9 @@ function getAnnotation(id1, id2, data) {
   // Populates dropdowns
 function populateLists(data){
   var names = peopletoarray(data);
-  $('#one').typeahead({
-    local: names.sort()
-  });
+  // $('#one').typeahead({
+  //   local: names.sort()
+  // });
   $('#two').typeahead({
     local: names.sort()
   });
@@ -461,7 +461,7 @@ function init() {
 
 
 
- //populateLists(allPeopleNamesData);
+  populateLists(allPeopleNamesData);
   filterGraph(data);
   initGraph(data, allPeopleNamesData);
 
