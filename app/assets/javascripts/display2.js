@@ -268,12 +268,12 @@ function populateLists(data){
   // $('#one').typeahead({
   //   local: names.sort()
   // });
-  $('#two').typeahead({
-    local: names.sort()
-  });
-  $('#three').typeahead({
-    local: names.sort()
-  });
+  // $('#two').typeahead({
+  //   local: names.sort()
+  // });
+  // $('#three').typeahead({
+  //   local: names.sort()
+  // });
   $('#group_name').typeahead({
     local: data.groups_names
   }).on('typeahead:selected', function (obj, datum) {
@@ -320,29 +320,34 @@ function filterGraph(data){
   twoDegs(ID, ID2, data, conf, sdate, edate);
 }
 
-function initGraph(data, allPeopleNamesData){
-  var names = peopletoarray(allPeopleNamesData);
-  var ids = idstoarray(allPeopleNamesData);
+function initGraph(data){
+  var names = peopletoarray(data);
+  var ids = idstoarray(data);
 
   if (getParam('id') > 0){
     $("#results").html("Two degrees of " + names[ids.indexOf(parseInt(getParam('id')))] + " at " + getParam('confidence') + "% from " + getParam('date').replace(',', ' to '));
     }
 
   //click methods for all the 'find' buttons in the search bar
+  //this should not use the entire peopletoarray instead it should use whatever value is passed through by the #one
   $("#findonenode").click(function () {
   	var table = 'no';
     Pace.restart();
-    if ($("#one").val()) {
-      var index = names.indexOf($("#one").val())
-    }
+    // if ($("#one").val()) {
+    //   var index = names.indexOf($("#one").val())
+    // }
+    // make the index equal autocomplete
+    var index = $("#one_node_id_field").val();
+    
     if ($("#show-table").val() == 1) {
     	table = 'yes'
     }
+
     var confidence = $("#slider-result-hidden1").val();
     var date = $("#search-date-hidden1").val().split(" - ");
     // '/?person_id=' + ids[index] + '&confidence=' + confidence + '&date=' + $("search-date-range1").val(); + '&table=' + table;
   	//window.location.href = '/?person_id=' + ids[index] + '&confidence=' + confidence + '&date=' + date + '&table=' + table;
-    window.location.href = '/?id=' + ids[index] + '&confidence=' + confidence + '&date=' + date + '&table=' + table;
+    window.location.href = '/?id=' + index + '&confidence=' + confidence + '&date=' + date + '&table=' + table;
   });
 
    $("#findtwonode").click(function () {
@@ -394,12 +399,12 @@ function init() {
   //This file contains all the id, first_name, last_name, ext_birth_year, prefix, suffix, and title for every person in the database
 
 
-	var data = { nodes: [], edges: [], groups_names: [], nodeKeys: [] };
-  var allPeopleNamesData = { nodes: [], edges: [], groups_names: [], groups_desc: [], groups_people: [], nodeKeys: [] };
+	var data = { nodes: [], edges: [], groups_names: [], groups_desc: [], groups_people: [], nodeKeys: [] };
+  //var allPeopleNamesData = { nodes: [], edges: [], groups_names: [], groups_desc: [], groups_people: [], nodeKeys: [] };
 
   var people = window.gon.people
   var group_data = window.gon.group_data
-  var all_people = window.gon.all_people
+  //var all_people = window.gon.all_people
   // var data= window.gon.data
   // var allPeopleNamesData= window.gon.allPeopleNamesData
   //This function only converts gon to all data for the searched person and 1st degree relationships
@@ -438,32 +443,32 @@ function init() {
   }
   
   //This function converts gon to name data for all people in the database
-  $.each(all_people, function(index, value) { 
-    var n = new node();
-    n.id = value.id;
-    n.first = value.first_name;
-    n.last = value.last_name;
-    n.prefix = value.prefix;
-    n.suffix = value.suffix;
-    n.title = value.title
-    n.label = n.first + " " + n.last;
-    n.birth = value.ext_birth_year;
-    n.death = value.ext_death_year;
-    allPeopleNamesData.nodes[n.id] = n;   
-  });
+  // $.each(all_people, function(index, value) { 
+  //   var n = new node();
+  //   n.id = value.id;
+  //   n.first = value.first_name;
+  //   n.last = value.last_name;
+  //   n.prefix = value.prefix;
+  //   n.suffix = value.suffix;
+  //   n.title = value.title
+  //   n.label = n.first + " " + n.last;
+  //   n.birth = value.ext_birth_year;
+  //   n.death = value.ext_death_year;
+  //   allPeopleNamesData.nodes[n.id] = n;   
+  // });
 
   //This function converts the gon for groups into readable information for groups
   $.each(group_data, function(index, value){
-    allPeopleNamesData.groups_names.push(value.name);
-    allPeopleNamesData.groups_desc.push(value.description);
-    allPeopleNamesData.groups_people.push(value.person_list);
+    data.groups_names.push(value.name);
+    data.groups_desc.push(value.description);
+    data.groups_people.push(value.person_list);
   });
 
 
 
-  populateLists(allPeopleNamesData);
+  populateLists(data);
   filterGraph(data);
-  initGraph(data, allPeopleNamesData);
+  initGraph(data);
 
    }
 

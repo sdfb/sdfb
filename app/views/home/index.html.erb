@@ -72,7 +72,10 @@
 
 				<section id="onenodeform">
 					<!-- Testing the new autocomplete -->
-					<input class="form-control" type="text" id="one" placeholder="Name" data-autocomplete="home/autocomplete_person_search_names_all">
+					<input class="form-control" type="text" id="one" placeholder="Name" data-autocomplete="home/autocomplete_person_search_names_all" data-id-element="#one_node_id_field"> 
+					<input id="one_node_id_field" type="hidden" />
+
+
 					<label for="search-date-range">Confidence Level:</label>
 					<span id="slide1" ><article id="node-slider" class="slider" name="1"></article></span>
 					<article class="slider-result" id="slider-result1">Possible Relationships @ 40%</article>
