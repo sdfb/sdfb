@@ -461,7 +461,7 @@ function init() {
 
 
 
- populateLists(allPeopleNamesData);
+ //populateLists(allPeopleNamesData);
   filterGraph(data);
   initGraph(data, allPeopleNamesData);
 

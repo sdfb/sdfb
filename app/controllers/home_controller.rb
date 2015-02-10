@@ -13,7 +13,7 @@ class HomeController < ApplicationController
         @data['people'] = Person.find(params[:id])
       end
     end
-    # @data['all_people'] = Person.all_approved.select("id, first_name, last_name, ext_birth_year, prefix, suffix, title")
+    @data['all_people'] = Person.all_approved.select("id, first_name, last_name, ext_birth_year, prefix, suffix, title")
     @data['group_data'] = Group.all_approved.select("id, name, description, person_list")
   end
   def list
