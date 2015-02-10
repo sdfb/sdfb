@@ -26,6 +26,7 @@ gem 'pg'
 	  gem 'therubyracer', :platforms => :ruby
 	  gem 'uglifier', '>= 1.0.3'
 	  gem "twitter-bootstrap-rails", '2.1.7'
+	
 
 
 
