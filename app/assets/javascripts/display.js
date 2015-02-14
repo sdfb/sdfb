@@ -80,7 +80,7 @@ function twoDegs(id, id2, data, confidence, sdate, edate) {
 	function createGraph(id, data, confidence, sdate, edate) {
     	var p = data.nodes[id];
       		$.each(p.rels, function(index, value) {
-        		if (value[2] == 0 || value[1] < confidence || sdate > p.birth_year || edate < p.birth_year) {
+        		if (value[2] == 0 || value[1] < confidence || edate < p.birth_year || sdate > p.death_year) {
          		} else {
 					var q = data.nodes[value[0]]; // find person object in data by id
 					keys[q.id] = createNodeKey(q); //puts nodekey into keys array
