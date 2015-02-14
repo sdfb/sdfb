@@ -165,13 +165,12 @@ aside {
     padding: 0px;
 }
 
-#addnode, #addedge, #addgroup{
-
-    padding: 0px 25px;
+#contribute-add-person, #contribute-add-group, #contribute-add-relationship{
+    padding: 0px 27px;
 }
 
-#show-table{
-	width:auto;
+.show-table{
+	max-width:15px;
 }
 
 #relationship-table{

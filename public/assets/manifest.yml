@@ -105,8 +105,8 @@ autocomplete-rails.js: autocomplete-rails.js
 autocomplete-rails/index.js: autocomplete-rails.js
 data.json: data.json
 data/index.json: data.json
-display2.js: display2.js
-display2/index.js: display2.js
+display.js: display.js
+display/index.js: display.js
 insights.standalone.js: insights.standalone.js
 insights/index.standalone.js: insights.standalone.js
 jquery-impromptu.min.js: jquery-impromptu.min.js

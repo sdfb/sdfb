@@ -1,14 +1,36 @@
+// Returns string stating confidence based on input decimal (0<n1.00)
+function getConfidence(n) {
+    if (0 <= n &&  n<= 19) {
+        return "very unlikely";}
+    else if (20 <= n &&  n<= 39) {
+        return "unlikely";}
+    else if (40 <= n &&  n<= 59) {
+        return "possible";}
+    else if (60 <= n && n<= 79) {
+        return "likely";}
+    else {
+        return "certain";}
+}
+
 $(document).ready(function() {
 
-    //Tooltips
-	$("#onenode").tooltip({placement: 	'right', title: 'Connections of one individual'});
-	$("#twonode").tooltip({placement: 	'right', title: 'Mutual connections between two individuals'});
-	$("#onegroup").tooltip({placement: 	'right', title: 'Members of one group'});
-	$("#twogroup").tooltip({placement: 	'left', title: 'Mutual members of two groups'});
+    var default_sdate = 1400
+    var default_edate = 1800
+    var default_certainty = 40
+    var default_scertainty = 0
+    var default_ecertainty = 100
 
-    $("#addnode").tooltip({placement:   'right', title: 'Add a new individual to the database'});
-    $("#addgroup").tooltip({placement:  'right', title: 'Add a new group to the database'});
-    $("#addedge").tooltip({placement:   'right', title: 'Add and annotate a relationship between two individuals'});
+    //Tooltips
+	$("#search-network").tooltip({placement: 	'right', title: 'Connections of one individual'});
+	//$("#search-shared-network").tooltip({placement: 	'right', title: 'Mutual connections between two individuals'});
+    $("#search-shared-network").tooltip({placement:     'right', title: 'New Feature Coming Soon'});
+	$("#search-group").tooltip({placement: 	'right', title: 'Members of one group'});
+	//$("#search-shared-group").tooltip({placement: 	'right', title: 'Mutual members of two groups'});
+    $("#search-shared-group").tooltip({placement:   'right', title: 'New Feature Coming Soon'});
+
+    $("#contribute-add-person").tooltip({placement:   'right', title: 'Add a new individual to the database'});
+    $("#contribute-add-group").tooltip({placement:  'right', title: 'Add a new group to the database'});
+    $("#contribute-add-relationship").tooltip({placement:   'right', title: 'Add and annotate a relationship between two individuals'});
 
     $("#icon-tag").tooltip({placement:  'right', title: 'Tag group'});
     $("#icon-link").tooltip({placement: 'right', title: 'Add a relationship'});
@@ -28,7 +50,11 @@ $(document).ready(function() {
     $(".icon-info").tooltip({placement:  'left', title: 'Info'});
 
     $(".slider").tooltip({placement: 'right', title: 'Choose the certainty of relationship'});
-	$('#onenodeform').css('display','block');
+	$('#search-network-form').css('display','block');
+
+    $("#search-network-show-table").click(function(){
+        $("#search-network-show-table").attr('href', "/people/" + $("#search-network-name-id").val());
+    });
 
     // Color guide
     $("#icon-color").click(function(){
@@ -48,15 +74,15 @@ $(document).ready(function() {
         $('.accordion_content ul li').removeClass('clicked');
         $(this).addClass('clicked');
 		$('section').css('display','none');	
-		var id = '#' + e.target.id + 'form';
+		var id = '#' + e.target.id + '-form';
 		$(id).css('display','block');
 	});
 	$('.toggle').click(function(e){
 		$('.toggle').removeClass('active');
 		$(this).addClass('active');
 	});
-	$('#findtwogroup').click(function(e){
-		$('#twogroupsmenu').css('display','block');
+	$('#search-shared-group').click(function(e){
+		$('#search-shared-group-form').css('display','block');
 	});
     $('section button').click(function(e){
         if (this.name == "node") {
@@ -77,148 +103,97 @@ $(document).ready(function() {
     });
 
  //  Sliding animation
-	$("#node-slider").slider({
+	$("#search-network-slider-confidence").slider({
         animate: true,
         range: "min",
-        value: 40,
-        min: 0,
-        max: 100,
+        value: default_certainty,
+        min: default_scertainty,
+        max: default_ecertainty,
         step: 1,
         // Gets a live reading of the value and prints it on the page
         slide: function( event, ui ) {
-        	var result = "Very unlikely";
-        	if (ui.value > 19 && ui.value < 40) {
-        		result = "Unlikely";
-        	} else if (ui.value > 39 && ui.value < 60) {
-        		result = "Possible";
-        	} else if (ui.value > 59 && ui.value < 80) {
-        		result = "Likely";
-        	} else if (ui.value > 79){
-                result = "Certain"
-            }
-            $("#slider-result1").html( result + " relationships @ " + ui.value + "%");
-            $("#slider-result-hidden1").val(ui.value);
+        	var result = getConfidence(ui.value);
+            $("#search-network-slider-confidence-result").html( result + " relationships @ " + ui.value + "%");
+            $("#search-network-slider-confidence-result-hidden").val(ui.value);
         }
     });
 
-    $("#edge-slider").slider({
+    $("#search-network-slider-date").slider({
         animate: true,
         range: "min",
-        value: 40,
-        min: 0,
-        max: 100,
+        value: 3,
+        min: default_sdate,
+        max: default_edate,
+        step: 1,
+        values: [ default_sdate, default_edate ],
+        slide: function( event, ui ) {
+            $("#search-network-slider-date-result" ).html("Date Range: " + ui.values[ 0 ] + " - " + ui.values[ 1 ] );
+            $("#search-network-slider-date-result-hidden").val(ui.values[ 0 ] + " - " + ui.values[ 1 ]);
+        }
+    });
+
+    $("#search-shared-network-slider-confidence").slider({
+        animate: true,
+        range: "min",
+        value: default_certainty,
+        min: default_scertainty,
+        max: default_ecertainty,
         step: 1,
         // Gets a live reading of the value and prints it on the page
         slide: function( event, ui ) {
-            var result = "Very unlikely";
-            if (ui.value > 19 && ui.value < 40) {
-                result = "Unlikely";
-            } else if (ui.value > 39 && ui.value < 60) {
-                result = "Possible";
-            } else if (ui.value > 59 && ui.value < 80) {
-                result = "Likely";
-            } else if (ui.value > 79){
-                result = "Certain"
-            }
-            $("#slideredge-result1").html( result + " relationships @ " + ui.value + "%");
-            $("#slideredge-result-hidden1").val(ui.value);
+            var result = getConfidence(ui.value);
+            $("#search-shared-network-slider-confidence-result").html( result + " relationships @ " + ui.value + "%");
+            $("#search-shared-network-slider-confidence-result-hidden").val(ui.value);
         }
     });
-
-    $("#nav-slider").slider({
-        animate: true,
-        range: "min",
-        value: 40,
-        min: 0,
-        max: 100,
-        step: 1,
-        // Gets a live reading of the value and prints it on the page
-        slide: function( event, ui ) {
-            var result = "Very unlikely";
-            if (ui.value > 19 && ui.value < 40) {
-                result = "Unlikely";
-            } else if (ui.value > 39 && ui.value < 60) {
-                result = "Possible";
-            } else if (ui.value > 59 && ui.value < 80) {
-                result = "Likely";
-            } else if (ui.value > 79){
-                result = "Certain"
-            }
-            $("#slidenav-result1").html( result + " relationships @ " + ui.value + "%");
-            $("#slidenav-result-hidden1").val(ui.value);
-        }
-    });
-
-		//  Sliding animation
-		$(".slider-date").slider({
-					animate: true,
-					range: "min",
-					value: 3,
-					min: 1400,
-					max: 1800,
-					step: 1,
-					values: [ 1400, 1800 ],
-					slide: function( event, ui ) {
-						$( "#search-date-range1" ).html("Date Range: " + ui.values[ 0 ] + " - " + ui.values[ 1 ] );
-                        $("#search-date-hidden1").val(ui.values[ 0 ] + " - " + ui.values[ 1 ]);
-					}
-		});
-		$( "#search-date-range1" ).html( "Date Range: " + $( ".slider-date" ).slider( "values", 0 ) + " - " + $( ".slider-date" ).slider( "values", 1 ) );
-		
-                //  Sliding animation
-        $(".slider-date2").slider({
-                    animate: true,
-                    range: "min",
-                    value: 3,
-                    min: 1400,
-                    max: 1800,
-                    step: 1,
-                    values: [ 1400, 1800 ],
-                    slide: function( event, ui ) {
-                       
-                        $( "#searchedge-date-range2" ).html("Date Range: " +  ui.values[ 0 ] + " - " + ui.values[ 1 ] );
-                        $("#searchedge-date-hidden2").val(ui.values[ 0 ] + " - " + ui.values[ 1 ]);
-                    }
-        });
-        $( "#searchedge-date-range2" ).html("Date Range: " +  $( ".slider-date2" ).slider( "values", 0 ) + " - " + $( ".slider-date2" ).slider( "values", 1 ) );
-
-        //  Sliding animation
-        $("#navslider2").slider({
-                    animate: true,
-                    range: "min",
-                    value: 3,
-                    min: 1400,
-                    max: 1800,
-                    step: 1,
-                    values: [ 1400, 1800 ],
-                    slide: function( event, ui ) {
-                        $( "#nav-date-range2" ).val( "Date Range: " + ui.values[ 0 ] + " - " + ui.values[ 1 ] );
-                    }
-        });
-        $( "#nav-date-range2" ).val( $( "#navslider2" ).slider( "values", 0 ) + " - " + $( "#navslider2" ).slider( "values", 1 ) );
 	
-        $("#slider1").change(function () {                    
-        var newValue = $('#slider1').val();
-        var result = "Very unlikely";
-            if (newValue > 19 && newValue < 40) {
-                result = "Unlikely";
-            } else if (newValue > 39 && newValue < 60) {
-                result = "Possible";
-            } else if (newValue > 59 && newValue < 80) {
-                result = "Likely";
-            } else if (newValue > 79){
-                result = "Certain"
-            }
-        $("#formCertainty").html(result + " relationships @ " + newValue + "%");
-        });
+    $("#search-shared-network-slider-date").slider({
+        animate: true,
+        range: "min",
+        value: 3,
+        min: default_sdate,
+        max: default_edate,
+        step: 1,
+        values: [ default_sdate, default_edate ],
+        slide: function( event, ui ) {
+            $("#search-shared-network-slider-date-result").html("Date Range: " +  ui.values[ 0 ] + " - " + ui.values[ 1 ] );
+            $("#search-shared-network-slider-date-result-hidden").val(ui.values[ 0 ] + " - " + ui.values[ 1 ]);
+        }
+    });
 
-        $("#certainty-anchor").click(function() {
-            $("#nav-certainty-slider").toggle( "slow", function() {
-            });
-        });
+    $("#nav-slider-confidence").slider({
+        animate: true,
+        range: "min",
+        value: 3,
+        min: default_scertainty,
+        max: default_ecertainty,
+        step: 1,
+        // Gets a live reading of the value and prints it on the page
+        slide: function( event, ui ) {
+            var result = getConfidence(ui.value);             
+            $("#nav-slider-confidence-result").html( result + " relationships @ " + ui.value + "%");
+            $("#nav-slider-confidence-result-hidden").val(ui.value);
+        }
+    });
 
-        $("#date-anchor").click(function() {
-            $("#nav-date").toggle( "slow", function() {
-            });
+    //  Sliding animation
+    $("#nav-slider-date").slider({
+        animate: true,
+        range: "min",
+        value: 3,
+        min: default_sdate,
+        max: default_edate,
+        step: 1,
+        values: [ default_sdate, default_edate],
+        slide: function( event, ui ) {
+            $( "#nav-slider-date-result" ).val( ui.values[ 0 ] + " - " + ui.values[ 1 ] );
+        }
+    });
+
+    $("#nav-anchor").click(function() {
+        $("#nav-slider").toggle( "fast", function() {
         });
+    });
+
+
 });
