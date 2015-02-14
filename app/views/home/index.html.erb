@@ -62,7 +62,7 @@
 
 				<section id="search-network-form">
 					<!-- Testing the new autocomplete -->
-					<input class="form-control" type="text" id="search-network-name" placeholder="Name" data-autocomplete="home/autocomplete_person_search_names_all" data-id-element="#search-network-name-id"> 
+					<input class="form-control" type="text" id="search-network-name" placeholder="Person Name" data-autocomplete="home/autocomplete_person_search_names_all" data-id-element="#search-network-name-id"> 
 					<input id="search-network-name-id" type="hidden" />
 					<label for="search-network-slider-confidence">Confidence Level:</label>
 					<span id="slide1" ><article id="search-network-slider-confidence" class="slider" name="1"></article></span>
@@ -80,12 +80,12 @@
 				</section>
 
 				<section id="search-shared-network-form">
-					<input class="form-control" type="text" id="search-shared-network-name1" placeholder="Name" data-autocomplete="home/autocomplete_person_search_names_all" data-id-element="#search-shared-network-name1-id"> 
+					<input class="form-control" type="text" id="search-shared-network-name1" placeholder="Person 1 Name" data-autocomplete="home/autocomplete_person_search_names_all" data-id-element="#search-shared-network-name1-id"> 
 					<input id="search-shared-network-name1-id" type="hidden" /><br>
-					<input class="form-control" type="text" id="search-shared-network-name2" placeholder="Name" data-autocomplete="home/autocomplete_person_search_names_all" data-id-element="#search-shared-network-name2-id"> 
+					<input class="form-control" type="text" id="search-shared-network-name2" placeholder="Person 2 Name" data-autocomplete="home/autocomplete_person_search_names_all" data-id-element="#search-shared-network-name2-id"> 
 					<input id="search-shared-network-name2-id" type="hidden" /><br>
 
-					<label for="search-shared-network-slider-confidence">Confidence Level:</label>
+					<label for="search-shared-network-slider-confidence">Maximum Confidence Level:</label>
 					<span id="slide3" ><article id="search-shared-network-slider-confidence" class="slider" name="2"></article></span>
 					<article class="slider-result" id="search-shared-network-slider-confidence-result">Possible Relationships @ 40%</article>
 					<input id="search-shared-network-slider-confidence-result-hidden" type="hidden" value="40"/>
@@ -102,9 +102,9 @@
 			<!-- GROUP FORMS -->
 
 				<section id="search-shared-group-form">
-					<input class="form-control" type="text" id="search-shared-group-name1" placeholder="Name" data-autocomplete="home/autocomplete_person_search_names_all" data-id-element="#search-shared-group-name1-id"> 
+					<input class="form-control" type="text" id="search-shared-group-name1" placeholder="Group 1 Name" data-autocomplete="home/autocomplete_person_search_names_all" data-id-element="#search-shared-group-name1-id"> 
 					<input id="search-shared-group-name1-id" type="hidden" />
-					<input class="form-control" type="text" id="search-shared-group-name2" placeholder="Name" data-autocomplete="home/autocomplete_person_search_names_all" data-id-element="#search-shared-group-name2-id"> 
+					<input class="form-control" type="text" id="search-shared-group-name2" placeholder="Group 2 Name" data-autocomplete="home/autocomplete_person_search_names_all" data-id-element="#search-shared-group-name2-id"> 
 					<input id="search-shared-group-name2-id" type="hidden" />
 					<button class="talkPageLink" type="button" id="search-shared-group-submit" name="group">Find</button>
 				</section>
@@ -115,7 +115,7 @@
 			<div  class="accordion_content " id="nodeinfo">
 				<a class="icon icon-annotate" id="node-icon-annotate"  name="group"></a>
 				<a class="icon icon-chain" id="node-icon-chain" name="edge"></a>
-				<p id="node-name" class="node-name"></p>
+				<p id="node-name" class="node-name">Click on a person node to see details</p>
 				<b>BIRTH DATE&nbsp;</b> 				<a id="node-bdate"></a><br>
 				<b>DEATH DATE&nbsp;</b> 				<a id="node-ddate"></a><br>
 				<b>HISTORICAL SIGNIFICANCE</b><br>		<a id="node-significance"></a><br>
@@ -131,7 +131,7 @@
 			<h3 class="accordion_btn"><span class="icon-edge"></span>Relationship</h3>
 			<div  class="accordion_content " id="edgeinfo">
 				<a class="icon icon-annotate" id="edge-icon-annotate" name="edge"></a>
-				<p id="edge-nodes"></p>
+				<p id="edge-nodes">Click on a relationship to see details</p>
 				<b>CONFIDENCE&nbsp;</b> 	<span id="edge-confidence"></span><br>
 				<b>DATE RANGE&nbsp;</b> 	<span id="edge-daterange"></span><br>
 				<span id="relationship-table">
@@ -146,7 +146,7 @@
 			</div>
 
 			<!-- group information bar -->
-			<h3 class="accordion_btn" id="tab-group"><span class="icon-node"></span>Group</h3>
+			<h3 class="accordion_btn" id="tab-group"><span class="icon-group"></span>Group</h3>
 			<div  class="accordion_content " id="groupinfo">
 				<a class="icon icon-label" id="group-icon-label" href="/group_assignments/new" name="edge"></a>
 				<a class="icon icon-annotate" id="group-icon-annotate" name="edge"></a>

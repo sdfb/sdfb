@@ -54,7 +54,8 @@ aside {
 	line-height: 25px;
 	text-align:left;
 	height: auto;
-	overflow:scroll;
+	overflow-y:scroll;
+    overflow-x:hidden;
 }
 
 .accordion_content .active {
@@ -310,7 +311,12 @@ a.icon, button.icon, a.icon:hover {
 .icon-node {
     background-image: url(node.png);
 }
-
+.icon-group {
+    background-image: url(group.png);
+}
+.icon-group:before{
+    content:  "" !important;
+}
 .icon-edge {
     background-image: url(edge.png);
 }
