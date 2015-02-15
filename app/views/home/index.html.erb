@@ -1,52 +1,12 @@
-<html>
-<head>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-</head>
 
-<body>
-	<script >
-		window.gon = <%= @data.to_json.html_safe %>
-	</script>
 	<div id="everything">
-	<div id="filterBar">
-		<ul>
-			<li id="results"></li>
-		</ul>
-		<ul>
-			<li>Filter By: &nbsp;</li>
-			<li><a id="nav-anchor">Certainty   Date</a></li>
-			<li><a class="talkPageLink" type="button" id="nav-filter-submit" name="nav-node">Filter</a></li>
-		</ul>
-		<div id="nav-slider" class="nav-hover">
-			<span id="slidenav" ><article id="nav-slider-confidence" class="slider" name="1"></article></span>
-			<article class="slider-result" id="nav-slider-confidence-result">Possible Relationships @ 40%</article>
-			<input id="nav-slider-confidence-result-hidden" type="hidden" value="40"/>
-			<label for="nav-slider-date">Date Range:</label><input type="text" id="nav-slider-date-result" readonly value="1400 - 1800">
-			<span id="slidenav2" ><article id="nav-slider-date" class="slider-date" name="2"></article></span>
+		<div id="graph"></div>
+		<div id="zoom">
+			<button class="icon icon-zoomin" name="in"></button>
+			<button class="icon icon-zoomout" name="out"></button>	
+			<button class="icon icon-color"></button>
+			<button class="icon icon-info"></button>
 		</div>
-	</div>
-	<div id="graph"></div>
-	<div id="zoom">
-		<button class="icon icon-zoomin" name="in"></button>
-		<button class="icon icon-zoomout" name="out"></button>	
-		<button class="icon icon-color"></button>
-		<button class="icon icon-info"></button>
-	</div>
-	<div id="twogroupsmenu">
-		<button type="button" class="btn btn-primary" id="group1" ></button>
-		<button type="button" class="btn btn-primary active" id="group2" >Intersection</button>
-		<button type="button" class="btn btn-primary" id="group3" ></button>
-	</div>
-
-	<div id="guide">
-		<p> Node Color By Birth Year: </p>
-		<div class="icon" id="cancel"></div>
-		<img id="guide-pic" src="assets/coloryearlegend.png" alt="Color Legend">
-	</div>
-
-	<aside>
 		<div id="accordion">
 			<!-- search bar -->
 			<h3 class="accordion_btn on"><span class="icon-magnify"></span>Search</h3>
@@ -166,8 +126,22 @@
 					<a href="/groups/new"><li id="contribute-add-group">Group</li></a>
 				</ul>
 			</div>
-		</div>
-	</aside>		
+		</div>	
+		<div id="filterBar">
+			<ul>
+				<li id="results"></li>
+			</ul>
+			<ul>
+				<li>Filter By: &nbsp;</li>
+				<li><a id="nav-anchor">Certainty   Date</a></li>
+				<li><a class="talkPageLink" type="button" id="nav-filter-submit" name="nav-node">Filter</a></li>
+			</ul>
+			<div id="nav-slider" class="nav-hover">
+				<span id="slidenav" ><article id="nav-slider-confidence" class="slider" name="1"></article></span>
+				<article class="slider-result" id="nav-slider-confidence-result">Possible Relationships @ 40%</article>
+				<input id="nav-slider-confidence-result-hidden" type="hidden" value="40"/>
+				<label for="nav-slider-date">Date Range:</label><input type="text" id="nav-slider-date-result" readonly value="1400 - 1800">
+				<span id="slidenav2" ><article id="nav-slider-date" class="slider-date" name="2"></article></span>
+			</div>
+		</div>				
 	</div>
-</body>
-</html>

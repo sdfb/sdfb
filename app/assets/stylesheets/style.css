@@ -3,6 +3,7 @@
 
 html, body {
     margin: 0;
+    padding:0;
     color: #323236;
     background-color: #ecebe9;
     font-family: 'Open Sans', sans-serif;
@@ -48,9 +49,8 @@ header a:hover {
 }
 
 #head {
-  position: absolute;
-  top: 0;
-  left: 0;
+  position:relative;
+  float:left;
   width: 100%;
   background: #555;
   z-index:10;
@@ -66,9 +66,6 @@ header a:hover {
   display:inline;
 }
 
-#everything {
-
-}
 li {
   display: inline;
 }
@@ -82,19 +79,15 @@ li {
   text-shadow: none;
 }
 #filterBar {
-  position: absolute;
-  top: 38px;
-  left: 0px;
-  width: 100%;
+  display:block;
+  overflow:hidden;
   background-color: #FBF3E1;
   line-height: 34px;
   height: auto;
-  padding: 10px 0px 0px 320px;
+  padding: 10px 30px 0px 0px;
   font-weight: lighter;
   text-transform: uppercase;
   letter-spacing: 2px;
-  float: left;
-
 }
 
 a:hover {
@@ -115,11 +108,8 @@ a:hover {
 }
 
 #graph {
-    position: absolute;
-    top: 0px;
-    left:0px;
-    overflow: hidden;
-    height:100%;
+	position:fixed;
+	height:100%;
     width:100%;
     z-index:-1;
 }
@@ -131,7 +121,7 @@ a:hover {
 
 #zoom {
   position: fixed;
-  top: 10%;
+  top:40px;
   right: 10px;
   width: 30px;
 }
@@ -270,31 +260,6 @@ a:hover {
 
 #jqi_state0_buttonOk {
   cursor: pointer;
-}
-
-
-/*COLOR GUIDE*/
-#guide {
-  display:none;
-  z-index:500;
-  position:absolute;
-  top:20%;
-  background-color: #ddd;
-  border:0px solid;
-  border-radius:25px;
-  opacity:0.98;
-  padding:20px;
-  left: 50%;
-  margin-left: -200px;
-
-}
-
-#guide-pic {
-    height:300px;
-    width:600px;
-    padding-top:20px;
-    margin-left:auto;
-    margin-right:auto;
 }
 
 #cancel {

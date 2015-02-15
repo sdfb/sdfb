@@ -1,20 +1,15 @@
 @import url(http://fonts.googleapis.com/css?family=Open+Sans:400,700);
 
-aside {
-    position: absolute;
-    left: 0;
-    top: 0px;
-    bottom: 0;
+
+#accordion {
+    position:relative;
+    float:left;
+    display:block;
     width: 300px;
     height:100%;
     overflow:visible;
-}
-
-#accordion {
-    position: absolute;
     width: 300px;
 	background: #78A7BF;
-    margin:38px 0px 0px 0px;
 }
 
 #accordion h3 {
