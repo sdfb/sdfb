@@ -1,120 +1,81 @@
-<html>
-<head>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-	<%= include_gon %>
-</head>
 
-<body>
 	<div id="everything">
-	<div id="filterBar">
-		<ul>
-			<li id="results"></li>
-		</ul>
-		<ul>
-			<li>Filter By: &nbsp;</li>
-			<li><a id="certainty-anchor">Certainty&nbsp;</a></li>
-			<li><a id="date-anchor">Date&nbsp;</a></li>
-			<li><a class="talkPageLink" type="button" id="nav-filter" name="nav-node">Filter</a></li>
-		</ul>
-		<div id="nav-certainty-slider" class="nav-hover">
-			<span id="slidenav" ><article id="nav-slider" class="slider" name="1"></article></span>
-			<article class="slider-result" id="slidenav-result1">Possible Relationships @ 40%</article>
-			<input id="slidenav-result-hidden1" type="hidden" value="40"/>
+		<div id="graph"></div>
+		<div id="zoom">
+			<button class="icon icon-zoomin" name="in"></button>
+			<button class="icon icon-zoomout" name="out"></button>	
+			<button class="icon icon-color"></button>
+			<button class="icon icon-info"></button>
 		</div>
-		<div id="nav-date" class="nav-hover">
-			<label for="nav-date-range">Date Range:</label><input type="text" id="nav-date-range2">
-			<span id="slidenav2" ><article id="navslider2"class="slider-date" name="2"></article></span>
-		</div>
-	</div>
-
-
-
- 	 
-	<div id="graph"></div>
-	<div id="zoom">
-		<button class="icon icon-zoomin" name="in"></button>
-		<button class="icon icon-zoomout" name="out"></button>	
-		<button class="icon icon-color"></button>
-		<button class="icon icon-info"></button>
-	</div>
-	<div id="twogroupsmenu">
-		<button type="button" class="btn btn-primary" id="group1" ></button>
-		<button type="button" class="btn btn-primary active" id="group2" >Intersection</button>
-		<button type="button" class="btn btn-primary" id="group3" ></button>
-	</div>
-
-	<div id="guide">
-		<p> Node Color By Birth Year: </p>
-		<div class="icon" id="cancel"></div>
-		<img id="guide-pic" src="assets/coloryearlegend.png" alt="Color Legend">
-	</div>
-
-	<aside>
 		<div id="accordion">
 			<!-- search bar -->
 			<h3 class="accordion_btn on"><span class="icon-magnify"></span>Search</h3>
 			<div class="accordion_content active" id="search">
 				<ul class="search-table">
-					<li id="onenode" class="clicked btnl">Network</li>		
-					<li id="twonode" class="btnl">Shared network</li>
-					<li id="onegroup" class="btnl" onclick="$('#tab-group').click();">Group</li>
-					<li id="twogroup" class="btnl">Shared groups</li>
+					<li id="search-network" class="clicked btnl">Network</li>		
+					<li id="search-shared-network" class="btnl">Shared network</li>
+					<li id="search-group" class="btnl" onclick="$('#tab-group').click();">Group</li>
+					<li id="search-shared-group" class="btnl">Shared groups</li>
 				</ul>
 
 				<!-- NODE FORMS -->
 
-				<section id="onenodeform">
-					<input class="form-control" type="text" id="one" placeholder="Name">
-					<label for="search-date-range">Confidence Level:</label>
-					<span id="slide1" ><article id="node-slider" class="slider" name="1"></article></span>
-					<article class="slider-result" id="slider-result1">Possible Relationships @ 40%</article>
-					<input id="slider-result-hidden1" type="hidden" value="40"/>
+				<section id="search-network-form">
+					<!-- Testing the new autocomplete -->
+					<input class="form-control" type="text" id="search-network-name" placeholder="Person Name" data-autocomplete="home/autocomplete_person_search_names_all" data-id-element="#search-network-name-id"> 
+					<input id="search-network-name-id" type="hidden" />
+					<label for="search-network-slider-confidence">Confidence Level:</label>
+					<span id="slide1" ><article id="search-network-slider-confidence" class="slider" name="1"></article></span>
+					<article class="slider-result" id="search-network-slider-confidence-result">Possible Relationships @ 40%</article>
+					<input id="search-network-slider-confidence-result-hidden" type="hidden" value="40"/>
 
-					<label for="search-date-range">Date Range:</label>
-					<span id="slide2" ><article class="slider-date" name="2"></article></span>
-					<article class="slider-result" id="search-date-range1">Date Range: 1400 - 1600</article>
-					<input id="search-date-hidden1" type="hidden" value="1400 - 1600"/>
+					<label for="search-network-slider-date">Date Range:</label>
+					<span id="slide2" ><article id="search-network-slider-date" class="slider" name="2"></article></span>
+					<article class="slider-result" id="search-network-slider-date-result">Date Range: 1400 - 1800</article>
+					<input id="search-network-slider-date-result-hidden" type="hidden" value="1400 - 1800"/>
 
-					<input type="checkbox" name="show-table" value="show-table" id="show-table">Show Table</input>
-					<a class="talkPageLink" type="button" id="findonenode" name="node">Find</a>
+					<!--<input type="checkbox" name="show-table" value="show-table" id="search-network-show-table" class="show-table">Show Table</input>-->
+					<a class="show-table" id="search-network-show-table">Show Table</a>
+					<a class="talkPageLink" type="button" id="search-network-submit" name="node">Find</a>
 				</section>
 
-				<section id="twonodeform">
-					<input class="form-control" type="text" id="two" placeholder="Name 1"><br>
-					<input class="form-control" type="text" id="three" placeholder="Name 2"><br>
-					<label for="search-date-range">Confidence Level:</label>
-					<span id="slide3" ><article id="edge-slider" class="slider" name="2"></article></span>
-					<article class="slider-result" id="slideredge-result1">Possible Relationships @ 40%</article>
-					<input id="slideredge-result-hidden2" type="hidden" value="40"/>
+				<section id="search-shared-network-form">
+					<input class="form-control" type="text" id="search-shared-network-name1" placeholder="Person 1 Name" data-autocomplete="home/autocomplete_person_search_names_all" data-id-element="#search-shared-network-name1-id"> 
+					<input id="search-shared-network-name1-id" type="hidden" /><br>
+					<input class="form-control" type="text" id="search-shared-network-name2" placeholder="Person 2 Name" data-autocomplete="home/autocomplete_person_search_names_all" data-id-element="#search-shared-network-name2-id"> 
+					<input id="search-shared-network-name2-id" type="hidden" /><br>
 
-					<label for="searchedge-date-range2">Date Range:</label>
-					<span id="slide4" ><article class="slider-date2" name="3"></article></span>
-					<article class="slider-result" id="searchedge-date-range2">Date Range: 1400 - 1600</article>
-					<input id="searchedge-date-hidden2" type="hidden" value="1400 - 1600"/>
+					<label for="search-shared-network-slider-confidence">Maximum Confidence Level:</label>
+					<span id="slide3" ><article id="search-shared-network-slider-confidence" class="slider" name="2"></article></span>
+					<article class="slider-result" id="search-shared-network-slider-confidence-result">Possible Relationships @ 40%</article>
+					<input id="search-shared-network-slider-confidence-result-hidden" type="hidden" value="40"/>
 
-					<input type="checkbox" id="check-shared" value="table">Show table<br>
-					<a class="talkPageLink" type="button" id="findtwonode" name="node">Find</a>
+					<label for="search-shared-network-slider-date">Date Range:</label>
+					<span id="slide4" ><article id="search-shared-network-slider-date" class="slider" name="3"></article></span>
+					<article class="slider-result" id="search-shared-network-slider-date-result">Date Range: 1400 - 1800</article>
+					<input id="search-shared-network-slider-date-result-hidden" type="hidden" value="1400 - 1800"/>
+
+					<!--<input type="checkbox" id="search-shared-network-show-table" value="table" class="show-table">Show table<br>-->
+					<a class="talkPageLink" type="button" id="search-shared-network-submit" name="node">Find</a>
 				</section>
 
 			<!-- GROUP FORMS -->
 
-				<section id="twogroupform">
-					<input 	class="form-control" type="text" id="five" placeholder="Group 1"><br>
-					<input 	class="form-control" type="text" id="six" placeholder="Group 2"><br>
-					<button class="talkPageLink" type="button" id="findtwogroup" name="group">Find</button>
+				<section id="search-shared-group-form">
+					<input class="form-control" type="text" id="search-shared-group-name1" placeholder="Group 1 Name" data-autocomplete="home/autocomplete_person_search_names_all" data-id-element="#search-shared-group-name1-id"> 
+					<input id="search-shared-group-name1-id" type="hidden" />
+					<input class="form-control" type="text" id="search-shared-group-name2" placeholder="Group 2 Name" data-autocomplete="home/autocomplete_person_search_names_all" data-id-element="#search-shared-group-name2-id"> 
+					<input id="search-shared-group-name2-id" type="hidden" />
+					<button class="talkPageLink" type="button" id="search-shared-group-submit" name="group">Find</button>
 				</section>
 			</div>
-
-
 
 			<!-- person information bar -->
 			<h3 class="accordion_btn"><span class="icon-node"></span>Person</h3>
 			<div  class="accordion_content " id="nodeinfo">
 				<a class="icon icon-annotate" id="node-icon-annotate"  name="group"></a>
 				<a class="icon icon-chain" id="node-icon-chain" name="edge"></a>
-				<p id="node-name" class="node-name"></p>
+				<p id="node-name" class="node-name">Click on a person node to see details</p>
 				<b>BIRTH DATE&nbsp;</b> 				<a id="node-bdate"></a><br>
 				<b>DEATH DATE&nbsp;</b> 				<a id="node-ddate"></a><br>
 				<b>HISTORICAL SIGNIFICANCE</b><br>		<a id="node-significance"></a><br>
@@ -130,7 +91,7 @@
 			<h3 class="accordion_btn"><span class="icon-edge"></span>Relationship</h3>
 			<div  class="accordion_content " id="edgeinfo">
 				<a class="icon icon-annotate" id="edge-icon-annotate" name="edge"></a>
-				<p id="edge-nodes"></p>
+				<p id="edge-nodes">Click on a relationship to see details</p>
 				<b>CONFIDENCE&nbsp;</b> 	<span id="edge-confidence"></span><br>
 				<b>DATE RANGE&nbsp;</b> 	<span id="edge-daterange"></span><br>
 				<span id="relationship-table">
@@ -145,7 +106,7 @@
 			</div>
 
 			<!-- group information bar -->
-			<h3 class="accordion_btn" id="tab-group"><span class="icon-node"></span>Group</h3>
+			<h3 class="accordion_btn" id="tab-group"><span class="icon-group"></span>Group</h3>
 			<div  class="accordion_content " id="groupinfo">
 				<a class="icon icon-label" id="group-icon-label" href="/group_assignments/new" name="edge"></a>
 				<a class="icon icon-annotate" id="group-icon-annotate" name="edge"></a>
@@ -160,16 +121,27 @@
 			<h3 class="accordion_btn"><span class="icon-add"></span>Contribute</h3>
 			<div  class="accordion_content tabs" id="add">
 				<ul class="clearfix">
-					<a href="/people/new"><li id="addnode">Person</li></a>
-					<a href="/relationships/new"><li id="addedge">Relationship</li></a>
-					<a href="/groups/new"><li id="addgroup">Group</li></a>
+					<a href="/people/new"><li id="contribute-add-person">Person</li></a>
+					<a href="/relationships/new"><li id="contribute-add-relationship">Relationship</li></a>
+					<a href="/groups/new"><li id="contribute-add-group">Group</li></a>
 				</ul>
 			</div>
-
-
-		</div>
-	</aside>		
-	
+		</div>	
+		<div id="filterBar">
+			<ul>
+				<li id="results"></li>
+			</ul>
+			<ul>
+				<li>Filter By: &nbsp;</li>
+				<li><a id="nav-anchor">Certainty   Date</a></li>
+				<li><a class="talkPageLink" type="button" id="nav-filter-submit" name="nav-node">Filter</a></li>
+			</ul>
+			<div id="nav-slider" class="nav-hover">
+				<span id="slidenav" ><article id="nav-slider-confidence" class="slider" name="1"></article></span>
+				<article class="slider-result" id="nav-slider-confidence-result">Possible Relationships @ 40%</article>
+				<input id="nav-slider-confidence-result-hidden" type="hidden" value="40"/>
+				<label for="nav-slider-date">Date Range:</label><input type="text" id="nav-slider-date-result" readonly value="1400 - 1800">
+				<span id="slidenav2" ><article id="nav-slider-date" class="slider-date" name="2"></article></span>
+			</div>
+		</div>				
 	</div>
-</body>
-</html>

@@ -1,20 +1,15 @@
 @import url(http://fonts.googleapis.com/css?family=Open+Sans:400,700);
 
-aside {
-    position: absolute;
-    left: 0;
-    top: 0px;
-    bottom: 0;
+
+#accordion {
+    position:relative;
+    float:left;
+    display:block;
     width: 300px;
     height:100%;
     overflow:visible;
-}
-
-#accordion {
-    position: absolute;
     width: 300px;
 	background: #78A7BF;
-    margin:38px 0px 0px 0px;
 }
 
 #accordion h3 {
@@ -54,7 +49,8 @@ aside {
 	line-height: 25px;
 	text-align:left;
 	height: auto;
-	overflow:scroll;
+	overflow-y:scroll;
+    overflow-x:hidden;
 }
 
 .accordion_content .active {
@@ -165,13 +161,12 @@ aside {
     padding: 0px;
 }
 
-#addnode, #addedge, #addgroup{
-
-    padding: 0px 25px;
+#contribute-add-person, #contribute-add-group, #contribute-add-relationship{
+    padding: 0px 27px;
 }
 
-#show-table{
-	width:auto;
+.show-table{
+	max-width:15px;
 }
 
 #relationship-table{
@@ -311,7 +306,12 @@ a.icon, button.icon, a.icon:hover {
 .icon-node {
     background-image: url(node.png);
 }
-
+.icon-group {
+    background-image: url(group.png);
+}
+.icon-group:before{
+    content:  "" !important;
+}
 .icon-edge {
     background-image: url(edge.png);
 }
