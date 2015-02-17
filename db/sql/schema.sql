@@ -3,7 +3,7 @@
 --
 
 SET statement_timeout = 0;
-SET lock_timeout = 0;
+-- SET lock_timeout = 0;
 SET client_encoding = 'UTF8';
 SET standard_conforming_strings = on;
 SET check_function_bodies = false;
@@ -13,7 +13,11 @@ SET client_min_messages = warning;
 -- Name: plpgsql; Type: EXTENSION; Schema: -; Owner: 
 --
 
-CREATE EXTENSION IF NOT EXISTS plpgsql WITH SCHEMA pg_catalog;
+-- CREATE EXTENSION IF NOT EXISTS plpgsql WITH SCHEMA pg_catalog;
+
+DROP TABLE IF EXISTS people CASCADE;
+DROP TABLE IF EXISTS relationships CASCADE;
+
 
 DROP TABLE IF EXISTS comments CASCADE;
 DROP TABLE IF EXISTS flags CASCADE;
@@ -21,11 +25,9 @@ DROP TABLE IF EXISTS group_assignments CASCADE;
 DROP TABLE IF EXISTS group_cat_assigns CASCADE;
 DROP TABLE IF EXISTS group_categories CASCADE;
 DROP TABLE IF EXISTS groups CASCADE;
-DROP TABLE IF EXISTS people CASCADE;
 DROP TABLE IF EXISTS rel_cat_assigns CASCADE;
 DROP TABLE IF EXISTS relationship_categories CASCADE;
 DROP TABLE IF EXISTS relationship_types CASCADE;
-DROP TABLE IF EXISTS relationships CASCADE;
 DROP TABLE IF EXISTS schema_migrations CASCADE;
 DROP TABLE IF EXISTS user_group_contribs CASCADE;
 DROP TABLE IF EXISTS user_person_contribs CASCADE;
@@ -38,7 +40,7 @@ DROP TABLE IF EXISTS users CASCADE;
 -- Name: EXTENSION plpgsql; Type: COMMENT; Schema: -; Owner: 
 --
 
-COMMENT ON EXTENSION plpgsql IS 'PL/pgSQL procedural language';
+-- COMMENT ON EXTENSION plpgsql IS 'PL/pgSQL procedural language';
 
 
 SET search_path = public, pg_catalog;
@@ -47,23 +49,23 @@ SET search_path = public, pg_catalog;
 -- Name: combination_edge_key(); Type: FUNCTION; Schema: public; Owner: sixdfbor_admin
 --
 
-CREATE FUNCTION combination_edge_key() RETURNS trigger
-    LANGUAGE plpgsql
-    AS $$
+--CREATE FUNCTION combination_edge_key() RETURNS trigger
+--    LANGUAGE plpgsql
+--    AS $$
 
-  begin
-    NEW.id := NEW.person1_index::text||NEW.person2_index::text;
-    return NEW;
-  end;
+--  begin
+--    NEW.id := NEW.person1_index::text||NEW.person2_index::text;
+--    return NEW;
+--  end;
 
-$$;
+--$$;
 
 
-ALTER FUNCTION public.combination_edge_key() OWNER TO sixdfbor_admin;
+-- ALTER FUNCTION public.combination_edge_key() OWNER TO sixdfbor_admin;
 
-SET default_tablespace = '';
+--SET default_tablespace = '';
 
-SET default_with_oids = false;
+--SET default_with_oids = false;
 
 --
 -- Name: comments; Type: TABLE; Schema: public; Owner: sixdfbor_admin; Tablespace: 
@@ -163,8 +165,7 @@ CREATE TABLE group_assignments (
     is_approved boolean,
     is_active boolean DEFAULT true,
     is_rejected boolean DEFAULT false,
-    edited_by_on text DEFAULT '--- []
-'::text,
+    edited_by_on text DEFAULT '--- []'::text,
     created_at timestamp without time zone NOT NULL,
     updated_at timestamp without time zone NOT NULL,
     person_autocomplete character varying(255)
@@ -208,8 +209,7 @@ CREATE TABLE group_cat_assigns (
     is_approved boolean DEFAULT false,
     is_active boolean DEFAULT true,
     is_rejected boolean DEFAULT false,
-    edited_by_on text DEFAULT '--- []
-'::text,
+    edited_by_on text DEFAULT '--- []'::text,
     created_at timestamp without time zone NOT NULL,
     updated_at timestamp without time zone NOT NULL
 );
@@ -252,8 +252,7 @@ CREATE TABLE group_categories (
     is_approved boolean DEFAULT false,
     is_active boolean DEFAULT true,
     is_rejected boolean DEFAULT false,
-    edited_by_on text DEFAULT '--- []
-'::text,
+    edited_by_on text DEFAULT '--- []'::text,
     created_at timestamp without time zone NOT NULL,
     updated_at timestamp without time zone NOT NULL
 );
@@ -297,12 +296,10 @@ CREATE TABLE groups (
     approved_by character varying(255),
     approved_on character varying(255),
     is_approved boolean DEFAULT false,
-    person_list text DEFAULT '--- []
-'::text,
+    person_list text DEFAULT '--- []'::text,
     is_active boolean DEFAULT true,
     is_rejected boolean DEFAULT false,
-    edited_by_on text DEFAULT '--- []
-'::text,
+    edited_by_on text DEFAULT '--- []'::text,
     created_at timestamp without time zone NOT NULL,
     updated_at timestamp without time zone NOT NULL
 );
@@ -341,8 +338,7 @@ CREATE TABLE people (
     last_name character varying(255),
     created_by integer,
     historical_significance text,
-    rel_sum text DEFAULT '--- []
-'::text,
+    rel_sum text DEFAULT '--- []'::text,
     prefix character varying(255),
     suffix character varying(255),
     search_names_all character varying(255),
@@ -359,12 +355,10 @@ CREATE TABLE people (
     approved_on timestamp without time zone,
     odnb_id integer,
     is_approved boolean DEFAULT false,
-    group_list text DEFAULT '--- []
-'::text,
+    group_list text DEFAULT '--- []'::text,
     is_active boolean DEFAULT true,
     is_rejected boolean DEFAULT false,
-    edited_by_on text DEFAULT '--- []
-'::text,
+    edited_by_on text DEFAULT '--- []'::text,
     created_at timestamp without time zone NOT NULL,
     updated_at timestamp without time zone NOT NULL
 );
@@ -407,8 +401,7 @@ CREATE TABLE rel_cat_assigns (
     is_approved boolean DEFAULT false,
     is_active boolean DEFAULT true,
     is_rejected boolean DEFAULT false,
-    edited_by_on text DEFAULT '--- []
-'::text,
+    edited_by_on text DEFAULT '--- []'::text,
     created_at timestamp without time zone NOT NULL,
     updated_at timestamp without time zone NOT NULL
 );
@@ -451,8 +444,7 @@ CREATE TABLE relationship_categories (
     created_by integer,
     is_active boolean DEFAULT true,
     is_rejected boolean DEFAULT false,
-    edited_by_on text DEFAULT '--- []
-'::text,
+    edited_by_on text DEFAULT '--- []'::text,
     created_at timestamp without time zone NOT NULL,
     updated_at timestamp without time zone NOT NULL
 );
@@ -497,8 +489,7 @@ CREATE TABLE relationship_types (
     is_approved boolean DEFAULT false,
     created_by integer,
     is_rejected boolean DEFAULT false,
-    edited_by_on text DEFAULT '--- []
-'::text,
+    edited_by_on text DEFAULT '--- []'::text,
     created_at timestamp without time zone NOT NULL,
     updated_at timestamp without time zone NOT NULL
 );
@@ -532,7 +523,7 @@ ALTER SEQUENCE relationship_types_id_seq OWNED BY relationship_types.id;
 --
 
 CREATE TABLE relationships (
-    id bigint,
+    id integer NOT NULL,
     original_certainty integer,
     person1_index integer NOT NULL,
     person2_index integer NOT NULL,
@@ -547,14 +538,12 @@ CREATE TABLE relationships (
     justification text,
     approved_by integer,
     approved_on timestamp without time zone,
-    types_list text DEFAULT '--- []
-'::text,
+    types_list text DEFAULT '--- []'::text,
     edge_birthdate_certainty integer,
     is_approved boolean DEFAULT false,
     is_active boolean DEFAULT true,
     is_rejected boolean DEFAULT false,
-    edited_by_on text DEFAULT '--- []
-'::text,
+    edited_by_on text DEFAULT '--- []'::text,
     created_at timestamp without time zone DEFAULT ('now'::text)::date,
     updated_at timestamp without time zone DEFAULT ('now'::text)::date,
     person1_autocomplete character varying(255),
@@ -590,8 +579,7 @@ CREATE TABLE user_group_contribs (
     is_approved boolean DEFAULT true,
     is_active boolean DEFAULT true,
     is_rejected boolean DEFAULT false,
-    edited_by_on text DEFAULT '--- []
-'::text,
+    edited_by_on text DEFAULT '--- []'::text,
     created_at timestamp without time zone NOT NULL,
     updated_at timestamp without time zone NOT NULL
 );
@@ -635,8 +623,7 @@ CREATE TABLE user_person_contribs (
     is_approved boolean DEFAULT true,
     is_active boolean DEFAULT true,
     is_rejected boolean DEFAULT false,
-    edited_by_on text DEFAULT '--- []
-'::text,
+    edited_by_on text DEFAULT '--- []'::text,
     created_at timestamp without time zone NOT NULL,
     updated_at timestamp without time zone NOT NULL,
     person_autocomplete character varying(255)
@@ -689,8 +676,7 @@ CREATE TABLE user_rel_contribs (
     is_approved boolean DEFAULT true,
     is_active boolean DEFAULT true,
     is_rejected boolean DEFAULT false,
-    edited_by_on text DEFAULT '--- []
-'::text,
+    edited_by_on text DEFAULT '--- []'::text,
     created_at timestamp without time zone NOT NULL,
     updated_at timestamp without time zone NOT NULL,
     person1_autocomplete character varying(255),
@@ -947,7 +933,7 @@ ALTER TABLE ONLY rel_cat_assigns
 
 --
 -- Name: relationship_categories_pkey; Type: CONSTRAINT; Schema: public; Owner: sixdfbor_admin; 
-Tablespace: 
+-- Tablespace: 
 --
 
 ALTER TABLE ONLY relationship_categories
@@ -1013,8 +999,8 @@ CREATE UNIQUE INDEX unique_schema_migrations ON schema_migrations USING btree (v
 -- Name: combination_edge_key_trigger; Type: TRIGGER; Schema: public; Owner: sixdfbor_admin
 --
 
-CREATE TRIGGER combination_edge_key_trigger BEFORE INSERT ON relationships FOR EACH ROW EXECUTE 
-PROCEDURE combination_edge_key();
+--CREATE TRIGGER combination_edge_key_trigger BEFORE INSERT ON relationships FOR EACH ROW EXECUTE 
+--PROCEDURE combination_edge_key();
 
 
 --
@@ -1037,10 +1023,10 @@ ALTER TABLE ONLY relationships
 -- Name: public; Type: ACL; Schema: -; Owner: sixdfbor_admin
 --
 
-REVOKE ALL ON SCHEMA public FROM PUBLIC;
+-- REVOKE ALL ON SCHEMA public FROM PUBLIC;
 -- REVOKE ALL ON SCHEMA public FROM sixdfbor_admin;
 -- GRANT ALL ON SCHEMA public TO sixdfbor_admin;
-GRANT ALL ON SCHEMA public TO PUBLIC;
+-- GRANT ALL ON SCHEMA public TO PUBLIC;
 
 
 --
