@@ -195,5 +195,19 @@ $(document).ready(function() {
         });
     });
 
-
+    //This is for the slider in Rails to update the confidence based on the slider selection
+    $("#slider1").change(function () {                    
+    var newValue = $('#slider1').val();
+    var result = "Very unlikely";
+        if (newValue > 19 && newValue < 40) {
+                result = "Unlikely";
+            } else if (newValue > 39 && newValue < 60) {
+                result = "Possible";
+            } else if (newValue > 59 && newValue < 80) {
+                result = "Likely";
+            } else if (newValue > 79){
+            result = "Certain"
+            }
+            $("#formCertainty").html(result + " relationships @ " + newValue + "%");
+    });
 });
