@@ -2,7 +2,7 @@
 
 <div class="row">
   <div class="span12">
-    <h1><%= @person.get_person_name %>
+    <h1><%= @person.display_name %>
     </h1>
   </div>
 </div>
@@ -149,7 +149,7 @@
     <% if ! @approved_relationships.empty? %>
       <div class="well">
       
-      <h2>All Relationships for <%= @person.get_person_name %> <%= link_to 'New Relationship',
+      <h2>All Relationships for <%= @person.display_name %> <%= link_to 'New Relationship',
                   new_relationship_path(:person1_id => @person.id),
                   :class => 'btn btn-primary btn-mini' %></h2><br>
 
@@ -198,7 +198,7 @@
       </div>
     <% else %>
       <div class = "well">
-        <h2>All Relationships for <%= @person.get_person_name %> <%= link_to 'New Relationship',
+        <h2>All Relationships for <%= @person.display_name %> <%= link_to 'New Relationship',
                   new_relationship_path(:person1_id => @person.id),
                   :class => 'btn btn-primary btn-mini' %></h2>
         <br>
@@ -207,7 +207,7 @@
     <% end %>
     <% if ! @user_person_contribs.empty? %>
     <div class="well">
-      <h2>All Annotations for <%= @person.get_person_name %> <%= link_to 'New annotation',
+      <h2>All Annotations for <%= @person.display_name %> <%= link_to 'New annotation',
                   new_user_person_contrib_path(:person_id => @person.id),
                   :class => 'btn btn-primary btn-mini' %></h2>
       <table class="table table-condensed">
@@ -225,7 +225,7 @@
             <% @user_person_contribs.each do |user_person_contrib| %>
               <tr>
                 <td><%= user_person_contrib.id %></td>
-                <td><%= link_to Person.find(user_person_contrib.person_id).get_person_name, person_path(user_person_contrib.person_id) %></td>
+                <td><%= link_to Person.find(user_person_contrib.person_id).display_name, person_path(user_person_contrib.person_id) %></td>
                 <td><%= user_person_contrib.annotation %></td>
                 <td><%= user_person_contrib.bibliography %></td>
                 <td>
@@ -246,7 +246,7 @@
       </div>
     <% else %>
     <div class = "well">
-      <h2>All annotations for <%= @person.get_person_name %> <%= link_to 'New User Person Contribution',
+      <h2>All annotations for <%= @person.display_name %> <%= link_to 'New User Person Contribution',
                 new_user_person_contrib_path(:person_id => @person.id),
                 :class => 'btn btn-primary btn-mini' %></h2>
       <br>
@@ -255,7 +255,7 @@
     <% end %>
 
     <div class = "well">
-      <h2>All Group Assignments for <%= @person.get_person_name %><%= link_to 'New Group Assignment',
+      <h2>All Group Assignments for <%= @person.display_name %><%= link_to 'New Group Assignment',
                     new_group_assignment_path(:person_id => @person.id),
                     :class => 'btn btn-primary btn-mini' %></h2>
       <% if ! @groups.empty? %>

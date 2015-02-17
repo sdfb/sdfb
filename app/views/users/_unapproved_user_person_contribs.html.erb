@@ -16,7 +16,7 @@
         <% @unapproved_user_person_contribs.each do |user_person_contrib| %>
           <tr>
             <td><%= user_person_contrib.id %></td>
-            <td><%= link_to Person.find(user_person_contrib.person_id).get_person_name, person_path(user_person_contrib.person_id) %></td>
+            <td><%= link_to Person.find(user_person_contrib.person_id).display_name, person_path(user_person_contrib.person_id) %></td>
             <td><%= user_person_contrib.annotation %></td>
             <td><%= user_person_contrib.bibliography %></td>
             <td>

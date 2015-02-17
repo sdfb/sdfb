@@ -207,15 +207,15 @@ class Relationship < ActiveRecord::Base
   end
 
   def get_both_names
-    return Person.find(person1_index).first_name + " " + Person.find(person1_index).last_name  + " & " + Person.find(person2_index).first_name + " " + Person.find(person2_index).last_name
+    return Person.find(person1_index).display_name + " & " + Person.find(person2_index).display_name 
   end
 
   def get_person1_name
-    return Person.find(person1_index).first_name + " " + Person.find(person1_index).last_name 
+    return Person.find(person1_index).display_name 
   end
 
   def get_person2_name
-    return Person.find(person2_index).first_name + " " + Person.find(person2_index).last_name 
+    return Person.find(person2_index).display_name 
   end
 
   def get_users_name

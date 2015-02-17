@@ -13,9 +13,9 @@
     </div>
   <% end %>
   <%= f.label :person1_index, label: "Person 1" %>
-  <%= Person.find(@relationship.person1_index).get_person_name %>
+  <%= Person.find(@relationship.person1_index).display_name %>
   <%= f.label :person2_index, label: "Person 2" %>
-  <%= Person.find(@relationship.person2_index).get_person_name %>
+  <%= Person.find(@relationship.person2_index).display_name %>
   <%= f.label :original_certainty, label: "Estimated Certainty" %>
   <%= f.range_field :original_certainty, :min=>0, :max=>100, :class=>"slide", :id=>"slider1"%>
   <br>

@@ -71,7 +71,7 @@ class UserPersonContrib < ActiveRecord::Base
   end
 
   def get_person_name
-    return Person.find(person_id).first_name + " " + Person.find(person_id).last_name 
+    return Person.find(person_id).display_name 
   end
 
   def get_users_name
