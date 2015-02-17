@@ -61,7 +61,7 @@ class Person < ActiveRecord::Base
   # validates_presence_of :last_name
   validates_presence_of :created_by
   validates_presence_of :gender
-  #validates_presence_of :display_name
+  validates_presence_of :display_name
   #validates_presence_of :rel_sum
   validates_presence_of :birth_year_type
   validates_presence_of :ext_birth_year
