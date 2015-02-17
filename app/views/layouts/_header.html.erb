@@ -12,14 +12,14 @@
 					      <b class="caret"></b>
 					    </a>
 					    <ul class="dropdown-menu">
-					    	<% if (current_user.user_type == "Admin") || (current_user.user_type == "Standard") || (current_user.user_type == "Curator")%>
+					    	<% if (current_user.user_type == "Admin") || (current_user.user_type == "Curator")%>
 						    	<li class="nav-header">People</li>
 						   	<% end %>
 						    	<li><a href="/people">People</a></li>
 						    	<% if (current_user.user_type == "Admin") || (current_user.user_type == "Curator")%>
 						    		<li><a href="/user_person_contribs">People Annotations</a></li>
 						    	<% end %>
-						    <% if (current_user.user_type == "Admin") || (current_user.user_type == "Standard") || (current_user.user_type == "Curator")%>
+						    <% if (current_user.user_type == "Admin") || (current_user.user_type == "Curator")%>
 						    	<li class="nav-header">Relationships</li>
 						    <% end %>
 						    	<% if (current_user.user_type == "Admin") || (current_user.user_type == "Standard") || (current_user.user_type == "Curator")%>
@@ -37,7 +37,7 @@
 						    	<% if (current_user.user_type == "Admin") || (current_user.user_type == "Curator")%>
 						    		<li><a href="/rel_cat_assigns">Relationship Type/Category Assignments</a></li>
 						    	<% end %>
-						    <% if (current_user.user_type == "Admin") || (current_user.user_type == "Standard") || (current_user.user_type == "Curator")%>
+						    <% if (current_user.user_type == "Admin") || (current_user.user_type == "Curator")%>
 						    	<li class="nav-header">Groups</li>
 						    <% end %>
 						    	<% if (current_user.user_type == "Admin") || (current_user.user_type == "Standard") || (current_user.user_type == "Curator")%>

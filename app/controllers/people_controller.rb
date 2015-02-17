@@ -123,7 +123,7 @@ class PeopleController < ApplicationController
           "Group List", "Justification", "Created By ID", "Created By", "Created At", "Is approved?",
           "Approved By ID", "Approved By", "Approved On"]
         @all_people.each do |person|
-          csv << [person.id, person.prefix, person.first_name, person.last_name, person.suffix,
+          csv << [person.id, person.odnb_id, person.prefix, person.first_name, person.last_name, person.suffix,
             person.title, person.search_names_all, person.gender, person.historical_significance, person.birth_year_type,
             person.ext_birth_year, person.alt_birth_year, person.death_year_type, person.ext_death_year, person.alt_death_year, person.rel_sum,
             person.group_list, person.justification, person.created_by, User.find(person.created_by).get_person_name, person.created_at,
