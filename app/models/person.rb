@@ -2,7 +2,7 @@ class Person < ActiveRecord::Base
   attr_accessible :odnb_id, :first_name, :last_name, :created_by, :historical_significance, :uncertain, :unlikely, :possible,
   :likely, :certain, :rel_sum, :prefix, :suffix, :search_names_all, :title, :birth_year_type, :ext_birth_year, :alt_birth_year, :death_year_type,
   :ext_death_year, :alt_death_year, :justification, :approved_by, :approved_on, :created_at, :is_approved, :group_list, :gender,
-  :is_active, :is_rejected, :edited_by_on
+  :is_active, :is_rejected, :edited_by_on, :display_name
   serialize :rel_sum,Array
   serialize :group_list,Array
   serialize :edited_by_on,Array
@@ -61,11 +61,7 @@ class Person < ActiveRecord::Base
   # validates_presence_of :last_name
   validates_presence_of :created_by
   validates_presence_of :gender
-  # validates_presence_of :uncertain
-  # validates_presence_of :unlikely
-  # validates_presence_of :possible
-  # validates_presence_of :likely
-  # validates_presence_of :certain
+  validates_presence_of :display_name
   #validates_presence_of :rel_sum
   validates_presence_of :birth_year_type
   validates_presence_of :ext_birth_year
@@ -169,7 +165,7 @@ class Person < ActiveRecord::Base
   end
 
   def autocomplete_name
-    "#{self.first_name} #{self.last_name} (#{self.ext_birth_year})"
+    "#{self.display_name} (#{self.ext_birth_year})"
   end
 
   def check_if_approved
@@ -180,7 +176,40 @@ class Person < ActiveRecord::Base
   end
 
   def get_person_name
-    return first_name + " " + last_name 
+    person_name = ""
+    if (prefix != "")
+      person_name += prefix
+    end
+    if (first_name != "")
+      if (person_name == "")
+        person_name += first_name
+      else
+        person_name += " " + first_name
+      end
+    end
+    if (last_name != "")
+      if (person_name == "")
+        person_name += last_name
+      else
+        person_name += " " + last_name
+      end
+    end
+    if (suffix != "")
+      if (person_name == "")
+        person_name += suffix
+      else
+        person_name += " " + suffix
+      end
+    end
+    if (title != "")
+      if (person_name == "")
+        person_name += title
+      else
+        person_name += " " + title
+      end
+    end
+      
+    return person_name
   end
 
   # searches for people by name

@@ -17,6 +17,7 @@
   <%= f.input :first_name %>
   <%= f.input :last_name %>
   <%= f.input :suffix %>
+  <%= f.input :display_name %>
   <%= f.hidden_field :created_by, :value => current_user.id %>
   <%= f.input :gender, :collection =>["female", "male","unknown"], label: "Gender", prompt: "Select" %>
   <%= f.input :odnb_id, label: "ODNB ID", as: :string %>

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20150118052942) do
+ActiveRecord::Schema.define(:version => 20150217005312) do
 
   create_table "comments", :force => true do |t|
     t.string   "comment_type"
@@ -128,6 +128,7 @@ ActiveRecord::Schema.define(:version => 20150118052942) do
     t.text     "edited_by_on",            :default => "--- []\n"
     t.datetime "created_at",                                      :null => false
     t.datetime "updated_at",                                      :null => false
+    t.string   "display_name"
   end
 
   create_table "rel_cat_assigns", :force => true do |t|

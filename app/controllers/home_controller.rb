@@ -1,5 +1,5 @@
 class HomeController < ApplicationController
-  autocomplete :person, :search_names_all, full: true, :extra_data => [:first_name, :last_name, :ext_birth_year], :display_value => :autocomplete_name
+  autocomplete :person, :search_names_all, full: true, :extra_data => [:display_name, :ext_birth_year], :display_value => :autocomplete_name
   layout "layouts/index_layout"
   def index
     #If there are no relationships, only return the person node

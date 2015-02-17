@@ -6,7 +6,7 @@ class RelationshipsController < ApplicationController
   # before_filter :check_login, :only => [:index, :new, :edit]
   # authorize_resource
 
-  autocomplete :person, :search_names_all, full: true, :extra_data => [:first_name, :last_name, :ext_birth_year], :display_value => :autocomplete_name
+  autocomplete :person, :search_names_all, full: true, :extra_data => [:display_name, :ext_birth_year], :display_value => :autocomplete_name
   load_and_authorize_resource
 
   helper PeopleHelper
@@ -133,8 +133,8 @@ class RelationshipsController < ApplicationController
           "End Day", "End Year", "Edge Birthdate Certainty", "Justification", "Created By ID", "Created By", "Created At", "Is approved?",
           "Approved By ID", "Approved By", "Approved On"]
         @all_relationships.each do |relationship|
-          csv << [relationship.id, relationship.person1_index, Person.find(relationship.person1_index).get_person_name, relationship.person2_index,
-            Person.find(relationship.person2_index).get_person_name, relationship.original_certainty, relationship.max_certainty, 
+          csv << [relationship.id, relationship.person1_index, Person.find(relationship.person1_index).display_name, relationship.person2_index,
+            Person.find(relationship.person2_index).display_name, relationship.original_certainty, relationship.max_certainty, 
             relationship.start_month, relationship.start_day, relationship.start_year, relationship.end_month, relationship.end_day, relationship.end_year,
             relationship.edge_birthdate_certainty, relationship.justification,
             relationship.created_by, User.find(relationship.created_by).get_person_name, relationship.created_at,
@@ -146,8 +146,8 @@ class RelationshipsController < ApplicationController
         csv << ["SDFB Relationship ID","Person 1 ID", "Person 1 Name", "Person 2 ID", "Person 2 Name", "Original Certainty", "Maximum Certainty",
           "Start Day", "Start Year",  "End Month", "End Day", "End Year"]
         @all_relationships_approved.each do |relationship|
-          csv << [relationship.id, relationship.person1_index, Person.find(relationship.person1_index).get_person_name, relationship.person2_index,
-            Person.find(relationship.person2_index).get_person_name, relationship.original_certainty, relationship.max_certainty,
+          csv << [relationship.id, relationship.person1_index, Person.find(relationship.person1_index).display_name, relationship.person2_index,
+            Person.find(relationship.person2_index).display_name, relationship.original_certainty, relationship.max_certainty,
             relationship.start_month, relationship.start_day, relationship.start_year, relationship.end_month, relationship.end_day, relationship.end_year]
         end
       end
@@ -165,8 +165,8 @@ class RelationshipsController < ApplicationController
           "End Day", "End Year", "Edge Birthdate Certainty", "Justification", "Created By ID", "Created By", "Created At", "Is approved?",
           "Approved By ID", "Approved By", "Approved On"]
         @all_relationships.each do |relationship|
-          csv << [relationship.id, relationship.person1_index, Person.find(relationship.person1_index).get_person_name, relationship.person2_index,
-            Person.find(relationship.person2_index).get_person_name, relationship.original_certainty, relationship.max_certainty, 
+          csv << [relationship.id, relationship.person1_index, Person.find(relationship.person1_index).display_name, relationship.person2_index,
+            Person.find(relationship.person2_index).display_name, relationship.original_certainty, relationship.max_certainty, 
             relationship.start_month, relationship.start_day, relationship.start_year, relationship.end_month, relationship.end_day, relationship.end_year,
             relationship.edge_birthdate_certainty, relationship.justification,
             relationship.created_by, User.find(relationship.created_by).get_person_name, relationship.created_at,
@@ -178,8 +178,8 @@ class RelationshipsController < ApplicationController
         csv << ["SDFB Relationship ID","Person 1 ID", "Person 1 Name", "Person 2 ID", "Person 2 Name", "Original Certainty", "Maximum Certainty",
           "Start Day", "Start Year",  "End Month", "End Day", "End Year"]
         @all_relationships_approved.each do |relationship|
-          csv << [relationship.id, relationship.person1_index, Person.find(relationship.person1_index).get_person_name, relationship.person2_index,
-            Person.find(relationship.person2_index).get_person_name, relationship.original_certainty, relationship.max_certainty,
+          csv << [relationship.id, relationship.person1_index, Person.find(relationship.person1_index).display_name, relationship.person2_index,
+            Person.find(relationship.person2_index).display_name, relationship.original_certainty, relationship.max_certainty,
             relationship.start_month, relationship.start_day, relationship.start_year, relationship.end_month, relationship.end_day, relationship.end_year]
         end
       end
@@ -197,8 +197,8 @@ class RelationshipsController < ApplicationController
           "End Day", "End Year", "Edge Birthdate Certainty", "Justification", "Created By ID", "Created By", "Created At", "Is approved?",
           "Approved By ID", "Approved By", "Approved On"]
         @all_relationships.each do |relationship|
-          csv << [relationship.id, relationship.person1_index, Person.find(relationship.person1_index).get_person_name, relationship.person2_index,
-            Person.find(relationship.person2_index).get_person_name, relationship.original_certainty, relationship.max_certainty, 
+          csv << [relationship.id, relationship.person1_index, Person.find(relationship.person1_index).display_name, relationship.person2_index,
+            Person.find(relationship.person2_index).display_name, relationship.original_certainty, relationship.max_certainty, 
             relationship.start_month, relationship.start_day, relationship.start_year, relationship.end_month, relationship.end_day, relationship.end_year,
             relationship.edge_birthdate_certainty, relationship.justification,
             relationship.created_by, User.find(relationship.created_by).get_person_name, relationship.created_at,
@@ -210,8 +210,8 @@ class RelationshipsController < ApplicationController
         csv << ["SDFB Relationship ID","Person 1 ID", "Person 1 Name", "Person 2 ID", "Person 2 Name", "Original Certainty", "Maximum Certainty",
           "Start Day", "Start Year",  "End Month", "End Day", "End Year"]
         @all_relationships_approved.each do |relationship|
-          csv << [relationship.id, relationship.person1_index, Person.find(relationship.person1_index).get_person_name, relationship.person2_index,
-            Person.find(relationship.person2_index).get_person_name, relationship.original_certainty, relationship.max_certainty,
+          csv << [relationship.id, relationship.person1_index, Person.find(relationship.person1_index).display_name, relationship.person2_index,
+            Person.find(relationship.person2_index).display_name, relationship.original_certainty, relationship.max_certainty,
             relationship.start_month, relationship.start_day, relationship.start_year, relationship.end_month, relationship.end_day, relationship.end_year]
         end
       end
@@ -229,8 +229,8 @@ class RelationshipsController < ApplicationController
           "End Day", "End Year", "Edge Birthdate Certainty", "Justification", "Created By ID", "Created By", "Created At", "Is approved?",
           "Approved By ID", "Approved By", "Approved On"]
         @all_relationships.each do |relationship|
-          csv << [relationship.id, relationship.person1_index, Person.find(relationship.person1_index).get_person_name, relationship.person2_index,
-            Person.find(relationship.person2_index).get_person_name, relationship.original_certainty, relationship.max_certainty, 
+          csv << [relationship.id, relationship.person1_index, Person.find(relationship.person1_index).display_name, relationship.person2_index,
+            Person.find(relationship.person2_index).display_name, relationship.original_certainty, relationship.max_certainty, 
             relationship.start_month, relationship.start_day, relationship.start_year, relationship.end_month, relationship.end_day, relationship.end_year,
             relationship.edge_birthdate_certainty, relationship.justification,
             relationship.created_by, User.find(relationship.created_by).get_person_name, relationship.created_at,
@@ -242,8 +242,8 @@ class RelationshipsController < ApplicationController
         csv << ["SDFB Relationship ID","Person 1 ID", "Person 1 Name", "Person 2 ID", "Person 2 Name", "Original Certainty", "Maximum Certainty",
           "Start Day", "Start Year",  "End Month", "End Day", "End Year"]
         @all_relationships_approved.each do |relationship|
-          csv << [relationship.id, relationship.person1_index, Person.find(relationship.person1_index).get_person_name, relationship.person2_index,
-            Person.find(relationship.person2_index).get_person_name, relationship.original_certainty, relationship.max_certainty,
+          csv << [relationship.id, relationship.person1_index, Person.find(relationship.person1_index).display_name, relationship.person2_index,
+            Person.find(relationship.person2_index).display_name, relationship.original_certainty, relationship.max_certainty,
             relationship.start_month, relationship.start_day, relationship.start_year, relationship.end_month, relationship.end_day, relationship.end_year]
         end
       end
@@ -261,8 +261,8 @@ class RelationshipsController < ApplicationController
           "End Day", "End Year", "Edge Birthdate Certainty", "Justification", "Created By ID", "Created By", "Created At", "Is approved?",
           "Approved By ID", "Approved By", "Approved On"]
         @all_relationships.each do |relationship|
-          csv << [relationship.id, relationship.person1_index, Person.find(relationship.person1_index).get_person_name, relationship.person2_index,
-            Person.find(relationship.person2_index).get_person_name, relationship.original_certainty, relationship.max_certainty, 
+          csv << [relationship.id, relationship.person1_index, Person.find(relationship.person1_index).display_name, relationship.person2_index,
+            Person.find(relationship.person2_index).display_name, relationship.original_certainty, relationship.max_certainty, 
             relationship.start_month, relationship.start_day, relationship.start_year, relationship.end_month, relationship.end_day, relationship.end_year,
             relationship.edge_birthdate_certainty, relationship.justification,
             relationship.created_by, User.find(relationship.created_by).get_person_name, relationship.created_at,
@@ -274,8 +274,8 @@ class RelationshipsController < ApplicationController
         csv << ["SDFB Relationship ID","Person 1 ID", "Person 1 Name", "Person 2 ID", "Person 2 Name", "Original Certainty", "Maximum Certainty",
           "Start Day", "Start Year",  "End Month", "End Day", "End Year"]
         @all_relationships_approved.each do |relationship|
-          csv << [relationship.id, relationship.person1_index, Person.find(relationship.person1_index).get_person_name, relationship.person2_index,
-            Person.find(relationship.person2_index).get_person_name, relationship.original_certainty, relationship.max_certainty,
+          csv << [relationship.id, relationship.person1_index, Person.find(relationship.person1_index).display_name, relationship.person2_index,
+            Person.find(relationship.person2_index).display_name, relationship.original_certainty, relationship.max_certainty,
             relationship.start_month, relationship.start_day, relationship.start_year, relationship.end_month, relationship.end_day, relationship.end_year]
         end
       end
@@ -293,8 +293,8 @@ class RelationshipsController < ApplicationController
           "End Day", "End Year", "Edge Birthdate Certainty", "Justification", "Created By ID", "Created By", "Created At", "Is approved?",
           "Approved By ID", "Approved By", "Approved On"]
         @all_relationships.each do |relationship|
-          csv << [relationship.id, relationship.person1_index, Person.find(relationship.person1_index).get_person_name, relationship.person2_index,
-            Person.find(relationship.person2_index).get_person_name, relationship.original_certainty, relationship.max_certainty, 
+          csv << [relationship.id, relationship.person1_index, Person.find(relationship.person1_index).display_name, relationship.person2_index,
+            Person.find(relationship.person2_index).display_name, relationship.original_certainty, relationship.max_certainty, 
             relationship.start_month, relationship.start_day, relationship.start_year, relationship.end_month, relationship.end_day, relationship.end_year,
             relationship.edge_birthdate_certainty, relationship.justification,
             relationship.created_by, User.find(relationship.created_by).get_person_name, relationship.created_at,
@@ -306,8 +306,8 @@ class RelationshipsController < ApplicationController
         csv << ["SDFB Relationship ID","Person 1 ID", "Person 1 Name", "Person 2 ID", "Person 2 Name", "Original Certainty", "Maximum Certainty",
           "Start Day", "Start Year",  "End Month", "End Day", "End Year"]
         @all_relationships_approved.each do |relationship|
-          csv << [relationship.id, relationship.person1_index, Person.find(relationship.person1_index).get_person_name, relationship.person2_index,
-            Person.find(relationship.person2_index).get_person_name, relationship.original_certainty, relationship.max_certainty,
+          csv << [relationship.id, relationship.person1_index, Person.find(relationship.person1_index).display_name, relationship.person2_index,
+            Person.find(relationship.person2_index).display_name, relationship.original_certainty, relationship.max_certainty,
             relationship.start_month, relationship.start_day, relationship.start_year, relationship.end_month, relationship.end_day, relationship.end_year]
         end
       end
@@ -325,8 +325,8 @@ class RelationshipsController < ApplicationController
           "End Day", "End Year", "Edge Birthdate Certainty", "Justification", "Created By ID", "Created By", "Created At", "Is approved?",
           "Approved By ID", "Approved By", "Approved On"]
         @all_relationships.each do |relationship|
-          csv << [relationship.id, relationship.person1_index, Person.find(relationship.person1_index).get_person_name, relationship.person2_index,
-            Person.find(relationship.person2_index).get_person_name, relationship.original_certainty, relationship.max_certainty, 
+          csv << [relationship.id, relationship.person1_index, Person.find(relationship.person1_index).display_name, relationship.person2_index,
+            Person.find(relationship.person2_index).display_name, relationship.original_certainty, relationship.max_certainty, 
             relationship.start_month, relationship.start_day, relationship.start_year, relationship.end_month, relationship.end_day, relationship.end_year,
             relationship.edge_birthdate_certainty, relationship.justification,
             relationship.created_by, User.find(relationship.created_by).get_person_name, relationship.created_at,
@@ -338,8 +338,8 @@ class RelationshipsController < ApplicationController
         csv << ["SDFB Relationship ID","Person 1 ID", "Person 1 Name", "Person 2 ID", "Person 2 Name", "Original Certainty", "Maximum Certainty",
           "Start Day", "Start Year",  "End Month", "End Day", "End Year"]
         @all_relationships_approved.each do |relationship|
-          csv << [relationship.id, relationship.person1_index, Person.find(relationship.person1_index).get_person_name, relationship.person2_index,
-            Person.find(relationship.person2_index).get_person_name, relationship.original_certainty, relationship.max_certainty,
+          csv << [relationship.id, relationship.person1_index, Person.find(relationship.person1_index).display_name, relationship.person2_index,
+            Person.find(relationship.person2_index).display_name, relationship.original_certainty, relationship.max_certainty,
             relationship.start_month, relationship.start_day, relationship.start_year, relationship.end_month, relationship.end_day, relationship.end_year]
         end
       end
@@ -357,8 +357,8 @@ class RelationshipsController < ApplicationController
           "End Day", "End Year", "Edge Birthdate Certainty", "Justification", "Created By ID", "Created By", "Created At", "Is approved?",
           "Approved By ID", "Approved By", "Approved On"]
         @all_relationships.each do |relationship|
-          csv << [relationship.id, relationship.person1_index, Person.find(relationship.person1_index).get_person_name, relationship.person2_index,
-            Person.find(relationship.person2_index).get_person_name, relationship.original_certainty, relationship.max_certainty, 
+          csv << [relationship.id, relationship.person1_index, Person.find(relationship.person1_index).display_name, relationship.person2_index,
+            Person.find(relationship.person2_index).display_name, relationship.original_certainty, relationship.max_certainty, 
             relationship.start_month, relationship.start_day, relationship.start_year, relationship.end_month, relationship.end_day, relationship.end_year,
             relationship.edge_birthdate_certainty, relationship.justification,
             relationship.created_by, User.find(relationship.created_by).get_person_name, relationship.created_at,
@@ -370,8 +370,8 @@ class RelationshipsController < ApplicationController
         csv << ["SDFB Relationship ID","Person 1 ID", "Person 1 Name", "Person 2 ID", "Person 2 Name", "Original Certainty", "Maximum Certainty",
           "Start Day", "Start Year",  "End Month", "End Day", "End Year"]
         @all_relationships_approved.each do |relationship|
-          csv << [relationship.id, relationship.person1_index, Person.find(relationship.person1_index).get_person_name, relationship.person2_index,
-            Person.find(relationship.person2_index).get_person_name, relationship.original_certainty, relationship.max_certainty,
+          csv << [relationship.id, relationship.person1_index, Person.find(relationship.person1_index).display_name, relationship.person2_index,
+            Person.find(relationship.person2_index).display_name, relationship.original_certainty, relationship.max_certainty,
             relationship.start_month, relationship.start_day, relationship.start_year, relationship.end_month, relationship.end_day, relationship.end_year]
         end
       end
@@ -389,8 +389,8 @@ class RelationshipsController < ApplicationController
           "End Day", "End Year", "Edge Birthdate Certainty", "Justification", "Created By ID", "Created By", "Created At", "Is approved?",
           "Approved By ID", "Approved By", "Approved On"]
         @all_relationships.each do |relationship|
-          csv << [relationship.id, relationship.person1_index, Person.find(relationship.person1_index).get_person_name, relationship.person2_index,
-            Person.find(relationship.person2_index).get_person_name, relationship.original_certainty, relationship.max_certainty, 
+          csv << [relationship.id, relationship.person1_index, Person.find(relationship.person1_index).display_name, relationship.person2_index,
+            Person.find(relationship.person2_index).display_name, relationship.original_certainty, relationship.max_certainty, 
             relationship.start_month, relationship.start_day, relationship.start_year, relationship.end_month, relationship.end_day, relationship.end_year,
             relationship.edge_birthdate_certainty, relationship.justification,
             relationship.created_by, User.find(relationship.created_by).get_person_name, relationship.created_at,
@@ -402,8 +402,8 @@ class RelationshipsController < ApplicationController
         csv << ["SDFB Relationship ID","Person 1 ID", "Person 1 Name", "Person 2 ID", "Person 2 Name", "Original Certainty", "Maximum Certainty",
           "Start Day", "Start Year",  "End Month", "End Day", "End Year"]
         @all_relationships_approved.each do |relationship|
-          csv << [relationship.id, relationship.person1_index, Person.find(relationship.person1_index).get_person_name, relationship.person2_index,
-            Person.find(relationship.person2_index).get_person_name, relationship.original_certainty, relationship.max_certainty,
+          csv << [relationship.id, relationship.person1_index, Person.find(relationship.person1_index).display_name, relationship.person2_index,
+            Person.find(relationship.person2_index).display_name, relationship.original_certainty, relationship.max_certainty,
             relationship.start_month, relationship.start_day, relationship.start_year, relationship.end_month, relationship.end_day, relationship.end_year]
         end
       end
@@ -421,8 +421,8 @@ class RelationshipsController < ApplicationController
           "End Day", "End Year", "Edge Birthdate Certainty", "Justification", "Created By ID", "Created By", "Created At", "Is approved?",
           "Approved By ID", "Approved By", "Approved On"]
         @all_relationships.each do |relationship|
-          csv << [relationship.id, relationship.person1_index, Person.find(relationship.person1_index).get_person_name, relationship.person2_index,
-            Person.find(relationship.person2_index).get_person_name, relationship.original_certainty, relationship.max_certainty, 
+          csv << [relationship.id, relationship.person1_index, Person.find(relationship.person1_index).display_name, relationship.person2_index,
+            Person.find(relationship.person2_index).display_name, relationship.original_certainty, relationship.max_certainty, 
             relationship.start_month, relationship.start_day, relationship.start_year, relationship.end_month, relationship.end_day, relationship.end_year,
             relationship.edge_birthdate_certainty, relationship.justification,
             relationship.created_by, User.find(relationship.created_by).get_person_name, relationship.created_at,
@@ -434,8 +434,8 @@ class RelationshipsController < ApplicationController
         csv << ["SDFB Relationship ID","Person 1 ID", "Person 1 Name", "Person 2 ID", "Person 2 Name", "Original Certainty", "Maximum Certainty",
           "Start Day", "Start Year",  "End Month", "End Day", "End Year"]
         @all_relationships_approved.each do |relationship|
-          csv << [relationship.id, relationship.person1_index, Person.find(relationship.person1_index).get_person_name, relationship.person2_index,
-            Person.find(relationship.person2_index).get_person_name, relationship.original_certainty, relationship.max_certainty,
+          csv << [relationship.id, relationship.person1_index, Person.find(relationship.person1_index).display_name, relationship.person2_index,
+            Person.find(relationship.person2_index).display_name, relationship.original_certainty, relationship.max_certainty,
             relationship.start_month, relationship.start_day, relationship.start_year, relationship.end_month, relationship.end_day, relationship.end_year]
         end
       end

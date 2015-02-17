@@ -1,4 +1,4 @@
-class UserRelContrib < ActiveRecord::Base
+fclass UserRelContrib < ActiveRecord::Base
   attr_accessible :annotation, :bibliography, :certainty, :created_by, :relationship_id, :relationship_type_id, 
   :approved_by, :approved_on, :created_at, :is_approved, :start_year, :start_month, 
   :start_day, :end_year, :end_month, :end_day, :is_active, :is_rejected, :edited_by_on, :person1_autocomplete,
@@ -340,15 +340,14 @@ class UserRelContrib < ActiveRecord::Base
   end
 
   def get_person1_name
-    return Person.find(Relationship.find(relationship_id).person1_index).first_name + " " + Person.find(Relationship.find(relationship_id).person1_index).last_name 
+    return Person.find(Relationship.find(relationship_id).person1_index).display_name
   end
 
   def get_person2_name
-    return Person.find(Relationship.find(relationship_id).person2_index).first_name + " " + Person.find(Relationship.find(relationship_id).person2_index).last_name 
-  end
+    return Person.find(Relationship.find(relationship_id).person2_index).display_name
 
   def get_both_names
-    return Person.find(Relationship.find(relationship_id).person1_index).first_name + " " + Person.find(Relationship.find(relationship_id).person1_index).last_name + " & " + Person.find(Relationship.find(relationship_id).person2_index).first_name + " " + Person.find(Relationship.find(relationship_id).person2_index).last_name 
+    return Person.find(Relationship.find(relationship_id).person1_index).display_name + " & " + Person.find(Relationship.find(relationship_id).person2_index).display_name
   end
 
   def get_users_name

@@ -19,7 +19,7 @@
         <dt><strong>Id:</strong></dt>
         <dd><%= @user_person_contrib.id %></dd>
         <dt><strong>Person:</strong></dt>
-        <dd><%= link_to Person.find(@user_person_contrib.person_id).get_person_name,  person_path(@user_person_contrib.person_id) %></dd>
+        <dd><%= link_to Person.find(@user_person_contrib.person_id).display_name,  person_path(@user_person_contrib.person_id) %></dd>
         <dt><strong>Created by:</strong></dt>
         <dd><%= link_to User.find(@user_person_contrib.created_by).username,  user_path(@user_person_contrib.created_by) %></dd>
         <dt><strong>Annotation:</strong></dt>
