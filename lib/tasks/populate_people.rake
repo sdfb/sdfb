@@ -1,12 +1,9 @@
 namespace :db do
   desc "Erase and fill database"
   # creating a rake task within db namespace called 'populate_people'
-<<<<<<< HEAD
+
   # executing 'rake db:populate_people' will cause this script to run task :populate_people => :environment do
-=======
-  # executing 'rake db:populate_people' will cause this script to run
-  task :populate_people => :environment do
->>>>>>> 8bd2ca1ff5d03c3cfb7a1d4e2674fc3c008d44f5
+
     # Invoke rake db:migrate just in case...
     # Rake::Task['db:migrate:reset'].invoke #commented this out so that it does not reset the database and two populate files can run
 
@@ -95,8 +92,4 @@ namespace :db do
     inFile.close
     puts "Finished adding People"
   end
-<<<<<<< HEAD
-end
-=======
-end
->>>>>>> 8bd2ca1ff5d03c3cfb7a1d4e2674fc3c008d44f5
+
