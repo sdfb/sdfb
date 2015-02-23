@@ -100,12 +100,6 @@
           <dt><strong>Historical Significance:</strong></dt>
           <dd><%= @person.historical_significance %></dd>
         <% end %>
-        <dt><strong>Relationship Summary:</strong></dt>
-        <% if ! @person.rel_sum.empty? %>
-          <dd><%= @person.rel_sum %></dd>
-        <% else %>
-          <dd>No relationships</dd>
-        <% end %>
         <dt><strong>Group Summary:</strong></dt>
         <% if ! @person.group_list.empty? %>
           <dd><%= @person.group_list %></dd>
