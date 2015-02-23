@@ -49,7 +49,15 @@ $(document).ready(function() {
     $(".icon-color").tooltip({placement:  'left', title: 'Colors'});
     $(".icon-info").tooltip({placement:  'left', title: 'Info'});
 
-    $(".slider").tooltip({placement: 'right', title: 'Choose the certainty of relationship'});
+    $("#search-network-slider-confidence").tooltip({placement: 'right', title: 'Choose the certainty'});
+    $("#search-network-slider-date").tooltip({placement: 'right', title: 'Choose the date range'});
+
+    $("#search-shared-network-slider-confidence").tooltip({placement: 'right', title: 'Choose the certainty'});
+    $("#search-shared-network-slider-date").tooltip({placement: 'right', title: 'Choose the date range'});
+
+    $("#nav-slider-confidence").tooltip({placement: 'right', title: 'Choose the Certainty Threshold, then Click Filter'});
+    $("#nav-slider-date").tooltip({placement: 'right', title: 'Choose the Date Range, then Click Filter'});
+
 	$('#search-network-form').css('display','block');
 
     $("#search-network-show-table").click(function(){
@@ -110,11 +118,13 @@ $(document).ready(function() {
         min: default_scertainty,
         max: default_ecertainty,
         step: 1,
+        values: [default_scertainty, default_ecertainty],
         // Gets a live reading of the value and prints it on the page
         slide: function( event, ui ) {
-        	var result = getConfidence(ui.value);
-            $("#search-network-slider-confidence-result").html( result + " relationships @ " + ui.value + "%");
-            $("#search-network-slider-confidence-result-hidden").val(ui.value);
+        	var sresult = getConfidence(ui.values[0]);
+            var eresult = getConfidence(ui.values[1]);
+            $("#search-network-slider-confidence-result").html( sresult + " to " + eresult + " relationships @ " + ui.values[0] + " - " + ui.values[1] + "%");
+            $("#search-network-slider-confidence-result-hidden").val(ui.values[0] + " - " + ui.values[1]);
         }
     });
 
@@ -132,6 +142,12 @@ $(document).ready(function() {
         }
     });
 
+    $("#search-network-name").keyup(function(event){
+        if(event.keyCode == 13){
+            $("#search-network-submit").click();
+        }
+    });
+
     $("#search-shared-network-slider-confidence").slider({
         animate: true,
         range: "min",
@@ -139,11 +155,13 @@ $(document).ready(function() {
         min: default_scertainty,
         max: default_ecertainty,
         step: 1,
+        values: [default_scertainty, default_ecertainty],
         // Gets a live reading of the value and prints it on the page
         slide: function( event, ui ) {
-            var result = getConfidence(ui.value);
-            $("#search-shared-network-slider-confidence-result").html( result + " relationships @ " + ui.value + "%");
-            $("#search-shared-network-slider-confidence-result-hidden").val(ui.value);
+            var sresult = getConfidence(ui.values[0]);
+            var eresult = getConfidence(ui.values[1]);
+            $("#search-shared-network-slider-confidence-result").html(sresult + " to " + eresult + " relationships @ " + ui.values[0] + " - " + ui.values[1] + "%");
+            $("#search-shared-network-slider-confidence-result-hidden").val(ui.values[0] + " - " + ui.values[1]);
         }
     });
 	
@@ -161,6 +179,18 @@ $(document).ready(function() {
         }
     });
 
+    $("#search-shared-network-name1").keyup(function(event){
+        if(event.keyCode == 13){
+            $("#search-shared-network-submit").click();
+        }
+    });
+
+    $("#search-shared-network-name2").keyup(function(event){
+        if(event.keyCode == 13){
+            $("#search-shared-network-submit").click();
+        }
+    });
+
     $("#nav-slider-confidence").slider({
         animate: true,
         range: "min",
@@ -168,11 +198,13 @@ $(document).ready(function() {
         min: default_scertainty,
         max: default_ecertainty,
         step: 1,
+        values: [default_scertainty, default_ecertainty],
         // Gets a live reading of the value and prints it on the page
         slide: function( event, ui ) {
-            var result = getConfidence(ui.value);             
-            $("#nav-slider-confidence-result").html( result + " relationships @ " + ui.value + "%");
-            $("#nav-slider-confidence-result-hidden").val(ui.value);
+            var sresult = getConfidence(ui.values[0]);
+            var eresult = getConfidence(ui.values[1]);           
+            $("#nav-slider-confidence-result").html(sresult + " to " + eresult + " relationships @ " + ui.values[0] + " - " + ui.values[1] + "%");
+            $("#nav-slider-confidence-result-hidden").val(ui.values[0] + " - " + ui.values[1]);
         }
     });
 
@@ -191,8 +223,7 @@ $(document).ready(function() {
     });
 
     $("#nav-anchor").click(function() {
-        $("#nav-slider").toggle( "fast", function() {
-        });
+        $("#nav-slider").toggleClass("nav-slider-show");
     });
 
     //This is for the slider in Rails to update the confidence based on the slider selection
