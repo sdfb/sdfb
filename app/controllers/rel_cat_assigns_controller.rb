@@ -5,7 +5,7 @@ class RelCatAssignsController < ApplicationController
   load_and_authorize_resource
   
   def index
-    @rel_cat_assigns_approved = RelCatAssign.all_approved.paginate(:page => params[:rel_cat_assigns_approved_page]).per_page(20)
+    @rel_cat_assigns_approved = RelCatAssign.all_approved.paginate(:page => params[:rel_cat_assigns_approved_page]).per_page(30)
 
     respond_to do |format|
       format.html # index.html.erb

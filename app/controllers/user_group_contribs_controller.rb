@@ -9,7 +9,7 @@ class UserGroupContribsController < ApplicationController
   load_and_authorize_resource
 
   def index
-    @user_group_contribs = UserGroupContrib.all_approved.paginate(:page => params[:user_group_contribs_page]).per_page(20)
+    @user_group_contribs = UserGroupContrib.all_approved.paginate(:page => params[:user_group_contribs_page]).per_page(30)
 
     respond_to do |format|
       format.html # index.html.erb

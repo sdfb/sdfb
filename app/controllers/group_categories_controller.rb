@@ -5,7 +5,7 @@ class GroupCategoriesController < ApplicationController
   load_and_authorize_resource
 
   def index
-    @group_categories_approved = GroupCategory.all_approved.paginate(:page => params[:group_category_approved_page]).per_page(20)
+    @group_categories_approved = GroupCategory.all_approved.paginate(:page => params[:group_category_approved_page]).per_page(30)
 
     respond_to do |format|
       format.html # index.html.erb
@@ -17,7 +17,7 @@ class GroupCategoriesController < ApplicationController
   # GET /group_categories/1.json
   def show
     @group_category = GroupCategory.find(params[:id])
-    @group_cat_assigns_approved = GroupCatAssign.for_group_category(params[:id]).all_approved.paginate(:page => params[:group_cat_assigns_approved_page]).per_page(20)
+    @group_cat_assigns_approved = GroupCatAssign.for_group_category(params[:id]).all_approved.paginate(:page => params[:group_cat_assigns_approved_page]).per_page(30)
 
     respond_to do |format|
       format.html # show.html.erb

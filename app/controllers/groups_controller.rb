@@ -21,9 +21,9 @@ class GroupsController < ApplicationController
   # GET /groups/1.json
   def show
     @group = Group.find(params[:id])
-    @user_group_contribs = UserGroupContrib.all_for_group(params[:id]).all_approved.paginate(:page => params[:user_group_contribs_page]).per_page(20)
-    @people = GroupAssignment.all_for_group(params[:id]).all_approved.paginate(:page => params[:people_page]).per_page(20)
-    @group_cat_assigns_approved = GroupCatAssign.for_group(params[:id]).all_approved.paginate(:page => params[:group_cat_assigns_approved_page]).per_page(20)
+    @user_group_contribs = UserGroupContrib.all_for_group(params[:id]).all_approved.paginate(:page => params[:user_group_contribs_page]).per_page(30)
+    @people = GroupAssignment.all_for_group(params[:id]).all_approved.paginate(:page => params[:people_page]).per_page(30)
+    @group_cat_assigns_approved = GroupCatAssign.for_group(params[:id]).all_approved.paginate(:page => params[:group_cat_assigns_approved_page]).per_page(30)
 
     respond_to do |format|
       format.html # show.html.erb
