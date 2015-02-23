@@ -274,9 +274,8 @@ a:hover {
 
 
 .nav-hover{
-  position:absolute;
-  top:100px;
-  left:400px;
+  position:relative;
+  margin: 5px 20px 0px 20px;
   z-index:10;
   background-color:#FBF3E1; 
   max-width:235px; 
@@ -299,6 +298,10 @@ a:hover {
 
 .nav-hover .slider{
   margin:0px;
+}
+
+.nav-slider-show{
+  display:inline-block;
 }
 
 /* Navigation Menu */

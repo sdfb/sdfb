@@ -47,6 +47,15 @@ UPDATE people AS p SET rel_sum = t3.rels FROM (
  ) t3 WHERE p.id = t3.pid;
 ```
 
+## To set up rails:
+```
+Follow this tutorial: http://rubyonrails.org/download/
+And install the Postgres database at: http://postgresapp.com/
+First time: To run the files cloned from Github and populate the database write the commands for the first time:
+install software plugins specific to the app:
+bundle install
+```
+
 ## To prepare database by creating/clearing it:
 
 ```
@@ -77,9 +86,17 @@ rake db:populate_rels_140001_160000
 rake db:populate_rels_160001_170542
 rake db:populate_user_rel_contribs_samples
 rake db:populate_people_display_names
-rake routes
+rake routes 
 ```
 
+## To run the server locally:
+
+```
+Start Postgres
+type "rails s" without the quotes into the terminal
+navigate to http://localhost:3000/
+end this process by sending "Ctrl-C" in terminal
+```
 
 
 TODO:

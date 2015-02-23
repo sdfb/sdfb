@@ -1,7 +1,6 @@
 var francisID = 10000473;
-//var default_confidence = 75;
-//showing all relationships with a confidence of at least 40 %
-var default_confidence = 40;
+var default_sconfidence = 40;
+var default_econfidence = 100;
 var default_sdate = 1400;
 var default_edate = 1800;
     
@@ -48,8 +47,8 @@ function notInArray(arr, val) {
 
 // Displays node information
 function showNodeInfo(data){
- accordion("node");
- $("#node-name").text(data.first+ " "+ data.last);
+ accordion("node")
+ $("#node-name").text(data.display_name);
  $("#node-bdate").text(data.birth_year_type + " " + data.birth_year);
  $("#node-ddate").text(data.death_year_type + " " + data.death_year);
  $("#node-significance").text(data.occupation);
@@ -73,14 +72,14 @@ function createNodeKey(node) {
   return nodeKey;
 }
 
-function twoDegs(id, id2, data, confidence, sdate, edate) {
+function twoDegs(id, id2, data, sconf, econf, sdate, edate) {
 	var keys = {};
 	var edges = [];
     var nodes = [];
-	function createGraph(id, data, confidence, sdate, edate) {
+	function createGraph(id, data, sconf, econf, sdate, edate) {
     	var p = data.nodes[id];
       		$.each(p.rels, function(index, value) {
-        		if (value[2] == 0 || value[1] < confidence || edate < p.birth_year || sdate > p.death_year) {
+        		if (value[2] == 0 || value[1] < sconf || value[1] > econf || edate < p.birth_year || sdate > p.death_year) {
          		} else {
 					var q = data.nodes[value[0]]; // find person object in data by id
 					keys[q.id] = createNodeKey(q); //puts nodekey into keys array
@@ -90,11 +89,11 @@ function twoDegs(id, id2, data, confidence, sdate, edate) {
               	} 
           	});
       //adds main person's id referenced to keys associative array. Keys represent all data in graph
-          keys[p.id] = {"text": p.first + " " + p.last, "size": 20, "id": p.id,  "cluster": getClusterRels(p)}; 
+          keys[p.id] = {"text": p.display_name, "size": 20, "id": p.id,  "cluster": getClusterRels(p)}; 
   	}
-    createGraph(id, data, confidence, sdate, edate);
+    createGraph(id, data, sconf, econf, sdate, edate);
     if (id2 != 0 && id2 != ""){
-        createGraph(id2, data, confidence, sdate, edate);
+        createGraph(id2, data, sconf, econf, sdate, edate);
     }
 
     $.each(keys, function(index, value) {
@@ -190,7 +189,8 @@ function getParam ( sname ){
 function filterGraph(data){
     var ID = getParam("id");
     var ID2 = getParam("id2");
-    var conf = getParam("confidence");
+    var sconf = getParam("confidence").split(",")[0];
+    var econf = getParam("confidence").split(",")[1];
     var date = getParam("date");
     var sdate = date.substring(0, 3);
     var edate = date.substring(5, 8);
@@ -204,14 +204,17 @@ function filterGraph(data){
     if(ID == ""){
         ID = francisID;
     }
-    if(conf == ""){
-        conf = default_confidence;
+    if(sconf == ""){
+        sconf = default_sconfidence;
     }
-    twoDegs(ID, ID2, data, conf, sdate, edate);
+    if(econf == ""){
+        econf = default_econfidence;
+    }
+    twoDegs(ID, ID2, data, sconf, econf, sdate, edate);
 }
 
 function initGraph(data){
-    var confidence = default_confidence
+    var confidence = default_sconfidence + " to " + default_econfidence
     var date = default_sdate + " - " + default_edate
     if (getParam('id') > 0){
          var name = data.nodes[parseInt(getParam('id'))].label
@@ -219,7 +222,7 @@ function initGraph(data){
         var name = data.nodes[francisID].label
     }
     if (getParam('confidence') > 0){
-        confidence = getParam('confidence')
+        confidence = getParam('confidence').replace(',', '% to ')
     }
     if (getParam('date') > 0){
         date = getParam('date').replace(',', ' to ')
@@ -235,7 +238,7 @@ function initGraph(data){
     if ($("#show-table").val() == 1) {
     	table = 'yes'
     }
-    var confidence = $("#search-network-slider-confidence-result-hidden").val();
+    var confidence = $("#search-network-slider-confidence-result-hidden").val().split(" - ");
     var date = $("#search-network-slider-date-result-hidden").val().split(" - ");
     window.location.href = '/?id=' + id + '&confidence=' + confidence + '&date=' + date + '&table=' + table;
   });
@@ -252,14 +255,14 @@ function initGraph(data){
       if ($("#show-table").val() == 1) {
         table = 'yes'
       }
-      var confidence = $("#search-shared-network-slider-confidence-result-hidden").val();
+      var confidence = $("#search-shared-network-slider-confidence-result-hidden").val().split(" - ");
       var date = $("#search-shared-network-slider-date-result-hidden").val().split(" - ");
       window.location.href = '/?id=' + id1 + '&id2=' + id2 + '&confidence=' + confidence + '&date=' + date + '&table=' + table;
     });
 
   $("#nav-filter-submit").click(function (){
     var ID = getParam("id");
-    var confidence = $("#nav-slider-confidence-result-hidden").val();
+    var confidence = $("#nav-slider-confidence-result-hidden").val().split(" - ");
     var date = $("#nav-slider-date-result").val().split(" - ");
     if ( ID != ""){
       window.location.href = '/?id=' + ID + '&confidence=' + confidence + '&date=' + date;
@@ -285,13 +288,8 @@ function initGraph(data){
 function init() {
 	//This file only contains the data for the searched person and 1st degree relationships
 	var data = { nodes: [], edges: [], groups_names: [], groups_desc: [], groups_people: [], nodeKeys: [] };
-	//var allPeopleNamesData = { nodes: [], edges: [], groups_names: [], groups_desc: [], groups_people: [], nodeKeys: [] };
-
 	var people = window.gon.people
 	var group_data = window.gon.group_data
-	//var all_people = window.gon.all_people
-	// var data= window.gon.data
-	// var allPeopleNamesData= window.gon.allPeopleNamesData
 	//This function only converts gon to all data for the searched person and 1st degree relationships
 
 	if (jQuery.type(people) === "object"){
@@ -300,7 +298,8 @@ function init() {
 		n.first = people.first_name;
 		n.last = people.last_name;
 		n.label = n.first + " " + n.last;
-        n.name_date = (n.first + " " + n.last + " (" + n.birth + ")");
+    n.name_date = (n.first + " " + n.last + " (" + n.birth + ")");
+    n.display_name = people.display_name;
 		n.birth_year = people.ext_birth_year;
 		n.birth_year_type = people.birth_year_type;
 		n.death_year = people.ext_death_year;
@@ -313,12 +312,13 @@ function init() {
 		data.nodes[n.id] = n;
 	}else{
 		$.each(people, function(index, value) { 
-        var n = {}
+    var n = {}
 		n.id = value.id;
 		n.first = value.first_name;
 		n.last = value.last_name;
 		n.label = n.first + " " + n.last;
-        n.name_date = (n.first + " " + n.last + " (" + n.birth + ")");
+    n.name_date = (n.first + " " + n.last + " (" + n.birth + ")");
+    n.display_name = value.display_name;
 		n.birth_year = value.ext_birth_year;
 		n.birth_year_type = value.birth_year_type;
 		n.death_year = value.ext_death_year;
