@@ -22,7 +22,7 @@ class PeopleController < ApplicationController
   # GET /people/1.json
   def show
     @person = Person.find(params[:id])
-    @approved_relationships = Relationship.all_for_person(params[:id]).all_approved.paginate(:page => params[:approved_relationships_page]).per_page(30)
+    @approved_relationships = Relationship.all_for_person(params[:id]).highest_certainty.all_approved.paginate(:page => params[:approved_relationships_page]).per_page(30)
     @user_person_contribs = UserPersonContrib.all_for_person(params[:id]).all_approved.paginate(:page => params[:user_person_contribs_page]).per_page(30)
     @groups = GroupAssignment.all_for_person(params[:id]).all_approved.paginate(:page => params[:groups_page]).per_page(30)
 
