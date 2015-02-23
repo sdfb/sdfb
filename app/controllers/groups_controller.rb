@@ -9,9 +9,7 @@ class GroupsController < ApplicationController
   load_and_authorize_resource
   
   def index
-    @groups_approved = Group.all_approved.paginate(:page => params[:groups_approved_page]).per_page(20)
-    @groups_unapproved = Group.all_unapproved.paginate(:page => params[:groups_unapproved_page]).per_page(20)
-
+    @groups_approved = Group.all_approved.paginate(:page => params[:groups_approved_page]).per_page(100)
 
     respond_to do |format|
       format.html # index.html.erb
