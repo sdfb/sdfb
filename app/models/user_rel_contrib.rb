@@ -49,7 +49,7 @@ class UserRelContrib < ActiveRecord::Base
   scope :all_for_relationship, lambda {|relID| 
       select('user_rel_contribs.*')
       .where('relationship_id = ?', relID)}
-  scope :highest_certainty, order('certainty')
+  scope :highest_certainty, order('certainty DESC')
 
   # Callbacks
   # ----------------------------- 
