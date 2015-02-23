@@ -1,4 +1,4 @@
-<h1>All people search results for "<%= @query %>"</h1>
+<h1>Person search results for "<%= Person.find(@query.to_i).autocomplete_name %>"</h1>
 
 <div class="well">
   <%= render 'person_search_box' %>

@@ -215,136 +215,14 @@ class Person < ActiveRecord::Base
   # searches for people by name
   def self.search_approved(search)
     if search 
-      #check that each result in the array is unique
-      uniqueArray = []
-
-      searchResultArray = [] 
-      #allow searches by person id
-      searchIdResult = Person.all_approved.for_id(search.to_i)
-      if (! searchIdResult.blank?)
-        if (! uniqueArray.include?(searchIdResult[0].id))
-          searchResultArray.push(searchIdResult[0])
-          uniqueArray.push(searchIdResult[0].id)
-        end
-      end
-
-      #separate search into several words
-      searchArray = search.split(" ")
-
-      #Add exact search for first two words
-      if (searchArray.length >= 2)
-        exactResult = Person.all_approved.for_first_and_last_name(searchArray[0].capitalize, searchArray[1].capitalize)
-        if (! exactResult.blank?)
-          if (! uniqueArray.include?(exactResult[0].id))
-            searchResultArray.push(exactResult[0])
-            uniqueArray.push(exactResult[0].id)
-          end
-        end
-      end
-
-      #Add exact search for first two words
-      if (searchArray.length >= 2)
-        exactResult = Person.all_approved.for_first_and_last_name(searchArray[0], searchArray[1])
-        if (! exactResult.blank?)
-          if (! uniqueArray.include?(exactResult[0].id))
-            searchResultArray.push(exactResult[0])
-            uniqueArray.push(exactResult[0].id)
-          end
-        end
-      end
-      
-      #Add similar search for first two words
-      if (searchArray.length >= 2)
-        exactResult = Person.all_approved.for_similar_first_and_last_name(searchArray[0].capitalize, searchArray[1].capitalize)
-        if (! exactResult.blank?)
-          if (! uniqueArray.include?(exactResult[0].id))
-            searchResultArray.push(exactResult[0])
-            uniqueArray.push(exactResult[0].id)
-          end
-        end
-      end
-
-      #Add similar search for first two words
-      if (searchArray.length >= 2)
-        exactResult = Person.all_approved.for_similar_first_and_last_name(searchArray[0], searchArray[1])
-        if (! exactResult.blank?)
-          if (! uniqueArray.include?(exactResult[0].id))
-            searchResultArray.push(exactResult[0])
-            uniqueArray.push(exactResult[0].id)
-          end
-        end
-      end
-
-      #for each word add search results
-      searchArray.each do |searchWord|
-        searchResult = Person.all_approved.for_first_or_last_name(searchWord.capitalize)
-        if (! searchResult.blank?)
-          searchResult.each do |searchResultRecord|
-            if (! uniqueArray.include?(searchResultRecord.id))
-              searchResultArray.push(searchResultRecord)
-              uniqueArray.push(searchResultRecord.id)
-            end
-          end
-        end
-      end
-      return searchResultArray
+      return Person.all_approved.for_id(search.to_i)
     end
   end
 
   # searches for people by name
   def self.search_all(search)
     if search 
-      #check that each result in the array is unique
-      uniqueArray = []
-
-      searchResultArray = [] 
-      #allow searches by person id
-      searchIdResult = Person.for_id(search.to_i)
-      if (! searchIdResult.blank?)
-        if (! uniqueArray.include?(searchIdResult[0].id))
-          searchResultArray.push(searchIdResult[0])
-          uniqueArray.push(searchIdResult[0].id)
-        end
-      end
-
-      #separate search into several words
-      searchArray = search.split(" ")
-
-      #Add exact search for first two words
-      if (searchArray.length >= 2)
-        exactResult = for_first_and_last_name(searchArray[0].capitalize, searchArray[1].capitalize)
-        if (! exactResult.blank?)
-          if (! uniqueArray.include?(exactResult[0].id))
-            searchResultArray.push(exactResult[0])
-            uniqueArray.push(exactResult[0].id)
-          end
-        end
-      end
-      
-      #Add similar search for first two words
-      if (searchArray.length >= 2)
-        exactResult = for_similar_first_and_last_name(searchArray[0].capitalize, searchArray[1].capitalize)
-        if (! exactResult.blank?)
-          if (! uniqueArray.include?(exactResult[0].id))
-            searchResultArray.push(exactResult[0])
-            uniqueArray.push(exactResult[0].id)
-          end
-        end
-      end
-
-      #for each word add search results
-      searchArray.each do |searchWord|
-        searchResult = for_first_or_last_name(searchWord.capitalize)
-        if (! searchResult.blank?)
-          searchResult.each do |searchResultRecord|
-            if (! uniqueArray.include?(searchResultRecord.id))
-              searchResultArray.push(searchResultRecord)
-              uniqueArray.push(searchResultRecord.id)
-            end
-          end
-        end
-      end
-      return searchResultArray
+      return Person.all.for_id(search.to_i)
     end
   end
 end

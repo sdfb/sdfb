@@ -68,7 +68,9 @@ Sdfb::Application.routes.draw do
   end
 
 
-  resources :people
+  resources :people do
+    get :autocomplete_person_search_names_all, on: :collection
+  end
 
 
   resources :user_person_contribs do
