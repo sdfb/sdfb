@@ -1,4 +1,4 @@
-<h1>All relationship search results for "<%= @person1Query %>" and "<%= @person2Query %>"</h1>
+<h1>All relationship search results for "<%= Person.find(@person1Query.to_i).autocomplete_name %>" and "<%= Person.find(@person2Query.to_i).autocomplete_name %>"</h1>
 
 <div class="well">
   <%= render 'rel_search_box' %>
@@ -39,6 +39,6 @@
 
 		<%= will_paginate @all_results, :param_name => 'all_results_page', :previous_label => "Previous&nbsp;", :next_label => "&nbsp;Next" %>
 	<% else %>
-		No relationship search results.
+		No relationship was found for those individuals.
 	<% end %>
 <% end %>
