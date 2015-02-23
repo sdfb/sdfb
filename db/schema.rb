@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20150217005312) do
+ActiveRecord::Schema.define(:version => 20150223041515) do
 
   create_table "comments", :force => true do |t|
     t.string   "comment_type"
@@ -52,6 +52,8 @@ ActiveRecord::Schema.define(:version => 20150217005312) do
     t.datetime "created_at",                                  :null => false
     t.datetime "updated_at",                                  :null => false
     t.string   "person_autocomplete"
+    t.string   "start_date_type"
+    t.string   "end_date_type"
   end
 
   create_table "group_cat_assigns", :force => true do |t|
@@ -91,13 +93,15 @@ ActiveRecord::Schema.define(:version => 20150217005312) do
     t.integer  "end_year"
     t.string   "approved_by"
     t.string   "approved_on"
-    t.boolean  "is_approved",   :default => false
-    t.text     "person_list",   :default => "--- []\n"
-    t.boolean  "is_active",     :default => true
-    t.boolean  "is_rejected",   :default => false
-    t.text     "edited_by_on",  :default => "--- []\n"
-    t.datetime "created_at",                            :null => false
-    t.datetime "updated_at",                            :null => false
+    t.boolean  "is_approved",     :default => false
+    t.text     "person_list",     :default => "--- []\n"
+    t.boolean  "is_active",       :default => true
+    t.boolean  "is_rejected",     :default => false
+    t.text     "edited_by_on",    :default => "--- []\n"
+    t.datetime "created_at",                              :null => false
+    t.datetime "updated_at",                              :null => false
+    t.string   "start_date_type"
+    t.string   "end_date_type"
   end
 
   create_table "people", :force => true do |t|
@@ -200,6 +204,8 @@ ActiveRecord::Schema.define(:version => 20150217005312) do
     t.datetime "updated_at",                                       :null => false
     t.string   "person1_autocomplete"
     t.string   "person2_autocomplete"
+    t.string   "start_date_type"
+    t.string   "end_date_type"
   end
 
   create_table "user_group_contribs", :force => true do |t|
@@ -258,6 +264,8 @@ ActiveRecord::Schema.define(:version => 20150217005312) do
     t.string   "person2_autocomplete"
     t.string   "person1_selection"
     t.string   "person2_selection"
+    t.string   "start_date_type"
+    t.string   "end_date_type"
   end
 
   create_table "users", :force => true do |t|

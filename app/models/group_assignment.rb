@@ -1,6 +1,7 @@
 class GroupAssignment < ActiveRecord::Base
   attr_accessible :created_by, :group_id, :approved_by, :approved_on, :person_id, :start_date, :end_date, :created_at,
-  :is_approved, :is_active, :is_rejected, :edited_by_on, :start_year, :start_month, :start_day, :end_year, :end_month, :end_day, :person_autocomplete
+  :is_approved, :is_active, :is_rejected, :edited_by_on, :start_year, :start_month, :start_day, :end_year, :end_month, :end_day,
+  :person_autocomplete, :start_date_type, :end_date_type
   serialize :edited_by_on,Array
   
   # Relationships
@@ -28,6 +29,12 @@ class GroupAssignment < ActiveRecord::Base
   validates_presence_of :group_id
   validates_presence_of :person_id
   validates_presence_of :created_by
+  ## start date type is one included in the list
+  validates_inclusion_of :start_date_type, :in => DATE_TYPE_LIST
+  ## end date type is one included in the list
+  validates_inclusion_of :end_date_type, :in => DATE_TYPE_LIST
+  # Misc Constants
+  DATE_TYPE_LIST = ["BF", "AF","IN","CA","BF/IN","AF/IN","NA"]
   # validates_presence_of :approved_by
   # validates_presence_of :approved_on
   ## approved_on must occur on the same date or after the created at date

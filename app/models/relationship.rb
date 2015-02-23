@@ -2,7 +2,8 @@ class Relationship < ActiveRecord::Base
   attr_accessible :max_certainty, :created_by, :original_certainty, :person1_index, :person2_index,
   :justification, :approved_by, :approved_on, :created_at, :edge_birthdate_certainty,
   :is_approved, :start_year, :start_month, :start_day, :end_year, :end_month, :end_day,
-  :is_active, :is_rejected, :edited_by_on, :person1_autocomplete, :person2_autocomplete, :types_list
+  :is_active, :is_rejected, :edited_by_on, :person1_autocomplete, :person2_autocomplete, :types_list,
+  :start_date_type, :end_date_type
   serialize :edited_by_on,Array
   serialize :types_list,Array
 
@@ -36,6 +37,12 @@ class Relationship < ActiveRecord::Base
   validates :start_year, :numericality => { :less_than_or_equal_to => 1800 }, :if => :start_year_present?
   validates :end_year, :numericality => { :greater_than_or_equal_to => 1400 }, :if => :end_year_present?
   validates :end_year, :numericality => { :less_than_or_equal_to => 1800 }, :if => :end_year_present?
+  ## start date type is one included in the list
+  validates_inclusion_of :start_date_type, :in => DATE_TYPE_LIST
+  ## end date type is one included in the list
+  validates_inclusion_of :end_date_type, :in => DATE_TYPE_LIST
+  # Misc Constants
+  DATE_TYPE_LIST = ["BF", "AF","IN","CA","BF/IN","AF/IN","NA"]
 
   # Scope
   # ----------------------------- 

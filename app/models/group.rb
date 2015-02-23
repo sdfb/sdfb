@@ -1,6 +1,7 @@
 class Group < ActiveRecord::Base
   attr_accessible :created_by, :description, :name, :justification, :approved_by, :approved_on, 
-  :created_at, :is_approved, :person_list, :start_year, :end_year, :is_active, :is_rejected, :edited_by_on
+  :created_at, :is_approved, :person_list, :start_year, :end_year, :is_active, :is_rejected,
+  :edited_by_on, :start_date_type, :end_date_type
   serialize :person_list,Array
   serialize :edited_by_on,Array
   
@@ -26,6 +27,12 @@ class Group < ActiveRecord::Base
   validates :start_year, :numericality => { :less_than_or_equal_to => 1800 }, :if => :start_year_present?
   validates :end_year, :numericality => { :greater_than_or_equal_to => 1400 }, :if => :end_year_present?
   validates :end_year, :numericality => { :less_than_or_equal_to => 1800 }, :if => :end_year_present?
+  ## start date type is one included in the list
+  validates_inclusion_of :start_date_type, :in => DATE_TYPE_LIST
+  ## end date type is one included in the list
+  validates_inclusion_of :end_date_type, :in => DATE_TYPE_LIST
+  # Misc Constants
+  DATE_TYPE_LIST = ["BF", "AF","IN","CA","BF/IN","AF/IN","NA"]
 
   # Scope
   # ----------------------------- 

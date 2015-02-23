@@ -2,7 +2,7 @@ class UserRelContrib < ActiveRecord::Base
   attr_accessible :annotation, :bibliography, :certainty, :created_by, :relationship_id, :relationship_type_id, 
   :approved_by, :approved_on, :created_at, :is_approved, :start_year, :start_month, 
   :start_day, :end_year, :end_month, :end_day, :is_active, :is_rejected, :edited_by_on, :person1_autocomplete,
-  :person2_autocomplete, :person1_selection, :person2_selection
+  :person2_autocomplete, :person1_selection, :person2_selection, :start_date_type, :end_date_type
   serialize :edited_by_on,Array
   
   # Relationships
@@ -33,6 +33,12 @@ class UserRelContrib < ActiveRecord::Base
   validates :start_year, :numericality => { :less_than_or_equal_to => 1800 }, :if => :start_year_present?
   validates :end_year, :numericality => { :greater_than_or_equal_to => 1400 }, :if => :end_year_present?
   validates :end_year, :numericality => { :less_than_or_equal_to => 1800 }, :if => :end_year_present?
+  ## start date type is one included in the list
+  validates_inclusion_of :start_date_type, :in => DATE_TYPE_LIST
+  ## end date type is one included in the list
+  validates_inclusion_of :end_date_type, :in => DATE_TYPE_LIST
+  # Misc Constants
+  DATE_TYPE_LIST = ["BF", "AF","IN","CA","BF/IN","AF/IN","NA"]
 
   # Scope
   # ----------------------------- 
