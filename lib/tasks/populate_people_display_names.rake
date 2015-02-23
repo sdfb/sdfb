@@ -1,6 +1,5 @@
 namespace :db do
-  # creating a rake task within db namespace called 'populate_people_genders'
-  # executing 'rake db:populate_populate_genders' will cause this script to run
+  # executing 'rake db:populate_people_display_names' will cause this script to run
   task :populate_people_display_names => :environment do 
     puts "Updating people's display names..."
     for i in 10000001..10013309
