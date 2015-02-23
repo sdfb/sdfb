@@ -3,7 +3,7 @@ namespace :db do
   # creating a rake task within db namespace called 'populate_people'
 
   # executing 'rake db:populate_people' will cause this script to run task :populate_people => :environment do
-
+  task :populate_people => :environment do
     # Invoke rake db:migrate just in case...
     # Rake::Task['db:migrate:reset'].invoke #commented this out so that it does not reset the database and two populate files can run
 
@@ -92,4 +92,5 @@ namespace :db do
     inFile.close
     puts "Finished adding People"
   end
+end
 
