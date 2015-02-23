@@ -221,10 +221,10 @@ function initGraph(data){
     }else{
         var name = data.nodes[francisID].label
     }
-    if (getParam('confidence') > 0){
+    if (getParam('confidence').length > 0){
         confidence = getParam('confidence').replace(',', '% to ')
     }
-    if (getParam('date') > 0){
+    if (getParam('date').length > 0){
         date = getParam('date').replace(',', ' to ')
     }
     $("#results").html("Two degrees of " + name + " at " + confidence + "% from " + date);
