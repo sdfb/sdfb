@@ -24,9 +24,45 @@
           <dt>Description:</strong></dt>
           <dd><%= @group.description %></dd>
         <% end %>
+        <% if ! @group.start_date_type.blank? %>
+          <dt><strong>Start Date Type:</strong></dt>
+          <dd>
+            <% if @group.start_date_type == "BF" %>
+              <dd>Before</dd>
+            <% elsif @group.start_date_type == "AF" %>
+              <dd>After</dd>
+            <% elsif @group.start_date_type == "IN" %>
+              <dd>In</dd>
+            <% elsif @group.start_date_type == "CA" %>
+              <dd>Circa</dd>
+            <% elsif @group.start_date_type == "BF/IN" %>
+              <dd>Before or In</dd>
+            <% elsif @group.start_date_type == "AF/IN" %>
+              <dd>After or In</dd>
+            <% end %>
+          </dd>
+        <% end %>
         <% if ! @group.start_year.blank? %>
           <dt>Start Year</dt>
           <dd><%= @group.start_year %></dd>
+        <% end %>
+        <% if ! @group.end_date_type.blank? %>
+          <dt><strong>Start Date Type:</strong></dt>
+          <dd>
+            <% if @group.end_date_type == "BF" %>
+              <dd>Before</dd>
+            <% elsif @group.end_date_type == "AF" %>
+              <dd>After</dd>
+            <% elsif @group.end_date_type == "IN" %>
+              <dd>In</dd>
+            <% elsif @group.end_date_type == "CA" %>
+              <dd>Circa</dd>
+            <% elsif @group.end_date_type == "BF/IN" %>
+              <dd>Before or In</dd>
+            <% elsif @group.end_date_type == "AF/IN" %>
+              <dd>After or In</dd>
+            <% end %>
+          </dd>
         <% end %>
         <% if ! @group.end_year.blank? %>
           <dt>End Year</dt>

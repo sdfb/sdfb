@@ -31,6 +31,24 @@
         <% end %>
         <dt><strong>Relationship Type:</strong></dt>
         <dd><%= link_to RelationshipType.find(@user_rel_contrib.relationship_type_id).name, relationship_type_path(@user_rel_contrib.relationship_type_id) %></dd>
+        <% if ! @user_rel_contrib.start_date_type.blank? %>
+          <dt><strong>Start Date Type:</strong></dt>
+          <dd>
+            <% if @user_rel_contrib.start_date_type == "BF" %>
+              <dd>Before</dd>
+            <% elsif @user_rel_contrib.start_date_type == "AF" %>
+              <dd>After</dd>
+            <% elsif @user_rel_contrib.start_date_type == "IN" %>
+              <dd>In</dd>
+            <% elsif @user_rel_contrib.start_date_type == "CA" %>
+              <dd>Circa</dd>
+            <% elsif @user_rel_contrib.start_date_type == "BF/IN" %>
+              <dd>Before or In</dd>
+            <% elsif @user_rel_contrib.start_date_type == "AF/IN" %>
+              <dd>After or In</dd>
+            <% end %>
+          </dd>
+        <% end %>
         <% if ((! @user_rel_contrib.start_month.blank?) || (! @user_rel_contrib.start_day.blank?) || (! @user_rel_contrib.start_year.blank?)) %>
           <dt><strong>Start date:</strong></dt>
           <dd><% if ! @user_rel_contrib.start_month.blank? %>
@@ -45,6 +63,24 @@
         <% else %>
           <dt><strong>Start date:</strong></dt>
           <dd>Unknown</dd>
+        <% end %>
+        <% if ! @user_rel_contrib.end_date_type.blank? %>
+          <dt><strong>Start Date Type:</strong></dt>
+          <dd>
+            <% if @user_rel_contrib.end_date_type == "BF" %>
+              <dd>Before</dd>
+            <% elsif @user_rel_contrib.end_date_type == "AF" %>
+              <dd>After</dd>
+            <% elsif @user_rel_contrib.end_date_type == "IN" %>
+              <dd>In</dd>
+            <% elsif @user_rel_contrib.end_date_type == "CA" %>
+              <dd>Circa</dd>
+            <% elsif @user_rel_contrib.end_date_type == "BF/IN" %>
+              <dd>Before or In</dd>
+            <% elsif @user_rel_contrib.end_date_type == "AF/IN" %>
+              <dd>After or In</dd>
+            <% end %>
+          </dd>
         <% end %>
         <% if ((! @user_rel_contrib.end_month.blank?) || (! @user_rel_contrib.end_day.blank?) || (! @user_rel_contrib.end_year.blank?)) %>
           <dt><strong>End date:</strong></dt>

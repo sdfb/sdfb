@@ -10,7 +10,9 @@
     <th>Group Assignment id</th>
     <th>Group</th>
     <th>Person</th>
+    <th>Start Date Type</th>
     <th>Start date</th>
+    <th>End Date Type</th>
     <th>End date</th>
     <th><%=t '.actions', :default => t("helpers.actions") %></th>
   </tr>
@@ -22,6 +24,21 @@
         <td><%= link_to group_assignment.get_group_name, group_path(group_assignment.group_id) %></td>
         <td><%= link_to group_assignment.get_person_name, person_path(group_assignment.person_id) %></td>
         <td>
+          <% if group_assignment.start_date_type == "BF" %>
+            Before
+          <% elsif group_assignment.start_date_type == "AF" %>
+            After
+          <% elsif group_assignment.start_date_type == "IN" %>
+            In
+          <% elsif group_assignment.start_date_type == "CA" %>
+            Circa
+          <% elsif group_assignment.start_date_type == "BF/IN" %>
+            Before or In
+          <% elsif group_assignment.start_date_type == "AF/IN" %>
+            After or In
+          <% end %>
+        </td>
+        <td>
           <% if ((! group_assignment.start_month.blank?) || (! group_assignment.start_day.blank?) || (! group_assignment.start_year.blank?)) %>
             <% if ! group_assignment.start_month.blank? %>
               <%= group_assignment.start_month %>
@@ -32,6 +49,21 @@
             <% if ! group_assignment.start_year.blank? %>
               <%= group_assignment.start_year %>
             <% end %>
+          <% end %>
+        </td>
+        <td>
+          <% if group_assignment.end_date_type == "BF" %>
+            Before
+          <% elsif group_assignment.end_date_type == "AF" %>
+            After
+          <% elsif group_assignment.end_date_type == "IN" %>
+            In
+          <% elsif group_assignment.end_date_type == "CA" %>
+            Circa
+          <% elsif group_assignment.end_date_type == "BF/IN" %>
+            Before or In
+          <% elsif group_assignment.end_date_type == "AF/IN" %>
+            After or In
           <% end %>
         </td>
         <td>

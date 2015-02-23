@@ -14,7 +14,9 @@
         <th>Group ID </th>
         <th>Name</th>
         <th>Description</th>
+        <th>Start Date Type</th>
         <th>Start Year</th>
+        <th>End Date Type</th>
         <th>End Year</th>
         <th><%=t '.actions', :default => t("helpers.actions") %></th>
       </tr>
@@ -25,7 +27,37 @@
           <td><%= group.id %></td>
           <td><%= group.name %></td>
           <td><%= group.description %></td>
+          <td>
+            <% if group.start_date_type == "BF" %>
+              Before
+            <% elsif group.start_date_type == "AF" %>
+              After
+            <% elsif group.start_date_type == "IN" %>
+              In
+            <% elsif group.start_date_type == "CA" %>
+              Circa
+            <% elsif group.start_date_type == "BF/IN" %>
+              Before or In
+            <% elsif group.start_date_type == "AF/IN" %>
+              After or In
+            <% end %>
+          </td>
           <td><%= group.start_year %></td>
+          <td>
+            <% if group.end_date_type == "BF" %>
+              Before
+            <% elsif group.end_date_type == "AF" %>
+              After
+            <% elsif group.end_date_type == "IN" %>
+              In
+            <% elsif group.end_date_type == "CA" %>
+              Circa
+            <% elsif group.end_date_type == "BF/IN" %>
+              Before or In
+            <% elsif group.end_date_type == "AF/IN" %>
+              After or In
+            <% end %>
+          </td>
           <td><%= group.end_year %></td>
           <td>
             <% if can? :show, group %>

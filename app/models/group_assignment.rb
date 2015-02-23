@@ -24,17 +24,18 @@ class GroupAssignment < ActiveRecord::Base
       .where('(group_id = ?)', groupID)}
   scope :for_user, lambda {|user_input| where('created_by = ?', "#{user_input}") }
 
+  # Misc Constants
+  DATE_TYPE_LIST = ["BF", "AF","IN","CA","BF/IN","AF/IN","NA"]
+
   # Validations
   # -----------------------------
   validates_presence_of :group_id
   validates_presence_of :person_id
   validates_presence_of :created_by
   ## start date type is one included in the list
-  validates_inclusion_of :start_date_type, :in => DATE_TYPE_LIST
+  validates_inclusion_of :start_date_type, :in => DATE_TYPE_LIST, :if => :start_year_present?
   ## end date type is one included in the list
-  validates_inclusion_of :end_date_type, :in => DATE_TYPE_LIST
-  # Misc Constants
-  DATE_TYPE_LIST = ["BF", "AF","IN","CA","BF/IN","AF/IN","NA"]
+  validates_inclusion_of :end_date_type, :in => DATE_TYPE_LIST, :if => :end_year_present?
   # validates_presence_of :approved_by
   # validates_presence_of :approved_on
   ## approved_on must occur on the same date or after the created at date
@@ -86,6 +87,14 @@ class GroupAssignment < ActiveRecord::Base
         updated_person_groups_list = GroupAssignment.all_approved.all_for_person(self.person_id).map{|ga| Group.find(ga.group_id).name }
         Person.update(self.person_id, group_list: updated_person_groups_list)
     end
+  end
+
+  def start_year_present?
+    ! self.start_year.nil?
+  end
+
+  def end_year_present?
+    ! self.end_year.nil?
   end
 
   def get_person_name

@@ -18,6 +18,9 @@ class UserRelContrib < ActiveRecord::Base
   ###need rel type for directional
   ###need inverse rel type for directional
 
+  # Misc Constants
+  DATE_TYPE_LIST = ["BF", "AF","IN","CA","BF/IN","AF/IN","NA"]
+
   # Validations
   # -----------------------------
   validates_presence_of :annotation
@@ -34,11 +37,9 @@ class UserRelContrib < ActiveRecord::Base
   validates :end_year, :numericality => { :greater_than_or_equal_to => 1400 }, :if => :end_year_present?
   validates :end_year, :numericality => { :less_than_or_equal_to => 1800 }, :if => :end_year_present?
   ## start date type is one included in the list
-  validates_inclusion_of :start_date_type, :in => DATE_TYPE_LIST
+  validates_inclusion_of :start_date_type, :in => DATE_TYPE_LIST, :if => :start_year_present?
   ## end date type is one included in the list
-  validates_inclusion_of :end_date_type, :in => DATE_TYPE_LIST
-  # Misc Constants
-  DATE_TYPE_LIST = ["BF", "AF","IN","CA","BF/IN","AF/IN","NA"]
+  validates_inclusion_of :end_date_type, :in => DATE_TYPE_LIST, :if => :end_year_present?
 
   # Scope
   # ----------------------------- 
