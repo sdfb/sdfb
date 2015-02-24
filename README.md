@@ -62,6 +62,7 @@ bundle install
 rake db:drop (if database is already created)
 rake db:create
 rake db:migrate
+rake routes 
 ```
 
 ## To populate this file:
@@ -75,6 +76,8 @@ rake db:populate_rel_cats
 rake db:populate_rel_types
 rake db:populate_rel_cat_assigns
 rake db:populate_group_cat_assigns
+rake db:populate_people_display_names
+rake db:populate_people_search_names_all
 rake db:populate_rels_2_20000
 rake db:populate_rels_20001_40000
 rake db:populate_rels_40001_60000
@@ -85,9 +88,6 @@ rake db:populate_rels_120001_140000
 rake db:populate_rels_140001_160000
 rake db:populate_rels_160001_170542
 rake db:populate_user_rel_contribs_samples
-rake db:populate_people_display_names
-rake db:populate_search_names_all
-rake routes 
 ```
 
 ## To run the server locally:
