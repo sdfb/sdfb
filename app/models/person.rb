@@ -117,25 +117,25 @@ class Person < ActiveRecord::Base
     peopleRecordsForReturn = []
     if id
       peopleIDArray = []
-      searchedPersonRecord = Person.select("id, first_name, last_name, ext_birth_year, ext_death_year, rel_sum, group_list, historical_significance, odnb_id, prefix, suffix, title").find(id)
+      searchedPersonRecord = Person.select("id, first_name, last_name, display_name, ext_birth_year, birth_year_type, ext_death_year, death_year_type, rel_sum, group_list, historical_significance, odnb_id, prefix, suffix, title").find(id)
       #Add the id and record for the searched person
       peopleIDArray.push(id)
       peopleRecordsForReturn.push(searchedPersonRecord)
       searchedPersonRecord.rel_sum.each do |firstDegreePerson|
         firstDegreePersonID = firstDegreePerson[0]
-        firstDegreePersonRecord = Person.select("id, first_name, last_name, ext_birth_year, ext_death_year, rel_sum, group_list, historical_significance, odnb_id, prefix, suffix, title").find(firstDegreePersonID)
+        firstDegreePersonRecord = Person.select("id, first_name, last_name, display_name, ext_birth_year, birth_year_type, ext_death_year, death_year_type,  rel_sum, group_list, historical_significance, odnb_id, prefix, suffix, title").find(firstDegreePersonID)
         #Add the id and record for the first degree connection
         peopleIDArray.push(firstDegreePersonID)
         peopleRecordsForReturn.push(firstDegreePersonRecord)
 
         #for each person who has a first degree relationship with the searched person
         #loop through the first degree person's relationships so that we can find the second degree relationships
-        firstDegreePersonRecord.rel_sum.each do |secondDegreePerson|
+          firstDegreePersonRecord.rel_sum.each do |secondDegreePerson|
           secondDegreePersonID = secondDegreePerson[0]
           #check if the person is already in the array and if not, add the array and the record
           if (! peopleIDArray.include?(secondDegreePersonID))
             peopleIDArray.push(secondDegreePersonID)
-            secondDegreePersonRecord = Person.select("id, first_name, last_name, ext_birth_year, ext_death_year, rel_sum, group_list, historical_significance, odnb_id, prefix, suffix, title").find(secondDegreePersonID)
+            secondDegreePersonRecord = Person.select("id, first_name, last_name, display_name, ext_birth_year, birth_year_type, ext_death_year, death_year_type, rel_sum, group_list, historical_significance, odnb_id, prefix, suffix, title").find(secondDegreePersonID)
             peopleRecordsForReturn.push(secondDegreePersonRecord)
           end
         end
