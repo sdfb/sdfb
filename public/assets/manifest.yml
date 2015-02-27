@@ -33,6 +33,8 @@ forward_enabled.png: forward_enabled.png
 forward_enabled/index.png: forward_enabled.png
 forward_enabled_hover.png: forward_enabled_hover.png
 forward_enabled_hover/index.png: forward_enabled_hover.png
+group.png: group.png
+group/index.png: group.png
 info.png: info.png
 info/index.png: info.png
 landing/arrow-down.png: landing/arrow-down.png
@@ -69,6 +71,8 @@ search.png: search.png
 search/index.png: search.png
 slider-bg.png: slider-bg.png
 slider-bg/index.png: slider-bg.png
+slider-button-large.png: slider-button-large.png
+slider-button-large/index.png: slider-button-large.png
 slider-button.png: slider-button.png
 slider-button/index.png: slider-button.png
 sort_asc.png: sort_asc.png
@@ -117,8 +121,6 @@ script.js: script.js
 script/index.js: script.js
 typeahead.js: typeahead.js
 typeahead/index.js: typeahead.js
-untitled.rhtml: untitled.rhtml
-untitled/index.rhtml: untitled.rhtml
 application.css: application.css
 application/index.css: application.css
 jquery.min.map: jquery.min.map
