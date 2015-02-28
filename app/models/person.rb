@@ -54,6 +54,7 @@ class Person < ActiveRecord::Base
 
   # Misc Constants
   DATE_TYPE_LIST = ["BF", "AF","IN","CA","BF/IN","AF/IN","NA"]
+  GENDER_LIST = ["female", "male","unknown"]
 
   # Validations
   # -----------------------------
@@ -92,6 +93,8 @@ class Person < ActiveRecord::Base
   validates_inclusion_of :birth_year_type, :in => DATE_TYPE_LIST
   ## birth year type is one included in the list
   validates_inclusion_of :death_year_type, :in => DATE_TYPE_LIST
+  ## gender must be included in the gender list
+  validates_inclusion_of :gender, :in => DATE_TYPE_LIST
 
   # Callbacks
   # ----------------------------- 
