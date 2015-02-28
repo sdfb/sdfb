@@ -57,7 +57,9 @@ Sdfb::Application.routes.draw do
   end
 
 
-  resources :groups
+  resources :groups do
+    get :autocomplete_group_name, on: :collection
+  end
 
 
   resources :user_group_contribs

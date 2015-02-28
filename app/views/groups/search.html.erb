@@ -1,4 +1,4 @@
-<h1>All group search results for "<%= @query %>"</h1>
+<h1>All group search results for "<%= Group.find(@query).name %>"</h1>
 
 <div class="well">
   <%= render 'group_search_box' %>

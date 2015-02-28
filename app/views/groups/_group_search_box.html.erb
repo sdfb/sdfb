@@ -1,6 +1,6 @@
 <b>Find Group</b>
-<form class="form-search" action="/group_search" method="get"> 
-Group Name or ID 
-<input type="text" name="query" class="input-medium search-query">  
+<form class="form-search" action="/group_search" method="get">
+<input type="text" data-autocomplete="groups/autocomplete_group_name" data-id-element="#search-group-id" placeholder="Group Name">  
+<input id="search-group-id" name="query" type="hidden" />
 <button type="submit" value="Search" class="btn btn-primary">Search</button>  
 </form>
