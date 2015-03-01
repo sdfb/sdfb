@@ -46,6 +46,7 @@ Sdfb::Application.routes.draw do
 
   resources :home do
     get :autocomplete_person_search_names_all, on: :collection
+    get :autocomplete_group_name, on: :collection
   end
 
   

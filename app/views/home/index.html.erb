@@ -62,9 +62,9 @@
 			<!-- GROUP FORMS -->
 
 				<section id="search-shared-group-form">
-					<input class="form-control" type="text" id="search-shared-group-name1" placeholder="Group 1 Name" data-autocomplete="home/autocomplete_person_search_names_all" data-id-element="#search-shared-group-name1-id"> 
+					<input class="form-control" type="text" id="search-shared-group-name1" placeholder="Group 1 Name" data-autocomplete="home/autocomplete_group_name" data-id-element="#search-shared-group-name1-id"> 
 					<input id="search-shared-group-name1-id" type="hidden" />
-					<input class="form-control" type="text" id="search-shared-group-name2" placeholder="Group 2 Name" data-autocomplete="home/autocomplete_person_search_names_all" data-id-element="#search-shared-group-name2-id"> 
+					<input class="form-control" type="text" id="search-shared-group-name2" placeholder="Group 2 Name" data-autocomplete="home/autocomplete_group_name" data-id-element="#search-shared-group-name2-id"> 
 					<input id="search-shared-group-name2-id" type="hidden" />
 					<button class="talkPageLink" type="button" id="search-shared-group-submit" name="group">Find</button>
 				</section>
@@ -110,7 +110,8 @@
 			<div  class="accordion_content " id="groupinfo">
 				<a class="icon icon-label" id="group-icon-label" href="/group_assignments/new" name="edge"></a>
 				<a class="icon icon-annotate" id="group-icon-annotate" name="edge"></a>
-				<input type="text" id="group_name" placeholder="Group">
+				<input type="text" data-autocomplete="home/autocomplete_group_name" data-id-element="#group_name" placeholder="Group Name">  
+				<input id="group_name" name="query" type="hidden" />
 				<p id="edge-nodes"></p>
 				<b>DESCRIPTION&nbsp;</b> 	<span id="group-description"></span><br>
 				<b>MEMBERS&nbsp;</b> 	<span id="group-members"></span><br>

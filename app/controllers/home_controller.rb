@@ -1,4 +1,5 @@
 class HomeController < ApplicationController
+  autocomplete :group, :name, full: true, :display_value => :name
   autocomplete :person, :search_names_all, full: true, :extra_data => [:display_name, :ext_birth_year], :display_value => :autocomplete_name
   layout "layouts/index_layout"
   def index
