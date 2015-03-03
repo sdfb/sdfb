@@ -3,19 +3,16 @@ class HomeController < ApplicationController
   autocomplete :person, :search_names_all, full: true, :extra_data => [:display_name, :ext_birth_year], :display_value => :autocomplete_name
   layout "layouts/index_layout"
   def index
-    #check if searching for 1 node (id2 is nil)
-    if (params[:id2].nil?)
-      #If there are no relationships, only return the person node
-      # @people = Person.find_first_degree_for(params[:id])
-      @data = {}
-      
-      if (params[:id].nil?)
-        @data['people'] = Person.find_2_degrees_for_person(10000473)
+    #If there are no relationships, only return the person node
+    # @people = Person.find_first_degree_for(params[:id])
+    @data = {}
+    @data['people'] = Person.find_first_degree_for(params[:id])
+    if (@data['people'].empty?) 
+      if (params[:id].blank?)
+        @data['people'] = Person.find(10000473)
       else
-        @data['people'] = Person.find_2_degrees_for_person(params[:id])
-        if (@data['people'].empty?)
-          @data['people'][0] = Person.find(params[:id])
-        end
+        @data['people'] = Person.find(params[:id])
+
       end
     else
       #The field will return searched node 1, searched node 2, shared nodes, and the first degree relationship of the shared network nodes
@@ -50,5 +47,8 @@ class HomeController < ApplicationController
   end
   def get_autocomplete_items(parameters)
     active_record_get_autocomplete_items(parameters).where("approved_by is not null and is_active is true and is_rejected is false")
+  end
+  def test
+  	#@data.people = Person.find_2_degrees_for_person(params[:person_id])
   end
 end

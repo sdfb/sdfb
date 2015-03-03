@@ -47,7 +47,7 @@ function notInArray(arr, val) {
 
 // Displays node information
 function showNodeInfo(data){
- accordion("node");
+ accordion("node")
  $("#node-name").text(data.display_name);
  $("#node-bdate").text(data.birth_year_type + " " + data.birth_year);
  $("#node-ddate").text(data.death_year_type + " " + data.death_year);
@@ -75,33 +75,22 @@ function createNodeKey(node) {
 function twoDegs(id, id2, data, sconf, econf, sdate, edate) {
 	var keys = {};
 	var edges = [];
-  var nodes = [];
-  function createGraph(id, data, sconf, econf, sdate, edate) {
-    var p = data.nodes[id];
-    $.each(p.rels, function(index, value) {
-      if (value[2] != 0 && value[1] >= sconf && value[1] <= econf && (edate >= p.birth_year || sdate <= p.death_year)) {
-        var q = data.nodes[value[0]]; // find person object in data by id
-        keys[q.id] = createNodeKey(q); //puts nodekey into keys array
-        if (notInArray(edges, [p.id, q.id])) {
-          edges.push([p.id, q.id]);
-        }
-         if (q && q.rels.length > 0) {
-           $.each(q.rels, function(index, value) {
-             if (value[2] != 0 && value[1] >= sconf && value[1] <= econf && (edate >= p.birth_year || sdate <= p.death_year)) { //checks again if relationship id is not zero and confidence is greater than 0.75
-               var r = data.nodes[value[0]]; //sets r as data from person id referenced in relationship array
-               keys[r.id] = createNodeKey(r); //puts nodekey in array for person 2's id
-               if (notInArray(edges, [q.id, r.id])) {
-                   edges.push([q.id, r.id]);
-                }
-              }
-            });  
-          }
-         } 
-        });
+    var nodes = [];
+	function createGraph(id, data, sconf, econf, sdate, edate) {
+    	var p = data.nodes[id];
+      		$.each(p.rels, function(index, value) {
+        		if (value[2] == 0 || value[1] < sconf || value[1] > econf || edate < p.birth_year || sdate > p.death_year) {
+         		} else {
+					var q = data.nodes[value[0]]; // find person object in data by id
+					keys[q.id] = createNodeKey(q); //puts nodekey into keys array
+					if (notInArray(edges, [p.id, q.id])) {
+					edges.push([p.id, q.id]);
+         			}
+              	} 
+          	});
       //adds main person's id referenced to keys associative array. Keys represent all data in graph
-      keys[p.id] = {"text": p.first + " " + p.last, "size": 20, "id": p.id,  "cluster": getClusterRels(p)}; 
-    }  
-  
+          keys[p.id] = {"text": p.display_name, "size": 20, "id": p.id,  "cluster": getClusterRels(p)}; 
+  	}
     createGraph(id, data, sconf, econf, sdate, edate);
     if (id2 != 0 && id2 != ""){
         createGraph(id2, data, sconf, econf, sdate, edate);
@@ -215,15 +204,17 @@ function filterGraph(data){
     if(ID == ""){
         ID = francisID;
     }
-    if(getParam("confidence") == ""){
+    if(sconf == ""){
         sconf = default_sconfidence;
+    }
+    if(econf == ""){
         econf = default_econfidence;
     }
     twoDegs(ID, ID2, data, sconf, econf, sdate, edate);
 }
 
 function initGraph(data){
-    var confidence = default_sconfidence + "% to " + default_econfidence
+    var confidence = default_sconfidence + " to " + default_econfidence
     var date = default_sdate + " - " + default_edate
     if (getParam('id') > 0){
          var name = data.nodes[parseInt(getParam('id'))].label
@@ -300,7 +291,26 @@ function init() {
 	var people = window.gon.people
 	var group_data = window.gon.group_data
 	//This function only converts gon to all data for the searched person and 1st degree relationships
-  //test using 10000007
+
+	if (jQuery.type(people) === "object"){
+        var n = {}
+		n.id = people.id;
+		n.first = people.first_name;
+		n.last = people.last_name;
+		n.label = n.first + " " + n.last;
+    n.name_date = (n.first + " " + n.last + " (" + n.birth + ")");
+    n.display_name = people.display_name;
+		n.birth_year = people.ext_birth_year;
+		n.birth_year_type = people.birth_year_type;
+		n.death_year = people.ext_death_year;
+		n.death_year_type = people.death_year_type;
+		n.occupation = people.historical_significance;
+		n.rels = people.rel_sum;
+		n.size = n.rels.length;
+		n.odnb_id = people.odnb_id;
+		n.groups = people.group_list;
+		data.nodes[n.id] = n;
+	}else{
 		$.each(people, function(index, value) { 
     var n = {}
 		n.id = value.id;
@@ -320,6 +330,7 @@ function init() {
 		n.groups = value.group_list;
 		data.nodes[n.id] = n;
 		});
+	}
 
   	//This function converts the gon for groups into readable information for groups
 	$.each(group_data, function(index, value){
@@ -327,6 +338,7 @@ function init() {
   	data.groups_desc.push(value.description);
   	data.groups_people.push(value.person_list);
 	});
+
 	filterGraph(data);
 	initGraph(data);
 }
