@@ -6,6 +6,7 @@ class GroupAssignmentsController < ApplicationController
   # before_filter :check_login, :only => [:new, :edit]
   # authorize_resource
 
+  autocomplete :person, :search_names_all, full: true, :extra_data => [:display_name, :ext_birth_year], :display_value => :autocomplete_name
   load_and_authorize_resource
   
   def index
@@ -14,6 +15,14 @@ class GroupAssignmentsController < ApplicationController
     respond_to do |format|
       format.html # index.html.erb
       format.json { render json: @group_assignments }
+    end
+  end
+
+  def get_autocomplete_items(parameters)
+    if ((current_user.user_type == "Admin") || (current_user.user_type == "Curator"))
+      active_record_get_autocomplete_items(parameters).where("is_rejected is false")
+    else
+      active_record_get_autocomplete_items(parameters).where("approved_by is not null and is_active is true and is_rejected is false")
     end
   end
 
