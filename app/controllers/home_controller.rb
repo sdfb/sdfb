@@ -12,12 +12,9 @@ class HomeController < ApplicationController
         @data['people'] = Person.find(10000473)
       else
         @data['people'] = Person.find(params[:id])
-
       end
-    else
-      #The field will return searched node 1, searched node 2, shared nodes, and the first degree relationship of the shared network nodes
-      @data['people'] = Person.find_2_degrees_for_shared_network(params[:id], params[:id2])
     end
+    #@data['all_people'] = Person.all_approved.select("id, first_name, last_name, ext_birth_year, prefix, suffix, title")
     
     # DELETE: This group_data is specifically for creating the group autocomplete and it can be removed
     @data['group_data'] = Group.all_approved.select("id, name, description, person_list")
