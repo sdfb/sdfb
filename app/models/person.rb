@@ -32,12 +32,15 @@ class Person < ActiveRecord::Base
   where first_name like '#{first_name_input}' AND last_name like '#{last_name_input}'")}
   scope :for_similar_first_and_last_name,  lambda {|first_name_input, last_name_input| find_by_sql("SELECT * FROM people
   where first_name like '%#{first_name_input}%' AND last_name like '%#{last_name_input}%'")}
+  scope :all_members_of_a_group, lambda {|groupID| 
+      select('people.*')
+      .joins('join group_assignments ga on (people.id = ga.person_id)')
+      .where('(ga.group_id = ?)', groupID)}
   scope :first_degree_for, lambda {|id_input| 
       select('people.*')
       .joins('join relationships r1 on ((r1.person1_index = people.id) or (r1.person2_index = people.id))')
       .where("people.approved_by is not null and ((r1.person1_index = '#{id_input}') or (r1.person2_index = '#{id_input}'))")
       }
-
   scope :for_2_people_first_last_name_exact_approved,
     lambda {|person1FirstName, person1LastName, person2FirstName, person2LastName| 
       select('relationships.*')
@@ -114,6 +117,24 @@ class Person < ActiveRecord::Base
     else
       return Person.first_degree_for(10000473)
     end
+  end
+
+  #this is a scope for the shared group, meaning that people that this returns are in two groups
+  def self.all_members_of_2_groups(group1ID, group2ID)
+    peopleRecordsForReturn = []
+    #find all members of the first group
+    peopleInGroup1 = Person.all_members_of_a_group(group1ID)
+    #find all members of the second group and get their list of IDs
+    idsForPeopleInGroup2 = Person.all_members_of_a_group(group2ID).map { |a| a.id }
+
+    #loop through all members of the first group and if their id are in the list of 
+    #ids for people in the second group then add them to the return array
+    peopleInGroup1.each do |memberRecord|
+      if (idsForPeopleInGroup2.include?(memberRecord.id))
+        peopleRecordsForReturn.push(memberRecord)
+      end
+    end
+    return peopleRecordsForReturn
   end
 
   def self.find_2_degrees_for_person(id)

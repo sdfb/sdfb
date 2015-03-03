@@ -18,8 +18,7 @@ class HomeController < ApplicationController
         end
       end
     else
-      #The field will return the shared network
-      ########needs work
+      #The field will return searched node 1, searched node 2, shared nodes, and the first degree relationship of the shared network nodes
       @data['people'] = Person.find_2_degrees_for_shared_network(params[:id], params[:id2])
     end
     
@@ -34,15 +33,15 @@ class HomeController < ApplicationController
         # This field will return the group record that has been searched so that the group info is available
         @data['group'] = Group.find(params[:group]).select("id, name, description, person_list")
         ########needs work
-        @data['group_members'] = Group.find_approved_group_members(params[:group])
+        @data['group_members'] = Person.all_members_of_a_group(params[:group]).all_approved
       else
         # if a shared group search
         # This field will return the group record for Group 1 that has been searched so that the group info is available
         @data['group'] = Group.find(params[:group]).select("id, name, description, person_list")
         # This field will return the group record for Group 2 that has been searched so that the group info is available
         @data['group2'] = Group.find(params[:group2]).select("id, name, description, person_list")
-        ########needs work
-        @data['group_members'] = Group.find_approved_shared_group_members(params[:group], params[:group2])
+        # Returns the people who are in both searched groups
+        @data['group_members'] = Person.all_members_of_2_groups(params[:group], params[:group2])
       end 
     end
   end
