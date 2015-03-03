@@ -11,7 +11,13 @@ namespace :db do
       data.each { |genderRecord|
         genderData = genderRecord.split("\t")
         person_id_input = genderData[0]
-        gender_input = genderData[1]
+        if genderData[1] == "male\n"
+          gender_input = "male"
+        elsif genderData[1] == "female\n"
+          gender_input = "female"
+        else
+          gender_input = "unknown"
+        end
         Person.update(person_id_input, gender: gender_input)
         count += 1
         puts count

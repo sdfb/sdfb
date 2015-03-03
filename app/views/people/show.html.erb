@@ -20,6 +20,7 @@
       <dl class="dl-horizontal">
         <dt><strong>Person id:</strong></dt>
         <dd><%= @person.id %></dd>
+        <dd><%= Person.find_2_degrees_for_shared_network(@person.id, 10001715) %></dd>
         <% if ! @person.odnb_id.blank? %>
           <dt><strong>ODNB id:</strong></dt>
           <dd><%= @person.odnb_id %></dd>
@@ -42,6 +43,8 @@
           <dt><strong>Suffix:</strong></dt>
           <dd><%= @person.suffix %></dd>
         <% end %>
+        <dt><strong>Rel sum:</strong></dt>
+        <dd><%= @person.rel_sum %></dd>
         <dt><strong>Gender:</strong></dt>
         <dd><%= @person.gender %></dd>
         <% if ! @person.search_names_all.blank? %>

@@ -94,7 +94,7 @@ class Person < ActiveRecord::Base
   ## birth year type is one included in the list
   validates_inclusion_of :death_year_type, :in => DATE_TYPE_LIST
   ## gender must be included in the gender list
-  validates_inclusion_of :gender, :in => DATE_TYPE_LIST
+  validates_inclusion_of :gender, :in => GENDER_LIST
 
   # Callbacks
   # ----------------------------- 
@@ -140,6 +140,67 @@ class Person < ActiveRecord::Base
             peopleIDArray.push(secondDegreePersonID)
             secondDegreePersonRecord = Person.select("id, first_name, last_name, display_name, ext_birth_year, birth_year_type, ext_death_year, death_year_type, rel_sum, group_list, historical_significance, odnb_id, prefix, suffix, title").find(secondDegreePersonID)
             peopleRecordsForReturn.push(secondDegreePersonRecord)
+          end
+        end
+      end
+    end
+    return peopleRecordsForReturn
+  end
+
+  def self.find_2_degrees_for_shared_network(person1_id, person2_id)
+    peopleRecordsForReturn = []
+    if person1_id
+      peopleIDArray = []
+
+      #find the person record for searched person 1
+      searchedPerson1Record = Person.select("id, first_name, last_name, display_name, ext_birth_year, birth_year_type, ext_death_year, death_year_type, rel_sum, group_list, historical_significance, odnb_id, prefix, suffix, title").find(person1_id)
+      #Add the id and record for the searched person 1
+      peopleIDArray.push(person1_id)
+      peopleRecordsForReturn.push(searchedPerson1Record)
+
+      #find the person record for searched person 2
+      searchedPerson2Record = Person.select("id, first_name, last_name, display_name, ext_birth_year, birth_year_type, ext_death_year, death_year_type, rel_sum, group_list, historical_significance, odnb_id, prefix, suffix, title").find(person2_id)
+      #Add the id and record for the searched person 2
+      peopleIDArray.push(person2_id)
+      peopleRecordsForReturn.push(searchedPerson2Record)
+
+      # go through each the relsum for searched person 1 and compare that entries with searched person 2
+      searchedPerson1Record.rel_sum.each do |firstDegreePerson|
+        firstDegreePersonID = firstDegreePerson[0]
+        #don't read the searched person1 and searched person2 records
+        if (firstDegreePersonID != person1_id)
+          if (firstDegreePersonID != person2_id) 
+            #Add the id and record for the first degree connection for person 1 if it is a shared connection with person 2
+            #loop through person 2's rel_sum to perform the check for that person
+            if (! searchedPerson2Record.rel_sum.nil?)
+              searchedPerson2Record.rel_sum.each do |firstDegreePersonForSearchedP2|
+                # if the first degree person is shared between the the searched person 1 and searched person 2 then add the record
+                # don't include the originally searched person 1 and person 2
+                if (firstDegreePersonForSearchedP2[0] != person1_id)
+                  if (firstDegreePersonForSearchedP2[0] != person2_id)
+                    if (firstDegreePersonForSearchedP2[0] == firstDegreePersonID)
+                      firstDegreePersonRecord = Person.select("id, first_name, last_name, display_name, ext_birth_year, birth_year_type, ext_death_year, death_year_type,  rel_sum, group_list, historical_significance, odnb_id, prefix, suffix, title").find(firstDegreePersonID)
+                      peopleIDArray.push(firstDegreePersonID)
+                      peopleRecordsForReturn.push(firstDegreePersonRecord)
+
+                      #for each person who has a first degree relationship with the searched person
+                      #loop through the first degree person's relationships so that we can find the second degree relationships
+                      if (! firstDegreePersonRecord.rel_sum.nil?)
+                        firstDegreePersonRecord.rel_sum.each do |secondDegreePerson|
+                          secondDegreePersonID = secondDegreePerson[0]
+                          #check if the person is already in the array and if not, add the array and the record
+                          if (! peopleIDArray.include?(secondDegreePersonID))
+                            peopleIDArray.push(secondDegreePersonID)
+                            secondDegreePersonRecord = Person.select("id, first_name, last_name, display_name, ext_birth_year, birth_year_type, ext_death_year, death_year_type, rel_sum, group_list, historical_significance, odnb_id, prefix, suffix, title").find(secondDegreePersonID)
+                            peopleRecordsForReturn.push(secondDegreePersonRecord)
+                          end
+                        end
+                      end
+                    end
+                  end
+                end
+              end
+            end
           end
         end
       end
