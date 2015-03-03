@@ -47,7 +47,7 @@ function notInArray(arr, val) {
 
 // Displays node information
 function showNodeInfo(data){
- accordion("node")
+ accordion("node");
  $("#node-name").text(data.display_name);
  $("#node-bdate").text(data.birth_year_type + " " + data.birth_year);
  $("#node-ddate").text(data.death_year_type + " " + data.death_year);
