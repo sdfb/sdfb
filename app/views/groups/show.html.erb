@@ -20,7 +20,6 @@
       <dl class="dl-horizontal">
         <dt>Name:</dt>
         <dd><%= @group.name %></dd>
-        <dd><%= Person.all_members_of_2_groups(1,2).size %></dd>
         <% if ! @group.description.blank? %>
           <dt>Description:</strong></dt>
           <dd><%= @group.description %></dd>
