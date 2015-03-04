@@ -207,13 +207,22 @@ class Person < ActiveRecord::Base
                       #for each person who has a first degree relationship with the searched person
                       #loop through the first degree person's relationships so that we can find the second degree relationships
                       if (! firstDegreePersonRecord.rel_sum.nil?)
-                        firstDegreePersonRecord.rel_sum.each do |secondDegreePerson|
-                          secondDegreePersonID = secondDegreePerson[0]
-                          #check if the person is already in the array and if not, add the array and the record
+                        firstDegreePersonRecord.rel_sum.each do |secondDegreePersonRel|
+                          secondDegreePersonID = secondDegreePersonRel[0]
+                          #check if the person is already in the array
                           if (! peopleIDArray.include?(secondDegreePersonID))
-                            peopleIDArray.push(secondDegreePersonID)
+                            #find the record of the second degree person
                             secondDegreePersonRecord = Person.select("id, first_name, last_name, display_name, ext_birth_year, birth_year_type, ext_death_year, death_year_type, rel_sum, group_list, historical_significance, odnb_id, prefix, suffix, title").find(secondDegreePersonID)
-                            peopleRecordsForReturn.push(secondDegreePersonRecord)
+
+                            #if the person is not in the array already
+                            secondDegreePersonRecord.rel_sum.each do |thirdDegreePerson|
+                              thirdDegreePersonID = thirdDegreePerson[0]
+                              #check if person1 and person 2 are within their first degree and if they are then return
+                              if ((thirdDegreePersonID == person1_id) || (thirdDegreePersonID == person2_id))
+                                peopleIDArray.push(secondDegreePersonID)
+                                peopleRecordsForReturn.push(secondDegreePersonRecord)
+                              end
+                            end
                           end
                         end
                       end
