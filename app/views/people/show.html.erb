@@ -20,7 +20,6 @@
       <dl class="dl-horizontal">
         <dt><strong>Person id:</strong></dt>
         <dd><%= @person.id %></dd>
-        <dd><%= Person.find_2_degrees_for_shared_network(10000001, 10006152) %></dd>
         <% if ! @person.odnb_id.blank? %>
           <dt><strong>ODNB id:</strong></dt>
           <dd><%= @person.odnb_id %></dd>

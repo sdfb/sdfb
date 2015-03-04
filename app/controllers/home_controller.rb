@@ -19,7 +19,7 @@ class HomeController < ApplicationController
       end
     else
       #The field will return searched node 1, searched node 2, shared nodes, and the first degree relationship of the shared network nodes
-      @data['people'] = Person.find_2_degrees_for_shared_network(params[:id], params[:id2])
+      @data['people'] = Person.find_2_degrees_for_shared_network(params[:id], params[:id2], params[:confidence], params[:date])
     end
     
     # DELETE: This group_data is specifically for creating the group autocomplete and it can be removed
