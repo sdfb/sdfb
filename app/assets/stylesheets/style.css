@@ -1,5 +1,5 @@
 @charset "UTF-8";
-@import url(https://fonts.googleapis.com/css?family=Open+Sans:400,700);
+@import url('https://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css');
 
 html, body {
     margin: 0;
@@ -112,6 +112,11 @@ a:hover {
 	height:100%;
     width:100%;
     z-index:-1;
+}
+
+#graph svg{
+  position: absolute;
+  bottom:0;
 }
 
 #bacon {
