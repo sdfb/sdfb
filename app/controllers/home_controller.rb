@@ -7,7 +7,7 @@ class HomeController < ApplicationController
     # @people = Person.find_first_degree_for(params[:id])
     @data = {}
     #only return people if there is no group search because if there is a group search it will be displayed separately
-    if (! params[:id].nil?)
+    if (params[:id].nil? && params[:group].nil?)
       #detect if this is a one degree search or a two degree search
       if (params[:id2].nil?)
         @data['people'] = Person.find_two_degree_for_person(params[:id], params[:confidence], params[:date])
