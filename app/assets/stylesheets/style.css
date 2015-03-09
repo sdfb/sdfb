@@ -80,7 +80,6 @@ li {
 }
 #filterBar {
   display:block;
-  overflow:hidden;
   background-color: #FBF3E1;
   line-height: 34px;
   height: auto;
@@ -88,6 +87,7 @@ li {
   font-weight: lighter;
   text-transform: uppercase;
   letter-spacing: 2px;
+  z-index:10;
 }
 
 a:hover {
@@ -111,7 +111,6 @@ a:hover {
 	position:fixed;
 	height:100%;
     width:100%;
-    z-index:-1;
 }
 
 #graph svg{

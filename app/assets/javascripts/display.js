@@ -85,7 +85,7 @@ function twoDegs(id, id2, people, sconf, econf, sdate, edate) {
 
     edges.reverse();
     var w = window.innerWidth;
-    var h = window.innerHeight - $("#head").height() - $("#filterBar").height();
+    var h = window.innerHeight;
     var options = { width: w, height: h, collisionAlpha: 25, colors: getColorsRels() };
     var graph = new Insights($("#graph")[0], nodes, edges, options).render();
 

@@ -27,7 +27,8 @@ class HomeController < ApplicationController
         # This field will return the group record that has been searched so that the group info is available
         @data['group'] = Group.select("id, name, description, person_list").find(params[:group])
         # Returns the people who are in the group
-        @data['group_members'] = Person.all_members_of_a_group(params[:group]).all_approved
+        #@data['group_members'] = Person.all_members_of_a_group(params[:group]).all_approved
+        @data['group_members'] = Person.all_members_of_a_group(params[:group])
       else
         # if a shared group search
         # This field will return the group record for Group 1 that has been searched so that the group info is available
