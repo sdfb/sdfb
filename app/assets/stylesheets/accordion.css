@@ -9,6 +9,7 @@
     height:100%;
     overflow:visible;
 	background: #78A7BF;
+    z-index:5;
 }
 
 #accordion h3 {
@@ -18,6 +19,7 @@
 	cursor: pointer;
 	color: #fff;
 	background: #196B94;
+
 }
 
 #accordion h3.on {
