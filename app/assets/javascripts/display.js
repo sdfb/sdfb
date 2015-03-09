@@ -302,12 +302,6 @@ function init() {
 	var people = window.gon.people;
 	var group_data = window.gon.group_data;
 
-  	//This function converts the gon for groups into readable information for groups
-	$.each(group_data, function(index, value){
-  	data.groups_names.push(value.name);
-  	data.groups_desc.push(value.description);
-  	data.groups_people.push(value.person_list);
-	});
 	filterGraph(people);
 	initGraph(people);
 }

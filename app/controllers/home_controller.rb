@@ -7,7 +7,7 @@ class HomeController < ApplicationController
     # @people = Person.find_first_degree_for(params[:id])
     @data = {}
     #only return people if there is no group search because if there is a group search it will be displayed separately
-    if (params[:id].nil? && params[:group].nil?)
+    if (params[:group].nil?)
       #detect if this is a one degree search or a two degree search
       if (params[:id2].nil?)
         @data['people'] = Person.find_two_degree_for_person(params[:id], params[:confidence], params[:date])
@@ -15,14 +15,12 @@ class HomeController < ApplicationController
         #The field will return searched node 1, searched node 2, shared nodes, and the first degree relationship of the shared network nodes
         @data['people'] = Person.find_two_degree_for_network(params[:id], params[:id2], params[:confidence], params[:date])
       end
-    end
-    #@data['all_people'] = Person.all_approved.select("id, first_name, last_name, ext_birth_year, prefix, suffix, title")
-    
-    # DELETE: This group_data is specifically for creating the group autocomplete and it can be removed
-    @data['group_data'] = Group.all_approved.select("id, name, description, person_list")
 
-    #Check if a group search or shared group search is happening
-    if (! params[:group].nil?)
+    #@data['all_people'] = Person.all_approved.select("id, first_name, last_name, ext_birth_year, prefix, suffix, title")
+    else
+      # DELETE: This group_data is specifically for creating the group autocomplete and it can be removed
+      @data['group_data'] = Group.all_approved.select("id, name, description, person_list")
+      #Check if a group search or shared group search is happening
       # Check if there is a second group to determine if there is a shared group
       if (params[:group2].nil?)
         #if just a group search (not a shared group search)
