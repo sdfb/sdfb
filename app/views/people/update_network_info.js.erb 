@@ -1,0 +1,17 @@
+ $("#node-name").text("<%= @node_info_title %>" + "<%= @node_info_first_name %>" + " " + "<%= @node_info_last_name %>");
+ $("#node-bdate").text("<%= @node_info_birth_year_type %>"+ " " + "<%= @node_info_birth %>");
+ $("#node-ddate").text("<%= @node_info_death_year_type %>"+ " " + "<%= @node_info_death %>");
+
+ $("#node-significance").text("<%= @node_info_historical_significance %>");
+ /*$("#node-group").text("<%= @node_info_group_list %>".join(","));*/
+var d = new Date();
+ $("#node-cite").text( "<%= @node_info_first_name %>" + " "+ "<%= @node_info_last_name %>" + " Network Visualization. \n Six Degrees of Francis Bacon: Reassembling the Early Modern Social Network. Gen. eds. Daniel Shore and Christopher Warren. "+d.getMonth()+"/"+d.getDate()+"/"+d.getFullYear()+" <http://sixdegreesoffrancisbacon.com/>");
+ if ("<%= @node_info_odnb_id %>"> 0){
+ 	$("#node-DNBlink").attr("href", "http://www.oxforddnb.com/view/article/"+"<%= @node_info_odnb_id %>");
+ }else{
+ 	$("#node-DNBlink").attr("href", "http://www.oxforddnb.com/search/quick/?quicksearch=quicksearch&docPos=1&searchTarget=people&simpleName="+"<%= @node_info_first_name %>" + "+" + "<%= @node_info_last_name %>");
+ }
+ $("#node-GoogleLink").attr("href", "http://www.google.com/search?q="+"<%= @node_info_first_name %>" + "+" + "<%= @node_info_last_name %>");
+ $("#node-discussion").attr("href", "/people/" + "<%= @node_id %>");
+ $("#node-icon-chain").attr("href", "/relationships/new?person1_id=" + "<%= @node_id %>");
+ $("#node-icon-annotate").attr("href", "/user_person_contribs/new?person_id=" + "<%= @node_id %>");

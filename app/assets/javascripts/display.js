@@ -4,27 +4,6 @@ var default_econfidence = 100;
 var default_sdate = 1400;
 var default_edate = 1800;
   
-// Displays node information
-function showNodeInfo(personInfo){
- accordion("node");
- $("#node-name").text(personInfo.display_name);
- $("#node-bdate").text(personInfo.birth_year_type + " " + personInfo.birth_year);
- $("#node-ddate").text(personInfo.death_year_type + " " + personInfo.death_year);
- $("#node-significance").text(personInfo.occupation);
- $("#node-group").text(personInfo.groups.join(","));
- var d = new Date();
- $("#node-cite").text( personInfo.first+ " "+ personInfo.last + " Network Visualization. \n Six Degrees of Francis Bacon: Reassembling the Early Modern Social Network. Gen. eds. Daniel Shore and Christopher Warren. "+d.getMonth()+"/"+d.getDate()+"/"+d.getFullYear()+" <http://sixdegreesoffrancisbacon.com/>");
- if (personInfo.odnb_id > 0){
-  $("#node-DNBlink").attr("href", "http://www.oxforddnb.com/view/article/"+personInfo.odnb_id);
- }else{
-  $("#node-DNBlink").attr("href", "http://www.oxforddnb.com/search/quick/?quicksearch=quicksearch&docPos=1&searchTarget=people&simpleName="+personInfo.first+"+"+personInfo.last);
- }
- $("#node-GoogleLink").attr("href", "http://www.google.com/search?q="+personInfo.first+"+"+ personInfo.last);
- $("#node-discussion").attr("href", "/people/" + personInfo.id);
- $("#node-icon-chain").attr("href", "/relationships/new?person1_id=" + personInfo.id);
- $("#node-icon-annotate").attr("href", "/user_person_contribs/new?person_id=" + personInfo.id);
-}
-
 /*
 Num_rels Cluster    Color
  0-1		0        orange
@@ -67,7 +46,7 @@ function notInArray(arr, val) {
 
 //creates a nodekey associative array with node info
 function createNodeKey(node, id) {
-  var nodeKey = {"text": node["display_name"], "size": 4, "id": id,  "cluster": 1};
+  var nodeKey = {"text": node["display_name"], "size": 10, "id": id,  "cluster": 1};
   return nodeKey;
 }
 
@@ -94,7 +73,7 @@ function twoDegs(id, id2, people, sconf, econf, sdate, edate) {
       });
     });
     //adds main person's id referenced to keys associative array. Keys represent all data in graph
-    keys[id] = {"text": p["display_name"], "size": 20, "id": id,  "cluster": 1}; 
+    keys[id] = {"text": p["display_name"], "size": 30, "id": id,  "cluster": 2}; 
   }
   createGraph(id, people, sconf, econf, sdate, edate);
   if (id2 != 0 && id2 != ""){
@@ -107,18 +86,38 @@ function twoDegs(id, id2, people, sconf, econf, sdate, edate) {
     edges.reverse();
     var w = window.innerWidth;
     var h = window.innerHeight - $("#head").height() - $("#filterBar").height();
-    var options = { width: w, height: h, collisionAlpha: 0.9, colors: getColorsRels() };
+    var options = { width: w, height: h, collisionAlpha: 25, colors: getColorsRels() };
     var graph = new Insights($("#graph")[0], nodes, edges, options).render();
-    graph.focus(id);
+
     graph.on("node:click", function(d) {
-        var clicked = people[d.id];
-        showNodeInfo(clicked);
+      var clicked = people[d.id];
+      $.ajax({
+            type: "GET",
+            url:    "/node_info", // should be mapped in routes.rb
+            data: {node_id:d.id},
+            datatype:"html", // check more option
+            success: function(data) {
+                     // handle response data
+                     },
+            async:   true
+          });  
+      accordion("node");
     });
 	
     graph.on("edge:click", function(d) {
         var id1 = parseInt(d.source.id);
         var id2 = parseInt(d.target.id);
-        getAnnotation(id1 < id2 ? id1 : id2, id1 > id2 ? id1 : id2, data);
+        $.ajax({
+            type: "GET",
+            url:    "/network_info", // should be mapped in routes.rb
+            data: {source_id:d.source.id, target_id:d.target.id},
+            datatype:"html", // check more option
+            success: function(data) {
+                     // handle response data
+                     },
+            async:   true
+          });  
+        accordion("edge");
     });
 
     graph.tooltip("<div class='btn' >{{text}}</div>");
@@ -156,31 +155,12 @@ function getConfidence(n) {
         return "certain";}
 }
 
-// Displays edge information 
-function getAnnotation(id1, id2, people) {
-  var id1_rel_array = people[id1].rels;
-  var confidence = "";
-  var rel_id = "";
-  $.each(id1_rel_array, function(index, value) {                    
-    if (value[0] == id2){
-       confidence = getConfidence(value[1]) + " @ " + value[1] + "%";
-       rel_id = value[3];
-    }
-  });
-  accordion("edge");
-  $("#edge-nodes").html(people[id1].display_name + " & " + people[id2].display_name);
-  $("#edge-confidence").html(confidence);
-  $("#edge-discussion").attr("href", "/relationships/" + rel_id );
-  $("#edge-icon-annotate").attr("href", "/user_rel_contribs/new?relationship_id=" + rel_id );
-  //$("#Sir-Mix-a-Lot").html(row.contributor); 
-  return true;
-};
-
 function getParam ( sname ){
     var params = location.search.substr(location.search.indexOf("?")+1);
     var sval = "";
     params = params.split("&");
     // split param and value into individual pieces
+    //$("#Sir-Mix-a-Lot").html(row.contributor); 
     for (var i=0; i<params.length; i++){
         temp = params[i].split("=");
         if ( [temp[0]] == sname ) { 
@@ -225,13 +205,18 @@ function initGraph(people){
   }else{
     var name = people[francisID].display_name
   }
+  if (getParam('id2') > 0){
+    var name2 = " and " + people[parseInt(getParam('id2'))].display_name
+  }else{
+    var name2 = ""
+  }
   if (getParam('confidence').length > 0){
       confidence = getParam('confidence').replace(',', '% to ')
   }
   if (getParam('date').length > 0){
       date = getParam('date').replace(',', ' to ')
   }
-  $("#results").html("Two degrees of " + name + " at " + confidence + "% from " + date);
+  $("#results").html("Two degrees of " + name + name2 + " at " + confidence + "% from " + date);
   //click methods for all the 'find' buttons in the search bar
   //this should not use the entire peopletoarray instead it should use whatever value is passed through by the #one
   $("#search-network-submit").click(function () {
@@ -266,13 +251,20 @@ function initGraph(people){
 
   $("#nav-filter-submit").click(function (){
     var ID = getParam("id");
+    var ID2 = getParam("id2")
+    if (ID2 != ""){
+      ID2Str = "&id2=" + ID2
+    }
+    else{
+      ID2Str = ""
+    }
     var confidence = $("#nav-slider-confidence-result-hidden").val().split(" - ");
     var date = $("#nav-slider-date-result").val().split(" - ");
     if ( ID != ""){
-      window.location.href = '/?id=' + ID + '&confidence=' + confidence + '&date=' + date;
+      window.location.href = '/?id=' + ID + ID2Str + '&confidence=' + confidence + '&date=' + date;
     }
     if (ID == ""){
-      window.location.href = '/?id=' + francisID + '&confidence=' + confidence + '&date=' + date;  
+      window.location.href = '/?id=' + francisID + ID2Str + '&confidence=' + confidence + '&date=' + date;  
     }
 
   });
@@ -281,11 +273,11 @@ function initGraph(people){
     addNodes = [];
     addEdges = [];
     var name = $('#node-name').html() + " (" + $('#node-bdate').html() + ")";
-        if (this.id == "icon-tag") {
-          $("#entry_1177061505").val(name);
-        } else if (this.id == "icon-link") {
-          $("#entry_768090773").val(name);
-        }
+    if (this.id == "icon-tag") {
+      $("#entry_1177061505").val(name);
+    } else if (this.id == "icon-link") {
+      $("#entry_768090773").val(name);
+    }
   });
 }
 
@@ -294,26 +286,6 @@ function init() {
 	var data = { nodes: [], edges: [], groups_names: [], groups_desc: [], groups_people: []};
 	var people = window.gon.people;
 	var group_data = window.gon.group_data;
-	//This function only converts gon to all data for the searched person and 1st degree relationships
- 	/*$.each(people, function(index, value) { 
-    var n = {}
-  	n.id = value.id;
-  	n.first = value.first_name;
-  	n.last = value.last_name;
-  	n.label = n.first + " " + n.last;
-    n.display_name = value.display_name;
-  	n.birth_year = value.ext_birth_year;
-  	n.birth_year_type = value.birth_year_type;
-  	n.death_year = value.ext_death_year;
-  	n.death_year_type = value.death_year_type;
-  	n.occupation = value.historical_significance;
-  	n.rels = value.rel_sum;
-  	n.size = n.rels.length;
-  	n.odnb_id = value.odnb_id;
-  	n.groups = value.group_list;
-  	data.nodes[n.id] = n;
-	});*/
-
 
   	//This function converts the gon for groups into readable information for groups
 	$.each(group_data, function(index, value){
@@ -326,5 +298,6 @@ function init() {
 }
 
 $(document).ready(function() {
-  init();
+  init();  
+
 });      

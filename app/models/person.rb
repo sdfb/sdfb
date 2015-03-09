@@ -114,6 +114,7 @@ class Person < ActiveRecord::Base
   # make a method that returns all of the two degrees for a person
   # use a array to track what people were added
   # have an array for the people records
+
   def self.find_first_degree_for_person(person_id, min_confidence, max_confidence, min_year, max_year, load_rels)
   	peopleRecordsForReturn = {}
 	  @PersonRecord = Person.select("id, rel_sum, display_name").where("id = ?", person_id)
@@ -123,11 +124,11 @@ class Person < ActiveRecord::Base
 			if ((firstDegreePerson[1].to_i >= min_confidence) && (firstDegreePerson[1].to_i <= max_confidence))
         @adjustedrel.push(firstDegreePerson)
         if (load_rels)
-          @firstDegreePersonQuery = Person.select("id, display_name, rel_sum").where("id = ? and not (ext_birth_year::integer > ? or ext_death_year::integer < ?)", firstDegreePersonID,  max_year, min_year)
+        	@firstDegreePersonQuery = Person.select("id, display_name, rel_sum").where("id = ? and not (ext_birth_year::integer > ? or ext_death_year::integer < ?)", firstDegreePersonID,  max_year, min_year)
   				peopleRecordsForReturn[@firstDegreePersonQuery[0].id] = {'rel_sum' => @firstDegreePersonQuery[0].rel_sum, 'display_name' => @firstDegreePersonQuery[0].display_name}   
 			  else
          @firstDegreePersonQuery = Person.select("id, display_name").where("id = ? and not (ext_birth_year::integer > ? or ext_death_year::integer < ?)", firstDegreePersonID,  max_year, min_year)
-          peopleRecordsForReturn[@firstDegreePersonQuery[0].id] = {'display_name' => @firstDegreePersonQuery[0].display_name}   
+         peopleRecordsForReturn[@firstDegreePersonQuery[0].id] = {'display_name' => @firstDegreePersonQuery[0].display_name}   
         end
       end
 		end
@@ -162,10 +163,58 @@ class Person < ActiveRecord::Base
       firstDegreePersonID = firstDegreePerson[0]
       @firstDegreePerson = self.find_first_degree_for_person(firstDegreePersonID, min_confidence, max_confidence, min_year, max_year, false)
       twoPeopleRecordsForReturn.update(@firstDegreePerson)
+      if(twoPeopleRecordsForReturn.length > 50)
+      	break	
+      end
     end
     twoPeopleRecordsForReturn.update(@zeroDegreePerson)
     return twoPeopleRecordsForReturn
   end
+
+  def self.find_two_degree_for_network(person_id1, person_id2, confidence_range, date_range)
+    twoPeopleRecordsForReturn = {}
+    if (confidence_range)
+      min_confidence = confidence_range.split(",")[0].to_i
+      max_confidence = confidence_range.split(",")[1].to_i
+    else
+      min_confidence = 60
+      max_confidence = 100
+    end
+    if (date_range)
+      min_year = date_range.split(",")[0].to_i
+      max_year = date_range.split(",")[1].to_i
+    else
+      min_year = 1400
+      max_year = 1800
+    end
+    @zeroDegreePerson1 = self.find_first_degree_for_person(person_id1, min_confidence, max_confidence, min_year, max_year, true)
+		@zeroDegreePerson2 = self.find_first_degree_for_person(person_id2, min_confidence, max_confidence, min_year, max_year, true)
+		@zeroDegreePerson2Rel = {}
+		@zeroDegreePerson2Rel[person_id2] = person_id2
+		@zeroDegreePerson2[person_id2.to_i]['rel_sum'].each do |firstDegreePerson2|
+			@zeroDegreePerson2Rel[firstDegreePerson2[0]] = firstDegreePerson2[0]
+		end
+		@zeroDegreePerson1[person_id1.to_i]['rel_sum'].each do |firstDegreePerson1|
+      firstDegreePersonID1 = firstDegreePerson1[0]
+      if (@zeroDegreePerson2Rel.include? firstDegreePersonID1)
+      	twoPeopleRecordsForReturn.update(self.find_first_degree_for_person(firstDegreePersonID1, min_confidence, max_confidence, min_year, max_year, true))
+      end
+    end
+		@zeroDegreePerson1Rel = {}
+		@zeroDegreePerson1Rel[person_id1] = person_id1
+		@zeroDegreePerson1[person_id1.to_i]['rel_sum'].each do |firstDegreePerson1|
+			@zeroDegreePerson1Rel[firstDegreePerson1[0]] = firstDegreePerson1[0]
+		end
+		@zeroDegreePerson2[person_id2.to_i]['rel_sum'].each do |firstDegreePerson2|
+      firstDegreePersonID2 = firstDegreePerson2[0]
+      if (@zeroDegreePerson1Rel.include? firstDegreePersonID2)
+      	twoPeopleRecordsForReturn.update(self.find_first_degree_for_person(firstDegreePersonID2, min_confidence, max_confidence, min_year, max_year, true))
+      end
+    end
+    twoPeopleRecordsForReturn.update(@zeroDegreePerson1)
+    twoPeopleRecordsForReturn.update(@zeroDegreePerson2)
+    return twoPeopleRecordsForReturn
+  end	
 
   #this is a scope for the shared group, meaning that people that this returns are in two groups
   def self.all_members_of_2_groups(group1ID, group2ID)

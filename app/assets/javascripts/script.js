@@ -16,7 +16,7 @@ $(document).ready(function() {
 
     var default_sdate = 1400
     var default_edate = 1800
-    var default_certainty = 40
+    var default_certainty = 60
     var default_scertainty = 0
     var default_ecertainty = 100
 

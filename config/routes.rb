@@ -2,6 +2,7 @@ Sdfb::Application.routes.draw do
   get "about" => "static_pages#about", :as => "about"
 	get "help" => "static_pages#help", :as => "help"
   get "tos" => "static_pages#tos", :as => "tos"
+
   resources :comments
 
 
@@ -40,7 +41,10 @@ Sdfb::Application.routes.draw do
   match '/group_search', :to => 'groups#search'
 
   match '/relationship_search', :to => 'relationships#search'
-  
+
+  match '/node_info', :to => 'home#update_node_info'
+  match '/network_info', :to => 'home#update_network_info'
+
   resources :users
   
 

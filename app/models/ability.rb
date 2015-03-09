@@ -142,6 +142,8 @@ class Ability
 			# A user can download people data
 			can :export_people, Person
 
+			#A user can get node info in accordion
+			can [:update_network_info, :update_node_info], Home
 			# A user can download relationship data
 			can :export_relationships, Relationship
 			can :export_rels_for_rels_100000000_100020000, Relationship
@@ -168,7 +170,7 @@ class Ability
 			can :search, Group
 
 			# Anyone can view search results
-			can :search, Person
+			can [:update_node_info, :search], Person
 
 			# Curators can view search results
 			can :search, Relationship
