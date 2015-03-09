@@ -7,7 +7,7 @@ class HomeController < ApplicationController
     # @people = Person.find_first_degree_for(params[:id])
     @data = {}
     #only return people if there is no group search because if there is a group search it will be displayed separately
-    if (params[:group].nil?)
+    if (! params[:id].nil?)
       #detect if this is a one degree search or a two degree search
       if (params[:id2].nil?)
         @data['people'] = Person.find_two_degree_for_person(params[:id], params[:confidence], params[:date])
@@ -27,7 +27,7 @@ class HomeController < ApplicationController
       if (params[:group2].nil?)
         #if just a group search (not a shared group search)
         # This field will return the group record that has been searched so that the group info is available
-        @data['group'] = Group.find(params[:group]).select("id, name, description, person_list")
+        @data['group'] = Group.select("id, name, description, person_list").find(params[:group])
         # Returns the people who are in the group
         @data['group_members'] = Person.all_members_of_a_group(params[:group]).all_approved
       else

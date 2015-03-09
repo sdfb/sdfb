@@ -22,10 +22,8 @@ $(document).ready(function() {
 
     //Tooltips
 	$("#search-network").tooltip({placement: 	'right', title: 'Connections of one individual'});
-	//$("#search-shared-network").tooltip({placement: 	'right', title: 'Mutual connections between two individuals'});
     $("#search-shared-network").tooltip({placement:     'right', title: 'New Feature Coming Soon'});
 	$("#search-group").tooltip({placement: 	'right', title: 'Members of one group'});
-	//$("#search-shared-group").tooltip({placement: 	'right', title: 'Mutual members of two groups'});
     $("#search-shared-group").tooltip({placement:   'right', title: 'New Feature Coming Soon'});
 
     $("#contribute-add-person").tooltip({placement:   'right', title: 'Add a new individual to the database'});

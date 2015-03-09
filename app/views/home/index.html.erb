@@ -14,7 +14,7 @@
 				<ul class="search-table">
 					<li id="search-network" class="clicked btnl">Network</li>		
 					<li id="search-shared-network" class="btnl">Shared network</li>
-					<li id="search-group" class="btnl" onclick="$('#tab-group').click();">Group</li>
+					<li id="search-group" class="btnl">Group</li>
 					<li id="search-shared-group" class="btnl">Shared groups</li>
 				</ul>
 
@@ -60,6 +60,11 @@
 				</section>
 
 			<!-- GROUP FORMS -->
+				<section id="search-group-form">
+					<input class="form-control" type="text" id="search-group-name" placeholder="Group Name" data-autocomplete="home/autocomplete_group_name" data-id-element="#search-group-name-id">  
+					<input id="search-group-name-id" type="hidden" />
+					<button class="talkPageLink" type="button" id="search-group-submit" name="group">Find</button>
+				</section>
 
 				<section id="search-shared-group-form">
 					<input class="form-control" type="text" id="search-shared-group-name1" placeholder="Group 1 Name" data-autocomplete="home/autocomplete_group_name" data-id-element="#search-shared-group-name1-id"> 
@@ -106,18 +111,11 @@
 			</a>
 			</div>
 
-			<!-- group information bar -->
+			<!-- group information bar 
 			<h3 class="accordion_btn" id="tab-group"><span class="icon-group"></span>Group</h3>
-			<div  class="accordion_content " id="groupinfo">
-				<a class="icon icon-label" id="group-icon-label" href="/group_assignments/new" name="edge"></a>
-				<a class="icon icon-annotate" id="group-icon-annotate" name="edge"></a>
-				<input type="text" data-autocomplete="home/autocomplete_group_name" data-id-element="#group_name" placeholder="Group Name">  
-				<input id="group_name" name="query" type="hidden" />
-				<p id="edge-nodes"></p>
-				<b>DESCRIPTION&nbsp;</b> 	<span id="group-description"></span><br>
-				<b>MEMBERS&nbsp;</b> 	<span id="group-members"></span><br>
-				<a class="talkPageLink" target="_blank">View Entry History</a>
-			</div>
+			<div  class="accordion_content " id="groupinfo">-->
+
+			<!--</div>-->
 
 			<!-- contribution bar -->
 			<h3 class="accordion_btn"><span class="icon-add"></span>Contribute</h3>

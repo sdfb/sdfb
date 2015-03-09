@@ -249,6 +249,21 @@ function initGraph(people){
       window.location.href = '/?id=' + id1 + '&id2=' + id2 + '&confidence=' + confidence + '&date=' + date + '&table=' + table;
     });
 
+  $("#search-group-submit").click(function () {
+    Pace.restart();
+    // make the index equal autocomplete
+    var id = $("#search-group-name-id").val();
+    window.location.href = '/?group=' + id;
+  });
+
+  $("#search-shared-group-submit").click(function () {
+    Pace.restart();
+    // make the index equal autocomplete
+    var id1 = $("#search-shared-group-name1-id").val();
+    var id2 = $("#search-shared-group-name2-id").val();
+    window.location.href = '/?group=' + id1 + '&group2=' + id2;
+  });
+
   $("#nav-filter-submit").click(function (){
     var ID = getParam("id");
     var ID2 = getParam("id2")
