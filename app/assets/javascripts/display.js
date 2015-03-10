@@ -287,12 +287,20 @@ function init() {
 	var people = window.gon.people;
 	var group_data = window.gon.group_data;
   var group = window.gon.group;
+  var group2 = window.gon.group2;
+  var group_members = window.gon.group_members;
+  console.log(group_members);
   if (getParam("group") == ""){
   	filterGraph(people);
   	initGraph(people);
+  	$('#group-table').hide();
   }else{
-    $.each(group_data, function(index, value) { 
-      $( "#table" ).append( "<div class='row'>" + value["name"] + "</div>" );
+     accordion("group"); 	
+  	$("#filterBar").hide();
+  	$("#group-name").text(group["name"]);
+  	$("#group-description").text(group["description"]);
+    $.each(group_members, function(index, value) { 
+      $( "#group-table" ).append( "<div class='group-row'><div class='col-md'>" + group_members[index]["display_name"] + "</div><div class='col-md'>" + group_members[index]["ext_birth_year"] + "</div><div class='col-md'>" + group_members[index]["ext_death_year"] + "</div><div class='col-md'><a href='/people/" + group_members[index]["id"] + "'>" + + group_members[index]["id"] + "</a></div></div>");
     });
   }
 }

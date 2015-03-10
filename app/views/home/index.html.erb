@@ -63,7 +63,7 @@
 				<section id="search-group-form">
 					<input class="form-control" type="text" id="search-group-name" placeholder="Group Name" data-autocomplete="home/autocomplete_group_name" data-id-element="#search-group-name-id">  
 					<input id="search-group-name-id" type="hidden" />
-					<button class="talkPageLink" type="button" id="search-group-submit" name="group">Find</button>
+					<a class="talkPageLink" type="button" id="search-group-submit" name="group">Find</a>
 				</section>
 
 				<section id="search-shared-group-form">
@@ -71,7 +71,7 @@
 					<input id="search-shared-group-name1-id" type="hidden" />
 					<input class="form-control" type="text" id="search-shared-group-name2" placeholder="Group 2 Name" data-autocomplete="home/autocomplete_group_name" data-id-element="#search-shared-group-name2-id"> 
 					<input id="search-shared-group-name2-id" type="hidden" />
-					<button class="talkPageLink" type="button" id="search-shared-group-submit" name="group">Find</button>
+					<a class="talkPageLink" type="button" id="search-shared-group-submit" name="group">Find</a>
 				</section>
 			</div>
 
@@ -111,11 +111,14 @@
 			</a>
 			</div>
 
-			<!-- group information bar 
+			<!-- group information bar -->
 			<h3 class="accordion_btn" id="tab-group"><span class="icon-group"></span>Group</h3>
-			<div  class="accordion_content " id="groupinfo">-->
+				<div class="accordion_content" id="groupinfo" name="group">
+					<p id="group-name">Search a group to see details</p>
+					<b>Description: </b><span id="group-description"></span><br>
+					<span class="fill"></span>
+				</div>
 
-			<!--</div>-->
 
 			<!-- contribution bar -->
 			<h3 class="accordion_btn"><span class="icon-add"></span>Contribute</h3>
@@ -143,5 +146,12 @@
 			<label for="nav-slider-date">Date Range:</label><input type="text" id="nav-slider-date-result" readonly value="1400 - 1800">
 			<span id="slidenav2" ><article id="nav-slider-date" class="slider-date" name="2"></article></span>
 		</div>	
-		<div id="table"></div>
+		<div id="group-table">
+			<div class="group-row">
+				<div class="col-md group-table-header">Person Name</div>
+				<div class='col-md'>Birth Date</div>
+				<div class='col-md'>Death Date</div>
+				<div class='col-md'>Link</div>
+			</div>
+		</div>
 	</div>

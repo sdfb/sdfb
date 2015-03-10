@@ -216,19 +216,28 @@ class Person < ActiveRecord::Base
     return twoPeopleRecordsForReturn
   end	
 
+  def self.all_members_of_1_group(groupID)
+    peopleRecordsForReturn = {}
+    #find all members of the first group
+    peopleInGroup1 = Person.all_members_of_a_group(groupID)
+    peopleInGroup1.each do |memberRecord|
+      peopleRecordsForReturn[memberRecord.id] = memberRecord
+    end
+    return peopleRecordsForReturn
+  end
+
   #this is a scope for the shared group, meaning that people that this returns are in two groups
   def self.all_members_of_2_groups(group1ID, group2ID)
-    peopleRecordsForReturn = []
+    peopleRecordsForReturn = {}
     #find all members of the first group
     peopleInGroup1 = Person.all_members_of_a_group(group1ID)
     #find all members of the second group and get their list of IDs
     idsForPeopleInGroup2 = Person.all_members_of_a_group(group2ID).map { |a| a.id }
-
     #loop through all members of the first group and if their id are in the list of 
     #ids for people in the second group then add them to the return array
     peopleInGroup1.each do |memberRecord|
       if (idsForPeopleInGroup2.include?(memberRecord.id))
-        peopleRecordsForReturn.push(memberRecord)
+        peopleRecordsForReturn[memberRecord.id] = memberRecord
       end
     end
     return peopleRecordsForReturn

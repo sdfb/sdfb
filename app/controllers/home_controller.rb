@@ -28,13 +28,13 @@ class HomeController < ApplicationController
         @data['group'] = Group.select("id, name, description, person_list").find(params[:group])
         # Returns the people who are in the group
         #@data['group_members'] = Person.all_members_of_a_group(params[:group]).all_approved
-        @data['group_members'] = Person.all_members_of_a_group(params[:group])
+        @data['group_members'] = Person.all_members_of_1_group(params[:group])
       else
         # if a shared group search
         # This field will return the group record for Group 1 that has been searched so that the group info is available
-        @data['group'] = Group.find(params[:group]).select("id, name, description, person_list")
+        @data['group'] = Group.select("id, name, description, person_list").find(params[:group])
         # This field will return the group record for Group 2 that has been searched so that the group info is available
-        @data['group2'] = Group.find(params[:group2]).select("id, name, description, person_list")
+        @data['group2'] = Group.select("id, name, description, person_list").find(params[:group2])
         # Returns the people who are in both searched groups
         @data['group_members'] = Person.all_members_of_2_groups(params[:group], params[:group2])
       end 

@@ -217,9 +217,13 @@
 	color: #fff;
 }
 
-#nodeinfo p, #edgeinfo p {
+#nodeinfo p, #edgeinfo p, #groupinfo p {
 	color: #fff;
 	font-size:14px;
+}
+.fill{
+    height: 10px;
+    display: block;
 }
 
 .talkPageLink:hover {
@@ -231,7 +235,7 @@
 	font-size:14px;
 	text-align:center;
     display:block;
-    margin:5px 20px 10px 20px;
+    margin:5px 20px 20px 20px;
     padding:5px 7px;
     background-color:#666;
 	font-size: 12px;
@@ -240,8 +244,7 @@
 	border-radius: 10px;
 	-khtml-border-radius: 10px; 
     height:25px !important;
-	/*-webkit-box-shadow: 10px 10px 10px 0px rgba(0,0,0,0.75);
-	-moz-box-shadow: 10px 10px 10px 0px rgba(0,0,0,0.75);
+	/*-webkit-box-shadow: 10px 10px 10px 0px rgba(0,0,0,0.75	-moz-box-shadow: 10px 10px 10px 0px rgba(0,0,0,0.75);
 	box-shadow: 10px 10px 10px 0px rgba(0,0,0,0.75);*/
 	border:none;
 }

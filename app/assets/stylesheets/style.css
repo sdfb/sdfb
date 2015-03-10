@@ -136,15 +136,29 @@ a:hover {
   z-index:5;
 }
 
-#table{
+#group-table{
   display:block;
   position:relative;
+  float:left;
+  margin:20px 0px 0px 20px;
+  background-color: #FBF3E1;
 }
 
-#table .row{
-  display:block;
+
+.group-table-header{
+  font-weight: bold;
+}
+
+.col-md, .col-sm{
   float:left;
-  width:100%;
+}
+
+.col-md{
+  width:200px;
+}
+
+.col-sm{
+  width:100px;
 }
 
 /*TABLE FORMAT*/
