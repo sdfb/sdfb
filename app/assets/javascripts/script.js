@@ -22,9 +22,9 @@ $(document).ready(function() {
 
     //Tooltips
 	$("#search-network").tooltip({placement: 	'right', title: 'Connections of one individual'});
-    $("#search-shared-network").tooltip({placement:     'right', title: 'New Feature Coming Soon'});
+    $("#search-shared-network").tooltip({placement:     'right', title: 'Mutual connections between two individuals'});
 	$("#search-group").tooltip({placement: 	'right', title: 'Members of one group'});
-    $("#search-shared-group").tooltip({placement:   'right', title: 'New Feature Coming Soon'});
+    $("#search-shared-group").tooltip({placement:   'right', title: 'Mutual members of two groups'});
 
     $("#contribute-add-person").tooltip({placement:   'right', title: 'Add a new individual to the database'});
     $("#contribute-add-group").tooltip({placement:  'right', title: 'Add a new group to the database'});

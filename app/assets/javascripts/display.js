@@ -18,7 +18,13 @@ Num_rels Cluster    Color
 
 //returns cluster number based on number of relationships the cluster has
 function getClusterRels(node){
-	var size = node.size;
+	try{
+		var size = Object.keys(node).length;
+	}
+	catch(err) {
+		var size = 0;
+	}
+
 	if (size > 100){
 		return 10;
 	}else{
@@ -46,8 +52,7 @@ function notInArray(arr, val) {
 
 //creates a nodekey associative array with node info
 function createNodeKey(node, id) {
-  var nodeKey = {"text": node["display_name"], "size": 10, "id": id,  "cluster": 1};
-  return nodeKey;
+  return {"text": node["display_name"], "size": 10, "id": id,  "cluster": getClusterRels(node["rel_sum"])};
 }
 
 function twoDegs(id, id2, people) {
@@ -73,13 +78,13 @@ function twoDegs(id, id2, people) {
       });
     });
     //adds main person's id referenced to keys associative array. Keys represent all data in graph
-    keys[id] = {"text": p["display_name"], "size": 30, "id": id,  "cluster": 2}; 
+    keys[id] = {"text": p["display_name"], "size": 30, "id": id,  "cluster": getClusterRels(p["rel_sum"])}; 
   }
   createGraph(id, people);
   if (id2 != 0 && id2 != ""){
       createGraph(id2, people);
-      keys[id2] = {"text": people[id2]["display_name"], "size": 30, "id": id2,  "cluster": 2}; 
-      keys[id] = {"text": people[id]["display_name"], "size": 30, "id": id,  "cluster": 2}; 
+      keys[id2] = {"text": people[id2]["display_name"], "size": 30, "id": id2,  "cluster": getClusterRels(people[id2]["rel_sum"])}; 
+      keys[id] = {"text": people[id]["display_name"], "size": 30, "id": id,  "cluster": getClusterRels(people[id]["rel_sum"])}; 
   }
   $.each(keys, function(index, value) {
     nodes.push(value); //adds each key to nodes array
@@ -289,8 +294,7 @@ function init() {
   var group = window.gon.group;
   var group2 = window.gon.group2;
   var group_members = window.gon.group_members;
-  console.log(group_members);
-  if (getParam("group") == ""){
+  if (getParam("group").length == 0){
   	filterGraph(people);
   	initGraph(people);
   	$('#group-table').hide();
@@ -299,6 +303,11 @@ function init() {
   	$("#filterBar").hide();
   	$("#group-name").text(group["name"]);
   	$("#group-description").text(group["description"]);
+  	if (typeof group2 != 'undefined'){
+	  	$("#group-name2").text(group2["name"]);
+	  	$("#group-description2").text(group2["description"]);
+	  	$(".group2").show();
+	  }
     $.each(group_members, function(index, value) { 
       $( "#group-table" ).append( "<div class='group-row'><div class='col-md'>" + group_members[index]["display_name"] + "</div><div class='col-md'>" + group_members[index]["ext_birth_year"] + "</div><div class='col-md'>" + group_members[index]["ext_death_year"] + "</div><div class='col-md'><a href='/people/" + group_members[index]["id"] + "'>" + + group_members[index]["id"] + "</a></div></div>");
     });
