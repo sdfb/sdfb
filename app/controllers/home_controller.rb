@@ -19,7 +19,7 @@ class HomeController < ApplicationController
     #@data['all_people'] = Person.all_approved.select("id, first_name, last_name, ext_birth_year, prefix, suffix, title")
     else
       # DELETE: This group_data is specifically for creating the group autocomplete and it can be removed
-      @data['group_data'] = Group.all_approved.select("id, name, description, person_list")
+      #@data['group_data'] = Group.all_approved.select("id, name, description, person_list")
       #Check if a group search or shared group search is happening
       # Check if there is a second group to determine if there is a shared group
       if (params[:group2].nil?)

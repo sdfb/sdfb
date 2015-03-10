@@ -50,11 +50,11 @@ function createNodeKey(node, id) {
   return nodeKey;
 }
 
-function twoDegs(id, id2, people, sconf, econf, sdate, edate) {
+function twoDegs(id, id2, people) {
 	var keys = {};
 	var edges = [];
   var nodes = [];
-	function createGraph(id, people, sconf, econf, sdate, edate) {
+	function createGraph(id, people) {
   	var p = people[id];
   	$.each(p.rel_sum, function(index, value) { 
   	  var q = value[0];
@@ -75,9 +75,11 @@ function twoDegs(id, id2, people, sconf, econf, sdate, edate) {
     //adds main person's id referenced to keys associative array. Keys represent all data in graph
     keys[id] = {"text": p["display_name"], "size": 30, "id": id,  "cluster": 2}; 
   }
-  createGraph(id, people, sconf, econf, sdate, edate);
+  createGraph(id, people);
   if (id2 != 0 && id2 != ""){
-      createGraph(id2, people, sconf, econf, sdate, edate);
+      createGraph(id2, people);
+      keys[id2] = {"text": people[id2]["display_name"], "size": 30, "id": id2,  "cluster": 2}; 
+      keys[id] = {"text": people[id]["display_name"], "size": 30, "id": id,  "cluster": 2}; 
   }
   $.each(keys, function(index, value) {
     nodes.push(value); //adds each key to nodes array
@@ -173,28 +175,13 @@ function getParam ( sname ){
 function filterGraph(people){
     var ID = getParam("id");
     var ID2 = getParam("id2");
-    var sconf = getParam("confidence").split(",")[0];
-    var econf = getParam("confidence").split(",")[1];
-    var date = getParam("date");
-    var sdate = date.substring(0, 3);
-    var edate = date.substring(5, 8);
     if(ID2 == "" || ID2 == "0"){
         ID2 = 0;
     } 
-    if(date == ""){
-        sdate = default_sdate;
-        edate = default_edate;
-    }
     if(ID == ""){
         ID = francisID;
     }
-    if(sconf == ""){
-        sconf = default_sconfidence;
-    }
-    if(econf == ""){
-        econf = default_econfidence;
-    }
-    twoDegs(ID, ID2, people, sconf, econf, sdate, edate);
+    twoDegs(ID, ID2, people);
 }
 
 function initGraph(people){
@@ -297,13 +284,17 @@ function initGraph(people){
 }
 
 function init() {
-	//This file only contains the data for the searched person and 1st degree relationships
-	var data = { nodes: [], edges: [], groups_names: [], groups_desc: [], groups_people: []};
 	var people = window.gon.people;
 	var group_data = window.gon.group_data;
-
-	filterGraph(people);
-	initGraph(people);
+  var group = window.gon.group;
+  if (getParam("group") == ""){
+  	filterGraph(people);
+  	initGraph(people);
+  }else{
+    $.each(group_data, function(index, value) { 
+      $( "#table" ).append( "<div class='row'>" + value["name"] + "</div>" );
+    });
+  }
 }
 
 $(document).ready(function() {
