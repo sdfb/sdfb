@@ -84,12 +84,21 @@ class UserRelContrib < ActiveRecord::Base
 
   #This adds the relationship types to a summary list under the relationship
   def create_relationship_types_list
-    if (self.is_approved == true)
-        #find all approved user_rel_contribs for that relationship
-        #map by type name
-        updated_rel_types_list = UserRelContrib.all_approved.all_for_relationship(self.relationship_id).map{|urc| RelationshipType.find(urc.relationship_type_id).name}
-        Relationship.update(self.relationship_id, types_list: updated_rel_types_list)
+    #find all approved user_rel_contribs for that relationship
+    #updated_rel_types_list = UserRelContrib.all_approved.all_for_relationship(self.relationship_id).map{|urc| RelationshipType.find(urc.relationship_type_id).name}
+    updated_rel_types_list = []
+    UserRelContrib.all_approved.all_for_relationship(self.relationship_id).each do | urc |
+      if ((urc.is_approved == true) && (urc.is_active == true))
+        user_rel_contrib_record = []
+        user_rel_contrib_record.push(RelationshipType.find(urc.relationship_type_id).name)
+        user_rel_contrib_record.push(urc.certainty)
+        user_rel_contrib_record.push(urc.start_year)
+        user_rel_contrib_record.push(urc.end_year)
+      end
+      updated_rel_types_list.push(user_rel_contrib_record)
     end
+
+    Relationship.update(self.relationship_id, types_list: updated_rel_types_list)
   end
 
   def add_editor_update_max_cert_check_approved
