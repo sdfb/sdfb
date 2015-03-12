@@ -61,6 +61,12 @@ class Ability
 			# A user can view their dashboard
 			can :dashboard, User
 
+			# A user can see the autocomplete dropdowns for people and relationships
+			can :autocomplete_person_search_names_all, [Relationship, Person, UserRelContrib, GroupAssignment]
+
+			# A user can see the autocomplete dropdowns for groups
+			can :autocomplete_group_name, Group
+
 		elsif (user.user_type == "Standard") 
 			#  A user can create users, groups, group assignments, people, relationships, user group contributions, user person contributions, and user relationship contributions
 			can [:new, :create], [User, Group, GroupAssignment, Person, Relationship, UserGroupContrib, UserPersonContrib, UserRelContrib]
@@ -157,6 +163,13 @@ class Ability
 
 			# A user can view their dashboard
 			can :dashboard, User
+
+			# A user can see the autocomplete dropdowns for people and relationships
+			can :autocomplete_person_search_names_all, [Relationship, Person, UserRelContrib, GroupAssignment]
+
+			# A user can see the autocomplete dropdowns for groups
+			can :autocomplete_group_name, Group
+
 		else
 			# Anyone can sign up
 			can [:new, :create], User
@@ -177,7 +190,7 @@ class Ability
 			can :show, [Group, Person, Relationship], :is_approved => true
 
 			# Anyone can see the autocomplete dropdowns for people and relationships
-			can :autocomplete_person_search_names_all, [Relationship, Person]
+			can :autocomplete_person_search_names_all, [Relationship, Person, UserRelContrib, GroupAssignment]
 
 			# Anyone can see the autocomplete dropdowns for groups
 			can :autocomplete_group_name, Group
