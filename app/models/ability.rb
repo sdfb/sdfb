@@ -175,6 +175,13 @@ class Ability
 
 			# Anyone can view the details of a groups, people, and relationships
 			can :show, [Group, Person, Relationship], :is_approved => true
+
+			# Anyone can see the autocomplete dropdowns for people and relationships
+			can :autocomplete_person_search_names_all, [Relationship, Person]
+
+			# Anyone can see the autocomplete dropdowns for groups
+			can :autocomplete_group_name, Group
+
 		end
 	end
 end

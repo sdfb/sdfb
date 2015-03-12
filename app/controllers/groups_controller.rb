@@ -19,8 +19,12 @@ class GroupsController < ApplicationController
   end
 
   def get_autocomplete_items(parameters)
-    if ((current_user.user_type == "Admin") || (current_user.user_type == "Curator"))
-      active_record_get_autocomplete_items(parameters).where("is_rejected is false")
+    if (! current_user.blank?)
+      if ((current_user.user_type == "Admin") || (current_user.user_type == "Curator"))
+        active_record_get_autocomplete_items(parameters).where("is_rejected is false")
+      else
+        active_record_get_autocomplete_items(parameters).where("approved_by is not null and is_active is true and is_rejected is false")
+      end
     else
       active_record_get_autocomplete_items(parameters).where("approved_by is not null and is_active is true and is_rejected is false")
     end
