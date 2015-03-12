@@ -1,8 +1,12 @@
-rake assets:precompile
-git add .
 echo "Please enter a commit message: "
 read msg
-git commit -m msg
+echo "Compiling assets...."
+rake assets:precompile
+git add .
+git commit -m "$msg"
+echo "pushing to git..."
 git push
+echo "pushing to heroku"
 heroku git:remote -a sixdegfrancisbacon
 git push heroku master
+echo "push complete! :)"
