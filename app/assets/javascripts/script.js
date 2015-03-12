@@ -16,17 +16,15 @@ $(document).ready(function() {
 
     var default_sdate = 1400
     var default_edate = 1800
-    var default_certainty = 40
+    var default_certainty = 60
     var default_scertainty = 0
     var default_ecertainty = 100
 
     //Tooltips
 	$("#search-network").tooltip({placement: 	'right', title: 'Connections of one individual'});
-	//$("#search-shared-network").tooltip({placement: 	'right', title: 'Mutual connections between two individuals'});
-    $("#search-shared-network").tooltip({placement:     'right', title: 'New Feature Coming Soon'});
+    $("#search-shared-network").tooltip({placement:     'right', title: 'Mutual connections between two individuals'});
 	$("#search-group").tooltip({placement: 	'right', title: 'Members of one group'});
-	//$("#search-shared-group").tooltip({placement: 	'right', title: 'Mutual members of two groups'});
-    $("#search-shared-group").tooltip({placement:   'right', title: 'New Feature Coming Soon'});
+    $("#search-shared-group").tooltip({placement:   'right', title: 'Mutual members of two groups'});
 
     $("#contribute-add-person").tooltip({placement:   'right', title: 'Add a new individual to the database'});
     $("#contribute-add-group").tooltip({placement:  'right', title: 'Add a new group to the database'});

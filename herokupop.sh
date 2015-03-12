@@ -5,7 +5,7 @@ heroku run rake db:populate_group_cats
 heroku run rake db:populate_rel_cats
 heroku run rake db:populate_rel_types
 heroku run rake db:populate_rel_cat_assigns
-heroku run  rake db:populate_group_cat_assigns
+heroku run rake db:populate_group_cat_assigns
 heroku run rake db:populate_rels_2_20000
 heroku run rake db:populate_rels_20001_40000
 heroku run rake db:populate_rels_40001_60000

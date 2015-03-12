@@ -17,3 +17,4 @@ rake db:populate_rels_140001_160000
 rake db:populate_rels_160001_170542
 rake db:populate_user_rel_contribs_samples
 rake db:populate_people_search_names_all
+rake db:populate_people_display_names

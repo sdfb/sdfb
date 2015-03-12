@@ -168,7 +168,7 @@ class Ability
 			can :search, Group
 
 			# Anyone can view search results
-			can :search, Person
+			can [:update_node_info, :search], Person
 
 			# Curators can view search results
 			can :search, Relationship

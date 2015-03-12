@@ -3,7 +3,7 @@ var default_sconfidence = 60;
 var default_econfidence = 100;
 var default_sdate = 1400;
 var default_edate = 1800;
-    
+  
 /*
 Num_rels Cluster    Color
  0-1		0        orange
@@ -11,20 +11,25 @@ Num_rels Cluster    Color
  4-5		2        aqua blue
  6-7		3        marine blue
  8-9		4        light blue
- 10-11		5      hot pink
+ 10-11	5        hot pink
  12+		6        purple
 
 */
 
 //returns cluster number based on number of relationships the cluster has
 function getClusterRels(node){
-	var size = node.size;
+	try{
+		var size = Object.keys(node).length;
+	}
+	catch(err) {
+		var size = 0;
+	}
+
 	if (size > 100){
 		return 10;
 	}else{
 		return (Math.floor(size / 2)) / 10;
 	}
-
 }
 //returns colors based on cluster group number
 function getColorsRels(){
@@ -33,92 +38,96 @@ function getColorsRels(){
 
 // Checks if a value is in an array
 function notInArray(arr, val) {
- var i = arr.length;
- while (i--) {
-   if (arr[i][0] == val[0] && arr[i][1] == val[1]) {
-     return false;
-   }
-   if (arr[i][1] == val[0] && arr[i][0] == val[1]) {
-     return false;
-   }
- }
- return true;
-}
-
-// Displays node information
-function showNodeInfo(data){
- accordion("node");
- $("#node-name").text(data.display_name);
- $("#node-bdate").text(data.birth_year_type + " " + data.birth_year);
- $("#node-ddate").text(data.death_year_type + " " + data.death_year);
- $("#node-significance").text(data.occupation);
- $("#node-group").text(data.groups.join(","));
- var d = new Date();
- $("#node-cite").text( data.first+ " "+ data.last + " Network Visualization. \n Six Degrees of Francis Bacon: Reassembling the Early Modern Social Network. Gen. eds. Daniel Shore and Christopher Warren. "+d.getMonth()+"/"+d.getDate()+"/"+d.getFullYear()+" <http://sixdegreesoffrancisbacon.com/>");
- if (data.odnb_id > 0){
-  $("#node-DNBlink").attr("href", "http://www.oxforddnb.com/view/article/"+data.odnb_id);
- }else{
-  $("#node-DNBlink").attr("href", "http://www.oxforddnb.com/search/quick/?quicksearch=quicksearch&docPos=1&searchTarget=people&simpleName="+data.first+"+"+data.last);
- }
- $("#node-GoogleLink").attr("href", "http://www.google.com/search?q="+data.first+"+"+ data.last);
- $("#node-discussion").attr("href", "/people/" + data.id);
- $("#node-icon-chain").attr("href", "/relationships/new?person1_id=" + data.id);
- $("#node-icon-annotate").attr("href", "/user_person_contribs/new?person_id=" + data.id);
+  var i = arr.length;
+  while (i--) {
+    if (arr[i][0] == val[0] && arr[i][1] == val[1]) {
+      return false;
+    }
+    if (arr[i][1] == val[0] && arr[i][0] == val[1]) {
+      return false;
+    }
+  }
+  return true;
 }
 
 //creates a nodekey associative array with node info
-function createNodeKey(node) {
-  var nodeKey = {"text": node.first + " " + node.last, "size": 4, "id": node.id,  "cluster": getClusterRels(node)};
-  return nodeKey;
+function createNodeKey(node, id) {
+  return {"text": node["display_name"], "size": 10, "id": id,  "cluster": getClusterRels(node["rel_sum"])};
 }
 
-function twoDegs(id, id2, data, sconf, econf, sdate, edate) {
+function twoDegs(id, id2, people) {
 	var keys = {};
 	var edges = [];
-    var nodes = [];
-	function createGraph(id, data, sconf, econf, sdate, edate) {
-    	var p = data.nodes[id];
-      		$.each(p.rels, function(index, value) {
-        		if (value[2] == 0 || value[1] < sconf || value[1] > econf || edate < p.birth_year || sdate > p.death_year) {
-         		} else {
-					var q = data.nodes[value[0]]; // find person object in data by id
-					keys[q.id] = createNodeKey(q); //puts nodekey into keys array
-					if (notInArray(edges, [p.id, q.id])) {
-					edges.push([p.id, q.id]);
-         			}
-              	} 
-          	});
-      //adds main person's id referenced to keys associative array. Keys represent all data in graph
-          keys[p.id] = {"text": p.display_name, "size": 20, "id": p.id,  "cluster": getClusterRels(p)}; 
-  	}
-    createGraph(id, data, sconf, econf, sdate, edate);
-    if (id2 != 0 && id2 != ""){
-        createGraph(id2, data, sconf, econf, sdate, edate);
-    }
-
-    $.each(keys, function(index, value) {
-      nodes.push(value); //adds each key to nodes array
+  var nodes = [];
+	function createGraph(id, people) {
+  	var p = people[id];
+  	$.each(p.rel_sum, function(index, value) { 
+  	  var q = value[0];
+  		keys[q] = createNodeKey(people[q],q);
+  		if (notInArray(edges, [id, value[0]])) {
+  		 edges.push([id, value[0]]);
+      }
+      $.each(people[q].rel_sum, function(index, value1) { 
+        var r = value1[0];
+        if (r in people){
+          keys[r] = createNodeKey(people[r],r);
+          if (notInArray(edges, [value[0], value1[0]])) {
+           edges.push([value[0], value1[0]]);
+          }
+        }
+      });
     });
+    //adds main person's id referenced to keys associative array. Keys represent all data in graph
+    keys[id] = {"text": p["display_name"], "size": 30, "id": id,  "cluster": getClusterRels(p["rel_sum"])}; 
+  }
+  createGraph(id, people);
+  if (id2 != 0 && id2 != ""){
+      createGraph(id2, people);
+      keys[id2] = {"text": people[id2]["display_name"], "size": 30, "id": id2,  "cluster": getClusterRels(people[id2]["rel_sum"])}; 
+      keys[id] = {"text": people[id]["display_name"], "size": 30, "id": id,  "cluster": getClusterRels(people[id]["rel_sum"])}; 
+  }
+  $.each(keys, function(index, value) {
+    nodes.push(value); //adds each key to nodes array
+  });
 
     edges.reverse();
     var w = window.innerWidth;
     var h = window.innerHeight;
-    var options = { width: w, height: h, collisionAlpha: 10, colors: getColorsRels() };
+    var options = { width: w, height: h, collisionAlpha: 25, colors: getColorsRels() };
     var graph = new Insights($("#graph")[0], nodes, edges, options).render();
-    graph.focus(id);
+
     graph.on("node:click", function(d) {
-        var clicked = data.nodes[d.id];
-        showNodeInfo(clicked);
+      var clicked = people[d.id];
+      $.ajax({
+            type: "GET",
+            url:    "/node_info", // should be mapped in routes.rb
+            data: {node_id:d.id},
+            datatype:"html", // check more option
+            success: function(data) {
+                     // handle response data
+                     },
+            async:   true
+          });  
+      accordion("node");
     });
 	
     graph.on("edge:click", function(d) {
         var id1 = parseInt(d.source.id);
         var id2 = parseInt(d.target.id);
-        getAnnotation(id1 < id2 ? id1 : id2, id1 > id2 ? id1 : id2, data);
+        $.ajax({
+            type: "GET",
+            url:    "/network_info", // should be mapped in routes.rb
+            data: {source_id:d.source.id, target_id:d.target.id},
+            datatype:"html", // check more option
+            success: function(data) {
+                     // handle response data
+                     },
+            async:   true
+          });  
+        accordion("edge");
     });
 
-    graph.tooltip("<div class='btn' >{{text}}</div>");
-
+    graph.tooltip("<div class='btn' >"+"{{text}}"+"</div>");
     $('#zoom button.icon').click(function(e){
         if (this.name == 'in') {
             graph.zoomIn();
@@ -152,31 +161,12 @@ function getConfidence(n) {
         return "certain";}
 }
 
-// Displays edge information 
-function getAnnotation(id1, id2, data) {
-  var id1_rel_array = data.nodes[id1].rels;
-  var confidence = "";
-  var rel_id = "";
-  $.each(id1_rel_array, function(index, value) {                    
-    if (value[0] == id2){
-       confidence = getConfidence(value[1]) + " @ " + value[1] + "%";
-       rel_id = value[3];
-    }
-  });
-  accordion("edge");
-  $("#edge-nodes").html(data.nodes[id1].first +" "+data.nodes[id1].last + " & " + data.nodes[id2].first+" "+data.nodes[id2].last);
-  $("#edge-confidence").html(confidence);
-  $("#edge-discussion").attr("href", "/relationships/" + rel_id );
-  $("#edge-icon-annotate").attr("href", "/user_rel_contribs/new?relationship_id=" + rel_id );
-  //$("#Sir-Mix-a-Lot").html(row.contributor); 
-  return true;
-};
-
 function getParam ( sname ){
     var params = location.search.substr(location.search.indexOf("?")+1);
     var sval = "";
     params = params.split("&");
     // split param and value into individual pieces
+    //$("#Sir-Mix-a-Lot").html(row.contributor); 
     for (var i=0; i<params.length; i++){
         temp = params[i].split("=");
         if ( [temp[0]] == sname ) { 
@@ -186,48 +176,38 @@ function getParam ( sname ){
     return sval;
 }
 
-function filterGraph(data){
+function filterGraph(people){
     var ID = getParam("id");
     var ID2 = getParam("id2");
-    var sconf = getParam("confidence").split(",")[0];
-    var econf = getParam("confidence").split(",")[1];
-    var date = getParam("date");
-    var sdate = date.substring(0, 3);
-    var edate = date.substring(5, 8);
     if(ID2 == "" || ID2 == "0"){
         ID2 = 0;
     } 
-    if(date == ""){
-        sdate = default_sdate;
-        edate = default_edate;
-    }
     if(ID == ""){
         ID = francisID;
     }
-    if(sconf == ""){
-        sconf = default_sconfidence;
-    }
-    if(econf == ""){
-        econf = default_econfidence;
-    }
-    twoDegs(ID, ID2, data, sconf, econf, sdate, edate);
+    twoDegs(ID, ID2, people);
 }
 
-function initGraph(data){
-    var confidence = default_sconfidence + " to " + default_econfidence
-    var date = default_sdate + " - " + default_edate
-    if (getParam('id') > 0){
-         var name = data.nodes[parseInt(getParam('id'))].label
-    }else{
-        var name = data.nodes[francisID].label
-    }
-    if (getParam('confidence').length > 0){
-        confidence = getParam('confidence').replace(',', '% to ')
-    }
-    if (getParam('date').length > 0){
-        date = getParam('date').replace(',', ' to ')
-    }
-    $("#results").html("Two degrees of " + name + " at " + confidence + "% from " + date);
+function initGraph(people){
+  var confidence = default_sconfidence + " to " + default_econfidence
+  var date = default_sdate + " - " + default_edate
+  if (getParam('id') > 0){
+    var name = people[parseInt(getParam('id'))].display_name
+  }else{
+    var name = people[francisID].display_name
+  }
+  if (getParam('id2') > 0){
+    var name2 = " and " + people[parseInt(getParam('id2'))].display_name
+  }else{
+    var name2 = ""
+  }
+  if (getParam('confidence').length > 0){
+      confidence = getParam('confidence').replace(',', '% to ')
+  }
+  if (getParam('date').length > 0){
+      date = getParam('date').replace(',', ' to ')
+  }
+  $("#results").html("Two degrees of " + name + name2 + " at " + confidence + "% from " + date);
   //click methods for all the 'find' buttons in the search bar
   //this should not use the entire peopletoarray instead it should use whatever value is passed through by the #one
   $("#search-network-submit").click(function () {
@@ -260,15 +240,37 @@ function initGraph(data){
       window.location.href = '/?id=' + id1 + '&id2=' + id2 + '&confidence=' + confidence + '&date=' + date + '&table=' + table;
     });
 
+  $("#search-group-submit").click(function () {
+    Pace.restart();
+    // make the index equal autocomplete
+    var id = $("#search-group-name-id").val();
+    window.location.href = '/?group=' + id;
+  });
+
+  $("#search-shared-group-submit").click(function () {
+    Pace.restart();
+    // make the index equal autocomplete
+    var id1 = $("#search-shared-group-name1-id").val();
+    var id2 = $("#search-shared-group-name2-id").val();
+    window.location.href = '/?group=' + id1 + '&group2=' + id2;
+  });
+
   $("#nav-filter-submit").click(function (){
     var ID = getParam("id");
+    var ID2 = getParam("id2")
+    if (ID2 != ""){
+      ID2Str = "&id2=" + ID2
+    }
+    else{
+      ID2Str = ""
+    }
     var confidence = $("#nav-slider-confidence-result-hidden").val().split(" - ");
     var date = $("#nav-slider-date-result").val().split(" - ");
     if ( ID != ""){
-      window.location.href = '/?id=' + ID + '&confidence=' + confidence + '&date=' + date;
+      window.location.href = '/?id=' + ID + ID2Str + '&confidence=' + confidence + '&date=' + date;
     }
     if (ID == ""){
-      window.location.href = '/?id=' + francisID + '&confidence=' + confidence + '&date=' + date;  
+      window.location.href = '/?id=' + francisID + ID2Str + '&confidence=' + confidence + '&date=' + date;  
     }
 
   });
@@ -277,72 +279,46 @@ function initGraph(data){
     addNodes = [];
     addEdges = [];
     var name = $('#node-name').html() + " (" + $('#node-bdate').html() + ")";
-        if (this.id == "icon-tag") {
-          $("#entry_1177061505").val(name);
-        } else if (this.id == "icon-link") {
-          $("#entry_768090773").val(name);
-        }
+    if (this.id == "icon-tag") {
+      $("#entry_1177061505").val(name);
+    } else if (this.id == "icon-link") {
+      $("#entry_768090773").val(name);
+    }
   });
 }
 
 function init() {
-	//This file only contains the data for the searched person and 1st degree relationships
-	var data = { nodes: [], edges: [], groups_names: [], groups_desc: [], groups_people: [], nodeKeys: [] };
-	var people = window.gon.people
-	var group_data = window.gon.group_data
-	//This function only converts gon to all data for the searched person and 1st degree relationships
-
-	if (jQuery.type(people) === "object"){
-        var n = {}
-		n.id = people.id;
-		n.first = people.first_name;
-		n.last = people.last_name;
-		n.label = n.first + " " + n.last;
-    n.name_date = (n.first + " " + n.last + " (" + n.birth + ")");
-    n.display_name = people.display_name;
-		n.birth_year = people.ext_birth_year;
-		n.birth_year_type = people.birth_year_type;
-		n.death_year = people.ext_death_year;
-		n.death_year_type = people.death_year_type;
-		n.occupation = people.historical_significance;
-		n.rels = people.rel_sum;
-		n.size = n.rels.length;
-		n.odnb_id = people.odnb_id;
-		n.groups = people.group_list;
-		data.nodes[n.id] = n;
-	}else{
-		$.each(people, function(index, value) { 
-    var n = {}
-		n.id = value.id;
-		n.first = value.first_name;
-		n.last = value.last_name;
-		n.label = n.first + " " + n.last;
-    n.name_date = (n.first + " " + n.last + " (" + n.birth + ")");
-    n.display_name = value.display_name;
-		n.birth_year = value.ext_birth_year;
-		n.birth_year_type = value.birth_year_type;
-		n.death_year = value.ext_death_year;
-		n.death_year_type = value.death_year_type;
-		n.occupation = value.historical_significance;
-		n.rels = value.rel_sum;
-		n.size = n.rels.length;
-		n.odnb_id = value.odnb_id;
-		n.groups = value.group_list;
-		data.nodes[n.id] = n;
-		});
-	}
-
-  	//This function converts the gon for groups into readable information for groups
-	$.each(group_data, function(index, value){
-  	data.groups_names.push(value.name);
-  	data.groups_desc.push(value.description);
-  	data.groups_people.push(value.person_list);
-	});
-
-	filterGraph(data);
-	initGraph(data);
+	var people = window.gon.people;
+  console.log(people);
+	var group_data = window.gon.group_data;
+  var group = window.gon.group;
+  var group2 = window.gon.group2;
+  var group_members = window.gon.group_members;
+  if (getParam("group").length == 0){
+    try{
+      $('#group-table').hide();
+    	filterGraph(people);
+    	initGraph(people);
+    }catch(e){
+      $("#results").text("There has been an error loading the graph");
+    }
+  }else{
+     accordion("group"); 	
+  	$("#filterBar").hide();
+  	$("#group-name").text(group["name"]);
+  	$("#group-description").text(group["description"]);
+  	if (typeof group2 != 'undefined'){
+	  	$("#group-name2").text(group2["name"]);
+	  	$("#group-description2").text(group2["description"]);
+	  	$(".group2").show();
+	  }
+    $.each(group_members, function(index, value) { 
+      $( "#group-table" ).append( "<div class='group-row'><div class='col-md'>" + group_members[index]["display_name"] + "</div><div class='col-md'>" + group_members[index]["ext_birth_year"] + "</div><div class='col-md'>" + group_members[index]["ext_death_year"] + "</div><div class='col-md'><a href='/people/" + group_members[index]["id"] + "'>" + + group_members[index]["id"] + "</a></div></div>");
+    });
+  }
 }
 
 $(document).ready(function() {
-  init();
+  init();  
+
 });      

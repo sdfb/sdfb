@@ -1,3 +1,15 @@
+## TO PUSH TO HEROKU
+1. Following these instructions, download the Heroku toolbelt so you can run from the command line
+2. In the command line, run heroku login
+3. Login with the sixdegfrancsbacon@gmail.com account (information on the Account Info google doc)
+4. From the sdfb directory on your machine, run heroku git:remote -a sixdegfrancisbacon
+5. Make sure all local changes are working
+6. Commit and push the changes to Katarina's sdfb repo
+7. Run git push heroku master
+8. If making changes to js or css, run rake assets:precompile, then commit and push again before running git push heroku master
+
+
+
 ## Status
 Had to roll back populate changes because there 
 is more logic in the models than I thought.
@@ -65,6 +77,13 @@ rake db:migrate
 rake routes 
 ```
 
+## To populate everything:
+
+```
+populate.sh
+```
+
+
 ## To populate this file:
 
 ```
@@ -88,6 +107,7 @@ rake db:populate_rels_120001_140000
 rake db:populate_rels_140001_160000
 rake db:populate_rels_160001_170542
 rake db:populate_user_rel_contribs_samples
+rake db:populate_people_display_names
 ```
 
 ## To run the server locally:

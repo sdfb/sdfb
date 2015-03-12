@@ -1,11 +1,11 @@
 
 	<div id="everything">
-		<div id="graph"></div>
+		<div id="graph"></div>		
 		<div id="zoom">
 			<button class="icon icon-zoomin" name="in"></button>
 			<button class="icon icon-zoomout" name="out"></button>	
-			<button class="icon icon-color"></button>
-			<button class="icon icon-info"></button>
+			<!--<button class="icon icon-color"></button>
+			<button class="icon icon-info"></button>-->
 		</div>
 		<div id="accordion">
 			<!-- search bar -->
@@ -14,7 +14,7 @@
 				<ul class="search-table">
 					<li id="search-network" class="clicked btnl">Network</li>		
 					<li id="search-shared-network" class="btnl">Shared network</li>
-					<li id="search-group" class="btnl" onclick="$('#tab-group').click();">Group</li>
+					<li id="search-group" class="btnl">Group</li>
 					<li id="search-shared-group" class="btnl">Shared groups</li>
 				</ul>
 
@@ -60,19 +60,25 @@
 				</section>
 
 			<!-- GROUP FORMS -->
+				<section id="search-group-form">
+					<input class="form-control" type="text" id="search-group-name" placeholder="Group Name" data-autocomplete="home/autocomplete_group_name" data-id-element="#search-group-name-id">  
+					<input id="search-group-name-id" type="hidden" />
+					<a class="talkPageLink" type="button" id="search-group-submit" name="group">Find</a>
+				</section>
 
 				<section id="search-shared-group-form">
 					<input class="form-control" type="text" id="search-shared-group-name1" placeholder="Group 1 Name" data-autocomplete="home/autocomplete_group_name" data-id-element="#search-shared-group-name1-id"> 
 					<input id="search-shared-group-name1-id" type="hidden" />
 					<input class="form-control" type="text" id="search-shared-group-name2" placeholder="Group 2 Name" data-autocomplete="home/autocomplete_group_name" data-id-element="#search-shared-group-name2-id"> 
 					<input id="search-shared-group-name2-id" type="hidden" />
-					<button class="talkPageLink" type="button" id="search-shared-group-submit" name="group">Find</button>
+					<a class="talkPageLink" type="button" id="search-shared-group-submit" name="group">Find</a>
 				</section>
 			</div>
 
 			<!-- person information bar -->
 			<h3 class="accordion_btn"><span class="icon-node"></span>Person</h3>
 			<div  class="accordion_content " id="nodeinfo">
+				<p id="node-info-text"></p>
 				<a class="icon icon-annotate" id="node-icon-annotate"  name="group"></a>
 				<a class="icon icon-chain" id="node-icon-chain" name="edge"></a>
 				<p id="node-name" class="node-name">Click on a person node to see details</p>
@@ -107,16 +113,14 @@
 
 			<!-- group information bar -->
 			<h3 class="accordion_btn" id="tab-group"><span class="icon-group"></span>Group</h3>
-			<div  class="accordion_content " id="groupinfo">
-				<a class="icon icon-label" id="group-icon-label" href="/group_assignments/new" name="edge"></a>
-				<a class="icon icon-annotate" id="group-icon-annotate" name="edge"></a>
-				<input type="text" data-autocomplete="home/autocomplete_group_name" data-id-element="#group_name" placeholder="Group Name">  
-				<input id="group_name" name="query" type="hidden" />
-				<p id="edge-nodes"></p>
-				<b>DESCRIPTION&nbsp;</b> 	<span id="group-description"></span><br>
-				<b>MEMBERS&nbsp;</b> 	<span id="group-members"></span><br>
-				<a class="talkPageLink" target="_blank">View Entry History</a>
-			</div>
+				<div class="accordion_content" id="groupinfo" name="group">
+					<p id="group-name">Search a group to see details</p>
+					<b>Description: </b><span id="group-description"></span><br>
+					<p id="group-name2" class="group2"></p>
+					<b class="group2">Description: </b><span class="group2" id="group-description2"></span><br>
+					<span class="fill"></span>
+				</div>
+
 
 			<!-- contribution bar -->
 			<h3 class="accordion_btn"><span class="icon-add"></span>Contribute</h3>
@@ -133,8 +137,7 @@
 				<li id="results"></li>
 			</ul>
 			<ul>
-				<li>Filter By: &nbsp;</li>
-				<li><a id="nav-anchor">Certainty   Date</a></li>
+				<li>Filter By: <a id="nav-anchor">Certainty   Date</a></li>
 				<li><a class="talkPageLink" type="button" id="nav-filter-submit" name="nav-node">Filter</a></li>
 			</ul>
 		</div>
@@ -144,5 +147,13 @@
 			<input id="nav-slider-confidence-result-hidden" type="hidden" value="0 - 100"/>
 			<label for="nav-slider-date">Date Range:</label><input type="text" id="nav-slider-date-result" readonly value="1400 - 1800">
 			<span id="slidenav2" ><article id="nav-slider-date" class="slider-date" name="2"></article></span>
-		</div>				
+		</div>	
+		<div id="group-table">
+			<div class="group-row">
+				<div class="col-md group-table-header">Person Name</div>
+				<div class='col-md'>Birth Date</div>
+				<div class='col-md'>Death Date</div>
+				<div class='col-md'>Link</div>
+			</div>
+		</div>
 	</div>

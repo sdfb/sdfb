@@ -1,0 +1,4 @@
+  $("#edge-nodes").html("<%= @source_name%>" + " & " + "<%= @target_name%>");
+  $("#edge-confidence").html("<%= @network_info_confidence %>" + "%");
+  $("#edge-discussion").attr("href", "/relationships/" + "<%= @network_info_id %>" );
+  $("#edge-icon-annotate").attr("href", "/user_rel_contribs/new?relationship_id=" + "<%= @network_info_id %>" );

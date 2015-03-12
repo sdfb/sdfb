@@ -1,4 +1,4 @@
-@import url(https://fonts.googleapis.com/css?family=Open+Sans:400,700);
+/*@import url('http://fonts.googleapis.com/css?family=Open+Sans');*/
 
 
 #accordion {
@@ -8,8 +8,8 @@
     width: 300px;
     height:100%;
     overflow:visible;
-    width: 300px;
 	background: #78A7BF;
+    z-index:5;
 }
 
 #accordion h3 {
@@ -19,6 +19,7 @@
 	cursor: pointer;
 	color: #fff;
 	background: #196B94;
+
 }
 
 #accordion h3.on {
@@ -146,6 +147,10 @@
 	overflow:hidden;
 }
 
+.group2{
+    display: none;
+}
+
 #search, #edgeinfo, #groupinfo{
 
     margin:0px 0px -15px 0px;
@@ -216,9 +221,13 @@
 	color: #fff;
 }
 
-#nodeinfo p, #edgeinfo p {
+#nodeinfo p, #edgeinfo p, #groupinfo p {
 	color: #fff;
 	font-size:14px;
+}
+.fill{
+    height: 10px;
+    display: block;
 }
 
 .talkPageLink:hover {
@@ -230,7 +239,7 @@
 	font-size:14px;
 	text-align:center;
     display:block;
-    margin:5px 20px 10px 20px;
+    margin:5px 20px 20px 20px;
     padding:5px 7px;
     background-color:#666;
 	font-size: 12px;
@@ -239,8 +248,7 @@
 	border-radius: 10px;
 	-khtml-border-radius: 10px; 
     height:25px !important;
-	/*-webkit-box-shadow: 10px 10px 10px 0px rgba(0,0,0,0.75);
-	-moz-box-shadow: 10px 10px 10px 0px rgba(0,0,0,0.75);
+	/*-webkit-box-shadow: 10px 10px 10px 0px rgba(0,0,0,0.75	-moz-box-shadow: 10px 10px 10px 0px rgba(0,0,0,0.75);
 	box-shadow: 10px 10px 10px 0px rgba(0,0,0,0.75);*/
 	border:none;
 }
