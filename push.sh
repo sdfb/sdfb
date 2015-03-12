@@ -10,5 +10,5 @@ echo "pushing to heroku"
 heroku git:remote -a sixdegfrancisbacon
 git push heroku master
 echo "push complete! :)"
-#This script automatically pushes changes to git!
+#This script automatically pushes changes to git and heroku!
 #Written by Jeremy Lee 2015
