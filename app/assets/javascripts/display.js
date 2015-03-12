@@ -127,8 +127,7 @@ function twoDegs(id, id2, people) {
         accordion("edge");
     });
 
-    graph.tooltip("<div class='btn' >" + decodeURIComponent("{{text}}") + "</div>");
-
+    graph.tooltip("<div class='btn' >" + "{{text}}".replace("%20", " ") + "</div>");
     $('#zoom button.icon').click(function(e){
         if (this.name == 'in') {
             graph.zoomIn();
