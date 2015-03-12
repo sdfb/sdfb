@@ -68,9 +68,14 @@ class HomeController < ApplicationController
     @target_id = params[:target_id]
     @source_name = Person.select("display_name").where("id = ?", @source_id)[0][:display_name]
     @target_name = Person.select("display_name").where("id = ?", @target_id)[0][:display_name]
-    @network_info = Relationship.select("id, max_certainty").where("person1_index = ? AND person2_index = ? OR person1_index = ? AND person2_index = ? ", @source_id, @target_id, @target_id, @source_id)
+    @network_info = Relationship.select("id, max_certainty, types_list, start_date_type, start_year, end_date_type, end_year").where("person1_index = ? AND person2_index = ? OR person1_index = ? AND person2_index = ? ", @source_id, @target_id, @target_id, @source_id)
     @network_info_id = @network_info[0][:id]
     @network_info_confidence = @network_info[0][:max_certainty]
+    @network_info_start_date_type = @network_info[0][:start_date_type]
+    @network_info_start_year = @network_info[0][:start_year]
+    @network_info_end_date_type = @network_info[0][:end_date_type]
+    @network_info_end_year = @network_info[0][:end_year]
+    @network_info_types_list = @network_info[0][:types_list]
     respond_to do |format|
       format.js
     end
