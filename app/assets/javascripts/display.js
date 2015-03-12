@@ -290,6 +290,7 @@ function initGraph(people){
 
 function init() {
 	var people = window.gon.people;
+  console.log(people);
 	var group_data = window.gon.group_data;
   var group = window.gon.group;
   var group2 = window.gon.group2;

@@ -9,6 +9,8 @@ namespace :db do
            display_name_input = person_record.get_person_name
            Person.update(i, display_name: display_name_input)
            puts display_name_input
+           new_person = Person.find(i)
+           puts new_person.display_name
          end
       end
     end
