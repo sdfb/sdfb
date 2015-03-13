@@ -2,10 +2,11 @@ class Person < ActiveRecord::Base
   attr_accessible :odnb_id, :first_name, :last_name, :created_by, :historical_significance, :uncertain, :unlikely, :possible,
   :likely, :certain, :rel_sum, :prefix, :suffix, :search_names_all, :title, :birth_year_type, :ext_birth_year, :alt_birth_year, :death_year_type,
   :ext_death_year, :alt_death_year, :justification, :approved_by, :approved_on, :created_at, :is_approved, :group_list, :gender,
-  :is_active, :is_rejected, :edited_by_on, :display_name
+  :is_active, :is_rejected, :edited_by_on, :display_name, :rel_list
   serialize :rel_sum,Array
   serialize :group_list,Array
   serialize :edited_by_on,Array
+  serialize :rel_list,Array
   #rel_sum is the relationship summary that is updated whenever a relationship is created or updated
   #rel_sum includes the person the indvidual has a relationship with, the updated max certainty, whether it has been approved, and the relationship id
 
@@ -14,7 +15,6 @@ class Person < ActiveRecord::Base
   has_many :groups, :through => :group_assignments
   has_many :user_person_contribs
   belongs_to :user
-  before_create :init_array
 
   # Scope
   # ----------------------------- 
@@ -377,6 +377,7 @@ class Person < ActiveRecord::Base
     self.rel_sum = nil
     self.group_list = nil
     self.edited_by_on = nil
+    self.rel_list = nil
   end
 
   def autocomplete_name

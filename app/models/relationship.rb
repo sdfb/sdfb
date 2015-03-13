@@ -206,6 +206,7 @@ class Relationship < ActiveRecord::Base
   # Whenever a relationship is created, the relationship summary (rel_sum) must be updated in both people's records
   def create_peoples_rel_sum
     if (self.is_approved == true)
+      # update people rel sum
       person1_index_in = self.person1_index
       person2_index_in = self.person2_index
       max_certainty_in = self.max_certainty
@@ -234,6 +235,23 @@ class Relationship < ActiveRecord::Base
       person2_current_rel_sum = Person.find(person2_index_in).rel_sum
       person2_current_rel_sum.push(new_rel_record)
       Person.update(person2_index, rel_sum: person2_current_rel_sum)
+
+      # create people rel list with person id, relationship id
+      # for person 1
+      old_rel_list_person1 = Person.find(person1_index_in).rel_list
+      new_rel_list_record_p1 = []
+      new_rel_list_record_p1.push(person2_index_in)
+      new_rel_list_record_p1.push(id_in)
+      old_rel_list_person1.push(new_rel_list_record_p1)
+      Person.update(person1_index, rel_list: old_rel_list_person1)
+
+      # for person 2
+      old_rel_list_person2 = Person.find(person2_index_in).rel_list
+      new_rel_list_record_p2 = []
+      new_rel_list_record_p2.push(person1_index_in)
+      new_rel_list_record_p2.push(id_in)
+      old_rel_list_person2.push(new_rel_list_record_p2)
+      Person.update(person2_index, rel_list: old_rel_list_person2)
     end
   end
 
@@ -261,6 +279,27 @@ class Relationship < ActiveRecord::Base
       end
     end
     Person.update(person2_index, rel_sum: person2_current_rel_sum)
+
+    # delete from rel_list
+    # delete from person 1 rel_list
+    old_rel_list_person1 = Person.find(person1_index_in).rel_list
+    old_rel_list_person1.each_with_index do |rel_record_1, i|
+      if rel_record_1[0] == person2_index_in
+        old_rel_list_person1.delete_at(i)
+        break
+      end
+    end
+    Person.update(person1_index, rel_list: old_rel_list_person1)
+
+    # delete from person 2 rel_list
+    old_rel_list_person2 = Person.find(person2_index_in).rel_list
+    old_rel_list_person2.each_with_index do |rel_record_2, i|
+      if rel_record_2[0] == person1_index_in
+        old_rel_list_person2.delete_at(i)
+        break
+      end
+    end
+    Person.update(person2_index, rel_list: old_rel_list_person2)
   end
 
   # Whenever a relationship is updated, the relationship summary (rel_sum) must be updated in both people's records
@@ -296,14 +335,24 @@ class Relationship < ActiveRecord::Base
           rel_record_1[6] = types_list_in
           person1_updated_flag = true
         else
-          # delete the record
+          # delete the rel_sum record
           person1_current_rel_sum.delete_at(i)
           person1_updated_flag = true
+
+          # delete from person 1 rel_list
+          old_rel_list_person1 = Person.find(person1_index_in).rel_list
+          old_rel_list_person1.each_with_index do |rel_record_1, i|
+            if rel_record_1[0] == person2_index_in
+              old_rel_list_person1.delete_at(i)
+              break
+            end
+          end
+          Person.update(person1_index, rel_list: old_rel_list_person1)
         end
       end
     end
 
-    # if the original rel_sum record didn't exist, them make it
+    # if the original rel_sum record didn't exist, then make it
     if person1_updated_flag == false
       if self.is_approved == true
         new_rel_record = []
@@ -312,6 +361,15 @@ class Relationship < ActiveRecord::Base
         new_rel_record.push(is_approved_in)
         new_rel_record.push(id_in)
         person1_current_rel_sum.push(new_rel_record)
+
+        # create people rel list with person id, relationship id
+        # for person 1
+        old_rel_list_person1 = Person.find(person1_index_in).rel_list
+        new_rel_list_record_p1 = []
+        new_rel_list_record_p1.push(person2_index_in)
+        new_rel_list_record_p1.push(id_in)
+        old_rel_list_person1.push(new_rel_list_record_p1)
+        Person.update(person1_index, rel_list: old_rel_list_person1)
       end
     end
     Person.update(person1_index, rel_sum: person1_current_rel_sum)
@@ -334,6 +392,16 @@ class Relationship < ActiveRecord::Base
           # delete the record
           person2_current_rel_sum.delete_at(i)
           person2_updated_flag = true
+
+          # delete from person 2 rel_list
+          old_rel_list_person2 = Person.find(person2_index_in).rel_list
+          old_rel_list_person2.each_with_index do |rel_record_2, i|
+            if rel_record_2[0] == person1_index_in
+              old_rel_list_person2.delete_at(i)
+              break
+            end
+          end
+          Person.update(person2_index, rel_list: old_rel_list_person2)
         end
       end
     end
@@ -347,6 +415,15 @@ class Relationship < ActiveRecord::Base
         new_rel_record.push(is_approved_in)
         new_rel_record.push(id_in)
         person2_current_rel_sum.push(new_rel_record)
+
+        # create people rel list with person id, relationship id
+        # for person 2
+        old_rel_list_person2 = Person.find(person2_index_in).rel_list
+        new_rel_list_record_p2 = []
+        new_rel_list_record_p2.push(person1_index_in)
+        new_rel_list_record_p2.push(id_in)
+        old_rel_list_person2.push(new_rel_list_record_p2)
+        Person.update(person2_index, rel_list: old_rel_list_person2)
       end
     end
     Person.update(person2_index, rel_sum: person2_current_rel_sum)
