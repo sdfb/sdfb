@@ -126,13 +126,7 @@ function twoDegs(id, id2, people) {
           });  
         accordion("edge");
     });
-<<<<<<< HEAD
     graph.tooltip("<div class='btn' >"+"{{text}}".replace(/\%20/," ") + "</div>");
-=======
-
-    graph.tooltip("<div class='btn' >{{text}}</div>");
-
->>>>>>> f83af74acb8c05c49661637977fa75fdf9829f2f
     $('#zoom button.icon').click(function(e){
         if (this.name == 'in') {
             graph.zoomIn();
