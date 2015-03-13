@@ -83,6 +83,8 @@ class GroupAssignmentsController < ApplicationController
   # PUT /group_assignments/1.json
   def update
     @group_assignment = GroupAssignment.find(params[:id])
+    @personOptions = Person.all_approved.alphabetical
+    @groupOptions = Group.all_approved
 
     respond_to do |format|
       if @group_assignment.update_attributes(params[:group_assignment])
