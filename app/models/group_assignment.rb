@@ -33,9 +33,9 @@ class GroupAssignment < ActiveRecord::Base
   validates_presence_of :person_id
   validates_presence_of :created_by
   ## start date type is one included in the list
-  ######validates_inclusion_of :start_date_type, :in => DATE_TYPE_LIST, :if => :start_year_present?
+  validates_inclusion_of :start_date_type, :in => DATE_TYPE_LIST, :if => :start_year_present?
   ## end date type is one included in the list
-  ########validates_inclusion_of :end_date_type, :in => DATE_TYPE_LIST, :if => :end_year_present?
+  validates_inclusion_of :end_date_type, :in => DATE_TYPE_LIST, :if => :end_year_present?
   # validates_presence_of :approved_by
   # validates_presence_of :approved_on
   ## approved_on must occur on the same date or after the created at date

@@ -19,8 +19,8 @@
     <%= f.hidden_field :relationship_id, value: 0 %>
     <%= f.hidden_field :person1_selection %>
     <%= f.hidden_field :person2_selection %>
-    <%= f.input :person1_autocomplete, as: :autocomplete, url: autocomplete_person_search_names_all_user_rel_contribs_path, input_html: { 'data-id-element' => '#user_rel_contrib_person1_selection' }, label: "Person 1", placeholder: "name" %>
-    <%= f.input :person2_autocomplete, as: :autocomplete, url: autocomplete_person_search_names_all_user_rel_contribs_path, input_html: { 'data-id-element' => '#user_rel_contrib_person2_selection' }, label: "Person 2", placeholder: "name" %>
+    <%= f.input :person1_autocomplete, as: :autocomplete, url: autocomplete_person_search_names_all_user_rel_contribs_path, input_html: { 'data-id-element' => '#user_rel_contrib_person1_selection' }, label: "Person 1", placeholder: "name", required: true %>
+    <%= f.input :person2_autocomplete, as: :autocomplete, url: autocomplete_person_search_names_all_user_rel_contribs_path, input_html: { 'data-id-element' => '#user_rel_contrib_person2_selection' }, label: "Person 2", placeholder: "name", required: true %>
   <% end %>
   <%= f.input :relationship_type_id, :collection =>@relType.collect{ |r| [r.name, r.id] }, label: "Relationship Type", prompt: "Select" %>  
 
