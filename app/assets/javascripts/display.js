@@ -126,7 +126,7 @@ function twoDegs(id, id2, people) {
           });  
         accordion("edge");
     });
-
+text
     graph.tooltip("<div class='btn' >"+"{{text}}"+"</div>");
     $('#zoom button.icon').click(function(e){
         if (this.name == 'in') {
@@ -289,7 +289,6 @@ function initGraph(people){
 
 function init() {
 	var people = window.gon.people;
-  console.log(people);
 	var group_data = window.gon.group_data;
   var group = window.gon.group;
   var group2 = window.gon.group2;
