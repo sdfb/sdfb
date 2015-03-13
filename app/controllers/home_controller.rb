@@ -57,7 +57,6 @@ class HomeController < ApplicationController
     @node_info_prefix = @node_info[0][:prefix]
     @node_info_suffix = @node_info[0][:suffix]
     @node_info_title = @node_info[0][:title]
-    @node_info_group_list = @node_info[0][:group_list]
     respond_to do |format|
       format.js
     end
