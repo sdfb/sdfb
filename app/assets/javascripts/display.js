@@ -126,7 +126,13 @@ function twoDegs(id, id2, people) {
           });  
         accordion("edge");
     });
+<<<<<<< HEAD
     graph.tooltip("<div class='btn' >"+"{{text}}".replace(/\%20/," ") + "</div>");
+=======
+
+    graph.tooltip("<div class='btn' >{{text}}</div>");
+
+>>>>>>> f83af74acb8c05c49661637977fa75fdf9829f2f
     $('#zoom button.icon').click(function(e){
         if (this.name == 'in') {
             graph.zoomIn();
@@ -293,13 +299,9 @@ function init() {
   var group2 = window.gon.group2;
   var group_members = window.gon.group_members;
   if (getParam("group").length == 0){
-    try{
-      $('#group-table').hide();
-    	filterGraph(people);
-    	initGraph(people);
-    }catch(e){
-      $("#results").text("There has been an error loading the graph");
-    }
+  	filterGraph(people);
+  	initGraph(people);
+  	$('#group-table').hide();
   }else{
      accordion("group"); 	
   	$("#filterBar").hide();
