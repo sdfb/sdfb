@@ -40,7 +40,7 @@ class UserRelContrib < ActiveRecord::Base
   validates_inclusion_of :start_date_type, :in => DATE_TYPE_LIST, :if => :start_year_present?
   ## end date type is one included in the list
   validates_inclusion_of :end_date_type, :in => DATE_TYPE_LIST, :if => :end_year_present?
-  validate :autocomplete_to_rel
+  validate :autocomplete_to_rel, :on => :create
 
   # Scope
   # ----------------------------- 
@@ -66,14 +66,16 @@ class UserRelContrib < ActiveRecord::Base
   # -----------------------------
   
   #This converts the person1_selected and the person2_selected into the relationship_id foreign key
-  def autocomplete_to_rel
+  def autocomplete_to_rel_approval
     #find the relationship_id given the two people
-    found_rel_id = Relationship.for_2_people(self.person1_selection, self.person2_selection)[0]
-    if (found_rel_id.nil?)
-      #if the relationship does not exist, then through an error
-      errors.add(:person2_autocomplete, "This relationship does not exist.")
-    else
-      self.relationship_id = found_rel_id.id
+    if (self.relationship_id == 0)
+      found_rel_id = Relationship.for_2_people(self.person1_selection, self.person2_selection)[0]
+      if (found_rel_id.nil?)
+        #if the relationship does not exist, then through an error
+        errors.add(:person2_autocomplete, "This relationship does not exist.")
+      else
+        self.relationship_id = found_rel_id.id
+      end
     end
 
     #set person1_autocomplete, person2_autocomplete, person1_selected, person2_selected to nil to save room in the database
@@ -83,10 +85,17 @@ class UserRelContrib < ActiveRecord::Base
     self.person2_selection = nil
   end
 
-  #This adds the relationship types to a summary list under the relationship
+  #this checks if the record is approved
+  def check_if_approved
+    if (self.is_approved == false)
+      self.approved_by = nil
+      self.approved_on = nil
+    end  
+  end
+
+  #This creates a new relationship types list, a 2d array with each realtionship type like [type name, certainty, start_year, end_year]
   def create_relationship_types_list
     #find all approved user_rel_contribs for that relationship
-    #updated_rel_types_list = UserRelContrib.all_approved.all_for_relationship(self.relationship_id).map{|urc| RelationshipType.find(urc.relationship_type_id).name}
     updated_rel_types_list = []
     UserRelContrib.all_approved.all_for_relationship(self.relationship_id).each do | urc |
       if ((urc.is_approved == true) && (urc.is_active == true))
@@ -122,26 +131,18 @@ class UserRelContrib < ActiveRecord::Base
         #set the max_certainty to the current user_rel_contrib certainty
         new_max_certainty = self.certainty
         # find all user_rel_contribs for a specific relationship
-        all_user_rel_contribs = UserRelContrib.all_for_relationship(self.relationship_id)
-
-        # checks whether the old certainty was disregarded out of the all user_rel_contrib
-        old_certainty = UserRelContrib.find(self.id).certainty
-        old_certainty_disregarded = false
+        all_user_rel_contribs = UserRelContrib.all_approved.all_for_relationship(self.relationship_id)
 
         # for each user_rel_contrib, check if it is greater than the max certainty and set that to equal the new_max_certainty
         all_user_rel_contribs.each do |urc|
-          if ((old_certainty == urc.certainty) && (old_certainty_disregarded == false))
-            old_certainty_disregarded = true
-          else 
-            if urc.certainty > new_max_certainty
-              new_max_certainty = urc.certainty
-            end
+          if urc.certainty > new_max_certainty
+            new_max_certainty = urc.certainty
           end
         end
 
-        # if max certainty = 0, set it to the original certainty
-        if (new_max_certainty == 0) 
-          original_certainty = Relationship.find(self.relationship_id).original_certainty
+        # check if original certainty is greater than the max certainty
+        original_certainty = Relationship.find(self.relationship_id).original_certainty
+        if (original_certainty > new_max_certainty) 
           new_max_certainty = original_certainty
         end 
 
@@ -170,29 +171,21 @@ class UserRelContrib < ActiveRecord::Base
         Person.update(person2_id, rel_sum: rel_sum_person_2)
     else
         # update the relationship's max certainty
-        #set the max_certainty to the current user_rel_contrib certainty
         new_max_certainty = 0
-        # find all user_rel_contribs for a specific relationship
-        all_user_rel_contribs = UserRelContrib.all_for_relationship(self.relationship_id)
 
-        # checks whether the old certainty was disregarded out of the all user_rel_contrib
-        old_certainty = UserRelContrib.find(self.id).certainty
-        old_certainty_disregarded = false
+        # find all user_rel_contribs for a specific relationship
+        all_user_rel_contribs = UserRelContrib.all_approved.all_for_relationship(self.relationship_id)
 
         # for each user_rel_contrib, check if it is greater than the max certainty and set that to equal the new_max_certainty
         all_user_rel_contribs.each do |urc|
-          if ((old_certainty == urc.certainty) && (old_certainty_disregarded == false))
-            old_certainty_disregarded = true
-          else 
-            if urc.certainty > new_max_certainty
-              new_max_certainty = urc.certainty
-            end
+          if urc.certainty > new_max_certainty
+            new_max_certainty = urc.certainty
           end
         end
 
         # if max certainty = 0, set it to the original certainty
-        if (new_max_certainty == 0) 
-          original_certainty = Relationship.find(self.relationship_id).original_certainty
+        original_certainty = Relationship.find(self.relationship_id).original_certainty
+        if (original_certainty > new_max_certainty) 
           new_max_certainty = original_certainty
         end 
         
@@ -222,13 +215,10 @@ class UserRelContrib < ActiveRecord::Base
     end
 
     #update approve_by
-    previous_approved_by = UserRelContrib.find(self.id).approved_by
-    if (self.is_approved != true)
+    if (self.is_approved == false)
       self.approved_by = nil
       self.approved_on = nil
-    elsif (self.approved_on == nil)
-      self.approved_by = previous_approved_by
-    end  
+    end
   end
 
   def init_array
@@ -243,13 +233,6 @@ class UserRelContrib < ActiveRecord::Base
     ! self.end_year.nil?
   end
 
-  def check_if_approved
-    if (self.is_approved != true)
-      self.approved_by = nil
-      self.approved_on = nil
-    end  
-  end
-
   def update_max_certainty
     #update max_certainty
     if (self.is_approved == true)
@@ -257,7 +240,7 @@ class UserRelContrib < ActiveRecord::Base
         #set the max_certainty to the current user_rel_contrib certainty
         new_max_certainty = self.certainty
         # find all user_rel_contribs for a specific relationship
-        all_user_rel_contribs = UserRelContrib.all_for_relationship(self.relationship_id)
+        all_user_rel_contribs = UserRelContrib.all_approved.all_for_relationship(self.relationship_id)
 
         # for each user_rel_contrib, check if it is greater than the max certainty and set that to equal the new_max_certainty
         all_user_rel_contribs.each do |urc|
@@ -266,12 +249,12 @@ class UserRelContrib < ActiveRecord::Base
           end
         end
 
-        # if max certainty = 0, set it to the original certainty
-        if (new_max_certainty == 0) 
-          original_certainty = Relationship.find(self.relationship_id).original_certainty
+        # check if original certainty is greater than the max certainty
+        original_certainty = Relationship.find(self.relationship_id).original_certainty
+        if (original_certainty > new_max_certainty) 
           new_max_certainty = original_certainty
         end 
-        
+
         Relationship.update(self.relationship_id, max_certainty: new_max_certainty)
 
       # update the max certainty of the relationship in the people's rel_sum
@@ -297,29 +280,21 @@ class UserRelContrib < ActiveRecord::Base
         Person.update(person2_id, rel_sum: rel_sum_person_2)
     else
         # update the relationship's max certainty
-        #set the max_certainty to the current user_rel_contrib certainty
         new_max_certainty = 0
-        # find all user_rel_contribs for a specific relationship
-        all_user_rel_contribs = UserRelContrib.all_for_relationship(self.relationship_id)
 
-        # checks whether the old certainty was disregarded out of the all user_rel_contrib
-        old_certainty = UserRelContrib.find(self.id).certainty
-        old_certainty_disregarded = false
+        # find all user_rel_contribs for a specific relationship
+        all_user_rel_contribs = UserRelContrib.all_approved.all_for_relationship(self.relationship_id)
 
         # for each user_rel_contrib, check if it is greater than the max certainty and set that to equal the new_max_certainty
         all_user_rel_contribs.each do |urc|
-          if ((old_certainty == urc.certainty) && (old_certainty_disregarded == false))
-            old_certainty_disregarded = true
-          else 
-            if urc.certainty > new_max_certainty
-              new_max_certainty = urc.certainty
-            end
+          if urc.certainty > new_max_certainty
+            new_max_certainty = urc.certainty
           end
         end
 
         # if max certainty = 0, set it to the original certainty
-        if (new_max_certainty == 0) 
-          original_certainty = Relationship.find(self.relationship_id).original_certainty
+        original_certainty = Relationship.find(self.relationship_id).original_certainty
+        if (original_certainty > new_max_certainty) 
           new_max_certainty = original_certainty
         end 
         
