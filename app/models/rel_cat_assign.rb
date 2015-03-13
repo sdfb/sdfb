@@ -12,6 +12,7 @@ class RelCatAssign < ActiveRecord::Base
   # -----------------------------
   validates_presence_of :relationship_category_id
   validates_presence_of :relationship_type_id
+  validate :check_if_approved_valid
 
   # Scope
   # ----------------------------- 
@@ -19,12 +20,13 @@ class RelCatAssign < ActiveRecord::Base
   scope :all_unapproved, where("approved_by is null and is_rejected is false")
   scope :for_rel_cat, lambda {|rel_cat_id_input| where('relationship_category_id = ?', "#{rel_cat_id_input}") }
   scope :for_rel_type, lambda {|rel_type_id_input| where('relationship_type_id = ?', "#{rel_type_id_input}") }
+  scope :find_if_exists, lambda {|rel_cat_id_input, rel_type_id_input| where('(relationship_category_id = ?) and (relationship_type_id = ?)', rel_cat_id_input, rel_type_id_input) }
   
   # Callbacks
   # -----------------------------
   before_create :init_array
-  before_create :check_if_approved
-  before_update :check_if_approved
+  before_create :check_if_approved_valid
+  before_update :check_if_approved_valid
   before_update :add_editor_to_edit_by_on
 
   # Custom Methods
@@ -47,7 +49,8 @@ class RelCatAssign < ActiveRecord::Base
     self.edited_by_on = nil
   end
 
-  def check_if_approved
+  def check_if_approved_valid
+    errors.add(:relationship_type_id, "This relationship type already has this relationship category.") if (! RelCatAssign.find_if_exists(self.relationship_category_id, self.relationship_type_id).empty?)
     if (self.is_approved != true)
       self.approved_by = nil
       self.approved_on = nil

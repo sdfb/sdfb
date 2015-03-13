@@ -51,8 +51,8 @@ class GroupAssignment < ActiveRecord::Base
   after_create :create_group_person_list
   after_update :create_group_person_list
   before_update :add_editor_to_edit_by_on
-  before_create :check_if_approved
-  before_update :check_if_approved
+  before_create :check_if_approved_valid
+  before_update :check_if_approved_valid
   before_create :init_array
 
   # Custom Methods
@@ -110,7 +110,7 @@ class GroupAssignment < ActiveRecord::Base
   end
 
   # checks if the group and person assignment already exists and if approved
-  def check_if_approved
+  def check_if_approved_valid
     errors.add(:person_id, "This person is already a member of this group.") if (! GroupAssignment.find_if_exists(self.person_id, self.group_id).empty?)
     if (self.is_approved != true)
       self.approved_by = nil
