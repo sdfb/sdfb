@@ -209,6 +209,9 @@ function initGraph(people){
   $("#results").html("Two degrees of " + name + name2 + " at " + confidence + "% from " + date);
   //click methods for all the 'find' buttons in the search bar
   //this should not use the entire peopletoarray instead it should use whatever value is passed through by the #one
+}
+
+function sidebarSearch(people){
   $("#search-network-submit").click(function () {
   	var table = 'no';
     Pace.restart();
@@ -292,6 +295,7 @@ function init() {
   var group = window.gon.group;
   var group2 = window.gon.group2;
   var group_members = window.gon.group_members;
+  sidebarSearch(people);
   if (getParam("group").length == 0){
   	filterGraph(people);
   	initGraph(people);
