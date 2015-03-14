@@ -14,43 +14,45 @@
                   edit_relationship_type_path(@relationship_type), :class => 'btn btn-mini' %>
         <% end %>
       </h2>
-      <br>
       <dl class="dl-horizontal">
-
-        <dt><strong>Name:</strong></dt>
+        <dt><strong>SDFB Relationship Type ID:</strong></dt>
+        <dd><%= @relationship_type.id %></dd>
+        <dt><strong>Relationship Type Name:</strong></dt>
         <dd><%= @relationship_type.name %></dd>
         <% if ! @relationship_type.description.blank? %>
-          <dt>Description:</strong></dt>
+          <dt><strong>Description:</strong></dt>
           <dd><%= @relationship_type.description %></dd>
         <% end %>
         <% if ! @relationship_type.relationship_type_inverse.blank? %>
-          <dt><strong>Relationship Inverse:</strong></dt>
+          <dt><strong>Relationship Type Inverse:</strong></dt>
           <dd><%= link_to RelationshipType.find(@relationship_type.relationship_type_inverse).name, relationship_type_path(@relationship_type.relationship_type_inverse) %></dd>
         <% end %>
         <dt><strong>Created by:</strong></dt>
         <dd><%= link_to User.find(@relationship_type.created_by).username,  user_path(@relationship_type.created_by) %></dd>
-        <dt><strong>Is Approved?:</strong></dt>
-        <dd><%= @relationship_type.is_approved %></dd>
-        <% if ! @relationship_type.approved_by.blank? %>
-          <dt><strong>Approved by:</strong></dt>
-          <dd><%= link_to User.find(@relationship_type.approved_by).username,  user_path(@relationship_type.approved_by) %></dd>
-        <% end %>
-        <% if ! @relationship_type.approved_on.blank? %>
-          <dt><strong>Approved on:</strong></dt>
-          <dd><%= @relationship_type.approved_on %></dd>
-        <% end %>
-        <dt>Created at</dt>
-        <dd><%= @relationship_type.created_at %></dd>
-        <dt>Edit History</dt>
-        <% if ! @relationship_type.edited_by_on.blank? %>
-          <dd><%= @relationship_type.edited_by_on %></dd>
-        <% else %>
-          <dd>No edits have been made.</dd>
+        <% if (! current_user.blank?) && ((current_user.user_type == "Admin") || (current_user.user_type == "Curator")) %>
+          <dt><strong>Is Approved?:</strong></dt>
+          <dd><%= @relationship_type.is_approved %></dd>
+          <% if ! @relationship_type.approved_by.blank? %>
+            <dt><strong>Approved By:</strong></dt>
+            <dd><%= link_to User.find(@relationship_type.approved_by).username,  user_path(@relationship_type.approved_by) %></dd>
+          <% end %>
+          <% if ! @relationship_type.approved_on.blank? %>
+            <dt><strong>Approved On:</strong></dt>
+            <dd><%= @relationship_type.approved_on %></dd>
+          <% end %>
+          <dt><strong>Created On:</strong></dt>
+          <dd><%= @relationship_type.created_at %></dd>
+          <dt><strong>Edit History:</strong></dt>
+          <% if ! @relationship_type.edited_by_on.blank? %>
+            <dd><%= @relationship_type.edited_by_on %></dd>
+          <% else %>
+            <dd>No edits have been made.</dd>
+          <% end %>
         <% end %>
         <% if (! current_user.blank?) && ((current_user.user_type == "Admin")) %>
-          <dt>Is Active</dt>
+          <dt><strong>Is Active:</strong></dt>
           <dd><%= @relationship_type.is_active %></dd>
-          <dt>Is Rejected</dt>
+          <dt><strong>Is Rejected:</strong></dt>
           <dd><%= @relationship_type.is_rejected %></dd>
         <% end %>
       </dl>
@@ -63,8 +65,7 @@
           <table class="table table-condensed">
             <thead>
               <tr>
-                <th>ID</th>
-                <th>Relationship</th>
+                <th>Assignment ID</th>
                 <th>Category</th>
                 <th><%=t '.actions', :default => t("helpers.actions") %></th>
               </tr>
@@ -73,7 +74,6 @@
               <% @rel_cat_assigns_approved.each do |rel_cat_assign| %>
                 <tr>
                   <td><%= rel_cat_assign.id %></td>
-                  <td><%= link_to RelationshipType.find(rel_cat_assign.relationship_type_id).name, relationship_type_path(rel_cat_assign.relationship_type_id) %></td>
                   <td><%= link_to RelationshipCategory.find(rel_cat_assign.relationship_category_id).name, relationship_category_path(rel_cat_assign.relationship_category_id) %></td>
                   <td>
                     <% if can? :show, rel_cat_assign %>
