@@ -1,15 +1,15 @@
 // Returns string stating confidence based on input decimal (0<n1.00)
 function getConfidence(n) {
     if (0 <= n &&  n<= 19) {
-        return "very unlikely";}
+        return "Very Unlikely";}
     else if (20 <= n &&  n<= 39) {
-        return "unlikely";}
+        return "Unlikely";}
     else if (40 <= n &&  n<= 59) {
-        return "possible";}
+        return "Possible";}
     else if (60 <= n && n<= 79) {
-        return "likely";}
+        return "Likely";}
     else {
-        return "certain";}
+        return "Certain";}
 }
 
 $(document).ready(function() {
@@ -47,13 +47,13 @@ $(document).ready(function() {
     $(".icon-color").tooltip({placement:  'left', title: 'Colors'});
     $(".icon-info").tooltip({placement:  'left', title: 'Info'});
 
-    $("#search-network-slider-confidence").tooltip({placement: 'right', title: 'Choose the certainty'});
-    $("#search-network-slider-date").tooltip({placement: 'right', title: 'Choose the date range'});
+    $("#search-network-slider-confidence").tooltip({placement: 'right', title: 'Choose the Confidence Level'});
+    $("#search-network-slider-date").tooltip({placement: 'right', title: 'Choose the Date Range'});
 
-    $("#search-shared-network-slider-confidence").tooltip({placement: 'right', title: 'Choose the certainty'});
-    $("#search-shared-network-slider-date").tooltip({placement: 'right', title: 'Choose the date range'});
+    $("#search-shared-network-slider-confidence").tooltip({placement: 'right', title: 'Choose the Confidence Level'});
+    $("#search-shared-network-slider-date").tooltip({placement: 'right', title: 'Choose the Date Range'});
 
-    $("#nav-slider-confidence").tooltip({placement: 'right', title: 'Choose the Certainty Threshold, then Click Filter'});
+    $("#nav-slider-confidence").tooltip({placement: 'right', title: 'Choose the Confidence Level, then Click Filter'});
     $("#nav-slider-date").tooltip({placement: 'right', title: 'Choose the Date Range, then Click Filter'});
 
 	$('#search-network-form').css('display','block');
@@ -121,7 +121,7 @@ $(document).ready(function() {
         slide: function( event, ui ) {
         	var sresult = getConfidence(ui.values[0]);
             var eresult = getConfidence(ui.values[1]);
-            $("#search-network-slider-confidence-result").html( sresult + " to " + eresult + " relationships @ " + ui.values[0] + " - " + ui.values[1] + "%");
+            $("#search-network-slider-confidence-result").html( sresult + " to " + eresult + " @ " + ui.values[0] + " - " + ui.values[1] + "%");
             $("#search-network-slider-confidence-result-hidden").val(ui.values[0] + " - " + ui.values[1]);
         }
     });
@@ -135,7 +135,7 @@ $(document).ready(function() {
         step: 1,
         values: [ default_sdate, default_edate ],
         slide: function( event, ui ) {
-            $("#search-network-slider-date-result" ).html("Date Range: " + ui.values[ 0 ] + " - " + ui.values[ 1 ] );
+            $("#search-network-slider-date-result" ).html("Selected Years: " + ui.values[ 0 ] + " - " + ui.values[ 1 ] );
             $("#search-network-slider-date-result-hidden").val(ui.values[ 0 ] + " - " + ui.values[ 1 ]);
         }
     });
@@ -158,7 +158,7 @@ $(document).ready(function() {
         slide: function( event, ui ) {
             var sresult = getConfidence(ui.values[0]);
             var eresult = getConfidence(ui.values[1]);
-            $("#search-shared-network-slider-confidence-result").html(sresult + " to " + eresult + " relationships @ " + ui.values[0] + " - " + ui.values[1] + "%");
+            $("#search-shared-network-slider-confidence-result").html(sresult + " to " + eresult + " @ " + ui.values[0] + " - " + ui.values[1] + "%");
             $("#search-shared-network-slider-confidence-result-hidden").val(ui.values[0] + " - " + ui.values[1]);
         }
     });
@@ -172,7 +172,7 @@ $(document).ready(function() {
         step: 1,
         values: [ default_sdate, default_edate ],
         slide: function( event, ui ) {
-            $("#search-shared-network-slider-date-result").html("Date Range: " +  ui.values[ 0 ] + " - " + ui.values[ 1 ] );
+            $("#search-shared-network-slider-date-result").html("Selected Years: " +  ui.values[ 0 ] + " - " + ui.values[ 1 ] );
             $("#search-shared-network-slider-date-result-hidden").val(ui.values[ 0 ] + " - " + ui.values[ 1 ]);
         }
     });
@@ -201,7 +201,7 @@ $(document).ready(function() {
         slide: function( event, ui ) {
             var sresult = getConfidence(ui.values[0]);
             var eresult = getConfidence(ui.values[1]);           
-            $("#nav-slider-confidence-result").html(sresult + " to " + eresult + " relationships @ " + ui.values[0] + " - " + ui.values[1] + "%");
+            $("#nav-slider-confidence-result").html(sresult + " to " + eresult + " @ " + ui.values[0] + " - " + ui.values[1] + "%");
             $("#nav-slider-confidence-result-hidden").val(ui.values[0] + " - " + ui.values[1]);
         }
     });
@@ -227,7 +227,7 @@ $(document).ready(function() {
     //This is for the slider in Rails to update the confidence based on the slider selection
     $("#slider1").change(function () {                    
     var newValue = $('#slider1').val();
-    var result = "Very unlikely";
+    var result = "Very Unlikely";
         if (newValue > 19 && newValue < 40) {
                 result = "Unlikely";
             } else if (newValue > 39 && newValue < 60) {
@@ -237,6 +237,6 @@ $(document).ready(function() {
             } else if (newValue > 79){
             result = "Certain"
             }
-            $("#formCertainty").html(result + " relationships @ " + newValue + "%");
+            $("#formCertainty").html(result + " @ " + newValue + "%");
     });
 });

@@ -22,37 +22,38 @@
 
 				<section id="search-network-form">
 					<!-- Testing the new autocomplete -->
+					<label for="search-network-name">Find Network For:</label>
 					<input class="form-control" type="text" id="search-network-name" placeholder="Person Name" data-autocomplete="home/autocomplete_person_search_names_all" data-id-element="#search-network-name-id"> 
 					<input id="search-network-name-id" type="hidden" />
-					<label for="search-network-slider-confidence">Confidence Level:</label>
+					<label for="search-network-slider-confidence">Relationship Confidence Level:</label>
 					<span id="slide1" ><article id="search-network-slider-confidence" class="slider" name="1"></article></span>
-					<article class="slider-result" id="search-network-slider-confidence-result">Very Unlikely To Certain Relationships @ 0 - 100%</article>
+					<article class="slider-result" id="search-network-slider-confidence-result">Very Unlikely to Certain @ 0 - 100%</article>
 					<input id="search-network-slider-confidence-result-hidden" type="hidden" value="0 - 100"/>
 
 					<label for="search-network-slider-date">Date Range:</label>
 					<span id="slide2" ><article id="search-network-slider-date" class="slider" name="2"></article></span>
-					<article class="slider-result" id="search-network-slider-date-result">Date Range: 1400 - 1800</article>
+					<article class="slider-result" id="search-network-slider-date-result">Selected Years: 1400 - 1800</article>
 					<input id="search-network-slider-date-result-hidden" type="hidden" value="1400 - 1800"/>
 
 					<!--<input type="checkbox" name="show-table" value="show-table" id="search-network-show-table" class="show-table">Show Table</input>-->
-					<a class="show-table" id="search-network-show-table">Show Table</a>
 					<a class="talkPageLink" type="button" id="search-network-submit" name="node">Find</a>
 				</section>
 
 				<section id="search-shared-network-form">
+					<label for="search-shared-network-name1">Find Shared Network For:</label>
 					<input class="form-control" type="text" id="search-shared-network-name1" placeholder="Person 1 Name" data-autocomplete="home/autocomplete_person_search_names_all" data-id-element="#search-shared-network-name1-id"> 
 					<input id="search-shared-network-name1-id" type="hidden" /><br>
 					<input class="form-control" type="text" id="search-shared-network-name2" placeholder="Person 2 Name" data-autocomplete="home/autocomplete_person_search_names_all" data-id-element="#search-shared-network-name2-id"> 
 					<input id="search-shared-network-name2-id" type="hidden" /><br>
 
-					<label for="search-shared-network-slider-confidence">Maximum Confidence Level:</label>
+					<label for="search-shared-network-slider-confidence">Relationship Confidence Level:</label>
 					<span id="slide3" ><article id="search-shared-network-slider-confidence" class="slider" name="2"></article></span>
-					<article class="slider-result" id="search-shared-network-slider-confidence-result">Very Unlikely To Certain Relationships @ 0 - 100%</article>
+					<article class="slider-result" id="search-shared-network-slider-confidence-result">Very Unlikely to Certain @ 0 - 100%</article>
 					<input id="search-shared-network-slider-confidence-result-hidden" type="hidden" value="0 - 100"/>
 
 					<label for="search-shared-network-slider-date">Date Range:</label>
 					<span id="slide4" ><article id="search-shared-network-slider-date" class="slider" name="3"></article></span>
-					<article class="slider-result" id="search-shared-network-slider-date-result">Date Range: 1400 - 1800</article>
+					<article class="slider-result" id="search-shared-network-slider-date-result">Selected Years: 1400 - 1800</article>
 					<input id="search-shared-network-slider-date-result-hidden" type="hidden" value="1400 - 1800"/>
 
 					<!--<input type="checkbox" id="search-shared-network-show-table" value="table" class="show-table">Show table<br>-->
@@ -61,12 +62,14 @@
 
 			<!-- GROUP FORMS -->
 				<section id="search-group-form">
+					<label for="search-group-name">Find Members Of:</label>
 					<input class="form-control" type="text" id="search-group-name" placeholder="Group Name" data-autocomplete="home/autocomplete_group_name" data-id-element="#search-group-name-id">  
 					<input id="search-group-name-id" type="hidden" />
 					<a class="talkPageLink" type="button" id="search-group-submit" name="group">Find</a>
 				</section>
 
 				<section id="search-shared-group-form">
+					<label for="search-shared-group-name1">Find Members Belonging to Both:</label>
 					<input class="form-control" type="text" id="search-shared-group-name1" placeholder="Group 1 Name" data-autocomplete="home/autocomplete_group_name" data-id-element="#search-shared-group-name1-id"> 
 					<input id="search-shared-group-name1-id" type="hidden" />
 					<input class="form-control" type="text" id="search-shared-group-name2" placeholder="Group 2 Name" data-autocomplete="home/autocomplete_group_name" data-id-element="#search-shared-group-name2-id"> 
@@ -137,23 +140,24 @@
 				<li id="results"></li>
 			</ul>
 			<ul>
-				<li>Filter By: <a id="nav-anchor">Certainty   Date</a></li>
-				<li><a class="talkPageLink" type="button" id="nav-filter-submit" name="nav-node">Filter</a></li>
+				<li><a id="nav-anchor">Filter By Relationship Confidence and Date Range</a></li>
 			</ul>
 		</div>
 		<div id="nav-slider" class="nav-hover">
+			<label for="nav-slider-confidence">Relationship Confidence Level:</label>
 			<span id="slidenav" ><article id="nav-slider-confidence" class="slider" name="1"></article></span>
-			<article class="slider-result" id="nav-slider-confidence-result">Very Unlikely To Certain Relationships @ 0 - 100%</article>
+			<article class="slider-result" id="nav-slider-confidence-result">Very Unlikely to Certain @ 0 - 100%</article>
 			<input id="nav-slider-confidence-result-hidden" type="hidden" value="0 - 100"/>
 			<label for="nav-slider-date">Date Range:</label><input type="text" id="nav-slider-date-result" readonly value="1400 - 1800">
 			<span id="slidenav2" ><article id="nav-slider-date" class="slider-date" name="2"></article></span>
+			<a class="talkPageLink" type="button" id="nav-filter-submit" name="nav-node">Filter</a>
 		</div>	
 		<div id="group-table">
 			<div class="group-row">
-				<div class="col-md group-table-header">Person Name</div>
-				<div class='col-md'>Birth Date</div>
-				<div class='col-md'>Death Date</div>
-				<div class='col-md'>Link</div>
+				<div class="col-md group-table-header">Member Name</div>
+				<div class='col-md group-table-header'>Membership Start Date</div>
+				<div class='col-md group-table-header'>Membership End Date</div>
+				<div class='col-md group-table-header'>Link</div>
 			</div>
 		</div>
 	</div>
