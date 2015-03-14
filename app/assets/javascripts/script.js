@@ -37,10 +37,10 @@ $(document).ready(function() {
     $("#icon-color").tooltip({placement: 'left', title: 'Click to view color legend'});
 
     $("#node-icon-chain").tooltip({placement: 'right', title: 'Add relationship'});
-    $("#node-icon-annotate").tooltip({placement: 'right', title: 'Edit person'});
-    $("#edge-icon-annotate").tooltip({placement: 'right', title: 'Edit relationship'});
+    $("#node-icon-annotate").tooltip({placement: 'right', title: 'Annotate person'});
+    $("#edge-icon-annotate").tooltip({placement: 'right', title: 'Annotate relationship'});
     $("#group-icon-label").tooltip({placement: 'right', title: 'Add person to group'});
-    $("#group-icon-annotate").tooltip({placement: 'right', title: 'Edit group'});
+    $("#group-icon-annotate").tooltip({placement: 'right', title: 'Annotate group'});
 
     $(".icon-zoomin").tooltip({placement:  'left', title: 'Zoom In'});
     $(".icon-zoomout").tooltip({placement:  'left', title: 'Zoom Out'});
