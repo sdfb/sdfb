@@ -206,26 +206,20 @@ class Relationship < ActiveRecord::Base
   # Whenever a relationship is created, the relationship summary (rel_sum) must be updated in both people's records
   def create_peoples_rel_sum
     if (self.is_approved == true)
+      # update people rel sum
       person1_index_in = self.person1_index
       person2_index_in = self.person2_index
       max_certainty_in = self.max_certainty
       start_date_in = self.start_year
       end_date_in = self.end_year
-      types_list_in = self.types_list
       id_in = self.id
-      if ! approved_by.nil?
-        is_approved_in = 1
-      else
-        is_approved_in = 0
-      end
+
       new_rel_record = []
       new_rel_record.push(person2_index)
       new_rel_record.push(max_certainty)
-      new_rel_record.push(is_approved_in)
       new_rel_record.push(id_in)
       new_rel_record.push(start_date_in)
       new_rel_record.push(end_date_in)
-      new_rel_record.push(types_list_in)
       person1_current_rel_sum = Person.find(person1_index_in).rel_sum
       person1_current_rel_sum.push(new_rel_record)
       Person.update(person1_index, rel_sum: person1_current_rel_sum)
@@ -272,12 +266,6 @@ class Relationship < ActiveRecord::Base
     start_date_in = self.start_year
     end_date_in = self.end_year
     id_in = self.id
-    types_list_in = self.types_list
-    if ! approved_by.nil?
-      is_approved_in = 1
-    else
-      is_approved_in = 0
-    end
 
     # For person1, find the existing rel_sum record and update it
     person1_current_rel_sum = Person.find(person1_index_in).rel_sum
@@ -287,30 +275,29 @@ class Relationship < ActiveRecord::Base
       #if the rel_sum record exists, then check if approved
       if rel_record_1[0] == person2_index_in
         if self.is_approved == true     
-          # update record
+          # if approved update record
           rel_record_1[1] = max_certainty_in
-          rel_record_1[2] = is_approved_in
-          rel_record_1[3] = id_in
-          rel_record_1[4] = start_date_in
-          rel_record_1[5] = end_date_in
-          rel_record_1[6] = types_list_in
+          rel_record_1[2] = id_in
+          rel_record_1[3] = start_date_in
+          rel_record_1[4] = end_date_in
           person1_updated_flag = true
         else
-          # delete the record
+          # if not approved delete the rel_sum record
           person1_current_rel_sum.delete_at(i)
           person1_updated_flag = true
         end
       end
     end
 
-    # if the original rel_sum record didn't exist, them make it
+    # if the original rel_sum record didn't exist, then make it
     if person1_updated_flag == false
       if self.is_approved == true
         new_rel_record = []
         new_rel_record.push(person2_index_in)
         new_rel_record.push(max_certainty_in)
-        new_rel_record.push(is_approved_in)
         new_rel_record.push(id_in)
+        new_rel_record.push(start_date_in)
+        new_rel_record.push(end_date_in)
         person1_current_rel_sum.push(new_rel_record)
       end
     end
@@ -318,17 +305,16 @@ class Relationship < ActiveRecord::Base
 
     # For person2, find the existing rel_sum record and update it
     person2_current_rel_sum = Person.find(person2_index_in).rel_sum
+
     # Checks to see if the original rel_sum record existed
     person2_updated_flag = false
     person2_current_rel_sum.each_with_index do |rel_record_2, i|
       if rel_record_2[0] == person1_index_in
         if self.is_approved == true  
           rel_record_2[1] = max_certainty_in
-          rel_record_2[2] = is_approved_in
-          rel_record_2[3] = id_in
-          rel_record_2[4] = start_date_in
-          rel_record_2[5] = end_date_in
-          rel_record_2[5] = types_list_in
+          rel_record_2[2] = id_in
+          rel_record_2[3] = start_date_in
+          rel_record_2[4] = end_date_in
           person2_updated_flag = true
         else
           # delete the record
@@ -344,8 +330,9 @@ class Relationship < ActiveRecord::Base
         new_rel_record = []
         new_rel_record.push(person1_index_in)
         new_rel_record.push(max_certainty_in)
-        new_rel_record.push(is_approved_in)
         new_rel_record.push(id_in)
+        new_rel_record.push(start_date_in)
+        new_rel_record.push(end_date_in)
         person2_current_rel_sum.push(new_rel_record)
       end
     end

@@ -17,16 +17,16 @@
       <br>
       <dl class="dl-horizontal">
         <% if ! current_user.nil? && (current_user.user_type == "Admin") %>
-          <dt><strong>User id:</strong></dt>
+          <dt><strong>SDFB User ID:</strong></dt>
           <dd><%= @user.id %></dd>
         <% end %>
         <dt><strong>Username:</strong></dt>
         <dd><%= @user.username %></dd>
         <% if ! @user.orcid.blank? %>
-          <dt><strong>ORC id:</strong></dt>
+          <dt><strong>ORCID:</strong></dt>
           <dd><%= @user.orcid %></dd>
         <% end %>
-        <dt><strong><%= model_class.human_attribute_name(:about_description) %>:</strong></dt>
+        <dt><strong>About Description:</strong></dt>
         <dd>
           <% if ! @user.about_description.blank? %>
             <%= @user.about_description %>
@@ -39,26 +39,26 @@
             <dt><strong>Affiliation:</strong></dt>
             <dd><%= @user.affiliation %></dd>
           <% end %>
-          <dt><strong><%= model_class.human_attribute_name(:email) %>:</strong></dt>
+          <dt><strong>Email:</strong></dt>
           <dd><%= @user.email %></dd>
           <% if ! @user.prefix.blank? %>
             <dt><strong>Prefix:</strong></dt>
             <dd><%= @user.prefix %></dd>
           <% end %>
-          <dt><strong><%= model_class.human_attribute_name(:first_name) %>:</strong></dt>
+          <dt><strong>First Name:</strong></dt>
           <dd><%= @user.first_name %></dd>
-          <dt><strong><%= model_class.human_attribute_name(:last_name) %>:</strong></dt>
+          <dt><strong>Last Name:</strong></dt>
           <dd><%= @user.last_name %></dd>
-          <dt><strong><%= model_class.human_attribute_name(:is_active) %>:</strong></dt>
+          <dt><strong>Is Active:</strong></dt>
           <dd><%= @user.is_active %></dd>
           <% if ! @user.user_type.blank? %>
-            <dt><strong>User type:</strong></dt>
+            <dt><strong>User Type:</strong></dt>
             <dd><%= @user.user_type %></dd>
           <% end %>
-          <dt><strong>Curator revoked?:</strong></dt>
+          <dt><strong>Curator Revoked?:</strong></dt>
           <dd><%= @user.curator_revoked %></dd>
         <% end %>
-        <dt><strong>User since:</strong></dt>
+        <dt><strong>User Since:</strong></dt>
         <dd><%= @user.created_at %></dd>
       </dl>
     </div>

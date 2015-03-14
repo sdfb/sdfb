@@ -14,7 +14,6 @@ class Person < ActiveRecord::Base
   has_many :groups, :through => :group_assignments
   has_many :user_person_contribs
   belongs_to :user
-  before_create :init_array
 
   # Scope
   # ----------------------------- 
@@ -114,7 +113,6 @@ class Person < ActiveRecord::Base
   # make a method that returns all of the two degrees for a person
   # use a array to track what people were added
   # have an array for the people records
-
   def self.find_first_degree_for_person(person_id, min_confidence, max_confidence, min_year, max_year, load_rels)
   	peopleRecordsForReturn = {}
 	  @PersonRecord = Person.select("id, rel_sum, display_name").where("id = ?", person_id)
