@@ -8,6 +8,10 @@
 7. Run git push heroku master
 8. If making changes to js or css, run rake assets:precompile, then commit and push again before running git push heroku master
 
+## POPULATING HEROKU
+To run any script for heroku you need to add "heroku run" before "rake". For example, to migrate run "heroku run rake db:migrate" in the command line.
+If populating the entire database you can run the file herokupop.sh which will run all the scripts.
+
 
 
 ## Status
