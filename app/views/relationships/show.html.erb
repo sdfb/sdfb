@@ -113,15 +113,15 @@
           <% end %>
           <dt><strong>Created On:</strong></dt>
           <dd><%= @relationship.created_at %></dd>
-          <dt>Edit History</dt>
+          <dt>Edit History:</dt>
           <% if ! @relationship.edited_by_on.blank? %>
             <dd><%= @relationship.edited_by_on %></dd>
           <% else %>
             <dd>No edits have been made.</dd>
           <% end %>
-          <dt>Is Active</dt>
+          <dt>Is Active:</dt>
           <dd><%= @relationship.is_active %></dd>
-          <dt>Is Rejected</dt>
+          <dt>Is Rejected:</dt>
           <dd><%= @relationship.is_rejected %></dd>
         <% end %>
       </dl>
