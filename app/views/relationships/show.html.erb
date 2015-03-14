@@ -18,11 +18,11 @@
       </h2>
       <br>
       <dl class="dl-horizontal">
-        <dt><strong>Relationship id:</strong></dt>
+        <dt><strong>SDFB Relationship ID:</strong></dt>
         <dd><%= @relationship.id %></dd>
-        <dt><strong>Max Certainty:</strong></dt>
+        <dt><strong>Maximum Certainty:</strong></dt>
         <dd><%= @relationship.max_certainty %>%</dd>
-        <dt><strong>Original Certainty:</strong></dt>
+        <dt><strong>Creator's Certainty:</strong></dt>
         <dd><%= @relationship.original_certainty %>%</dd>
         <dt><strong>Person 1:</strong></dt>
         <dd><%= link_to @relationship.get_person1_name,  person_path(@relationship.person1_index) %></dd>
@@ -47,7 +47,7 @@
           </dd>
         <% end %>
         <% if ((! @relationship.start_month.blank?) || (! @relationship.start_day.blank?) || (! @relationship.start_year.blank?)) %>
-          <dt><strong>Start date:</strong></dt>
+          <dt><strong>Start Date:</strong></dt>
           <dd><% if ! @relationship.start_month.blank? %>
             <%= @relationship.start_month %>
           <% end %>  
@@ -58,7 +58,7 @@
             <%= @relationship.start_year %>
           <% end %></dd>
         <% else %>
-          <dt><strong>Start date:</strong></dt>
+          <dt><strong>Start Date:</strong></dt>
           <dd>Unknown</dd>
         <% end %>
         <% if ! @relationship.end_date_type.blank? %>
@@ -80,7 +80,7 @@
           </dd>
         <% end %>
         <% if ((! @relationship.end_month.blank?) || (! @relationship.end_day.blank?) || (! @relationship.end_year.blank?)) %>
-          <dt><strong>End date:</strong></dt>
+          <dt><strong>End Date:</strong></dt>
           <dd><% if ! @relationship.end_month.blank? %>
             <%= @relationship.end_month %>
           <% end %>  
@@ -91,34 +91,34 @@
             <%= @relationship.end_year %>
           <% end %></dd>
         <% else %>
-          <dt><strong>End date:</strong></dt>
+          <dt><strong>End Date:</strong></dt>
           <dd>Unknown</dd>
         <% end %>
-        <dt><strong>Created by:</strong></dt>
+        <dt><strong>Created By:</strong></dt>
         <dd><%= link_to User.find(@relationship.created_by).username,  user_path(@relationship.created_by) %></dd>
-        <dt><strong>Is Approved?:</strong></dt>
-        <dd><%= @relationship.is_approved %></dd>
-        <% if ! @relationship.approved_by.blank? %>
-          <dt><strong>Approved by:</strong></dt>
-          <dd><%= link_to User.find(@relationship.approved_by).username,  user_path(@relationship.approved_by) %></dd></dd>
-        <% end %>
-        <% if ! @relationship.approved_by.blank? %>
-          <dt><strong>Approved on:</strong></dt>
-          <dd><%= @relationship.approved_on %></dd>
-        <% end %>
-        <% if ! @relationship.justification.blank? %>
-          <dt><strong>Justification:</strong></dt>
-          <dd><%= @relationship.justification %></dd>
-        <% end %>
-        <dt><strong>Created at:</strong></dt>
-        <dd><%= @relationship.created_at %></dd>
-        <dt>Edit History</dt>
-        <% if ! @relationship.edited_by_on.blank? %>
-          <dd><%= @relationship.edited_by_on %></dd>
-        <% else %>
-          <dd>No edits have been made.</dd>
-        <% end %>
         <% if (! current_user.blank?) && ((current_user.user_type == "Admin") || (current_user.user_type == "Curator")) %>
+          <dt><strong>Is Approved?:</strong></dt>
+          <dd><%= @relationship.is_approved %></dd>
+          <% if ! @relationship.approved_by.blank? %>
+            <dt><strong>Approved By:</strong></dt>
+            <dd><%= link_to User.find(@relationship.approved_by).username,  user_path(@relationship.approved_by) %></dd></dd>
+          <% end %>
+          <% if ! @relationship.approved_by.blank? %>
+            <dt><strong>Approved On:</strong></dt>
+            <dd><%= @relationship.approved_on %></dd>
+          <% end %>
+          <% if ! @relationship.justification.blank? %>
+            <dt><strong>Justification:</strong></dt>
+            <dd><%= @relationship.justification %></dd>
+          <% end %>
+          <dt><strong>Created On:</strong></dt>
+          <dd><%= @relationship.created_at %></dd>
+          <dt>Edit History</dt>
+          <% if ! @relationship.edited_by_on.blank? %>
+            <dd><%= @relationship.edited_by_on %></dd>
+          <% else %>
+            <dd>No edits have been made.</dd>
+          <% end %>
           <dt>Is Active</dt>
           <dd><%= @relationship.is_active %></dd>
           <dt>Is Rejected</dt>
@@ -137,10 +137,10 @@
       <table class="table table-condensed">
         <thead>
           <tr>
-            <th>Id</th>
+            <th>SDFB Assignment ID</th>
             <th>Relationship</th>
-            <th>Relationship type</th>
-            <th>Confidence</th>
+            <th>Relationship Type</th>
+            <th>Certainty</th>
             <th><%=t '.actions', :default => t("helpers.actions") %></th>
           </tr>
         </thead>

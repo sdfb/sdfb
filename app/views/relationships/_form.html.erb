@@ -26,24 +26,24 @@
   <%= f.label :original_certainty, label: "Estimated Certainty" %>
   <%= f.range_field :original_certainty, :min=>0, :max=>100, :class=>"slide", :id=>"slider1"%>
   <br>
-  <% if ! @relationship.original_certainty.blank? %>
-    <text id="formCertainty">Possible relationships @ <%= @relationship.original_certainty %>%</text><br>
-  <% else %>
-    <text id="formCertainty">Possible relationships @ 50%</text><br>
-  <% end %>
+    <% if ! @relationship.original_certainty.blank? %>
+        <text id="formCertainty">Possible Relationships @ <%= @relationship.original_certainty %>%</text><br>
+    <% else %>
+      <text id="formCertainty">Possible Relationships @ 50%</text><br>
+    <% end %>
   <br>
-  <%= f.input :start_date_type, :collection =>["BF", "AF","IN","CA","BF/IN","AF/IN"], label: "Birth Year Type", prompt: "Select", hint: " BF = Before, AF = After, IN = In, CA = Circa, BF/IN = Before or In, AF/IN = After or In" %>
-  <%= f.label :start_month, label: "Start Date" %>
+  <%= f.label :start_date_type, label: "Start Date" %>
+  <%= f.input :start_date_type, :collection =>["BF", "AF","IN","CA","BF/IN","AF/IN"], label: false, prompt: "Year Type", hint: " BF = Before, AF = After, IN = In, CA = Circa, BF/IN = Before or In, AF/IN = After or In" %>
   <%= f.input :start_month, label: "Start Date", :collection =>["January","February","March","April","May","June","July","August","September","October","November","December"], label: false, prompt: "Month", :include_blank => true %>
   <%= f.input :start_day, label: false, :collection => 1..31, prompt: "Day", :include_blank => true %>
   <%= f.input :start_year, as: :string, label: false, placeholder: "Year"%>
-  <%= f.input :end_date_type, :collection =>["BF", "AF","IN","CA","BF/IN","AF/IN"], label: "Birth Year Type", prompt: "Select", hint: " BF = Before, AF = After, IN = In, CA = Circa, BF/IN = Before or In, AF/IN = After or In" %>
-  <%= f.label :end_month, label: "End Date" %>
+  <%= f.label :end_date_type, label: "End Date" %>
+  <%= f.input :end_date_type, :collection =>["BF", "AF","IN","CA","BF/IN","AF/IN"], label: false, prompt: "Year Type", hint: " BF = Before, AF = After, IN = In, CA = Circa, BF/IN = Before or In, AF/IN = After or In" %>
   <%= f.input :end_month, :collection =>["January","February","March","April","May","June","July","August","September","October","November","December"], label: false, prompt: "Month", :include_blank => true %>
   <%= f.input :end_day, label: false, :collection => 1..31, prompt: "Day", :include_blank => true %>
   <%= f.input :end_year, label: false, as: :string, placeholder: "Year" %>
 
-  <%= f.input :justification, input_html: { rows:"5" }, required: true %>
+  <%= f.input :justification, input_html: { rows:"5" }, required: true, label: "Justification for Relationship Creation" %>
   <%= f.hidden_field :created_by, :value => current_user.id %>
   <% if (current_user.user_type == "Admin") || (current_user.user_type == "Curator") %>
     <%= f.input :is_approved %>
