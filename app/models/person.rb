@@ -14,7 +14,6 @@ class Person < ActiveRecord::Base
   has_many :groups, :through => :group_assignments
   has_many :user_person_contribs
   belongs_to :user
-  before_create :init_array
 
   # Scope
   # ----------------------------- 
@@ -114,7 +113,6 @@ class Person < ActiveRecord::Base
   # make a method that returns all of the two degrees for a person
   # use a array to track what people were added
   # have an array for the people records
-
   def self.find_first_degree_for_person(person_id, min_confidence, max_confidence, min_year, max_year, load_rels)
   	peopleRecordsForReturn = {}
 	  @PersonRecord = Person.select("id, rel_sum, display_name").where("id = ?", person_id)
@@ -125,8 +123,12 @@ class Person < ActiveRecord::Base
         @adjustedrel.push(firstDegreePerson)
         if (load_rels)
         	@firstDegreePersonQuery = Person.select("id, display_name, rel_sum").where("id = ? and not (ext_birth_year::integer > ? or ext_death_year::integer < ?)", firstDegreePersonID,  max_year, min_year)
-  				peopleRecordsForReturn[@firstDegreePersonQuery[0].id] = {'rel_sum' => @firstDegreePersonQuery[0].rel_sum, 'display_name' => @firstDegreePersonQuery[0].display_name}   
-			  else
+  				@firstDegreePersonRel = []
+          @firstDegreePersonQuery[0].rel_sum.each do |rel|
+            if ((firstDegreePerson[1].to_i >= min_confidence) && (firstDegreePerson[1].to_i <= max_confidence))
+              @firstDegreePersonRel.push(rel)
+          peopleRecordsForReturn[@firstDegreePersonQuery[0].id] = {'rel_sum' => @firstDegreePersonRel, 'display_name' => @firstDegreePersonQuery[0].display_name}   
+        else
          @firstDegreePersonQuery = Person.select("id, display_name").where("id = ? and not (ext_birth_year::integer > ? or ext_death_year::integer < ?)", firstDegreePersonID,  max_year, min_year)
          peopleRecordsForReturn[@firstDegreePersonQuery[0].id] = {'display_name' => @firstDegreePersonQuery[0].display_name}   
         end

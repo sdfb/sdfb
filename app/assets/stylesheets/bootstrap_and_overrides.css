@@ -60,11 +60,15 @@ p, ol, ul, td {
 }
 
 a:visited {
-  color: #196B94;
+  color: #005f8e;
+}
+
+a:visited:hover {
+  color: #003651;
 }
 
 a:hover {
-  color: #78A7BF;
+  color: #003651;
 }
 
 /*.accordion_content ul li:hover, .accordion_content ul li.clicked {
@@ -170,6 +174,18 @@ a:hover {
   color:#fff;
 }
 
+.form-horizontal {
+  /*max-width: 500px;*/
+}
+
+.form-horizontal textarea {
+}
+
+.form-horizontal .form-actions {
+  padding-left: 10px;
+}
+
+
 h1 {
   margin: 0px;
   line-height: 40px;
@@ -199,4 +215,7 @@ h3, h4, h5, h6 {
 
 label {
   font-weight: bold;
+  text-transform: uppercase;
+  font-size: 12px !important;
+  padding-top: 10px;
 }

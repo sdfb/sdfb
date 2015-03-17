@@ -27,8 +27,6 @@
   <% end %>
   <%= f.hidden_field :edited_by_on, :value => current_user.id %>
   <div class="form-actions">
-    <%= f.button :submit, :class => 'btn btn-primary' %>
-    <%= link_to t('.cancel', :default => t("helpers.links.cancel")),
-                user_person_contribs_path, :class => 'btn' %>
+    <%= f.button :submit, :class => 'btn btn-primary', :value => "Edit Person Annotation" %>
   </div>
 <% end %>

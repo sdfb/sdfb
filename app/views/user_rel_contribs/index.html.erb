@@ -1,15 +1,13 @@
-<h1>All Relationship Type Assignments <%= link_to 'Assign Relationship Types', new_user_rel_contrib_path, :class => 'btn btn-primary' %></h1><br>
+<h1>All Relationship Type Assignments <%= link_to 'Assign Relationship Type to a Person', new_user_rel_contrib_path, :class => 'btn btn-primary' %></h1><br>
 
 <% if ! @user_rel_contribs.empty? %>
   <table class="table table-condensed">
     <thead>
       <tr>
-        <th>Id</th>
+        <th>SDFB Relationship Type Assign. ID</th>
         <th>Relationship</th>
-        <th>Relationship type</th>
+        <th>Relationship Type</th>
         <th>Certainty</th>
-        <th>Annotation</th>
-        <th>Bibliography</th>
         <th><%=t '.actions', :default => t("helpers.actions") %></th>
       </tr>
     </thead>
@@ -20,8 +18,6 @@
           <td><%= link_to user_rel_contrib.get_both_names, relationship_path(user_rel_contrib.relationship_id) %></td>
           <td><%= link_to RelationshipType.find(user_rel_contrib.relationship_type_id).name, relationship_type_path(user_rel_contrib.relationship_type_id) %></td>
           <td><%= user_rel_contrib.certainty %>%</td>
-          <td><%= user_rel_contrib.annotation %></td>
-          <td><%= user_rel_contrib.bibliography %></td>
           <td>
             <% if can? :show, user_rel_contrib %>
               <%= link_to 'Show', user_rel_contrib, :class => 'btn btn-mini' %>

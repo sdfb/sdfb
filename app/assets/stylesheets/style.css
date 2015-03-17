@@ -96,7 +96,7 @@ li {
 
 a:hover {
   background: rgba(0,0,0,0);
-  color: #999;
+  color: #1c7098;
   text-decoration: none;
 }
 
@@ -265,8 +265,8 @@ a:hover {
   width: 246px;
   height: 11px;
   position: relative;
-  margin: 15px 4px;
-  background-color: black;
+  margin: 0px 4px;
+  background-color: #333;
   border: none;
 }
 

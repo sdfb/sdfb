@@ -66,7 +66,7 @@ class UserRelContrib < ActiveRecord::Base
   # -----------------------------
   
   #This converts the person1_selected and the person2_selected into the relationship_id foreign key
-  def autocomplete_to_rel_approval
+  def autocomplete_to_rel
     #find the relationship_id given the two people
     if (self.relationship_id == 0)
       found_rel_id = Relationship.for_2_people(self.person1_selection, self.person2_selection)[0]
@@ -158,13 +158,13 @@ class UserRelContrib < ActiveRecord::Base
 
         # locate the record for the specific relationship for person 1
         rel_sum_person_1.each do |rel|
-          if rel[3] == self.relationship_id
+          if rel[2] == self.relationship_id
             rel[1] = new_max_certainty
           end
         end
         Person.update(person1_id, rel_sum: rel_sum_person_1)
         rel_sum_person_2.each do |rel|
-          if rel[3] == self.relationship_id
+          if rel[2] == self.relationship_id
             rel[1] = new_max_certainty
           end
         end
@@ -201,13 +201,13 @@ class UserRelContrib < ActiveRecord::Base
 
         # locate the record for the specific relationship for person 1
         rel_sum_person_1.each do |rel|
-          if rel[3] == self.relationship_id
+          if rel[2] == self.relationship_id
             rel[1] = new_max_certainty
           end
         end
         Person.update(person1_id, rel_sum: rel_sum_person_1)
         rel_sum_person_2.each do |rel|
-          if rel[3] == self.relationship_id
+          if rel[2] == self.relationship_id
             rel[1] = new_max_certainty
           end
         end
@@ -267,13 +267,13 @@ class UserRelContrib < ActiveRecord::Base
 
         # locate the record for the specific relationship for person 1
         rel_sum_person_1.each do |rel|
-          if rel[3] == self.relationship_id
+          if rel[2] == self.relationship_id
             rel[1] = new_max_certainty
           end
         end
         Person.update(person1_id, rel_sum: rel_sum_person_1)
         rel_sum_person_2.each do |rel|
-          if rel[3] == self.relationship_id
+          if rel[2] == self.relationship_id
             rel[1] = new_max_certainty
           end
         end
@@ -310,13 +310,13 @@ class UserRelContrib < ActiveRecord::Base
 
         # locate the record for the specific relationship for person 1
         rel_sum_person_1.each do |rel|
-          if rel[3] == self.relationship_id
+          if rel[2] == self.relationship_id
             rel[1] = new_max_certainty
           end
         end
         Person.update(person1_id, rel_sum: rel_sum_person_1)
         rel_sum_person_2.each do |rel|
-          if rel[3] == self.relationship_id
+          if rel[2] == self.relationship_id
             rel[1] = new_max_certainty
           end
         end

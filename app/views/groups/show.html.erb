@@ -18,10 +18,12 @@
       </h2>
       <br>
       <dl class="dl-horizontal">
-        <dt>Name:</dt>
+        <dt><strong>SDFB Group ID:</strong></dt>
+        <dd><%= @group.id %></dd>
+        <dt><strong>Name:</strong></dt>
         <dd><%= @group.name %></dd>
         <% if ! @group.description.blank? %>
-          <dt>Description:</strong></dt>
+          <dt><strong>Description:</strong></dt>
           <dd><%= @group.description %></dd>
         <% end %>
         <% if ! @group.start_date_type.blank? %>
@@ -43,7 +45,7 @@
           </dd>
         <% end %>
         <% if ! @group.start_year.blank? %>
-          <dt>Start Year</dt>
+          <dt><strong>Start Year:</strong></dt>
           <dd><%= @group.start_year %></dd>
         <% end %>
         <% if ! @group.end_date_type.blank? %>
@@ -65,41 +67,41 @@
           </dd>
         <% end %>
         <% if ! @group.end_year.blank? %>
-          <dt>End Year</dt>
+          <dt><strong>End Year:</strong></dt>
           <dd><%= @group.end_year %></dd>
         <% end %>
         <% if ! @group.person_list.blank? %>
-          <dt>Members</dt>
+          <dt><strong>Members</strong></dt>
           <dd><%= @group.person_list %></dd>
         <% end %>
         <% if ! @group.justification.blank? %>
-          <dt>Justification</dt>
+          <dt><strong>Justification</strong></dt>
           <dd><%= @group.justification %></dd>
         <% end %>
-        <dt>Created by</dt>
+        <dt><strong>Created By:</strong></dt>
           <dd><%= link_to User.find(@group.created_by).username,  user_path(@group.created_by) %></dd>
-        <dt>Created at</dt>
+        <dt><strong>Created On:</strong></dt>
         <dd><%= @group.created_at %></dd>
-        <dt><strong>Is Approved?:</strong></dt>
-        <dd><%= @group.is_approved %></dd>
-        <% if ! @group.approved_by.blank? %>
-          <dt><strong>Approved by:</strong></dt>
-          <dd><%= link_to User.find(@group.approved_by).username,  user_path(@group.approved_by) %></dd>
-        <% end %>
-        <% if ! @group.approved_on.blank? %>
-          <dt><strong>Approved on:</strong></dt>
-          <dd><%= @group.approved_on %></dd>
-        <% end %>
-        <dt>Edit History</dt>
-        <% if ! @group.edited_by_on.blank? %>
-          <dd><%= @group.edited_by_on %></dd>
-        <% else %>
-          <dd>No edits have been made.</dd>
-        <% end %>
         <% if (! current_user.blank?) && ((current_user.user_type == "Admin") || (current_user.user_type == "Curator")) %>
-          <dt>Is Active</dt>
+          <dt><strong>Is Approved?:</strong></dt>
+          <dd><%= @group.is_approved %></dd>
+          <% if ! @group.approved_by.blank? %>
+            <dt><strong>Approved By:</strong></dt>
+            <dd><%= link_to User.find(@group.approved_by).username,  user_path(@group.approved_by) %></dd>
+          <% end %>
+          <% if ! @group.approved_on.blank? %>
+            <dt><strong>Approved On:</strong></dt>
+            <dd><%= @group.approved_on %></dd>
+          <% end %>
+          <dt><strong>Edit History:</strong></dt>
+          <% if ! @group.edited_by_on.blank? %>
+            <dd><%= @group.edited_by_on %></dd>
+          <% else %>
+            <dd>No edits have been made.</dd>
+          <% end %>
+          <dt><strong>Is Active:</strong></dt>
           <dd><%= @group.is_active %></dd>
-          <dt>Is Rejected</dt>
+          <dt><strong>Is Rejected:</strong></dt>
           <dd><%= @group.is_rejected %></dd>
         <% end %>
       </dl>
@@ -114,8 +116,7 @@
         <table class="table table-condensed">
           <thead>
             <tr>
-              <th>Id</th>
-              <th>Group</th>
+              <th>Annotation ID</th>
               <th>Annotation</th>
               <th>Bibliography</th>
               <th><%=t '.actions', :default => t("helpers.actions") %></th>
@@ -125,7 +126,6 @@
             <% @user_group_contribs.each do |user_group_contrib| %>
               <tr>
                 <td><%= user_group_contrib.id %></td>
-                <td><%= link_to Group.find(user_group_contrib.group_id).name, group_path(user_group_contrib.group_id) %></td>
                 <td><%= user_group_contrib.annotation %></td>
                 <td><%= user_group_contrib.bibliography %></td>
                 <td>
@@ -162,10 +162,10 @@
           <table class="table table-condensed">
             <thead>
             <tr>
-              <th>ID</th>
+              <th>Assignment ID</th>
               <th>Person</th>
-              <th>Start date</th>
-              <th>End date</th>
+              <th>Start Date</th>
+              <th>End Date</th>
               <th><%=t '.actions', :default => t("helpers.actions") %></th>
             </tr>
             </thead>
@@ -226,8 +226,7 @@
           <table class="table table-condensed">
             <thead>
               <tr>
-                <th>ID</th>
-                <th>Group</th>
+                <th>Assignment ID</th>
                 <th>Category</th>
                 <th><%=t '.actions', :default => t("helpers.actions") %></th>
               </tr>
@@ -236,7 +235,6 @@
               <% @group_cat_assigns_approved.each do |group_cat_assign| %>
                 <tr>
                   <td><%= group_cat_assign.id %></td>
-                  <td><%= link_to Group.find(group_cat_assign.group_id).name, group_path(group_cat_assign.group_id) %></td>
                   <td><%= link_to GroupCategory.find(group_cat_assign.group_category_id).name, group_category_path(group_cat_assign.group_category_id) %></td>
                   <td>
                     <% if can? :show, group_cat_assign %>

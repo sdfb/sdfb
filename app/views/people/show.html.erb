@@ -11,18 +11,20 @@
   <div class="span5">
     <div class="well">
       <h2>Information
-        <% if can? :update, @people %> 
+        <% if (! current_user.blank?) && ((current_user.user_type == "Admin") || (current_user.user_type == "Curator")) %> 
           <%= link_to t('.edit', :default => t("helpers.links.edit")),
                   edit_person_path(@person), :class => 'btn btn-mini' %>
         <% end %>
       </h2>
       <br>
       <dl class="dl-horizontal">
-        <dt><strong>Person id:</strong></dt>
+        <dt><strong>SDFB Person ID:</strong></dt>
         <dd><%= @person.id %></dd>
+        <dt><strong>ODNB ID:</strong></dt>
         <% if ! @person.odnb_id.blank? %>
-          <dt><strong>ODNB id:</strong></dt>
           <dd><%= @person.odnb_id %></dd>
+        <% else %>
+          <dd>No ODNB ID recorded.</dd>
         <% end %>
         <% if ! @person.title.blank? %>
           <dt><strong>Title:</strong></dt>
@@ -32,7 +34,7 @@
           <dt><strong>Prefix:</strong></dt>
           <dd><%= @person.prefix %></dd>
         <% end %>
-        <dt><strong>First name:</strong></dt>
+        <dt><strong>First Name:</strong></dt>
         <dd><%= @person.first_name %></dd>
         <% if ! @person.last_name.blank? %>
           <dt><strong>Last Name:</strong></dt>
@@ -44,14 +46,16 @@
         <% end %>
         <dt><strong>Gender:</strong></dt>
         <dd><%= @person.gender %></dd>
+        <dt><strong>All Historical Aliases:</strong></dt>
         <% if ! @person.search_names_all.blank? %>
-          <dt><strong>All known identities:</strong></dt>
           <dd><%= @person.search_names_all %></dd>
+        <% else %>
+          <dd>No known identities recorded.</dd>
         <% end %>
         <dt><strong>Created by:</strong></dt>
         <dd><%= link_to User.find(@person.created_by).username,  user_path(@person.created_by) %></dd>
+        <dt><strong>Birth Year Type:</strong></dt>
         <% if ! @person.birth_year_type.blank? %>
-          <dt><strong>Birth Year Type:</strong></dt>
           <dd>
             <% if @person.birth_year_type == "BF" %>
               <dd>Before</dd>
@@ -67,71 +71,81 @@
               <dd>After or In</dd>
             <% end %>
           </dd>
+        <% else %>
+          <dd>Unknown</dd>
         <% end %>
-        <dt><strong>Extant birth year:</strong></dt>
-        <dd><%= @person.ext_birth_year %></dd>
+        <dt><strong>Birth Year:</strong></dt>
+        <% if ! @person.ext_birth_year.blank? %>
+          <dd><%= @person.ext_birth_year %></dd>
+        <% else %>
+          Unknown
+        <% end %>
         <% if ! @person.alt_birth_year.blank? %>
-          <dt><strong>Alternate birth year:</strong></dt>
+          <dt><strong>Alternate Birth Year:</strong></dt>
           <dd><%= @person.alt_birth_year %></dd>
         <% end %>
         <dt><strong>Death Year Type:</strong></dt>
-        <dd>
-          <% if @person.death_year_type == "BF" %>
-            <dd>Before</dd>
-          <% elsif @person.death_year_type == "AF" %>
-            <dd>After</dd>
-          <% elsif @person.death_year_type == "IN" %>
-            <dd>In</dd>
-          <% elsif @person.death_year_type == "CA" %>
-            <dd>Circa</dd>
-          <% elsif @person.death_year_type == "BF/IN" %>
-            <dd>Before or In</dd>
-          <% elsif @person.death_year_type == "AF/IN" %>
-            <dd>After or In</dd>
-          <% end %>
-        </dd>
-        <dt><strong>Extant death year:</strong></dt>
-        <dd><%= @person.ext_death_year %></dd>
+        <% if ! @person.death_year_type.blank? %>
+          <dd>
+            <% if @person.death_year_type == "BF" %>
+              <dd>Before</dd>
+            <% elsif @person.death_year_type == "AF" %>
+              <dd>After</dd>
+            <% elsif @person.death_year_type == "IN" %>
+              <dd>In</dd>
+            <% elsif @person.death_year_type == "CA" %>
+              <dd>Circa</dd>
+            <% elsif @person.death_year_type == "BF/IN" %>
+              <dd>Before or In</dd>
+            <% elsif @person.death_year_type == "AF/IN" %>
+              <dd>After or In</dd>
+            <% end %>
+          </dd>
+        <% else %>
+          <dd>Unknown</dd>
+        <% end %>
+        <dt><strong>Death Year:</strong></dt>
+        <% if ! @person.death_year_type.blank? %>
+          <dd><%= @person.ext_death_year %></dd>
+        <% else %>
+          <dd>Unknown</dd>
+        <% end %>
         <% if ! @person.alt_death_year.blank? %>
-          <dt><strong>Alternate death year:</strong></dt>
+          <dt><strong>Alternate Death Year:</strong></dt>
           <dd><%= @person.alt_death_year %></dd>
         <% end %>
+        <dt><strong>Historical Significance:</strong></dt>
         <% if ! @person.historical_significance.blank? %>
-          <dt><strong>Historical Significance:</strong></dt>
           <dd><%= @person.historical_significance %></dd>
-        <% end %>
-        <dt><strong>Group Summary:</strong></dt>
-        <% if ! @person.group_list.empty? %>
-          <dd><%= @person.group_list %></dd>
         <% else %>
-          <dd>No groups</dd>
-        <% end %>
-        <dt><strong>Is Approved?:</strong></dt>
-        <dd><%= @person.is_approved %></dd>
-        <% if ! @person.approved_by.blank? %>
-          <dt><strong>Approved by:</strong></dt>
-          <dd><%= link_to User.find(@person.approved_by).username,  user_path(@person.approved_by) %></dd>
-        <% end %>
-        <% if ! @person.approved_on.blank? %>
-          <dt><strong>Approved on:</strong></dt>
-          <dd><%= @person.approved_on %></dd>
-        <% end %>
-        <% if ! @person.justification.blank? %>
-          <dt><strong>Justification:</strong></dt>
-          <dd><%= @person.justification %></dd>
-        <% end %>
-        <dt><strong>Created at:</strong></dt>
-        <dd><%= @person.created_at %></dd>
-        <dt>Edit History</dt>
-        <% if ! @person.edited_by_on.blank? %>
-          <dd><%= @person.edited_by_on %></dd>
-        <% else %>
-          <dd>No edits have been made.</dd>
+          <dd>No historical significance recorded.</dd>
         <% end %>
         <% if (! current_user.blank?) && ((current_user.user_type == "Admin") || (current_user.user_type == "Curator")) %>
-          <dt>Is Active</dt>
+          <dt><strong>Is Approved?:</strong></dt>
+          <dd><%= @person.is_approved %></dd>
+          <% if ! @person.approved_by.blank? %>
+            <dt><strong>Approved By:</strong></dt>
+            <dd><%= link_to User.find(@person.approved_by).username,  user_path(@person.approved_by) %></dd>
+          <% end %>
+          <% if ! @person.approved_on.blank? %>
+            <dt><strong>Approved On:</strong></dt>
+            <dd><%= @person.approved_on %></dd>
+          <% end %>
+          <% if ! @person.justification.blank? %>
+            <dt><strong>Justification for Person Creation:</strong></dt>
+            <dd><%= @person.justification %></dd>
+          <% end %>
+          <dt><strong>Created On:</strong></dt>
+          <dd><%= @person.created_at %></dd>
+          <dt><strong>Edit History:</strong></dt>
+          <% if ! @person.edited_by_on.blank? %>
+            <dd><%= @person.edited_by_on %></dd>
+          <% else %>
+            <dd>No edits have been made.</dd>
+          <% end %>
+          <dt><strong>Is Active:</strong></dt>
           <dd><%= @person.is_active %></dd>
-          <dt>Is Rejected</dt>
+          <dt><strong>Is Rejected:</strong></dt>
           <dd><%= @person.is_rejected %></dd>
         <% end %>
       </dl>
@@ -150,7 +164,7 @@
       <table class="table table-condensed">
         <thead>
           <tr>
-            <th>Id</th>
+            <th>SDFB Relationship ID</th>
             <th>Person 1</th>
             <th>Person 2</th>
             <% if ! current_user.blank? %>
@@ -208,8 +222,7 @@
         <table class="table table-condensed">
           <thead>
             <tr>
-              <th>Id</th>
-              <th>Person</th>
+              <th>SDFB Annotation ID</th>
               <th>Annotation</th>
               <th>Bibliography</th>
               <th><%=t '.actions', :default => t("helpers.actions") %></th>
@@ -219,7 +232,6 @@
             <% @user_person_contribs.each do |user_person_contrib| %>
               <tr>
                 <td><%= user_person_contrib.id %></td>
-                <td><%= link_to Person.find(user_person_contrib.person_id).display_name, person_path(user_person_contrib.person_id) %></td>
                 <td><%= user_person_contrib.annotation %></td>
                 <td><%= user_person_contrib.bibliography %></td>
                 <td>
@@ -256,10 +268,10 @@
         <table class="table table-condensed">
           <thead>
           <tr>
-            <th>Group Assignment id</th>
+            <th>SDFB Group Assignment ID</th>
             <th>Group</th>
-            <th>Start date</th>
-            <th>End date</th>
+            <th>Start Date</th>
+            <th>End Date</th>
             <th><%=t '.actions', :default => t("helpers.actions") %></th>
           </tr>
           </thead>

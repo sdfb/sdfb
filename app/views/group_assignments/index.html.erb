@@ -1,19 +1,19 @@
 <%- model_class = GroupAssignment -%>
 
-<h1>All Group Assignments<%= link_to 'New Group Assignment',
+<h1>All Group Assignments<%= link_to 'Assign a Person to a Group',
             new_group_assignment_path,
             :class => 'btn btn-primary' %></h1><br>
 
 <table class="table table-condensed">
   <thead>
   <tr>
-    <th>Group Assignment id</th>
+    <th>SDFB Group Assignment ID</th>
     <th>Group</th>
     <th>Person</th>
     <th>Start Date Type</th>
-    <th>Start date</th>
+    <th>Start Date</th>
     <th>End Date Type</th>
-    <th>End date</th>
+    <th>End Date</th>
     <th><%=t '.actions', :default => t("helpers.actions") %></th>
   </tr>
   </thead>

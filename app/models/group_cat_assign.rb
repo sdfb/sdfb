@@ -14,6 +14,7 @@ class GroupCatAssign < ActiveRecord::Base
   validates_presence_of :group_category_id
   validates_presence_of :group_id
   validates_presence_of :created_by
+  validate :check_if_approved_valid
 
   # Scope
   # ----------------------------- 
@@ -21,11 +22,12 @@ class GroupCatAssign < ActiveRecord::Base
   scope :all_unapproved, where("approved_by is null and is_rejected is false")
   scope :for_group, lambda {|group_id_input| where('group_id = ?', "#{group_id_input}") }
   scope :for_group_category, lambda {|group_category_id_input| where('group_category_id = ?', "#{group_category_id_input}") }
+  scope :find_if_exists, lambda {|group_category_id_input, group_id_input| where('(group_category_id = ?) and (group_id = ?)', group_category_id_input, group_id_input) }
 
   # Callbacks
   # ----------------------------- 
-  before_create :check_if_approved
-  before_update :check_if_approved
+  before_create :check_if_approved_valid
+  before_update :check_if_approved_valid
   before_create :init_array
   before_update :add_editor_to_edit_by_on
 
@@ -49,7 +51,8 @@ class GroupCatAssign < ActiveRecord::Base
     self.edited_by_on = nil
   end
   
-  def check_if_approved
+  def check_if_approved_valid
+      errors.add(:group_id, "This group already has this group category.") if (! GroupCatAssign.find_if_exists(self.group_category_id, self.group_id).empty?)
     if (self.is_approved != true)
       self.approved_by = nil
       self.approved_on = nil

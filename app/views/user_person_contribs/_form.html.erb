@@ -31,8 +31,6 @@
     <%= f.hidden_field :approved_on, :value => Time.now %>
   <% end %>
   <div class="form-actions">
-    <%= f.button :submit, :class => 'btn btn-primary' %>
-    <%= link_to t('.cancel', :default => t("helpers.links.cancel")),
-                user_person_contribs_path, :class => 'btn' %>
+    <%= f.button :submit, :class => 'btn btn-primary', :value => "Add Note to Person" %>
   </div>
 <% end %>

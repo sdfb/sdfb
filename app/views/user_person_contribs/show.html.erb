@@ -16,11 +16,11 @@
       </h2>
       <br>
       <dl class="dl-horizontal">
-        <dt><strong>Id:</strong></dt>
+        <dt><strong>SDFB Person Annot. ID:</strong></dt>
         <dd><%= @user_person_contrib.id %></dd>
         <dt><strong>Person:</strong></dt>
         <dd><%= link_to Person.find(@user_person_contrib.person_id).display_name,  person_path(@user_person_contrib.person_id) %></dd>
-        <dt><strong>Created by:</strong></dt>
+        <dt><strong>Created By:</strong></dt>
         <dd><%= link_to User.find(@user_person_contrib.created_by).username,  user_path(@user_person_contrib.created_by) %></dd>
         <dt><strong>Annotation:</strong></dt>
         <dd><%= @user_person_contrib.annotation %></dd>
@@ -28,28 +28,28 @@
           <dt><strong>Bibliography:</strong></dt>
           <dd><%= @user_person_contrib.bibliography %></dd>
         <% end %>
-        <dt><strong>Created at:</strong></dt>
-        <dd><%= @user_person_contrib.created_at %></dd>
-        <dt><strong>Is Approved?:</strong></dt>
-        <dd><%= @user_person_contrib.is_approved %></dd>
-        <% if ! @user_person_contrib.approved_by.blank? %>
-          <dt><strong>Approved by:</strong></dt>
-          <dd><%= link_to User.find(@user_person_contrib.approved_by).username,  user_path(@user_person_contrib.approved_by) %></dd>
-        <% end %>
-        <% if ! @user_person_contrib.approved_by.blank? %>
-          <dt><strong>Approved on:</strong></dt>
-          <dd><%= @user_person_contrib.approved_on %></dd>
-        <% end %>
-        <dt>Edit History</dt>
-        <% if ! @user_person_contrib.edited_by_on.blank? %>
-          <dd><%= @user_person_contrib.edited_by_on %></dd>
-        <% else %>
-          <dd>No edits have been made.</dd>
-        <% end %>
         <% if (! current_user.blank?) && ((current_user.user_type == "Admin") || (current_user.user_type == "Curator")) %>
-          <dt>Is Active</dt>
+          <dt><strong>Created On:</strong></dt>
+          <dd><%= @user_person_contrib.created_at %></dd>
+          <dt><strong>Is Approved?:</strong></dt>
+          <dd><%= @user_person_contrib.is_approved %></dd>
+          <% if ! @user_person_contrib.approved_by.blank? %>
+            <dt><strong>Approved By:</strong></dt>
+            <dd><%= link_to User.find(@user_person_contrib.approved_by).username,  user_path(@user_person_contrib.approved_by) %></dd>
+          <% end %>
+          <% if ! @user_person_contrib.approved_by.blank? %>
+            <dt><strong>Approved On:</strong></dt>
+            <dd><%= @user_person_contrib.approved_on %></dd>
+          <% end %>
+          <dt><strong>Edit History:</strong></dt>
+          <% if ! @user_person_contrib.edited_by_on.blank? %>
+            <dd><%= @user_person_contrib.edited_by_on %></dd>
+          <% else %>
+            <dd>No edits have been made.</dd>
+          <% end %>
+          <dt><strong>Is Active:</strong></dt>
           <dd><%= @user_person_contrib.is_active %></dd>
-          <dt>Is Rejected</dt>
+          <dt><strong>Is Rejected:</strong></dt>
           <dd><%= @user_person_contrib.is_rejected %></dd>
         <% end %>
       </dl>

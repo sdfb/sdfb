@@ -23,6 +23,7 @@ class GroupAssignment < ActiveRecord::Base
       select('group_assignments.*')
       .where('(group_id = ?)', groupID)}
   scope :for_user, lambda {|user_input| where('created_by = ?', "#{user_input}") }
+  scope :find_if_exists, lambda {|person_input, group_input| where('(person_id = ?) and (group_id = ?) and is_approved is true', person_input, group_input) }
 
   # Misc Constants
   DATE_TYPE_LIST = ["BF", "AF","IN","CA","BF/IN","AF/IN","NA"]
@@ -32,6 +33,8 @@ class GroupAssignment < ActiveRecord::Base
   validates_presence_of :group_id
   validates_presence_of :person_id
   validates_presence_of :created_by
+  # checks if the group and person assignment already exists
+  validate :check_if_approved
   ## start date type is one included in the list
   validates_inclusion_of :start_date_type, :in => DATE_TYPE_LIST, :if => :start_year_present?
   ## end date type is one included in the list
@@ -48,12 +51,13 @@ class GroupAssignment < ActiveRecord::Base
   after_create :create_group_person_list
   after_update :create_group_person_list
   before_update :add_editor_to_edit_by_on
-  before_create :check_if_approved
-  before_update :check_if_approved
+  before_create :check_if_approved_valid
+  before_update :check_if_approved_valid
   before_create :init_array
 
   # Custom Methods
   # -----------------------------
+  
   def init_array
     self.edited_by_on = nil
   end
@@ -105,7 +109,9 @@ class GroupAssignment < ActiveRecord::Base
     return Group.find(group_id).name
   end
 
-  def check_if_approved
+  # checks if the group and person assignment already exists and if approved
+  def check_if_approved_valid
+    errors.add(:person_id, "This person is already a member of this group.") if (! GroupAssignment.find_if_exists(self.person_id, self.group_id).empty?)
     if (self.is_approved != true)
       self.approved_by = nil
       self.approved_on = nil

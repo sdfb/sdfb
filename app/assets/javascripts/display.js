@@ -149,15 +149,15 @@ $('#zoom button.icon').click(function(e){
 // Returns string stating confidence based on input decimal (0<n1.00)
 function getConfidence(n) {
     if (0 <= n &&  n<= 19) {
-        return "very unlikely";}
+        return "Very Unlikely";}
     else if (20 <= n &&  n<= 39) {
-        return "unlikely";}
+        return "Unlikely";}
     else if (40 <= n &&  n<= 59) {
-        return "possible";}
+        return "Possible";}
     else if (60 <= n && n<= 79) {
-        return "likely";}
+        return "Likely";}
     else {
-        return "certain";}
+        return "Certain";}
 }
 
 function getParam ( sname ){

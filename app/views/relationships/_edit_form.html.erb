@@ -2,7 +2,6 @@
   <% if @relationship.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(@relationship.errors.count, "error") %> prohibited this person from being saved:</h2>
-
       <ul>
       <% @relationship.errors.full_messages.each do |msg| %>
         <br>
@@ -16,27 +15,29 @@
   <%= Person.find(@relationship.person1_index).display_name %>
   <%= f.label :person2_index, label: "Person 2" %>
   <%= Person.find(@relationship.person2_index).display_name %>
-  <%= f.label :original_certainty, label: "Estimated Certainty" %>
-  <%= f.range_field :original_certainty, :min=>0, :max=>100, :class=>"slide", :id=>"slider1"%>
-  <br>
-  <% if ! @relationship.original_certainty.blank? %>
-    <text id="formCertainty">Possible relationships @ <%= @relationship.original_certainty %>%</text><br>
-  <% else %>
-    <text id="formCertainty">Possible relationships @ 50%</text><br>
+  <% if (current_user.user_type == "Admin") %>
+    <%= f.label :original_certainty, label: "Estimated Certainty" %>
+    <%= f.range_field :original_certainty, :min=>0, :max=>100, :class=>"slide", :id=>"slider1"%>
+    <br>
+    <% if ! @relationship.original_certainty.blank? %>
+      <text id="formCertainty">Possible Relationships @ <%= @relationship.original_certainty %>%</text><br>
+    <% else %>
+      <text id="formCertainty">Possible Relationships @ 50%</text><br>
+    <% end %>
+    <br>
   <% end %>
-  <br>
-  <%= f.input :start_date_type, :collection =>["BF", "AF","IN","CA","BF/IN","AF/IN"], label: "Birth Year Type", prompt: "Select", hint: " BF = Before, AF = After, IN = In, CA = Circa, BF/IN = Before or In, AF/IN = After or In" %>
-  <%= f.label :start_month, label: "Start Date" %>
+  <%= f.label :start_date_type, label: "Start Date" %>
+  <%= f.input :start_date_type, :collection =>["BF", "AF","IN","CA","BF/IN","AF/IN"], label: false, prompt: "Year Type", hint: " BF = Before, AF = After, IN = In, CA = Circa, BF/IN = Before or In, AF/IN = After or In" %>
   <%= f.input :start_month, label: "Start Date", :collection =>["January","February","March","April","May","June","July","August","September","October","November","December"], label: false, prompt: "Month", :include_blank => true %>
   <%= f.input :start_day, label: false, :collection => 1..31, prompt: "Day", :include_blank => true %>
   <%= f.input :start_year, as: :string, label: false, placeholder: "Year"%>
-  <%= f.input :end_date_type, :collection =>["BF", "AF","IN","CA","BF/IN","AF/IN"], label: "Birth Year Type", prompt: "Select", hint: " BF = Before, AF = After, IN = In, CA = Circa, BF/IN = Before or In, AF/IN = After or In" %>
-  <%= f.label :end_month, label: "End Date" %>
+  <%= f.label :end_date_type, label: "End Date" %>
+  <%= f.input :end_date_type, :collection =>["BF", "AF","IN","CA","BF/IN","AF/IN"], label: false, prompt: "Year Type", hint: " BF = Before, AF = After, IN = In, CA = Circa, BF/IN = Before or In, AF/IN = After or In" %>
   <%= f.input :end_month, :collection =>["January","February","March","April","May","June","July","August","September","October","November","December"], label: false, prompt: "Month", :include_blank => true %>
   <%= f.input :end_day, label: false, :collection => 1..31, prompt: "Day", :include_blank => true %>
   <%= f.input :end_year, label: false, as: :string, placeholder: "Year" %>
 
-  <%= f.input :justification, input_html: { rows:"5" }, required: true %>
+  <%= f.input :justification, input_html: { rows:"5" }, label: "Justification for Relationship Creation" %>
   <% if (current_user.user_type == "Admin") || (current_user.user_type == "Curator") %>
     <%= f.input :is_approved %>
     <%= f.input :is_active %>
@@ -48,6 +49,6 @@
   <% end %>
   <%= f.hidden_field :edited_by_on, :value => current_user.id %>
   <div class="form-actions">
-    <%= f.button :submit, :class => 'btn btn-primary' %>
+    <%= f.button :submit, :class => 'btn btn-primary', :value => "Edit Relationship" %>
   </div>
 <% end %>

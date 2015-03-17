@@ -1,4 +1,4 @@
-<h1>All People <%= link_to 'New Person', new_person_path, :class => 'btn btn-primary' %><%=link_to 'Export Data', '/export_people', :class => 'btn btn-primary'%></h1>
+<h1>All People <%= link_to 'Add a Person to SDFB', new_person_path, :class => 'btn btn-primary' %><%=link_to 'Export Data', '/export_people', :class => 'btn btn-primary'%></h1>
 
 <div class="well">
   <div class="container">
@@ -11,18 +11,18 @@
   <table class="table table-condensed">
     <thead>
       <tr>
-        <th>Person id</th>
-        <th>ODNB id</th>
+        <th>SDFB Person ID</th>
+        <th>ODNB ID</th>
         <th>Prefix</th>
-        <th>First name</th>
-        <th>Last name</th>
+        <th>First Name</th>
+        <th>Last Name</th>
         <th>Suffix</th>
         <th>Title</th>
         <th>Birth Year Type</th>
-        <th>Extant Birth Year</th>
+        <th>Birth Year</th>
         <th>Death Year Type</th>
-        <th>Extant Death Year</th>
-        <th>Historical significance</th>
+        <th>Death Year</th>
+        <th>Historical Significance</th>
         <th><%=t '.actions', :default => t("helpers.actions") %></th>
       </tr>
     </thead>

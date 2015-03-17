@@ -12,23 +12,23 @@
       </ul>
     </div>
   <% end %>
-  <%= f.input :title %>
+  <%= f.input :display_name, label: "Display Name" %>
   <%= f.input :prefix %>
-  <%= f.input :first_name %>
-  <%= f.input :last_name %>
+  <%= f.input :first_name, label: "First Name" %>
+  <%= f.input :last_name, label: "Last Name" %>
   <%= f.input :suffix %>
-  <%= f.input :display_name %>
+  <%= f.input :title %>
   <%= f.input :gender, :collection =>['female', 'male','unknown'], label: "Gender", prompt: "Select", selected: @person.gender %>
   <%= f.input :odnb_id, label: "ODNB ID", as: :string %>
   <%= f.input :birth_year_type, :collection =>["BF", "AF","IN","CA","BF/IN","AF/IN"], label: "Birth Year Type", prompt: "Select", hint: " BF = Before, AF = After, IN = In, CA = Circa, BF/IN = Before or In, AF/IN = After or In" %>
-  <%= f.input :ext_birth_year %>
-  <%= f.input :alt_birth_year %>
+  <%= f.input :ext_birth_year, label: "Birth Year" %>
+  <%= f.input :alt_birth_year, label: "Alternative Birth Year" %>
   <%= f.input :death_year_type, :collection =>["BF", "AF","IN","CA","BF/IN","AF/IN"], label: "Death Year Type", prompt: "Select", hint: " BF = Before, AF = After, IN = In, CA = Circa, BF/IN = Before or In, AF/IN = After or In" %>
-  <%= f.input :ext_death_year %>
-  <%= f.input :alt_death_year %>
-  <%= f.input :search_names_all %>
-  <%= f.input :historical_significance, input_html: { rows:"5" } %>
-  <%= f.input :justification, input_html: { rows:"5" } %>
+  <%= f.input :ext_death_year, label: "Death Year" %>
+  <%= f.input :alt_death_year, label: "Alternative Death Year" %>
+  <%= f.input :search_names_all, label: "All Historical Aliases" %>
+  <%= f.input :historical_significance, input_html: { rows:"5" }, label: "Historical Significance" %>
+  <%= f.input :justification, input_html: { rows:"5" }, label: "Justification for Person Creation" %>
   <% if (current_user.user_type == "Admin") || (current_user.user_type == "Curator") %>
     <%= f.input :is_approved %>
     <%= f.input :is_active %>
@@ -40,8 +40,6 @@
   <% end %>
   <%= f.hidden_field :edited_by_on, :value => current_user.id %>
   <div class="form-actions">
-    <%= f.button :submit, :class => 'btn btn-primary' %>
-    <%= link_to t('.cancel', :default => t("helpers.links.cancel")),
-                people_path, :class => 'btn' %>
+    <%= f.button :submit, :class => 'btn btn-primary', :value => "Edit Person" %>
   </div>
 <% end %>

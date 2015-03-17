@@ -16,8 +16,11 @@
       </h2>
       <br>
       <dl class="dl-horizontal">
-
-        <dt><strong>Name:</strong></dt>
+        <% if (! current_user.blank?) && ((current_user.user_type == "Admin") || (current_user.user_type == "Curator")) %>
+          <dt><strong>SDFB Rel. Category ID:</strong></dt>
+          <dd><%= @relationship_category.id %></dd>
+        <% end %>
+        <dt><strong>Category Name:</strong></dt>
         <dd><%= @relationship_category.name %></dd>
         <% if ! @relationship_category.description.blank? %>
           <dt>Description:</strong></dt>
@@ -25,28 +28,30 @@
         <% end %>
         <dt><strong>Created by:</strong></dt>
         <dd><%= link_to User.find(@relationship_category.created_by).username,  user_path(@relationship_category.created_by) %></dd>
-        <dt><strong>Is Approved?:</strong></dt>
-        <dd><%= @relationship_category.is_approved %></dd>
-        <% if ! @relationship_category.approved_by.blank? %>
-          <dt><strong>Approved by:</strong></dt>
-          <dd><%= link_to User.find(@relationship_category.approved_by).username,  user_path(@relationship_category.approved_by) %></dd>
+        <% if (! current_user.blank?) && (current_user.user_type == "Admin") %>
+          <dt><strong>Is Approved?:</strong></dt>
+          <dd><%= @relationship_category.is_approved %></dd>
+          <% if ! @relationship_category.approved_by.blank? %>
+            <dt><strong>Approved By:</strong></dt>
+            <dd><%= link_to User.find(@relationship_category.approved_by).username,  user_path(@relationship_category.approved_by) %></dd>
+          <% end %>
+          <% if ! @relationship_category.approved_on.blank? %>
+            <dt><strong>Approved On:</strong></dt>
+            <dd><%= @relationship_category.approved_on %></dd>
+          <% end %>
+          <dt><strong>Created On:</strong></dt>
+          <dd><%= @relationship_category.created_at %></dd>
+          <dt><strong>Edit History:</strong></dt>
+          <% if ! @relationship_category.edited_by_on.blank? %>
+            <dd><%= @relationship_category.edited_by_on %></dd>
+          <% else %>
+            <dd>No edits have been made.</dd>
+          <% end %>
         <% end %>
-        <% if ! @relationship_category.approved_on.blank? %>
-          <dt><strong>Approved on:</strong></dt>
-          <dd><%= @relationship_category.approved_on %></dd>
-        <% end %>
-        <dt>Created at</dt>
-        <dd><%= @relationship_category.created_at %></dd>
-        <dt>Edit History</dt>
-        <% if ! @relationship_category.edited_by_on.blank? %>
-          <dd><%= @relationship_category.edited_by_on %></dd>
-        <% else %>
-          <dd>No edits have been made.</dd>
-        <% end %>
-        <% if (! current_user.blank?) && ((current_user.user_type == "Admin")) %>
-          <dt>Is Active</dt>
+        <% if (! current_user.blank?) && (current_user.user_type == "Admin") %>
+          <dt><strong>Is Active:</strong></dt>
           <dd><%= @relationship_category.is_active %></dd>
-          <dt>Is Rejected</dt>
+          <dt><strong>Is Rejected:</strong></dt>
           <dd><%= @relationship_category.is_rejected %></dd>
         <% end %>
       </dl>
@@ -59,9 +64,8 @@
         <table class="table table-condensed">
           <thead>
             <tr>
-              <th>ID</th>
-              <th>Relationship</th>
-              <th>Category</th>
+              <th>SDFB Rel. Type Assignment ID</th>
+              <th>Relationship Type Name</th>
               <th><%=t '.actions', :default => t("helpers.actions") %></th>
             </tr>
           </thead>
@@ -70,7 +74,6 @@
               <tr>
                 <td><%= rel_cat_assign.id %></td>
                 <td><%= link_to RelationshipType.find(rel_cat_assign.relationship_type_id).name, relationship_type_path(rel_cat_assign.relationship_type_id) %></td>
-                <td><%= link_to RelationshipCategory.find(rel_cat_assign.relationship_category_id).name, relationship_category_path(rel_cat_assign.relationship_category_id) %></td>
                 <td>
                   <% if can? :show, rel_cat_assign %>
                     <%= link_to 'Show', rel_cat_assign, :class => 'btn btn-mini' %>
