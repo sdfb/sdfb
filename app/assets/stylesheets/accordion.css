@@ -231,7 +231,9 @@
 }
 
 .talkPageLink:hover {
-    background-color:#555;
+    color:#fff;
+    background-color:#207ca9;
+    border-color:#1c6c94;
 }
 
 .talkPageLink {
@@ -241,7 +243,8 @@
     display:block;
     margin:5px 20px 20px 20px;
     padding:5px 7px;
-    background-color:#666;
+    background-color:#248cbe;
+    border-color: #207ca9;
 	font-size: 12px;
 	-moz-border-radius: 10px;
 	-webkit-border-radius: 10px;

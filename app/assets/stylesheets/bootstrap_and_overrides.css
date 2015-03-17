@@ -60,11 +60,15 @@ p, ol, ul, td {
 }
 
 a:visited {
-  color: #196B94;
+  color: #005f8e;
+}
+
+a:visited:hover {
+  color: #003651;
 }
 
 a:hover {
-  color: #78A7BF;
+  color: #003651;
 }
 
 /*.accordion_content ul li:hover, .accordion_content ul li.clicked {
@@ -168,6 +172,10 @@ a:hover {
 
 .btn-danger:visited:hover {
   color:#fff;
+}
+
+.form-horizontal .form-actions {
+  padding-left: 10px;
 }
 
 h1 {

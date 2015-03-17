@@ -46,8 +46,6 @@
     <%= f.hidden_field :approved_on, :value => Time.now %>
   <% end %>
   <div class="form-actions">
-    <%= f.button :submit, :class => 'btn' %>
-    <%= link_to t('.cancel', :default => t("helpers.links.cancel")),
-                group_assignments_path, :class => 'btn' %>
+    <%= f.button :submit, :class => 'btn', :value => "Assign Person to Group" %>
   </div>
 <% end %>
