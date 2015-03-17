@@ -127,6 +127,8 @@ class Person < ActiveRecord::Base
           @firstDegreePersonQuery[0].rel_sum.each do |rel|
             if ((firstDegreePerson[1].to_i >= min_confidence) && (firstDegreePerson[1].to_i <= max_confidence))
               @firstDegreePersonRel.push(rel)
+            end
+          end
           peopleRecordsForReturn[@firstDegreePersonQuery[0].id] = {'rel_sum' => @firstDegreePersonRel, 'display_name' => @firstDegreePersonQuery[0].display_name}   
         else
          @firstDegreePersonQuery = Person.select("id, display_name").where("id = ? and not (ext_birth_year::integer > ? or ext_death_year::integer < ?)", firstDegreePersonID,  max_year, min_year)
