@@ -174,9 +174,17 @@ a:hover {
   color:#fff;
 }
 
+.form-horizontal {
+  /*max-width: 500px;*/
+}
+
+.form-horizontal textarea {
+}
+
 .form-horizontal .form-actions {
   padding-left: 10px;
 }
+
 
 h1 {
   margin: 0px;
