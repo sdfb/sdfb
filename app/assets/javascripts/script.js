@@ -28,7 +28,7 @@ $(document).ready(function() {
 
     $("#contribute-add-person").tooltip({placement:   'right', title: 'Add a new individual to the database'});
     $("#contribute-add-group").tooltip({placement:  'right', title: 'Add a new group to the database'});
-    $("#contribute-add-relationship").tooltip({placement:   'right', title: 'Add and annotate a relationship between two individuals'});
+    $("#contribute-add-relationship").tooltip({placement:   'right', title: 'Add a relationship between two individuals'});
 
     $("#icon-tag").tooltip({placement:  'right', title: 'Tag group'});
     $("#icon-link").tooltip({placement: 'right', title: 'Add a relationship'});
@@ -37,10 +37,10 @@ $(document).ready(function() {
     $("#icon-color").tooltip({placement: 'left', title: 'Click to view color legend'});
 
     $("#node-icon-chain").tooltip({placement: 'right', title: 'Add relationship'});
-    $("#node-icon-annotate").tooltip({placement: 'right', title: 'Annotate person'});
-    $("#edge-icon-annotate").tooltip({placement: 'right', title: 'Annotate relationship'});
+    $("#node-icon-annotate").tooltip({placement: 'right', title: 'Add a note to this person'});
+    $("#edge-icon-annotate").tooltip({placement: 'right', title: 'Add a relationship type and note to this relationship'});
     $("#group-icon-label").tooltip({placement: 'right', title: 'Add person to group'});
-    $("#group-icon-annotate").tooltip({placement: 'right', title: 'Annotate group'});
+    $("#group-icon-annotate").tooltip({placement: 'right', title: 'Add a note to this group'});
 
     $(".icon-zoomin").tooltip({placement:  'left', title: 'Zoom In'});
     $(".icon-zoomout").tooltip({placement:  'left', title: 'Zoom Out'});
