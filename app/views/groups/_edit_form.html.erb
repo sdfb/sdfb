@@ -32,8 +32,6 @@
   <% end %>
   <%= f.hidden_field :edited_by_on, :value => current_user.id %>
   <div class="form-actions">
-    <%= f.button :submit, :class => 'btn btn-primary' %>
-    <%= link_to t('.cancel', :default => t("helpers.links.cancel")),
-                groups_path, :class => 'btn' %>
+    <%= f.button :submit, :class => 'btn btn-primary', :value => "Edit Group" %>
   </div>
 <% end %>
