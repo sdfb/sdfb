@@ -222,7 +222,9 @@ function sidebarSearch(people){
     }
     var confidence = $("#search-network-slider-confidence-result-hidden").val().split(" - ");
     var date = $("#search-network-slider-date-result-hidden").val().split(" - ");
-    window.location.href = '/?id=' + id + '&confidence=' + confidence + '&date=' + date + '&table=' + table;
+    if (id != "" && confidence != "" && date != ""){
+      window.location.href = '/?id=' + id + '&confidence=' + confidence + '&date=' + date;
+    }
   });
 
    $("#search-shared-network-submit").click(function () {
@@ -239,14 +241,18 @@ function sidebarSearch(people){
       }
       var confidence = $("#search-shared-network-slider-confidence-result-hidden").val().split(" - ");
       var date = $("#search-shared-network-slider-date-result-hidden").val().split(" - ");
-      window.location.href = '/?id=' + id1 + '&id2=' + id2 + '&confidence=' + confidence + '&date=' + date + '&table=' + table;
+      if (id != "" && id2 != "" && confidence != "" && date != ""){
+        window.location.href = '/?id=' + id1 + '&id2=' + id2 + '&confidence=' + confidence + '&date=' + date + '&table=' + table;
+      }    
     });
 
   $("#search-group-submit").click(function () {
     Pace.restart();
     // make the index equal autocomplete
     var id = $("#search-group-name-id").val();
-    window.location.href = '/?group=' + id;
+    if (id != ""){
+      window.location.href = '/?group=' + id;
+    }
   });
 
   $("#search-shared-group-submit").click(function () {
@@ -254,7 +260,9 @@ function sidebarSearch(people){
     // make the index equal autocomplete
     var id1 = $("#search-shared-group-name1-id").val();
     var id2 = $("#search-shared-group-name2-id").val();
-    window.location.href = '/?group=' + id1 + '&group2=' + id2;
+    if (id1 != "" && id2 != ""){
+      window.location.href = '/?group=' + id1 + '&group2=' + id2;
+    }  
   });
 
   $("#nav-filter-submit").click(function (){
