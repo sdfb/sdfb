@@ -33,7 +33,7 @@ function getClusterRels(node){
 }
 //returns colors based on cluster group number
 function getColorsRels(){
-   return { 0: "#f56046", 1: "#ffbb12", 2: "#73cab5", 3: "#1d7578", 4: "#b6dcf2", 5: "#ff00ff", 6: "#9954e2"}
+   return { 0: "#bf5b17", 1: "#d73027", 2: "#fc8d59", 3: "#fee090", 4: "#e0f3f8", 5: "#91bfdb", 6: "#4575b4"}
 }
 
 // Checks if a value is in an array
