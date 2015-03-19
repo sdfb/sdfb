@@ -209,9 +209,6 @@ function initGraph(people){
   $("#results").html("Two degrees of " + name + name2 + " at " + confidence + "% from " + date);
   //click methods for all the 'find' buttons in the search bar
   //this should not use the entire peopletoarray instead it should use whatever value is passed through by the #one
-}
-
-function sidebarSearch(people){
   $("#search-network-submit").click(function () {
   	var table = 'no';
     Pace.restart();
@@ -222,9 +219,7 @@ function sidebarSearch(people){
     }
     var confidence = $("#search-network-slider-confidence-result-hidden").val().split(" - ");
     var date = $("#search-network-slider-date-result-hidden").val().split(" - ");
-    if (id  && confidence && date ){
-      window.location.href = '/?id=' + id + '&confidence=' + confidence + '&date=' + date;
-    }
+    window.location.href = '/?id=' + id + '&confidence=' + confidence + '&date=' + date + '&table=' + table;
   });
 
    $("#search-shared-network-submit").click(function () {
@@ -241,18 +236,14 @@ function sidebarSearch(people){
       }
       var confidence = $("#search-shared-network-slider-confidence-result-hidden").val().split(" - ");
       var date = $("#search-shared-network-slider-date-result-hidden").val().split(" - ");
-      if (id1 && id2 && date && confidence){
-        window.location.href = '/?id=' + id1 + '&id2=' + id2 + '&confidence=' + confidence + '&date=' + date + '&table=' + table;
-      }    
+      window.location.href = '/?id=' + id1 + '&id2=' + id2 + '&confidence=' + confidence + '&date=' + date + '&table=' + table;
     });
 
   $("#search-group-submit").click(function () {
     Pace.restart();
     // make the index equal autocomplete
     var id = $("#search-group-name-id").val();
-    if (id ){
-      window.location.href = '/?group=' + id;
-    }
+    window.location.href = '/?group=' + id;
   });
 
   $("#search-shared-group-submit").click(function () {
@@ -260,9 +251,7 @@ function sidebarSearch(people){
     // make the index equal autocomplete
     var id1 = $("#search-shared-group-name1-id").val();
     var id2 = $("#search-shared-group-name2-id").val();
-    if (id1 && id2){
-      window.location.href = '/?group=' + id1 + '&group2=' + id2;
-    }  
+    window.location.href = '/?group=' + id1 + '&group2=' + id2;
   });
 
   $("#nav-filter-submit").click(function (){
@@ -303,7 +292,6 @@ function init() {
   var group = window.gon.group;
   var group2 = window.gon.group2;
   var group_members = window.gon.group_members;
-  sidebarSearch(people);
   if (getParam("group").length == 0){
   	filterGraph(people);
   	initGraph(people);
