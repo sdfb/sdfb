@@ -33,7 +33,7 @@ function getClusterRels(node){
 }
 //returns colors based on cluster group number
 function getColorsRels(){
-   return { 0: "#f56046", 1: "#ffbb12", 2: "#73cab5", 3: "#1d7578", 4: "#b6dcf2", 5: "#ff00ff", 6: "#9954e2"}
+   return { 0: "#bf5b17", 1: "#d73027", 2: "#fc8d59", 3: "#fee090", 4: "#e0f3f8", 5: "#91bfdb", 6: "#4575b4"}
 }
 
 // Checks if a value is in an array
@@ -222,7 +222,7 @@ function sidebarSearch(people){
     }
     var confidence = $("#search-network-slider-confidence-result-hidden").val().split(" - ");
     var date = $("#search-network-slider-date-result-hidden").val().split(" - ");
-    if (id != "" && confidence != "" && date != ""){
+    if (id  && confidence && date ){
       window.location.href = '/?id=' + id + '&confidence=' + confidence + '&date=' + date;
     }
   });
@@ -241,7 +241,7 @@ function sidebarSearch(people){
       }
       var confidence = $("#search-shared-network-slider-confidence-result-hidden").val().split(" - ");
       var date = $("#search-shared-network-slider-date-result-hidden").val().split(" - ");
-      if (id != "" && id2 != "" && confidence != "" && date != ""){
+      if (id1 && id2 && date && confidence){
         window.location.href = '/?id=' + id1 + '&id2=' + id2 + '&confidence=' + confidence + '&date=' + date + '&table=' + table;
       }    
     });
@@ -250,7 +250,7 @@ function sidebarSearch(people){
     Pace.restart();
     // make the index equal autocomplete
     var id = $("#search-group-name-id").val();
-    if (id != ""){
+    if (id ){
       window.location.href = '/?group=' + id;
     }
   });
@@ -260,7 +260,7 @@ function sidebarSearch(people){
     // make the index equal autocomplete
     var id1 = $("#search-shared-group-name1-id").val();
     var id2 = $("#search-shared-group-name2-id").val();
-    if (id1 != "" && id2 != ""){
+    if (id1 && id2){
       window.location.href = '/?group=' + id1 + '&group2=' + id2;
     }  
   });
