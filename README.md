@@ -89,7 +89,7 @@ populate.sh
 ```
 
 
-## To populate this file:
+## To populate this file run the following commands in order:
 
 ```
 rake db:populate_people
@@ -112,8 +112,14 @@ rake db:populate_rels_120001_140000
 rake db:populate_rels_140001_160000
 rake db:populate_rels_160001_170542
 rake db:populate_user_rel_contribs_samples
-rake db:populate_people_display_names
-rake db:populate_rel_sum
+rake db:populate_rel_start_end_date
+
+## IMPORTANT NOTES ON POPULATING:
+1. You must only run the following if updating people populated prior to March 12, 2015
+    rake db:populate_rel_sum
+2. To populate the first time, you must comment out the following before populating (then comment back in after you are done):
+    In app>models>person.rb, "validates_presence_of :display_name"
+
 ```
 
 ## To run the server locally:

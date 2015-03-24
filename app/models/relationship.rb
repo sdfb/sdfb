@@ -74,6 +74,8 @@ class Relationship < ActiveRecord::Base
   # ----------------------------- 
   before_create :max_certainty_on_create
   after_create :create_peoples_rel_sum
+  before_create :create_start_and_end_date
+  before_update :create_start_and_end_date
   after_update :update_peoples_rel_sum
   after_destroy :delete_peoples_rel_sum
   before_create :check_if_approved
@@ -81,28 +83,79 @@ class Relationship < ActiveRecord::Base
   before_create :check_if_valid
   before_create :init_array
   before_update :add_editor_to_edit_by_on_max_certainty
-  #before_create :check_if_start_date_complete
-  #before_update :check_if_start_date_complete
-  #before_create :check_if_end_date_complete
-  #before_update :check_if_end_date_complete
 
 	# Custom Methods
   # -----------------------------
-  # def check_if_start_date_complete
-  #   if ((!((! self.start_day.blank?) && (! self.start_month.blank?) && (! self.start_year.blank?))) || (!((self.start_day.blank?) && (self.start_month.blank?) && (self.start_year.blank?))))
-  #     errors.add(:start_day, "The start date is incomplete without the start day.") if self.start_day.blank?
-  #     errors.add(:start_month, "The start date is incomplete without the start month.") if self.start_month.blank?
-  #     errors.add(:start_year, "The start date is incomplete without the start year.") if self.start_year.blank?
-  #   end
-  # end
 
-  # def check_if_end_date_complete
-  #   if ((!((! self.end_day.blank?) && (! self.end_month.blank?) && (! self.end_year.blank?))) || (!((self.end_day.blank?) && (self.end_month.blank?) && (self.end_year.blank?))))
-  #     errors.add(:end_day, "The end date is incomplete without the end day.") if self.end_day.blank?
-  #     errors.add(:end_month, "The end date is incomplete without the end month.") if self.end_month.blank?
-  #     errors.add(:end_year, "The end date is incomplete without the end year.") if self.end_year.blank?
-  #   end
-  # end
+  ##if a user submits a new relationship but does not include a start and end date it defaults to a start and end date based on the birth years of the people in the relationship
+  def create_start_and_end_date
+    person1_record = Person.find(self.person1_index)
+    person2_record = Person.find(self.person2_index)
+    if (! person1_record.nil?)
+      birth_year_1 = person1_record.ext_birth_year
+      death_year_1 = person1_record.ext_death_year
+    end
+    if (! person2_record.nil?)
+      birth_year_2 = person2_record.ext_birth_year
+      death_year_2 = person2_record.ext_death_year
+    end
+
+    #Only use default start date if the user does not enter a start year
+    if (self.start_year.blank?)
+      #decide new relationship start date
+      if ((! birth_year_1.blank?) || (! birth_year_2.blank?))
+        ##if there is a birthdate for at least 1 person
+        new_start_year_type = "AF/IN"
+        if ((! birth_year_1.blank?) && (! birth_year_2.blank?))
+          ## Use max birth year if birthdates are recorded for both people because the relationship can't start before someone is born
+          if birth_year_1 > birth_year_2
+            new_start_year = birth_year_1.to_i
+          else
+            new_start_year = birth_year_2.to_i
+          end
+        elsif (! birth_year_1.blank?)
+          new_start_year = birth_year_1.to_i
+        elsif (! birth_year_2.blank?)
+          new_start_year = birth_year_2.to_i
+        end
+      else
+        ##if there is no birthdates, set start date to the default CA 1400 (around 1400)
+        new_start_year_type = "CA"
+        new_start_year = 1400
+      end
+
+      self.start_year = new_start_year
+      self.start_date_type = new_start_year_type
+    end 
+
+    #Only use default end date if the user does not enter an end year
+    if (self.end_year.blank?)
+      #decide new relationship end date
+      if ((! death_year_1.blank?) || (! death_year_2.blank?))
+        ##if there is a deathdate for at least 1 person
+        new_end_year_type = "BF/IN"
+        if ((! death_year_1.blank?) && (! death_year_2.blank?))
+          ## Use min deathdate if deathdates are recorded for both people because the relationship will end by the time of the people dies
+          if death_year_1 < death_year_2
+            new_end_year = death_year_1.to_i
+          else
+            new_end_year = death_year_2.to_i
+          end
+        elsif (! death_year_1.blank?)
+          new_end_year = death_year_1.to_i
+        elsif (! death_year_2.blank?)
+          new_end_year = death_year_2.to_i
+        end
+      else
+        ##If there is no death year, set end year to the default CA 1800 (around 1800)
+        new_end_year_type = "CA"
+        new_end_year = 1800
+      end
+      self.end_year = new_end_year
+      self.end_date_type = new_end_year_type
+    end
+  end
+
   def add_editor_to_edit_by_on_max_certainty
     # Add editor to edit_by_on
     if (! self.edited_by_on.blank?)

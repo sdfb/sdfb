@@ -20,8 +20,8 @@ namespace :db do
         end_year_input = userRelContribData[8].to_i
         annotation_input  = userRelContribData[9]
         certainty_input = userRelContribData[10]
-        created_by_input = User.for_email("sdfb_admin@example.com")[0].id
-        approved_by_input = User.for_email("sdfb_admin@example.com")[0].id
+        created_by_input = 2
+        approved_by_input = 2
         approved_on_input = Time.now
         count += 1
 
@@ -34,6 +34,8 @@ namespace :db do
           urc.end_day = end_day_input
           urc.end_month = end_month_input
           urc.end_year = end_year_input
+          urc.start_date_type = "IN"
+          urc.end_date_type = "IN"
           urc.annotation = annotation_input
           urc.certainty = certainty_input
           urc.is_approved = true
