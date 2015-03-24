@@ -119,14 +119,13 @@ rake db:populate_rel_start_end_date_7001_7210
 rake db:populate_rel_start_end_date_7212_10000
 rake db:populate_rel_start_end_date_10001_14000
 rake db:populate_rel_start_end_date_14001_all
-100003943+ 100007000 doesn't work
-100007210+
 
 ## IMPORTANT NOTES ON POPULATING:
 1. You must only run the following if updating people populated prior to March 12, 2015
     rake db:populate_rel_sum
 2. To populate the first time, you must comment out the following before populating (then comment back in after you are done):
     In app>models>person.rb, "validates_presence_of :display_name"
+3. Manually enter start and end dates for relationships 100007211 and 100003942
 
 ```
 
