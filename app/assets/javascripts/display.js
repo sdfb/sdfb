@@ -16,7 +16,7 @@ Num_rels Cluster    Color
 
 */
 
-//returns cluster number based on number of relationships the cluster has
+// //returns cluster number based on number of relationships the cluster has
 function getClusterRels(node){
 	try{
 		var size = Object.keys(node).length;
@@ -35,6 +35,37 @@ function getClusterRels(node){
 function getColorsRels(){
    return { 0: "#bf5b17", 1: "#d73027", 2: "#fc8d59", 3: "#fee090", 4: "#e0f3f8", 5: "#91bfdb", 6: "#4575b4"}
 }
+
+//returns cluster number based on number of relationships the cluster has
+// function getClusterRels(node){
+//   try{
+//     var size = Object.keys(node).length;
+//   }
+//   catch(err) {
+//     var size = 0;
+//   }
+
+//   if (size >= 50){
+//     return 6;
+//   } else if (size >= 30){
+//     return 5;
+//   } else if (size >= 20) {
+//     return 4;
+//   } else if (size >=10) {
+//     return 3;
+//   } else if (size >=5) {
+//     return 2;
+//   } else if (size >1) {
+//     return 1;
+//   } else {
+//     return 0;
+//   }
+// }
+
+// //returns colors based on cluster group number
+// function getColorsRels(){
+//    return { 0: "#bdbdbd", 1: "#d73027", 2: "#fc8d59", 3: "#fee090", 4: "#abd9e9", 5: "#74add1", 6: "#4575b4"}
+// }
 
 // Checks if a value is in an array
 function notInArray(arr, val) {
