@@ -34,7 +34,7 @@ class GroupAssignment < ActiveRecord::Base
   validates_presence_of :person_id
   validates_presence_of :created_by
   # checks if the group and person assignment already exists
-  validate :check_if_approved_valid
+  validate :check_if_approved
   ## start date type is one included in the list
   validates_inclusion_of :start_date_type, :in => DATE_TYPE_LIST, :if => :start_year_present?
   ## end date type is one included in the list

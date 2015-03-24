@@ -1,7 +1,7 @@
 ## TO PUSH TO HEROKU
 1. Following these instructions, download the Heroku toolbelt so you can run from the command line
 2. In the command line, run heroku login
-3. Login with the SixDegreesFrancisBacon@gmail.com account (information on the Account Info google doc)
+3. Login with the sixdegfrancsbacon@gmail.com account (information on the Account Info google doc)
 4. From the sdfb directory on your machine, run heroku git:remote -a sixdegfrancisbacon
 5. Make sure all local changes are working
 6. Commit and push the changes to Katarina's sdfb repo
@@ -89,7 +89,7 @@ populate.sh
 ```
 
 
-## To populate this file run the following commands in order:
+## To populate this file:
 
 ```
 rake db:populate_people
@@ -112,29 +112,8 @@ rake db:populate_rels_120001_140000
 rake db:populate_rels_140001_160000
 rake db:populate_rels_160001_170542
 rake db:populate_user_rel_contribs_samples
-rake db:populate_rel_start_end_date_1_3900
-rake db:populate_rel_start_end_date_3901_3941
-rake db:populate_rel_start_end_date_3943_6368
-rake db:populate_rel_start_end_date_6370_7000
-rake db:populate_rel_start_end_date_7001_7210
-rake db:populate_rel_start_end_date_7212_9300
-rake db:populate_rel_start_end_date_9306_9360
-rake db:populate_rel_start_end_date_9363_10000*
-rake db:populate_rel_start_end_date_9363_10000*
-rake db:populate_rel_start_end_date_10001_17000
-rake db:populate_rel_start_end_date_17001_17190
-rake db:populate_rel_start_end_date_17192_19845
-rake db:populate_rel_start_end_date_19848_all*
-
-## IMPORTANT NOTES ON POPULATING:
-1. You must only run the following if updating people populated prior to March 12, 2015
-    rake db:populate_rel_sum
-2. To populate the first time, you must comment out the following before populating (then comment back in after you are done):
-    In app>models>person.rb, "validates_presence_of :display_name"
-3. Manually enter start and end dates for relationships 100007211, 100003942, and 100006369, 100009301, 100009302, 100009303, 100017191, 100009305, 100019846, 100009361, 100009362, 100019847, 100019846, 100019847
-
-
-100009458
+rake db:populate_people_display_names
+rake db:populate_rel_sum
 ```
 
 ## To run the server locally:

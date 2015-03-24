@@ -119,26 +119,14 @@ class Person < ActiveRecord::Base
     @adjustedrel = []
 		@PersonRecord[0]['rel_sum'].each do |firstDegreePerson|
 			firstDegreePersonID = firstDegreePerson[0]
-
-      if ((firstDegreePerson[3].to_i >= min_year) && (firstDegreePerson[4].to_i <= max_year))
-  			if ((firstDegreePerson[1].to_i >= min_confidence) && (firstDegreePerson[1].to_i <= max_confidence))
-          @adjustedrel.push(firstDegreePerson)
-          if (load_rels)
-          	@firstDegreePersonQuery = Person.select("id, display_name, rel_sum").where("id = ?", firstDegreePersonID)
-    				@firstDegreePersonRel = []
-            @firstDegreePersonQuery[0].rel_sum.each do |rel|
-              if ((rel[3].to_i >= min_year) && (rel[4].to_i <= max_year))
-                if ((rel[1].to_i >= min_confidence) && (rel[1].to_i <= max_confidence))
-                  @firstDegreePersonRel.push(rel)
-                end
-              end
-            end
-            peopleRecordsForReturn[@firstDegreePersonQuery[0].id] = {'rel_sum' => @firstDegreePersonRel, 'display_name' => @firstDegreePersonQuery[0].display_name}   
-          else
-           @firstDegreePersonQuery = Person.select("id, display_name").where("id = ?", firstDegreePersonID)
-           peopleRecordsForReturn[@firstDegreePersonQuery[0].id] = {'display_name' => @firstDegreePersonQuery[0].display_name}   
-          end
-
+			if ((firstDegreePerson[1].to_i >= min_confidence) && (firstDegreePerson[1].to_i <= max_confidence))
+        @adjustedrel.push(firstDegreePerson)
+        if (load_rels)
+        	@firstDegreePersonQuery = Person.select("id, display_name, rel_sum").where("id = ? and not (ext_birth_year::integer > ? or ext_death_year::integer < ?)", firstDegreePersonID,  max_year, min_year)
+  				peopleRecordsForReturn[@firstDegreePersonQuery[0].id] = {'rel_sum' => @firstDegreePersonQuery[0].rel_sum, 'display_name' => @firstDegreePersonQuery[0].display_name}   
+			  else
+         @firstDegreePersonQuery = Person.select("id, display_name").where("id = ? and not (ext_birth_year::integer > ? or ext_death_year::integer < ?)", firstDegreePersonID,  max_year, min_year)
+         peopleRecordsForReturn[@firstDegreePersonQuery[0].id] = {'display_name' => @firstDegreePersonQuery[0].display_name}   
         end
       end
 		end
@@ -170,16 +158,11 @@ class Person < ActiveRecord::Base
     end
     @zeroDegreePerson = self.find_first_degree_for_person(person_id, min_confidence, max_confidence, min_year, max_year, true)
     @zeroDegreePerson[person_id.to_i]['rel_sum'].each do |firstDegreePerson|
-      #check that relationship is within the date and confidence range
-      if ((firstDegreePerson[3].to_i >= min_year) && (firstDegreePerson[4].to_i <= max_year))
-        if ((firstDegreePerson[1].to_i >= min_confidence) && (firstDegreePerson[1].to_i <= max_confidence))
-          firstDegreePersonID = firstDegreePerson[0]
-          @firstDegreePerson = self.find_first_degree_for_person(firstDegreePersonID, min_confidence, max_confidence, min_year, max_year, false)
-          twoPeopleRecordsForReturn.update(@firstDegreePerson)
-          if(twoPeopleRecordsForReturn.length > 50)
-          	break	
-          end
-        end
+      firstDegreePersonID = firstDegreePerson[0]
+      @firstDegreePerson = self.find_first_degree_for_person(firstDegreePersonID, min_confidence, max_confidence, min_year, max_year, false)
+      twoPeopleRecordsForReturn.update(@firstDegreePerson)
+      if(twoPeopleRecordsForReturn.length > 50)
+      	break	
       end
     end
     twoPeopleRecordsForReturn.update(@zeroDegreePerson)
@@ -207,41 +190,23 @@ class Person < ActiveRecord::Base
 		@zeroDegreePerson2Rel = {}
 		@zeroDegreePerson2Rel[person_id2] = person_id2
 		@zeroDegreePerson2[person_id2.to_i]['rel_sum'].each do |firstDegreePerson2|
-      #check that relationship is within the date and confidence range
-      if ((firstDegreePerson2[3].to_i >= min_year) && (firstDegreePerson2[4].to_i <= max_year))
-        if ((firstDegreePerson2[1].to_i >= min_confidence) && (firstDegreePerson2[1].to_i <= max_confidence))
-			    @zeroDegreePerson2Rel[firstDegreePerson2[0]] = firstDegreePerson2[0]
-        end
-      end
+			@zeroDegreePerson2Rel[firstDegreePerson2[0]] = firstDegreePerson2[0]
 		end
 		@zeroDegreePerson1[person_id1.to_i]['rel_sum'].each do |firstDegreePerson1|
-      #check that relationship is within the date and confidence range
-      if ((firstDegreePerson1[3].to_i >= min_year) && (firstDegreePerson1[4].to_i <= max_year))
-        if ((firstDegreePerson1[1].to_i >= min_confidence) && (firstDegreePerson1[1].to_i <= max_confidence))
-          firstDegreePersonID1 = firstDegreePerson1[0]
-          if (@zeroDegreePerson2Rel.include? firstDegreePersonID1)
-          	twoPeopleRecordsForReturn.update(self.find_first_degree_for_person(firstDegreePersonID1, min_confidence, max_confidence, min_year, max_year, true))
-          end
-        end
+      firstDegreePersonID1 = firstDegreePerson1[0]
+      if (@zeroDegreePerson2Rel.include? firstDegreePersonID1)
+      	twoPeopleRecordsForReturn.update(self.find_first_degree_for_person(firstDegreePersonID1, min_confidence, max_confidence, min_year, max_year, true))
       end
     end
 		@zeroDegreePerson1Rel = {}
 		@zeroDegreePerson1Rel[person_id1] = person_id1
 		@zeroDegreePerson1[person_id1.to_i]['rel_sum'].each do |firstDegreePerson1|
-      if ((firstDegreePerson1[3].to_i >= min_year) && (firstDegreePerson1[4].to_i <= max_year))
-        if ((firstDegreePerson1[1].to_i >= min_confidence) && (firstDegreePerson1[1].to_i <= max_confidence))
-			    @zeroDegreePerson1Rel[firstDegreePerson1[0]] = firstDegreePerson1[0]
-        end
-      end
+			@zeroDegreePerson1Rel[firstDegreePerson1[0]] = firstDegreePerson1[0]
 		end
 		@zeroDegreePerson2[person_id2.to_i]['rel_sum'].each do |firstDegreePerson2|
-      if ((firstDegreePerson2[3].to_i >= min_year) && (firstDegreePerson2[4].to_i <= max_year))
-        if ((firstDegreePerson2[1].to_i >= min_confidence) && (firstDegreePerson2[1].to_i <= max_confidence))
-          firstDegreePersonID2 = firstDegreePerson2[0]
-          if (@zeroDegreePerson1Rel.include? firstDegreePersonID2)
-          	twoPeopleRecordsForReturn.update(self.find_first_degree_for_person(firstDegreePersonID2, min_confidence, max_confidence, min_year, max_year, true))
-          end
-        end
+      firstDegreePersonID2 = firstDegreePerson2[0]
+      if (@zeroDegreePerson1Rel.include? firstDegreePersonID2)
+      	twoPeopleRecordsForReturn.update(self.find_first_degree_for_person(firstDegreePersonID2, min_confidence, max_confidence, min_year, max_year, true))
       end
     end
     twoPeopleRecordsForReturn.update(@zeroDegreePerson1)
@@ -276,121 +241,121 @@ class Person < ActiveRecord::Base
     return peopleRecordsForReturn
   end
 
-  # def self.find_2_degrees_for_person(id)
-  #   peopleRecordsForReturn = []
-  #   if id
-  #     peopleIDArray = []
-  #     searchedPersonRecord = Person.select("id, first_name, last_name, ext_birth_year, ext_death_year, rel_sum, group_list, historical_significance, odnb_id, prefix, suffix, title").find(id)
-  #     #Add the id and record for the searched person
-  #     peopleIDArray.push(id)
-  #     peopleRecordsForReturn.push(searchedPersonRecord)
-  #     searchedPersonRecord.rel_sum.each do |firstDegreePerson|
-  #       firstDegreePersonID = firstDegreePerson[0]
-  #       firstDegreePersonRecord = Person.select("id, first_name, last_name, ext_birth_year, ext_death_year, rel_sum, group_list, historical_significance, odnb_id, prefix, suffix, title").find(firstDegreePersonID)
-  #       #Add the id and record for the first degree connection
-  #       peopleIDArray.push(firstDegreePersonID)
-  #       peopleRecordsForReturn.push(firstDegreePersonRecord)
+  def self.find_2_degrees_for_person(id)
+    peopleRecordsForReturn = []
+    if id
+      peopleIDArray = []
+      searchedPersonRecord = Person.select("id, first_name, last_name, ext_birth_year, ext_death_year, rel_sum, group_list, historical_significance, odnb_id, prefix, suffix, title").find(id)
+      #Add the id and record for the searched person
+      peopleIDArray.push(id)
+      peopleRecordsForReturn.push(searchedPersonRecord)
+      searchedPersonRecord.rel_sum.each do |firstDegreePerson|
+        firstDegreePersonID = firstDegreePerson[0]
+        firstDegreePersonRecord = Person.select("id, first_name, last_name, ext_birth_year, ext_death_year, rel_sum, group_list, historical_significance, odnb_id, prefix, suffix, title").find(firstDegreePersonID)
+        #Add the id and record for the first degree connection
+        peopleIDArray.push(firstDegreePersonID)
+        peopleRecordsForReturn.push(firstDegreePersonRecord)
 
-  #       #for each person who has a first degree relationship with the searched person
-  #       #loop through the first degree person's relationships so that we can find the second degree relationships
-  #       firstDegreePersonRecord.rel_sum.each do |secondDegreePerson|
-  #         secondDegreePersonID = secondDegreePerson[0]
-  #         #check if the person is already in the array and if not, add the array and the record
-  #         if (! peopleIDArray.include?(secondDegreePersonID))
-  #           peopleIDArray.push(secondDegreePersonID)
-  #           secondDegreePersonRecord = Person.select("id, first_name, last_name, ext_birth_year, ext_death_year, rel_sum, group_list, historical_significance, odnb_id, prefix, suffix, title").find(secondDegreePersonID)
-  #           peopleRecordsForReturn.push(secondDegreePersonRecord)
-  #         end
-  #       end
-  #     end
-  #   end
-  #   return peopleRecordsForReturn
-  # end
+        #for each person who has a first degree relationship with the searched person
+        #loop through the first degree person's relationships so that we can find the second degree relationships
+        firstDegreePersonRecord.rel_sum.each do |secondDegreePerson|
+          secondDegreePersonID = secondDegreePerson[0]
+          #check if the person is already in the array and if not, add the array and the record
+          if (! peopleIDArray.include?(secondDegreePersonID))
+            peopleIDArray.push(secondDegreePersonID)
+            secondDegreePersonRecord = Person.select("id, first_name, last_name, ext_birth_year, ext_death_year, rel_sum, group_list, historical_significance, odnb_id, prefix, suffix, title").find(secondDegreePersonID)
+            peopleRecordsForReturn.push(secondDegreePersonRecord)
+          end
+        end
+      end
+    end
+    return peopleRecordsForReturn
+  end
 
-  # def self.find_2_degrees_for_shared_network(person1_id, person2_id, confidence_range, date_range)
-  #   peopleRecordsForReturn = []
-  #   min_confidence = confidence_range.split(",")[0]
-  #   max_confidence = confidence_range.split(",")[1]
-  #   min_year = date_range.split(",")[0]
-  #   max_year = date_range.split(",")[1]
-  #   if person1_id
-  #     peopleIDArray = []
+  def self.find_2_degrees_for_shared_network(person1_id, person2_id, confidence_range, date_range)
+    peopleRecordsForReturn = []
+    min_confidence = confidence_range.split(",")[0]
+    max_confidence = confidence_range.split(",")[1]
+    min_year = date_range.split(",")[0]
+    max_year = date_range.split(",")[1]
+    if person1_id
+      peopleIDArray = []
 
-  #     #find the person record for searched person 1, add regardless of confidence range or date range
-  #     searchedPerson1Record = Person.select("id, first_name, last_name, display_name, ext_birth_year, birth_year_type, ext_death_year, death_year_type, rel_sum, group_list, historical_significance, odnb_id, prefix, suffix, title").find(person1_id)
-  #     #Add the id and record for the searched person 1
-  #     peopleIDArray.push(person1_id)
-  #     peopleRecordsForReturn.push(searchedPerson1Record)
+      #find the person record for searched person 1, add regardless of confidence range or date range
+      searchedPerson1Record = Person.select("id, first_name, last_name, display_name, ext_birth_year, birth_year_type, ext_death_year, death_year_type, rel_sum, group_list, historical_significance, odnb_id, prefix, suffix, title").find(person1_id)
+      #Add the id and record for the searched person 1
+      peopleIDArray.push(person1_id)
+      peopleRecordsForReturn.push(searchedPerson1Record)
 
-  #     #find the person record for searched person 2, add regardless of confidence range or date range
-  #     searchedPerson2Record = Person.select("id, first_name, last_name, display_name, ext_birth_year, birth_year_type, ext_death_year, death_year_type, rel_sum, group_list, historical_significance, odnb_id, prefix, suffix, title").find(person2_id)
-  #     #Add the id and record for the searched person 2
-  #     peopleIDArray.push(person2_id)
-  #     peopleRecordsForReturn.push(searchedPerson2Record)
+      #find the person record for searched person 2, add regardless of confidence range or date range
+      searchedPerson2Record = Person.select("id, first_name, last_name, display_name, ext_birth_year, birth_year_type, ext_death_year, death_year_type, rel_sum, group_list, historical_significance, odnb_id, prefix, suffix, title").find(person2_id)
+      #Add the id and record for the searched person 2
+      peopleIDArray.push(person2_id)
+      peopleRecordsForReturn.push(searchedPerson2Record)
 
-  #     # go through each the relsum for searched person 1 and compare that entries with searched person 2
-  #     searchedPerson1Record.rel_sum.each do |firstDegreePerson|
-  #       firstDegreePersonID = firstDegreePerson[0]
-  #       #don't read the searched person1 and searched person2 records
-  #       if (firstDegreePersonID != person1_id)
-  #         if (firstDegreePersonID != person2_id) 
-  #           #Add the id and record for the first degree connection for person 1 if it is a shared connection with person 2
-  #           #loop through person 2's rel_sum to perform the check for that person
-  #           if (! searchedPerson2Record.rel_sum.nil?)
-  #             searchedPerson2Record.rel_sum.each do |firstDegreePersonForSearchedP2|
-  #               # if the first degree person is shared between the the searched person 1 and searched person 2 then add the record
-  #               # don't include the originally searched person 1 and person 2
-  #               #check if the relationship is within the confidence range to decide whether to add it
-  #               if ((firstDegreePersonForSearchedP2[1].to_i >= min_confidence.to_i) && (firstDegreePersonForSearchedP2[1].to_i <= max_confidence.to_i))
-  #                 if (firstDegreePersonForSearchedP2[0] != person1_id)
-  #                   if (firstDegreePersonForSearchedP2[0] != person2_id)
-  #                     if (firstDegreePersonForSearchedP2[0] == firstDegreePersonID)
-  #                       firstDegreePersonRecord = Person.select("id, first_name, last_name, display_name, ext_birth_year, birth_year_type, ext_death_year, death_year_type,  rel_sum, group_list, historical_significance, odnb_id, prefix, suffix, title").find(firstDegreePersonID)
-  #                       #check if the person is within the date range to decide whether to add it
-  #                       if ((firstDegreePersonRecord.ext_birth_year.to_i >= min_year.to_i) && (firstDegreePersonRecord.ext_birth_year.to_i <= max_year.to_i))
-  #                         peopleIDArray.push(firstDegreePersonID)
-  #                         peopleRecordsForReturn.push(firstDegreePersonRecord)
+      # go through each the relsum for searched person 1 and compare that entries with searched person 2
+      searchedPerson1Record.rel_sum.each do |firstDegreePerson|
+        firstDegreePersonID = firstDegreePerson[0]
+        #don't read the searched person1 and searched person2 records
+        if (firstDegreePersonID != person1_id)
+          if (firstDegreePersonID != person2_id) 
+            #Add the id and record for the first degree connection for person 1 if it is a shared connection with person 2
+            #loop through person 2's rel_sum to perform the check for that person
+            if (! searchedPerson2Record.rel_sum.nil?)
+              searchedPerson2Record.rel_sum.each do |firstDegreePersonForSearchedP2|
+                # if the first degree person is shared between the the searched person 1 and searched person 2 then add the record
+                # don't include the originally searched person 1 and person 2
+                #check if the relationship is within the confidence range to decide whether to add it
+                if ((firstDegreePersonForSearchedP2[1].to_i >= min_confidence.to_i) && (firstDegreePersonForSearchedP2[1].to_i <= max_confidence.to_i))
+                  if (firstDegreePersonForSearchedP2[0] != person1_id)
+                    if (firstDegreePersonForSearchedP2[0] != person2_id)
+                      if (firstDegreePersonForSearchedP2[0] == firstDegreePersonID)
+                        firstDegreePersonRecord = Person.select("id, first_name, last_name, display_name, ext_birth_year, birth_year_type, ext_death_year, death_year_type,  rel_sum, group_list, historical_significance, odnb_id, prefix, suffix, title").find(firstDegreePersonID)
+                        #check if the person is within the date range to decide whether to add it
+                        if ((firstDegreePersonRecord.ext_birth_year.to_i >= min_year.to_i) && (firstDegreePersonRecord.ext_birth_year.to_i <= max_year.to_i))
+                          peopleIDArray.push(firstDegreePersonID)
+                          peopleRecordsForReturn.push(firstDegreePersonRecord)
                         
-  #                         #for each person who has a first degree relationship with the searched person
-  #                         #loop through the first degree person's relationships so that we can find the second degree relationships
-  #                         if (! firstDegreePersonRecord.rel_sum.nil?)
-  #                           firstDegreePersonRecord.rel_sum.each do |secondDegreePersonRel|
-  #                             if ((secondDegreePersonRel[1].to_i >= min_confidence.to_i) && (secondDegreePersonRel[1].to_i <= max_confidence.to_i))
-  #                               secondDegreePersonID = secondDegreePersonRel[0]
-  #                               #check if the person is already in the array
-  #                               if (! peopleIDArray.include?(secondDegreePersonID))
-  #                                 #find the record of the second degree person
-  #                                 secondDegreePersonRecord = Person.select("id, first_name, last_name, display_name, ext_birth_year, birth_year_type, ext_death_year, death_year_type, rel_sum, group_list, historical_significance, odnb_id, prefix, suffix, title").find(secondDegreePersonID)
+                          #for each person who has a first degree relationship with the searched person
+                          #loop through the first degree person's relationships so that we can find the second degree relationships
+                          if (! firstDegreePersonRecord.rel_sum.nil?)
+                            firstDegreePersonRecord.rel_sum.each do |secondDegreePersonRel|
+                              if ((secondDegreePersonRel[1].to_i >= min_confidence.to_i) && (secondDegreePersonRel[1].to_i <= max_confidence.to_i))
+                                secondDegreePersonID = secondDegreePersonRel[0]
+                                #check if the person is already in the array
+                                if (! peopleIDArray.include?(secondDegreePersonID))
+                                  #find the record of the second degree person
+                                  secondDegreePersonRecord = Person.select("id, first_name, last_name, display_name, ext_birth_year, birth_year_type, ext_death_year, death_year_type, rel_sum, group_list, historical_significance, odnb_id, prefix, suffix, title").find(secondDegreePersonID)
 
-  #                                 #if the person is not in the array already
-  #                                 secondDegreePersonRecord.rel_sum.each do |thirdDegreePerson|
-  #                                   thirdDegreePersonID = thirdDegreePerson[0]
-  #                                   #check if person1 and person 2 are within their first degree and if they are then return
-  #                                   if ((thirdDegreePersonID == person1_id) || (thirdDegreePersonID == person2_id))
-  #                                     #check if the person is within the confidence range and date range to decide whether to add it
-  #                                     if ((secondDegreePersonRecord.ext_birth_year.to_i >= min_year.to_i) && (secondDegreePersonRecord.ext_birth_year.to_i <= max_year.to_i))
-  #                                       peopleIDArray.push(secondDegreePersonID)
-  #                                       peopleRecordsForReturn.push(secondDegreePersonRecord)
-  #                                     end
-  #                                   end
-  #                                 end
-  #                               end
-  #                             end
-  #                           end
-  #                         end
-  #                       end
-  #                     end
-  #                   end
-  #                 end
-  #               end
-  #             end
-  #           end
-  #         end
-  #       end
-  #     end
-  #   end
-  #   return peopleRecordsForReturn
-  # end
+                                  #if the person is not in the array already
+                                  secondDegreePersonRecord.rel_sum.each do |thirdDegreePerson|
+                                    thirdDegreePersonID = thirdDegreePerson[0]
+                                    #check if person1 and person 2 are within their first degree and if they are then return
+                                    if ((thirdDegreePersonID == person1_id) || (thirdDegreePersonID == person2_id))
+                                      #check if the person is within the confidence range and date range to decide whether to add it
+                                      if ((secondDegreePersonRecord.ext_birth_year.to_i >= min_year.to_i) && (secondDegreePersonRecord.ext_birth_year.to_i <= max_year.to_i))
+                                        peopleIDArray.push(secondDegreePersonID)
+                                        peopleRecordsForReturn.push(secondDegreePersonRecord)
+                                      end
+                                    end
+                                  end
+                                end
+                              end
+                            end
+                          end
+                        end
+                      end
+                    end
+                  end
+                end
+              end
+            end
+          end
+        end
+      end
+    end
+    return peopleRecordsForReturn
+  end
 
   def add_editor_to_edit_by_on
     if (! self.edited_by_on.blank?)

@@ -12,8 +12,8 @@ namespace :db do
 	        relData = relationship.split("\t")
 	        person1_input = relData[0].to_i+10000000
 	        person2_input = relData[1].to_i+10000000
-	        created_by_input = 2
-	        approved_by_input = 2
+	        created_by_input = User.for_email("odnb_admin@example.com")[0].id
+	        approved_by_input = User.for_email("odnb_admin@example.com")[0].id
 	        approved_on_input = Time.now
 	        max_certainty_input = (0.0 + relData[2].to_f * 100.00).to_i
 	        original_certainty_input = (0.0 + relData[2].to_f * 100.00).to_i
@@ -40,7 +40,7 @@ namespace :db do
         	next_id = (next_id.to_i + 1)
 	       }
 	     }
-	     puts next_id.to_s
+	     puts count
 	    inFile.close
 	    puts "Finished adding relationships 160001_170542"
 	end
