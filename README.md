@@ -115,19 +115,20 @@ rake db:populate_user_rel_contribs_samples
 rake db:populate_rel_start_end_date_1_3900
 rake db:populate_rel_start_end_date_3901_3941
 rake db:populate_rel_start_end_date_3943_6368
-rake db:populate_rel_start_end_date_6370_7000*
+rake db:populate_rel_start_end_date_6370_7000
 rake db:populate_rel_start_end_date_7001_7210
 rake db:populate_rel_start_end_date_7212_9300
-rake db:populate_rel_start_end_date_9300_10000*
+rake db:populate_rel_start_end_date_9304_10000*
 rake db:populate_rel_start_end_date_10001_17000
-rake db:populate_rel_start_end_date_17001_all*
+rake db:populate_rel_start_end_date_17001_17190*
+rake db:populate_rel_start_end_date_17192_all*
 
 ## IMPORTANT NOTES ON POPULATING:
 1. You must only run the following if updating people populated prior to March 12, 2015
     rake db:populate_rel_sum
 2. To populate the first time, you must comment out the following before populating (then comment back in after you are done):
     In app>models>person.rb, "validates_presence_of :display_name"
-3. Manually enter start and end dates for relationships 100007211, 100003942, and 100006369, 100009301
+3. Manually enter start and end dates for relationships 100007211, 100003942, and 100006369, 100009301, 100009302, 100009303, 100017191
 
 ```
 
