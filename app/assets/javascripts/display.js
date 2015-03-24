@@ -83,7 +83,8 @@ function notInArray(arr, val) {
 
 //creates a nodekey associative array with node info
 function createNodeKey(node, id) {
-  return {"text": node["display_name"], "size": 10, "id": id,  "cluster": getClusterRels(node["rel_sum"])};
+  return {"text": node["display_name"].replace(" ", "_"), "size": 10, "id": id,  "cluster": getClusterRels(node["rel_sum"])};
+
 }
 
 function twoDegs(id, id2, people) {
@@ -95,6 +96,7 @@ function twoDegs(id, id2, people) {
   	$.each(p.rel_sum, function(index, value) { 
   	  var q = value[0];
   		keys[q] = createNodeKey(people[q],q);
+      console.log(keys[q]);
   		if (notInArray(edges, [id, value[0]])) {
   		 edges.push([id, value[0]]);
       }
@@ -109,7 +111,7 @@ function twoDegs(id, id2, people) {
       });
     });
     //adds main person's id referenced to keys associative array. Keys represent all data in graph
-    keys[id] = {"text": p["display_name"], "size": 30, "id": id,  "cluster": getClusterRels(p["rel_sum"])}; 
+    keys[id] = {"text": p["display_name"].replace(" ", "_"), "size": 30, "id": id,  "cluster": getClusterRels(p["rel_sum"])}; 
   }
   createGraph(id, people);
   if (id2 != 0 && id2 != ""){
@@ -157,7 +159,7 @@ function twoDegs(id, id2, people) {
           });  
         accordion("edge");
     });
-    graph.tooltip("<div class='btn' >"+"{{text}}".replace(/\%20/," ") + "</div>");
+    graph.tooltip("<div class='btn' >"+"{{text}}".replace("_", " ") + "</div>");
     $('#zoom button.icon').click(function(e){
         if (this.name == 'in') {
             graph.zoomIn();
