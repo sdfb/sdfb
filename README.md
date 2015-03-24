@@ -121,6 +121,7 @@ rake db:populate_rel_start_end_date_7212_9300
 <<<<<<< HEAD
 rake db:populate_rel_start_end_date_9306_9360
 <<<<<<< HEAD
+<<<<<<< HEAD
 rake db:populate_rel_start_end_date_9363_10000*
 rake db:populate_rel_start_end_date_9363_10000*
 rake db:populate_rel_start_end_date_10001_17000
@@ -140,6 +141,13 @@ rake db:populate_rel_start_end_date_17001_17190
 rake db:populate_rel_start_end_date_17192_19845
 rake db:populate_rel_start_end_date_19847_all*
 >>>>>>> parent of 5bffe11... updating rel start and end date populate scripts to skip some
+=======
+rake db:populate_rel_start_end_date_9362_10000*
+rake db:populate_rel_start_end_date_10001_17000
+rake db:populate_rel_start_end_date_17001_17190
+rake db:populate_rel_start_end_date_17192_19845
+rake db:populate_rel_start_end_date_19847_all*
+>>>>>>> parent of 5bffe11... updating rel start and end date populate scripts to skip some
 
 ## IMPORTANT NOTES ON POPULATING:
 1. You must only run the following if updating people populated prior to March 12, 2015
@@ -148,11 +156,15 @@ rake db:populate_rel_start_end_date_19847_all*
     In app>models>person.rb, "validates_presence_of :display_name"
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 3. Manually enter start and end dates for relationships 100007211, 100003942, and 100006369, 100009301, 100009302, 100009303, 100017191, 100009305, 100019846, 100009361, 100009362, 100019847, 100019846, 100019847
 =======
 3. Manually enter start and end dates for relationships 100007211, 100003942, and 100006369, 100009301, 100009302, 100009303, 100017191
 >>>>>>> parent of 7c3daf9... added more population scripts for rel start and end date
 
+=======
+3. Manually enter start and end dates for relationships 100007211, 100003942, and 100006369, 100009301, 100009302, 100009303, 100017191, 100009305, 100019846, 100009361
+>>>>>>> parent of 5bffe11... updating rel start and end date populate scripts to skip some
 =======
 3. Manually enter start and end dates for relationships 100007211, 100003942, and 100006369, 100009301, 100009302, 100009303, 100017191, 100009305, 100019846, 100009361
 >>>>>>> parent of 5bffe11... updating rel start and end date populate scripts to skip some
