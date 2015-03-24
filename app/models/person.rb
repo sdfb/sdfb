@@ -120,14 +120,14 @@ class Person < ActiveRecord::Base
 		@PersonRecord[0]['rel_sum'].each do |firstDegreePerson|
 			firstDegreePersonID = firstDegreePerson[0]
       if ((firstDegreePerson[3].to_i >= min_year) && (firstDegreePerson[4].to_i <= max_year))
-  			if ((firstDegreePerson[1].to_i >= min_confidence) && (firstDegreePerson[1].to_i <= max_confidence))
+  			if ((firstDegreePerson[1].to_i >= min_confidence) && (firstDegreePerson[1].to_i <= max_confidence) && @adjustedrel.length <= 100)
           @adjustedrel.push(firstDegreePerson)
           if (load_rels)
           	@firstDegreePersonQuery = Person.select("id, display_name, rel_sum").where("id = ?", firstDegreePersonID)
     				@firstDegreePersonRel = []
             @firstDegreePersonQuery[0].rel_sum.each do |rel|
-              if ((rel[3].to_i >= min_year) && (rel[4].to_i <= max_year))
-                if ((rel[1].to_i >= min_confidence) && (rel[1].to_i <= max_confidence))
+              if ((rel[3].to_i >= min_year) && (rel[4].to_i <= max_year) )
+                if ((rel[1].to_i >= min_confidence) && (rel[1].to_i <= max_confidence ) && @firstDegreePersonRel.length <= 100)
                   @firstDegreePersonRel.push(rel)
                 end
               end
@@ -174,9 +174,6 @@ class Person < ActiveRecord::Base
           firstDegreePersonID = firstDegreePerson[0]
           @firstDegreePerson = self.find_first_degree_for_person(firstDegreePersonID, min_confidence, max_confidence, min_year, max_year, false)
           twoPeopleRecordsForReturn.update(@firstDegreePerson)
-          if(twoPeopleRecordsForReturn.length > 50)
-          	break	
-          end
         end
       end
     end
