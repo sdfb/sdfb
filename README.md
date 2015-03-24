@@ -112,7 +112,15 @@ rake db:populate_rels_120001_140000
 rake db:populate_rels_140001_160000
 rake db:populate_rels_160001_170542
 rake db:populate_user_rel_contribs_samples
-rake db:populate_rel_start_end_date
+rake db:populate_rel_start_end_date_1_3900
+rake db:populate_rel_start_end_date_3901_3941
+rake db:populate_rel_start_end_date_3943_7000
+rake db:populate_rel_start_end_date_7001_7210
+rake db:populate_rel_start_end_date_7212_10000
+rake db:populate_rel_start_end_date_10001_14000
+rake db:populate_rel_start_end_date_14001_all
+100003943+ 100007000 doesn't work
+100007210+
 
 ## IMPORTANT NOTES ON POPULATING:
 1. You must only run the following if updating people populated prior to March 12, 2015
