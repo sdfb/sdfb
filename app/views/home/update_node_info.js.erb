@@ -3,7 +3,7 @@
  $("#node-ddate").text("<%= @node_info_death_year_type %>"+ " " + "<%= @node_info_death %>");
 
  $("#node-significance").text("<%= @node_info_historical_significance %>");
- /*$("#node-group").text("<%= @node_info_group_list %>".join(","));*/
+ $("#node-group").text("<%= @node_info_group_list %>".join(","));
 var d = new Date();
  $("#node-cite").text( "<%= @node_info_first_name %>" + " "+ "<%= @node_info_last_name %>" + " Network Visualization. \n Six Degrees of Francis Bacon: Reassembling the Early Modern Social Network. Gen. eds. Daniel Shore and Christopher Warren. "+d.getMonth()+"/"+d.getDate()+"/"+d.getFullYear()+" <http://sixdegreesoffrancisbacon.com/>");
  if ("<%= @node_info_odnb_id %>"> 0){
