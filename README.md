@@ -1,7 +1,7 @@
 ## TO PUSH TO HEROKU
 1. Following these instructions, download the Heroku toolbelt so you can run from the command line
 2. In the command line, run heroku login
-3. Login with the sixdegfrancsbacon@gmail.com account (information on the Account Info google doc)
+3. Login with the SixDegreesFrancisBacon@gmail.com account (information on the Account Info google doc)
 4. From the sdfb directory on your machine, run heroku git:remote -a sixdegfrancisbacon
 5. Make sure all local changes are working
 6. Commit and push the changes to Katarina's sdfb repo
