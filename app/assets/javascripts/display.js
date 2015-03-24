@@ -17,6 +17,7 @@ Num_rels Cluster    Color
 */
 
 // //returns cluster number based on number of relationships the cluster has
+<<<<<<< HEAD
 function getClusterRels(node){
 	try{
 		var size = Object.keys(node).length;
@@ -47,14 +48,17 @@ function getColorsRels(){
 }
 
 //returns cluster number based on number of relationships the cluster has
+=======
+>>>>>>> cde2e2de3e2dc774376914be4552579b80a0506f
 // function getClusterRels(node){
-//   try{
-//     var size = Object.keys(node).length;
-//   }
-//   catch(err) {
-//     var size = 0;
-//   }
+// 	try{
+// 		var size = Object.keys(node).length;
+// 	}
+// 	catch(err) {
+// 		var size = 0;
+// 	}
 
+<<<<<<< HEAD
 //   if (size >= 50){
 //     return 6;
 //   } else if (size >= 30){
@@ -70,12 +74,49 @@ function getColorsRels(){
 //   } else {
 //     return 0;
 //   }
+=======
+// 	if (size > 100){
+// 		return 10;
+// 	}else{
+// 		return (Math.floor(size / 2)) / 10;
+// 	}
+>>>>>>> cde2e2de3e2dc774376914be4552579b80a0506f
 // }
-
 // //returns colors based on cluster group number
 // function getColorsRels(){
-//    return { 0: "#bdbdbd", 1: "#d73027", 2: "#fc8d59", 3: "#fee090", 4: "#abd9e9", 5: "#74add1", 6: "#4575b4"}
+//    return { 0: "#bf5b17", 1: "#d73027", 2: "#fc8d59", 3: "#fee090", 4: "#e0f3f8", 5: "#91bfdb", 6: "#4575b4"}
 // }
+
+//returns cluster number based on number of relationships the cluster has
+function getClusterRels(node){
+  try{
+    var size = Object.keys(node).length;
+  }
+  catch(err) {
+    var size = 0;
+  }
+
+  if (size >= 50){
+    return 6;
+  } else if (size >= 30){
+    return 5;
+  } else if (size >= 20) {
+    return 4;
+  } else if (size >=10) {
+    return 3;
+  } else if (size >=5) {
+    return 2;
+  } else if (size >1) {
+    return 1;
+  } else {
+    return 0;
+  }
+}
+
+//returns colors based on cluster group number
+function getColorsRels(){
+   return { 0: "#bdbdbd", 1: "#d73027", 2: "#fc8d59", 3: "#fee090", 4: "#abd9e9", 5: "#74add1", 6: "#4575b4"}
+}
 
 // Checks if a value is in an array
 function notInArray(arr, val) {
@@ -93,7 +134,8 @@ function notInArray(arr, val) {
 
 //creates a nodekey associative array with node info
 function createNodeKey(node, id) {
-  return {"text": node["display_name"], "size": 10, "id": id,  "cluster": getClusterRels(node["rel_sum"])};
+  return {"text": node["display_name"].replace(" ", "_"), "size": 10, "id": id,  "cluster": getClusterRels(node["rel_sum"])};
+
 }
 
 function twoDegs(id, id2, people) {
@@ -105,6 +147,7 @@ function twoDegs(id, id2, people) {
   	$.each(p.rel_sum, function(index, value) { 
   	  var q = value[0];
   		keys[q] = createNodeKey(people[q],q);
+      console.log(keys[q]);
   		if (notInArray(edges, [id, value[0]])) {
   		 edges.push([id, value[0]]);
       }
@@ -119,7 +162,7 @@ function twoDegs(id, id2, people) {
       });
     });
     //adds main person's id referenced to keys associative array. Keys represent all data in graph
-    keys[id] = {"text": p["display_name"], "size": 30, "id": id,  "cluster": getClusterRels(p["rel_sum"])}; 
+    keys[id] = {"text": p["display_name"].replace(" ", "_"), "size": 30, "id": id,  "cluster": getClusterRels(p["rel_sum"])}; 
   }
   createGraph(id, people);
   if (id2 != 0 && id2 != ""){
@@ -167,7 +210,7 @@ function twoDegs(id, id2, people) {
           });  
         accordion("edge");
     });
-    graph.tooltip("<div class='btn' >"+"{{text}}".replace(/\%20/," ") + "</div>");
+    graph.tooltip("<div class='btn' >"+"{{text}}".replace("_", " ") + "</div>");
     $('#zoom button.icon').click(function(e){
         if (this.name == 'in') {
             graph.zoomIn();
@@ -250,9 +293,6 @@ function initGraph(people){
   $("#results").html("Two degrees of " + name + name2 + " at " + confidence + "% from " + date);
   //click methods for all the 'find' buttons in the search bar
   //this should not use the entire peopletoarray instead it should use whatever value is passed through by the #one
-}
-
-function sidebarSearch(people){
   $("#search-network-submit").click(function () {
   	var table = 'no';
     Pace.restart();
@@ -263,9 +303,7 @@ function sidebarSearch(people){
     }
     var confidence = $("#search-network-slider-confidence-result-hidden").val().split(" - ");
     var date = $("#search-network-slider-date-result-hidden").val().split(" - ");
-    if (id  && confidence && date ){
-      window.location.href = '/?id=' + id + '&confidence=' + confidence + '&date=' + date;
-    }
+    window.location.href = '/?id=' + id + '&confidence=' + confidence + '&date=' + date + '&table=' + table;
   });
 
    $("#search-shared-network-submit").click(function () {
@@ -282,18 +320,14 @@ function sidebarSearch(people){
       }
       var confidence = $("#search-shared-network-slider-confidence-result-hidden").val().split(" - ");
       var date = $("#search-shared-network-slider-date-result-hidden").val().split(" - ");
-      if (id1 && id2 && date && confidence){
-        window.location.href = '/?id=' + id1 + '&id2=' + id2 + '&confidence=' + confidence + '&date=' + date + '&table=' + table;
-      }    
+      window.location.href = '/?id=' + id1 + '&id2=' + id2 + '&confidence=' + confidence + '&date=' + date + '&table=' + table;
     });
 
   $("#search-group-submit").click(function () {
     Pace.restart();
     // make the index equal autocomplete
     var id = $("#search-group-name-id").val();
-    if (id ){
-      window.location.href = '/?group=' + id;
-    }
+    window.location.href = '/?group=' + id;
   });
 
   $("#search-shared-group-submit").click(function () {
@@ -301,9 +335,7 @@ function sidebarSearch(people){
     // make the index equal autocomplete
     var id1 = $("#search-shared-group-name1-id").val();
     var id2 = $("#search-shared-group-name2-id").val();
-    if (id1 && id2){
-      window.location.href = '/?group=' + id1 + '&group2=' + id2;
-    }  
+    window.location.href = '/?group=' + id1 + '&group2=' + id2;
   });
 
   $("#nav-filter-submit").click(function (){
@@ -344,7 +376,6 @@ function init() {
   var group = window.gon.group;
   var group2 = window.gon.group2;
   var group_members = window.gon.group_members;
-  sidebarSearch(people);
   if (getParam("group").length == 0){
   	filterGraph(people);
   	initGraph(people);
