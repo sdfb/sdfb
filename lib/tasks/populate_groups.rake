@@ -19,13 +19,17 @@ namespace :db do
         end
         if (! groupData[3].blank?)
           start_year_input = groupData[3]
+          start_date_type_input = "IN"
         else
           start_year_input = nil
+          start_date_type_input = nil
         end
         if (! groupData[4].blank?)
           end_year_input = groupData[4]
+          end_date_type_input = "IN"
         else
           end_year_input = nil
+          end_date_type_input = nil
         end
         created_by_input = User.for_email("sdfb_admin@example.com")[0].id
         approved_by_input = User.for_email("sdfb_admin@example.com")[0].id
@@ -38,7 +42,9 @@ namespace :db do
           g.is_approved = true
           g.description = description_input
           g.start_year = start_year_input
+          g.start_date_type = start_date_type_input
           g.end_year = end_year_input
+          g.end_date_type = end_date_type_input
           g.created_by = created_by_input
           g.approved_by = approved_by_input
           g.approved_on = approved_on_input
