@@ -119,20 +119,24 @@ class Person < ActiveRecord::Base
     @adjustedrel = []
 		@PersonRecord[0]['rel_sum'].each do |firstDegreePerson|
 			firstDegreePersonID = firstDegreePerson[0]
-			if ((firstDegreePerson[1].to_i >= min_confidence) && (firstDegreePerson[1].to_i <= max_confidence))
-        @adjustedrel.push(firstDegreePerson)
-        if (load_rels)
-        	@firstDegreePersonQuery = Person.select("id, display_name, rel_sum").where("id = ? and not (ext_birth_year::integer > ? or ext_death_year::integer < ?)", firstDegreePersonID,  max_year, min_year)
-  				@firstDegreePersonRel = []
-          @firstDegreePersonQuery[0].rel_sum.each do |rel|
-            if ((rel[1].to_i >= min_confidence) && (rel[1].to_i <= max_confidence))
-              @firstDegreePersonRel.push(rel)
+      if ((firstDegreePerson[3].to_i >= min_year) && (firstDegreePerson[4].to_i <= max_year))
+  			if ((firstDegreePerson[1].to_i >= min_confidence) && (firstDegreePerson[1].to_i <= max_confidence))
+          @adjustedrel.push(firstDegreePerson)
+          if (load_rels)
+          	@firstDegreePersonQuery = Person.select("id, display_name, rel_sum").where("id = ?", firstDegreePersonID)
+    				@firstDegreePersonRel = []
+            @firstDegreePersonQuery[0].rel_sum.each do |rel|
+              if ((rel[3].to_i >= min_year) && (rel[4].to_i <= max_year))
+                if ((rel[1].to_i >= min_confidence) && (rel[1].to_i <= max_confidence))
+                  @firstDegreePersonRel.push(rel)
+                end
+              end
             end
+            peopleRecordsForReturn[@firstDegreePersonQuery[0].id] = {'rel_sum' => @firstDegreePersonRel, 'display_name' => @firstDegreePersonQuery[0].display_name}   
+          else
+           @firstDegreePersonQuery = Person.select("id, display_name").where("id = ?", firstDegreePersonID)
+           peopleRecordsForReturn[@firstDegreePersonQuery[0].id] = {'display_name' => @firstDegreePersonQuery[0].display_name}   
           end
-          peopleRecordsForReturn[@firstDegreePersonQuery[0].id] = {'rel_sum' => @firstDegreePersonRel, 'display_name' => @firstDegreePersonQuery[0].display_name}   
-        else
-         @firstDegreePersonQuery = Person.select("id, display_name").where("id = ? and not (ext_birth_year::integer > ? or ext_death_year::integer < ?)", firstDegreePersonID,  max_year, min_year)
-         peopleRecordsForReturn[@firstDegreePersonQuery[0].id] = {'display_name' => @firstDegreePersonQuery[0].display_name}   
         end
       end
 		end
@@ -164,11 +168,15 @@ class Person < ActiveRecord::Base
     end
     @zeroDegreePerson = self.find_first_degree_for_person(person_id, min_confidence, max_confidence, min_year, max_year, true)
     @zeroDegreePerson[person_id.to_i]['rel_sum'].each do |firstDegreePerson|
-      firstDegreePersonID = firstDegreePerson[0]
-      @firstDegreePerson = self.find_first_degree_for_person(firstDegreePersonID, min_confidence, max_confidence, min_year, max_year, false)
-      twoPeopleRecordsForReturn.update(@firstDegreePerson)
-      if(twoPeopleRecordsForReturn.length > 50)
-      	break	
+      if ((firstDegreePerson[3].to_i >= min_year) && (firstDegreePerson[4].to_i <= max_year))
+        if ((firstDegreePerson[1].to_i >= min_confidence) && (firstDegreePerson[1].to_i <= max_confidence))
+          firstDegreePersonID = firstDegreePerson[0]
+          @firstDegreePerson = self.find_first_degree_for_person(firstDegreePersonID, min_confidence, max_confidence, min_year, max_year, false)
+          twoPeopleRecordsForReturn.update(@firstDegreePerson)
+          if(twoPeopleRecordsForReturn.length > 50)
+          	break	
+          end
+        end
       end
     end
     twoPeopleRecordsForReturn.update(@zeroDegreePerson)

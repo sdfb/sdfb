@@ -2,3 +2,5 @@
   $("#edge-confidence").html("<%= @network_info_confidence %>" + "%");
   $("#edge-discussion").attr("href", "/relationships/" + "<%= @network_info_id %>" );
   $("#edge-icon-annotate").attr("href", "/user_rel_contribs/new?relationship_id=" + "<%= @network_info_id %>" );
+  $("#edge-startyear").html("<%= @network_info_start_date_type %>" + " " + "<%= @network_info_start_year %>");
+  $("#edge-endyear").html("<%= @network_info_end_date_type %>" + " " + "<%= @network_info_end_year %>");
