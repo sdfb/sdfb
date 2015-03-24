@@ -17,7 +17,6 @@ Num_rels Cluster    Color
 */
 
 // //returns cluster number based on number of relationships the cluster has
-<<<<<<< HEAD
 function getClusterRels(node){
 	try{
 		var size = Object.keys(node).length;
@@ -48,8 +47,7 @@ function getColorsRels(){
 }
 
 //returns cluster number based on number of relationships the cluster has
-=======
->>>>>>> cde2e2de3e2dc774376914be4552579b80a0506f
+
 // function getClusterRels(node){
 // 	try{
 // 		var size = Object.keys(node).length;
@@ -58,7 +56,6 @@ function getColorsRels(){
 // 		var size = 0;
 // 	}
 
-<<<<<<< HEAD
 //   if (size >= 50){
 //     return 6;
 //   } else if (size >= 30){
@@ -74,13 +71,11 @@ function getColorsRels(){
 //   } else {
 //     return 0;
 //   }
-=======
 // 	if (size > 100){
 // 		return 10;
 // 	}else{
 // 		return (Math.floor(size / 2)) / 10;
 // 	}
->>>>>>> cde2e2de3e2dc774376914be4552579b80a0506f
 // }
 // //returns colors based on cluster group number
 // function getColorsRels(){
