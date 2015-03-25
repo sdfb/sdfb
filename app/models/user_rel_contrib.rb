@@ -59,8 +59,8 @@ class UserRelContrib < ActiveRecord::Base
   before_update :add_editor_update_max_cert_check_approved
   before_create :update_max_certainty
   after_create :check_if_approved
-  #after_create :create_relationship_types_list
-  #after_update :create_relationship_types_list
+  after_create :create_relationship_types_list
+  after_update :create_relationship_types_list
 
   # Custom Methods
   # -----------------------------

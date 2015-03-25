@@ -76,7 +76,7 @@ class Relationship < ActiveRecord::Base
   after_create :create_peoples_rel_sum
   before_create :create_start_and_end_date
   before_update :create_start_and_end_date
-  after_update :update_peoples_rel_sum
+  #after_update :update_peoples_rel_sum
   after_destroy :delete_peoples_rel_sum
   before_create :check_if_approved
   before_update :check_if_approved
