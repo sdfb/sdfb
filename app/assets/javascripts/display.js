@@ -109,13 +109,13 @@ function twoDegs(id, id2, people) {
       });
     });
     //adds main person's id referenced to keys associative array. Keys represent all data in graph
-    keys[id] = {"text": p["display_name"], "size": 30, "id": id,  "cluster": getClusterRels(p["rel_sum"])}; 
+    keys[id] = {"text": p["display_name"].replace(/ /g,"_"), "size": 30, "id": id,  "cluster": getClusterRels(p["rel_sum"])}; 
   }
   createGraph(id, people);
   if (id2 != 0 && id2 != ""){
       createGraph(id2, people);
-      keys[id2] = {"text": people[id2]["display_name"], "size": 30, "id": id2,  "cluster": getClusterRels(people[id2]["rel_sum"])}; 
-      keys[id] = {"text": people[id]["display_name"], "size": 30, "id": id,  "cluster": getClusterRels(people[id]["rel_sum"])}; 
+      keys[id2] = {"text": people[id2]["display_name"].replace(/ /g,"_"), "size": 30, "id": id2,  "cluster": getClusterRels(people[id2]["rel_sum"])}; 
+      keys[id] = {"text": people[id]["display_name"].replace(/ /g,"_"), "size": 30, "id": id,  "cluster": getClusterRels(people[id]["rel_sum"])}; 
   }
   $.each(keys, function(index, value) {
     nodes.push(value); //adds each key to nodes array
