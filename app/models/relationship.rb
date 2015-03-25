@@ -75,14 +75,14 @@ class Relationship < ActiveRecord::Base
   before_create :max_certainty_on_create
   after_create :create_peoples_rel_sum
   before_create :create_start_and_end_date
-  #before_update :create_start_and_end_date
-  #after_update :update_peoples_rel_sum
+  before_update :create_start_and_end_date
+  after_update :update_peoples_rel_sum
   after_destroy :delete_peoples_rel_sum
   before_create :check_if_approved
-  #before_update :check_if_approved
+  before_update :check_if_approved
   before_create :check_if_valid
   before_create :init_array
-  #before_update :add_editor_to_edit_by_on_max_certainty
+  before_update :add_editor_to_edit_by_on_max_certainty
 
 	# Custom Methods
   # -----------------------------
