@@ -222,12 +222,12 @@ function initGraph(people){
   var confidence = default_sconfidence + " to " + default_econfidence
   var date = default_sdate + " - " + default_edate
   if (getParam('id') > 0){
-    var name = people[parseInt(getParam('id'))].display_name
+    var name = people[parseInt(getParam('id'))].display_name.replace(/ /g,"_")
   }else{
-    var name = people[francisID].display_name
+    var name = people[francisID].display_name.replace(/ /g,"_")
   }
   if (getParam('id2') > 0){
-    var name2 = " and " + people[parseInt(getParam('id2'))].display_name
+    var name2 = " and " + people[parseInt(getParam('id2'))].display_name.replace(/ /g,"_")
   }else{
     var name2 = ""
   }
