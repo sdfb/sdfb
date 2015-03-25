@@ -344,9 +344,12 @@ function init() {
     $("#filterBar").hide();
     $("#group-name").text(group["name"]);
     $("#group-description").text(group["description"]);
+    $("#group-discussion").attr("href", "groups/" + group["id"])
+    $(".group2").hide();
     if (typeof group2 != 'undefined'){
       $("#group-name2").text(group2["name"]);
       $("#group-description2").text(group2["description"]);
+      $("#group-discussion2").attr("href", "groups/" + group2["id"])
       $(".group2").show();
     }
     $.each(group_members, function(index, value) { 
