@@ -158,17 +158,17 @@ class Relationship < ActiveRecord::Base
 
   def add_editor_to_edit_by_on_max_certainty
     # Add editor to edit_by_on
-    if (! self.edited_by_on.blank?)
-      previous_edited_by_on = Relationship.find(self.id).edited_by_on
-      if previous_edited_by_on.nil?
-        previous_edited_by_on = []
-      end
-      newEditRecord = []
-      newEditRecord.push(self.edited_by_on)
-      newEditRecord.push(Time.now)
-      previous_edited_by_on.push(newEditRecord)
-      self.edited_by_on = previous_edited_by_on
-    end
+    # if (! self.edited_by_on.blank?)
+    #   previous_edited_by_on = Relationship.find(self.id).edited_by_on
+    #   if previous_edited_by_on.nil?
+    #     previous_edited_by_on = []
+    #   end
+    #   newEditRecord = []
+    #   newEditRecord.push(self.edited_by_on)
+    #   newEditRecord.push(Time.now)
+    #   previous_edited_by_on.push(newEditRecord)
+    #   self.edited_by_on = previous_edited_by_on
+    # end
 
     # update max certainty
     # Only update max_certainty if there are no User_rel_edits
