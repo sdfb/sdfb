@@ -32,12 +32,12 @@
   <% else %>
     <text id="formCertainty">Possible relationships @ 50%</text><br>
   <% end %>
-  <%= f.input :start_date_type, :collection =>["BF", "AF","IN","CA","BF/IN","AF/IN"], label: "Birth Year Type", prompt: "Select", hint: " BF = Before, AF = After, IN = In, CA = Circa, BF/IN = Before or In, AF/IN = After or In" %>
+  <%= f.input :start_date_type, :collection =>["BF", "AF","IN","CA","BF/IN","AF/IN"], label: "Start Year Type", prompt: "Select", hint: " BF = Before, AF = After, IN = In, CA = Circa, BF/IN = Before or In, AF/IN = After or In" %>
   <%= f.label :start_month, label: "Start Date" %>
   <%= f.input :start_month, label: "Start Date", :collection =>["January","February","March","April","May","June","July","August","September","October","November","December"], label: false, prompt: "Month", :include_blank => true %>
   <%= f.input :start_day, label: false, :collection => 1..31, prompt: "Day", :include_blank => true %>
   <%= f.input :start_year, as: :string, label: false, placeholder: "Year"%>
-  <%= f.input :end_date_type, :collection =>["BF", "AF","IN","CA","BF/IN","AF/IN"], label: "Birth Year Type", prompt: "Select", hint: " BF = Before, AF = After, IN = In, CA = Circa, BF/IN = Before or In, AF/IN = After or In" %>
+  <%= f.input :end_date_type, :collection =>["BF", "AF","IN","CA","BF/IN","AF/IN"], label: "End Year Type", prompt: "Select", hint: " BF = Before, AF = After, IN = In, CA = Circa, BF/IN = Before or In, AF/IN = After or In" %>
   <%= f.label :end_month, label: "End Date" %>
   <%= f.input :end_month, :collection =>["January","February","March","April","May","June","July","August","September","October","November","December"], label: false, prompt: "Month", :include_blank => true %>
   <%= f.input :end_day, label: false, :collection => 1..31, prompt: "Day", :include_blank => true %>
