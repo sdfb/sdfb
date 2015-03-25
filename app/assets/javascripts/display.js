@@ -83,7 +83,7 @@ function notInArray(arr, val) {
 
 //creates a nodekey associative array with node info
 function createNodeKey(node, id) {
-  return {"text": node["display_name"], "size": 10, "id": id,  "cluster": getClusterRels(node["rel_sum"])};
+  return {"text": node["display_name"].replace(/ /g,"_"), "size": 10, "id": id,  "cluster": getClusterRels(node["rel_sum"])};
 }
 
 function twoDegs(id, id2, people) {
@@ -157,7 +157,7 @@ function twoDegs(id, id2, people) {
           });  
         accordion("edge");
     });
-    graph.tooltip("<div class='btn' >"+"{{text}}".replace(/\%20/," ") + "</div>");
+    graph.tooltip("<div class='btn' >"+"{{text}}".replace(/_/g," ") + "</div>");
     $('#zoom button.icon').click(function(e){
         if (this.name == 'in') {
             graph.zoomIn();
