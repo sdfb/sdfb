@@ -69,20 +69,28 @@ class UserRelContrib < ActiveRecord::Base
   def autocomplete_to_rel
     #find the relationship_id given the two people
     if (self.relationship_id == 0)
-      found_rel_id = Relationship.for_2_people(self.person1_selection, self.person2_selection)[0]
-      if (found_rel_id.nil?)
+      if ((! self.person1_selection.blank?) && (! self.person2_selection.blank?))
+        found_rel_id = Relationship.for_2_people(self.person1_selection, self.person2_selection)[0]
+        if (found_rel_id.nil?)
         #if the relationship does not exist, then through an error
         errors.add(:person2_autocomplete, "This relationship does not exist.")
+        else
+          self.relationship_id = found_rel_id.id
+          #set person1_autocomplete, person2_autocomplete, person1_selected, person2_selected to nil to save room in the database
+          self.person1_autocomplete = nil
+          self.person2_autocomplete = nil
+          self.person1_selection = nil
+          self.person2_selection = nil
+        end
       else
-        self.relationship_id = found_rel_id.id
+        if (self.person1_selection.blank?) 
+          errors.add(:person1_autocomplete, "Please select people from the autocomplete dropdown menus.")
+        end
+        if (self.person2_selection.blank?) 
+          errors.add(:person2_autocomplete, "Please select people from the autocomplete dropdown menus.")
+        end
       end
     end
-
-    #set person1_autocomplete, person2_autocomplete, person1_selected, person2_selected to nil to save room in the database
-    self.person1_autocomplete = nil
-    self.person2_autocomplete = nil
-    self.person1_selection = nil
-    self.person2_selection = nil
   end
 
   #this checks if the record is approved
