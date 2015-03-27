@@ -221,7 +221,7 @@
       </div>
 
       <div class="well">
-        <h2>All Group Category Assignments for <%= @group.name%><% if ! current_user.nil? && ((current_user.user_type == "Admin") || (current_user.user_type == "Curator"))%><%= link_to 'New Group Category Assignment', new_group_cat_assign_path(:group_id => @group.id), :class => 'btn btn-primary btn-mini' %><% end %></h2>
+        <h2>All Group Category Assignments for <%= @group.name%><% if (! current_user.blank?) && ((current_user.user_type == "Admin") || (current_user.user_type == "Curator"))%><%= link_to 'New Group Category Assignment', new_group_cat_assign_path(:group_id => @group.id), :class => 'btn btn-primary btn-mini' %><% end %></h2>
         <% if ! @group_cat_assigns_approved.empty? %>
           <table class="table table-condensed">
             <thead>
