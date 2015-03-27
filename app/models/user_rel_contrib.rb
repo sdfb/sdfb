@@ -44,8 +44,8 @@ class UserRelContrib < ActiveRecord::Base
 
   # Scope
   # ----------------------------- 
-  scope :all_approved, where("approved_by is not null and is_active is true and is_rejected is false")
-  scope :all_unapproved, where("approved_by is null and is_rejected is false")
+  scope :all_approved, where("is_approved is true and is_active is true and is_rejected is false")
+  scope :all_unapproved, where("is_approved is false and is_rejected is false")
   scope :for_user, lambda {|user_input| where('created_by = ?', "#{user_input}") }
   scope :all_for_relationship, lambda {|relID| 
       select('user_rel_contribs.*')
