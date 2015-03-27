@@ -1,4 +1,4 @@
-<%- model_class = Person -%>
+f<%- model_class = Person -%>
 
 <div class="row">
   <div class="span12">
@@ -137,12 +137,12 @@
           <% end %>
           <dt><strong>Created On:</strong></dt>
           <dd><%= @person.created_at %></dd>
-          <dt><strong>Edit History:</strong></dt>
+          <!-- <dt><strong>Edit History:</strong></dt>
           <% if ! @person.edited_by_on.blank? %>
             <dd><%= @person.edited_by_on %></dd>
           <% else %>
             <dd>No edits have been made.</dd>
-          <% end %>
+          <% end %> -->
           <dt><strong>Is Active:</strong></dt>
           <dd><%= @person.is_active %></dd>
           <dt><strong>Is Rejected:</strong></dt>
