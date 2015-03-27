@@ -8,7 +8,7 @@
 </div>
 <br>
 <div class="row">
-  <div class="span5">
+  <div class="span7">
     <div class="well">
       <h2>Information
         <% if (! current_user.blank?) && ((current_user.user_type == "Admin") || (current_user.user_type == "Curator")) %> 
@@ -153,178 +153,24 @@
     
   </div>
 
-  <div class="span7">
-    <% if ! @approved_relationships.empty? %>
-      <div class="well">
-      
-      <h2>All Relationships for <%= @person.display_name %> <%= link_to 'New Relationship',
-                  new_relationship_path(:person1_id => @person.id),
-                  :class => 'btn btn-primary btn-mini' %></h2><br>
-
-      <table class="table table-condensed">
-        <thead>
-          <tr>
-            <th>SDFB Relationship ID</th>
-            <th>Person 1</th>
-            <th>Person 2</th>
-            <% if ! current_user.blank? %>
-                <% if (current_user.user_type == "Admin")  %>
-                    <th>Original Certainty</th>
-                <% end %>
-            <% end %>
-            <th>Maximum Certainty</th>
-            <th><%=t '.actions', :default => t("helpers.actions") %></th>
-          </tr>
-        </thead>
-        <tbody>
-          <% @approved_relationships.each do |relationship| %>
-            <tr>
-              <td><%= relationship.id %></td>
-              <td><%= link_to relationship.get_person1_name, person_path(relationship.person1_index) %></td>
-              <td><%= link_to relationship.get_person2_name, person_path(relationship.person2_index) %></td>
-              <% if ! current_user.blank? %>
-                  <% if (current_user.user_type == "Admin")  %>
-                      <td><%= relationship.original_certainty %></td>
-                  <% end %>
-              <% end %>
-              <td><%= relationship.max_certainty %></td>
-              <td>
-                <% if can? :show, relationship %>
-                  <%= link_to 'Show', relationship, :class => 'btn btn-mini'  %>
-                <% end %>
-                <% if can? :update, relationship %>
-                  <%= link_to t('.edit', :default => t("helpers.links.edit")),
-                              edit_relationship_path(relationship), :class => 'btn btn-mini' %>
-                <% end %>
-              </td>
-            </tr>
-          <% end %>
-        </tbody>
-      </table>
-
-      <%= will_paginate @approved_relationships, :param_name => 'approved_relationships_page', :previous_label => "Previous&nbsp;", :next_label => "&nbsp;Next" %>
-      </div>
-    <% else %>
-      <div class = "well">
-        <h2>All Relationships for <%= @person.display_name %> <%= link_to 'New Relationship',
-                  new_relationship_path(:person1_id => @person.id),
-                  :class => 'btn btn-primary btn-mini' %></h2>
-        <br>
-        <b>No relationships exist.</b>
-      </div>
-    <% end %>
-    <% if ! @user_person_contribs.empty? %>
+  <div class="span5">
     <div class="well">
-      <h2>All Annotations for <%= @person.display_name %> <%= link_to 'New annotation',
-                  new_user_person_contrib_path(:person_id => @person.id),
-                  :class => 'btn btn-primary btn-mini' %></h2>
-      <table class="table table-condensed">
-        <table class="table table-condensed">
-          <thead>
-            <tr>
-              <th>SDFB Annotation ID</th>
-              <th>Annotation</th>
-              <th>Bibliography</th>
-              <th><%=t '.actions', :default => t("helpers.actions") %></th>
-            </tr>
-          </thead>
-          <tbody>
-            <% @user_person_contribs.each do |user_person_contrib| %>
-              <tr>
-                <td><%= user_person_contrib.id %></td>
-                <td><%= user_person_contrib.annotation %></td>
-                <td><%= user_person_contrib.bibliography %></td>
-                <td>
-                  <% if can? :show, user_person_contrib %>
-                    <%= link_to 'Show', user_person_contrib, :class => 'btn btn-mini' %>
-                  <% end %>
-                  <% if can? :update, user_person_contrib %>
-                    <%= link_to t('.edit', :default => t("helpers.links.edit")),
-                              edit_user_person_contrib_path(user_person_contrib), :class => 'btn btn-mini' %>
-                  <% end %>
-                </td>
-              </tr>
-            <% end %>
-          </tbody>
-        </table>
-
-        <%= will_paginate @user_person_contribs, :param_name => 'user_person_contribs_page', :previous_label => "Previous&nbsp;", :next_label => "&nbsp;Next" %>
-      </div>
-    <% else %>
-    <div class = "well">
-      <h2>All annotations for <%= @person.display_name %> <%= link_to 'New User Person Contribution',
-                new_user_person_contrib_path(:person_id => @person.id),
-                :class => 'btn btn-primary btn-mini' %></h2>
-      <br>
-      <b>No annotations exist.</b>
-    </div>
-    <% end %>
-
-    <div class = "well">
-      <h2>All Group Assignments for <%= @person.display_name %><%= link_to 'New Group Assignment',
-                    new_group_assignment_path(:person_id => @person.id),
-                    :class => 'btn btn-primary btn-mini' %></h2>
-      <% if ! @groups.empty? %>
-        <table class="table table-condensed">
-          <thead>
-          <tr>
-            <th>SDFB Group Assignment ID</th>
-            <th>Group</th>
-            <th>Start Date</th>
-            <th>End Date</th>
-            <th><%=t '.actions', :default => t("helpers.actions") %></th>
-          </tr>
-          </thead>
-          <tbody>
-            <% @groups.each do |group_assignment| %>
-              <tr>
-                <td><%= group_assignment.id %></td>
-                <td><%= link_to group_assignment.get_group_name, group_path(group_assignment.group_id) %></td>
-                <td>
-                  <% if ((! group_assignment.start_month.blank?) || (! group_assignment.start_day.blank?) || (! group_assignment.start_year.blank?)) %>
-                    <% if ! group_assignment.start_month.blank? %>
-                      <%= group_assignment.start_month %>
-                    <% end %>  
-                    <% if ! group_assignment.start_day.blank? %>
-                      <%= group_assignment.start_day %>,
-                    <% end %>
-                    <% if ! group_assignment.start_year.blank? %>
-                      <%= group_assignment.start_year %>
-                    <% end %>
-                  <% end %>
-                </td>
-                <td>
-                  <% if ((! group_assignment.end_month.blank?) || (! group_assignment.end_day.blank?) || (! group_assignment.end_year.blank?)) %>
-                    <% if ! group_assignment.end_month.blank? %>
-                      <%= group_assignment.end_month %>
-                    <% end %>  
-                    <% if ! group_assignment.end_day.blank? %>
-                      <%= group_assignment.end_day %>,
-                    <% end %>
-                    <% if ! group_assignment.end_year.blank? %>
-                      <%= group_assignment.end_year %>
-                    <% end %>
-                  <% end %>
-                </td>
-                <td>
-                  <% if can? :show, group_assignment %>
-                    <%= link_to 'Show', group_assignment, :class => 'btn btn-mini' %>
-                  <% end %>
-                  <% if can? :update, group_assignment %>
-                    <%= link_to 'Edit', edit_group_assignment_path(group_assignment), :class => 'btn btn-mini' %>
-                  <% end %>
-                </td>
-              </tr>
-            <% end %>
-          </tbody>
-        </table>
-
-        <%= will_paginate @groups, :param_name => 'groups_page', :previous_label => "Previous&nbsp;", :next_label => "&nbsp;Next" %>
-      <% else %>
-        <br>
-        <b>No groups have been assigned to this person.</b>
-      <% end %>
-    </div>
+      <h2>Quicklinks for this Person</h2>
+      <dl class="dl-horizontal">
+        <dt><strong>Person Record:</strong></dt>
+        <dd><%= link_to 'View',
+                  controller: "people", action: "show", id: @person %></dd>
+        <dt><strong>Relationships:</strong></dt>
+        <dd><%= link_to 'View',
+                  controller: "people", action: "relationships", id: @person %></dd>
+        <dt><strong>Group Membership:</strong></dt>
+        <dd><%= link_to 'View',
+                  controller: "people", action: "membership", id: @person %></dd></dd>
+        <dt><strong>Notes:</strong></dt>
+        <dd><%= link_to 'View',
+                  controller: "people", action: "notes", id: @person %></dd></dd>
+      </dl>
+    </div>    
   </div>
 </div>
 

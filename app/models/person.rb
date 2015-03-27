@@ -105,6 +105,7 @@ class Person < ActiveRecord::Base
   # ----------------------------- 
   before_create :init_array
   before_create :check_if_approved
+  #after_create :popualate_search_names_if_empty
   before_update :check_if_approved
   before_update :add_editor_to_edit_by_on
 

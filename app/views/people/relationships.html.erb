@@ -1,0 +1,92 @@
+<%- model_class = Person -%>
+
+<div class="row">
+  <div class="span12">
+    <h1><%= @person.display_name %>
+    </h1>
+  </div>
+</div>
+<br>
+<div class="row">
+  <div class="span7">
+    <% if ! @approved_relationships.empty? %>
+      <div class="well">
+      
+      <h2>All Relationships for <%= @person.display_name %> <%= link_to 'New Relationship',
+                  new_relationship_path(:person1_id => @person.id),
+                  :class => 'btn btn-primary btn-mini' %></h2><br>
+
+      <table class="table table-condensed">
+        <thead>
+          <tr>
+            <th>SDFB Relationship ID</th>
+            <th>Person 1</th>
+            <th>Person 2</th>
+            <% if ! current_user.blank? %>
+                <% if (current_user.user_type == "Admin")  %>
+                    <th>Original Certainty</th>
+                <% end %>
+            <% end %>
+            <th>Maximum Certainty</th>
+            <th><%=t '.actions', :default => t("helpers.actions") %></th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @approved_relationships.each do |relationship| %>
+            <tr>
+              <td><%= relationship.id %></td>
+              <td><%= link_to relationship.get_person1_name, person_path(relationship.person1_index) %></td>
+              <td><%= link_to relationship.get_person2_name, person_path(relationship.person2_index) %></td>
+              <% if ! current_user.blank? %>
+                  <% if (current_user.user_type == "Admin")  %>
+                      <td><%= relationship.original_certainty %></td>
+                  <% end %>
+              <% end %>
+              <td><%= relationship.max_certainty %></td>
+              <td>
+                <% if can? :show, relationship %>
+                  <%= link_to 'Show', relationship, :class => 'btn btn-mini'  %>
+                <% end %>
+                <% if can? :update, relationship %>
+                  <%= link_to t('.edit', :default => t("helpers.links.edit")),
+                              edit_relationship_path(relationship), :class => 'btn btn-mini' %>
+                <% end %>
+              </td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+
+      <%= will_paginate @approved_relationships, :param_name => 'approved_relationships_page', :previous_label => "Previous&nbsp;", :next_label => "&nbsp;Next" %>
+      </div>
+    <% else %>
+      <div class = "well">
+        <h2>All Relationships for <%= @person.display_name %> <%= link_to 'New Relationship',
+                  new_relationship_path(:person1_id => @person.id),
+                  :class => 'btn btn-primary btn-mini' %></h2>
+        <br>
+        <b>No relationships exist.</b>
+      </div>
+    <% end %>
+  </div>
+  <div class="span5">
+      <div class="well">
+        <h2>Quicklinks for this Person</h2>
+        <dl class="dl-horizontal">
+          <dt><strong>Person Record:</strong></dt>
+          <dd><%= link_to 'View',
+                    controller: "people", action: "show", id: @person %></dd>
+          <dt><strong>Relationships:</strong></dt>
+          <dd><%= link_to 'View',
+                    controller: "people", action: "relationships", id: @person %></dd>
+          <dt><strong>Group Membership:</strong></dt>
+          <dd><%= link_to 'View',
+                    controller: "people", action: "membership", id: @person %></dd></dd>
+          <dt><strong>Notes:</strong></dt>
+          <dd><%= link_to 'View',
+                    controller: "people", action: "notes", id: @person %></dd></dd>
+        </dl>
+      </div>    
+    </div>
+</div>
+
