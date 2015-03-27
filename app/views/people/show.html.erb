@@ -17,138 +17,139 @@
         <% end %>
       </h2>
       <br>
-<!--       <dl class="dl-horizontal">
-        <dt><strong>SDFB Person ID:</strong></dt>
-        <dd><%= @person.id %></dd>
-        <dt><strong>ODNB ID:</strong></dt>
-        <% if ! @person.odnb_id.blank? %>
-          <dd><%= @person.odnb_id %></dd>
-        <% else %>
-          <dd>No ODNB ID recorded.</dd>
-        <% end %>
-        <% if ! @person.title.blank? %>
-          <dt><strong>Title:</strong></dt>
-          <dd><%= @person.title %></dd>
-        <% end %>
-        <% if ! @person.prefix.blank? %>
-          <dt><strong>Prefix:</strong></dt>
-          <dd><%= @person.prefix %></dd>
-        <% end %>
-        <dt><strong>First Name:</strong></dt>
-        <dd><%= @person.first_name %></dd>
-        <% if ! @person.last_name.blank? %>
-          <dt><strong>Last Name:</strong></dt>
-          <dd><%= @person.last_name %></dd>
-        <% end %>
-        <% if ! @person.suffix.blank? %>
-          <dt><strong>Suffix:</strong></dt>
-          <dd><%= @person.suffix %></dd>
-        <% end %>
-        <dt><strong>Gender:</strong></dt>
-        <dd><%= @person.gender %></dd>
-        <dt><strong>All Historical Aliases:</strong></dt>
-        <% if ! @person.search_names_all.blank? %>
-          <dd><%= @person.search_names_all %></dd>
-        <% else %>
-          <dd>No known identities recorded.</dd>
-        <% end %>
-        <dt><strong>Created by:</strong></dt>
-        <dd><%= link_to User.find(@person.created_by).username,  user_path(@person.created_by) %></dd>
-        <dt><strong>Birth Year Type:</strong></dt>
-        <% if ! @person.birth_year_type.blank? %>
-          <dd>
-            <% if @person.birth_year_type == "BF" %>
-              <dd>Before</dd>
-            <% elsif @person.birth_year_type == "AF" %>
-              <dd>After</dd>
-            <% elsif @person.birth_year_type == "IN" %>
-              <dd>In</dd>
-            <% elsif @person.birth_year_type == "CA" %>
-              <dd>Circa</dd>
-            <% elsif @person.birth_year_type == "BF/IN" %>
-              <dd>Before or In</dd>
-            <% elsif @person.birth_year_type == "AF/IN" %>
-              <dd>After or In</dd>
-            <% end %>
-          </dd>
-        <% else %>
-          <dd>Unknown</dd>
-        <% end %>
-        <dt><strong>Birth Year:</strong></dt>
-        <% if ! @person.ext_birth_year.blank? %>
-          <dd><%= @person.ext_birth_year %></dd>
-        <% else %>
-          Unknown
-        <% end %>
-        <% if ! @person.alt_birth_year.blank? %>
-          <dt><strong>Alternate Birth Year:</strong></dt>
-          <dd><%= @person.alt_birth_year %></dd>
-        <% end %>
-        <dt><strong>Death Year Type:</strong></dt>
-        <% if ! @person.death_year_type.blank? %>
-          <dd>
-            <% if @person.death_year_type == "BF" %>
-              <dd>Before</dd>
-            <% elsif @person.death_year_type == "AF" %>
-              <dd>After</dd>
-            <% elsif @person.death_year_type == "IN" %>
-              <dd>In</dd>
-            <% elsif @person.death_year_type == "CA" %>
-              <dd>Circa</dd>
-            <% elsif @person.death_year_type == "BF/IN" %>
-              <dd>Before or In</dd>
-            <% elsif @person.death_year_type == "AF/IN" %>
-              <dd>After or In</dd>
-            <% end %>
-          </dd>
-        <% else %>
-          <dd>Unknown</dd>
-        <% end %>
-        <dt><strong>Death Year:</strong></dt>
-        <% if ! @person.death_year_type.blank? %>
-          <dd><%= @person.ext_death_year %></dd>
-        <% else %>
-          <dd>Unknown</dd>
-        <% end %>
-        <% if ! @person.alt_death_year.blank? %>
-          <dt><strong>Alternate Death Year:</strong></dt>
-          <dd><%= @person.alt_death_year %></dd>
-        <% end %>
-        <dt><strong>Historical Significance:</strong></dt>
-        <% if ! @person.historical_significance.blank? %>
-          <dd><%= @person.historical_significance %></dd>
-        <% else %>
-          <dd>No historical significance recorded.</dd>
-        <% end %>
-        <% if (! current_user.blank?) && ((current_user.user_type == "Admin") || (current_user.user_type == "Curator")) %>
-          <dt><strong>Is Approved?:</strong></dt>
-          <dd><%= @person.is_approved %></dd>
-          <% if ! @person.approved_by.blank? %>
-            <dt><strong>Approved By:</strong></dt>
-            <dd><%= link_to User.find(@person.approved_by).username,  user_path(@person.approved_by) %></dd>
-          <% end %>
-          <% if ! @person.approved_on.blank? %>
-            <dt><strong>Approved On:</strong></dt>
-            <dd><%= @person.approved_on %></dd>
-          <% end %>
-          <% if ! @person.justification.blank? %>
-            <dt><strong>Justification for Person Creation:</strong></dt>
-            <dd><%= @person.justification %></dd>
-          <% end %>
-          <dt><strong>Created On:</strong></dt>
-          <dd><%= @person.created_at %></dd>
-          <!-- <dt><strong>Edit History:</strong></dt>
-          <% if ! @person.edited_by_on.blank? %>
-            <dd><%= @person.edited_by_on %></dd>
+      <% person_data = @person %>
+        <dl class="dl-horizontal">
+          <dt><strong>SDFB Person ID:</strong></dt>
+          <dd><%= person_data.id %></dd>
+          <dt><strong>ODNB ID:</strong></dt>
+          <% if ! person_data.odnb_id.blank? %>
+            <dd><%= person_data.odnb_id %></dd>
           <% else %>
-            <dd>No edits have been made.</dd>
-          <% end %> -->
-          <dt><strong>Is Active:</strong></dt>
-          <dd><%= @person.is_active %></dd>
-          <dt><strong>Is Rejected:</strong></dt>
-          <dd><%= @person.is_rejected %></dd>
-        <% end %>
-      </dl> -->
+            <dd>No ODNB ID recorded.</dd>
+          <% end %>
+          <% if ! person_data.title.blank? %>
+            <dt><strong>Title:</strong></dt>
+            <dd><%= person_data.title %></dd>
+          <% end %>
+          <% if ! person_data.prefix.blank? %>
+            <dt><strong>Prefix:</strong></dt>
+            <dd><%= person_data.prefix %></dd>
+          <% end %>
+          <dt><strong>First Name:</strong></dt>
+          <dd><%= person_data.first_name %></dd>
+          <% if ! person_data.last_name.blank? %>
+            <dt><strong>Last Name:</strong></dt>
+            <dd><%= person_data.last_name %></dd>
+          <% end %>
+          <% if ! person_data.suffix.blank? %>
+            <dt><strong>Suffix:</strong></dt>
+            <dd><%= person_data.suffix %></dd>
+          <% end %>
+          <dt><strong>Gender:</strong></dt>
+          <dd><%= person_data.gender %></dd>
+          <dt><strong>All Historical Aliases:</strong></dt>
+          <% if ! person_data.search_names_all.blank? %>
+            <dd><%= person_data.search_names_all %></dd>
+          <% else %>
+            <dd>No known identities recorded.</dd>
+          <% end %>
+          <dt><strong>Created by:</strong></dt>
+          <dd><%= link_to User.find(person_data.created_by).username,  user_path(person_data.created_by) %></dd>
+          <dt><strong>Birth Year Type:</strong></dt>
+          <% if ! person_data.birth_year_type.blank? %>
+            <dd>
+              <% if person_data.birth_year_type == "BF" %>
+                <dd>Before</dd>
+              <% elsif person_data.birth_year_type == "AF" %>
+                <dd>After</dd>
+              <% elsif person_data.birth_year_type == "IN" %>
+                <dd>In</dd>
+              <% elsif person_data.birth_year_type == "CA" %>
+                <dd>Circa</dd>
+              <% elsif person_data.birth_year_type == "BF/IN" %>
+                <dd>Before or In</dd>
+              <% elsif person_data.birth_year_type == "AF/IN" %>
+                <dd>After or In</dd>
+              <% end %>
+            </dd>
+          <% else %>
+            <dd>Unknown</dd>
+          <% end %>
+          <dt><strong>Birth Year:</strong></dt>
+          <% if ! person_data.ext_birth_year.blank? %>
+            <dd><%= person_data.ext_birth_year %></dd>
+          <% else %>
+            Unknown
+          <% end %>
+          <% if ! person_data.alt_birth_year.blank? %>
+            <dt><strong>Alternate Birth Year:</strong></dt>
+            <dd><%= person_data.alt_birth_year %></dd>
+          <% end %>
+          <dt><strong>Death Year Type:</strong></dt>
+          <% if ! person_data.death_year_type.blank? %>
+            <dd>
+              <% if person_data.death_year_type == "BF" %>
+                <dd>Before</dd>
+              <% elsif person_data.death_year_type == "AF" %>
+                <dd>After</dd>
+              <% elsif person_data.death_year_type == "IN" %>
+                <dd>In</dd>
+              <% elsif person_data.death_year_type == "CA" %>
+                <dd>Circa</dd>
+              <% elsif person_data.death_year_type == "BF/IN" %>
+                <dd>Before or In</dd>
+              <% elsif person_data.death_year_type == "AF/IN" %>
+                <dd>After or In</dd>
+              <% end %>
+            </dd>
+          <% else %>
+            <dd>Unknown</dd>
+          <% end %>
+          <dt><strong>Death Year:</strong></dt>
+          <% if ! person_data.death_year_type.blank? %>
+            <dd><%= person_data.ext_death_year %></dd>
+          <% else %>
+            <dd>Unknown</dd>
+          <% end %>
+          <% if ! person_data.alt_death_year.blank? %>
+            <dt><strong>Alternate Death Year:</strong></dt>
+            <dd><%= person_data.alt_death_year %></dd>
+          <% end %>
+          <dt><strong>Historical Significance:</strong></dt>
+          <% if ! person_data.historical_significance.blank? %>
+            <dd><%= person_data.historical_significance %></dd>
+          <% else %>
+            <dd>No historical significance recorded.</dd>
+          <% end %>
+          <% if (! current_user.blank?) && ((current_user.user_type == "Admin") || (current_user.user_type == "Curator")) %>
+            <dt><strong>Is Approved?:</strong></dt>
+            <dd><%= person_data.is_approved %></dd>
+            <% if ! person_data.approved_by.blank? %>
+              <dt><strong>Approved By:</strong></dt>
+              <dd><%= link_to User.find(person_data.approved_by).username,  user_path(person_data.approved_by) %></dd>
+            <% end %>
+            <% if ! person_data.approved_on.blank? %>
+              <dt><strong>Approved On:</strong></dt>
+              <dd><%= person_data.approved_on %></dd>
+            <% end %>
+            <% if ! person_data.justification.blank? %>
+              <dt><strong>Justification for Person Creation:</strong></dt>
+              <dd><%= person_data.justification %></dd>
+            <% end %>
+            <dt><strong>Created On:</strong></dt>
+            <dd><%= person_data.created_at %></dd>
+            <!-- <dt><strong>Edit History:</strong></dt>
+            <% if ! person_data.edited_by_on.blank? %>
+              <dd><%= person_data.edited_by_on %></dd>
+            <% else %>
+              <dd>No edits have been made.</dd>
+            <% end %> -->
+            <dt><strong>Is Active:</strong></dt>
+            <dd><%= person_data.is_active %></dd>
+            <dt><strong>Is Rejected:</strong></dt>
+            <dd><%= person_data.is_rejected %></dd>
+          <% end %>
+        </dl>
     </div>
     
   </div>
