@@ -14,7 +14,7 @@ class GroupCatAssign < ActiveRecord::Base
   validates_presence_of :group_category_id
   validates_presence_of :group_id
   validates_presence_of :created_by
-  #validate :check_if_approved_valid
+  validate :check_if_approved_valid
 
   # Scope
   # ----------------------------- 
@@ -26,8 +26,8 @@ class GroupCatAssign < ActiveRecord::Base
 
   # Callbacks
   # ----------------------------- 
-  #before_create :check_if_approved_valid
-  #before_update :check_if_approved_valid
+  before_create :check_if_approved_valid
+  before_update :check_if_approved_valid
   before_create :init_array
   before_update :add_editor_to_edit_by_on
 
