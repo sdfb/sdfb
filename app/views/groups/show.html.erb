@@ -49,7 +49,7 @@
           <dd><%= @group.start_year %></dd>
         <% end %>
         <% if ! @group.end_date_type.blank? %>
-          <dt><strong>Start Date Type:</strong></dt>
+          <dt><strong>End Date Type:</strong></dt>
           <dd>
             <% if @group.end_date_type == "BF" %>
               <dd>Before</dd>
@@ -69,10 +69,6 @@
         <% if ! @group.end_year.blank? %>
           <dt><strong>End Year:</strong></dt>
           <dd><%= @group.end_year %></dd>
-        <% end %>
-        <% if ! @group.person_list.blank? %>
-          <dt><strong>Members</strong></dt>
-          <dd><%= @group.person_list %></dd>
         <% end %>
         <% if ! @group.justification.blank? %>
           <dt><strong>Justification</strong></dt>
