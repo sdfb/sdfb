@@ -12,7 +12,8 @@ class RelCatAssign < ActiveRecord::Base
   # -----------------------------
   validates_presence_of :relationship_category_id
   validates_presence_of :relationship_type_id
-  validate :check_if_approved_valid
+  validate :check_if_approved_valid_create, on: :create
+  validate :check_if_approved_valid_update, on: :update
 
   # Scope
   # ----------------------------- 
@@ -25,8 +26,8 @@ class RelCatAssign < ActiveRecord::Base
   # Callbacks
   # -----------------------------
   before_create :init_array
-  before_create :check_if_approved_valid
-  before_update :check_if_approved_valid
+  before_create :check_if_approved_valid_create
+  before_update :check_if_approved_valid_update
   before_update :add_editor_to_edit_by_on
 
   # Custom Methods
@@ -49,8 +50,15 @@ class RelCatAssign < ActiveRecord::Base
     self.edited_by_on = nil
   end
 
-  def check_if_approved_valid
+  def check_if_approved_valid_create
     errors.add(:relationship_type_id, "This relationship type already has this relationship category.") if (! RelCatAssign.find_if_exists(self.relationship_category_id, self.relationship_type_id).empty?)
+    if (self.is_approved != true)
+      self.approved_by = nil
+      self.approved_on = nil
+    end  
+  end
+
+  def check_if_approved_valid_update
     if (self.is_approved != true)
       self.approved_by = nil
       self.approved_on = nil

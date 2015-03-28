@@ -14,7 +14,9 @@ class GroupCatAssign < ActiveRecord::Base
   validates_presence_of :group_category_id
   validates_presence_of :group_id
   validates_presence_of :created_by
-  validate :check_if_approved_valid
+  validate :check_if_approved_valid_create, on: :create
+  validate :check_if_approved_valid_update, on: :update
+
 
   # Scope
   # ----------------------------- 
@@ -26,8 +28,8 @@ class GroupCatAssign < ActiveRecord::Base
 
   # Callbacks
   # ----------------------------- 
-  before_create :check_if_approved_valid
-  before_update :check_if_approved_valid
+  before_create :check_if_approved_valid_create
+  before_update :check_if_approved_valid_update
   before_create :init_array
   before_update :add_editor_to_edit_by_on
 
@@ -51,8 +53,15 @@ class GroupCatAssign < ActiveRecord::Base
     self.edited_by_on = nil
   end
   
-  def check_if_approved_valid
+  def check_if_approved_valid_create
       errors.add(:group_id, "This group already has this group category.") if (! GroupCatAssign.find_if_exists(self.group_category_id, self.group_id).empty?)
+    if (self.is_approved != true)
+      self.approved_by = nil
+      self.approved_on = nil
+    end  
+  end
+
+  def check_if_approved_valid_update
     if (self.is_approved != true)
       self.approved_by = nil
       self.approved_on = nil
