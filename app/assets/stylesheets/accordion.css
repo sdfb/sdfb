@@ -256,6 +256,11 @@
 	border:none;
 }
 
+.odnb-img{
+    max-width: 40px;
+    max-height: 40px;
+}
+
 aside ::-webkit-scrollbar {  
     width: 6px; 
 }  
