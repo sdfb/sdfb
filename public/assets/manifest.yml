@@ -67,6 +67,8 @@ node.png: node.png
 node/index.png: node.png
 odnb.gif: odnb.gif
 odnb/index.gif: odnb.gif
+odnb_sq.gif: odnb_sq.gif
+odnb_sq/index.gif: odnb_sq.gif
 search.png: search.png
 search/index.png: search.png
 slider-bg.png: slider-bg.png

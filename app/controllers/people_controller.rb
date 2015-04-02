@@ -26,10 +26,34 @@ class PeopleController < ApplicationController
   # GET /people/1
   # GET /people/1.json
   def show
-    @person = Person.find(params[:id])
-    @approved_relationships = Relationship.all_for_person(params[:id]).highest_certainty.all_approved.paginate(:page => params[:approved_relationships_page]).per_page(30)
-    @user_person_contribs = UserPersonContrib.all_for_person(params[:id]).all_approved.paginate(:page => params[:user_person_contribs_page]).per_page(30)
+    @person = Person.select("id, odnb_id, title, prefix, first_name, last_name, suffix, gender, search_names_all, created_by, birth_year_type, ext_birth_year, alt_birth_year, death_year_type, ext_death_year, alt_death_year, is_approved, approved_by, approved_on, justification, is_rejected, is_active, created_at, display_name, historical_significance").find(params[:id])
+
+    respond_to do |format|
+      format.html # show.html.erb
+      format.json { render json: @person }
+    end
+  end
+
+  def membership
     @groups = GroupAssignment.all_for_person(params[:id]).all_approved.paginate(:page => params[:groups_page]).per_page(30)
+
+    respond_to do |format|
+      format.html # show.html.erb
+      format.json { render json: @person }
+    end
+  end
+
+  def relationships
+    @approved_relationships = Relationship.all_for_person(params[:id]).highest_certainty.all_approved.paginate(:page => params[:approved_relationships_page]).per_page(30)
+
+    respond_to do |format|
+      format.html # show.html.erb
+      format.json { render json: @person }
+    end
+  end
+
+  def notes
+    @user_person_contribs = UserPersonContrib.all_for_person(params[:id]).all_approved.paginate(:page => params[:user_person_contribs_page]).per_page(30)
 
     respond_to do |format|
       format.html # show.html.erb

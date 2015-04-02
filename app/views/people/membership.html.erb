@@ -1,0 +1,98 @@
+<%- model_class = Person -%>
+
+<div class="row">
+  <div class="span12">
+    <h1><%= @person.display_name %>
+    </h1>
+  </div>
+</div>
+<br>
+<div class="row">
+  <div class="span7">
+    <div class = "well">
+      <h2>All Group Assignments for <%= @person.display_name %><%= link_to 'New Group Assignment',
+                    new_group_assignment_path(:person_id => @person.id),
+                    :class => 'btn btn-primary btn-mini' %></h2>
+      <% if ! @groups.empty? %>
+        <table class="table table-condensed">
+          <thead>
+          <tr>
+            <th>SDFB Group Assignment ID</th>
+            <th>Group</th>
+            <th>Start Date</th>
+            <th>End Date</th>
+            <th><%=t '.actions', :default => t("helpers.actions") %></th>
+          </tr>
+          </thead>
+          <tbody>
+            <% @groups.each do |group_assignment| %>
+              <tr>
+                <td><%= group_assignment.id %></td>
+                <td><%= link_to group_assignment.get_group_name, group_path(group_assignment.group_id) %></td>
+                <td>
+                  <% if ((! group_assignment.start_month.blank?) || (! group_assignment.start_day.blank?) || (! group_assignment.start_year.blank?)) %>
+                    <% if ! group_assignment.start_month.blank? %>
+                      <%= group_assignment.start_month %>
+                    <% end %>  
+                    <% if ! group_assignment.start_day.blank? %>
+                      <%= group_assignment.start_day %>,
+                    <% end %>
+                    <% if ! group_assignment.start_year.blank? %>
+                      <%= group_assignment.start_year %>
+                    <% end %>
+                  <% end %>
+                </td>
+                <td>
+                  <% if ((! group_assignment.end_month.blank?) || (! group_assignment.end_day.blank?) || (! group_assignment.end_year.blank?)) %>
+                    <% if ! group_assignment.end_month.blank? %>
+                      <%= group_assignment.end_month %>
+                    <% end %>  
+                    <% if ! group_assignment.end_day.blank? %>
+                      <%= group_assignment.end_day %>,
+                    <% end %>
+                    <% if ! group_assignment.end_year.blank? %>
+                      <%= group_assignment.end_year %>
+                    <% end %>
+                  <% end %>
+                </td>
+                <td>
+                  <% if can? :show, group_assignment %>
+                    <%= link_to 'Show', group_assignment, :class => 'btn btn-mini' %>
+                  <% end %>
+                  <% if can? :update, group_assignment %>
+                    <%= link_to 'Edit', edit_group_assignment_path(group_assignment), :class => 'btn btn-mini' %>
+                  <% end %>
+                </td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+
+        <%= will_paginate @groups, :param_name => 'groups_page', :previous_label => "Previous&nbsp;", :next_label => "&nbsp;Next" %>
+      <% else %>
+        <br>
+        <b>No groups have been assigned to this person.</b>
+      <% end %>
+    </div>
+  </div>
+  <div class="span5">
+      <div class="well">
+        <h2>Quicklinks for this Person</h2>
+        <dl class="dl-horizontal">
+          <dt><strong>Person Record:</strong></dt>
+          <dd><%= link_to 'View',
+                    controller: "people", action: "show", id: @person %></dd>
+          <dt><strong>Relationships:</strong></dt>
+          <dd><%= link_to 'View',
+                    controller: "people", action: "relationships", id: @person %></dd>
+          <dt><strong>Group Membership:</strong></dt>
+          <dd><%= link_to 'View',
+                    controller: "people", action: "membership", id: @person %></dd></dd>
+          <dt><strong>Notes:</strong></dt>
+          <dd><%= link_to 'View',
+                    controller: "people", action: "notes", id: @person %></dd></dd>
+        </dl>
+      </div>    
+    </div>
+</div>
+

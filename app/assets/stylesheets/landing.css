@@ -1,6 +1,6 @@
-/*@import url(https://fonts.googleapis.com/css?family=Open+Sans:400,700);
+@import url(https://fonts.googleapis.com/css?family=Open+Sans:400,700);
 
-#everything{
+#everything, #navbar{
   display: none;
 }
 
@@ -22,9 +22,9 @@
   padding-top: 5%;
   text-align: center;
   background: #4281a0;
-}*/
+}
 
-/*#landing-open img {
+#landing-open img {
   margin: 5%;
 }
 
@@ -52,9 +52,9 @@
   height: 85px;
   width: 45px;
   position: fixed;
-}*/
+}
 
-/*#arrow-down{
+#arrow-down{
   bottom: 0;
   display: block;
   margin: 0 auto;
@@ -90,7 +90,7 @@
   background-position: center top;
   background-color: #ecebe9;
   height: 100%;
-  /*width: 100%;
+  width: 100%;
   padding-top: 15%;
   overflow: hidden;
 }
@@ -174,4 +174,4 @@ h5{
 
 #landing-sidebar img{
   padding-top: 20px;
-}*/
+}

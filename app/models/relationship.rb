@@ -157,7 +157,7 @@ class Relationship < ActiveRecord::Base
   end
 
   def add_editor_to_edit_by_on_max_certainty
-    # Add editor to edit_by_on
+    #Add editor to edit_by_on
     if (! self.edited_by_on.blank?)
       previous_edited_by_on = Relationship.find(self.id).edited_by_on
       if previous_edited_by_on.nil?

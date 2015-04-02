@@ -42,6 +42,10 @@ Sdfb::Application.routes.draw do
 
   match '/relationship_search', :to => 'relationships#search'
 
+  match '/people_membership', :to => 'people#membership'
+  match '/people_relationships', :to => 'people#relationships'
+  match '/people_notes', :to => 'people#notes'
+
   match '/node_info', :to => 'home#update_node_info'
   match '/network_info', :to => 'home#update_network_info'
 

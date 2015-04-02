@@ -34,7 +34,8 @@ class GroupAssignment < ActiveRecord::Base
   validates_presence_of :person_id
   validates_presence_of :created_by
   # checks if the group and person assignment already exists
-  validate :check_if_approved_valid
+  validate :check_if_approved_valid_create, on: :create
+  validate :check_if_approved_valid_update, on: :update
   ## start date type is one included in the list
   validates_inclusion_of :start_date_type, :in => DATE_TYPE_LIST, :if => :start_year_present?
   ## end date type is one included in the list
@@ -51,8 +52,8 @@ class GroupAssignment < ActiveRecord::Base
   after_create :create_group_person_list
   after_update :create_group_person_list
   before_update :add_editor_to_edit_by_on
-  before_create :check_if_approved_valid
-  before_update :check_if_approved_valid
+  before_create :check_if_approved_valid_create
+  before_update :check_if_approved_valid_update
   before_create :init_array
 
   # Custom Methods
@@ -110,8 +111,15 @@ class GroupAssignment < ActiveRecord::Base
   end
 
   # checks if the group and person assignment already exists and if approved
-  def check_if_approved_valid
+  def check_if_approved_valid_create
     errors.add(:person_id, "This person is already a member of this group.") if (! GroupAssignment.find_if_exists(self.person_id, self.group_id).empty?)
+    if (self.is_approved != true)
+      self.approved_by = nil
+      self.approved_on = nil
+    end  
+  end
+
+  def check_if_approved_valid_update
     if (self.is_approved != true)
       self.approved_by = nil
       self.approved_on = nil
