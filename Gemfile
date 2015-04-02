@@ -43,6 +43,12 @@ gem 'gon'
 # Validates dates
 gem 'validates_timeliness'
 
+gem 'puma'
+
+gem "rack-timeout"
+
+gem 'newrelic_rpm'
+
 
 
 
