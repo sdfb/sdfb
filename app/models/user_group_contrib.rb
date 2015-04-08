@@ -26,7 +26,7 @@ class UserGroupContrib < ActiveRecord::Base
   scope :all_for_group, lambda {|groupID| 
       select('user_group_contribs.*')
       .where('group_id = ?', groupID)}
-  scope :all_inactive, where("is_active is true")
+  scope :all_inactive, where("is_active is false")
   scope :all_rejected, where("is_rejected is true")
 
   # Callbacks

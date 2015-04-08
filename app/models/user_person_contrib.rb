@@ -26,7 +26,7 @@ class UserPersonContrib < ActiveRecord::Base
   scope :all_for_person, lambda {|personID| 
       select('user_person_contribs.*')
       .where('person_id = ?', personID)}
-  scope :all_inactive, where("is_active is true")
+  scope :all_inactive, where("is_active is false")
   scope :all_rejected, where("is_rejected is true")
 
   # Callbacks
