@@ -32,6 +32,10 @@ Sdfb::Application.routes.draw do
   get "home/index"
 
   get "dashboard" => "users#dashboard", :as => "dashboard"
+  get "my_contributions" => "users#my_contributions", :as => "my_contributions"
+  get "all_inactive" => "users#all_inactive", :as => "all_inactive"
+  get "all_unapproved" => "users#all_unapproved", :as => "all_unapproved"
+  get "all_rejected" => "users#all_rejected", :as => "all_rejected"
 
   # set the root
   root :to => "home#index"

@@ -1,0 +1,11 @@
+<h1>All Unapproved Records</h1>
+
+<% if logged_in? %>
+	<%= render 'unapproved_people' %>
+	<%= render 'unapproved_relationships' %>
+	<%= render 'unapproved_groups' %>
+	<%= render 'unapproved_group_assignments' %>
+	<%= render 'unapproved_user_person_contribs' %>
+	<%= render 'unapproved_user_rel_contribs' %>
+	<%= render 'unapproved_user_group_contribs' %>
+<% end %>

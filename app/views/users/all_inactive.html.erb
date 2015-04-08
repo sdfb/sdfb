@@ -1,0 +1,11 @@
+<h1>All Inactive Records</h1>
+
+<% if logged_in? %>
+	<%= render 'inactive_people' %>
+	<%= render 'inactive_relationships' %>
+	<%= render 'inactive_groups' %>
+	<%= render 'inactive_group_assignments' %>
+	<%= render 'inactive_user_person_contribs' %>
+	<%= render 'inactive_user_rel_contribs' %>
+	<%= render 'inactive_user_group_contribs' %>
+<% end %>

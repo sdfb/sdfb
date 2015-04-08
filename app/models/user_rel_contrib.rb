@@ -51,6 +51,8 @@ class UserRelContrib < ActiveRecord::Base
       select('user_rel_contribs.*')
       .where('relationship_id = ?', relID)}
   scope :highest_certainty, order('certainty DESC')
+  scope :all_inactive, where("is_active is true")
+  scope :all_rejected, where("is_rejected is true")
 
   # Callbacks
   # ----------------------------- 

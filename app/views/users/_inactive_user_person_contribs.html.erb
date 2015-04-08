@@ -1,0 +1,42 @@
+<h2>Inactive People Annotations</h2>
+
+<% if ! @inactive_user_person_contribs.empty? %>
+  <div class = "well">
+    <table class="table table-condensed">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Person</th>
+          <th>Annotation</th>
+          <th>Bibliography</th>
+          <th><%=t '.actions', :default => t("helpers.actions") %></th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @inactive_user_person_contribs.each do |user_person_contrib| %>
+          <tr>
+            <td><%= user_person_contrib.id %></td>
+            <td><%= link_to Person.find(user_person_contrib.person_id).display_name, person_path(user_person_contrib.person_id) %></td>
+            <td><%= user_person_contrib.annotation %></td>
+            <td><%= user_person_contrib.bibliography %></td>
+            <td>
+              <% if can? :show, user_person_contrib %>
+                <%= link_to 'Show', user_person_contrib, :class => 'btn btn-mini' %>
+              <% end %>
+              <% if can? :update, user_person_contrib %>
+                <%= link_to t('.edit', :default => t("helpers.links.edit")),
+                          edit_user_person_contrib_path(user_person_contrib), :class => 'btn btn-mini' %>
+              <% end %>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+
+    <%= will_paginate @inactive_user_person_contribs, :param_name => 'inactive_user_person_contribs_page', :previous_label => "Previous&nbsp;", :next_label => "&nbsp;Next" %>
+  </div>
+<% else %>
+  <div class = "well">
+    No people annotations exist.
+  </div>
+<% end %>

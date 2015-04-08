@@ -1,0 +1,11 @@
+<h1>My Contributions</h1>
+
+<% if logged_in? %>
+	<%= render 'user_rel_contribs_for_user' %>
+	<%= render 'user_person_contribs_for_user' %>
+	<%= render 'user_group_contribs_for_user' %>
+	<%= render 'group_assignments_for_user' %>
+	<%= render 'new_rel_for_user' %>
+	<%= render 'new_people_for_user' %>
+	<%= render 'new_group_for_user' %>
+<% end %>

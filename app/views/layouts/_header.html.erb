@@ -5,8 +5,8 @@
 		<ul class="nav pull-right">
 			<% if logged_in? %>
 				<li><a href="/">Visualization</a></li>
-				<li><a href="/dashboard">Dashboard</a></li>
-				<% if (current_user.user_type == "Admin") || (current_user.user_type == "Standard") || (current_user.user_type == "Curator")%>
+				<% if (current_user.user_type == "Admin") || (current_user.user_type == "Curator")%>
+
 					<li class="dropdown">
 					    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
 					      View Records
@@ -62,6 +62,18 @@
 						    	<% end %>
 					    </ul>
 					</li>
+
+					<li class="dropdown">
+					    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+					    	Admin Dashboards
+					      <b class="caret"></b>
+					    </a>
+						<ul class="dropdown-menu">
+							<li><a href="/all_unapproved">All Unapproved Records</a></li>
+							<li><a href="/all_rejected">All Rejected Records</a></li>
+							<li><a href="/all_inactive">All Inactive Records</a></li>
+						</ul>
+					</li>
 				<% end %>
 			<% else %>
 				<li><a href="/">Visualization</a></li>
@@ -78,10 +90,19 @@
 				</li>
 			<% end %>
 			<% if current_user %>
-				<li><%= link_to current_user.email, user_path(current_user) %></li>
-				<li><%= link_to "Sign out", sign_out_path %></li>
+				<li class="dropdown">
+				    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+				    	<%= current_user.email %>
+				      <b class="caret"></b>
+				    </a>
+					<ul class="dropdown-menu">
+						<li><a href="/my_contributions">My Contributions</a></li>
+						<li><%= link_to "My Account", user_path(current_user) %></li>
+						<li><%= link_to "Sign Out", sign_out_path %></li>
+					</ul>
+				</li>
 			<% else %>
-				<li><%= link_to "Sign in", sign_in_path %></li>
+				<li><%= link_to "Sign In / Sign Up", sign_in_path %></li>
 			<% end %>
 			<li><a href="/about">About</a></li>
 			<li><a href="/help">Help</a></li>

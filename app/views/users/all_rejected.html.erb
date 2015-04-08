@@ -1,0 +1,11 @@
+<h1>All Rejected Records</h1>
+
+<% if logged_in? %>
+	<%= render 'rejected_people' %>
+	<%= render 'rejected_relationships' %>
+	<%= render 'rejected_groups' %>
+	<%= render 'rejected_group_assignments' %>
+	<%= render 'rejected_user_person_contribs' %>
+	<%= render 'rejected_user_rel_contribs' %>
+	<%= render 'rejected_user_group_contribs' %>
+<% end %>

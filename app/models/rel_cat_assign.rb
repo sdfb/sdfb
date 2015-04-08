@@ -22,7 +22,9 @@ class RelCatAssign < ActiveRecord::Base
   scope :for_rel_cat, lambda {|rel_cat_id_input| where('relationship_category_id = ?', "#{rel_cat_id_input}") }
   scope :for_rel_type, lambda {|rel_type_id_input| where('relationship_type_id = ?', "#{rel_type_id_input}") }
   scope :find_if_exists, lambda {|rel_cat_id_input, rel_type_id_input| where('(relationship_category_id = ?) and (relationship_type_id = ?)', rel_cat_id_input, rel_type_id_input) }
-  
+  scope :all_inactive, where("is_active is true")
+  scope :all_rejected, where("is_rejected is true")
+
   # Callbacks
   # -----------------------------
   before_create :init_array

@@ -51,6 +51,8 @@ class Relationship < ActiveRecord::Base
   scope :all_unapproved, where("approved_by is null and is_rejected is false")
   scope :for_user, lambda {|user_input| where('created_by = ?', "#{user_input}") }
   scope :highest_certainty, order('max_certainty DESC')
+  scope :all_inactive, where("is_active is true")
+  scope :all_rejected, where("is_rejected is true")
   scope :all_for_person, 
     lambda {|personID| 
       select('relationships.*')

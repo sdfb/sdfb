@@ -86,6 +86,9 @@ class UsersController < ApplicationController
     @unapproved_user_group_contribs = UserGroupContrib.all_unapproved.paginate(:page => params[:unapproved_user_group_contribs_page]).per_page(5)
     @unapproved_user_rel_contribs = UserRelContrib.all_unapproved.paginate(:page => params[:unapproved_user_rel_contribs_page]).per_page(5)
     @unapproved_user_person_contribs = UserPersonContrib.all_unapproved.paginate(:page => params[:unapproved_user_person_contribs_page]).per_page(5)
+  end
+
+  def my_contributions
     @user_rel_contribs = UserRelContrib.for_user(current_user.id).paginate(:page => params[:user_rel_contribs_page]).per_page(5)
     @user_person_contribs = UserPersonContrib.for_user(current_user.id).paginate(:page => params[:user_person_contribs_page]).per_page(5)
     @user_group_contribs = UserGroupContrib.for_user(current_user.id).paginate(:page => params[:user_group_contribs_page]).per_page(5)
@@ -93,6 +96,36 @@ class UsersController < ApplicationController
     @new_groups = Group.for_user(current_user.id).paginate(:page => params[:groups_page]).per_page(5)
     @new_relationships = Relationship.for_user(current_user.id).paginate(:page => params[:relationships_page]).per_page(5)
     @group_assignments = GroupAssignment.for_user(current_user.id).paginate(:page => params[:group_assignments_page]).per_page(5)
+  end
+
+  def all_inactive
+    @inactive_people = Person.all_inactive.paginate(:page => params[:inactive_people_page]).per_page(5)
+    @inactive_groups = Group.all_inactive.paginate(:page => params[:inactive_groups_page]).per_page(5)
+    @inactive_relationships = Relationship.all_inactive.paginate(:page => params[:inactive_relationships_page]).per_page(5)
+    @inactive_group_assigns = GroupAssignment.all_inactive.paginate(:page => params[:inactive_group_assigns_page]).per_page(5)
+    @inactive_user_group_contribs = UserGroupContrib.all_inactive.paginate(:page => params[:inactive_user_group_contribs_page]).per_page(5)
+    @inactive_user_rel_contribs = UserRelContrib.all_inactive.paginate(:page => params[:inactive_user_rel_contribs_page]).per_page(5)
+    @inactive_user_person_contribs = UserPersonContrib.all_inactive.paginate(:page => params[:inactive_user_person_contribs_page]).per_page(5)
+  end 
+
+  def all_unapproved
+    @unapproved_people = Person.all_unapproved.paginate(:page => params[:unapproved_people_page]).per_page(5)
+    @unapproved_groups = Group.all_unapproved.paginate(:page => params[:unapproved_groups_page]).per_page(5)
+    @unapproved_relationships = Relationship.all_unapproved.paginate(:page => params[:unapproved_relationships_page]).per_page(5)
+    @unapproved_group_assigns = GroupAssignment.all_unapproved.paginate(:page => params[:unapproved_group_assigns_page]).per_page(5)
+    @unapproved_user_group_contribs = UserGroupContrib.all_unapproved.paginate(:page => params[:unapproved_user_group_contribs_page]).per_page(5)
+    @unapproved_user_rel_contribs = UserRelContrib.all_unapproved.paginate(:page => params[:unapproved_user_rel_contribs_page]).per_page(5)
+    @unapproved_user_person_contribs = UserPersonContrib.all_unapproved.paginate(:page => params[:unapproved_user_person_contribs_page]).per_page(5)
+  end
+
+  def all_rejected
+    @rejected_people = Person.all_rejected.paginate(:page => params[:rejected_people_page]).per_page(5)
+    @rejected_groups = Group.all_rejected.paginate(:page => params[:rejected_groups_page]).per_page(5)
+    @rejected_relationships = Relationship.all_rejected.paginate(:page => params[:rejected_relationships_page]).per_page(5)
+    @rejected_group_assigns = GroupAssignment.all_rejected.paginate(:page => params[:rejected_group_assigns_page]).per_page(5)
+    @rejected_user_group_contribs = UserGroupContrib.all_rejected.paginate(:page => params[:rejected_user_group_contribs_page]).per_page(5)
+    @rejected_user_rel_contribs = UserRelContrib.all_rejected.paginate(:page => params[:rejected_user_rel_contribs_page]).per_page(5)
+    @rejected_user_person_contribs = UserPersonContrib.all_rejected.paginate(:page => params[:rejected_user_person_contribs_page]).per_page(5)
   end
 
   # DELETE /users/1
