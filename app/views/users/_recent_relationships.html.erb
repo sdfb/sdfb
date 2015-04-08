@@ -1,0 +1,41 @@
+<h2>Recent Relationships</h2>
+<% if ! @recent_relationships.empty? %>
+  <div class = "well">
+    <table class="table table-condensed">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Person 1</th>
+          <th>Person 2</th>
+          <th>Maximum Certainty</th>
+          <th><%=t '.actions', :default => t("helpers.actions") %></th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @recent_relationships.each do |relationship| %>
+          <tr>
+            <td><%= relationship.id %></td>
+            <td><%= link_to relationship.get_person1_name, person_path(relationship.person1_index) %></td>
+            <td><%= link_to relationship.get_person2_name, person_path(relationship.person2_index) %></td>
+            <td><%= relationship.max_certainty %>%</td>
+            <td>
+              <% if can? :show, relationship %>
+                <%= link_to 'Show', relationship, :class => 'btn btn-mini'  %>
+              <% end %>
+              <% if can? :update, relationship %>
+                <%= link_to t('.edit', :default => t("helpers.links.edit")),
+                            edit_relationship_path(relationship), :class => 'btn btn-mini' %>
+              <% end %>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+
+    <%= will_paginate @recent_relationships, :param_name => 'recent_relationships_page', :previous_label => "Previous&nbsp;", :next_label => "&nbsp;Next" %>
+  </div>
+<% else %>
+  <div class = "well">
+    No recent relationships exist.
+  </div>
+<% end %>

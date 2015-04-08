@@ -23,6 +23,7 @@ class GroupCatAssign < ActiveRecord::Base
   scope :all_approved, where("approved_by is not null and is_active is true and is_rejected is false")
   scope :all_inactive, where("is_active is false")
   scope :all_rejected, where("is_rejected is true")
+  scope :all_recent, order('created_at DESC')
   scope :all_unapproved, where("approved_by is null and is_rejected is false")
   scope :for_group, lambda {|group_id_input| where('group_id = ?', "#{group_id_input}") }
   scope :for_group_category, lambda {|group_category_id_input| where('group_category_id = ?', "#{group_category_id_input}") }

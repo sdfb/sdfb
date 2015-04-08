@@ -24,6 +24,7 @@ class RelCatAssign < ActiveRecord::Base
   scope :find_if_exists, lambda {|rel_cat_id_input, rel_type_id_input| where('(relationship_category_id = ?) and (relationship_type_id = ?)', rel_cat_id_input, rel_type_id_input) }
   scope :all_inactive, where("is_active is false")
   scope :all_rejected, where("is_rejected is true")
+  scope :all_recent, order('created_at DESC')
 
   # Callbacks
   # -----------------------------

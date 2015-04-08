@@ -1,0 +1,11 @@
+<h1>All Recent Records</h1>
+
+<% if logged_in? %>
+	<%= render 'recent_people' %>
+	<%= render 'recent_relationships' %>
+	<%= render 'recent_groups' %>
+	<%= render 'recent_group_assignments' %>
+	<%= render 'recent_user_person_contribs' %>
+	<%= render 'recent_user_rel_contribs' %>
+	<%= render 'recent_user_group_contribs' %>
+<% end %>

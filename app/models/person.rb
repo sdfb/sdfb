@@ -21,6 +21,7 @@ class Person < ActiveRecord::Base
   scope :all_unapproved, where("approved_by is null and is_rejected is false")
   scope :all_inactive, where("is_active is false")
   scope :all_rejected, where("is_rejected is true")
+  scope :all_recent, order('created_at DESC')
   scope :for_user, lambda {|user_input| where('created_by = ?', "#{user_input}") }
   scope :for_odnb_id, lambda {|odnb_id_input| where('odnb_id like ?', "%#{odnb_id_input}%") }
   scope :for_first_name, lambda {|first_name_input| where('first_name like ?', "%#{first_name_input}")}

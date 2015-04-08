@@ -128,6 +128,16 @@ class UsersController < ApplicationController
     @rejected_user_person_contribs = UserPersonContrib.all_rejected.paginate(:page => params[:rejected_user_person_contribs_page]).per_page(5)
   end
 
+  def all_recent
+    @recent_people = Person.all_recent.paginate(:page => params[:recent_people_page]).per_page(5)
+    @recent_groups = Group.all_recent.paginate(:page => params[:recent_groups_page]).per_page(5)
+    @recent_relationships = Relationship.all_recent.paginate(:page => params[:recent_relationships_page]).per_page(5)
+    @recent_group_assigns = GroupAssignment.all_recent.paginate(:page => params[:recent_group_assigns_page]).per_page(5)
+    @recent_user_group_contribs = UserGroupContrib.all_recent.paginate(:page => params[:recent_user_group_contribs_page]).per_page(5)
+    @recent_user_rel_contribs = UserRelContrib.all_recent.paginate(:page => params[:recent_user_rel_contribs_page]).per_page(5)
+    @recent_user_person_contribs = UserPersonContrib.all_recent.paginate(:page => params[:recent_user_person_contribs_page]).per_page(5)
+  end
+
   # DELETE /users/1
   # DELETE /users/1.json
   # def destroy

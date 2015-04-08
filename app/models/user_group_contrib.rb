@@ -28,6 +28,7 @@ class UserGroupContrib < ActiveRecord::Base
       .where('group_id = ?', groupID)}
   scope :all_inactive, where("is_active is false")
   scope :all_rejected, where("is_rejected is true")
+  scope :all_recent, order('created_at DESC')
 
   # Callbacks
   # ----------------------------- 

@@ -19,6 +19,7 @@ class GroupCategory < ActiveRecord::Base
   scope :all_unapproved, where("approved_by is null and is_rejected is false")
   scope :all_inactive, where("is_active is false")
   scope :all_rejected, where("is_rejected is true")
+  scope :all_recent, order('created_at DESC')
 
   # Callbacks
   # ----------------------------- 
