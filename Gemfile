@@ -45,7 +45,7 @@ gem 'validates_timeliness'
 
 gem 'puma'
 
-gem "rack-timeout"
+gem "rack-timeout", '~> 0.2.4'
 
 gem 'newrelic_rpm'
 

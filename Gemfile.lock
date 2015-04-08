@@ -73,7 +73,7 @@ GEM
       rack
     rack-test (0.6.3)
       rack (>= 1.0)
-    rack-timeout (0.2.3)
+    rack-timeout (0.2.4)
     rails (3.2.11)
       actionmailer (= 3.2.11)
       actionpack (= 3.2.11)
@@ -143,7 +143,7 @@ DEPENDENCIES
   newrelic_rpm
   pg
   puma
-  rack-timeout
+  rack-timeout (~> 0.2.4)
   rails (= 3.2.11)
   rails3-jquery-autocomplete
   sass-rails (~> 3.2.3)
