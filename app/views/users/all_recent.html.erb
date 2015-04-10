@@ -2,10 +2,21 @@
 
 <% if logged_in? %>
 	<%= render 'recent_people' %>
+	<%= render 'recent_user_person_contribs' %>
 	<%= render 'recent_relationships' %>
+	<% if (current_user.user_type == "Admin") %>
+		<%= render 'recent_rel_types' %>
+	<% end %>
+	<%= render 'recent_user_rel_contribs' %>
+	<% if (current_user.user_type == "Admin") %>
+		<%= render 'recent_rel_cats' %>
+	<% end %>
+	<%= render 'recent_rel_type_cat_assign' %>
 	<%= render 'recent_groups' %>
 	<%= render 'recent_group_assignments' %>
-	<%= render 'recent_user_person_contribs' %>
-	<%= render 'recent_user_rel_contribs' %>
 	<%= render 'recent_user_group_contribs' %>
+	<% if (current_user.user_type == "Admin") %>
+		<%= render 'recent_group_cats' %>
+	<% end %>
+	<%= render 'recent_cat_assigns' %>
 <% end %>

@@ -1,0 +1,29 @@
+<h2>Rejected Relationship Categories</h2>
+    <% if ! @rejected_rel_cats.empty? %>
+        <div class = "well">  
+            <table class="table table-condensed">
+                <tr>
+                <th>SDFB Relationship Category ID</th>
+                <th>Category Name</th>
+                <th>Description</th>
+                <th></th>
+                </tr>
+
+                <% @rejected_rel_cats.each do |relationship_category| %>
+                  <tr>
+                    <td><%= relationship_category.id %></td>
+                    <td><%= relationship_category.name %></td>
+                    <td><%= relationship_category.description %></td>
+                    <td><%= link_to 'Show', relationship_category, :class => 'btn btn-mini' %>
+                    <%= link_to 'Edit', edit_relationship_category_path(relationship_category), :class => 'btn btn-mini' %></td>
+                  </tr>
+                <% end %>
+            </table>
+
+            <%= will_paginate @rejected_rel_cats, :param_name => 'rejected_rel_cats_page', :previous_label => "Previous&nbsp;", :next_label => "&nbsp;Next" %>
+        </div>
+    <% else %>
+        <div class = "well">
+        No rejected relationship categories exist.
+        </div>
+<% end %>

@@ -28,6 +28,8 @@ class GroupCatAssign < ActiveRecord::Base
   scope :for_group, lambda {|group_id_input| where('group_id = ?', "#{group_id_input}") }
   scope :for_group_category, lambda {|group_category_id_input| where('group_category_id = ?', "#{group_category_id_input}") }
   scope :find_if_exists, lambda {|group_category_id_input, group_id_input| where('(group_category_id = ?) and (group_id = ?)', group_category_id_input, group_id_input) }
+  scope :for_user, lambda {|user_input| where('created_by = ?', "#{user_input}") }
+
 
   # Callbacks
   # ----------------------------- 

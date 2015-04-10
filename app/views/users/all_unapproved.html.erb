@@ -2,10 +2,21 @@
 
 <% if logged_in? %>
 	<%= render 'unapproved_people' %>
+	<%= render 'unapproved_user_person_contribs' %>
 	<%= render 'unapproved_relationships' %>
+	<% if (current_user.user_type == "Admin") %>
+		<%= render 'unapproved_rel_types' %>
+	<% end %>
+	<%= render 'unapproved_user_rel_contribs' %>
+	<% if (current_user.user_type == "Admin") %>
+		<%= render 'unapproved_rel_cats' %>
+	<% end %>
+	<%= render 'unapproved_rel_type_cat_assign' %>
 	<%= render 'unapproved_groups' %>
 	<%= render 'unapproved_group_assignments' %>
-	<%= render 'unapproved_user_person_contribs' %>
-	<%= render 'unapproved_user_rel_contribs' %>
 	<%= render 'unapproved_user_group_contribs' %>
+	<% if (current_user.user_type == "Admin") %>
+		<%= render 'unapproved_group_cats' %>
+	<% end %>
+	<%= render 'unapproved_cat_assigns' %>
 <% end %>

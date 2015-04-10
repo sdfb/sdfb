@@ -1,0 +1,32 @@
+<h2>Rejected Relationship Types</h2>
+<% if ! @rejected_rel_types.empty? %>
+	<div class = "well">
+		<table class="table table-condensed">
+		    <tr>
+		    <th>SDFB Relationship Type ID</th>
+		    <th>Relationship Type Name</th>
+		    <th>Inverse of Relationship Type</th>
+		    <th></th>
+		    </tr>
+
+		    <% @rejected_rel_types.each do |relationship_type| %>
+		      <tr>
+		        <td><%= relationship_type.id %></td>
+		        <td><%= relationship_type.name %></td>
+		        <% if ! relationship_type.relationship_type_inverse.blank? %>
+		            <td><%= link_to RelationshipType.find(relationship_type.relationship_type_inverse).name, relationship_type_path(relationship_type.relationship_type_inverse) %></td>
+		        <% else %>
+		            <td></td>
+		        <% end %>
+		        <td><%= link_to 'Show', relationship_type, :class => 'btn btn-mini' %>
+		        <%= link_to 'Edit', edit_relationship_type_path(relationship_type), :class => 'btn btn-mini' %></td>
+		      </tr>
+		    <% end %>
+		</table>
+		<%= will_paginate @rejected_rel_types, :param_name => 'rejected_rel_types_page', :previous_label => "Previous&nbsp;", :next_label => "&nbsp;Next" %>
+	</div>
+ <% else %>
+	<div class = "well">
+	No rejected relationship types exist.
+	</div>
+<% end %>
