@@ -59,7 +59,6 @@ class Ability
 			can :export_rels_for_rels_greater_than_100180000, Relationship
 
 			# A user can view their dashboard
-			can :dashboard, User
 			can :my_contributions, User
 			can :all_unapproved, User
 			
@@ -169,7 +168,6 @@ class Ability
 			can :export_rels_for_rels_greater_than_100180000, Relationship
 
 			# A user can view their dashboard
-			can :dashboard, User
 			can :my_contributions, User
 
 			# A user can see the autocomplete dropdowns for people and relationships

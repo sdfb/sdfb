@@ -1,14 +1,14 @@
-<h2>Recent People Annotations</h2>
+<h2>Recent People Notes</h2>
 
 <% if ! @recent_user_person_contribs.empty? %>
   <div class = "well">
     <table class="table table-condensed">
       <thead>
         <tr>
-          <th>ID</th>
+          <th>SDFB Person ID</th>
           <th>Person</th>
-          <th>Annotation</th>
-          <th>Bibliography</th>
+          <th>Note</th>
+          <th>Citation</th>
           <th><%=t '.actions', :default => t("helpers.actions") %></th>
         </tr>
       </thead>
@@ -37,6 +37,6 @@
   </div>
 <% else %>
   <div class = "well">
-    No people annotations exist.
+    No people notes exist.
   </div>
 <% end %>
