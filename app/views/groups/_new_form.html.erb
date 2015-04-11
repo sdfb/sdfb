@@ -25,6 +25,8 @@
     <%= f.hidden_field :approved_by, :value => current_user.id %>
   <% end %>
   <div class="form-actions">
+    Please note that your submission will not appear on SDFB <br>
+    until it is reviewed by the SDFB curator or administrator. <br>
     <%= f.button :submit, :class => 'btn btn-primary', :value => "Add Group to SDFB" %>
   </div>
 <% end %>
