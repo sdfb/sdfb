@@ -8,7 +8,6 @@
           <th>SDFB Group Notes ID</th>
           <th>Group</th>
           <th>Note</th>
-          <th>Citation</th>
           <th><%=t '.actions', :default => t("helpers.actions") %></th>
         </tr>
       </thead>
@@ -18,7 +17,6 @@
             <td><%= user_group_contrib.id %></td>
             <td><%= link_to Group.find(user_group_contrib.group_id).name, group_path(user_group_contrib.group_id) %></td>
             <td><%= user_group_contrib.annotation %></td>
-            <td><%= user_group_contrib.bibliography %></td>
             <td>
               <% if can? :show, user_group_contrib %>
                   <%= link_to 'Show', user_group_contrib, :class => 'btn btn-mini' %>
