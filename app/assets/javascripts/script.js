@@ -21,22 +21,22 @@ $(document).ready(function() {
     var default_ecertainty = 100
 
     //Tooltips
-	$("#search-network").tooltip({placement: 	'right', title: 'Connections of one individual'});
-    $("#search-shared-network").tooltip({placement:     'right', title: 'Mutual connections between two individuals'});
-	$("#search-group").tooltip({placement: 	'right', title: 'Members of one group'});
-    $("#search-shared-group").tooltip({placement:   'right', title: 'Mutual members of two groups'});
+	$("#search-network").tooltip({placement: 	'right', title: 'First- and second-degree network connections of one person'});
+    $("#search-shared-network").tooltip({placement:     'right', title: 'First- and second-degree network connections shared by two people'});
+	$("#search-group").tooltip({placement: 	'right', title: 'Members belonging to a group'});
+    $("#search-shared-group").tooltip({placement:   'right', title: 'Members belonging to both groups'});
 
-    $("#contribute-add-person").tooltip({placement:   'right', title: 'Add a new individual to the database'});
+    $("#contribute-add-person").tooltip({placement:   'right', title: 'Add a new person to the database'});
     $("#contribute-add-group").tooltip({placement:  'right', title: 'Add a new group to the database'});
-    $("#contribute-add-relationship").tooltip({placement:   'right', title: 'Add a relationship between two individuals'});
+    $("#contribute-add-relationship").tooltip({placement:   'right', title: 'Add a new, untyped relationship between two people in the database'});
 
     $("#icon-tag").tooltip({placement:  'right', title: 'Tag group'});
-    $("#icon-link").tooltip({placement: 'right', title: 'Add a relationship'});
-    $("#icon-annotate").tooltip({placement: 'right', title: 'Annotate relationship'});
+    $("#icon-link").tooltip({placement: 'right', title: 'Add a new, untyped relationship for this person'});
+    $("#icon-annotate").tooltip({placement: 'right', title: 'Add a note to this relationship'});
     $("#icon-info").tooltip({placement: 'left', title: 'Scroll to zoom, double click on node or edge for more information, single click to reset view'});
     $("#icon-color").tooltip({placement: 'left', title: 'Click to view color legend'});
 
-    $("#node-icon-chain").tooltip({placement: 'right', title: 'Add relationship'});
+    $("#node-icon-chain").tooltip({placement: 'right', title: 'Add a new, untyped relationship for this person'});
     $("#node-icon-annotate").tooltip({placement: 'right', title: 'Add a note to this person'});
     $("#edge-icon-annotate").tooltip({placement: 'right', title: 'Add a relationship type and note to this relationship'});
     $("#group-icon-label").tooltip({placement: 'right', title: 'Add person to group'});
