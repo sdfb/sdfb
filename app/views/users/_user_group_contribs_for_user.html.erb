@@ -1,10 +1,10 @@
-<h2>Group Annotations</h2>
+<h2>Group Notes</h2>
 <div class = "well">
   <% if ! @user_group_contribs.empty? %>
     <table class="table table-condensed">
       <thead>
         <tr>
-          <th>ID</th>
+          <th>SDFB Group Note ID</th>
           <th>Group</th>
           <th>Status</th>
           <th><%=t '.actions', :default => t("helpers.actions") %></th>
@@ -46,6 +46,6 @@
 
     <%= will_paginate @user_group_contribs, :param_name => 'user_group_contribs_page', :previous_label => "Previous&nbsp;", :next_label => "&nbsp;Next" %>
   <% else %>
-      You have not contributed any group annotations.
+      You have not contributed any group notes.
   <% end %>
 </div>

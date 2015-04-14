@@ -1,10 +1,10 @@
-<h2>People Annotations</h2>
+<h2>People Note</h2>
 <div class = "well">
   <% if ! @user_person_contribs.empty? %>
     <table class="table table-condensed">
       <thead>
         <tr>
-          <th>ID</th>
+          <th>SDFB People Note ID</th>
           <th>Person</th>
           <th>Status</th>
           <th><%=t '.actions', :default => t("helpers.actions") %></th>
@@ -46,6 +46,6 @@
 
     <%= will_paginate @user_person_contribs, :param_name => 'user_person_contribs_page', :previous_label => "Previous&nbsp;", :next_label => "&nbsp;Next" %>
   <% else %>
-    You have not contributed any people annotations.
+    You have not contributed any people notes.
   <% end %>
 </div>

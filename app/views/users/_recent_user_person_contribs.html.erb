@@ -1,14 +1,13 @@
-<h2>Recent People Annotations</h2>
+<h2>Recent People Notes</h2>
 
 <% if ! @recent_user_person_contribs.empty? %>
   <div class = "well">
     <table class="table table-condensed">
       <thead>
         <tr>
-          <th>ID</th>
+          <th>SDFB Person ID</th>
           <th>Person</th>
-          <th>Annotation</th>
-          <th>Bibliography</th>
+          <th>Note</th>
           <th><%=t '.actions', :default => t("helpers.actions") %></th>
         </tr>
       </thead>
@@ -18,7 +17,6 @@
             <td><%= user_person_contrib.id %></td>
             <td><%= link_to Person.find(user_person_contrib.person_id).display_name, person_path(user_person_contrib.person_id) %></td>
             <td><%= user_person_contrib.annotation %></td>
-            <td><%= user_person_contrib.bibliography %></td>
             <td>
               <% if can? :show, user_person_contrib %>
                 <%= link_to 'Show', user_person_contrib, :class => 'btn btn-mini' %>
@@ -37,6 +35,6 @@
   </div>
 <% else %>
   <div class = "well">
-    No people annotations exist.
+    No people notes exist.
   </div>
 <% end %>

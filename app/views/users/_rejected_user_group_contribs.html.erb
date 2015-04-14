@@ -1,14 +1,13 @@
-<h2>Rejected Group Annotations</h2>
+<h2>Rejected Group Notes</h2>
 
 <% if ! @rejected_user_group_contribs.empty? %>
   <div class = "well">
     <table class="table table-condensed">
       <thead>
         <tr>
-          <th>ID</th>
+          <th>SDFB Group Notes ID</th>
           <th>Group</th>
-          <th>Annotation</th>
-          <th>Bibliography</th>
+          <th>Note</th>
           <th><%=t '.actions', :default => t("helpers.actions") %></th>
         </tr>
       </thead>
@@ -18,7 +17,6 @@
             <td><%= user_group_contrib.id %></td>
             <td><%= link_to Group.find(user_group_contrib.group_id).name, group_path(user_group_contrib.group_id) %></td>
             <td><%= user_group_contrib.annotation %></td>
-            <td><%= user_group_contrib.bibliography %></td>
             <td>
               <% if can? :show, user_group_contrib %>
                   <%= link_to 'Show', user_group_contrib, :class => 'btn btn-mini' %>
@@ -37,6 +35,6 @@
   </div>
 <% else %>
   <div class = "well">
-    No group annotations exist.
+    No group notes exist.
   </div>
 <% end %>

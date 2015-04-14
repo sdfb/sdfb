@@ -1,11 +1,30 @@
 <h1>All Recent Records</h1>
 
+<%= render 'recent_people' %>
+<%= render 'recent_user_person_contribs' %>
+<%= render 'recent_relationships' %>
 <% if logged_in? %>
-	<%= render 'recent_people' %>
-	<%= render 'recent_relationships' %>
-	<%= render 'recent_groups' %>
-	<%= render 'recent_group_assignments' %>
-	<%= render 'recent_user_person_contribs' %>
-	<%= render 'recent_user_rel_contribs' %>
-	<%= render 'recent_user_group_contribs' %>
+	<% if (current_user.user_type == "Admin") %>
+		<%= render 'recent_rel_types' %>
+	<% end %>
+<% end %>
+<%= render 'recent_user_rel_contribs' %>
+<% if logged_in? %>
+	<% if (current_user.user_type == "Admin") %>
+		<%= render 'recent_rel_cats' %>
+	<% end %>
+	<% if (current_user.user_type == "Admin") || (current_user.user_type == "Curator") %>
+		<%= render 'recent_rel_type_cat_assign' %>
+	<% end %>
+<% end %>
+<%= render 'recent_groups' %>
+<%= render 'recent_group_assignments' %>
+<%= render 'recent_user_group_contribs' %>
+<% if logged_in? %>
+	<% if (current_user.user_type == "Admin") %>
+		<%= render 'recent_group_cats' %>
+	<% end %>
+	<% if (current_user.user_type == "Admin") || (current_user.user_type == "Curator") %>
+		<%= render 'recent_cat_assigns' %>
+	<% end %>
 <% end %>

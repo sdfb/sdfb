@@ -6,13 +6,13 @@ var default_edate = 1800;
   
 /*
 Num_rels Cluster    Color
- 0-1    0        orange
- 2-3    1        yellow
- 4-5    2        aqua blue
- 6-7    3        marine blue
- 8-9    4        light blue
- 10-11  5        hot pink
- 12+    6        purple
+ 0      0        grey
+ 1-4    1        red
+ 5-9    2        orange
+ 10-19  3        yellow
+ 20-29  4        light blue
+ 30-49  5        medium blue
+ 50+    6        dark blue
 */
 
 // //returns cluster number based on number of relationships the cluster has
@@ -55,7 +55,7 @@ function getColorsRels(){
      return 3;
    } else if (size >=5) {
      return 2;
-   } else if (size >1) {
+   } else if (size >=1) {
      return 1;
    } else {
      return 0;
@@ -64,7 +64,7 @@ function getColorsRels(){
 
 // //returns colors based on cluster group number
  function getColorsRels(){
-    return { 0: "#bdbdbd", 1: "#d73027", 2: "#fc8d59", 3: "#fee090", 4: "#abd9e9", 5: "#74add1", 6: "#4575b4"}
+    return { 0: "#bdbdbd", 1: "#d73027", 2: "#f46d43", 3: "#fdae61", 4: "#abd9e9", 5: "#74add1", 6: "#4575b4"}
  }
 
 // Checks if a value is in an array

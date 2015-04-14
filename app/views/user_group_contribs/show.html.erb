@@ -2,7 +2,7 @@
 
 <div class="row">
   <div class="span12">
-    <h1>Group Annotation</h1>
+    <h1>Group Note</h1>
   </div>
 </div>
 <br>
@@ -23,10 +23,10 @@
         <dd><%= link_to Group.find(@user_group_contrib.group_id).name,  group_path(@user_group_contrib.group_id) %></dd>
         <dt><strong>Created By:</strong></dt>
         <dd><%= link_to User.find(@user_group_contrib.created_by).username,  user_path(@user_group_contrib.created_by) %></dd>
-        <dt><strong>Annotation:</strong></dt>
+        <dt><strong>Note:</strong></dt>
         <dd><%= @user_group_contrib.annotation %></dd>
         <% if ! @user_group_contrib.bibliography.blank? %>
-          <dt><strong>Bibliography:</strong></dt>
+          <dt><strong>Citation:</strong></dt>
           <dd><%= @user_group_contrib.bibliography %></dd>
         <% end %>
         <% if (! current_user.blank?) && ((current_user.user_type == "Admin") || (current_user.user_type == "Curator")) %>

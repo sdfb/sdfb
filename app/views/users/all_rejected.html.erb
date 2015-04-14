@@ -2,10 +2,21 @@
 
 <% if logged_in? %>
 	<%= render 'rejected_people' %>
+	<%= render 'rejected_user_person_contribs' %>
 	<%= render 'rejected_relationships' %>
+	<% if (current_user.user_type == "Admin") %>
+		<%= render 'rejected_rel_types' %>
+	<% end %>
+	<%= render 'rejected_user_rel_contribs' %>
+	<% if (current_user.user_type == "Admin") %>
+		<%= render 'rejected_rel_cats' %>
+	<% end %>
+	<%= render 'rejected_rel_type_cat_assign' %>
 	<%= render 'rejected_groups' %>
 	<%= render 'rejected_group_assignments' %>
-	<%= render 'rejected_user_person_contribs' %>
-	<%= render 'rejected_user_rel_contribs' %>
 	<%= render 'rejected_user_group_contribs' %>
+	<% if (current_user.user_type == "Admin") %>
+		<%= render 'rejected_group_cats' %>
+	<% end %>
+	<%= render 'rejected_cat_assigns' %>
 <% end %>

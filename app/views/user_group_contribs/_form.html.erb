@@ -18,8 +18,8 @@
     <%= f.input :group_id, :collection =>@groupOptions.collect{ |g| [g.name, g.id] }, label: "Group", prompt: "Select" %>
   <% end %>
   <%= f.hidden_field :created_by, :value => current_user.id %>
-  <%= f.input :annotation %>
-  <%= f.input :bibliography %>
+  <%= f.input :annotation, label: "Note" %>
+  <%= f.input :bibliography, label: "Citation" %>
   <% if (current_user.user_type == "Admin") || (current_user.user_type == "Curator") %>
     <%= f.input :is_approved %>
     <%= f.input :is_active %>
@@ -28,6 +28,8 @@
     <%= f.hidden_field :approved_on, :value => Time.now %>
   <% end %>
   <div class="form-actions">
+    Please note that your submission will not appear on SDFB <br>
+    until it is reviewed by a SDFB curator or administrator. <br>
     <%= f.button :submit, :class => 'btn btn-primary', :value => "Add Note to Group" %>
   </div>
 <% end %>

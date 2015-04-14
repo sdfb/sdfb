@@ -58,8 +58,10 @@
           <dt><strong>Curator Revoked?:</strong></dt>
           <dd><%= @user.curator_revoked %></dd>
         <% end %>
-        <dt><strong>User Since:</strong></dt>
-        <dd><%= @user.created_at %></dd>
+        <% if ! current_user.nil? && (current_user.user_type == "Admin") %>
+          <dt><strong>User Since:</strong></dt>
+          <dd><%= @user.created_at %></dd>
+        <% end %>
       </dl>
     </div>
   </div>

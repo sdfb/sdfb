@@ -25,10 +25,10 @@
         <dd><%= link_to Relationship.find(@user_rel_contrib.relationship_id).get_person1_name + " & " + Relationship.find(@user_rel_contrib.relationship_id).get_person2_name ,  relationship_path(@user_rel_contrib.relationship_id) %></dd>
         <dt><strong><%= model_class.human_attribute_name(:certainty) %>:</strong></dt>
         <dd><%= @user_rel_contrib.certainty %>%</dd>
-        <dt><strong><%= model_class.human_attribute_name(:annotation) %>:</strong></dt>
+        <dt><strong>Note:</strong></dt>
         <dd><%= @user_rel_contrib.annotation %></dd>
         <% if (! @user_rel_contrib.bibliography.blank?) %>
-          <dt><strong>Bibliography:</strong></dt>
+          <dt><strong>Citation:</strong></dt>
           <dd><%= @user_rel_contrib.bibliography %></dd>
         <% end %>
         <dt><strong>Relationship Type:</strong></dt>

@@ -1,4 +1,4 @@
-<h1>Group Annotations <%= link_to 'Add a Note to a Group',
+<h1>Group Note <%= link_to 'Add a Note to a Group',
             new_user_group_contrib_path,
             :class => 'btn btn-primary' %></h1><br>
 
@@ -6,10 +6,10 @@
   <table class="table table-condensed">
     <thead>
       <tr>
-        <th>SDFB Group Annotation ID</th>
+        <th>SDFB Group Note ID</th>
         <th>Group</th>
-        <th>Annotation</th>
-        <th>Bibliography</th>
+        <th>Note</th>
+        <th>Citation</th>
         <th><%=t '.actions', :default => t("helpers.actions") %></th>
       </tr>
     </thead>
@@ -37,6 +37,6 @@
   <%= will_paginate @user_group_contribs, :param_name => 'user_group_contribs_page', :previous_label => "Previous&nbsp;", :next_label => "&nbsp;Next" %>
 <% else %>
   <div class = "well">
-    No group annotations exist.
+    No group notes exist.
   </div>
 <% end %>

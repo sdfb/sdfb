@@ -1,7 +1,7 @@
 <%- model_class = UserPersonContrib -%>
 <div class="row">
   <div class="span12">
-    <h1>Person Annotation</h1>
+    <h1>Person Note</h1>
   </div>
 </div>
 <br>
@@ -22,10 +22,10 @@
         <dd><%= link_to Person.find(@user_person_contrib.person_id).display_name,  person_path(@user_person_contrib.person_id) %></dd>
         <dt><strong>Created By:</strong></dt>
         <dd><%= link_to User.find(@user_person_contrib.created_by).username,  user_path(@user_person_contrib.created_by) %></dd>
-        <dt><strong>Annotation:</strong></dt>
+        <dt><strong>Note:</strong></dt>
         <dd><%= @user_person_contrib.annotation %></dd>
         <% if ! @user_person_contrib.bibliography.blank? %>
-          <dt><strong>Bibliography:</strong></dt>
+          <dt><strong>Citation:</strong></dt>
           <dd><%= @user_person_contrib.bibliography %></dd>
         <% end %>
         <% if (! current_user.blank?) && ((current_user.user_type == "Admin") || (current_user.user_type == "Curator")) %>

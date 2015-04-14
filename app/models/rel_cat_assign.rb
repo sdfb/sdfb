@@ -25,6 +25,7 @@ class RelCatAssign < ActiveRecord::Base
   scope :all_inactive, where("is_active is false")
   scope :all_rejected, where("is_rejected is true")
   scope :all_recent, order('created_at DESC')
+  scope :for_user, lambda {|user_input| where('created_by = ?', "#{user_input}") }
 
   # Callbacks
   # -----------------------------

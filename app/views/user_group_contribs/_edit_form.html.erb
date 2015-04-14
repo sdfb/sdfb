@@ -17,8 +17,8 @@
   <% else %>
     <%= f.input :group_id, :collection =>@groupOptions.collect{ |g| [g.name, g.id] }, label: "Group", prompt: "Select" %>
   <% end %>
-  <%= f.input :annotation %>
-  <%= f.input :bibliography %>
+  <%= f.input :annotation, label: "Note" %>
+  <%= f.input :bibliography, label: "Citation" %>
   <% if (current_user.user_type == "Admin") || (current_user.user_type == "Curator") %>
     <%= f.input :is_approved %>
     <%= f.input :is_active %>
@@ -30,6 +30,6 @@
   <% end %>
   <%= f.hidden_field :edited_by_on, :value => current_user.id %>
   <div class="form-actions">
-    <%= f.button :submit, :class => 'btn btn-primary', :value => "Edit Group Annotation" %>
+    <%= f.button :submit, :class => 'btn btn-primary', :value => "Edit Group Note" %>
   </div>
 <% end %>
