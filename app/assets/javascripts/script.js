@@ -20,6 +20,18 @@ $(document).ready(function() {
     var default_scertainty = 0
     var default_ecertainty = 100
 
+$(function() {
+    $( document ).tooltip({
+      items: "button",
+      content: function() {
+        var element = $( this );
+        if ( element.attr("id") == "icon-color" {
+          return "<img src='./imgages/colorchart.png'/>";
+        }
+      }
+    });
+  });
+
     //Tooltips
 	$("#search-network").tooltip({placement: 	'right', title: 'Connections of one individual'});
     $("#search-shared-network").tooltip({placement:     'right', title: 'Mutual connections between two individuals'});
@@ -34,7 +46,7 @@ $(document).ready(function() {
     $("#icon-link").tooltip({placement: 'right', title: 'Add a relationship'});
     $("#icon-annotate").tooltip({placement: 'right', title: 'Annotate relationship'});
     $("#icon-info").tooltip({placement: 'left', title: 'Scroll to zoom, double click on node or edge for more information, single click to reset view'});
-    $("#icon-color").tooltip({placement: 'left', title: 'Click to view color legend'});
+    $("#icon-color").tooltip({placement: 'left', title: 'Colors', content: function () { return '<img src="images/colorchart.png" />'; } });
 
     $("#node-icon-chain").tooltip({placement: 'right', title: 'Add relationship'});
     $("#node-icon-annotate").tooltip({placement: 'right', title: 'Add a note to this person'});
@@ -44,7 +56,7 @@ $(document).ready(function() {
 
     $(".icon-zoomin").tooltip({placement:  'left', title: 'Zoom In'});
     $(".icon-zoomout").tooltip({placement:  'left', title: 'Zoom Out'});
-    $(".icon-color").tooltip({placement:  'left', title: 'Colors'});
+    $(".icon-color").tooltip({placement:  'left', title: 'Colors', content: function () { return '<img src="images/colorchart.png" />'; } });
     $(".icon-info").tooltip({placement:  'left', title: 'Info'});
 
     $("#search-network-slider-confidence").tooltip({placement: 'right', title: 'Choose the Confidence Level'});
