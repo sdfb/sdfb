@@ -25,7 +25,7 @@ $(function() {
       items: "button",
       content: function() {
         var element = $( this );
-        if ( element.attr("id") == "icon-color" {
+        if ( element.attr("id") == "icon-color") {
           return "<img src='./imgages/colorchart.png'/>";
         }
       }
