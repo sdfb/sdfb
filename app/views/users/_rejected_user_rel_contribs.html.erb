@@ -6,8 +6,7 @@
       <thead>
         <tr>
           <th>SDFB Rel. Type Assign. ID</th>
-          <th>Relationship</th>
-          <th>Relationship type</th>
+          <th>Relationship Type</th>
           <th>Certainty</th>
           <th>Note</th>
           <th><%=t '.actions', :default => t("helpers.actions") %></th>
@@ -16,9 +15,10 @@
       <tbody>
         <% @rejected_user_rel_contribs.each do |user_rel_contrib| %>
           <tr>
+            <% person1_name = user_rel_contrib.get_person1_name %>
+            <% person2_name = user_rel_contrib.get_person2_name %>
             <td><%= user_rel_contrib.id %></td>
-            <td><%= link_to user_rel_contrib.get_both_names, relationship_path(user_rel_contrib.relationship_id) %></td>
-            <td><%= link_to RelationshipType.find(user_rel_contrib.relationship_type_id).name, relationship_type_path(user_rel_contrib.relationship_type_id) %></td>
+            <td><%= person1_name %> <%= link_to RelationshipType.find(user_rel_contrib.relationship_type_id).name, relationship_type_path(user_rel_contrib.relationship_type_id) %> <%= person2_name %></td>
             <td><%= user_rel_contrib.certainty %>%</td>
             <td><%= user_rel_contrib.annotation %></td>
             <td>
