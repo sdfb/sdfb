@@ -17,6 +17,8 @@ back_enabled_hover.png: back_enabled_hover.png
 back_enabled_hover/index.png: back_enabled_hover.png
 cancel.png: cancel.png
 cancel/index.png: cancel.png
+colorchart.png: colorchart.png
+colorchart/index.png: colorchart.png
 colors.png: colors.png
 colors/index.png: colors.png
 coloryearlegend.png: coloryearlegend.png
