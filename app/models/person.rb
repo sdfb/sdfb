@@ -156,13 +156,16 @@ class Person < ActiveRecord::Base
       max_year = 1800
     end
     @zeroDegreePerson = self.find_first_degree_for_person(person_id, min_confidence, max_confidence, min_year, max_year, true)
-    @zeroDegreePerson[person_id.to_i]['rel_sum'].each do |firstDegreePerson|
-      #check that relationship is within the date and confidence range
-      if ((firstDegreePerson[3].to_i >= min_year) && (firstDegreePerson[4].to_i <= max_year))
-        if ((firstDegreePerson[1].to_i >= min_confidence) && (firstDegreePerson[1].to_i <= max_confidence))
-          firstDegreePersonID = firstDegreePerson[0]
-          @firstDegreePerson = self.find_first_degree_for_person(firstDegreePersonID, min_confidence, max_confidence, min_year, max_year, false)
-          twoPeopleRecordsForReturn.update(@firstDegreePerson)
+    #limit second degree node display to nodes of degree <=50
+    if @zeroDegreePerson[person_id.to_i]['rel_sum'].length <= 50
+        @zeroDegreePerson[person_id.to_i]['rel_sum'].each do |firstDegreePerson|
+            #check that relationship is within the date and confidence range
+            if ((firstDegreePerson[3].to_i >= min_year) && (firstDegreePerson[4].to_i <= max_year))
+                if ((firstDegreePerson[1].to_i >= min_confidence) && (firstDegreePerson[1].to_i <= max_confidence))
+                    firstDegreePersonID = firstDegreePerson[0]
+                    @firstDegreePerson = self.find_first_degree_for_person(firstDegreePersonID, min_confidence, max_confidence, min_year, max_year, false)
+                    twoPeopleRecordsForReturn.update(@firstDegreePerson)
+           end
         end
       end
     end
