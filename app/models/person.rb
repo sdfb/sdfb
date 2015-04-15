@@ -26,14 +26,10 @@ class Person < ActiveRecord::Base
   scope :for_odnb_id, lambda {|odnb_id_input| where('odnb_id like ?', "%#{odnb_id_input}%") }
   scope :for_first_name, lambda {|first_name_input| where('first_name like ?', "%#{first_name_input}")}
   scope :for_last_name, lambda {|last_name_input| where('last_name like ?', "%#{last_name_input}")}
-  scope :for_first_or_last_name,  lambda {|name_input| find_by_sql("SELECT * FROM people
-  where first_name like '#{name_input}' OR last_name like '#{name_input}'")}
+  scope :for_first_or_last_name,  lambda {|name_input| where('(first_name like ?) || (last_name like ?)', "%#{name_input}", "%#{name_input}")}
   scope :alphabetical, order('last_name').order('first_name');
   scope :for_id, lambda {|id_input| where('id = ?', "#{id_input}") }
-  scope :for_first_and_last_name,  lambda {|first_name_input, last_name_input| find_by_sql("SELECT * FROM people
-  where first_name like '#{first_name_input}' AND last_name like '#{last_name_input}'")}
-  scope :for_similar_first_and_last_name,  lambda {|first_name_input, last_name_input| find_by_sql("SELECT * FROM people
-  where first_name like '%#{first_name_input}%' AND last_name like '%#{last_name_input}%'")}
+  scope :for_first_and_last_name,  lambda {|name_input| where('(first_name like ?) AND (last_name like ?)', "%#{name_input}", "%#{name_input}")}
   scope :all_members_of_a_group, lambda {|groupID| 
       select('people.*')
       .joins('join group_assignments ga on (people.id = ga.person_id)')
@@ -45,20 +41,7 @@ class Person < ActiveRecord::Base
       }
   scope :rels_for_id, lambda {|id, sdata, edate|
   	select('id, rel_sum')
-  	.where("id = '#{id}' and (ext_birth_year < '#{edate}' or ext_death_year > '#{sdate}')")}
-  scope :for_2_people_first_last_name_exact_approved,
-    lambda {|person1FirstName, person1LastName, person2FirstName, person2LastName| 
-      select('relationships.*')
-      .joins('join people p1 on relationships.person1_index = p1.id')
-      .joins('join people p2 on relationships.person2_index = p2.id')
-      .where("((p1.first_name like '#{person1FirstName}' AND p1.last_name like '#{person1LastName}')
-        or
-          (p2.first_name like '#{person1FirstName}' AND p2.last_name like '#{person1LastName}'))
-        and
-          ((p1.first_name like '#{person2FirstName}' AND p1.last_name like '#{person2LastName}')
-        or
-          (p2.first_name like '#{person2FirstName}' AND p2.last_name like '#{person2LastName}'))")
-      .where("relationships.approved_by is not null")}
+  	.where("id = ? and (ext_birth_year < ? or ext_death_year > ?)", '%#{id}', '%#{edate}', '%#{sdate}')}
 
   # Misc Constants
   DATE_TYPE_LIST = ["BF", "AF","IN","CA","BF/IN","AF/IN","NA"]
