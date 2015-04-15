@@ -2,8 +2,9 @@
 
 <div class="row">
   <div class="span12">
-    <h1>Relationship: <%= @relationship.get_person1_name + " & " + @relationship.get_person2_name%>
-    </h1>
+    <% person1_name = @relationship.get_person1_name %>
+    <% person2_name = @relationship.get_person2_name %>
+    <h1>Relationship: <%= person1_name + " & " + person2_name%></h1>
   </div>
 </div>
 <br>
@@ -25,9 +26,9 @@
         <dt><strong>Creator's Certainty:</strong></dt>
         <dd><%= @relationship.original_certainty %>%</dd>
         <dt><strong>Person 1:</strong></dt>
-        <dd><%= link_to @relationship.get_person1_name,  person_path(@relationship.person1_index) %></dd>
+        <dd><%= link_to person1_name,  person_path(@relationship.person1_index) %></dd>
         <dt><strong>Person 2:</strong></dt>
-        <dd><%= link_to @relationship.get_person2_name,  person_path(@relationship.person2_index) %></dd>
+        <dd><%= link_to person2_name,  person_path(@relationship.person2_index) %></dd>
         <% if ! @relationship.start_date_type.blank? %>
           <dt><strong>Start Date Type:</strong></dt>
           <dd>
@@ -138,7 +139,6 @@
         <thead>
           <tr>
             <th>SDFB Assignment ID</th>
-            <th>Relationship</th>
             <th>Relationship Type</th>
             <th>Certainty</th>
             <th><%=t '.actions', :default => t("helpers.actions") %></th>
@@ -148,8 +148,9 @@
           <% @user_rel_contribs.each do |user_rel_contrib| %>
             <tr>
               <td><%= user_rel_contrib.id %></td>
-              <td><%= link_to user_rel_contrib.get_both_names, relationship_path(user_rel_contrib.relationship_id) %></td>
-              <td><%= link_to RelationshipType.find(user_rel_contrib.relationship_type).name, relationship_type_path(user_rel_contrib.relationship_type) %></td>
+              <td><%= person1_name %> <%= link_to RelationshipType.find(user_rel_contrib.relationship_type).name, relationship_type_path(user_rel_contrib.relationship_type) %>
+              <%= person2_name %> 
+              </td>
               <td><%= user_rel_contrib.certainty %>%</td>
               <td>
                 <% if can? :show, user_rel_contrib %>

@@ -12,9 +12,10 @@
       </ul>
     </div>
   <% end %>
-  <%= f.label :relationship_id %>
-  <%= Relationship.find(@user_rel_contrib.relationship_id).get_both_names %>
-  <%= f.input :relationship_type_id, :collection =>@relType.collect{ |r| [r.name, r.id] }, label: "Relationship Type", prompt: "Select" %>  
+  <%= f.label :relationship__type_id %>
+  <%= Relationship.find(@user_rel_contrib.relationship_id).get_person1_name %>
+  <%= f.input :relationship_type_id, :collection =>@relType.collect{ |r| [r.name, r.id] }, label: false, prompt: "Select" %>
+  <%= Relationship.find(@user_rel_contrib.relationship_id).get_person2_name %>
 
   <%= f.label :certainty %>
   <%= f.range_field :certainty, :min=>0, :max=>100, :class=>"slide", :id=>"slider1"%>

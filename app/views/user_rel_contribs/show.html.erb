@@ -22,7 +22,9 @@
           <dd><%= @user_rel_contrib.id %></dd>
         <% end %>
         <dt><strong>Relationship:</strong></dt>
-        <dd><%= link_to Relationship.find(@user_rel_contrib.relationship_id).get_person1_name + " & " + Relationship.find(@user_rel_contrib.relationship_id).get_person2_name ,  relationship_path(@user_rel_contrib.relationship_id) %></dd>
+        <% person1 = Relationship.find(@user_rel_contrib.relationship_id).get_person1_name %>
+        <% person2 = Relationship.find(@user_rel_contrib.relationship_id).get_person2_name %>
+        <dd><%= link_to person1 + " & " + person2,  relationship_path(@user_rel_contrib.relationship_id) %></dd>
         <dt><strong><%= model_class.human_attribute_name(:certainty) %>:</strong></dt>
         <dd><%= @user_rel_contrib.certainty %>%</dd>
         <dt><strong>Note:</strong></dt>
@@ -32,7 +34,7 @@
           <dd><%= @user_rel_contrib.bibliography %></dd>
         <% end %>
         <dt><strong>Relationship Type:</strong></dt>
-        <dd><%= link_to RelationshipType.find(@user_rel_contrib.relationship_type_id).name, relationship_type_path(@user_rel_contrib.relationship_type_id) %></dd>
+        <dd><%= person1 %> <%= link_to RelationshipType.find(@user_rel_contrib.relationship_type_id).name, relationship_type_path(@user_rel_contrib.relationship_type_id)%> <%= person2 %></dd>
         <% if ! @user_rel_contrib.start_date_type.blank? %>
           <dt><strong>Start Date Type:</strong></dt>
           <dd>
