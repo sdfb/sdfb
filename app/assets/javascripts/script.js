@@ -46,7 +46,7 @@ $(function() {
     $("#icon-link").tooltip({placement: 'right', title: 'Add a new, untyped relationship for this person'});
     $("#icon-annotate").tooltip({placement: 'right', title: 'Add a note to this relationship'});
     $("#icon-info").tooltip({placement: 'left', title: 'Scroll to zoom, double click on node or edge for more information, single click to reset view'});
-    $("#icon-color").tooltip({placement: 'left', title: 'Colors', content: function () { return '<img src="images/colorchart.png" />'; } });
+    $("#icon-color").tooltip({placement: 'left', title: 'Color legend', content: function () { return '<img src="images/colorchart.png" />'; } });
 
     $("#node-icon-chain").tooltip({placement: 'right', title: 'Add a new, untyped relationship for this person'});
     $("#node-icon-annotate").tooltip({placement: 'right', title: 'Add a note to this person'});
@@ -56,8 +56,8 @@ $(function() {
 
     $(".icon-zoomin").tooltip({placement:  'left', title: 'Zoom In'});
     $(".icon-zoomout").tooltip({placement:  'left', title: 'Zoom Out'});
-    $(".icon-color").tooltip({placement:  'left', title: 'Colors', content: function () { return '<img src="images/colorchart.png" />'; } });
-    $(".icon-info").tooltip({placement:  'left', title: 'Info'});
+    $(".icon-color").tooltip({placement:  'left', title: 'Color legend', content: function () { return '<img src="images/colorchart.png" />'; } });
+    $(".icon-info").tooltip({placement:  'left', title: 'Scroll to zoom, double click on node or edge for more information, single click to reset view'});
 
     $("#search-network-slider-confidence").tooltip({placement: 'right', title: 'Choose the Confidence Level'});
     $("#search-network-slider-date").tooltip({placement: 'right', title: 'Choose the Date Range'});
