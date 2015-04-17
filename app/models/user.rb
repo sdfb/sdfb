@@ -65,8 +65,8 @@ class User < ActiveRecord::Base
   scope :active, where(is_active: true)
   scope :all_inactive, where(is_active: false)
   scope :for_email, lambda {|email_input| where('email like ?', "%#{email_input}%") }
-  scope :all_rejected, where("is_rejected is true")
   scope :all_recent, order('created_at DESC')
+  scope :all_rejected, where("is_rejected is true and is_active is true")
 
   # Callbacks
   # -----------------------------

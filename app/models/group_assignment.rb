@@ -12,10 +12,10 @@ class GroupAssignment < ActiveRecord::Base
 
   # Scope
   # ----------------------------- 
-  scope :all_approved, where("approved_by is not null and is_active is true and is_rejected is false")
-  scope :all_unapproved, where("approved_by is null and is_rejected is false")
+  scope :all_approved, where("is_approved is true and is_active is true and is_rejected is false")
   scope :all_inactive, where("is_active is false")
-  scope :all_rejected, where("is_rejected is true")
+  scope :all_rejected, where("is_rejected is true and is_active is true")
+  scope :all_unapproved, where("is_approved is false and is_rejected is false and is_active is true")
   scope :all_recent, order('created_at DESC')
   scope :all_for_person, 
     lambda {|personID| 
