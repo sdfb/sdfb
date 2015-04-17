@@ -28,9 +28,9 @@ class GroupCatAssignsController < ApplicationController
   # GET /group_cat_assigns/new.json
   def new
     @group_cat_assign = GroupCatAssign.new
-    @groupOptions = Group.all_approved
+    @groupOptions = Group.all_approved.alphabetical
     @group_id = params[:group_id]
-    @groupCatOptions = GroupCategory.all_approved
+    @groupCatOptions = GroupCategory.all_approved.alphabetical
     @group_cat_id = params[:group_cat_id]
 
     respond_to do |format|
@@ -42,9 +42,9 @@ class GroupCatAssignsController < ApplicationController
   # GET /group_cat_assigns/1/edit
   def edit
     @group_cat_assign = GroupCatAssign.find(params[:id])
-    @groupOptions = Group.all_approved
+    @groupOptions = Group.all_approved.alphabetical
     @group_id = params[:group_id]
-    @groupCatOptions = GroupCategory.all_approved
+    @groupCatOptions = GroupCategory.all_approved.alphabetical
     @group_cat_id = params[:group_cat_id]
     @is_approved = @group_cat_assign.is_approved
     #authorize! :edit, @group_cat_assign
@@ -54,9 +54,9 @@ class GroupCatAssignsController < ApplicationController
   # POST /group_cat_assigns.json
   def create
     @group_cat_assign = GroupCatAssign.new(params[:group_cat_assign])
-    @groupOptions = Group.all_approved
+    @groupOptions = Group.all_approved.alphabetical
     @group_id = params[:group_id]
-    @groupCatOptions = GroupCategory.all_approved
+    @groupCatOptions = GroupCategory.all_approved.alphabetical
     @group_cat_id = params[:group_cat_id]
 
     respond_to do |format|

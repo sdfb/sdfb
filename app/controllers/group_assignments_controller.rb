@@ -42,7 +42,7 @@ class GroupAssignmentsController < ApplicationController
   def new
     @group_assignment = GroupAssignment.new
     @personOptions = Person.all_approved.alphabetical
-    @groupOptions = Group.all_approved
+    @groupOptions = Group.all_approved.alphabetical
     @person_id = params[:person_id]
     @group_id = params[:group_id]
 
@@ -56,7 +56,7 @@ class GroupAssignmentsController < ApplicationController
   def edit
     @group_assignment = GroupAssignment.find(params[:id])
     @personOptions = Person.all_approved.alphabetical
-    @groupOptions = Group.all_approved
+    @groupOptions = Group.all_approved.alphabetical
     @is_approved = @group_assignment.is_approved
     #authorize! :edit, @group_assignment
   end
@@ -66,7 +66,7 @@ class GroupAssignmentsController < ApplicationController
   def create
     @group_assignment = GroupAssignment.new(params[:group_assignment])
     @personOptions = Person.all_approved.alphabetical
-    @groupOptions = Group.all_approved
+    @groupOptions = Group.all_approved.alphabetical
 
     respond_to do |format|
       if @group_assignment.save

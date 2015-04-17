@@ -25,6 +25,7 @@ class RelationshipType < ActiveRecord::Base
   scope :all_unapproved, where("is_approved is false and is_rejected is false and is_active is true")
   scope :all_recent, order('created_at DESC')
   scope :for_user, lambda {|user_input| where('created_by = ?', "#{user_input}") }
+  scope :alphabetical, order('name')
 
   # Callbacks
   # ----------------------------- 

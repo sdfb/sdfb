@@ -32,7 +32,7 @@ class UserGroupContribsController < ApplicationController
   # GET /user_group_contribs/new.json
   def new
     @user_group_contrib = UserGroupContrib.new
-    @groupOptions = Group.all_approved
+    @groupOptions = Group.all_approved.alphabetical
     @group_id = params[:group_id]
 
     respond_to do |format|
@@ -44,7 +44,7 @@ class UserGroupContribsController < ApplicationController
   # GET /user_group_contribs/1/edit
   def edit
     @user_group_contrib = UserGroupContrib.find(params[:id])
-    @groupOptions = Group.all_approved
+    @groupOptions = Group.all_approved.alphabetical
     @is_approved = @user_group_contrib.is_approved
     #authorize! :edit, @user_group_contrib
   end
@@ -53,7 +53,7 @@ class UserGroupContribsController < ApplicationController
   # POST /user_group_contribs.json
   def create
     @user_group_contrib = UserGroupContrib.new(params[:user_group_contrib])
-    @groupOptions = Group.all_approved
+    @groupOptions = Group.all_approved.alphabetical
 
     respond_to do |format|
       if @user_group_contrib.save
