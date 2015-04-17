@@ -146,29 +146,27 @@ class PeopleController < ApplicationController
     @all_people = Person.all
     if (current_user.user_type == "Admin")
       people_csv = CSV.generate do |csv|
-        csv << ["SDFB Person ID", "ODNB ID", "Prefix", "First Name", "Last Name", "Suffix", "Title", "All Search Names", "Gender",
+        csv << ["SDFB Person ID", "ODNB ID", "Display Name", "Prefix", "First Name", "Last Name", "Suffix", "Title", "All Search Names", "Gender",
           "Historical Significance", "Birth Year Type", "Extant Birth Year", "Alternate Birth Year", "Death Year Type",
-          "Extant Death Year", "Alternate Death Year", "Relationship Summary [Person 2 ID, Maximum Certainty, Approval (1=Yes or 0=No), Relationship ID]", 
-          "Group List", "Justification", "Created By ID", "Created By", "Created At", "Is approved?",
-          "Approved By ID", "Approved By", "Approved On"]
+          "Extant Death Year", "Alternate Death Year", "Group List", "Justification", "Created By ID", "Created At", "Is approved?",
+          "Approved By ID", "Approved On"]
         @all_people.each do |person|
-          csv << [person.id, person.odnb_id, person.prefix, person.first_name, person.last_name, person.suffix,
+          csv << [person.id, person.odnb_id, person.display_name, person.prefix, person.first_name, person.last_name, person.suffix,
             person.title, person.search_names_all, person.gender, person.historical_significance, person.birth_year_type,
-            person.ext_birth_year, person.alt_birth_year, person.death_year_type, person.ext_death_year, person.alt_death_year, person.rel_sum,
-            person.group_list, person.justification, person.created_by, User.find(person.created_by).get_person_name, person.created_at,
-            person.is_approved, person.approved_by, User.find(person.approved_by).get_person_name, person.approved_on]
+            person.ext_birth_year, person.alt_birth_year, person.death_year_type, person.ext_death_year, person.alt_death_year,
+            person.group_list, person.justification, person.created_by, person.created_at,
+            person.is_approved, person.approved_by, person.approved_on]
         end
       end
     else
     people_csv = CSV.generate do |csv|
-        csv << ["SDFB Person ID", "ODNB ID", "Prefix", "First Name", "Last Name", "Suffix", "Title", "All Search Names", "Gender",
+        csv << ["SDFB Person ID", "ODNB ID", "Display Name", "Prefix", "First Name", "Last Name", "Suffix", "Title", "All Search Names", "Gender",
           "Historical Significance", "Birth Year Type", "Extant Birth Year", "Alternate Birth Year", "Death Year Type",
-          "Extant Death Year", "Alternate Death Year", "Relationship Summary [Person 2 ID, Maximum Certainty, Approval (1=Yes or 0=No), Relationship ID]", 
-          "Group List"]
+          "Extant Death Year", "Alternate Death Year", "Group List"]
         @all_people_approved.each do |person|
-          csv << [person.id, person.odnb_id, person.prefix, person.first_name, person.last_name, person.suffix,
+          csv << [person.id, person.odnb_id, person.display_name, person.prefix, person.first_name, person.last_name, person.suffix,
             person.title, person.search_names_all, person.gender, person.historical_significance, person.birth_year_type,
-            person.ext_birth_year, person.alt_birth_year, person.death_year_type, person.ext_death_year, person.alt_death_year, person.rel_sum,
+            person.ext_birth_year, person.alt_birth_year, person.death_year_type, person.ext_death_year, person.alt_death_year,
             person.group_list]
         end
       end
