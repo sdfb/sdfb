@@ -47,6 +47,7 @@ class Group < ActiveRecord::Base
   scope :similar_name_match, lambda {|search_input| where('name like ?', "%#{search_input}%") }
   scope :for_user, lambda {|user_input| where('created_by = ?', "#{user_input}") }
   scope :alphabetical, order('name')
+  scope :order_by_sdfb_id, order('id')
 
   # Callbacks
   # ----------------------------- 

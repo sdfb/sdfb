@@ -12,7 +12,7 @@ class RelationshipsController < ApplicationController
   helper PeopleHelper
 
   def index
-    @approved_relationships = Relationship.all_approved.paginate(:page => params[:approved_relationships_page]).per_page(30)
+    @approved_relationships = Relationship.all_approved.order_by_sdfb_id.paginate(:page => params[:approved_relationships_page]).per_page(30)
 
     respond_to do |format|
       format.html # index.html.erb

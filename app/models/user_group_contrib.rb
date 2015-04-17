@@ -29,6 +29,7 @@ class UserGroupContrib < ActiveRecord::Base
       select('user_group_contribs.*')
       .where('group_id = ?', groupID)}
   scope :all_recent, order('created_at DESC')
+  scope :order_by_sdfb_id, order('id')
 
   # Callbacks
   # ----------------------------- 

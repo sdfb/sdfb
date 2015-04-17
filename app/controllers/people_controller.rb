@@ -11,7 +11,7 @@ class PeopleController < ApplicationController
   load_and_authorize_resource
   
   def index
-    @people_approved = Person.all_approved.paginate(:page => params[:people_approved_page]).per_page(30)
+    @people_approved = Person.all_approved.order_by_sdfb_id.paginate(:page => params[:people_approved_page]).per_page(30)
 
     respond_to do |format|
       format.html # index.html.erb
@@ -35,7 +35,7 @@ class PeopleController < ApplicationController
   end
 
   def membership
-    @groups = GroupAssignment.all_for_person(params[:id]).all_approved.paginate(:page => params[:groups_page]).per_page(30)
+    @groups = GroupAssignment.all_for_person(params[:id]).all_approved.order_by_sdfb_id.paginate(:page => params[:groups_page]).per_page(30)
 
     respond_to do |format|
       format.html # show.html.erb
@@ -44,7 +44,7 @@ class PeopleController < ApplicationController
   end
 
   def relationships
-    @approved_relationships = Relationship.all_for_person(params[:id]).highest_certainty.all_approved.paginate(:page => params[:approved_relationships_page]).per_page(30)
+    @approved_relationships = Relationship.all_for_person(params[:id]).highest_certainty.all_approved.order_by_sdfb_id.paginate(:page => params[:approved_relationships_page]).per_page(30)
 
     respond_to do |format|
       format.html # show.html.erb
@@ -53,7 +53,7 @@ class PeopleController < ApplicationController
   end
 
   def notes
-    @user_person_contribs = UserPersonContrib.all_for_person(params[:id]).all_approved.paginate(:page => params[:user_person_contribs_page]).per_page(30)
+    @user_person_contribs = UserPersonContrib.all_for_person(params[:id]).all_approved.order_by_sdfb_id.paginate(:page => params[:user_person_contribs_page]).per_page(30)
 
     respond_to do |format|
       format.html # show.html.erb
@@ -137,7 +137,7 @@ class PeopleController < ApplicationController
       else
           @all_results1 = Person.search_approved(@query)
       end
-      @all_results = @all_results1.paginate(:page => params[:all_results_page], :per_page => 20)
+      @all_results = @all_results1.order_by_sdfb_id.paginate(:page => params[:all_results_page], :per_page => 20)
     end
   end
 

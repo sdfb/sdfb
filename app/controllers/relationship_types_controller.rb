@@ -5,7 +5,7 @@ class RelationshipTypesController < ApplicationController
   load_and_authorize_resource
   
   def index
-    @relationship_types = RelationshipType.all_approved.paginate(:page => params[:rel_types_approved_page]).per_page(150)
+    @relationship_types = RelationshipType.all_approved.order_by_sdfb_id.paginate(:page => params[:rel_types_approved_page]).per_page(150)
 
     respond_to do |format|
       format.html # index.html.erb
@@ -17,7 +17,7 @@ class RelationshipTypesController < ApplicationController
   # GET /relationship_types/1.json
   def show
     @relationship_type = RelationshipType.find(params[:id])
-    @rel_cat_assigns_approved = RelCatAssign.all_approved.for_rel_type(params[:id]).paginate(:page => params[:rel_cat_assigns_approved_page]).per_page(30)
+    @rel_cat_assigns_approved = RelCatAssign.all_approved.for_rel_type(params[:id]).order_by_sdfb_id.paginate(:page => params[:rel_cat_assigns_approved_page]).per_page(30)
 
     respond_to do |format|
       format.html # show.html.erb

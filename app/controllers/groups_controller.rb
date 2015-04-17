@@ -10,7 +10,7 @@ class GroupsController < ApplicationController
   load_and_authorize_resource
   
   def index
-    @groups_approved = Group.all_approved.paginate(:page => params[:groups_approved_page]).per_page(100)
+    @groups_approved = Group.all_approved.order_by_sdfb_id.order_by_sdfb_id.paginate(:page => params[:groups_approved_page]).per_page(100)
 
     respond_to do |format|
       format.html # index.html.erb
@@ -34,9 +34,9 @@ class GroupsController < ApplicationController
   # GET /groups/1.json
   def show
     @group = Group.select("id, name, description, start_date_type, start_year, end_date_type, end_year, justification, created_at, created_by, is_approved, edited_by_on, is_active, approved_by, approved_on, is_rejected").find(params[:id])
-    @user_group_contribs = UserGroupContrib.all_for_group(params[:id]).all_approved.paginate(:page => params[:user_group_contribs_page]).per_page(30)
-    @people = GroupAssignment.all_for_group(params[:id]).all_approved.paginate(:page => params[:people_page]).per_page(30)
-    @group_cat_assigns_approved = GroupCatAssign.for_group(params[:id]).all_approved.paginate(:page => params[:group_cat_assigns_approved_page]).per_page(30)
+    @user_group_contribs = UserGroupContrib.all_for_group(params[:id]).all_approved.order_by_sdfb_id.paginate(:page => params[:user_group_contribs_page]).per_page(30)
+    @people = GroupAssignment.all_for_group(params[:id]).all_approved.order_by_sdfb_id.paginate(:page => params[:people_page]).per_page(30)
+    @group_cat_assigns_approved = GroupCatAssign.for_group(params[:id]).all_approved.order_by_sdfb_id.paginate(:page => params[:group_cat_assigns_approved_page]).per_page(30)
 
     respond_to do |format|
       format.html # show.html.erb

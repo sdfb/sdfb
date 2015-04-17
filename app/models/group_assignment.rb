@@ -27,6 +27,7 @@ class GroupAssignment < ActiveRecord::Base
       .where('(group_id = ?)', groupID)}
   scope :for_user, lambda {|user_input| where('created_by = ?', "#{user_input}") }
   scope :find_if_exists, lambda {|person_input, group_input| where('(person_id = ?) and (group_id = ?) and is_approved is true', person_input, group_input) }
+  scope :order_by_sdfb_id, order('id')
 
   # Misc Constants
   DATE_TYPE_LIST = ["BF", "AF","IN","CA","BF/IN","AF/IN","NA"]

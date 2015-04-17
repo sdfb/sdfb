@@ -20,6 +20,7 @@ class RelationshipCategory < ActiveRecord::Base
   scope :all_recent, order('created_at DESC')
   scope :for_user, lambda {|user_input| where('created_by = ?', "#{user_input}") }
   scope :alphabetical, order('name')
+  scope :order_by_sdfb_id, order('id')
 
   # Callbacks
   # ----------------------------- 

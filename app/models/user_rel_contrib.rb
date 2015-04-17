@@ -54,6 +54,7 @@ class UserRelContrib < ActiveRecord::Base
       .where('relationship_id = ?', relID)}
   scope :highest_certainty, order('certainty DESC')
   scope :all_recent, order('created_at DESC')
+  scope :order_by_sdfb_id, order('id')
 
   # Callbacks
   # ----------------------------- 

@@ -14,6 +14,11 @@ To run any script for heroku you need to add "heroku run" before "rake". For exa
 If populating the entire database you can run the file herokupop.sh which will run all the scripts.
 
 
+## Code to restart localhost server if there is an error
+kill -9 $(lsof -i tcp:3000 -t)
+
+## Brakeman runs checks against the app to identify security flaws
+to use run the command 'brakeman' in the Terminal
 
 ## Status
 Had to roll back populate changes because there 

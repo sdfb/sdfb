@@ -10,7 +10,7 @@ class UserPersonContribsController < ApplicationController
   load_and_authorize_resource
 
   def index
-    @user_person_contribs = UserPersonContrib.all_approved.paginate(:page => params[:user_person_contribs_page]).per_page(30)
+    @user_person_contribs = UserPersonContrib.all_approved.order_by_sdfb_id.paginate(:page => params[:user_person_contribs_page]).per_page(30)
 
     respond_to do |format|
       format.html # index.html.erb

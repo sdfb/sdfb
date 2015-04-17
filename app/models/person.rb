@@ -42,6 +42,7 @@ class Person < ActiveRecord::Base
   scope :rels_for_id, lambda {|id, sdata, edate|
   	select('id, rel_sum')
   	.where("id = ? and (ext_birth_year < ? or ext_death_year > ?)", '%#{id}', '%#{edate}', '%#{sdate}')}
+  scope :order_by_sdfb_id, order('id')
 
   # Misc Constants
   DATE_TYPE_LIST = ["BF", "AF","IN","CA","BF/IN","AF/IN","NA"]
