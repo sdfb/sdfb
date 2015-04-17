@@ -21,6 +21,6 @@
 		<%= render 'group_cats_for_user' %>
 	<% end %>
 	<% if (current_user.user_type == "Admin") || (current_user.user_type == "Curator")  %>
-		<%= render 'cat_assigns_for_user' %>
+		<%= render 'group_cat_assigns_for_user' %>
 	<% end %>
 <% end %>

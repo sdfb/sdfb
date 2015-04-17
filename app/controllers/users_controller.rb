@@ -86,7 +86,7 @@ class UsersController < ApplicationController
     @new_relationships = Relationship.for_user(current_user.id).order_by_sdfb_id.paginate(:page => params[:relationships_page]).per_page(5)
     @group_assignments = GroupAssignment.for_user(current_user.id).order_by_sdfb_id.paginate(:page => params[:group_assignments_page]).per_page(5)
 
-    @group_cat_assign = RelCatAssign.for_user(current_user.id).order_by_sdfb_id.paginate(:page => params[:rel_cat_assigns_page]).per_page(5)
+    @group_cat_assign = GroupCatAssign.for_user(current_user.id).order_by_sdfb_id.paginate(:page => params[:group_cat_assigns_page]).per_page(5)
     @group_cats = GroupCategory.for_user(current_user.id).order_by_sdfb_id.paginate(:page => params[:group_cats_page]).per_page(5)
     @rel_type_cat_assigns = RelCatAssign.for_user(current_user.id).order_by_sdfb_id.paginate(:page => params[:rel_type_cat_assigns_page]).per_page(5)
     @rel_cats = RelationshipCategory.for_user(current_user.id).order_by_sdfb_id.paginate(:page => params[:rel_cats_page]).per_page(5)
@@ -102,7 +102,7 @@ class UsersController < ApplicationController
     @inactive_user_rel_contribs = UserRelContrib.all_inactive.order_by_sdfb_id.paginate(:page => params[:inactive_user_rel_contribs_page]).per_page(5)
     @inactive_user_person_contribs = UserPersonContrib.all_inactive.order_by_sdfb_id.paginate(:page => params[:inactive_user_person_contribs_page]).per_page(5)
 
-    @inactive_group_cat_assign = RelCatAssign.all_inactive.order_by_sdfb_id.paginate(:page => params[:inactive_rel_cat_assigns_page]).per_page(5)
+    @inactive_group_cat_assign = GroupCatAssign.all_inactive.order_by_sdfb_id.paginate(:page => params[:inactive_group_cat_assigns_page]).per_page(5)
     @inactive_group_cats = GroupCategory.all_inactive.order_by_sdfb_id.paginate(:page => params[:inactive_group_cats_page]).per_page(5)
     @inactive_rel_type_cat_assigns = RelCatAssign.all_inactive.order_by_sdfb_id.paginate(:page => params[:inactive_rel_type_cat_assigns_page]).per_page(5)
     @inactive_rel_cats = RelationshipCategory.all_inactive.order_by_sdfb_id.paginate(:page => params[:inactive_rel_cats_page]).per_page(5)
@@ -120,7 +120,7 @@ class UsersController < ApplicationController
     @unapproved_user_rel_contribs = UserRelContrib.all_unapproved.order_by_sdfb_id.paginate(:page => params[:unapproved_user_rel_contribs_page]).per_page(5)
     @unapproved_user_person_contribs = UserPersonContrib.all_unapproved.order_by_sdfb_id.paginate(:page => params[:unapproved_user_person_contribs_page]).per_page(5)
   
-    @unapproved_group_cat_assign = RelCatAssign.all_unapproved.order_by_sdfb_id.paginate(:page => params[:unapproved_rel_cat_assigns_page]).per_page(5)
+    @unapproved_group_cat_assign = GroupCatAssign.all_unapproved.order_by_sdfb_id.paginate(:page => params[:unapproved_group_cat_assigns_page]).per_page(5)
     @unapproved_group_cats = GroupCategory.all_unapproved.order_by_sdfb_id.paginate(:page => params[:unapproved_group_cats_page]).per_page(5)
     @unapproved_rel_type_cat_assigns = RelCatAssign.all_unapproved.order_by_sdfb_id.paginate(:page => params[:unapproved_rel_type_cat_assigns_page]).per_page(5)
     @unapproved_rel_cats = RelationshipCategory.all_unapproved.order_by_sdfb_id.paginate(:page => params[:unapproved_rel_cats_page]).per_page(5)
@@ -136,7 +136,7 @@ class UsersController < ApplicationController
     @rejected_user_rel_contribs = UserRelContrib.all_rejected.order_by_sdfb_id.paginate(:page => params[:rejected_user_rel_contribs_page]).per_page(5)
     @rejected_user_person_contribs = UserPersonContrib.all_rejected.order_by_sdfb_id.paginate(:page => params[:rejected_user_person_contribs_page]).per_page(5)
   
-    @rejected_group_cat_assign = RelCatAssign.all_rejected.order_by_sdfb_id.paginate(:page => params[:rejected_rel_cat_assigns_page]).per_page(5)
+    @rejected_group_cat_assign = GroupCatAssign.all_rejected.order_by_sdfb_id.paginate(:page => params[:rejected_group_cat_assigns_page]).per_page(5)
     @rejected_group_cats = GroupCategory.all_rejected.order_by_sdfb_id.paginate(:page => params[:rejected_group_cats_page]).per_page(5)
     @rejected_rel_type_cat_assigns = RelCatAssign.all_rejected.order_by_sdfb_id.paginate(:page => params[:rejected_rel_type_cat_assigns_page]).per_page(5)
     @rejected_rel_cats = RelationshipCategory.all_rejected.order_by_sdfb_id.paginate(:page => params[:rejected_rel_cats_page]).per_page(5)
@@ -152,7 +152,7 @@ class UsersController < ApplicationController
     @recent_user_rel_contribs = UserRelContrib.all_recent.paginate(:page => params[:recent_user_rel_contribs_page]).per_page(5)
     @recent_user_person_contribs = UserPersonContrib.all_recent.paginate(:page => params[:recent_user_person_contribs_page]).per_page(5)
 
-    @recent_group_cat_assign = RelCatAssign.all_recent.paginate(:page => params[:recent_rel_cat_assigns_page]).per_page(5)
+    @recent_group_cat_assign = GroupCatAssign.all_recent.paginate(:page => params[:recent_group_cat_assigns_page]).per_page(5)
     @recent_group_cats = GroupCategory.all_recent.paginate(:page => params[:recent_group_cats_page]).per_page(5)
     @recent_rel_type_cat_assigns = RelCatAssign.all_recent.paginate(:page => params[:recent_rel_type_cat_assigns_page]).per_page(5)
     @recent_rel_cats = RelationshipCategory.all_recent.paginate(:page => params[:recent_rel_cats_page]).per_page(5)
