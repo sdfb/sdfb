@@ -93,7 +93,6 @@ class Person < ActiveRecord::Base
   before_create :init_array
   before_create :check_if_approved
   before_create :populate_search_names
-  before_update :populate_search_names
   before_update :check_if_approved
   before_update :add_editor_to_edit_by_on
 
