@@ -26,8 +26,7 @@
   <%= f.input :death_year_type, :collection =>["BF", "AF","IN","CA","BF/IN","AF/IN"], label: "Death Year Type", prompt: "Select", hint: " BF = Before, AF = After, IN = In, CA = Circa, BF/IN = Before or In, AF/IN = After or In" %>
   <%= f.input :ext_death_year, label: "Death Year" %>
   <%= f.input :alt_death_year, label: "Alternative Death Year" %>
-  <%= f.input :search_names_all, label: "All Historical Aliases" %>
-  <%= f.input :historical_significance, input_html: { rows:"5" }, label: "Historical Significance" %>
+  <%= f.input :search_names_all, label: "All Historical Aliases for Search" %>
   <%= f.input :justification, input_html: { rows:"5" }, label: "Justification for Person Creation" %>
   <% if (current_user.user_type == "Admin") || (current_user.user_type == "Curator") %>
     <%= f.input :is_approved %>

@@ -92,12 +92,108 @@ class Person < ActiveRecord::Base
   # ----------------------------- 
   before_create :init_array
   before_create :check_if_approved
-  #after_create :popualate_search_names_if_empty
+  before_create :populate_search_names
+  before_update :populate_search_names
   before_update :check_if_approved
   before_update :add_editor_to_edit_by_on
 
   # Custom Methods
   # -----------------------------
+
+  #populate search names with all permutations of the name on create and if empty on edit
+  def populate_search_names
+    search_names_all_input = ""
+    #add all permutations to the search names all  
+    if (! self.prefix.blank?)
+      if (! self.first_name.blank?)
+        # Prefix FirstName
+        if (! search_names_all_input.blank?)
+          search_names_all_input += ", "
+        end
+        search_names_all_input += self.prefix + " " + self.first_name
+        if (! self.last_name.blank?)
+          # Prefix FirstName LastName
+          if (! search_names_all_input.blank?)
+            search_names_all_input += ", "
+          end
+          search_names_all_input += self.prefix + " " + self.first_name + " " + self.last_name
+
+          if (! self.suffix.blank?)
+            # Prefix FirstName LastName Suffix
+            if (! search_names_all_input.blank?)
+              search_names_all_input += ", "
+            end
+            search_names_all_input += self.prefix + " " + self.first_name + " " + self.last_name + " " + self.suffix
+          end
+          if (! self.title.blank?)
+            # Prefix FirstName LastName Title
+            if (! search_names_all_input.blank?)
+              search_names_all_input += ", "
+            end
+            search_names_all_input += self.prefix + " " + self.first_name + " " + self.last_name + " " + self.title
+          end
+        end
+        if (! self.suffix.blank?)
+          # Prefix FirstName Suffix
+          if (! search_names_all_input.blank?)
+            search_names_all_input += ", "
+          end
+          search_names_all_input += self.prefix + " " + self.first_name + " " + self.suffix
+        end
+      end
+      if (! self.last_name.blank?)
+        # Prefix LastName
+        if (! search_names_all_input.blank?)
+            search_names_all_input += ", "
+        end
+        search_names_all_input += self.prefix + " " + self.last_name
+        if (! self.suffix.blank?)
+          # Prefix LastName Suffix
+          if (! search_names_all_input.blank?)
+            search_names_all_input += ", "
+          end
+          search_names_all_input += self.prefix + " " + self.last_name + " " + self.suffix
+        end
+      end
+    end
+    if (! self.first_name.blank?)
+      # FirstName
+      if (! search_names_all_input.blank?)
+        search_names_all_input += ", "
+      end
+      search_names_all_input += self.first_name
+      if (! self.last_name.blank?)
+        # FirstName LastName
+        if (! search_names_all_input.blank?)
+          search_names_all_input += ", "
+        end
+        search_names_all_input += self.first_name + " " +  self.last_name
+        if (! self.suffix.blank?)
+          # FirstName LastName Suffix
+          if (! search_names_all_input.blank?)
+            search_names_all_input += ", "
+          end
+          search_names_all_input += self.first_name + " " + self.last_name + " " + self.suffix
+        end
+        if (! self.title.blank?)
+          # FirstName LastName Title
+          if (! search_names_all_input.blank?)
+            search_names_all_input += ", "
+          end
+          search_names_all_input += self.first_name + " " + self.last_name + " " + self.title
+        end
+      end
+      if (! self.suffix.blank?)
+        # FirstName Suffix
+        if (! search_names_all_input.blank?)
+          search_names_all_input += ", "
+        end
+        search_names_all_input += self.first_name + " " + self.suffix
+      end
+    end
+    self.search_names_all = search_names_all_input
+  end
+
   # make a method that returns all of the two degrees for a person
   # use a array to track what people were added
   # have an array for the people records
