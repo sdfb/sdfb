@@ -66,6 +66,8 @@ class UserRelContrib < ActiveRecord::Base
   after_create :check_if_approved
   ##after_create :create_relationship_types_list ##
   ##after_update :create_relationship_types_list
+  before_create :create_start_and_end_date
+  before_update :create_start_and_end_date
 
   # Custom Methods
   # -----------------------------
@@ -81,11 +83,6 @@ class UserRelContrib < ActiveRecord::Base
         errors.add(:person2_autocomplete, "This relationship does not exist.")
         else
           self.relationship_id = found_rel_id.id
-          #set person1_autocomplete, person2_autocomplete, person1_selected, person2_selected to nil to save room in the database
-          self.person1_autocomplete = nil
-          self.person2_autocomplete = nil
-          self.person1_selection = nil
-          self.person2_selection = nil
         end
       else
         if (self.person1_selection.blank?) 
@@ -104,6 +101,77 @@ class UserRelContrib < ActiveRecord::Base
       self.approved_by = nil
       self.approved_on = nil
     end  
+  end
+
+  ##if a user submits a new relationship but does not include a start and end date it defaults to a start and end date based on the birth years of the people in the relationship
+  def create_start_and_end_date
+    person1_index = Relationship.find(relationship_id).person1_index
+    person2_index = Relationship.find(relationship_id).person2_index
+    person1_record = Person.find(person1_index)
+    person2_record = Person.find(person2_index)
+    if (! person1_record.nil?)
+      birth_year_1 = person1_record.ext_birth_year
+      death_year_1 = person1_record.ext_death_year
+    end
+    if (! person2_record.nil?)
+      birth_year_2 = person2_record.ext_birth_year
+      death_year_2 = person2_record.ext_death_year
+    end
+
+    #Only use default start date if the user does not enter a start year
+    if (self.start_year.blank?)
+      #decide new relationship start date
+      if ((! birth_year_1.blank?) || (! birth_year_2.blank?))
+        ##if there is a birthdate for at least 1 person
+        new_start_year_type = "AF/IN"
+        if ((! birth_year_1.blank?) && (! birth_year_2.blank?))
+          ## Use max birth year if birthdates are recorded for both people because the relationship can't start before someone is born
+          if birth_year_1 > birth_year_2
+            new_start_year = birth_year_1.to_i
+          else
+            new_start_year = birth_year_2.to_i
+          end
+        elsif (! birth_year_1.blank?)
+          new_start_year = birth_year_1.to_i
+        elsif (! birth_year_2.blank?)
+          new_start_year = birth_year_2.to_i
+        end
+      else
+        ##if there is no birthdates, set start date to the default CA 1400 (around 1400)
+        new_start_year_type = "CA"
+        new_start_year = 1400
+      end
+
+      self.start_year = new_start_year
+      self.start_date_type = new_start_year_type
+    end 
+
+    #Only use default end date if the user does not enter an end year
+    if (self.end_year.blank?)
+      #decide new relationship end date
+      if ((! death_year_1.blank?) || (! death_year_2.blank?))
+        ##if there is a deathdate for at least 1 person
+        new_end_year_type = "BF/IN"
+        if ((! death_year_1.blank?) && (! death_year_2.blank?))
+          ## Use min deathdate if deathdates are recorded for both people because the relationship will end by the time of the people dies
+          if death_year_1 < death_year_2
+            new_end_year = death_year_1.to_i
+          else
+            new_end_year = death_year_2.to_i
+          end
+        elsif (! death_year_1.blank?)
+          new_end_year = death_year_1.to_i
+        elsif (! death_year_2.blank?)
+          new_end_year = death_year_2.to_i
+        end
+      else
+        ##If there is no death year, set end year to the default CA 1800 (around 1800)
+        new_end_year_type = "CA"
+        new_end_year = 1800
+      end
+      self.end_year = new_end_year
+      self.end_date_type = new_end_year_type
+    end
   end
 
   #This creates a new relationship types list, a 2d array with each realtionship type like [type name, certainty, start_year, end_year]
@@ -244,6 +312,10 @@ class UserRelContrib < ActiveRecord::Base
 
   def end_year_present?
     ! self.end_year.nil?
+  end
+
+  def update_max_certainty2
+
   end
 
   def update_max_certainty
