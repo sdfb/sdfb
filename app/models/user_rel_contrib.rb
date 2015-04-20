@@ -319,7 +319,7 @@ class UserRelContrib < ActiveRecord::Base
   def update_max_certainty
     relationship_record = Relationship.find(self.relationship_id)
     old_type_certainty_list = relationship_record.type_certainty_list
-    if ((self.is_approved == true) && (self.is_active == true) && (self.is_rejected == false))
+    if ((relationship_record.max_user_rel_edit != self.id) && (self.is_approved == true) && (self.is_active == true) && (self.is_rejected == false))
       #Avoid errors by always checking that the field is an array
       #if the type_certainty_list is blank then just add the record
       if old_type_certainty_list.nil?
@@ -356,16 +356,60 @@ class UserRelContrib < ActiveRecord::Base
 
       # update the relationship's maximum certainty if new certainty is greater
       original_max_certainty = relationship_record.max_certainty
-      creator_certainty = relationship_record.original_certainty
-      if self.certainty > creator_certainty
-        if self.certainty > original_max_certainty 
-          Relationship.update(self.relationship_id, max_certainty: self.certainty)
-        end
+      if self.certainty >= original_max_certainty 
+        Relationship.update(self.relationship_id, max_certainty: self.certainty, max_user_rel_edit: self.id)
+      elsif relationship_record.max_user_rel_edit.nil?
+        Relationship.update(self.relationship_id, max_user_rel_edit: 0)
+      end
+    elsif ((relationship_record.max_user_rel_edit == self.id) && (self.is_approved == true) && (self.is_active == true) && (self.is_rejected == false))
+      #Avoid errors by always checking that the field is an array
+      #if the type_certainty_list is blank then just add the record
+      if old_type_certainty_list.nil?
+        new_type_certainty_list = []
+        new_type_certainty = []
+        new_type_certainty.push(self.id)
+        new_type_certainty.push(self.certainty)
+        new_type_certainty_list.push(new_type_certainty)
       else
-        Relationship.update(self.relationship_id, max_certainty: creator_certainty)
+        #Check if the relationship type assignment is in the type_certainty_list and update it if it is
+        new_type_certainty_list = old_type_certainty_list
+        found_flag = false
+        old_type_certainty_list.each do |rta|
+          #if the user_rel_edit record already exists in the type_certainty_list then update the certainty in the array
+          if (rta[0] == self.id)
+            # update the certainty for that array
+            rta[1] = self.certainty
+            new_type_certainty_list = old_type_certainty_list
+            found_flag = true
+            break
+          end
+        end
+        #if the user_rel_edit record does not already exists in the type_certainty_list then add it
+        if (found_flag == false)
+          new_type_certainty = []
+          new_type_certainty.push(self.id)
+          new_type_certainty.push(self.certainty)
+          new_type_certainty_list.push(new_type_certainty)
+        end
+      end
+
+      # update the relationship's type certainty list
+      Relationship.update(self.relationship_id, type_certainty_list: new_type_certainty_list)
+
+      # look through the list and find the new max certainty
+      certainty_from_list = new_type_certainty_list.map { |e| e.second }
+      max_certainty_from_list = certainty_from_list.max.to_i
+      creator_certainty = relationship_record.original_certainty
+      
+      if max_certainty_from_list >= creator_certainty
+        #find the index of the new max certainty
+        max_certainty_from_list_index = new_type_certainty_list[certainty_from_list.index(max_certainty_from_list)][0]
+        Relationship.update(self.relationship_id, max_certainty: max_certainty_from_list, max_user_rel_edit: max_certainty_from_list_index)
+      else
+        Relationship.update(self.relationship_id, max_certainty: creator_certainty, max_user_rel_edit: 0)
       end
     else
-      delete_flag = false
+      max_user_rel_contrib_id = 0
       #possibly delete the record since it shouldn't be there anymore if it is not approved
       old_type_certainty_list.each_with_index do |rta, i|
         #if the user_rel_edit record already exists in the type_certainty_list then update the certainty in the array
@@ -373,19 +417,21 @@ class UserRelContrib < ActiveRecord::Base
           new_type_certainty_list = old_type_certainty_list
           new_type_certainty_list.delete_at(i)
           Relationship.update(self.relationship_id, type_certainty_list: new_type_certainty_list)
-          delete_flag = true
           break
         end
       end
-      if (delete_flag == true)
-        # update the relationship's maximum certainty if deleted certainty
-        max_certainty_from_list = new_type_certainty_list.map { |e| e.second }.max.to_i
-        creator_certainty = relationship_record.original_certainty
-        if max_certainty_from_list > creator_certainty
-          Relationship.update(self.relationship_id, max_certainty: max_certainty_from_list)
-        else
-         Relationship.update(self.relationship_id, max_certainty: creator_certainty)
-        end
+      # update the relationship's maximum certainty if deleted certainty
+      # find the new max certainty
+      certainty_from_list = new_type_certainty_list.map { |e| e.second }
+      max_certainty_from_list = certainty_from_list.max.to_i
+      creator_certainty = relationship_record.original_certainty
+      
+      if max_certainty_from_list >= creator_certainty
+        #find the index of the new max certainty
+        max_certainty_from_list_index = new_type_certainty_list[certainty_from_list.index(max_certainty_from_list)][0]
+        Relationship.update(self.relationship_id, max_certainty: max_certainty_from_list, max_user_rel_edit: max_certainty_from_list_index)
+      else
+        Relationship.update(self.relationship_id, max_certainty: creator_certainty, max_user_rel_edit: 0)
       end
     end
   end
@@ -413,10 +459,12 @@ class UserRelContrib < ActiveRecord::Base
       creator_certainty = relationship_record.original_certainty
       if self.certainty > creator_certainty
         if self.certainty > original_max_certainty
-          Relationship.update(self.relationship_id, max_certainty: self.certainty)
+          Relationship.update(self.relationship_id, max_certainty: self.certainty, max_user_rel_edit: self.id)
         end
-      else
-        Relationship.update(self.relationship_id, max_certainty: creator_certainty)
+      elsif creator_certainty > original_max_certainty
+        Relationship.update(self.relationship_id, max_certainty: creator_certainty, max_user_rel_edit: 0)
+      elsif relationship_record.max_user_rel_edit.nil?
+        Relationship.update(self.relationship_id, max_user_rel_edit: 0)
       end
     end
 

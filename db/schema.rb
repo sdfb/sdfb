@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20150420020028) do
+ActiveRecord::Schema.define(:version => 20150420060521) do
 
   create_table "comments", :force => true do |t|
     t.string   "comment_type"
@@ -207,6 +207,7 @@ ActiveRecord::Schema.define(:version => 20150420020028) do
     t.string   "start_date_type"
     t.string   "end_date_type"
     t.text     "type_certainty_list",      :default => "--- []\n"
+    t.integer  "max_user_rel_edit"
   end
 
   create_table "user_group_contribs", :force => true do |t|

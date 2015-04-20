@@ -3,7 +3,7 @@ class Relationship < ActiveRecord::Base
   :justification, :approved_by, :approved_on, :created_at, :edge_birthdate_certainty,
   :is_approved, :start_year, :start_month, :start_day, :end_year, :end_month, :end_day,
   :is_active, :is_rejected, :edited_by_on, :person1_autocomplete, :person2_autocomplete, :types_list,
-  :start_date_type, :end_date_type, :type_certainty_list
+  :start_date_type, :end_date_type, :type_certainty_list, :max_user_rel_edit
   serialize :edited_by_on,Array
   serialize :types_list,Array
   # The type certainty list is a 2d array that includes the relationship type assignment id 
