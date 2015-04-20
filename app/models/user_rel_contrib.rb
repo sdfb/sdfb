@@ -365,26 +365,28 @@ class UserRelContrib < ActiveRecord::Base
         Relationship.update(self.relationship_id, max_certainty: creator_certainty)
       end
     else
-      # delete_flag = false
-      # #possibly delete the record since it shouldn't be there anymore if it is not approved
-      # old_type_certainty_list.each_with_index do |rta, i|
-      #   #if the user_rel_edit record already exists in the type_certainty_list then update the certainty in the array
-      #   if (rta[0] == self.id)
-      #     new_type_certainty_list = old_type_certainty_list.pop(i)
-      #     delete_flag = true
-      #     break
-      #   end
-      # end
-      # if (delete_flag == true)
-      #   # update the relationship's maximum certainty if deleted certainty
-      #   max_certainty_from_list = new_type_certainty_list.map { |e| e.second }.max.to_i
-      #   creator_certainty = relationship_record.original_certainty
-      #   if max_certainty_from_list > creator_certainty
-      #     Relationship.update(self.relationship_id, type_certainty_list: new_type_certainty_list,  max_certainty: max_certainty_from_list)
-      #   else
-      #    Relationship.update(self.relationship_id, type_certainty_list: new_type_certainty_list,  max_certainty: creator_certainty)
-      #   end
-      # end
+      delete_flag = false
+      #possibly delete the record since it shouldn't be there anymore if it is not approved
+      old_type_certainty_list.each_with_index do |rta, i|
+        #if the user_rel_edit record already exists in the type_certainty_list then update the certainty in the array
+        if (rta[0] == self.id)
+          new_type_certainty_list = old_type_certainty_list
+          new_type_certainty_list.delete_at(i)
+          Relationship.update(self.relationship_id, type_certainty_list: new_type_certainty_list)
+          delete_flag = true
+          break
+        end
+      end
+      if (delete_flag == true)
+        # update the relationship's maximum certainty if deleted certainty
+        max_certainty_from_list = new_type_certainty_list.map { |e| e.second }.max.to_i
+        creator_certainty = relationship_record.original_certainty
+        if max_certainty_from_list > creator_certainty
+          Relationship.update(self.relationship_id, max_certainty: max_certainty_from_list)
+        else
+         Relationship.update(self.relationship_id, max_certainty: creator_certainty)
+        end
+      end
     end
   end
 
