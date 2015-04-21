@@ -49,8 +49,12 @@ $(function() {
     $("#icon-color").tooltip({placement: 'left', title: 'Color legend', content: function () { return '<img src="images/colorchart.png" />'; } });
 
     $("#node-icon-tag").tooltip({placement:  'right', title: 'Add person to a group'});
+    $("#group-icon-tag").tooltip({placement:  'right', title: 'Add a person to this group'});
+    $("#group-icon-tag2").tooltip({placement:  'right', title: 'Add a person to this group'});
     $("#node-icon-chain").tooltip({placement: 'right', title: 'Add a new, untyped relationship for this person'});
     $("#node-icon-annotate").tooltip({placement: 'right', title: 'Add a note to this person'});
+    $("#group-icon-annotate").tooltip({placement: 'right', title: 'Add a note to this group'});
+    $("#group-icon-annotate2").tooltip({placement: 'right', title: 'Add a note to this group'});
     $("#edge-icon-annotate").tooltip({placement: 'right', title: 'Add a relationship type and note to this relationship'});
     $("#group-icon-label").tooltip({placement: 'right', title: 'Add person to group'});
     $("#group-icon-annotate").tooltip({placement: 'right', title: 'Add a note to this group'});

@@ -345,12 +345,16 @@ function init() {
     $("#group-name").text(group["name"]);
     $("#group-description").text(group["description"]);
     $("#group-discussion").attr("href", "groups/" + group["id"])
+    $("#group-icon-annotate").attr("href", "/user_group_contribs/new?group_id=" + group["id"]);
+    $("#group-icon-tag").attr("href", "/group_assignments/new?group_id=" + group["id"]);
     $(".group2").hide();
     if (typeof group2 != 'undefined'){
       $("#group-name2").text(group2["name"]);
       $("#group-description2").text(group2["description"]);
       $("#group-discussion2").attr("href", "groups/" + group2["id"])
       $(".group2").show();
+      $("#group-icon-annotate2").attr("href", "/user_group_contribs/new?group_id=" + group2["id"]);
+      $("#group-icon-tag2").attr("href", "/group_assignments/new?group_id=" + group2["id"]);
     }
     $.each(group_members, function(index, value) { 
       $( "#group-table" ).append( "<div class='group-row'><div class='col-md'>" + group_members[index]["display_name"].replace(/ /g,"_") + "</div><div class='col-md'>" + group_members[index]["ext_birth_year"] + "</div><div class='col-md'>" + group_members[index]["ext_death_year"] + "</div><div class='col-md'><a href='/people/" + group_members[index]["id"] + "'>" + + group_members[index]["id"] + "</a></div></div>");

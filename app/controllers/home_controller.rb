@@ -79,6 +79,10 @@ class HomeController < ApplicationController
       format.js
     end
   end
+
+  def update_group_info
+    @group_id = params[:group]
+  end
   
   def get_autocomplete_items(parameters)
     active_record_get_autocomplete_items(parameters).where("approved_by is not null and is_active is true and is_rejected is false")
