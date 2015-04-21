@@ -136,6 +136,13 @@ a:hover {
   z-index:5;
 }
 
+
+
+.ui-dialog-titlebar {
+  background-color: #555;
+  border: none;
+}
+
 #group-table{
   display:block;
   position:relative;
