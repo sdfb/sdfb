@@ -358,8 +358,50 @@ class UserRelContrib < ActiveRecord::Base
       original_max_certainty = relationship_record.max_certainty
       if self.certainty >= original_max_certainty 
         Relationship.update(self.relationship_id, max_certainty: self.certainty, max_user_rel_edit: self.id)
+        # update the max certainty of the relationship in the people's rel_sum
+        # find the existing rel_sums for person 1 and person 2
+        person1_id = relationship_record.person1_index
+        rel_sum_person_1 = Person.find(person1_id).rel_sum
+
+        person2_id = relationship_record.person2_index
+        rel_sum_person_2 = Person.find(person2_id).rel_sum
+
+        # locate the record for the specific relationship for person 1
+        rel_sum_person_1.each do |rel|
+          if rel[3] == relationship_record.id
+            rel[1] = self.certainty
+          end
+        end
+        Person.update(person1_id, rel_sum: rel_sum_person_1)
+        rel_sum_person_2.each do |rel|
+          if rel[3] == relationship_record.id
+            rel[1] = self.certainty
+          end
+        end
+        Person.update(person2_id, rel_sum: rel_sum_person_2)
       elsif relationship_record.max_user_rel_edit.nil?
         Relationship.update(self.relationship_id, max_user_rel_edit: 0)
+        # update the max certainty of the relationship in the people's rel_sum
+        # find the existing rel_sums for person 1 and person 2
+        person1_id = relationship_record.person1_index
+        rel_sum_person_1 = Person.find(person1_id).rel_sum
+
+        person2_id = relationship_record.person2_index
+        rel_sum_person_2 = Person.find(person2_id).rel_sum
+
+        # locate the record for the specific relationship for person 1
+        rel_sum_person_1.each do |rel|
+          if rel[3] == relationship_record.id
+            rel[1] = relationship_record.original_certainty
+          end
+        end
+        Person.update(person1_id, rel_sum: rel_sum_person_1)
+        rel_sum_person_2.each do |rel|
+          if rel[3] == relationship_record.id
+            rel[1] = relationship_record.original_certainty
+          end
+        end
+        Person.update(person2_id, rel_sum: rel_sum_person_2)
       end
     elsif ((relationship_record.max_user_rel_edit == self.id) && (self.is_approved == true) && (self.is_active == true) && (self.is_rejected == false))
       #Avoid errors by always checking that the field is an array
@@ -405,8 +447,50 @@ class UserRelContrib < ActiveRecord::Base
         #find the index of the new max certainty
         max_certainty_from_list_index = new_type_certainty_list[certainty_from_list.index(max_certainty_from_list)][0]
         Relationship.update(self.relationship_id, max_certainty: max_certainty_from_list, max_user_rel_edit: max_certainty_from_list_index)
+        # update the max certainty of the relationship in the people's rel_sum
+        # find the existing rel_sums for person 1 and person 2
+        person1_id = relationship_record.person1_index
+        rel_sum_person_1 = Person.find(person1_id).rel_sum
+
+        person2_id = relationship_record.person2_index
+        rel_sum_person_2 = Person.find(person2_id).rel_sum
+
+        # locate the record for the specific relationship for person 1
+        rel_sum_person_1.each do |rel|
+          if rel[3] == relationship_record.id
+            rel[1] = max_certainty_from_list
+          end
+        end
+        Person.update(person1_id, rel_sum: rel_sum_person_1)
+        rel_sum_person_2.each do |rel|
+          if rel[3] == relationship_record.id
+            rel[1] = max_certainty_from_list
+          end
+        end
+        Person.update(person2_id, rel_sum: rel_sum_person_2)
       else
         Relationship.update(self.relationship_id, max_certainty: creator_certainty, max_user_rel_edit: 0)
+        # update the max certainty of the relationship in the people's rel_sum
+        # find the existing rel_sums for person 1 and person 2
+        person1_id = relationship_record.person1_index
+        rel_sum_person_1 = Person.find(person1_id).rel_sum
+
+        person2_id = relationship_record.person2_index
+        rel_sum_person_2 = Person.find(person2_id).rel_sum
+
+        # locate the record for the specific relationship for person 1
+        rel_sum_person_1.each do |rel|
+          if rel[3] == relationship_record.id
+            rel[1] = creator_certainty
+          end
+        end
+        Person.update(person1_id, rel_sum: rel_sum_person_1)
+        rel_sum_person_2.each do |rel|
+          if rel[3] == relationship_record.id
+            rel[1] = creator_certainty
+          end
+        end
+        Person.update(person2_id, rel_sum: rel_sum_person_2)
       end
     else
       max_user_rel_contrib_id = 0
@@ -430,8 +514,50 @@ class UserRelContrib < ActiveRecord::Base
         #find the index of the new max certainty
         max_certainty_from_list_index = new_type_certainty_list[certainty_from_list.index(max_certainty_from_list)][0]
         Relationship.update(self.relationship_id, max_certainty: max_certainty_from_list, max_user_rel_edit: max_certainty_from_list_index)
+        # update the max certainty of the relationship in the people's rel_sum
+        # find the existing rel_sums for person 1 and person 2
+        person1_id = relationship_record.person1_index
+        rel_sum_person_1 = Person.find(person1_id).rel_sum
+
+        person2_id = relationship_record.person2_index
+        rel_sum_person_2 = Person.find(person2_id).rel_sum
+
+        # locate the record for the specific relationship for person 1
+        rel_sum_person_1.each do |rel|
+          if rel[3] == relationship_record.id
+            rel[1] = max_certainty_from_list
+          end
+        end
+        Person.update(person1_id, rel_sum: rel_sum_person_1)
+        rel_sum_person_2.each do |rel|
+          if rel[3] == relationship_record.id
+            rel[1] = max_certainty_from_list
+          end
+        end
+        Person.update(person2_id, rel_sum: rel_sum_person_2)
       else
         Relationship.update(self.relationship_id, max_certainty: creator_certainty, max_user_rel_edit: 0)
+        # update the max certainty of the relationship in the people's rel_sum
+        # find the existing rel_sums for person 1 and person 2
+        person1_id = relationship_record.person1_index
+        rel_sum_person_1 = Person.find(person1_id).rel_sum
+
+        person2_id = relationship_record.person2_index
+        rel_sum_person_2 = Person.find(person2_id).rel_sum
+
+        # locate the record for the specific relationship for person 1
+        rel_sum_person_1.each do |rel|
+          if rel[3] == relationship_record.id
+            rel[1] = creator_certainty
+          end
+        end
+        Person.update(person1_id, rel_sum: rel_sum_person_1)
+        rel_sum_person_2.each do |rel|
+          if rel[3] == relationship_record.id
+            rel[1] = creator_certainty
+          end
+        end
+        Person.update(person2_id, rel_sum: rel_sum_person_2)
       end
     end
   end
@@ -460,9 +586,51 @@ class UserRelContrib < ActiveRecord::Base
       if self.certainty > creator_certainty
         if self.certainty > original_max_certainty
           Relationship.update(self.relationship_id, max_certainty: self.certainty, max_user_rel_edit: self.id)
+          # update the max certainty of the relationship in the people's rel_sum
+          # find the existing rel_sums for person 1 and person 2
+          person1_id = relationship_record.person1_index
+          rel_sum_person_1 = Person.find(person1_id).rel_sum
+
+          person2_id = relationship_record.person2_index
+          rel_sum_person_2 = Person.find(person2_id).rel_sum
+
+          # locate the record for the specific relationship for person 1
+          rel_sum_person_1.each do |rel|
+            if rel[3] == relationship_record.id
+              rel[1] = self.certainty
+            end
+          end
+          Person.update(person1_id, rel_sum: rel_sum_person_1)
+          rel_sum_person_2.each do |rel|
+            if rel[3] == relationship_record.id
+              rel[1] = self.certainty
+            end
+          end
+          Person.update(person2_id, rel_sum: rel_sum_person_2)
         end
       elsif creator_certainty > original_max_certainty
         Relationship.update(self.relationship_id, max_certainty: creator_certainty, max_user_rel_edit: 0)
+        # update the max certainty of the relationship in the people's rel_sum
+        # find the existing rel_sums for person 1 and person 2
+        person1_id = relationship_record.person1_index
+        rel_sum_person_1 = Person.find(person1_id).rel_sum
+
+        person2_id = relationship_record.person2_index
+        rel_sum_person_2 = Person.find(person2_id).rel_sum
+
+        # locate the record for the specific relationship for person 1
+        rel_sum_person_1.each do |rel|
+          if rel[3] == relationship_record.id
+            rel[1] = creator_certainty
+          end
+        end
+        Person.update(person1_id, rel_sum: rel_sum_person_1)
+        rel_sum_person_2.each do |rel|
+          if rel[3] == relationship_record.id
+            rel[1] = creator_certainty
+          end
+        end
+        Person.update(person2_id, rel_sum: rel_sum_person_2)
       elsif relationship_record.max_user_rel_edit.nil?
         Relationship.update(self.relationship_id, max_user_rel_edit: 0)
       end
