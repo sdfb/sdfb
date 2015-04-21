@@ -37,9 +37,9 @@ $(document).ready(function() {
     $("#icon-link").tooltip({placement: 'right', title: 'Add a new, untyped relationship for this person'});
     $("#icon-annotate").tooltip({placement: 'right', title: 'Add a note to this relationship'});
 
-    $("#icon-color").click(function() {
-      $( "#colorlegend" ).dialog( "open" );
-    });
+    // $("#icon-color").click(function() {
+    //   $( "#colorlegend" ).dialog( "open" );
+    // });
 
     $("#node-icon-tag").tooltip({placement:  'right', title: 'Add person to a group'});
     $("#group-icon-tag").tooltip({placement:  'right', title: 'Add a person to this group'});
