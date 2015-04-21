@@ -84,7 +84,6 @@ li {
   line-height: 34px;
   height: auto;
   font-weight: lighter;
-  text-transform: uppercase;
   letter-spacing: 2px;
   z-index:1;
   position:relative;
@@ -106,7 +105,6 @@ a:hover {
     background: none;
     text-align: center;
     font-weight: lighter;
-    text-transform: uppercase;
     letter-spacing: 2px;
     font-size: 14px;
 }

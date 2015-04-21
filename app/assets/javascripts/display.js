@@ -237,7 +237,7 @@ function initGraph(people){
   if (getParam('date').length > 0){
       date = getParam('date').replace(',', ' to ')
   }
-  $("#results").html("Two degrees of " + name + name2 + " at " + confidence + "% from " + date);
+  $("#results").html("Two Degrees of " + name + name2 + " at " + confidence + "% from " + date + " (100 node display limit)");
   //click methods for all the 'find' buttons in the search bar
   //this should not use the entire peopletoarray instead it should use whatever value is passed through by the #one
 }

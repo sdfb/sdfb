@@ -20,23 +20,23 @@ $(document).ready(function() {
     var default_scertainty = 0
     var default_ecertainty = 100
 
-$(function() {
-    $( document ).tooltip({
-      items: "button",
-      content: function() {
-        var element = $( this );
-        if ( element.attr("id") == "icon-color") {
-          return "<img src='./imgages/colorchart.png'/>";
-        }
-      }
-    });
-  });
+// $(function() {
+//     $( document ).tooltip({
+//       items: "button",
+//       content: function() {
+//         var element = $( this );
+//         if ( element.attr("id") == "icon-color") {
+//           return "<img src='./imgages/colorchart.png'/>";
+//         }
+//       }
+//     });
+//   });
 
     //Tooltips
 	$("#search-network").tooltip({placement: 	'right', title: 'First- and second-degree network connections of one person'});
-    $("#search-shared-network").tooltip({placement:     'right', title: 'First- and second-degree network connections shared by two people'});
+    $("#search-shared-network").tooltip({placement:     'left', title: 'First- and second-degree network connections shared by two people'});
 	$("#search-group").tooltip({placement: 	'right', title: 'Members belonging to a group'});
-    $("#search-shared-group").tooltip({placement:   'right', title: 'Members belonging to both groups'});
+    $("#search-shared-group").tooltip({placement:   'left', title: 'Members belonging to both groups'});
 
     $("#contribute-add-person").tooltip({placement:   'right', title: 'Add a new person to the database'});
     $("#contribute-add-group").tooltip({placement:  'right', title: 'Add a new group to the database'});
@@ -45,8 +45,6 @@ $(function() {
     $("#icon-tag").tooltip({placement:  'right', title: 'Tag group'});
     $("#icon-link").tooltip({placement: 'right', title: 'Add a new, untyped relationship for this person'});
     $("#icon-annotate").tooltip({placement: 'right', title: 'Add a note to this relationship'});
-    $("#icon-info").tooltip({placement: 'left', title: 'Scroll to zoom, double click on node or edge for more information, single click to reset view'});
-    $("#icon-color").tooltip({placement: 'left', title: 'Color legend', content: function () { return '<img src="images/colorchart.png" />'; } });
 
     $("#node-icon-tag").tooltip({placement:  'right', title: 'Add person to a group'});
     $("#group-icon-tag").tooltip({placement:  'right', title: 'Add a person to this group'});
@@ -61,7 +59,7 @@ $(function() {
 
     $(".icon-zoomin").tooltip({placement:  'left', title: 'Zoom In'});
     $(".icon-zoomout").tooltip({placement:  'left', title: 'Zoom Out'});
-    $(".icon-color").tooltip({placement:  'left', title: 'Color legend', content: function () { return '<img src="images/colorchart.png" />'; } });
+    // $(".icon-color").tooltip({placement:  'left', title: 'Color legend', content: function () { return '<img src="images/colorchart.png" />'; } });
     $(".icon-info").tooltip({placement:  'left', title: 'Scroll to zoom, double click on node or edge for more information, single click to reset view'});
 
     $("#search-network-slider-confidence").tooltip({placement: 'right', title: 'Choose the Confidence Level'});
@@ -80,17 +78,17 @@ $(function() {
     });
 
     // Color guide
-    $("#icon-color").click(function(){
-        if( $('#guide').css('display') == 'none' ){
-            $("#guide").css('display','block');
-        }
-        else{
-            $("#guide").css('display','none');
-        }        
-    });
-    $("#guide").click(function(){
-          $("#guide").css('display','none');
-    });
+    // $("#icon-color").click(function(){
+    //     if( $('#guide').css('display') == 'none' ){
+    //         $("#guide").css('display','block');
+    //     }
+    //     else{
+    //         $("#guide").css('display','none');
+    //     }        
+    // });
+    // $("#guide").click(function(){
+    //       $("#guide").css('display','none');
+    // });
 
 	// Shows search bars when click on side menu
 	$('.accordion_content ul li').click(function(e){

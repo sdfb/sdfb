@@ -12,6 +12,10 @@
     z-index:5;
 }
 
+#accordion .tooltip {
+    width: 125px;
+}
+
 #accordion h3 {
 	font-size: 12px;
 	line-height: 34px;
@@ -254,6 +258,7 @@
 	/*-webkit-box-shadow: 10px 10px 10px 0px rgba(0,0,0,0.75	-moz-box-shadow: 10px 10px 10px 0px rgba(0,0,0,0.75);
 	box-shadow: 10px 10px 10px 0px rgba(0,0,0,0.75);*/
 	border:none;
+    overflow: hidden;
 }
 
 .odnb-img{
