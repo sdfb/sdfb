@@ -21,7 +21,7 @@ $(document).ready(function() {
     var default_ecertainty = 100
 
 
-    $("#colorlegend").dialog({autoOpen: false, height: "auto", show: "slideDown", position: { my: "right top", at: "right-10% top+10%", of: window }});
+    // $("#colorlegend").dialog({autoOpen: false, height: "auto", show: "slideDown", position: { my: "right top", at: "right-10% top+10%", of: window }});
 
     //Tooltips
 	$("#search-network").tooltip({placement: 	'right', title: 'First- and second-degree network connections of one person'});
