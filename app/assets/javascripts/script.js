@@ -20,17 +20,8 @@ $(document).ready(function() {
     var default_scertainty = 0
     var default_ecertainty = 100
 
-// $(function() {
-//     $( document ).tooltip({
-//       items: "button",
-//       content: function() {
-//         var element = $( this );
-//         if ( element.attr("id") == "icon-color") {
-//           return "<img src='./imgages/colorchart.png'/>";
-//         }
-//       }
-//     });
-//   });
+
+    $("#colorlegend").dialog({autoOpen: false, height: "auto", show: "slideDown", position: { my: "right top", at: "right-10% top+10%", of: window }});
 
     //Tooltips
 	$("#search-network").tooltip({placement: 	'right', title: 'First- and second-degree network connections of one person'});
@@ -46,6 +37,10 @@ $(document).ready(function() {
     $("#icon-link").tooltip({placement: 'right', title: 'Add a new, untyped relationship for this person'});
     $("#icon-annotate").tooltip({placement: 'right', title: 'Add a note to this relationship'});
 
+    $("#icon-color").click(function() {
+      $( "#colorlegend" ).dialog( "open" );
+    });
+
     $("#node-icon-tag").tooltip({placement:  'right', title: 'Add person to a group'});
     $("#group-icon-tag").tooltip({placement:  'right', title: 'Add a person to this group'});
     $("#group-icon-tag2").tooltip({placement:  'right', title: 'Add a person to this group'});
@@ -59,8 +54,6 @@ $(document).ready(function() {
 
     $(".icon-zoomin").tooltip({placement:  'left', title: 'Zoom In'});
     $(".icon-zoomout").tooltip({placement:  'left', title: 'Zoom Out'});
-    // $(".icon-color").tooltip({placement:  'left', title: 'Color legend', content: function () { return '<img src="images/colorchart.png" />'; } });
-    $(".icon-info").tooltip({placement:  'left', title: 'Scroll to zoom, double click on node or edge for more information, single click to reset view'});
 
     $("#search-network-slider-confidence").tooltip({placement: 'right', title: 'Choose the Confidence Level'});
     $("#search-network-slider-date").tooltip({placement: 'right', title: 'Choose the Date Range'});
@@ -72,6 +65,7 @@ $(document).ready(function() {
     $("#nav-slider-date").tooltip({placement: 'right', title: 'Choose the Date Range, then Click Filter'});
 
 	$('#search-network-form').css('display','block');
+    $(".icon-info").tooltip({placement:  'left', title: 'Info'});
 
     $("#search-network-show-table").click(function(){
         $("#search-network-show-table").attr('href', "/people/" + $("#search-network-name-id").val());
