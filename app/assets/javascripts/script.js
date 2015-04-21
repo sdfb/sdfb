@@ -48,6 +48,7 @@ $(function() {
     $("#icon-info").tooltip({placement: 'left', title: 'Scroll to zoom, double click on node or edge for more information, single click to reset view'});
     $("#icon-color").tooltip({placement: 'left', title: 'Color legend', content: function () { return '<img src="images/colorchart.png" />'; } });
 
+    $("#node-icon-tag").tooltip({placement:  'right', title: 'Add person to a group'});
     $("#node-icon-chain").tooltip({placement: 'right', title: 'Add a new, untyped relationship for this person'});
     $("#node-icon-annotate").tooltip({placement: 'right', title: 'Add a note to this person'});
     $("#edge-icon-annotate").tooltip({placement: 'right', title: 'Add a relationship type and note to this relationship'});
