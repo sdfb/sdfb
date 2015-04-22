@@ -54,6 +54,7 @@ $(document).ready(function() {
 
     $(".icon-zoomin").tooltip({placement:  'left', title: 'Zoom In'});
     $(".icon-zoomout").tooltip({placement:  'left', title: 'Zoom Out'});
+	$(".icon-info").tooltip({placement:  'left', title: 'Scroll to zoom, double click on node or edge for more information, single click to reset view'});
 
     $("#search-network-slider-confidence").tooltip({placement: 'right', title: 'Choose the Confidence Level'});
     $("#search-network-slider-date").tooltip({placement: 'right', title: 'Choose the Date Range'});
@@ -65,7 +66,6 @@ $(document).ready(function() {
     $("#nav-slider-date").tooltip({placement: 'right', title: 'Choose the Date Range, then Click Filter'});
 
 	$('#search-network-form').css('display','block');
-    $(".icon-info").tooltip({placement:  'left', title: 'Info'});
 
     $("#search-network-show-table").click(function(){
         $("#search-network-show-table").attr('href', "/people/" + $("#search-network-name-id").val());
