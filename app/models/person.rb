@@ -33,7 +33,7 @@ class Person < ActiveRecord::Base
   scope :all_members_of_a_group, lambda {|groupID| 
       select('people.*')
       .joins('join group_assignments ga on (people.id = ga.person_id)')
-      .where('(ga.group_id = ?)', groupID)}
+      .where('(ga.group_id = ? and ga.approved_by is not null)', groupID)}
   scope :first_degree_for, lambda {|id_input| 
       select('people.*')
       .joins('join relationships r1 on ((r1.person1_index = people.id) or (r1.person2_index = people.id))')
