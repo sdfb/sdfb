@@ -1,11 +1,11 @@
  $(document).ready(function(){
 
- 	/*if(document.cookie == 'skiplanding=yes'){
+ 	if(document.cookie == 'skiplanding=yes'){
  		$('#landing').fadeOut();
- 		$('#everything').fadeIn();
+ 		$('#everything').show();
  	}else{
  		document.cookie="skiplanding=yes; expires=Thu, 18 Dec 3000 12:00:00 UTC";
- 	};*/
+ 	};
 
  	$('#skipIntro').mouseover(function(){
 		

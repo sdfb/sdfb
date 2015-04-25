@@ -15,27 +15,6 @@ Num_rels Cluster    Color
  50+    6        dark blue
 */
 
-// //returns cluster number based on number of relationships the cluster has
-/*
-function getClusterRels(node){
-  try{
-    var size = Object.keys(node).length;
-  }
-  catch(err) {
-    var size = 0;
-  }
-
-  if (size > 100){
-    return 10;
-  }else{
-    return (Math.floor(size / 2)) / 10;
-  }
-}
-//returns colors based on cluster group number
-function getColorsRels(){
-   return { 0: "#bf5b17", 1: "#d73027", 2: "#fc8d59", 3: "#fee090", 4: "#e0f3f8", 5: "#91bfdb", 6: "#4575b4"}
-}
-*/
 //returns cluster number based on number of relationships the cluster has
  function getClusterRels(node){
    try{
@@ -335,6 +314,10 @@ function init() {
   var group2 = window.gon.group2;
   var group_members = window.gon.group_members;
   sidebarSearch(people);
+  if (people[0] == "nodelimit"){
+    window.location.href = "/people/" + people[1];
+  }
+
   if (getParam("group").length == 0){
     filterGraph(people);
     initGraph(people);

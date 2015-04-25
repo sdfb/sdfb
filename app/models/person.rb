@@ -261,9 +261,11 @@ class Person < ActiveRecord::Base
                     firstDegreePersonID = firstDegreePerson[0]
                     @firstDegreePerson = self.find_first_degree_for_person(firstDegreePersonID, min_confidence, max_confidence, min_year, max_year, false)
                     twoPeopleRecordsForReturn.update(@firstDegreePerson)
-           end
+                end
+            end
         end
-      end
+    else
+      return ["nodelimit", person_id]
     end
     twoPeopleRecordsForReturn.update(@zeroDegreePerson)
     return twoPeopleRecordsForReturn
