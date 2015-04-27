@@ -314,10 +314,14 @@ function init() {
   var group2 = window.gon.group2;
   var group_members = window.gon.group_members;
   sidebarSearch(people);
-  if (people[0] == "nodelimit"){
-    window.location.href = "/people/" + people[1];
+  if (people != undefined){
+    if (people[0] == "nodelimit"){
+    	window.location.href = "/people/" + people[1];
+  	}
+	  if (people[0] == "nodelimit_network"){
+	    window.location.href = "/relationships/" + people[1];
+	  }
   }
-
   if (getParam("group").length == 0){
     filterGraph(people);
     initGraph(people);

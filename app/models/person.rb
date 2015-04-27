@@ -271,6 +271,16 @@ class Person < ActiveRecord::Base
     return twoPeopleRecordsForReturn
   end
 
+  def self.find_relationship(id, rel_sum)
+    rel_sum.each do |rel|
+      if rel[0] == id
+        p "found111"
+        p rel[3]
+        return rel[3]
+      end
+    end
+  end
+
   def self.find_two_degree_for_network(person_id1, person_id2, confidence_range, date_range)
     twoPeopleRecordsForReturn = {}
     if (confidence_range)
@@ -291,6 +301,12 @@ class Person < ActiveRecord::Base
 		@zeroDegreePerson2 = self.find_first_degree_for_person(person_id2, min_confidence, max_confidence, min_year, max_year, true)
 		@zeroDegreePerson2Rel = {}
 		@zeroDegreePerson2Rel[person_id2] = person_id2
+    if @zeroDegreePerson2[person_id2.to_i]['rel_sum'].length > 50
+      return ["nodelimit_network", self.find_relationship(person_id1.to_i, @zeroDegreePerson2[person_id2.to_i]['rel_sum'])]
+    end
+    if @zeroDegreePerson1[person_id1.to_i]['rel_sum'].length > 50
+      return ["nodelimit_network", self.find_relationship(person_id2.to_i, @zeroDegreePerson1[person_id1.to_i]['rel_sum'])]
+    end
 		@zeroDegreePerson2[person_id2.to_i]['rel_sum'].each do |firstDegreePerson2|
       #check that relationship is within the date and confidence range
       if ((firstDegreePerson2[3].to_i >= min_year) && (firstDegreePerson2[4].to_i <= max_year))
