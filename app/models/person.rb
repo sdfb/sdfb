@@ -273,12 +273,11 @@ class Person < ActiveRecord::Base
 
   def self.find_relationship(id, rel_sum)
     rel_sum.each do |rel|
-      if rel[0] == id
-        p "found111"
-        p rel[3]
+      if rel[0].to_i == id
         return rel[3]
       end
     end
+    return "None"
   end
 
   def self.find_two_degree_for_network(person_id1, person_id2, confidence_range, date_range)
@@ -302,10 +301,20 @@ class Person < ActiveRecord::Base
 		@zeroDegreePerson2Rel = {}
 		@zeroDegreePerson2Rel[person_id2] = person_id2
     if @zeroDegreePerson2[person_id2.to_i]['rel_sum'].length > 50
-      return ["nodelimit_network", self.find_relationship(person_id1.to_i, @zeroDegreePerson2[person_id2.to_i]['rel_sum'])]
+      @found = self.find_relationship(person_id1.to_i, @zeroDegreePerson2[person_id2.to_i]['rel_sum'])
+      if @found != "None"
+        return ["nodelimit_network", @found]
+      else
+        return ["nodelimit", person_id2.to_i]
+      end
     end
     if @zeroDegreePerson1[person_id1.to_i]['rel_sum'].length > 50
-      return ["nodelimit_network", self.find_relationship(person_id2.to_i, @zeroDegreePerson1[person_id1.to_i]['rel_sum'])]
+      @found = self.find_relationship(person_id2.to_i, @zeroDegreePerson2[person_id1.to_i]['rel_sum'])
+      if @found != "None"
+        return ["nodelimit_network", @found]
+      else
+        return ["nodelimit", person_id1.to_i]
+      end
     end
 		@zeroDegreePerson2[person_id2.to_i]['rel_sum'].each do |firstDegreePerson2|
       #check that relationship is within the date and confidence range
