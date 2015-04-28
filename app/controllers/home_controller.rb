@@ -87,7 +87,4 @@ class HomeController < ApplicationController
   def get_autocomplete_items(parameters)
     active_record_get_autocomplete_items(parameters).where("approved_by is not null and is_active is true and is_rejected is false")
   end
-  def test
-  	#@data.people = Person.find_2_degrees_for_person(params[:person_id])
-  end
 end

@@ -1,0 +1,7 @@
+_HiStOrY_V2_
+\d
+groups
+select * from groups
+select * from groups;
+\d groups
+\s select * groups;

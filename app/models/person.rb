@@ -33,7 +33,7 @@ class Person < ActiveRecord::Base
   scope :all_members_of_a_group, lambda {|groupID| 
       select('people.*')
       .joins('join group_assignments ga on (people.id = ga.person_id)')
-      .where('(ga.group_id = ?)', groupID)}
+      .where('(ga.group_id = ? and ga.approved_by is not null)', groupID)}
   scope :first_degree_for, lambda {|id_input| 
       select('people.*')
       .joins('join relationships r1 on ((r1.person1_index = people.id) or (r1.person2_index = people.id))')
@@ -261,12 +261,23 @@ class Person < ActiveRecord::Base
                     firstDegreePersonID = firstDegreePerson[0]
                     @firstDegreePerson = self.find_first_degree_for_person(firstDegreePersonID, min_confidence, max_confidence, min_year, max_year, false)
                     twoPeopleRecordsForReturn.update(@firstDegreePerson)
-           end
+                end
+            end
         end
-      end
+    else
+      return ["nodelimit", person_id]
     end
     twoPeopleRecordsForReturn.update(@zeroDegreePerson)
     return twoPeopleRecordsForReturn
+  end
+
+  def self.find_relationship(id, rel_sum)
+    rel_sum.each do |rel|
+      if rel[0].to_i == id
+        return rel[3]
+      end
+    end
+    return "None"
   end
 
   def self.find_two_degree_for_network(person_id1, person_id2, confidence_range, date_range)
@@ -289,6 +300,22 @@ class Person < ActiveRecord::Base
 		@zeroDegreePerson2 = self.find_first_degree_for_person(person_id2, min_confidence, max_confidence, min_year, max_year, true)
 		@zeroDegreePerson2Rel = {}
 		@zeroDegreePerson2Rel[person_id2] = person_id2
+    if @zeroDegreePerson2[person_id2.to_i]['rel_sum'].length > 50
+      @found = self.find_relationship(person_id1.to_i, @zeroDegreePerson2[person_id2.to_i]['rel_sum'])
+      if @found != "None"
+        return ["nodelimit_network", @found]
+      else
+        return ["nodelimit", person_id2.to_i]
+      end
+    end
+    if @zeroDegreePerson1[person_id1.to_i]['rel_sum'].length > 50
+      @found = self.find_relationship(person_id2.to_i, @zeroDegreePerson2[person_id1.to_i]['rel_sum'])
+      if @found != "None"
+        return ["nodelimit_network", @found]
+      else
+        return ["nodelimit", person_id1.to_i]
+      end
+    end
 		@zeroDegreePerson2[person_id2.to_i]['rel_sum'].each do |firstDegreePerson2|
       #check that relationship is within the date and confidence range
       if ((firstDegreePerson2[3].to_i >= min_year) && (firstDegreePerson2[4].to_i <= max_year))

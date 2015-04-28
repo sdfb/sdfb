@@ -6,6 +6,8 @@ rake db:populate_rel_cats
 rake db:populate_rel_types
 rake db:populate_rel_cat_assigns
 rake db:populate_group_cat_assigns
+rake db:populate_people_display_names
+rake db:populate_people_search_names_all
 rake db:populate_rels_2_20000
 rake db:populate_rels_20001_40000
 rake db:populate_rels_40001_60000
@@ -16,5 +18,10 @@ rake db:populate_rels_120001_140000
 rake db:populate_rels_140001_160000
 rake db:populate_rels_160001_170542
 rake db:populate_user_rel_contribs_samples
-rake db:populate_people_search_names_all
-rake db:populate_people_display_names
+rake db:populate_rel_start_end_date_20001_20367
+rake db:populate_rel_start_end_date_20368_40000
+rake db:populate_rel_start_end_date_50293_60000
+rake db:populate_rel_start_end_date_60917_80000
+rake db:populate_rel_start_end_date_82014_88072
+rake db:populate_rel_start_end_date_88073_100000
+rake db:populate_rel_start_end_date_101033_120000
