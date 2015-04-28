@@ -74,11 +74,14 @@
           <dt><strong>Justification</strong></dt>
           <dd><%= @group.justification %></dd>
         <% end %>
-        <dt><strong>Created By:</strong></dt>
-          <dd><%= link_to User.find(@group.created_by).username,  user_path(@group.created_by) %></dd>
-        <dt><strong>Created On:</strong></dt>
-        <dd><%= @group.created_at %></dd>
         <% if (! current_user.blank?) && ((current_user.user_type == "Admin") || (current_user.user_type == "Curator")) %>
+          <dt><strong>Created:</strong></dt>
+          <dd><%= @group.created_at.strftime("%m/%d/%Y") %> by <%= link_to User.find(@group.created_by).username,  user_path(@group.created_by) %></dd>
+          <% @last_edit = @group.last_edit %>
+          <% if ! @last_edit.blank? %>
+            <dt><strong>Last Edit:</strong></dt>
+            <dd><%= @last_edit[1].strftime("%m/%d/%Y")%> by <%= link_to User.find(@last_edit[0]).username,  user_path(@last_edit[0]) %></dd>
+          <% end %>
           <dt><strong>Is Approved?:</strong></dt>
           <dd><%= @group.is_approved %></dd>
           <% if ! @group.approved_by.blank? %>
@@ -88,12 +91,6 @@
           <% if ! @group.approved_on.blank? %>
             <dt><strong>Approved On:</strong></dt>
             <dd><%= @group.approved_on %></dd>
-          <% end %>
-          <dt><strong>Edit History:</strong></dt>
-          <% if ! @group.edited_by_on.blank? %>
-            <dd><%= @group.edited_by_on %></dd>
-          <% else %>
-            <dd>No edits have been made.</dd>
           <% end %>
           <dt><strong>Is Active:</strong></dt>
           <dd><%= @group.is_active %></dd>

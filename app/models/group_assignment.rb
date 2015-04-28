@@ -1,8 +1,8 @@
 class GroupAssignment < ActiveRecord::Base
   attr_accessible :created_by, :group_id, :approved_by, :approved_on, :person_id, :start_date, :end_date, :created_at,
-  :is_approved, :is_active, :is_rejected, :edited_by_on, :start_year, :start_month, :start_day, :end_year, :end_month, :end_day,
-  :person_autocomplete, :start_date_type, :end_date_type
-  serialize :edited_by_on,Array
+  :is_approved, :is_active, :is_rejected, :start_year, :start_month, :start_day, :end_year, :end_month, :end_day,
+  :person_autocomplete, :start_date_type, :end_date_type, :last_edit
+  serialize :last_edit,Array
   
   # Relationships
   # -----------------------------
@@ -39,7 +39,6 @@ class GroupAssignment < ActiveRecord::Base
   validates_presence_of :created_by
   # checks if the group and person assignment already exists
   validate :check_if_approved_valid_create, on: :create
-  validate :check_if_approved_valid_update, on: :update
   ## start date type is one included in the list
   validates_inclusion_of :start_date_type, :in => DATE_TYPE_LIST, :if => :start_year_present?
   ## end date type is one included in the list
@@ -53,32 +52,17 @@ class GroupAssignment < ActiveRecord::Base
 
   # Callbacks
   # ----------------------------- 
+  before_create :init_array
   after_create :create_group_person_list
   after_update :create_group_person_list
-  before_update :add_editor_to_edit_by_on
   before_create :check_if_approved_valid_create
-  before_update :check_if_approved_valid_update
-  before_create :init_array
+  before_update :check_if_approved_and_update_edit
+
 
   # Custom Methods
   # -----------------------------
-  
   def init_array
-    self.edited_by_on = nil
-  end
-
-  def add_editor_to_edit_by_on
-    if (! self.edited_by_on.blank?)
-      previous_edited_by_on = GroupAssignment.find(self.id).edited_by_on
-      if previous_edited_by_on.nil?
-        previous_edited_by_on = []
-      end
-      newEditRecord = []
-      newEditRecord.push(self.edited_by_on)
-      newEditRecord.push(Time.now)
-      previous_edited_by_on.push(newEditRecord)
-      self.edited_by_on = previous_edited_by_on
-    end
+    self.last_edit = nil
   end
 
   def create_group_person_list
@@ -92,7 +76,7 @@ class GroupAssignment < ActiveRecord::Base
 
       #adds the group to the person
         #find all approved group_assignments for that person
-        #map by gorup name
+        #map by group name
         updated_person_groups_list = GroupAssignment.all_approved.all_for_person(self.person_id).map{|ga| Group.find(ga.group_id).name }
         Person.update(self.person_id, group_list: updated_person_groups_list)
     end
@@ -123,8 +107,16 @@ class GroupAssignment < ActiveRecord::Base
     end  
   end
 
-  def check_if_approved_valid_update
-    if (self.is_approved != true)
+  def check_if_approved_and_update_edit
+    new_last_edit = []
+    new_last_edit.push(self.approved_by.to_i)
+    new_last_edit.push(Time.now)
+    self.last_edit = new_last_edit
+
+    # update approval
+    if (self.is_approved == true)
+      self.approved_on = Time.now
+    else
       self.approved_by = nil
       self.approved_on = nil
     end  

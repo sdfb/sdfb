@@ -1,7 +1,7 @@
 class RelCatAssign < ActiveRecord::Base
   attr_accessible :relationship_category_id, :relationship_type_id, :created_at, :approved_by,
-  :approved_on, :is_approved, :created_by, :is_active, :is_rejected, :edited_by_on
-  serialize :edited_by_on,Array
+  :approved_on, :is_approved, :created_by, :is_active, :is_rejected, :last_edit
+  serialize :last_edit,Array
 
   # Relationships
   # -----------------------------
@@ -13,7 +13,6 @@ class RelCatAssign < ActiveRecord::Base
   validates_presence_of :relationship_category_id
   validates_presence_of :relationship_type_id
   validate :check_if_approved_valid_create, on: :create
-  validate :check_if_approved_valid_update, on: :update
 
   # Scope
   # ----------------------------- 
@@ -32,27 +31,12 @@ class RelCatAssign < ActiveRecord::Base
   # -----------------------------
   before_create :init_array
   before_create :check_if_approved_valid_create
-  before_update :check_if_approved_valid_update
-  before_update :add_editor_to_edit_by_on
+  before_update :check_if_approved_and_update_edit
 
   # Custom Methods
   # -----------------------------
-  def add_editor_to_edit_by_on
-    if (! self.edited_by_on.blank?)
-      previous_edited_by_on = RelCatAssign.find(self.id).edited_by_on
-      if previous_edited_by_on.nil?
-        previous_edited_by_on = []
-      end
-      newEditRecord = []
-      newEditRecord.push(self.edited_by_on)
-      newEditRecord.push(Time.now)
-      previous_edited_by_on.push(newEditRecord)
-      self.edited_by_on = previous_edited_by_on
-    end
-  end
-
   def init_array
-    self.edited_by_on = nil
+    self.last_edit = nil
   end
 
   def check_if_approved_valid_create
@@ -63,8 +47,16 @@ class RelCatAssign < ActiveRecord::Base
     end  
   end
 
-  def check_if_approved_valid_update
-    if (self.is_approved != true)
+  def check_if_approved_and_update_edit
+    new_last_edit = []
+    new_last_edit.push(self.approved_by.to_i)
+    new_last_edit.push(Time.now)
+    self.last_edit = new_last_edit
+
+    # update approval
+    if (self.is_approved == true)
+      self.approved_on = Time.now
+    else
       self.approved_by = nil
       self.approved_on = nil
     end  

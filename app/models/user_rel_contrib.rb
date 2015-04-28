@@ -1,10 +1,10 @@
 class UserRelContrib < ActiveRecord::Base
   attr_accessible :annotation, :bibliography, :certainty, :created_by, :relationship_id, :relationship_type_id, 
   :approved_by, :approved_on, :created_at, :is_approved, :start_year, :start_month, 
-  :start_day, :end_year, :end_month, :end_day, :is_active, :is_rejected, :edited_by_on, :person1_autocomplete,
-  :person2_autocomplete, :person1_selection, :person2_selection, :start_date_type, :end_date_type
-  serialize :edited_by_on,Array
-  
+  :start_day, :end_year, :end_month, :end_day, :is_active, :is_rejected, :person1_autocomplete,
+  :person2_autocomplete, :person1_selection, :person2_selection, :start_date_type, :end_date_type, :last_edit
+  serialize :last_edit,Array
+
   # Relationships
   # -----------------------------
   belongs_to :relationship
@@ -60,9 +60,7 @@ class UserRelContrib < ActiveRecord::Base
   # ----------------------------- 
   before_create :init_array
   before_create :autocomplete_to_rel
-  before_update :add_editor_update_max_cert_check_approved
-  ##before_create :update_max_certainty ###
-  after_update :check_if_approved
+  before_update :check_if_approved_and_update_edit
   after_create :check_if_approved
   after_create :create_max_certainty
   after_update :update_max_certainty
@@ -73,6 +71,9 @@ class UserRelContrib < ActiveRecord::Base
 
   # Custom Methods
   # -----------------------------
+  def init_array
+    self.last_edit = nil
+  end
   
   #This converts the person1_selected and the person2_selected into the relationship_id foreign key
   def autocomplete_to_rel
@@ -100,6 +101,21 @@ class UserRelContrib < ActiveRecord::Base
   #this checks if the record is approved
   def check_if_approved
     if (self.is_approved == false)
+      self.approved_by = nil
+      self.approved_on = nil
+    end  
+  end
+
+  def check_if_approved_and_update_edit
+    new_last_edit = []
+    new_last_edit.push(self.approved_by.to_i)
+    new_last_edit.push(Time.now)
+    self.last_edit = new_last_edit
+
+    # update approval
+    if (self.is_approved == true)
+      self.approved_on = Time.now
+    else
       self.approved_by = nil
       self.approved_on = nil
     end  
@@ -194,118 +210,12 @@ class UserRelContrib < ActiveRecord::Base
     Relationship.update(self.relationship_id, types_list: updated_rel_types_list)
   end
 
-  def add_editor_update_max_cert_check_approved
-    # update edit_by_on
-    if (! self.edited_by_on.blank?)
-      previous_edited_by_on = UserRelContrib.find(self.id).edited_by_on
-      if previous_edited_by_on.nil?
-        previous_edited_by_on = []
-      end
-      newEditRecord = []
-      newEditRecord.push(self.approved_by)
-      newEditRecord.push(Time.now)
-      previous_edited_by_on.push(newEditRecord)
-      self.edited_by_on = previous_edited_by_on
-    end
-
-    # #update max_certainty
-    # if (self.is_approved == true)
-    #   # update the relationship's max certainty
-    #     #set the max_certainty to the current user_rel_contrib certainty
-    #     new_max_certainty = self.certainty
-    #     # find all user_rel_contribs for a specific relationship
-    #     all_user_rel_contribs = UserRelContrib.all_approved.all_for_relationship(self.relationship_id)
-
-    #     # for each user_rel_contrib, check if it is greater than the max certainty and set that to equal the new_max_certainty
-    #     all_user_rel_contribs.each do |urc|
-    #       if urc.certainty > new_max_certainty
-    #         new_max_certainty = urc.certainty
-    #       end
-    #     end
-
-    #     # check if original certainty is greater than the max certainty
-    #     original_certainty = Relationship.find(self.relationship_id).original_certainty
-    #     if (original_certainty > new_max_certainty) 
-    #       new_max_certainty = original_certainty
-    #     end 
-
-    #     Relationship.update(self.relationship_id, max_certainty: new_max_certainty)
-
-    #   # update the max certainty of the relationship in the people's rel_sum
-    #     # find the existing rel_sums for person 1 and person 2
-    #     person1_id = Relationship.find(self.relationship_id).person1_index
-    #     rel_sum_person_1 = Person.find(person1_id).rel_sum
-
-    #     person2_id = Relationship.find(self.relationship_id).person2_index
-    #     rel_sum_person_2 = Person.find(person2_id).rel_sum
-
-    #     # locate the record for the specific relationship for person 1
-    #     rel_sum_person_1.each do |rel|
-    #       if rel[2] == self.relationship_id
-    #         rel[1] = new_max_certainty
-    #       end
-    #     end
-    #     Person.update(person1_id, rel_sum: rel_sum_person_1)
-    #     rel_sum_person_2.each do |rel|
-    #       if rel[2] == self.relationship_id
-    #         rel[1] = new_max_certainty
-    #       end
-    #     end
-    #     Person.update(person2_id, rel_sum: rel_sum_person_2)
-    # else
-    #     # update the relationship's max certainty
-    #     new_max_certainty = 0
-
-    #     # find all user_rel_contribs for a specific relationship
-    #     all_user_rel_contribs = UserRelContrib.all_approved.all_for_relationship(self.relationship_id)
-
-    #     # for each user_rel_contrib, check if it is greater than the max certainty and set that to equal the new_max_certainty
-    #     all_user_rel_contribs.each do |urc|
-    #       if urc.certainty > new_max_certainty
-    #         new_max_certainty = urc.certainty
-    #       end
-    #     end
-
-    #     # if max certainty = 0, set it to the original certainty
-    #     original_certainty = Relationship.find(self.relationship_id).original_certainty
-    #     if (original_certainty > new_max_certainty) 
-    #       new_max_certainty = original_certainty
-    #     end 
-        
-    #     Relationship.update(self.relationship_id, max_certainty: new_max_certainty)
-
-    #   # update the max certainty of the relationship in the people's rel_sum
-    #     # find the existing rel_sums for person 1 and person 2
-    #     person1_id = Relationship.find(self.relationship_id).person1_index
-    #     rel_sum_person_1 = Person.find(person1_id).rel_sum
-
-    #     person2_id = Relationship.find(self.relationship_id).person2_index
-    #     rel_sum_person_2 = Person.find(person2_id).rel_sum
-
-    #     # locate the record for the specific relationship for person 1
-    #     rel_sum_person_1.each do |rel|
-    #       if rel[2] == self.relationship_id
-    #         rel[1] = new_max_certainty
-    #       end
-    #     end
-    #     Person.update(person1_id, rel_sum: rel_sum_person_1)
-    #     rel_sum_person_2.each do |rel|
-    #       if rel[2] == self.relationship_id
-    #         rel[1] = new_max_certainty
-    #       end
-    #     end
-    #     Person.update(person2_id, rel_sum: rel_sum_person_2)
-    # end
-
+  def update_approved
     #update approve_by
     if (self.is_approved == false)
       self.approved_by = nil
       self.approved_on = nil
     end
-  end
-
-  def init_array
-    self.edited_by_on = nil
   end
   
   def start_year_present?

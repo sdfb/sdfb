@@ -1,9 +1,9 @@
 class Group < ActiveRecord::Base
   attr_accessible :created_by, :description, :name, :justification, :approved_by, :approved_on, 
   :created_at, :is_approved, :person_list, :start_year, :end_year, :is_active, :is_rejected,
-  :edited_by_on, :start_date_type, :end_date_type
+  :start_date_type, :end_date_type, :last_edit
   serialize :person_list,Array
-  serialize :edited_by_on,Array
+  serialize :last_edit,Array
   
   # Relationships
   # -----------------------------
@@ -53,28 +53,14 @@ class Group < ActiveRecord::Base
   # ----------------------------- 
   before_create :init_array
   before_create :check_if_approved
-  before_update :check_if_approved
-  before_update :add_editor_to_edit_by_on
+  before_update :check_if_approved_and_update_edit
 
   # Custom Methods
   # -----------------------------
-  def add_editor_to_edit_by_on
-    if (! self.edited_by_on.blank?)
-      previous_edited_by_on = Group.find(self.id).edited_by_on
-      if previous_edited_by_on.nil?
-        previous_edited_by_on = []
-      end
-      newEditRecord = []
-      newEditRecord.push(self.edited_by_on)
-      newEditRecord.push(Time.now)
-      previous_edited_by_on.push(newEditRecord)
-      self.edited_by_on = previous_edited_by_on
-    end
-  end
 
   def init_array
     self.person_list = nil
-    self.edited_by_on = nil
+    self.last_edit = nil
   end
 
   def get_users_name
@@ -86,6 +72,21 @@ class Group < ActiveRecord::Base
   end
 
   def check_if_approved
+    if (self.is_approved == true)
+      self.approved_on = Time.now
+    else
+      self.approved_by = nil
+      self.approved_on = nil
+    end  
+  end
+
+  def check_if_approved_and_update_edit
+    new_last_edit = []
+    new_last_edit.push(self.approved_by.to_i)
+    new_last_edit.push(Time.now)
+    self.last_edit = new_last_edit
+
+    # update approval
     if (self.is_approved == true)
       self.approved_on = Time.now
     else

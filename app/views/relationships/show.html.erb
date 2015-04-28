@@ -95,9 +95,14 @@
           <dt><strong>End Date:</strong></dt>
           <dd>Unknown</dd>
         <% end %>
-        <dt><strong>Created By:</strong></dt>
-        <dd><%= link_to User.find(@relationship.created_by).username,  user_path(@relationship.created_by) %></dd>
         <% if (! current_user.blank?) && ((current_user.user_type == "Admin") || (current_user.user_type == "Curator")) %>
+          <dt><strong>Created:</strong></dt>
+          <dd><%= @relationship.created_at.strftime("%m/%d/%Y") %> by <%= link_to User.find(@relationship.created_by).username,  user_path(@relationship.created_by) %></dd>
+          <% @last_edit = @relationship.last_edit %>
+          <% if ! @last_edit.blank? %>
+            <dt><strong>Last Edit:</strong></dt>
+            <dd><%= @last_edit[1].strftime("%m/%d/%Y")%> by <%= link_to User.find(@last_edit[0]).username,  user_path(@last_edit[0]) %></dd>
+          <% end %>
           <dt><strong>Is Approved?:</strong></dt>
           <dd><%= @relationship.is_approved %></dd>
           <% if ! @relationship.approved_by.blank? %>
@@ -115,14 +120,6 @@
           <% if ! @relationship.justification.blank? %>
             <dt><strong>Justification:</strong></dt>
             <dd><%= @relationship.justification %></dd>
-          <% end %>
-          <dt><strong>Created On:</strong></dt>
-          <dd><%= @relationship.created_at %></dd>
-          <dt>Edit History:</dt>
-          <% if ! @relationship.edited_by_on.blank? %>
-            <dd><%= @relationship.edited_by_on %></dd>
-          <% else %>
-            <dd>No edits have been made.</dd>
           <% end %>
           <dt>Is Active:</dt>
           <dd><%= @relationship.is_active %></dd>

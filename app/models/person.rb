@@ -2,10 +2,10 @@ class Person < ActiveRecord::Base
   attr_accessible :odnb_id, :first_name, :last_name, :created_by, :historical_significance, :uncertain, :unlikely, :possible,
   :likely, :certain, :rel_sum, :prefix, :suffix, :search_names_all, :title, :birth_year_type, :ext_birth_year, :alt_birth_year, :death_year_type,
   :ext_death_year, :alt_death_year, :justification, :approved_by, :approved_on, :created_at, :is_approved, :group_list, :gender,
-  :is_active, :is_rejected, :edited_by_on, :display_name
+  :is_active, :is_rejected, :display_name, :last_edit
   serialize :rel_sum,Array
   serialize :group_list,Array
-  serialize :edited_by_on,Array
+  serialize :last_edit,Array
   #rel_sum is the relationship summary that is updated whenever a relationship is created or updated
   #rel_sum includes the person the indvidual has a relationship with, the updated max certainty, whether it has been approved, and the relationship id
 
@@ -93,8 +93,7 @@ class Person < ActiveRecord::Base
   before_create :init_array
   before_create :check_if_approved
   before_create :populate_search_names
-  before_update :check_if_approved
-  before_update :add_editor_to_edit_by_on
+  before_update :check_if_approved_and_update_edit
 
   # Custom Methods
   # -----------------------------
@@ -493,24 +492,10 @@ class Person < ActiveRecord::Base
   #   return peopleRecordsForReturn
   # end
 
-  def add_editor_to_edit_by_on
-    if (! self.edited_by_on.blank?)
-      previous_edited_by_on = Person.find(self.id).edited_by_on
-      if previous_edited_by_on.nil?
-        previous_edited_by_on = []
-      end
-      newEditRecord = []
-      newEditRecord.push(self.edited_by_on)
-      newEditRecord.push(Time.now)
-      previous_edited_by_on.push(newEditRecord)
-      self.edited_by_on = previous_edited_by_on
-    end
-  end
-
   def init_array
     self.rel_sum = nil
     self.group_list = nil
-    self.edited_by_on = nil
+    self.last_edit = nil
   end
 
   def autocomplete_name
@@ -519,6 +504,21 @@ class Person < ActiveRecord::Base
 
   def check_if_approved
     if (self.is_approved != true)
+      self.approved_by = nil
+      self.approved_on = nil
+    end  
+  end
+
+  def check_if_approved_and_update_edit
+    new_last_edit = []
+    new_last_edit.push(self.approved_by.to_i)
+    new_last_edit.push(Time.now)
+    self.last_edit = new_last_edit
+
+    # update approval
+    if (self.is_approved == true)
+      self.approved_on = Time.now
+    else
       self.approved_by = nil
       self.approved_on = nil
     end  

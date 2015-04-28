@@ -13,8 +13,8 @@
     </div>
   <% end %>
   <%= f.label :relationship__type_id %>
-  <%= Relationship.find(@user_rel_contrib.relationship_id).get_person1_name %>
-  <%= f.input :relationship_type_id, :collection =>@relType.collect{ |r| [r.name, r.id] }, label: false, prompt: "Select" %>
+  <%= Relationship.find(@user_rel_contrib.relationship_id).get_person1_name %> 
+  <strong><%= RelationshipType.find(@user_rel_contrib.relationship_type_id).name %></strong>
   <%= Relationship.find(@user_rel_contrib.relationship_id).get_person2_name %>
 
   <%= f.label :certainty %>
@@ -47,7 +47,6 @@
       <%= f.hidden_field :approved_on, :value => Time.now %>
     <% end %>
   <% end %>
-  <%= f.hidden_field :edited_by_on, :value => current_user.id %>
   <div class="form-actions">
     <%= f.button :submit, :class => 'btn btn-primary', :value => "Edit Relatonship Type Assignment" %>
   </div>

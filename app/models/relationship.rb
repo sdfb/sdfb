@@ -2,13 +2,13 @@ class Relationship < ActiveRecord::Base
   attr_accessible :max_certainty, :created_by, :original_certainty, :person1_index, :person2_index,
   :justification, :approved_by, :approved_on, :created_at, :edge_birthdate_certainty,
   :is_approved, :start_year, :start_month, :start_day, :end_year, :end_month, :end_day,
-  :is_active, :is_rejected, :edited_by_on, :person1_autocomplete, :person2_autocomplete, :types_list,
-  :start_date_type, :end_date_type, :type_certainty_list, :max_user_rel_edit
-  serialize :edited_by_on,Array
+  :is_active, :is_rejected, :person1_autocomplete, :person2_autocomplete, :types_list,
+  :start_date_type, :end_date_type, :type_certainty_list, :max_user_rel_edit, :last_edit
   serialize :types_list,Array
   # The type certainty list is a 2d array that includes the relationship type assignment id 
   # and the relationship certainty for that relationship type
   serialize :type_certainty_list,Array
+  serialize :last_edit,Array
 
   # Relationships
   # -----------------------------
@@ -78,7 +78,8 @@ class Relationship < ActiveRecord::Base
   scope :order_by_sdfb_id, order('id')
 
   # Callbacks
-  # ----------------------------- 
+  # -----------------------------
+  before_create :init_array 
   before_create :max_certainty_on_create
   after_create :create_peoples_rel_sum
   before_create :create_start_and_end_date
@@ -86,13 +87,15 @@ class Relationship < ActiveRecord::Base
   after_update :update_peoples_rel_sum
   after_destroy :delete_peoples_rel_sum
   before_create :check_if_approved
-  before_update :check_if_approved
+  before_update :check_if_approved_and_update_edit
   before_create :check_if_valid
-  before_create :init_array
-  before_update :add_editor_to_edit_by_on_max_certainty
+  before_update :update_max_certainty
 
 	# Custom Methods
   # -----------------------------
+  def init_array
+    self.last_edit = nil
+  end
 
   ##if a user submits a new relationship but does not include a start and end date it defaults to a start and end date based on the birth years of the people in the relationship
   def create_start_and_end_date
@@ -163,19 +166,7 @@ class Relationship < ActiveRecord::Base
     end
   end
 
-  def add_editor_to_edit_by_on_max_certainty
-    #Add editor to edit_by_on
-    if (! self.edited_by_on.blank?)
-      previous_edited_by_on = Relationship.find(self.id).edited_by_on
-      if previous_edited_by_on.nil?
-        previous_edited_by_on = []
-      end
-      newEditRecord = []
-      newEditRecord.push(self.edited_by_on)
-      newEditRecord.push(Time.now)
-      previous_edited_by_on.push(newEditRecord)
-      self.edited_by_on = previous_edited_by_on
-    end
+  def update_max_certainty
 
     ###### update max certainty
 
@@ -262,10 +253,6 @@ class Relationship < ActiveRecord::Base
       end
     end
   end
-
-  def init_array
-    self.edited_by_on = nil
-  end
   
   def start_year_present?
     ! self.start_year.nil?
@@ -305,6 +292,21 @@ class Relationship < ActiveRecord::Base
 
   def check_if_approved
     if (self.is_approved != true)
+      self.approved_by = nil
+      self.approved_on = nil
+    end  
+  end
+
+  def check_if_approved_and_update_edit
+    new_last_edit = []
+    new_last_edit.push(self.approved_by.to_i)
+    new_last_edit.push(Time.now)
+    self.last_edit = new_last_edit
+
+    # update approval
+    if (self.is_approved == true)
+      self.approved_on = Time.now
+    else
       self.approved_by = nil
       self.approved_on = nil
     end  

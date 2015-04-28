@@ -20,17 +20,20 @@
         <dd><%= @user_person_contrib.id %></dd>
         <dt><strong>Person:</strong></dt>
         <dd><%= link_to Person.find(@user_person_contrib.person_id).display_name,  person_path(@user_person_contrib.person_id) %></dd>
-        <dt><strong>Created By:</strong></dt>
-        <dd><%= link_to User.find(@user_person_contrib.created_by).username,  user_path(@user_person_contrib.created_by) %></dd>
         <dt><strong>Note:</strong></dt>
         <dd><%= @user_person_contrib.annotation %></dd>
         <% if ! @user_person_contrib.bibliography.blank? %>
           <dt><strong>Citation:</strong></dt>
           <dd><%= @user_person_contrib.bibliography %></dd>
         <% end %>
+        <dt><strong>Created:</strong></dt>
+        <dd><%= @user_person_contrib.created_at.strftime("%m/%d/%Y") %> by <%= link_to User.find(@user_person_contrib.created_by).username,  user_path(@user_person_contrib.created_by) %></dd>
+        <% @last_edit = @user_person_contrib.last_edit %>
+        <% if ! @last_edit.blank? %>
+          <dt><strong>Last Edit:</strong></dt>
+          <dd><%= @last_edit[1].strftime("%m/%d/%Y")%> by <%= link_to User.find(@last_edit[0]).username,  user_path(@last_edit[0]) %></dd>
+        <% end %>
         <% if (! current_user.blank?) && ((current_user.user_type == "Admin") || (current_user.user_type == "Curator")) %>
-          <dt><strong>Created On:</strong></dt>
-          <dd><%= @user_person_contrib.created_at %></dd>
           <dt><strong>Is Approved?:</strong></dt>
           <dd><%= @user_person_contrib.is_approved %></dd>
           <% if ! @user_person_contrib.approved_by.blank? %>
@@ -40,12 +43,6 @@
           <% if ! @user_person_contrib.approved_by.blank? %>
             <dt><strong>Approved On:</strong></dt>
             <dd><%= @user_person_contrib.approved_on %></dd>
-          <% end %>
-          <dt><strong>Edit History:</strong></dt>
-          <% if ! @user_person_contrib.edited_by_on.blank? %>
-            <dd><%= @user_person_contrib.edited_by_on %></dd>
-          <% else %>
-            <dd>No edits have been made.</dd>
           <% end %>
           <dt><strong>Is Active:</strong></dt>
           <dd><%= @user_person_contrib.is_active %></dd>
