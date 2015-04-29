@@ -97,7 +97,13 @@ Sdfb::Application.routes.draw do
     get :autocomplete_person_search_names_all, on: :collection
   end
 
-  # Routing for people record export
+  # Routing for group assignments record export
+  match '/export_group_assignments' => 'group_assignments#export_group_assignments'
+
+  # Routing for relationship type assignments
+  match '/export_rel_type_assigns' => 'user_rel_contribs#export_rel_type_assigns'
+
+  # Routing for group record export
   match '/export_groups' => 'groups#export_groups'
 
   # Routing for people record export

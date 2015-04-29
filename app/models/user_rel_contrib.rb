@@ -46,6 +46,7 @@ class UserRelContrib < ActiveRecord::Base
   # ----------------------------- 
   scope :all_approved, where("is_approved is true and is_active is true and is_rejected is false")
   scope :all_inactive, where("is_active is false")
+  scope :all_active_unrejected, where("is_active is true and is_rejected is false")
   scope :all_rejected, where("is_rejected is true and is_active is true")
   scope :all_unapproved, where("is_approved is false and is_rejected is false and is_active is true")
   scope :for_user, lambda {|user_input| where('created_by = ?', "#{user_input}") }
@@ -694,5 +695,36 @@ class UserRelContrib < ActiveRecord::Base
     else
       return "ODNB"
     end
+  end
+
+  def export_rel_type_assigns
+    @all_user_rel_contribs_approved = UserRelContrib.all_approved
+    @all_user_rel_contribs = UserRelContrib.all_active_unrejected
+    if (current_user.user_type == "Admin")
+      user_rel_contribs_csv = CSV.generate do |csv|
+          csv << ["SDFB Relationship Type Assignment ID", "SDFB Relationship ID", "Relationship Type", "Certainty", "Start Date Type", "Start Month", "Start Day", "Start Year", "End Date Type", "End Month", "End Day", "End Year", "Justification", "Citation", "Created By ID", "Created At", "Is approved?", "Approved By ID", "Approved On"]
+          @all_user_rel_contribs.each do |user_rel_contrib|
+              csv << [user_rel_contrib.id, user_rel_contrib.relationship_id,
+              RelationshipType.find(user_rel_contrib.relationship_type_id).name, user_rel_contrib.certainty, 
+              user_rel_contrib.start_date_type, user_rel_contrib.start_month, user_rel_contrib.start_day,
+              user_rel_contrib.start_year, user_rel_contrib.end_date_type,  user_rel_contrib.end_month,
+              user_rel_contrib.end_day, user_rel_contrib.end_year,
+              user_rel_contrib.annotation, user_rel_contrib.bibliography, user_rel_contrib.created_by, user_rel_contrib.created_at,
+              user_rel_contrib.is_approved, user_rel_contrib.approved_by, user_rel_contrib.approved_on]
+          end
+      end
+    else
+      user_rel_contribs_csv = CSV.generate do |csv|
+        csv << ["SDFB Relationship Type Assignment ID", "SDFB Relationship ID", "Relationship Type", "Certainty", "Start Year Type", "Start Month", "Start Day", "Start Year", "End Date Type", "End Month", "End Day", "End Year"]
+        @all_user_rel_contribs_approved.each do |user_rel_contrib|
+            csv << [user_rel_contrib.id, user_rel_contrib.relationship_id,
+            RelationshipType.find(user_rel_contrib.relationship_type_id).name, user_rel_contrib.certainty,
+            user_rel_contrib.start_date_type, user_rel_contrib.start_month, user_rel_contrib.start_day,
+            user_rel_contrib.start_year, user_rel_contrib.end_date_type,  user_rel_contrib.end_month,
+            user_rel_contrib.end_day, user_rel_contrib.end_year]
+        end
+      end
+    end
+    send_data(user_rel_contribs_csv, :type => 'text/csv', :filename => 'SDFB_GroupAssignments.csv')
   end
 end

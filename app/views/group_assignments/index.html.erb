@@ -2,7 +2,7 @@
 
 <h1>All Group Assignments<%= link_to 'Assign a Person to a Group',
             new_group_assignment_path,
-            :class => 'btn btn-primary' %></h1><br>
+            :class => 'btn btn-primary' %><%=link_to 'Export Data', '/export_group_assignments', :class => 'btn btn-primary'%></h1><br>
 
 <table class="table table-condensed">
   <thead>

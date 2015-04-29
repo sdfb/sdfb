@@ -124,7 +124,7 @@ class RelationshipsController < ApplicationController
 
   def export_rels_for_rels_100000000_100020000
     @all_relationships_approved = Relationship.for_rels_100000000_100020000.all_approved
-    @all_relationships = Relationship.for_rels_100000000_100020000
+    @all_relationships = Relationship.for_rels_100000000_100020000.all_active_unrejected
     if (current_user.user_type == "Admin")
       relationship_csv = CSV.generate do |csv|
         csv << ["SDFB Relationship ID", "Person 1 ID", "Person 2 ID",
@@ -156,7 +156,7 @@ class RelationshipsController < ApplicationController
 
     def export_rels_for_rels_100020001_100040000
     @all_relationships_approved = Relationship.for_rels_100020001_100040000.all_approved
-    @all_relationships = Relationship.for_rels_100020001_100040000
+    @all_relationships = Relationship.for_rels_100020001_100040000.all_active_unrejected
     if (current_user.user_type == "Admin")
       relationship_csv = CSV.generate do |csv|
         csv << ["SDFB Relationship ID", "Person 1 ID", "Person 2 ID",
@@ -188,7 +188,7 @@ class RelationshipsController < ApplicationController
 
     def export_rels_for_rels_100040001_100060000
       @all_relationships_approved = Relationship.for_rels_100040001_100060000.all_approved
-      @all_relationships = Relationship.for_rels_100040001_100060000
+      @all_relationships = Relationship.for_rels_100040001_100060000.all_active_unrejected
       if (current_user.user_type == "Admin")
         relationship_csv = CSV.generate do |csv|
           csv << ["SDFB Relationship ID", "Person 1 ID", "Person 2 ID",
@@ -220,7 +220,7 @@ class RelationshipsController < ApplicationController
 
     def export_rels_for_rels_100060001_100080000
     @all_relationships_approved = Relationship.for_rels_100060001_100080000.all_approved
-    @all_relationships = Relationship.for_rels_100060001_100080000
+    @all_relationships = Relationship.for_rels_100060001_100080000.all_active_unrejected
     if (current_user.user_type == "Admin")
       relationship_csv = CSV.generate do |csv|
         csv << ["SDFB Relationship ID", "Person 1 ID", "Person 2 ID",
@@ -252,7 +252,7 @@ class RelationshipsController < ApplicationController
 
     def export_rels_for_rels_100080001_100100000
     @all_relationships_approved = Relationship.for_rels_100080001_100100000.all_approved
-    @all_relationships = Relationship.for_rels_100080001_100100000
+    @all_relationships = Relationship.for_rels_100080001_100100000.all_active_unrejected
     if (current_user.user_type == "Admin")
       relationship_csv = CSV.generate do |csv|
         csv << ["SDFB Relationship ID", "Person 1 ID", "Person 2 ID",
@@ -284,7 +284,7 @@ class RelationshipsController < ApplicationController
 
     def export_rels_for_rels_100100001_100120000
     @all_relationships_approved = Relationship.for_rels_100100001_100120000.all_approved
-    @all_relationships = Relationship.for_rels_100100001_100120000
+    @all_relationships = Relationship.for_rels_100100001_100120000.all_active_unrejected
     if (current_user.user_type == "Admin")
       relationship_csv = CSV.generate do |csv|
         csv << ["SDFB Relationship ID", "Person 1 ID", "Person 2 ID",
@@ -316,7 +316,7 @@ class RelationshipsController < ApplicationController
 
     def export_rels_for_rels_100120001_100140000
     @all_relationships_approved = Relationship.for_rels_100120001_100140000.all_approved
-    @all_relationships = Relationship.for_rels_100120001_100140000
+    @all_relationships = Relationship.for_rels_100120001_100140000.all_active_unrejected
     if (current_user.user_type == "Admin")
       relationship_csv = CSV.generate do |csv|
         csv << ["SDFB Relationship ID", "Person 1 ID", "Person 2 ID",
@@ -348,7 +348,7 @@ class RelationshipsController < ApplicationController
 
   def export_rels_for_rels_100140001_100160000
     @all_relationships_approved = Relationship.for_rels_100140001_100160000.all_approved
-    @all_relationships = Relationship.for_rels_100140001_100160000
+    @all_relationships = Relationship.for_rels_100140001_100160000.all_active_unrejected
     if (current_user.user_type == "Admin")
       relationship_csv = CSV.generate do |csv|
         csv << ["SDFB Relationship ID", "Person 1 ID", "Person 2 ID",
@@ -380,7 +380,7 @@ class RelationshipsController < ApplicationController
 
     def export_rels_for_rels_100160001_100180000
       @all_relationships_approved = Relationship.for_rels_100000000_100020000.all_approved
-      @all_relationships = Relationship.for_rels_100160001_100180000
+      @all_relationships = Relationship.for_rels_100160001_100180000.all_active_unrejected
       if (current_user.user_type == "Admin")
         relationship_csv = CSV.generate do |csv|
           csv << ["SDFB Relationship ID", "Person 1 ID", "Person 2 ID",
@@ -412,7 +412,7 @@ class RelationshipsController < ApplicationController
 
     def export_rels_for_rels_greater_than_100180000
     @all_relationships_approved = Relationship.for_rels_greater_than_100180000.all_approved
-    @all_relationships = Relationship.for_rels_greater_than_100180000
+    @all_relationships = Relationship.for_rels_greater_than_100180000.all_active_unrejected
     if (current_user.user_type == "Admin")
       relationship_csv = CSV.generate do |csv|
         csv << ["SDFB Relationship ID", "Person 1 ID", "Person 2 ID",

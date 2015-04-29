@@ -143,7 +143,7 @@ class PeopleController < ApplicationController
 
   def export_people
     @all_people_approved = Person.all_approved
-    @all_people = Person.all
+    @all_people = Person.all_active_unrejected
     if (current_user.user_type == "Admin")
       people_csv = CSV.generate do |csv|
         csv << ["SDFB Person ID", "ODNB ID", "Display Name", "Prefix", "First Name", "Last Name", "Suffix", "Title", "All Search Names", "Gender",

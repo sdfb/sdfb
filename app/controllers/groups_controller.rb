@@ -123,7 +123,7 @@ class GroupsController < ApplicationController
 
   def export_groups
     @all_groups_approved = Group.all_approved
-    @all_groups = Group.all
+    @all_groups = Group.all_active_unrejected
     if (current_user.user_type == "Admin")
       group_csv = CSV.generate do |csv|
         csv << ["SDFB Group ID", "Name", "Description", "Start Year Type", "Start Year", "End Year Type", "End Year", "Members List (Name with SDFB Person ID)", "Justification", "Created By ID", "Created At", "Is approved?",

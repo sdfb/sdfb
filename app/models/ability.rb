@@ -20,7 +20,7 @@ class Ability
 			
 			# Curators can edit everything except other users.
 			# Curators can edit and approve groups, relationships, people, and group assignments, user group contributions, user person contributions, and user relationship contributions, group category assignments
-			can [:edit, :update], [Group, GroupAssignment, Person, Relationship, UserGroupContrib, UserPersonContrib, UserRelContrib, GroupCatAssign]
+			can [:edit, :update], [Group, GroupAssignment, Person, Relationship, UserGroupContrib, UserPersonContrib, UserRelContrib, GroupCatAssign, RelCatAssign]
 
 			# Curators can only edit their own information
 			can [:edit, :update], User do |x|  
@@ -44,6 +44,12 @@ class Ability
 
 			# A user can download people data
 			can :export_people, Person
+
+			# A user can download group assginment data
+			can :export_group_assignments, GroupAssignment
+
+			# A user can download relationship type assignment data
+			can :export_rel_type_assigns, UserRelContrib
 
 			# A user can download relationship data
 			can :export_relationships, Relationship
