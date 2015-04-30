@@ -22,8 +22,9 @@
         <dd><%= link_to Group.find(@group_assignment.group_id).name,  group_path(@group_assignment.group_id) %></dd>
         <dt><strong>Person:</strong></dt>
         <dd><%= link_to Person.find(@group_assignment.person_id).first_name + " " + Person.find(@group_assignment.person_id).last_name,  person_path(@group_assignment.person_id) %></dd>
+
+        <dt><strong>Start Date Type:</strong></dt>
         <% if ! @group_assignment.start_date_type.blank? %>
-          <dt><strong>Start Date Type:</strong></dt>
           <dd>
             <% if @group_assignment.start_date_type == "BF" %>
               <dd>Before</dd>
@@ -39,9 +40,12 @@
               <dd>After or In</dd>
             <% end %>
           </dd>
+        <% else %>
+          <dd>Unknown</dd>
         <% end %>
-        <% if ((! @group_assignment.start_month.blank?) || (! @group_assignment.start_day.blank?) || (! @group_assignment.start_year.blank?)) %>
-            <dt><strong>Start date</strong></dt>
+
+        <dt><strong>Start Date:</strong></dt>
+        <% if ((! @group_assignment.start_month.blank?) || (! @group_assignment.start_day.blank?) || (! @group_assignment.start_year.blank?)) %> 
           <dd>
             <% if ! @group_assignment.start_month.blank? %>
               <%= @group_assignment.start_month %>
@@ -52,10 +56,13 @@
             <% if ! @group_assignment.start_year.blank? %>
               <%= @group_assignment.start_year %>
             <% end %>
-          </dd> 
+          </dd>
+        <% else %>
+          <dd>Unknown</dd>
         <% end %>
+
+        <dt><strong>End Date Type:</strong></dt>
         <% if ! @group_assignment.end_date_type.blank? %>
-          <dt><strong>Start Date Type:</strong></dt>
           <dd>
             <% if @group_assignment.end_date_type == "BF" %>
               <dd>Before</dd>
@@ -71,9 +78,12 @@
               <dd>After or In</dd>
             <% end %>
           </dd>
+        <% else %>
+          <dd>Unknown</dd>
         <% end %>
+
+        <dt><strong>End Date:</strong></dt>
         <% if ((! @group_assignment.end_month.blank?) || (! @group_assignment.end_day.blank?) || (! @group_assignment.end_year.blank?)) %>
-            <dt><strong>End date</strong></dt>
             <dd>
               <% if ! @group_assignment.end_month.blank? %>
                 <%= @group_assignment.end_month %>
@@ -85,7 +95,10 @@
                 <%= @group_assignment.end_year %>
               <% end %>
             </dd>
+        <% else %>
+          <dd>Unknown</dd>
         <% end %>
+
         <% if (! current_user.blank?) && (current_user.user_type == "Admin") %>
           <dt><strong>Created:</strong></dt>
           <dd><%= @group_assignment.created_at.strftime("%m/%d/%Y") %> by <%= link_to User.find(@group_assignment.created_by).username,  user_path(@group_assignment.created_by) %></dd>

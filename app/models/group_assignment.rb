@@ -58,6 +58,8 @@ class GroupAssignment < ActiveRecord::Base
   after_update :create_group_person_list
   before_create :check_if_approved_valid_create
   before_update :check_if_approved_and_update_edit
+  before_create :create_start_and_end_date
+  before_update :create_start_and_end_date
 
 
   # Custom Methods
@@ -128,6 +130,75 @@ class GroupAssignment < ActiveRecord::Base
       return User.find(created_by).first_name + " " + User.find(created_by).last_name
     else
       return "ODNB"
+    end
+  end
+
+  ##if a user submits a new relationship but does not include a start and end date it defaults to a start and end date based on the birth years of the people in the relationship
+  def create_start_and_end_date
+    person_record = Person.find(self.person_id)
+    if (! person_record.nil?)
+      birth_year = person_record.ext_birth_year.to_i
+      death_year = person_record.ext_death_year.to_i
+    end
+    group_record = Group.find(self.group_id)
+    if (! group_record .nil?)
+      group_start_year = group_record.start_year.to_i
+      group_end_year = group_record.end_year.to_i
+    end
+    
+    #Only use default start date if the user does not enter a start year
+    if (self.start_year.blank?)
+      #decide new assignment start date
+      if ((! birth_year.blank?) || (! group_start_year.blank?))
+        ##if there is a birth/group start year for at least 1 person
+        new_start_year_type = "AF/IN"
+        if ((! birth_year.blank?) && (! group_start_year.blank?))
+          ## Use max birth/group start year because the assignment can't start before someone is born or before group started
+          if ((birth_year > group_start_year) || (group_start_year.zero?) || (group_start_year.blank?) || (group_start_year.nil?))
+            new_start_year = birth_year.to_i
+          else
+            new_start_year = group_start_year.to_i
+          end
+        elsif (! birth_year.blank?)
+          new_start_year = birth_year.to_i
+        elsif (! group_start_year.blank?)
+          new_start_year = group_start_year.to_i
+        end
+      else
+        ##if there is no group start or birth years, set start date to the default CA 1400 (around 1400)
+        new_start_year_type = "CA"
+        new_start_year = 1400
+      end
+
+      self.start_year = new_start_year
+      self.start_date_type = new_start_year_type
+    end 
+
+    #Only use default end date if the user does not enter an end year
+    if (self.end_year.blank?)
+      #decide new relationship end date
+      if ((! death_year.blank?) || (! group_end_year.blank?))
+        ##if there is a deathdate for at least 1 person
+        new_end_year_type = "BF/IN"
+        if ((! death_year.blank?) && (! group_end_year.blank?))
+          ## Use min deathdate if deathdates are recorded for both people because the relationship will end by the time of the people dies
+          if ((death_year < group_end_year) || (group_end_year.zero?) || (group_end_year.blank?) || (group_end_year.nil?))
+            new_end_year = death_year.to_i
+          else
+            new_end_year = group_end_year.to_i
+          end
+        elsif (! death_year.blank?)
+          new_end_year = death_year.to_i
+        elsif (! group_end_year.blank?)
+          new_end_year = group_end_year.to_i
+        end
+      else
+        ##If there is no death year, set end year to the default CA 1800 (around 1800)
+        new_end_year_type = "CA"
+        new_end_year = 1800
+      end
+      self.end_year = new_end_year
+      self.end_date_type = new_end_year_type
     end
   end
 end

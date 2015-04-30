@@ -22,12 +22,16 @@
         <dd><%= @group.id %></dd>
         <dt><strong>Name:</strong></dt>
         <dd><%= @group.name %></dd>
+        
+        <dt><strong>Description:</strong></dt>
         <% if ! @group.description.blank? %>
-          <dt><strong>Description:</strong></dt>
           <dd><%= @group.description %></dd>
+        <% else %>
+          <dd>Unknown</dd>
         <% end %>
+
+        <dt><strong>Start Date Type:</strong></dt>
         <% if ! @group.start_date_type.blank? %>
-          <dt><strong>Start Date Type:</strong></dt>
           <dd>
             <% if @group.start_date_type == "BF" %>
               <dd>Before</dd>
@@ -43,13 +47,19 @@
               <dd>After or In</dd>
             <% end %>
           </dd>
+        <% else %>
+          <dd>Unknown</dd>
         <% end %>
+        
+        <dt><strong>Start Year:</strong></dt>
         <% if ! @group.start_year.blank? %>
-          <dt><strong>Start Year:</strong></dt>
           <dd><%= @group.start_year %></dd>
+        <% else %>
+          <dd>Unknown</dd>
         <% end %>
+        
+        <dt><strong>End Date Type:</strong></dt>
         <% if ! @group.end_date_type.blank? %>
-          <dt><strong>End Date Type:</strong></dt>
           <dd>
             <% if @group.end_date_type == "BF" %>
               <dd>Before</dd>
@@ -65,15 +75,25 @@
               <dd>After or In</dd>
             <% end %>
           </dd>
+        <% else %>
+          <dd>Unknown</dd>
         <% end %>
+
+        
+        <dt><strong>End Year:</strong></dt>
         <% if ! @group.end_year.blank? %>
-          <dt><strong>End Year:</strong></dt>
           <dd><%= @group.end_year %></dd>
+        <% else %>
+          <dd>Unknown</dd>
         <% end %>
-        <% if ! @group.justification.blank? %>
-          <dt><strong>Justification</strong></dt>
+
+        <dt><strong>Justification</strong></dt>
+        <% if ! @group.justification.blank? %> 
           <dd><%= @group.justification %></dd>
+        <% else %>
+          <dd>Unknown</dd>
         <% end %>
+
         <% if (! current_user.blank?) && ((current_user.user_type == "Admin") || (current_user.user_type == "Curator")) %>
           <dt><strong>Created:</strong></dt>
           <dd><%= @group.created_at.strftime("%m/%d/%Y") %> by <%= link_to User.find(@group.created_by).username,  user_path(@group.created_by) %></dd>
