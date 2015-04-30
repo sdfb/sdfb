@@ -46,6 +46,8 @@
       <%= f.hidden_field :approved_by, :value => current_user.id %>
       <%= f.hidden_field :approved_on, :value => Time.now %>
     <% end %>
+  <% else %>
+    <%= f.hidden_field :is_approved, :value => false %>
   <% end %>
   <div class="form-actions">
     <%= f.button :submit, :class => 'btn btn-primary', :value => "Edit Relatonship Type Assignment" %>

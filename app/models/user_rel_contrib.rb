@@ -62,7 +62,7 @@ class UserRelContrib < ActiveRecord::Base
   before_create :init_array
   before_create :autocomplete_to_rel
   before_update :check_if_approved_and_update_edit
-  after_create :check_if_approved
+  before_create :check_if_approved
   after_create :create_max_certainty
   after_update :update_max_certainty
   ##after_create :create_relationship_types_list ##
