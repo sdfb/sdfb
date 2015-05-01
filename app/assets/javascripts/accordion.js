@@ -6,7 +6,6 @@ $(document).ready(function(){
 		if(!$(this).next().is(":visible")) {
 			$(this).next().slideDown();
 			var h = $( window ).height();
-			
 			$("#accordion div").css("max-height", h - 203 + 'px');
 		}
 	});
@@ -19,6 +18,5 @@ function accordion(item) {
 	$("#accordion h3").removeClass('on');
 	$("#" + item + "info").prev().addClass('on');	
 	$("#" + item + "info").addClass("active");
-
 	$("#" + item + "info").slideDown();
 }

@@ -17,6 +17,7 @@ $(document).ready(function() {
     var default_sdate = 1400
     var default_edate = 1800
     var default_certainty = 60
+    var range_default_certainty = [60,100]
     var default_scertainty = 0
     var default_ecertainty = 100
 
@@ -125,7 +126,7 @@ $(document).ready(function() {
         min: default_scertainty,
         max: default_ecertainty,
         step: 1,
-        values: [default_scertainty, default_ecertainty],
+        values: range_default_certainty,
         // Gets a live reading of the value and prints it on the page
         slide: function( event, ui ) {
         	var sresult = getConfidence(ui.values[0]);
@@ -162,7 +163,7 @@ $(document).ready(function() {
         min: default_scertainty,
         max: default_ecertainty,
         step: 1,
-        values: [default_scertainty, default_ecertainty],
+        values: range_default_certainty,
         // Gets a live reading of the value and prints it on the page
         slide: function( event, ui ) {
             var sresult = getConfidence(ui.values[0]);
