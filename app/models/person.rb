@@ -309,7 +309,7 @@ class Person < ActiveRecord::Base
       end
     end
     if @zeroDegreePerson1[person_id1.to_i]['rel_sum'].length > 50
-      @found = self.find_relationship(person_id2.to_i, @zeroDegreePerson2[person_id1.to_i]['rel_sum'])
+      @found = self.find_relationship(person_id2.to_i, @zeroDegreePerson1[person_id1.to_i]['rel_sum'])
       if @found != "None"
         return ["nodelimit_network", @found]
       else
