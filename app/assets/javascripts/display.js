@@ -316,7 +316,7 @@ function init() {
   sidebarSearch(people);
   if (people != undefined){
     if (people[0] == "nodelimit"){
-    	window.location.href = "/people/" + people[1];
+    	window.location.href = "/people_relationships?id=" + people[1];
   	}
 	  if (people[0] == "nodelimit_network"){
 	    window.location.href = "/relationships/" + people[1];
