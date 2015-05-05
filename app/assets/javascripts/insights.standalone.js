@@ -9669,7 +9669,7 @@ Tooltip.prototype = {
 
         if (!this._offset) throw new Error("Must set an offset");
         
-        this.el.innerHTML = content;
+        this.el.innerHTML = content.replace(/%20/g, " ");;
         this.el.style.top = this._offset.top + "px";
         this.el.style.left = this._offset.left + "px";
         
