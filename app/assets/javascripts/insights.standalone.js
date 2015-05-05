@@ -9419,8 +9419,7 @@ function escape(html) {
     .replace(/&/g, '&amp;')
     .replace(/"/g, '&quot;')
     .replace(/</g, '&lt;')
-    .replace(/>/g, '&gt;')
-    .replace(/%20/g, " ");
+    .replace(/>/g, '&gt;');
 }
 });
 require.register("component-indexof/index.js", function(exports, require, module){
@@ -9670,7 +9669,7 @@ Tooltip.prototype = {
 
         if (!this._offset) throw new Error("Must set an offset");
         
-        this.el.innerHTML = content;
+        this.el.innerHTML = content.replace(/%20/g, " ");;
         this.el.style.top = this._offset.top + "px";
         this.el.style.left = this._offset.left + "px";
         
