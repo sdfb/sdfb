@@ -345,7 +345,9 @@ function init() {
           $( "#search-shared-network" ).click();
         });
 	  }
-  }else if (getParam("group").length == 0){
+  }
+
+  if (getParam("group").length == 0){
     filterGraph(people);
     initGraph(people);
     $('#group-table').hide();
