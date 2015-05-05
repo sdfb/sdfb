@@ -1,5 +1,10 @@
 
- $("#node-name").text("<%= @node_info_display_name %>");
+ $("#node-name").text("<%= @node_info_display_name %>".replace(/&amp;/g, '&')
+												        .replace(/&lt;/g, '<')
+												        .replace(/&gt;/g, '>')
+												        .replace(/&quot;/g, '"')
+												        .replace(/&#x27;/g, '\'')
+												        .replace(/&#039;/g, "'"));
  $("#node-bdate").text("<%= @node_info_birth_year_type %>"+ " " + "<%= @node_info_birth %>");
  $("#node-ddate").text("<%= @node_info_death_year_type %>"+ " " + "<%= @node_info_death %>");
 
