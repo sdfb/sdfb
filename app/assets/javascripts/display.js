@@ -36,7 +36,6 @@ function getClusterRels(node){
 		var size = 0;
 	}
 
-
    if (size >= 50){
      return 6;
    } else if (size >= 30){
@@ -56,7 +55,7 @@ function getClusterRels(node){
 
 // //returns colors based on cluster group number
  function getColorsRels(){
-    return { 0: "#bdbdbd", 1: "#d73027", 2: "#f46d43", 3: "#fdae61", 4: "#abd9e9", 5: "#74add1", 6: "#4575b4"}
+    return { 0: "#bdbdbd", 1: "#d73027", 2: "#f46d43", 3: "#fdae61", 4: "#abd9e9", 5: "#74add1", 6: "#4575b4", 100: "#74DF00"}
  }
 
 // Checks if a value is in an array
@@ -101,13 +100,13 @@ function twoDegs(id, id2, people) {
       });
     });
     //adds main person's id referenced to keys associative array. Keys represent all data in graph
-    keys[id] = {"text": p["display_name"], "size": 30, "id": id,  "cluster": getClusterRels(p["rel_sum"])}; 
+    keys[id] = {"text": p["display_name"], "size": 30, "id": id,  "cluster": 100}; 
   }
   createGraph(id, people);
   if (id2 != 0 && id2 != ""){
       createGraph(id2, people);
-      keys[id2] = {"text": people[id2]["display_name"], "size": 30, "id": id2,  "cluster": getClusterRels(people[id2]["rel_sum"])}; 
-      keys[id] = {"text": people[id]["display_name"], "size": 30, "id": id,  "cluster": getClusterRels(people[id]["rel_sum"])}; 
+      keys[id2] = {"text": people[id2]["display_name"], "size": 30, "id": id2,  "cluster": 100}; 
+      keys[id] = {"text": people[id]["display_name"], "size": 30, "id": id,  "cluster": 100}; 
   }
   $.each(keys, function(index, value) {
     nodes.push(value); //adds each key to nodes array
@@ -329,13 +328,24 @@ function init() {
   sidebarSearch(people);
   if (people != undefined){
     if (people[0] == "nodelimit"){
-    	window.location.href = "/people_relationships?id=" + people[1];
-  	}
+        $("#kickback").show();
+        $('#kickbackyes').attr('href', "/people_relationships?id=" + people[1]);
+        $( "#kickbackno" ).click(function() {
+          $("#kickback").hide();
+          $( "#search-button" ).click();
+        });
+      }
+  	
 	  if (people[0] == "nodelimit_network"){
-	    window.location.href = "/relationships/" + people[1];
+        $("#kickback").show();
+        $('#kickbackyes').attr('href', "/relationships/" + people[1]);
+        $( "#kickbackno" ).click(function() {
+          $("#kickback").hide();
+          $( "#search-button" ).click();
+          $( "#search-shared-network" ).click();
+        });
 	  }
-  }
-  if (getParam("group").length == 0){
+  }else if (getParam("group").length == 0){
     filterGraph(people);
     initGraph(people);
     $('#group-table').hide();

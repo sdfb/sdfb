@@ -1,5 +1,5 @@
  $(document).ready(function(){
-
+    $('#kickback').hide();
  	if(document.cookie == 'skiplanding=yes'){
  		$('#landing').fadeOut();
  		$('#everything').show();
