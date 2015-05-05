@@ -97,6 +97,30 @@ Sdfb::Application.routes.draw do
     get :autocomplete_person_search_names_all, on: :collection
   end
 
+  # Routing for group category record export
+  match '/export_group_categories' => 'group_categories#export_group_categories'
+
+  # Routing for group category assignment record export
+  match '/export_group_cat_assigns' => 'group_cat_assigns#export_group_cat_assigns'
+
+  # Routing for relationship category assignment record export
+  match '/export_rel_cat_assigns' => 'rel_cat_assigns#export_rel_cat_assigns'
+
+  # Routing for relationship category record export
+  match '/export_rel_cats' => 'relationship_categories#export_rel_cats'
+
+  # Routing for relationship type record export
+  match '/export_rel_types' => 'relationship_types#export_rel_types'
+
+  # Routing for user group contributions record export
+  match '/export_group_notes' => 'user_group_contribs#export_group_notes'
+
+  # Routing for user person contributions record export
+  match '/export_people_notes' => 'user_person_contribs#export_people_notes'
+
+  # Routing for user record export
+  match '/export_users' => 'users#export_users'
+
   # Routing for group assignments record export
   match '/export_group_assignments' => 'group_assignments#export_group_assignments'
 
@@ -108,6 +132,12 @@ Sdfb::Application.routes.draw do
 
   # Routing for people record export
   match '/export_people' => 'people#export_people'
+
+  # Routing for relationship type/cat assign record export with relationship type and relationship category
+  get "export_rel_cat_assign_list" => "rel_cat_assigns#export_rel_cat_assign_list", :as => "export_rel_cat_assign_list"
+
+  # Routing for group category assign record export with group category
+  get "export_group_cat_assign_list" => "group_cat_assigns#export_group_cat_assign_list", :as => "export_group_cat_assign_list"
 
   # Routing for relationship record export
   get "export_relationships" => "relationships#export_relationships", :as => "export_relationships"
