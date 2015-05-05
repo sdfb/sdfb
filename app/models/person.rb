@@ -252,7 +252,8 @@ class Person < ActiveRecord::Base
       max_year = 1800
     end
     @zeroDegreePerson = self.find_first_degree_for_person(person_id, min_confidence, max_confidence, min_year, max_year, true)
-    #limit second degree node display to nodes of degree <=50
+    #limit first degree node display to nodes of degree <100, second degree node display to nodes of degree <=50
+    if @zeroDegreePerson[person_id.to_i]['rel_sum'].length < 100
     if @zeroDegreePerson[person_id.to_i]['rel_sum'].length <= 50
         @zeroDegreePerson[person_id.to_i]['rel_sum'].each do |firstDegreePerson|
             #check that relationship is within the date and confidence range
@@ -263,6 +264,7 @@ class Person < ActiveRecord::Base
                     twoPeopleRecordsForReturn.update(@firstDegreePerson)
                 end
             end
+        end
         end
     else
       return ["nodelimit", person_id]
@@ -300,7 +302,7 @@ class Person < ActiveRecord::Base
 		@zeroDegreePerson2 = self.find_first_degree_for_person(person_id2, min_confidence, max_confidence, min_year, max_year, true)
 		@zeroDegreePerson2Rel = {}
 		@zeroDegreePerson2Rel[person_id2] = person_id2
-    if @zeroDegreePerson2[person_id2.to_i]['rel_sum'].length > 50
+    if @zeroDegreePerson2[person_id2.to_i]['rel_sum'].length > 100
       @found = self.find_relationship(person_id1.to_i, @zeroDegreePerson2[person_id2.to_i]['rel_sum'])
       if @found != "None"
         return ["nodelimit_network", @found]
@@ -308,7 +310,7 @@ class Person < ActiveRecord::Base
         return ["nodelimit", person_id2.to_i]
       end
     end
-    if @zeroDegreePerson1[person_id1.to_i]['rel_sum'].length > 50
+    if @zeroDegreePerson1[person_id1.to_i]['rel_sum'].length > 100
       @found = self.find_relationship(person_id2.to_i, @zeroDegreePerson1[person_id1.to_i]['rel_sum'])
       if @found != "None"
         return ["nodelimit_network", @found]
