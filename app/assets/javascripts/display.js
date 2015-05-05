@@ -75,7 +75,7 @@ function notInArray(arr, val) {
 
 //creates a nodekey associative array with node info
 function createNodeKey(node, id) {
-  return {"text": "sup%20", "size": 10, "id": id,  "cluster": getClusterRels(node["rel_sum"])};
+  return {"text": node["display_name"], "size": 10, "id": id,  "cluster": getClusterRels(node["rel_sum"])};
 }
 
 function twoDegs(id, id2, people) {
