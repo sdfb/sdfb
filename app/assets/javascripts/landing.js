@@ -4,7 +4,10 @@
  		$('#landing').fadeOut();
  		$('#everything').show();
  	}else{
- 		document.cookie="skiplanding=yes; expires=Thu, 18 Dec 3000 12:00:00 UTC";
+ 		date = new Date();
+        date.setTime(date.getTime()+(24*60*60*1000));
+        expires = "; expires="+date.toGMTString();
+ 		document.cookie="skiplanding=yes; expires="+expires;
  	};
 
  	$('#skipIntro').mouseover(function(){

@@ -62,7 +62,7 @@ function notInArray(arr, val) {
 
 //creates a nodekey associative array with node info
 function createNodeKey(node, id) {
-  return {"text": node["display_name"].replace(/ /g,"_"), "size": 10, "id": id,  "cluster": getClusterRels(node["rel_sum"])};
+  return {"text": "sup%20", "size": 10, "id": id,  "cluster": getClusterRels(node["rel_sum"])};
 }
 
 function twoDegs(id, id2, people) {
@@ -88,13 +88,13 @@ function twoDegs(id, id2, people) {
       });
     });
     //adds main person's id referenced to keys associative array. Keys represent all data in graph
-    keys[id] = {"text": p["display_name"].replace(/ /g,"_"), "size": 30, "id": id,  "cluster": getClusterRels(p["rel_sum"])}; 
+    keys[id] = {"text": p["display_name"], "size": 30, "id": id,  "cluster": getClusterRels(p["rel_sum"])}; 
   }
   createGraph(id, people);
   if (id2 != 0 && id2 != ""){
       createGraph(id2, people);
-      keys[id2] = {"text": people[id2]["display_name"].replace(/ /g,"_"), "size": 30, "id": id2,  "cluster": getClusterRels(people[id2]["rel_sum"])}; 
-      keys[id] = {"text": people[id]["display_name"].replace(/ /g,"_"), "size": 30, "id": id,  "cluster": getClusterRels(people[id]["rel_sum"])}; 
+      keys[id2] = {"text": people[id2]["display_name"], "size": 30, "id": id2,  "cluster": getClusterRels(people[id2]["rel_sum"])}; 
+      keys[id] = {"text": people[id]["display_name"], "size": 30, "id": id,  "cluster": getClusterRels(people[id]["rel_sum"])}; 
   }
   $.each(keys, function(index, value) {
     nodes.push(value); //adds each key to nodes array
@@ -136,7 +136,7 @@ function twoDegs(id, id2, people) {
           });  
         accordion("edge");
     });
-    graph.tooltip("<div class='btn' >"+"{{text}}".replace(/_/g," ") + "</div>");
+    graph.tooltip("<div class='btn' >"+"{{text}}" + "</div>");
     $('#zoom button.icon').click(function(e){
         if (this.name == 'in') {
             graph.zoomIn();
@@ -201,12 +201,12 @@ function initGraph(people){
   var confidence = default_sconfidence + " to " + default_econfidence
   var date = default_sdate + " - " + default_edate
   if (getParam('id') > 0){
-    var name = people[parseInt(getParam('id'))].display_name.replace(/ /g,"_")
+    var name = people[parseInt(getParam('id'))].display_name
   }else{
-    var name = people[francisID].display_name.replace(/ /g,"_")
+    var name = people[francisID].display_name
   }
   if (getParam('id2') > 0){
-    var name2 = " and " + people[parseInt(getParam('id2'))].display_name.replace(/ /g,"_")
+    var name2 = " and " + people[parseInt(getParam('id2'))].display_name
   }else{
     var name2 = ""
   }
@@ -344,7 +344,7 @@ function init() {
       $("#group-icon-tag2").attr("href", "/group_assignments/new?group_id=" + group2["id"]);
     }
     $.each(group_members, function(index, value) { 
-      $( "#group-table" ).append( "<div class='group-row'><div class='col-md'>" + group_members[index]["display_name"].replace(/ /g,"_") + "</div><div class='col-md'>" + group_members[index]["ext_birth_year"] + "</div><div class='col-md'>" + group_members[index]["ext_death_year"] + "</div><div class='col-md'><a href='/people/" + group_members[index]["id"] + "'>" + + group_members[index]["id"] + "</a></div></div>");
+      $( "#group-table" ).append( "<div class='group-row'><div class='col-md'>" + group_members[index]["display_name"] + "</div><div class='col-md'>" + group_members[index]["ext_birth_year"] + "</div><div class='col-md'>" + group_members[index]["ext_death_year"] + "</div><div class='col-md'><a href='/people/" + group_members[index]["id"] + "'>" + + group_members[index]["id"] + "</a></div></div>");
     });
   }
 }
