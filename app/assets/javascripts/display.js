@@ -15,6 +15,7 @@ Num_rels Cluster    Color
  50+    6        dark blue
 */
 
+
 //returns cluster number based on number of relationships the cluster has
  function getClusterRels(node){
    try{
@@ -23,6 +24,18 @@ Num_rels Cluster    Color
    catch(err) {
      var size = 0;
    }
+ };
+
+//returns cluster number based on number of relationships the cluster has
+
+function getClusterRels(node){
+	try{
+		var size = Object.keys(node).length;
+	}
+	catch(err) {
+		var size = 0;
+	}
+
 
    if (size >= 50){
      return 6;
@@ -62,7 +75,7 @@ function notInArray(arr, val) {
 
 //creates a nodekey associative array with node info
 function createNodeKey(node, id) {
-  return {"text": "sup%20", "size": 10, "id": id,  "cluster": getClusterRels(node["rel_sum"])};
+  return {"text": node["display_name"], "size": 10, "id": id,  "cluster": getClusterRels(node["rel_sum"])};
 }
 
 function twoDegs(id, id2, people) {

@@ -117,6 +117,7 @@ rake db:populate_rels_120001_140000
 rake db:populate_rels_140001_160000
 rake db:populate_rels_160001_170542
 rake db:populate_user_rel_contribs_samples
+<<<<<<< Updated upstream
 rake db:populate_rel_start_end_date_20001_20367
 rake db:populate_rel_start_end_date_20368_40000
 rake db:populate_rel_start_end_date_50293_60000**didnt work
@@ -126,12 +127,42 @@ rake db:populate_rel_start_end_date_88073_100000***
 rake db:populate_rel_start_end_date_101033_120000***100101035
 rake db:populate_rel_start_end_date_101030_176542
 *****
+=======
+rake db:populate_rel_start_end_date_1_3900
+rake db:populate_rel_start_end_date_3901_3941
+rake db:populate_rel_start_end_date_3943_6368
+rake db:populate_rel_start_end_date_6370_7000
+rake db:populate_rel_start_end_date_7001_7210
+rake db:populate_rel_start_end_date_7212_9300
+<<<<<<< HEAD
+rake db:populate_rel_start_end_date_9306_9360
+rake db:populate_rel_start_end_date_9363_10000*
+rake db:populate_rel_start_end_date_9363_10000*
+rake db:populate_rel_start_end_date_10001_17000
+rake db:populate_rel_start_end_date_17001_17190
+rake db:populate_rel_start_end_date_17192_19845
+rake db:populate_rel_start_end_date_19848_all*
+=======
+rake db:populate_rel_start_end_date_9304_10000*
+rake db:populate_rel_start_end_date_10001_17000
+rake db:populate_rel_start_end_date_17001_17190*
+rake db:populate_rel_start_end_date_17192_all*
+>>>>>>> parent of 7c3daf9... added more population scripts for rel start and end date
+>>>>>>> Stashed changes
 
 ## IMPORTANT NOTES ON POPULATING:
 1. You must only run the following if updating people populated prior to March 12, 2015
     rake db:populate_rel_sum
 2. To populate the first time, you must comment out the following before populating (then comment back in after you are done):
     In app>models>person.rb, "validates_presence_of :display_name"
+<<<<<<< Updated upstream
+=======
+<<<<<<< HEAD
+3. Manually enter start and end dates for relationships 100007211, 100003942, and 100006369, 100009301, 100009302, 100009303, 100017191, 100009305, 100019846, 100009361, 100009362, 100019847, 100019846, 100019847
+=======
+3. Manually enter start and end dates for relationships 100007211, 100003942, and 100006369, 100009301, 100009302, 100009303, 100017191
+>>>>>>> parent of 7c3daf9... added more population scripts for rel start and end date
+>>>>>>> Stashed changes
 
 3. Manually enter start and end dates for relationships 100007211, 100003942, and 100006369, 100009301, 100009302, 100009303, 100017191, 100009305, 100019846, 100009361, 100009362, 100019847, 100019846, 100019847, 100020367, 100050292, 100060915, 100101032, 100022939, 100088072, 100101032, 100093012
 
