@@ -16,6 +16,7 @@
   <%= Person.find(@user_person_contrib.person_id).display_name %>
   <%= f.input :annotation, label: "Note" %>
   <%= f.input :bibliography, label: "Citation" %>
+  <%= f.hidden_field :approved_by, :value => current_user.id %>
   <% if (current_user.user_type == "Admin") || (current_user.user_type == "Curator") %>
     <%= f.input :is_approved %>
     <%= f.input :is_active %>

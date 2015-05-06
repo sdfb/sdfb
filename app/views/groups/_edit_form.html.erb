@@ -21,6 +21,7 @@
   <%= f.input :end_date_type, :collection =>["BF", "AF","IN","CA","BF/IN","AF/IN"], label: false, prompt: "Year Type", hint: " BF = Before, AF = After, IN = In, CA = Circa, BF/IN = Before or In, AF/IN = After or In" %>
   <%= f.input :end_year, as: :string, label: false, placeholder: "End Year" %>
   <%= f.input :justification, input_html: { rows:"5" }, label: "Justification for Group Creation" %>
+  <%= f.hidden_field :approved_by, :value => current_user.id %>
   <% if (current_user.user_type == "Admin") || (current_user.user_type == "Curator") %>
     <%= f.input :is_approved %>
     <%= f.input :is_active %>

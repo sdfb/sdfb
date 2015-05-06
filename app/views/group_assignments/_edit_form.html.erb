@@ -26,6 +26,7 @@
   <%= f.input :end_month, :collection =>["January","February","March","April","May","June","July","August","September","October","November","December"], label: false, prompt: "Month", :include_blank => true %>
   <%= f.input :end_day, label: false, :collection => 1..31, prompt: "Day", :include_blank => true %>
   <%= f.input :end_year, label: false, as: :string, placeholder: "Year" %>
+  <%= f.hidden_field :approved_by, :value => current_user.id %>
   <% if current_user.user_type == "Admin" %>
     <%= f.input :is_approved %>
     <%= f.input :is_active %>

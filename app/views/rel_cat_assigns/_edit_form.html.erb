@@ -17,6 +17,7 @@
   <%= RelationshipType.find(@rel_cat_assign.relationship_type_id).name %>
   <%= f.label :relationship_category_id %>
   <%= RelationshipCategory.find(@rel_cat_assign.relationship_category_id).name %>
+  <%= f.hidden_field :approved_by, :value => current_user.id %>
   <% if current_user.user_type == "Admin" %>
     <%= f.input :is_approved %>
     <%= f.input :is_active %>
