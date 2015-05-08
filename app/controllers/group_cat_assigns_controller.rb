@@ -90,6 +90,34 @@ class GroupCatAssignsController < ApplicationController
     end
   end
 
+  def export_group_cat_assigns
+    @all_group_cat_assigns_approved = GroupCatAssign.all_approved
+    @all_group_cat_assigns = GroupCatAssign.all_active_unrejected
+    if (current_user.user_type == "Admin")
+      group_cat_assigns_csv = CSV.generate do |csv|
+        csv << ["SDFB Assignment ID", "Group Category ID", "Group ID", "Created By", "Created At", "Is Approved?", "Approved By ID", "Approved On"]
+        @all_group_cat_assigns.each do |group_cat_assign|
+          csv << [group_cat_assign.id, group_cat_assign.group_category_id,
+          group_cat_assign.group_id, group_cat_assign.created_by, group_cat_assign.created_at,
+          group_cat_assign.is_approved, group_cat_assign.approved_by, group_cat_assign.approved_on]
+        end
+      end
+    else
+      group_cat_assigns_csv = CSV.generate do |csv|
+        csv << ["SDFB Assignment ID", "Group Category ID", "Group ID", "Created By", "Created At"]
+        @all_group_cat_assigns_approved.each do |group_cat_assign|
+          csv << [group_cat_assign.id, group_cat_assign.group_category_id,
+          group_cat_assign.group_id, group_cat_assign.created_by, group_cat_assign.created_at]
+        end
+      end
+    end
+    send_data(group_cat_assigns_csv, :type => 'text/csv', :filename => 'SDFB_GroupCategoryAssignments.csv')
+  end
+
+  def export_group_cat_assign_list
+
+  end
+
   # DELETE /group_cat_assigns/1
   # DELETE /group_cat_assigns/1.json
   # def destroy

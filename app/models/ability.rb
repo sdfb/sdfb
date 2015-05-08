@@ -64,6 +64,33 @@ class Ability
 			can :export_rels_for_rels_100160001_100180000, Relationship
 			can :export_rels_for_rels_greater_than_100180000, Relationship
 
+			# A user can export category assignment records
+			can :export_group_cat_assigns, GroupCatAssign
+
+			# A user can export relationship category assignment records
+			can :export_rel_cat_assigns, RelCatAssign
+
+			# A user can export user group contributions records
+			can :export_group_notes, UserGroupContrib
+
+			# A user can export user person contributions records
+			can :export_people_notes, UserPersonContrib
+
+			# A user can export group category records
+			can :export_group_categories, GroupCategory
+
+			# A user can export relationship category records
+			can :export_rel_cats, RelationshipCategory
+
+			# A user can export relationship type records
+			can :export_rel_types, RelationshipType
+
+			# A user can export all relevant records to the relationship category assignments
+			can :export_rel_cat_assign_list, RelCatAssign
+
+			# A user can export all relevant records to the group category assignments
+			can :export_group_cat_assign_list, GroupCatAssign
+
 			# A user can view their dashboard
 			can :my_contributions, User
 			can :all_unapproved, User

@@ -29,6 +29,7 @@ class GroupCatAssign < ActiveRecord::Base
   scope :find_if_exists, lambda {|group_category_id_input, group_id_input| where('(group_category_id = ?) and (group_id = ?)', group_category_id_input, group_id_input) }
   scope :for_user, lambda {|user_input| where('created_by = ?', "#{user_input}") }
   scope :order_by_sdfb_id, order('id')
+  scope :all_active_unrejected, where("is_active is true and is_rejected is false")
 
   # Callbacks
   # ----------------------------- 

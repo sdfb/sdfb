@@ -90,6 +90,35 @@ class RelCatAssignsController < ApplicationController
     end
   end
 
+  def export_rel_cat_assigns
+    @all_rel_cat_assigns_approved = RelCatAssign.all_approved
+    @all_rel_cat_assigns = RelCatAssign.all_active_unrejected
+    if (current_user.user_type == "Admin")
+      rel_cat_assigns_csv = CSV.generate do |csv|
+          csv << ["SDFB Assignment ID", "Relationship Category ID", "Relationship Type ID", "Created By", "Created At", "Is Approved?", "Approved By ID", "Approved On"]
+          @all_rel_cat_assigns.each do |rel_cat_assign|
+              csv << [rel_cat_assign.id, rel_cat_assign.relationship_category_id,
+              rel_cat_assign.relationship_type_id, rel_cat_assign.created_by, rel_cat_assign.created_at,
+              rel_cat_assign.is_approved, rel_cat_assign.approved_by, rel_cat_assign.approved_on]
+          end
+      end
+    else
+      rel_cat_assigns_csv = CSV.generate do |csv|
+          csv << ["SDFB Assignment ID", "Relationship Category ID", "Relationship Type ID", "Created By", "Created At"]
+          @all_rel_cat_assigns_approved.each do |rel_cat_assign|
+              csv << [rel_cat_assign.id, rel_cat_assign.relationship_category_id,
+              rel_cat_assign.relationship_type_id, rel_cat_assign.created_by, rel_cat_assign.created_at]
+          end
+      end
+    end
+    send_data(rel_cat_assigns_csv, :type => 'text/csv', :filename => 'SDFB_RelCategoryAssignments.csv')
+  end
+
+  def export_rel_cat_assign_list
+
+  end
+
+
   # DELETE /rel_cat_assigns/1
   # DELETE /rel_cat_assigns/1.json
   # def destroy
