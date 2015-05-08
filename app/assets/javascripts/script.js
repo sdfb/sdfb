@@ -122,7 +122,6 @@ $(document).ready(function() {
 	$("#search-network-slider-confidence").slider({
         animate: true,
         range: "min",
-        value: default_certainty,
         min: default_scertainty,
         max: default_ecertainty,
         step: 1,
@@ -131,9 +130,15 @@ $(document).ready(function() {
         slide: function( event, ui ) {
         	var sresult = getConfidence(ui.values[0]);
             var eresult = getConfidence(ui.values[1]);
-            $("#search-network-slider-confidence-result").html( sresult + " to " + eresult + " @ " + ui.values[0] + " - " + ui.values[1] + "%");
+            $("#search-network-slider-confidence-result").html( sresult + " to " + eresult + " @ " + " - " + ui.values[1] + "%");
+            $("#search-network-slider-confidence-sinput").val(ui.values[0]);
             $("#search-network-slider-confidence-result-hidden").val(ui.values[0] + " - " + ui.values[1]);
         }
+    });
+
+    $("#search-network-slider-confidence-sinput").change(function(){
+        var range = $("#search-network-slider-confidence").slider( "values");
+        $("#search-network-slider-confidence").slider( "option", "values", [$(this).val(), range[1]]);
     });
 
     $("#search-network-slider-date").slider({

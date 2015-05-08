@@ -466,3 +466,21 @@ a:hover {
   filter: alpha(opacity=90); /* For IE8 and earlier */
   padding:15px;
 }
+
+.corner{
+  width: 0;
+  height: 0;
+  border-bottom: 100px solid red;
+  border-right: 100px solid transparent;
+  bottom: 0;
+  position:fixed;
+
+}
+
+.beta-triangle{
+ left: 0px;
+ bottom: 5px;
+ color: #ffffff;
+ position:fixed;
+ font-size: 2.5em;
+ } 

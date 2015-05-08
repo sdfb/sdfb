@@ -110,10 +110,22 @@
 			<% else %>
 				<li><%= link_to "Sign In / Sign Up", sign_in_path %></li>
 			<% end %>
-			<li><a href="/about">About</a></li>
-			<li><a href="/help">Help</a></li>
-			<li><a href="http://6dfb.tumblr.com/">Blog</a></li>
-			<li><a target="blanK" href="http://goo.gl/forms/J4u7kgI6h4">Provide Feedback</a></li>
+				<li class="dropdown">
+				    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+				    	?
+				      <b class="caret"></b>
+				    </a>
+					<ul class="dropdown-menu">
+						<li><a href="/about">About</a></li>
+						<li><a href="http://6dfb.tumblr.com/">Blog</a></li>
+						<li><a href="/help">Help</a></li>
+						<li><a href="/tutorial">Tutorials</a></li>
+						<li><a href="/guide">Teaching Guides</a></li>
+					</ul>
+				</li>
+
+
+			<li><a target="blanK" href="http://goo.gl/forms/J4u7kgI6h4">Feedback</a></li>
 	  	</ul>
 	</ul>
 </div>
