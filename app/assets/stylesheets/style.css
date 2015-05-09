@@ -301,7 +301,7 @@ a:hover {
   display: inline-block;
   text-align:center;
   height: auto;
-  width: 250px;
+  width: auto;
   font-family: 'Open Sans',sans-serif;
   padding-bottom: 0px;
 }
@@ -484,3 +484,5 @@ a:hover {
  position:fixed;
  font-size: 2.5em;
  } 
+
+

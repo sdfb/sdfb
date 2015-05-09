@@ -130,8 +130,9 @@ $(document).ready(function() {
         slide: function( event, ui ) {
         	var sresult = getConfidence(ui.values[0]);
             var eresult = getConfidence(ui.values[1]);
-            $("#search-network-slider-confidence-result").html( sresult + " to " + eresult + " @ " + " - " + ui.values[1] + "%");
+            $("#search-network-slider-confidence-result").html( sresult + " to " + eresult);
             $("#search-network-slider-confidence-sinput").val(ui.values[0]);
+            $("#search-network-slider-confidence-einput").val(ui.values[1]);
             $("#search-network-slider-confidence-result-hidden").val(ui.values[0] + " - " + ui.values[1]);
         }
     });
@@ -139,6 +140,19 @@ $(document).ready(function() {
     $("#search-network-slider-confidence-sinput").change(function(){
         var range = $("#search-network-slider-confidence").slider( "values");
         $("#search-network-slider-confidence").slider( "option", "values", [$(this).val(), range[1]]);
+        $("#search-network-slider-confidence-result-hidden").val($(this).val() + " - " + range[1]);
+        var sresult = getConfidence($(this).val());
+        var eresult = getConfidence(range[1]);
+        $("#search-network-slider-confidence-result").html( sresult + " to " + eresult);
+    });
+
+    $("#search-network-slider-confidence-einput").change(function(){
+        var range = $("#search-network-slider-confidence").slider( "values");
+        $("#search-network-slider-confidence").slider( "option", "values", [range[0], $(this).val()]);
+        $("#search-network-slider-confidence-result-hidden").val(range[0]+ " - " + $(this).val());
+        var sresult = getConfidence(range[0]);
+        var eresult = getConfidence($(this).val());
+        $("#search-network-slider-confidence-result").html( sresult + " to " + eresult);
     });
 
     $("#search-network-slider-date").slider({
@@ -150,10 +164,23 @@ $(document).ready(function() {
         step: 1,
         values: [ default_sdate, default_edate ],
         slide: function( event, ui ) {
-            $("#search-network-slider-date-result" ).html("Selected Years: " + ui.values[ 0 ] + " - " + ui.values[ 1 ] );
+            $("#search-network-slider-date-sinput").val(ui.values[0]);
+            $("#search-network-slider-date-einput").val(ui.values[1]);            
             $("#search-network-slider-date-result-hidden").val(ui.values[ 0 ] + " - " + ui.values[ 1 ]);
         }
     });
+
+    $("#search-network-slider-date-sinput").change(function(){
+        var range = $("#search-network-slider-date").slider( "values");
+        $("#search-network-slider-date").slider( "option", "values", [$(this).val(), range[1]]);
+        $("#search-network-slider-date-result-hidden").val($(this).val() + " - " + range[0]);
+    });          
+
+    $("#search-network-slider-date-einput").change(function(){
+        var range = $("#search-network-slider-date").slider( "values");
+        $("#search-network-slider-date").slider( "option", "values", [range[0], $(this).val()]);
+        $("#search-network-slider-date-result-hidden").val(range[0]+ " - " + $(this).val());
+    });    
 
     $("#search-network-name").keyup(function(event){
         if(event.keyCode == 13){

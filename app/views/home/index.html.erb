@@ -30,12 +30,16 @@
 					<input id="search-network-name-id" type="hidden" />
 					<label for="search-network-slider-confidence">Relationship Confidence Level:</label>
 					<span id="slide1" ><article id="search-network-slider-confidence" class="slider" name="1"></article></span>
-					<article class="slider-result" id="search-network-slider-confidence-result">Likely to Certain @ </article><input id="search-network-slider-confidence-sinput" type="number" min="0" max ="100" value="60"> - 100%
+					<article class="slider-result" id="search-network-slider-confidence-result">Likely to Certain</article>
+					 @ <input id="search-network-slider-confidence-sinput" type="number" class="range-input" min="0" max ="100" value="60">
+					 % - <input id="search-network-slider-confidence-einput" type="number" class="range-input" min="0" max ="100" value="100">% 
 					<input id="search-network-slider-confidence-result-hidden" type="hidden" value="60 - 100"/>
 
 					<label for="search-network-slider-date">Relationship Date Range:</label>
 					<span id="slide2" ><article id="search-network-slider-date" class="slider" name="2"></article></span>
-					<article class="slider-result" id="search-network-slider-date-result">Selected Years: 1400 - 1800</article>
+					<article class="slider-result" id="search-network-slider-date-result">Selected Years: </article>
+					<input id="search-network-slider-date-sinput" type="number" class="range-input range-input-date" min="1400" max ="1800" value="1400">
+					 - <input id="search-network-slider-date-einput" type="number" class="range-input range-input-date" min="1400" max ="1800" value="1800">
 					<input id="search-network-slider-date-result-hidden" type="hidden" value="1400 - 1800"/>
 
 					<!--<input type="checkbox" name="show-table" value="show-table" id="search-network-show-table" class="show-table">Show Table</input>-->

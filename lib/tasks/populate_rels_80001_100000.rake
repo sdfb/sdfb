@@ -18,9 +18,9 @@ namespace :db do
 	        max_certainty_input = (0.0 + relData[2].to_f * 100.00).to_i
 	        original_certainty_input = (0.0 + relData[2].to_f * 100.00).to_i
 	        edge_birthdate_certainty_in = relData[3] 
-	        puts count
+	        #puts count
 	        count += 1
-	        puts "next_id1 = " + next_id.to_s
+	        #puts "next_id1 = " + next_id.to_s
 
 	       	a_rel = Relationship.new do |r| 
 				r.id = next_id
