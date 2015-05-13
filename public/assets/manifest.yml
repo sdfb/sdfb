@@ -101,6 +101,8 @@ ui-bg_highlight-soft_100_eeeeee_1x100.png: ui-bg_highlight-soft_100_eeeeee_1x100
 ui-bg_highlight-soft_100_eeeeee_1x100/index.png: ui-bg_highlight-soft_100_eeeeee_1x100.png
 ui-icons_222222_256x240.png: ui-icons_222222_256x240.png
 ui-icons_222222_256x240/index.png: ui-icons_222222_256x240.png
+ui-icons_888888_256x240.png: ui-icons_888888_256x240.png
+ui-icons_888888_256x240/index.png: ui-icons_888888_256x240.png
 us.png: us.png
 us/index.png: us.png
 zoomin.png: zoomin.png

@@ -128,7 +128,7 @@ a:hover {
 
 #zoom {
   position: fixed;
-  top:40px;
+  top: 110px;
   right: 10px;
   width: 30px;
   z-index:5;
@@ -326,7 +326,7 @@ a:hover {
   margin: 5px 20px 0px 20px;
   z-index:10;
   background-color:#FBF3E1; 
-  max-width:235px; 
+  max-width:325px; 
   padding: 5px 10px;
   display:none;
 }
@@ -337,7 +337,12 @@ a:hover {
   font-height: 14px;
   letter-spacing: normal;
   text-align: center;
-  width: 220px;
+  width: 325px;
+}
+
+.nav-hover input{
+  font-size:10px;
+  max-width:40px;
 }
 
 .nav-hover .slider-result{

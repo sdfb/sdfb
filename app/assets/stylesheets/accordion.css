@@ -46,7 +46,7 @@
 	overflow: auto;
 }
 
- .accordion_content section .range-input{
+ .accordion_content section .range-input, .range-input{
   max-width:34px;
   display: inline;
   padding:0px;

@@ -297,7 +297,7 @@ function sidebarSearch(people){
       ID2Str = ""
     }
     var confidence = $("#nav-slider-confidence-result-hidden").val().split(" - ");
-    var date = $("#nav-slider-date-result").val().split(" - ");
+    var date = $("#nav-slider-date-result-hidden").val().split(" - ");
     if ( ID != ""){
       window.location.href = '/?id=' + ID + ID2Str + '&confidence=' + confidence + '&date=' + date;
     }

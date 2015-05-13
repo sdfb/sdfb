@@ -55,12 +55,16 @@
 
 					<label for="search-shared-network-slider-confidence">Relationship Confidence Level:</label>
 					<span id="slide3" ><article id="search-shared-network-slider-confidence" class="slider" name="2"></article></span>
-					<article class="slider-result" id="search-shared-network-slider-confidence-result">Likely to Certain @ 60 - 100%</article>
+					<article class="slider-result" id="search-shared-network-slider-confidence-result">Likely to Certain</article>
+					 @ <input id="search-shared-network-slider-confidence-sinput" type="number" class="range-input" min="0" max ="100" value="60">
+					 % - <input id="search-shared-network-slider-confidence-einput" type="number" class="range-input" min="0" max ="100" value="100">% 					
 					<input id="search-shared-network-slider-confidence-result-hidden" type="hidden" value="60 - 100"/>
 
 					<label for="search-shared-network-slider-date">Relationship Date Range:</label>
 					<span id="slide4" ><article id="search-shared-network-slider-date" class="slider" name="3"></article></span>
-					<article class="slider-result" id="search-shared-network-slider-date-result">Selected Years: 1400 - 1800</article>
+					<article class="slider-result" id="search-shared-network-slider-date-result">Selected Years:</article>
+					<input id="search-shared-network-slider-date-sinput" type="number" class="range-input range-input-date" min="1400" max ="1800" value="1400">
+					 - <input id="search-shared-network-slider-date-einput" type="number" class="range-input range-input-date" min="1400" max ="1800" value="1800">
 					<input id="search-shared-network-slider-date-result-hidden" type="hidden" value="1400 - 1800"/>
 
 					<!--<input type="checkbox" id="search-shared-network-show-table" value="table" class="show-table">Show table<br>-->
@@ -158,12 +162,19 @@
 			</ul>
 		</div>
 		<div id="nav-slider" class="nav-hover">
-			<label for="nav-slider-confidence">Relationship Confidence Level:</label>
+			<label for="nav-slider-confidence">Confidence Level:</label>
 			<span id="slidenav" ><article id="nav-slider-confidence" class="slider" name="1"></article></span>
-			<article class="slider-result" id="nav-slider-confidence-result">Very Unlikely to Certain @ 0 - 100%</article>
+			<article class="slider-result" id="nav-slider-confidence-result">Very Unlikely to Certain</article>
+			 @ <input id="nav-slider-confidence-sinput" type="number" class="range-input" min="0" max ="100" value="60">
+			 % - <input id="nav-slider-confidence-einput" type="number" class="range-input" min="0" max ="100" value="100">% 						
 			<input id="nav-slider-confidence-result-hidden" type="hidden" value="0 - 100"/>
-			<label for="nav-slider-date">Relationship Date Range:</label><input type="text" id="nav-slider-date-result" readonly value="1400 - 1800">
+
+			<label for="nav-slider-date">Date Range:</label>
 			<span id="slidenav2" ><article id="nav-slider-date" class="slider-date" name="2"></article></span>
+			<article id="nav-slider-date-result" class="slider-result">Relationship Date Range: </article>
+			<input id="nav-slider-date-sinput" type="number" class="range-input range-input-date" min="1400" max ="1800" value="1400">
+			 - <input id="nav-slider-date-einput" type="number" class="range-input range-input-date" min="1400" max ="1800" value="1800">
+			<input id="nav-slider-date-result-hidden" type="hidden" value="1400-1800"/>
 			<a class="talkPageLink" type="button" id="nav-filter-submit" name="nav-node">Filter</a>
 		</div>	
 		<div id="group-table">

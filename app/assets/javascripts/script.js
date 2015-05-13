@@ -18,8 +18,8 @@ $(document).ready(function() {
     var default_edate = 1800
     var default_certainty = 60
     var range_default_certainty = [60,100]
-    var default_scertainty = 0
-    var default_ecertainty = 100
+    var default_sconfidence = 0
+    var default_econfidence = 100
 
 
      $("#colorlegend").dialog({autoOpen: false, height: "auto", show: "slideDown", position: { my: "right top", at: "right-10% top+10%", of: window }});
@@ -121,9 +121,9 @@ $(document).ready(function() {
  //  Sliding animation
 	$("#search-network-slider-confidence").slider({
         animate: true,
-        range: "min",
-        min: default_scertainty,
-        max: default_ecertainty,
+        range: true,
+        min: default_sconfidence,
+        max: default_econfidence,
         step: 1,
         values: range_default_certainty,
         // Gets a live reading of the value and prints it on the page
@@ -139,25 +139,33 @@ $(document).ready(function() {
 
     $("#search-network-slider-confidence-sinput").change(function(){
         var range = $("#search-network-slider-confidence").slider( "values");
-        $("#search-network-slider-confidence").slider( "option", "values", [$(this).val(), range[1]]);
-        $("#search-network-slider-confidence-result-hidden").val($(this).val() + " - " + range[1]);
-        var sresult = getConfidence($(this).val());
-        var eresult = getConfidence(range[1]);
-        $("#search-network-slider-confidence-result").html( sresult + " to " + eresult);
+        if ($(this).val() < range[1] && $(this).val() >= default_sconfidence ){
+            $("#search-network-slider-confidence").slider( "option", "values", [$(this).val(), range[1]]);
+            $("#search-network-slider-confidence-result-hidden").val($(this).val() + " - " + range[1]);
+            var sresult = getConfidence($(this).val());
+            var eresult = getConfidence(range[1]);
+            $("#search-network-slider-confidence-result").html( sresult + " to " + eresult);
+        }else{
+            $(this).val(range[0]);
+        }
     });
 
     $("#search-network-slider-confidence-einput").change(function(){
         var range = $("#search-network-slider-confidence").slider( "values");
-        $("#search-network-slider-confidence").slider( "option", "values", [range[0], $(this).val()]);
-        $("#search-network-slider-confidence-result-hidden").val(range[0]+ " - " + $(this).val());
-        var sresult = getConfidence(range[0]);
-        var eresult = getConfidence($(this).val());
-        $("#search-network-slider-confidence-result").html( sresult + " to " + eresult);
+        if ($(this).val() > range[0] && $(this).val() <= default_econfidence ){
+            $("#search-network-slider-confidence").slider( "option", "values", [range[0], $(this).val()]);
+            $("#search-network-slider-confidence-result-hidden").val(range[0]+ " - " + $(this).val());
+            var sresult = getConfidence(range[0]);
+            var eresult = getConfidence($(this).val());
+            $("#search-network-slider-confidence-result").html( sresult + " to " + eresult);
+        }else{
+            $(this).val(range[1]);
+        }
     });
 
     $("#search-network-slider-date").slider({
         animate: true,
-        range: "min",
+        range: true,
         value: 3,
         min: default_sdate,
         max: default_edate,
@@ -172,16 +180,25 @@ $(document).ready(function() {
 
     $("#search-network-slider-date-sinput").change(function(){
         var range = $("#search-network-slider-date").slider( "values");
-        $("#search-network-slider-date").slider( "option", "values", [$(this).val(), range[1]]);
-        $("#search-network-slider-date-result-hidden").val($(this).val() + " - " + range[0]);
+        if ($(this).val() < range[1] && $(this).val() >= default_sdate){
+            $("#search-network-slider-date").slider( "option", "values", [$(this).val(), range[1]]);
+            $("#search-network-slider-date-result-hidden").val($(this).val() + " - " + range[0]);
+        }else{
+            $(this).val(range[0]);
+        }
     });          
 
     $("#search-network-slider-date-einput").change(function(){
         var range = $("#search-network-slider-date").slider( "values");
-        $("#search-network-slider-date").slider( "option", "values", [range[0], $(this).val()]);
-        $("#search-network-slider-date-result-hidden").val(range[0]+ " - " + $(this).val());
+        if ($(this).val() > range[0] && $(this).val() <= default_edate){
+            $("#search-network-slider-date").slider( "option", "values", [range[0], $(this).val()]);
+            $("#search-network-slider-date-result-hidden").val(range[0]+ " - " + $(this).val());
+        }else{
+            $(this).val(range[1]);
+        }
     });    
 
+    //searches if enter is pressed
     $("#search-network-name").keyup(function(event){
         if(event.keyCode == 13){
             $("#search-network-submit").click();
@@ -190,34 +207,84 @@ $(document).ready(function() {
 
     $("#search-shared-network-slider-confidence").slider({
         animate: true,
-        range: "min",
+        range: true,
         value: default_certainty,
-        min: default_scertainty,
-        max: default_ecertainty,
+        min: default_sconfidence,
+        max: default_econfidence,
         step: 1,
         values: range_default_certainty,
         // Gets a live reading of the value and prints it on the page
         slide: function( event, ui ) {
             var sresult = getConfidence(ui.values[0]);
             var eresult = getConfidence(ui.values[1]);
-            $("#search-shared-network-slider-confidence-result").html(sresult + " to " + eresult + " @ " + ui.values[0] + " - " + ui.values[1] + "%");
+            $("#search-shared-network-slider-confidence-result").html( sresult + " to " + eresult);
+            $("#search-shared-network-slider-confidence-sinput").val(ui.values[0]);
+            $("#search-shared-network-slider-confidence-einput").val(ui.values[1]);
             $("#search-shared-network-slider-confidence-result-hidden").val(ui.values[0] + " - " + ui.values[1]);
         }
     });
+
+    $("#search-shared-network-slider-confidence-sinput").change(function(){
+        var range = $("#search-shared-network-slider-confidence").slider( "values");
+        if ($(this).val() < range[1] && $(this).val() >= default_sconfidence){
+            $("#search-shared-network-slider-confidence").slider( "option", "values", [$(this).val(), range[1]]);
+            $("#search-shared-network-slider-confidence-result-hidden").val($(this).val() + " - " + range[1]);
+            var sresult = getConfidence($(this).val());
+            var eresult = getConfidence(range[1]);
+            $("#search-shared-network-slider-confidence-result").html( sresult + " to " + eresult);
+        }else{
+            $(this).val(range[0]);
+        }
+    });
+
+    $("#search-shared-network-slider-confidence-einput").change(function(){
+        var range = $("#search-network-slider-confidence").slider( "values");
+        if ($(this).val() > range[0] && $(this).val() <= default_econfidence){
+            $("#search-shared-network-slider-confidence").slider( "option", "values", [range[0], $(this).val()]);
+            $("#search-shared-network-slider-confidence-result-hidden").val(range[0]+ " - " + $(this).val());
+            var sresult = getConfidence(range[0]);
+            var eresult = getConfidence($(this).val());
+            $("#search-shared-network-slider-confidence-result").html( sresult + " to " + eresult);
+        }else{
+            $(this).val(range[1]);
+        }
+    });    
 	
     $("#search-shared-network-slider-date").slider({
         animate: true,
-        range: "min",
+        range: true,
         value: 3,
         min: default_sdate,
         max: default_edate,
         step: 1,
         values: [ default_sdate, default_edate ],
         slide: function( event, ui ) {
-            $("#search-shared-network-slider-date-result").html("Selected Years: " +  ui.values[ 0 ] + " - " + ui.values[ 1 ] );
+            $("#search-shared-network-slider-date-sinput").val(ui.values[0]);
+            $("#search-shared-network-slider-date-einput").val(ui.values[1]);    
+            $("#search-shared-network-slider-date-result").html("Selected Years: ");
             $("#search-shared-network-slider-date-result-hidden").val(ui.values[ 0 ] + " - " + ui.values[ 1 ]);
         }
     });
+
+    $("#search-shared-network-slider-date-sinput").change(function(){
+        var range = $("#search-network-slider-date").slider( "values");
+        if ($(this).val() < range[1] && $(this).val() >= default_sdate){
+            $("#search-shared-network-slider-date").slider( "option", "values", [$(this).val(), range[1]]);
+            $("#search-shared-network-slider-date-result-hidden").val($(this).val() + " - " + range[0]);
+        }else{
+            $(this).val(range[0]);
+        }
+    });          
+
+    $("#search-shared-network-slider-date-einput").change(function(){
+        var range = $("#search-network-slider-date").slider( "values");
+        if ($(this).val() > range[0] && $(this).val() <= default_edate){
+            $("#search-shared-network-slider-date").slider( "option", "values", [range[0], $(this).val()]);
+            $("#search-shared-network-slider-date-result-hidden").val(range[0]+ " - " + $(this).val());
+        }else{
+            $(this).val(range[1]);
+        }
+    });        
 
     $("#search-shared-network-name1").keyup(function(event){
         if(event.keyCode == 13){
@@ -233,34 +300,77 @@ $(document).ready(function() {
 
     $("#nav-slider-confidence").slider({
         animate: true,
-        range: "min",
+        range: true,
         value: 3,
-        min: default_scertainty,
-        max: default_ecertainty,
+        min: default_sconfidence,
+        max: default_econfidence,
         step: 1,
-        values: [default_scertainty, default_ecertainty],
+        values: [default_sconfidence, default_econfidence],
         // Gets a live reading of the value and prints it on the page
         slide: function( event, ui ) {
             var sresult = getConfidence(ui.values[0]);
-            var eresult = getConfidence(ui.values[1]);           
-            $("#nav-slider-confidence-result").html(sresult + " to " + eresult + " @ " + ui.values[0] + " - " + ui.values[1] + "%");
+            var eresult = getConfidence(ui.values[1]);
+            $("#nav-slider-confidence-sinput").val(ui.values[0]);
+            $("#nav-slider-confidence-einput").val(ui.values[1]);            
             $("#nav-slider-confidence-result-hidden").val(ui.values[0] + " - " + ui.values[1]);
         }
     });
 
+    $("#nav-slider-confidence-sinput").change(function(){
+        var range = $("#nav-slider-confidence").slider( "values");
+        if ($(this).val() < range[1] && $(this).val() >= default_sconfidence){
+            $("#nav-slider-confidence").slider( "option", "values", [$(this).val(), range[1]]);
+            $("#nav-slider-confidence-result-hidden").val($(this).val() + " - " + range[0]);
+        }else{
+            $(this).val(range[0]);
+        }
+    });          
+
+    $("#nav-slider-confidence-einput").change(function(){
+        var range = $("#nav-slider-confidence").slider( "values");
+        if ($(this).val() > range[0] && $(this).val() <= default_econfidence){
+            $("#nav-slider-confidence").slider( "option", "values", [range[0], $(this).val()]);
+            $("#nav-slider-confidence-result-hidden").val(range[0]+ " - " + $(this).val());
+        }else{
+            $(this).val(range[1]);
+        }
+    });      
+
     //  Sliding animation
     $("#nav-slider-date").slider({
         animate: true,
-        range: "min",
+        range: true,
         value: 3,
         min: default_sdate,
         max: default_edate,
         step: 1,
         values: [ default_sdate, default_edate],
         slide: function( event, ui ) {
-            $( "#nav-slider-date-result" ).val( ui.values[ 0 ] + " - " + ui.values[ 1 ] );
+            $("#nav-slider-date-sinput").val(ui.values[0]);
+            $("#nav-slider-date-einput").val(ui.values[1]);
+            $( "#nav-slider-date-result-hidden" ).val( ui.values[ 0 ] + " - " + ui.values[ 1 ] );
         }
     });
+
+    $("#nav-slider-date-sinput").change(function(){
+        var range = $("#nav-slider-date").slider( "values");
+        if ($(this).val() < range[1] && $(this).val() >= default_sdate){
+            $("#nav-slider-date").slider( "option", "values", [$(this).val(), range[1]]);
+            $("#nav-slider-date-result-hidden").val($(this).val() + " - " + range[1]);
+        }else{
+            $(this).val(range[0]);
+        }
+    });          
+
+    $("#nav-slider-date-einput").change(function(){
+        var range = $("#nav-slider-date").slider( "values");
+        if ($(this).val() > range[0] && $(this).val() <= default_edate){
+            $("#nav-slider-date").slider( "option", "values", [range[0], $(this).val()]);
+            $("#nav-slider-date-result-hidden").val(range[0]+ " - " + $(this).val());
+        }else{
+            $(this).val(range[1]);
+        }
+    });      
 
     $("#nav-anchor").click(function() {
         $("#nav-slider").toggleClass("nav-slider-show");
