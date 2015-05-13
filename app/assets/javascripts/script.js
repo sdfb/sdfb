@@ -14,8 +14,8 @@ function getConfidence(n) {
 
 $(document).ready(function() {
 
-    var default_sdate = 1400
-    var default_edate = 1800
+    var default_sdate = 1500
+    var default_edate = 1700
     var default_certainty = 60
     var range_default_certainty = [60,100]
     var default_sconfidence = 0
@@ -23,6 +23,7 @@ $(document).ready(function() {
 
 
      $("#colorlegend").dialog({autoOpen: false, height: "auto", show: "slideDown", position: { my: "right top", at: "right-10% top+10%", of: window }});
+     $(".ui-dialog-titlebar-close").html("X");
 
     //Tooltips
 	$("#search-network").tooltip({placement: 	'right', title: 'First- and second-degree network connections of one person'});

@@ -1,8 +1,8 @@
 var francisID = 10000473;
 var default_sconfidence = 60;
 var default_econfidence = 100;
-var default_sdate = 1400;
-var default_edate = 1800;
+var default_sdate = 1500;
+var default_edate = 1700;
   
 /*
 Num_rels Cluster    Color
@@ -149,6 +149,7 @@ function twoDegs(id, id2, people) {
         accordion("edge");
     });
     graph.tooltip("<div class='btn' >"+"{{text}}" + "</div>");
+
     $('#zoom button.icon').click(function(e){
         if (this.name == 'in') {
             graph.zoomIn();
@@ -197,6 +198,23 @@ function getParam ( sname ){
     return sval;
 }
 
+function showAccordion(id, id2){
+  if (id2 == "0"){
+    $.ajax({
+          type: "GET",
+          url:    "/node_info", // should be mapped in routes.rb
+          data: {node_id:id},
+          datatype:"html", // check more option
+          success: function(data) {
+                   // handle response data
+                   },
+          async:   true
+        });  
+      accordion("node");
+  }
+  
+}
+
 function filterGraph(people){
     var ID = getParam("id");
     var ID2 = getParam("id2");
@@ -207,6 +225,7 @@ function filterGraph(people){
         ID = francisID;
     }
     twoDegs(ID, ID2, people);
+    showAccordion(ID, ID2);
 }
 
 function initGraph(people){
@@ -328,22 +347,33 @@ function init() {
   sidebarSearch(people);
   if (people != undefined){
     if (people[0] == "nodelimit"){
-        $("#kickback").show();
-        $('#kickbackyes').attr('href', "/people_relationships?id=" + people[1]);
-        $( "#kickbackno" ).click(function() {
-          $("#kickback").hide();
-          $( "#search-button" ).click();
-        });
-      }
+      $("#group-table").hide();
+      $("#kickback").show();
+      $('#kickbackyes').attr('href', "/people_relationships?id=" + people[1]);
+      $( "#kickbackno" ).click(function() {
+        $("#kickback").hide();
+        $("#search-network-name").val(people[2][0]["display_name"]);
+        $("#search-network-name" ).click();
+        $("#search-network-name-id").val(people[1]);
+        $("#search-button").click();
+      });
+    }
   	
 	  if (people[0] == "nodelimit_network"){
-        $("#kickback").show();
-        $('#kickbackyes').attr('href', "/relationships/" + people[1]);
-        $( "#kickbackno" ).click(function() {
-          $("#kickback").hide();
-          $( "#search-button" ).click();
-          $( "#search-shared-network" ).click();
-        });
+      $("#group-table").hide();
+      $("#kickback").show();
+      $('#kickbackyes').attr('href', "/relationships/" + people[1]);
+      $("#kickbackno" ).click(function() {
+        $("#kickback").hide();
+        $("#search-shared-network-name1").val(people[4][0]["display_name"]);
+        $("#search-shared-network-name1" ).click();
+        $("#search-shared-network-name1-id").val(people[2]);    
+        $("#search-shared-network-name2").val(people[5][0]["display_name"]);
+        $("#search-shared-network-name2" ).click();
+        $("#search-shared-network-name2-id").val(people[3]);                    
+        $("#search-button" ).click();
+        $("#search-shared-network").click();
+      });
 	  }
   }
 

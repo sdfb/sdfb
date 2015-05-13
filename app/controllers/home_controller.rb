@@ -65,8 +65,14 @@ class HomeController < ApplicationController
   def update_network_info
     @source_id = params[:source_id]
     @target_id = params[:target_id]
-    @source_name = Person.select("display_name").where("id = ?", @source_id)[0][:display_name]
-    @target_name = Person.select("display_name").where("id = ?", @target_id)[0][:display_name]
+    @source_info = Person.select("display_name, first_name, last_name").where("id = ?", @source_id)
+    @target_info = Person.select("display_name, first_name, last_name").where("id = ?", @target_id)
+    @source_name = @source_info[0][:display_name]
+    @target_name = @target_info[0][:display_name]
+    @source_first_name = @source_info[0][:first_name]
+    @source_last_name = @source_info[0][:last_name]
+    @target_first_name = @target_info[0][:first_name]
+    @target_last_name = @target_info[0][:last_name]
     @network_info = Relationship.select("id, max_certainty, types_list, start_date_type, start_year, end_date_type, end_year").where("person1_index = ? AND person2_index = ? OR person1_index = ? AND person2_index = ? ", @source_id, @target_id, @target_id, @source_id)
     @network_info_id = @network_info[0][:id]
     @network_info_confidence = @network_info[0][:max_certainty]

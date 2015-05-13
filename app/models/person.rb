@@ -267,7 +267,8 @@ class Person < ActiveRecord::Base
         end
         end
     else
-      return ["nodelimit", person_id]
+      display_name = Person.select("display_name").where("id = ?", person_id)
+      return ["nodelimit", person_id, display_name]
     end
     twoPeopleRecordsForReturn.update(@zeroDegreePerson)
     return twoPeopleRecordsForReturn
@@ -276,7 +277,7 @@ class Person < ActiveRecord::Base
   def self.find_relationship(id, rel_sum)
     rel_sum.each do |rel|
       if rel[0].to_i == id
-        return rel[3]
+        return rel
       end
     end
     return "None"
@@ -305,17 +306,23 @@ class Person < ActiveRecord::Base
     if @zeroDegreePerson2[person_id2.to_i]['rel_sum'].length > 100
       @found = self.find_relationship(person_id1.to_i, @zeroDegreePerson2[person_id2.to_i]['rel_sum'])
       if @found != "None"
-        return ["nodelimit_network", @found]
+        display_name1 = Person.select("display_name").where("id = ?", person_id1.to_i)
+        display_name2 = Person.select("display_name").where("id = ?", person_id2.to_i)        
+        return ["nodelimit_network", @found[2], person_id1.to_i, person_id2.to_i, display_name1, display_name2]
       else
-        return ["nodelimit", person_id2.to_i]
+        display_name = Person.select("display_name").where("id = ?", person_id2.to_i)
+        return ["nodelimit", person_id2.to_i, display_name]
       end
     end
     if @zeroDegreePerson1[person_id1.to_i]['rel_sum'].length > 100
       @found = self.find_relationship(person_id2.to_i, @zeroDegreePerson1[person_id1.to_i]['rel_sum'])
       if @found != "None"
-        return ["nodelimit_network", @found]
+        display_name1 = Person.select("display_name").where("id = ?", person_id1.to_i)
+        display_name2 = Person.select("display_name").where("id = ?", person_id2.to_i)
+        return ["nodelimit_network", @found[2], person_id1.to_i, person_id2.to_i, display_name1, display_name2]
       else
-        return ["nodelimit", person_id1.to_i]
+        display_name = Person.select("display_name").where("id = ?", person_id1.to_i)
+        return ["nodelimit", person_id1.to_i, display_name]
       end
     end
 		@zeroDegreePerson2[person_id2.to_i]['rel_sum'].each do |firstDegreePerson2|

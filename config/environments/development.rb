@@ -34,4 +34,5 @@ Sdfb::Application.configure do
   config.serve_static_assets = true
   # Expands the lines which load the assets
   config.assets.debug = false
+  config.assets.compile = true
 end

@@ -9,3 +9,5 @@
   $("#edge-icon-annotate").attr("href", "/user_rel_contribs/new?relationship_id=" + "<%= @network_info_id %>" );
   $("#edge-startyear").html("<%= @network_info_start_date_type %>" + " " + "<%= @network_info_start_year %>");
   $("#edge-endyear").html("<%= @network_info_end_date_type %>" + " " + "<%= @network_info_end_year %>");
+
+  $("#edge-GoogleLink").attr("href", "http://www.google.com/search?q="+"<%= @source_first_name %>" + "+" + "<%= @source_last_name %>" + "+" + "<%= @target_first_name %>" + "+" + "<%= @target_last_name %>");
