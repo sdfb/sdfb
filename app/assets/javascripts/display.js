@@ -323,7 +323,6 @@ function sidebarSearch(people){
     if (ID == ""){
       window.location.href = '/?id=' + francisID + ID2Str + '&confidence=' + confidence + '&date=' + date;  
     }
-
   });
 
   $("aside button.icon").click(function(){
