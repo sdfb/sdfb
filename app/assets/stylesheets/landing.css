@@ -1,7 +1,15 @@
 @import url(https://fonts.googleapis.com/css?family=Open+Sans:400,700);
 
+#landing-video{
+  text-align:center;
+}
 
-#landing{
+#landing-video iframe{
+
+  padding:10% 0px 0px 0px;
+}
+
+#landing, #landing-video{
   background: #4281a0;
   position: fixed;
   top: 0;

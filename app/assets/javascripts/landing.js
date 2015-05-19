@@ -1,7 +1,8 @@
  $(document).ready(function(){
+ 	$('#landing').hide();
     $('#kickback').hide();
  	if(document.cookie == 'skiplanding=yes'){
- 		$('#landing').fadeOut();
+ 		$('#landing-video').hide();
  		$('#everything').show();
  	}else{
  		date = new Date();
@@ -18,7 +19,7 @@
  	});
 
  	$('#skipIntro').click(function(){
- 		$('#landing').fadeOut();
+ 		$('#landing-video').fadeOut();
  		$('#everything').fadeIn();
  	});
  	var i = 0;
