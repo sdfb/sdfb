@@ -321,7 +321,7 @@ $(document).ready(function() {
         var range = $("#nav-slider-confidence").slider( "values");
         if ($(this).val() < range[1] && $(this).val() >= default_sconfidence){
             $("#nav-slider-confidence").slider( "option", "values", [$(this).val(), range[1]]);
-            $("#nav-slider-confidence-result-hidden").val($(this).val() + " - " + range[0]);
+            $("#nav-slider-confidence-result-hidden").val($(this).val() + " - " + range[1]);
         }else{
             $(this).val(range[0]);
         }
