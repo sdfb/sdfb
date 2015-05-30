@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 
-gem 'rails', '3.2.11'
+gem 'rails', '4.1.8'
 
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
@@ -13,6 +13,8 @@ gem "less-rails" #Sprockets (what Rails 3.1 uses for its asset pipeline) support
 
 gem 'will_paginate'
 gem 'simple_form'
+gem 'railties', '4.1.8'
+gem 'activemodel', '4.1.8'
 
 gem 'rails3-jquery-autocomplete'
 
@@ -20,7 +22,7 @@ gem 'rails3-jquery-autocomplete'
 # in production environments by default.
 gem 'pg'
 
-	  gem 'sass-rails',   '~> 3.2.3'
+	  gem 'sass-rails'
 	  gem 'therubyracer', :platforms => :ruby
 	  gem 'uglifier', '>= 1.0.3'
 	  gem "twitter-bootstrap-rails", '2.1.7'
@@ -48,6 +50,11 @@ gem 'puma'
 gem "rack-timeout", '~> 0.2.4'
 
 gem 'newrelic_rpm'
+
+gem 'protected_attributes'
+gem 'rails-observers'
+gem 'actionpack-page_caching'
+gem 'actionpack-action_caching'
 
 
 

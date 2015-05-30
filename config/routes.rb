@@ -42,18 +42,18 @@ Sdfb::Application.routes.draw do
   # set the root
   root :to => "home#index"
 
-  match '/people_search', :to => 'people#search'
+  match '/people_search', :to => 'people#search', :via => [:get]
 
-  match '/group_search', :to => 'groups#search'
+  match '/group_search', :to => 'groups#search', :via => [:get]
 
-  match '/relationship_search', :to => 'relationships#search'
+  match '/relationship_search', :to => 'relationships#search', :via => [:get]
 
-  match '/people_membership', :to => 'people#membership'
-  match '/people_relationships', :to => 'people#relationships'
-  match '/people_notes', :to => 'people#notes'
+  match '/people_membership', :to => 'people#membership', :via => [:get]
+  match '/people_relationships', :to => 'people#relationships', :via => [:get]
+  match '/people_notes', :to => 'people#notes', :via => [:get]
 
-  match '/node_info', :to => 'home#update_node_info'
-  match '/network_info', :to => 'home#update_network_info'
+  match '/node_info', :to => 'home#update_node_info', :via => [:get]
+  match '/network_info', :to => 'home#update_network_info', :via => [:get]
 
   resources :users
   
@@ -100,59 +100,59 @@ Sdfb::Application.routes.draw do
   end
 
   # Routing for group category record export
-  match '/export_group_categories' => 'group_categories#export_group_categories'
+  match '/export_group_categories' => 'group_categories#export_group_categories', :via => [:get]
 
   # Routing for group category assignment record export
-  match '/export_group_cat_assigns' => 'group_cat_assigns#export_group_cat_assigns'
+  match '/export_group_cat_assigns' => 'group_cat_assigns#export_group_cat_assigns', :via => [:get]
 
   # Routing for relationship category assignment record export
-  match '/export_rel_cat_assigns' => 'rel_cat_assigns#export_rel_cat_assigns'
+  match '/export_rel_cat_assigns' => 'rel_cat_assigns#export_rel_cat_assigns', :via => [:get]
 
   # Routing for relationship category record export
-  match '/export_rel_cats' => 'relationship_categories#export_rel_cats'
+  match '/export_rel_cats' => 'relationship_categories#export_rel_cats', :via => [:get]
 
   # Routing for relationship type record export
-  match '/export_rel_types' => 'relationship_types#export_rel_types'
+  match '/export_rel_types' => 'relationship_types#export_rel_types', :via => [:get]
 
   # Routing for user group contributions record export
-  match '/export_group_notes' => 'user_group_contribs#export_group_notes'
+  match '/export_group_notes' => 'user_group_contribs#export_group_notes', :via => [:get]
 
   # Routing for user person contributions record export
-  match '/export_people_notes' => 'user_person_contribs#export_people_notes'
+  match '/export_people_notes' => 'user_person_contribs#export_people_notes', :via => [:get]
 
   # Routing for user record export
-  match '/export_users' => 'users#export_users'
+  match '/export_users' => 'users#export_users', :via => [:get]
 
   # Routing for group assignments record export
-  match '/export_group_assignments' => 'group_assignments#export_group_assignments'
+  match '/export_group_assignments' => 'group_assignments#export_group_assignments', :via => [:get]
 
   # Routing for relationship type assignments
-  match '/export_rel_type_assigns' => 'user_rel_contribs#export_rel_type_assigns'
+  match '/export_rel_type_assigns' => 'user_rel_contribs#export_rel_type_assigns', :via => [:get]
 
   # Routing for group record export
-  match '/export_groups' => 'groups#export_groups'
+  match '/export_groups' => 'groups#export_groups', :via => [:get]
 
   # Routing for people record export
-  match '/export_people' => 'people#export_people'
+  match '/export_people' => 'people#export_people', :via => [:get]
 
   # Routing for relationship type/cat assign record export with relationship type and relationship category
-  get "export_rel_cat_assign_list" => "rel_cat_assigns#export_rel_cat_assign_list", :as => "export_rel_cat_assign_list"
+  get "export_rel_cat_assign_list" => "rel_cat_assigns#export_rel_cat_assign_list",  :via => [:get], :as => "export_rel_cat_assign_list"
 
   # Routing for group category assign record export with group category
-  get "export_group_cat_assign_list" => "group_cat_assigns#export_group_cat_assign_list", :as => "export_group_cat_assign_list"
+  get "export_group_cat_assign_list" => "group_cat_assigns#export_group_cat_assign_list", :via => [:get], :as => "export_group_cat_assign_list"
 
   # Routing for relationship record export
   get "export_relationships" => "relationships#export_relationships", :as => "export_relationships"
-  match '/relationships_100000000_100020000' => 'relationships#export_rels_for_rels_100000000_100020000'
-  match '/relationships_100020001_100040000' => 'relationships#export_rels_for_rels_100020001_100040000'
-  match '/relationships_100040001_100060000' => 'relationships#export_rels_for_rels_100040001_100060000'
-  match '/relationships_100060001_100080000' => 'relationships#export_rels_for_rels_100060001_100080000'
-  match '/relationships_100080001_100100000' => 'relationships#export_rels_for_rels_100080001_100100000'
-  match '/relationships_100100001_100120000' => 'relationships#export_rels_for_rels_100100001_100120000'
-  match '/relationships_100120001_100140000' => 'relationships#export_rels_for_rels_100120001_100140000'
-  match '/relationships_100140001_100160000' => 'relationships#export_rels_for_rels_100140001_100160000'
-  match '/relationships_100160001_100180000' => 'relationships#export_rels_for_rels_100160001_100180000'
-  match '/relationships_greater_than_100180000' => 'relationships#export_rels_for_rels_greater_than_100180000'
+  match '/relationships_100000000_100020000' => 'relationships#export_rels_for_rels_100000000_100020000', :via => [:get]
+  match '/relationships_100020001_100040000' => 'relationships#export_rels_for_rels_100020001_100040000', :via => [:get]
+  match '/relationships_100040001_100060000' => 'relationships#export_rels_for_rels_100040001_100060000', :via => [:get]
+  match '/relationships_100060001_100080000' => 'relationships#export_rels_for_rels_100060001_100080000', :via => [:get]
+  match '/relationships_100080001_100100000' => 'relationships#export_rels_for_rels_100080001_100100000', :via => [:get]
+  match '/relationships_100100001_100120000' => 'relationships#export_rels_for_rels_100100001_100120000', :via => [:get]
+  match '/relationships_100120001_100140000' => 'relationships#export_rels_for_rels_100120001_100140000', :via => [:get]
+  match '/relationships_100140001_100160000' => 'relationships#export_rels_for_rels_100140001_100160000', :via => [:get]
+  match '/relationships_100160001_100180000' => 'relationships#export_rels_for_rels_100160001_100180000', :via => [:get]
+  match '/relationships_greater_than_100180000' => 'relationships#export_rels_for_rels_greater_than_100180000', :via => [:get]
 
   # main resources  # The priority is based upon order of creation:
   # first created -> highest priority.
