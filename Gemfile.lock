@@ -87,6 +87,11 @@ GEM
       activemodel (~> 4.0)
     rails3-jquery-autocomplete (1.0.15)
       rails (>= 3.2)
+    rails_12factor (0.0.3)
+      rails_serve_static_assets
+      rails_stdout_logging
+    rails_serve_static_assets (0.0.4)
+    rails_stdout_logging (0.0.3)
     railties (4.1.8)
       actionpack (= 4.1.8)
       activesupport (= 4.1.8)
@@ -152,6 +157,7 @@ DEPENDENCIES
   rails (= 4.1.8)
   rails-observers
   rails3-jquery-autocomplete
+  rails_12factor
   railties (= 4.1.8)
   sass-rails
   simple_form

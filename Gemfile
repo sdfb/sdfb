@@ -55,6 +55,7 @@ gem 'protected_attributes'
 gem 'rails-observers'
 gem 'actionpack-page_caching'
 gem 'actionpack-action_caching'
+gem 'rails_12factor'
 
 
 
@@ -76,4 +77,4 @@ gem 'actionpack-action_caching'
 # gem 'debugger'
 
 
-#ruby '2.0.0'
+ruby '2.2.1'
