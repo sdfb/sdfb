@@ -43,9 +43,9 @@ Sdfb::Application.configure do
   # Precompile additional assets (application.js, application.css, and all non-JS/CSS are already added)
   config.assets.precompile += %w( jquery-2.1.1.min jquery-impromptu.min.js jquery-ui.min.js accordion.js autocomplete-rails.js bootstrap.min display.js insights.standalone.js script.js pace.js typeahead.js )
 
-  # Don't fallback to assets pipeline if a precompiled asset is missed
-  config.assets.compile = false
+  # # Don't fallback to assets pipeline if a precompiled asset is missed
+  # config.assets.compile = false
 
-  # Generate digests for assets URLs
-  config.assets.digest = true
+  # # Generate digests for assets URLs
+  # config.assets.digest = true
 end
