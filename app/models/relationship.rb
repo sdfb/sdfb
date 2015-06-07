@@ -55,14 +55,12 @@ class Relationship < ActiveRecord::Base
   scope :all_active_unrejected,  -> { where(is_active: true, is_rejected: false) }
   scope :all_rejected, -> { where(is_rejected: true, is_active: true) }
   scope :all_unapproved, -> { where(is_approved: false, is_rejected: false, is_active: true) }
-  scope :for_user, lambda {|user_input| where('created_by = ?', "#{user_input}") }
+  scope :for_user, -> (user_input) { where('created_by = ?', "#{user_input}") }
   scope :highest_certainty, -> { order(max_certainty: :desc) }
-  scope :all_for_person, 
-    lambda {|personID| 
+  scope :all_for_person, -> (personID) {
       select('relationships.*')
       .where('(person1_index = ?) or (person2_index = ?)', personID, personID)}
-  scope :for_2_people,
-    lambda {|person1ID, person2ID| 
+  scope :for_2_people, -> (person1ID, person2ID) {
     select('relationships.*')
     .where('((person1_index = ?) or (person2_index = ?)) and ((person1_index = ?) or (person2_index = ?))', person1ID, person1ID, person2ID, person2ID)}
   scope :for_rels_100000000_100020000, -> { where("id between 100000000 and 100020000") }

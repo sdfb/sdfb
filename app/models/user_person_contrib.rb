@@ -24,8 +24,8 @@ class UserPersonContrib < ActiveRecord::Base
   scope :all_inactive, -> { where(is_active: false) }
   scope :all_rejected, -> { where(is_rejected: true, is_active: true) }
   scope :all_unapproved, -> { where(is_approved: false, is_rejected: false, is_active: true) }
-  scope :for_user, lambda {|user_input| where('created_by = ?', "#{user_input}") }
-  scope :all_for_person, lambda {|personID| 
+  scope :for_user, -> (user_input) { where('created_by = ?', "#{user_input}") }
+  scope :all_for_person, -> (personID) {
       select('user_person_contribs.*')
       .where('person_id = ?', personID)}
   scope :all_recent, -> { order(created_at: :desc) }

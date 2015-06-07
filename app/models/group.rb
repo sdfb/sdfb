@@ -43,10 +43,10 @@ class Group < ActiveRecord::Base
   scope :all_active_unrejected, -> { where(is_active: true, is_rejected: false) }
   scope :all_unapproved, -> { where(is_approved: false, is_rejected: false, is_active: true) }
   scope :all_recent, -> { order(created_at: :desc) }
-  scope :for_id, lambda {|id_input| where('id = ?', "#{id_input}") }
-  scope :exact_name_match, lambda {|search_input| where('name like ?', "#{search_input}") }
-  scope :similar_name_match, lambda {|search_input| where('name like ?', "%#{search_input}%") }
-  scope :for_user, lambda {|user_input| where('created_by = ?', "#{user_input}") }
+  scope :for_id, -> (id_input) { where('id = ?', "#{id_input}") }
+  scope :exact_name_match, -> (search_input) { where('name like ?', "#{search_input}") }
+  scope :similar_name_match, -> (search_input) { where('name like ?', "%#{search_input}%") }
+  scope :for_user, -> (user_input) { where('created_by = ?', "#{user_input}") }
   scope :alphabetical, -> { order(name: :asc) }
   scope :order_by_sdfb_id, -> { order(id: :asc) }
   # Callbacks

@@ -24,8 +24,8 @@ class UserGroupContrib < ActiveRecord::Base
   scope :all_inactive, -> { where(is_active: false) }
   scope :all_rejected, -> { where(is_rejected: true, is_active: true) }
   scope :all_unapproved, -> { where(is_approved: false, is_rejected: false, is_active: true) }
-  scope :for_user, lambda {|user_input| where('created_by = ?', "#{user_input}") }
-  scope :all_for_group, lambda {|groupID| 
+  scope :for_user, -> ( user_input) { where('created_by = ?', "#{user_input}") }
+  scope :all_for_group, -> (groupID) {
       select('user_group_contribs.*')
       .where('group_id = ?', groupID)}
   scope :all_recent, -> { order(created_at: :desc) }

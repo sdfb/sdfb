@@ -24,10 +24,10 @@ class GroupCatAssign < ActiveRecord::Base
   scope :all_rejected, -> { where(is_rejected: true, is_active: true) }
   scope :all_unapproved, -> { where(is_approved: false, is_rejected: false, is_active: true) }
   scope :all_recent, -> { order(created_at: :desc) }
-  scope :for_group, lambda {|group_id_input| where('group_id = ?', "#{group_id_input}") }
-  scope :for_group_category, lambda {|group_category_id_input| where('group_category_id = ?', "#{group_category_id_input}") }
-  scope :find_if_exists, lambda {|group_category_id_input, group_id_input| where('(group_category_id = ?) and (group_id = ?)', group_category_id_input, group_id_input) }
-  scope :for_user, lambda {|user_input| where('created_by = ?', "#{user_input}") }
+  scope :for_group, -> (group_id_input) { where('group_id = ?', "#{group_id_input}") }
+  scope :for_group_category, -> (group_category_id_input) { where('group_category_id = ?', "#{group_category_id_input}") }
+  scope :find_if_exists, -> ( group_category_id_input, group_id_input) { where('(group_category_id = ?) and (group_id = ?)', group_category_id_input, group_id_input) }
+  scope :for_user, -> (user_input) { where('created_by = ?', "#{user_input}") }
   scope :order_by_sdfb_id, -> { order(id: :asc) }
   scope :all_active_unrejected, -> { where(is_active: true, is_rejected: false) }
 

@@ -18,12 +18,10 @@ class GroupAssignment < ActiveRecord::Base
   scope :all_rejected, -> { where(is_rejected: true, is_active: true) }
   scope :all_unapproved, -> { where(is_approved: false, is_rejected: false, is_active: true) }
   scope :all_recent, -> { order(created_at: :desc) }
-  scope :all_for_person, 
-    lambda {|personID| 
+  scope :all_for_person, -> (personID) {
       select('group_assignments.*')
       .where('(person_id = ?)', personID)}
-  scope :all_for_group, 
-    lambda {|groupID| 
+  scope :all_for_group, -> (groupID) {
       select('group_assignments.*')
       .where('(group_id = ?)', groupID)}
   scope :for_user, lambda {|user_input| where('created_by = ?', "#{user_input}") }

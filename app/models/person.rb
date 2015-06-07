@@ -23,24 +23,24 @@ class Person < ActiveRecord::Base
   scope :all_unapproved, -> { where(is_approved: false, is_rejected: false, is_active: true) }
   scope :all_recent,  -> { order(created_at: :desc) }
   scope :all_active_unrejected, -> { where(is_active: true, is_rejected: false) }
-  scope :for_user, lambda {|user_input| where('created_by = ?', "#{user_input}") }
-  scope :for_odnb_id, lambda {|odnb_id_input| where('odnb_id like ?', "%#{odnb_id_input}%") }
-  scope :for_first_name, lambda {|first_name_input| where('first_name like ?', "%#{first_name_input}")}
-  scope :for_last_name, lambda {|last_name_input| where('last_name like ?', "%#{last_name_input}")}
-  scope :for_first_or_last_name,  lambda {|name_input| where('(first_name like ?) || (last_name like ?)', "%#{name_input}", "%#{name_input}")}
+  scope :for_user, -> (user_input) { where('created_by = ?', "#{user_input}") }
+  scope :for_odnb_id, -> (odnb_id_input) { where('odnb_id like ?', "%#{odnb_id_input}%") }
+  scope :for_first_name, -> (first_name_input) { where('first_name like ?', "%#{first_name_input}")}
+  scope :for_last_name, -> (last_name_input) { where('last_name like ?', "%#{last_name_input}")}
+  scope :for_first_or_last_name, -> (name_input) { where('(first_name like ?) || (last_name like ?)', "%#{name_input}", "%#{name_input}")}
   scope :alphabetical, -> { order(last_name: :asc, first_name: :asc) }
-  scope :for_id, lambda {|id_input| where('id = ?', "#{id_input}") }
-  scope :for_first_and_last_name,  lambda {|name_input| where('(first_name like ?) AND (last_name like ?)', "%#{name_input}", "%#{name_input}")}
-  scope :all_members_of_a_group, lambda {|groupID| 
+  scope :for_id, -> (id_input) { where('id = ?', "#{id_input}") }
+  scope :for_first_and_last_name,  -> (name_input) { where('(first_name like ?) AND (last_name like ?)', "%#{name_input}", "%#{name_input}")}
+  scope :all_members_of_a_group, -> (groupID) { 
       select('people.*')
       .joins('join group_assignments ga on (people.id = ga.person_id)')
       .where('(ga.group_id = ? and ga.approved_by is not null)', groupID)}
-  scope :first_degree_for, lambda {|id_input| 
+  scope :first_degree_for, -> (id_input) {
       select('people.*')
       .joins('join relationships r1 on ((r1.person1_index = people.id) or (r1.person2_index = people.id))')
       .where("people.approved_by is not null and ((r1.person1_index = '#{id_input}') or (r1.person2_index = '#{id_input}'))")
       }
-  scope :rels_for_id, lambda {|id, sdata, edate|
+  scope :rels_for_id, -> (id, sdata, edate) {
   	select('id, rel_sum')
   	.where("id = ? and (ext_birth_year < ? or ext_death_year > ?)", '%#{id}', '%#{edate}', '%#{sdate}')}
   scope :order_by_sdfb_id, -> { order(:id) }

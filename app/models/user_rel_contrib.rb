@@ -49,8 +49,8 @@ class UserRelContrib < ActiveRecord::Base
   scope :all_active_unrejected, -> { where(is_active: true, is_rejected: false) }
   scope :all_rejected, -> { where(is_rejected: true, is_active: true) }
   scope :all_unapproved, -> { where(is_approved: false, is_rejected: false, is_active: true) }
-  scope :for_user, lambda {|user_input| where('created_by = ?', "#{user_input}") }
-  scope :all_for_relationship, lambda {|relID| 
+  scope :for_user, -> (user_input) { where('created_by = ?', "#{user_input}") }
+  scope :all_for_relationship, -> (relID) {
       select('user_rel_contribs.*')
       .where('relationship_id = ?', relID)}
   scope :highest_certainty, -> { order(certainty: :desc) }
