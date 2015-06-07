@@ -21,7 +21,7 @@ class RelationshipCategory < ActiveRecord::Base
   scope :for_user, lambda {|user_input| where('created_by = ?', "#{user_input}") }
   scope :alphabetical, -> { order(name: :asc) }
   scope :order_by_sdfb_id, -> { order(id: :asc) }
-  scope :all_active_unrejected, { -> where(is_active: true, is_rejected: false) }
+  scope :all_active_unrejected, -> { where(is_active: true, is_rejected: false) }
 
   # Callbacks
   # ----------------------------- 
