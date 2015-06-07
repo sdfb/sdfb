@@ -12,12 +12,12 @@ class GroupAssignment < ActiveRecord::Base
 
   # Scope
   # ----------------------------- 
-  scope :all_approved, where("is_approved is true and is_active is true and is_rejected is false")
-  scope :all_inactive, where("is_active is false")
-  scope :all_active_unrejected, where("is_active is true and is_rejected is false")
-  scope :all_rejected, where("is_rejected is true and is_active is true")
-  scope :all_unapproved, where("is_approved is false and is_rejected is false and is_active is true")
-  scope :all_recent, order('created_at DESC')
+  scope :all_approved, -> { where(is_approved: true, is_active: true, is_rejected:false) }
+  scope :all_inactive, -> { where(is_active: false) }
+  scope :all_active_unrejected, -> { where(is_active: true, is_rejected: false) }
+  scope :all_rejected, -> { where(is_rejected: true, is_active: true) }
+  scope :all_unapproved, -> { where(is_approved: false, is_rejected: false, is_active: true) }
+  scope :all_recent, -> { order(created_at: :desc) }
   scope :all_for_person, 
     lambda {|personID| 
       select('group_assignments.*')
@@ -28,7 +28,7 @@ class GroupAssignment < ActiveRecord::Base
       .where('(group_id = ?)', groupID)}
   scope :for_user, lambda {|user_input| where('created_by = ?', "#{user_input}") }
   scope :find_if_exists, lambda {|person_input, group_input| where('(person_id = ?) and (group_id = ?) and is_approved is true', person_input, group_input) }
-  scope :order_by_sdfb_id, order('id')
+  scope :order_by_sdfb_id, -> { order(id: :asc) }
 
   # Misc Constants
   DATE_TYPE_LIST = ["BF", "AF","IN","CA","BF/IN","AF/IN","NA"]

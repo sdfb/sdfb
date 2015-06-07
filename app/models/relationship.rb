@@ -50,13 +50,13 @@ class Relationship < ActiveRecord::Base
 
   # Scope
   # ----------------------------- 
-  scope :all_approved, where("is_approved is true and is_active is true and is_rejected is false")
-  scope :all_inactive, where("is_active is false")
-  scope :all_active_unrejected, where("is_active is true and is_rejected is false")
-  scope :all_rejected, where("is_rejected is true and is_active is true")
-  scope :all_unapproved, where("is_approved is false and is_rejected is false and is_active is true")
+  scope :all_approved, -> { where(is_approved: true, is_active: true, is_rejected: false) }
+  scope :all_inactive, -> { where(is_active: false) }
+  scope :all_active_unrejected,  -> { where(is_active: true, is_rejected: false) }
+  scope :all_rejected, -> { where(is_rejected: true, is_active: true) }
+  scope :all_unapproved, -> { where(is_approved: false, is_rejected: false, is_active: true) }
   scope :for_user, lambda {|user_input| where('created_by = ?', "#{user_input}") }
-  scope :highest_certainty, order('max_certainty DESC')
+  scope :highest_certainty, -> { order(max_certainty: :desc) }
   scope :all_for_person, 
     lambda {|personID| 
       select('relationships.*')
@@ -65,18 +65,18 @@ class Relationship < ActiveRecord::Base
     lambda {|person1ID, person2ID| 
     select('relationships.*')
     .where('((person1_index = ?) or (person2_index = ?)) and ((person1_index = ?) or (person2_index = ?))', person1ID, person1ID, person2ID, person2ID)}
-  scope :for_rels_100000000_100020000, where("id between 100000000 and 100020000")
-  scope :for_rels_100020001_100040000, where("id between 100020001 and 100040000")
-  scope :for_rels_100040001_100060000, where("id between 100040001 and 100060000")
-  scope :for_rels_100060001_100080000, where("id between 100060001 and 100080000")
-  scope :for_rels_100080001_100100000, where("id between 100080001 and 100100000")
-  scope :for_rels_100100001_100120000, where("id between 100100001 and 100120000")
-  scope :for_rels_100120001_100140000, where("id between 100120001 and 100140000")
-  scope :for_rels_100140001_100160000, where("id between 100140001 and 100160000")
-  scope :for_rels_100160001_100180000, where("id between 100160001 and 100180000")
-  scope :for_rels_greater_than_100180000, where("id > 100180000")
-  scope :all_recent, order('created_at DESC')
-  scope :order_by_sdfb_id, order('id')
+  scope :for_rels_100000000_100020000, -> { where("id between 100000000 and 100020000") }
+  scope :for_rels_100020001_100040000, -> { where("id between 100020001 and 100040000") }
+  scope :for_rels_100040001_100060000, -> { where("id between 100040001 and 100060000") }
+  scope :for_rels_100060001_100080000, -> { where("id between 100060001 and 100080000") }
+  scope :for_rels_100080001_100100000, -> { where("id between 100080001 and 100100000") }
+  scope :for_rels_100100001_100120000, -> { where("id between 100100001 and 100120000") }
+  scope :for_rels_100120001_100140000, -> { where("id between 100120001 and 100140000") }
+  scope :for_rels_100140001_100160000, -> { where("id between 100140001 and 100160000") }
+  scope :for_rels_100160001_100180000, -> { where("id between 100160001 and 100180000") }
+  scope :for_rels_greater_than_100180000, -> { where("id > 100180000") }
+  scope :all_recent, -> { order(created_at: :desc) }
+  scope :order_by_sdfb_id, -> { order(id: :asc) }
 
   # Callbacks
   # -----------------------------

@@ -22,11 +22,11 @@ gem 'rails3-jquery-autocomplete'
 # in production environments by default.
 gem 'pg'
 
-	  gem 'sass-rails'
-	  gem 'therubyracer', :platforms => :ruby
-	  gem 'uglifier', '>= 1.0.3'
-	  gem "twitter-bootstrap-rails", '2.1.7'
-	
+gem 'sass-rails'
+gem 'therubyracer', :platforms => :ruby
+gem 'uglifier', '>= 1.0.3'
+gem "twitter-bootstrap-rails", '2.1.7'
+
   #gem 'coffee-rails', '~> 3.2.1'
 
   # See https://github.com/sstephenson/execjs#readme for more supported runtimes

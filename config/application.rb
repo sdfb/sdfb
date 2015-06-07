@@ -61,6 +61,7 @@ module Sdfb
     config.assets.version = '1.0'
 		require 'active_support/core_ext/numeric/bytes'
 		config.cache_store = :memory_store, {:size => 2048.megabytes}
+        require "active_record/railtie"
   end
 
 

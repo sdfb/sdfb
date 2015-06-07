@@ -6,7 +6,7 @@ Sdfb::Application.configure do
   # since you don't have to restart the web server when you make code changes.
 
   config.eager_load = true
-config.assets.js_compressor = :uglifier
+  config.assets.js_compressor = :uglifier
 
   config.cache_classes = true
 
@@ -40,5 +40,6 @@ config.assets.js_compressor = :uglifier
   config.assets.debug = false
 
   # Precompile additional assets (application.js, application.css, and all non-JS/CSS are already added)
- config.assets.precompile += %w( jquery-2.1.1.min jquery-impromptu.min.js jquery-ui.min.js accordion.js autocomplete-rails.js bootstrap.min display.js insights.standalone.js script.js pace.js typeahead.js )
+  config.assets.precompile += %w( jquery-2.1.1.min jquery-impromptu.min.js jquery-ui.min.js accordion.js autocomplete-rails.js bootstrap.min display.js insights.standalone.js script.js pace.js typeahead.js )
+
 end

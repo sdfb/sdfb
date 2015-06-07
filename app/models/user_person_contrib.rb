@@ -20,17 +20,17 @@ class UserPersonContrib < ActiveRecord::Base
 
   # Scope
   # ----------------------------- 
-  scope :all_approved, where("is_approved is true and is_active is true and is_rejected is false")
-  scope :all_inactive, where("is_active is false")
-  scope :all_rejected, where("is_rejected is true and is_active is true")
-  scope :all_unapproved, where("is_approved is false and is_rejected is false and is_active is true")
+  scope :all_approved, -> { where(is_approved: true, is_active: true, is_rejected: false) }
+  scope :all_inactive, -> { where(is_active: false) }
+  scope :all_rejected, -> { where(is_rejected: true, is_active: true) }
+  scope :all_unapproved, -> { where(is_approved: false, is_rejected: false, is_active: true) }
   scope :for_user, lambda {|user_input| where('created_by = ?', "#{user_input}") }
   scope :all_for_person, lambda {|personID| 
       select('user_person_contribs.*')
       .where('person_id = ?', personID)}
-  scope :all_recent, order('created_at DESC')
-  scope :order_by_sdfb_id, order('id')
-  scope :all_active_unrejected, where("is_active is true and is_rejected is false")
+  scope :all_recent, -> { order(created_at: :desc) }
+  scope :order_by_sdfb_id, -> { order(id: :asc) }
+  scope :all_active_unrejected, -> { where(is_active: true, is_rejected: false) }
 
   # Callbacks
   # ----------------------------- 
