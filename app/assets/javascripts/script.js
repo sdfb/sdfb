@@ -50,7 +50,9 @@ $(document).ready(function() {
     $("#node-icon-annotate").tooltip({placement: 'right', title: 'Add a note to this person'});
     $("#group-icon-annotate").tooltip({placement: 'right', title: 'Add a note to this group'});
     $("#group-icon-annotate2").tooltip({placement: 'right', title: 'Add a note to this group'});
+
     $("#edge-icon-annotate").tooltip({placement: 'right', title: 'Add a relationship type and note to this relationship'});
+    $("#edge-annotate").tooltip({placement: 'right', title: 'Inferred statistically from the ODNB'});
     $("#group-icon-label").tooltip({placement: 'right', title: 'Add person to group'});
     $("#group-icon-annotate").tooltip({placement: 'right', title: 'Add a note to this group'});
 
