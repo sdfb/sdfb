@@ -1,10 +1,15 @@
 namespace :db do
-	task :populate_rel_start_end_date_100001_120000 => :environment do 
+	task :populate_rel_start_end_date_remaining => :environment do 
 		#for each relationship, update the start and end date based on the birthdates of the people in the relationship
 		puts "Updating the start date and end date of each relationship..."
 		
-    	for i in 100100001..100120000
-			relationship_record = Relationship.find(i) 
+		# find all relationship records who do not currently have a start year or end year
+		rel_no_date_array = Relationship.all_no_dates
+		puts rel_no_date_array.size
+
+    	rel_no_date_array.each do |rel|
+    		i = rel.id.to_i
+			relationship_record = rel
 			birth_year_1 = nil
 			death_year_1 = nil
 			birth_year_2 = nil
@@ -96,6 +101,7 @@ namespace :db do
 					# puts "" + new_end_year.to_s
 					Relationship.update(i, start_year: new_start_year, start_date_type: new_start_year_type, end_year: new_end_year, end_date_type: new_end_year_type)
 					puts "updated rel: " + i.to_s + "birth_year_1:" + birth_year_1.to_s + " start_year:" + new_start_year.to_s + "birth_year_2:" + birth_year_2.to_s + " end_year:" + new_end_year.to_s
+	
 				end
 			end
     	end

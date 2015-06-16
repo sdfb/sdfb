@@ -1,9 +1,9 @@
 namespace :db do
-	task :populate_rel_start_end_date_110001_130000 => :environment do 
+	task :populate_rel_start_end_date_100160001_100170000 => :environment do 
 		#for each relationship, update the start and end date based on the birthdates of the people in the relationship
 		puts "Updating the start date and end date of each relationship..."
 		
-    	for i in 100110001..100130000
+    	for i in 100160001..100170000
 			relationship_record = Relationship.find(i) 
 			birth_year_1 = nil
 			death_year_1 = nil

@@ -54,6 +54,7 @@ class Relationship < ActiveRecord::Base
   scope :all_inactive, -> { where(is_active: false) }
   scope :all_active_unrejected,  -> { where(is_active: true, is_rejected: false) }
   scope :all_rejected, -> { where(is_rejected: true, is_active: true) }
+  scope :all_no_dates, -> { where("start_year IS NULL or end_year IS NULL") }
   scope :all_unapproved, -> { where(is_approved: false, is_rejected: false, is_active: true) }
   scope :for_user, -> (user_input) { where('created_by = ?', "#{user_input}") }
   scope :highest_certainty, -> { order(max_certainty: :desc) }
