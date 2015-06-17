@@ -13,7 +13,7 @@ function getConfidence(n) {
 }
 
 $(document).ready(function() {
-
+    
     var default_sdate = 1500
     var default_edate = 1700
     var default_certainty = 60
