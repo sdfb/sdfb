@@ -58,7 +58,7 @@ gem 'actionpack-action_caching'
 gem 'rails_12factor'
 
 
-
+gem "brakeman", :require => false
 
 
 # To use ActiveModel has_secure_password

@@ -155,14 +155,75 @@ navigate to http://localhost:3000/
 end this process by sending "Ctrl-C" in terminal
 ```
 
+Most Recent Brakeman 6-16-15:
++SUMMARY+
 
-TODO:
--redirect when a user does not have access to a page.
--edit the forms (choose from user names) and validations
--edit the views to display names
----------
--create accordian
--create search using two names
--create search using one name w/ filters
--create search using group
--create search using two groups
++-------------------+--------+
+| Scanned/Reported  | Total  |
++-------------------+--------+
+| Controllers       | 19     |
+| Models            | 16     |
+| Templates         | 177    |
+| Errors            | 2      |
+| Security Warnings | 15 (1) |
++-------------------+--------+
+
++----------------------------+-------+
+| Warning Type               | Total |
++----------------------------+-------+
+| Cross-Site Request Forgery | 1     |
+| Mass Assignment            | 12    |
+| SQL Injection              | 1     |
+| Session Setting            | 1     |
++----------------------------+-------+
++Errors+
++----------------------------------------------------------------------------->>
+| Error                                                                       >>
++----------------------------------------------------------------------------->>
+| /Users/katarinashaw/Documents/sdfb/app/views/password_resets/edit.html.erb:3>>
+| /Users/katarinashaw/Documents/sdfb/app/views/relationships/all_rels_for_pers>>
++----------------------------------------------------------------------------->>
+
+
++SECURITY WARNINGS+
+
++------------+--------+------------------+-----------------+------------------>>
+| Confidence | Class  | Method           | Warning Type    | Message          >>
++------------+--------+------------------+-----------------+------------------>>
+| High       |        |                  | Session Setting | Session secret sh>>
+| Medium     | Person | first_degree_for | SQL Injection   | Possible SQL inje>>
++------------+--------+------------------+-----------------+------------------>>
+
+
+
+Controller Warnings:
+
++------------+-----------------------+----------------------------+----------->>
+| Confidence | Controller            | Warning Type               | Message   >>
++------------+-----------------------+----------------------------+----------->>
+| Medium     | ApplicationController | Cross-Site Request Forgery | protect_fr>>
++------------+-----------------------+----------------------------+----------->>
+
+
+
+Model Warnings:
+
++------------+-------------------+-----------------+-------------------------->>
+| Confidence | Model             | Warning Type    | Message                  >>
++------------+-------------------+-----------------+-------------------------->>
+| Weak       | Flag              | Mass Assignment | Potentially dangerous att>>
+| Weak       | GroupAssignment   | Mass Assignment | Potentially dangerous att>>
+| Weak       | GroupAssignment   | Mass Assignment | Potentially dangerous att>>
+| Weak       | GroupCatAssign    | Mass Assignment | Potentially dangerous att>>
+| Weak       | GroupCatAssign    | Mass Assignment | Potentially dangerous att>>
+| Weak       | Person            | Mass Assignment | Potentially dangerous att>>
+| Weak       | RelCatAssign      | Mass Assignment | Potentially dangerous att>>
+| Weak       | RelCatAssign      | Mass Assignment | Potentially dangerous att>>
+| Weak       | UserGroupContrib  | Mass Assignment | Potentially dangerous att>>
+| Weak       | UserPersonContrib | Mass Assignment | Potentially dangerous att>>
+| Weak       | UserRelContrib    | Mass Assignment | Potentially dangerous att>>
+| Weak       | UserRelContrib    | Mass Assignment | Potentially dangerous att>>
++------------+-------------------+-----------------+-------------------------->>
+
+CMU-912690:sdfb katarinashaw$ 
+
