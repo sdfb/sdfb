@@ -1,4 +1,0 @@
-Options -Multiviews
-PassengerResolveSymlinksInDocumentRoot on
-RailsEnv development
-SetEnv GEM_HOME /home1/sixdfbor/ruby/gems
