@@ -337,17 +337,6 @@ function sidebarSearch(people){
   });
 }
 
-function d3() {
-  d3.select("#graph")
-  .selectAll("svg")
-  .data(people)
-  .enter()
-  .append("svg")
-  .style("fill", function(people[0]) {
-    // function to assign color of node
-  });
-}
-
 function init() {
   var people = window.gon.people;
   var group_data = window.gon.group_data;
