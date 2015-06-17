@@ -416,6 +416,5 @@ function init() {
 
 $(document).ready(function() {
   init();  
-d3.select("body").append("p").text("wow");
 
 });      
