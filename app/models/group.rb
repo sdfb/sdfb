@@ -54,9 +54,27 @@ class Group < ActiveRecord::Base
   before_create :init_array
   before_create :check_if_approved
   before_update :check_if_approved_and_update_edit
+  before_create :create_start_and_end_date
+  before_update :create_start_and_end_date
 
   # Custom Methods
   # -----------------------------
+  def create_start_and_end_date
+    if (start_year.blank?)
+      self.start_year = 1500
+      self.start_date_type = "CA"
+    end
+    if (start_date_type.blank?)
+      self.start_date_type = "CA"
+    end
+    if (end_year.blank?)
+      self.end_year = 1700
+      self.end_date_type = "CA"
+    end   
+    if (end_date_type.blank?)
+      self.end_date_type = "CA"
+    end
+  end
 
   def init_array
     self.person_list = nil

@@ -14,7 +14,7 @@ If populating the entire database you can run the file herokupop.sh which will r
 
 ## USING THE HEROKU SANDBOX
 1. Switch to the sandbox repository. From the sdfb directory on your machine, run heroku git:remote -a sdfb2
-2. 
+2. Follow "To Push to Heroku" section steps 5-8
 
 
 ## Code to restart localhost server if there is an error
@@ -120,7 +120,7 @@ rake db:populate_rels_120001_140000
 rake db:populate_rels_140001_160000
 rake db:populate_rels_160001_170542
 rake db:populate_user_rel_contribs_samples
-# Populate start and end dates
+# Populate start and end dates (only need to do this if you originally populated relationships before May 1, 2015)
 rake db:populate_rel_start_end_date_100000001_100010000
 rake db:populate_rel_start_end_date_100010001_100020000
 rake db:populate_rel_start_end_date_100020001_100030000
