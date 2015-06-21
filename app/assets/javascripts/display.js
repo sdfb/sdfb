@@ -77,10 +77,15 @@ function createNodeKey(node, id) {
   return {"text": node["display_name"], "size": 10, "id": id,  "cluster": getClusterRels(node["rel_sum"])};
 }
 
+function createDataKey(node, id) {
+  return {};
+}
+
 function twoDegs(id, id2, people) {
   var keys = {};
   var edges = [];
   var nodes = [];
+
   function createGraph(id, people) {
     var p = people[id];
     $.each(p.rel_sum, function(index, value) { 
@@ -102,6 +107,7 @@ function twoDegs(id, id2, people) {
     //adds main person's id referenced to keys associative array. Keys represent all data in graph
     keys[id] = {"text": p["display_name"], "size": 30, "id": id,  "cluster": getClusterRels(p["rel_sum"])}; 
   }
+
   createGraph(id, people);
   if (id2 != 0 && id2 != ""){
       createGraph(id2, people);
@@ -116,6 +122,19 @@ function twoDegs(id, id2, people) {
     var w = window.innerWidth;
     var h = window.innerHeight;
     var options = { width: w, height: h, collisionAlpha: 25, colors: getColorsRels() };
+
+    // var svg = d3.select("#graph").append("svg").attr("width", 50).attr("height", 50);
+      
+
+    // var nodes = svg.selectAll("circle")
+    //                 .data(nodes)
+    //                 .enter()
+    //                 .append("circle")
+    //                 .attr("fill", function(d) { getColorsRels(d["rel_sum"]) })
+    //                 .attr("r", function(d) { getClusterRels(d["rel_sum"]) })
+    //                 .attr("cx", function(d) { d["id"] } )
+    //                 .attr("cy", function(d) { d["id"] } )
+    //                 ;
     var graph = new Insights($("#graph")[0], nodes, edges, options).render();
 
     graph.on("node:click", function(d) {
@@ -147,6 +166,10 @@ function twoDegs(id, id2, people) {
             async:   true
           });  
         accordion("edge");
+    });
+
+    graph.on("edge:mouseover", function(d) {
+      console.log("mouseover");
     });
     graph.tooltip("<div class='btn' >"+"{{text}}" + "</div>");
 

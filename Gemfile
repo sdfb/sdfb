@@ -15,7 +15,6 @@ gem 'will_paginate'
 gem 'simple_form'
 gem 'railties', '4.1.8'
 gem 'activemodel', '4.1.8'
-gem 'd3_rails'
 
 gem 'rails3-jquery-autocomplete'
 gem 'jquery-turbolinks'
