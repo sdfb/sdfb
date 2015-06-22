@@ -118,8 +118,6 @@ function twoDegs(id, id2, people) {
     var w = window.innerWidth;
     var h = window.innerHeight;
     var options = { width: w, height: h, collisionAlpha: 25, colors: getColorsRels() };
-            .attr("cy", function(d) { d["id"] } )
-                  ;
     var graph = new Insights($("#graph")[0], nodes, edges, options).render();
 
     graph.on("node:click", function(d) {
