@@ -48,10 +48,6 @@ header a:hover {
   color: #ffffff !important;
 }
 
-.d3node {
-  radius: 50px;
-}
-
 #head {
   position:relative;
   float:left;

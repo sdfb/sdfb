@@ -10151,7 +10151,6 @@ Graph.prototype = {
       .attr("stroke", bind(this, this.pathStroke))
       .attr("stroke-width", PATH_STROKE_WIDTH)
       .attr("fill", "none")
-      .on("mouseover", bind(this, this.onPathOver))
       .on("dblclick", bind(this, this.onPathClick));
     
     var node = this.d3Nodes = this.parent.selectAll(".node")
@@ -10307,23 +10306,6 @@ Graph.prototype = {
     this.state.adjacents[d.target.id] = d.target;
     this.update();
     this.emit("edge:click", d);
-  },
-
-  onPathOver: function(d)  {
-        var self = this 
-      , e = d3.event;
-
-    // To avoid focusing hidden elements
-    if (!self.isPathVisible(d.source, d.target)) {
-      return;
-    } else {
-      e.preventDefault();
-      e.stopPropagation();
-    }
-    this.state.focused = d.source;
-    this.state.adjacents[d.target.id] = d.target;
-    this.update();
-    this.emit("edge:mouseover", d);
   },
 
   /**
