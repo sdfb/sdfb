@@ -48,4 +48,13 @@ Sdfb::Application.configure do
 
   # # Generate digests for assets URLs
   # config.assets.digest = true
+  ActionMailer::Base.smtp_settings = {
+    :user_name => 'app35236337@heroku.com',
+    :password => '3irsljgy5593',
+    :domain => 'sdfb2.herokuapp.com',
+    :address => 'smtp.sendgrid.net',
+    :port => 587,
+    :authentication => :plain,
+    :enable_starttls_auto => true
+  }
 end
