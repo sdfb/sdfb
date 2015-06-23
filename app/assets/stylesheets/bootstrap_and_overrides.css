@@ -219,3 +219,8 @@ label {
   font-size: 12px !important;
   padding-top: 10px;
 }
+
+.alert{
+  margin-bottom:0px;
+}
+}
