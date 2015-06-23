@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150428042348) do
+ActiveRecord::Schema.define(version: 20150623020141) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -105,6 +105,11 @@ ActiveRecord::Schema.define(version: 20150428042348) do
     t.string   "start_date_type"
     t.string   "end_date_type"
     t.text     "last_edit",       default: "--- []\n"
+  end
+
+  create_table "password_digests", force: true do |t|
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "people", force: true do |t|
@@ -288,11 +293,15 @@ ActiveRecord::Schema.define(version: 20150428042348) do
     t.string   "prefix"
     t.string   "orcid"
     t.integer  "created_by"
-    t.boolean  "is_curator",            default: false
-    t.boolean  "curator_revoked",       default: false
+    t.boolean  "is_curator",             default: false
+    t.boolean  "curator_revoked",        default: false
     t.string   "username"
-    t.datetime "created_at",                            null: false
-    t.datetime "updated_at",                            null: false
+    t.datetime "created_at",                             null: false
+    t.datetime "updated_at",                             null: false
+    t.string   "password_reset_token"
+    t.datetime "password_reset_sent_at"
+    t.string   "password_digest"
+    t.string   "auth_token"
   end
 
 end

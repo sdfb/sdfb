@@ -8,7 +8,7 @@ gem 'rails', '4.1.8'
 ######################## We need to specify the platform for this to work with Passenger
 
 
-gem "less-rails" #Sprockets (what Rails 3.1 uses for its asset pipeline) supports LESS
+# gem "less-rails" #Sprockets (what Rails 3.1 uses for its asset pipeline) supports LESS
 
 
 gem 'will_paginate'
