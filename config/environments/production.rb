@@ -57,4 +57,5 @@ Sdfb::Application.configure do
     :authentication => :plain,
     :enable_starttls_auto => true
   }
+  default_url_options[:host]
 end
