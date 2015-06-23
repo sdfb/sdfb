@@ -2,7 +2,7 @@ echo "Please enter a commit message: "
 read msg
 echo "Compiling assets...."
 rake assets:precompile
-git add .
+git add -A
 git commit -m "$msg"
 echo "pushing to git..."
 git push
