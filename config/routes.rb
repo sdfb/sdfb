@@ -1,4 +1,6 @@
 Sdfb::Application.routes.draw do
+  get 'password_resets/new'
+
   get "about" => "static_pages#about", :as => "about"
 	get "help" => "static_pages#help", :as => "help"
   get "tos" => "static_pages#tos", :as => "tos"
@@ -6,24 +8,13 @@ Sdfb::Application.routes.draw do
   get "tutorial" => "static_pages#tutorial", :as => "tutorial"
 
   resources :comments
-
-
   resources :relationship_types
-
-
   resources :rel_cat_assigns
-
-
   resources :relationship_categories
-
-
   resources :group_cat_assigns
-
-
   resources :group_categories
-
-
   resources :flags
+  resources :password_resets  
 
 
   get "sign_in" => "sessions#new", :as => "sign_in"
