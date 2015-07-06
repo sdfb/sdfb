@@ -2,10 +2,11 @@
 <html>
 <head>
   <title>Six Degrees of Francis Bacon</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.5/d3.min.js" charset="utf-8"></script>
   <script>
   	window.gon = <%= @data.to_json.html_safe %>
   </script>
-  <%= javascript_include_tag "jquery-2.1.1.min", "jquery-ui.min", "jquery-impromptu.min.js", "landing", "insights.standalone", "script",  "pace.min", "typeahead",  "accordion",  "bootstrap.min", "autocomplete-rails", "display" %>
+  <%= javascript_include_tag "jquery-2.1.1.min", "jquery-ui.min", "jquery-impromptu.min.js", "landing", "insights.standalone", "script",  "pace.min", "typeahead",  "accordion",  "bootstrap.min", "autocomplete-rails", "d3", "display" %>
 
   <%= stylesheet_link_tag "landing", "accordion", "jquery-ui.min", "bootstrap_and_overrides", "style", "insights.standalone.css" %>
   <%= csrf_meta_tags %>

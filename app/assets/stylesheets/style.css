@@ -476,14 +476,15 @@ a:hover {
   width: 0;
   height: 0;
   border-bottom: 100px solid red;
-  border-right: 100px solid transparent;
+  border-left: 100px solid transparent;
   bottom: 0;
   position:fixed;
+  right:0;
 
 }
 
 .beta-triangle{
- left: 0px;
+ right: 0px;
  bottom: 5px;
  color: #ffffff;
  position:fixed;

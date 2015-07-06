@@ -8,7 +8,7 @@ Sdfb::Application.configure do
   config.eager_load = true
   config.assets.js_compressor = :uglifier
 
-  config.cache_classes = true
+  config.cache_classes = false
 
   # Log error messages when you accidentally call methods on nil.
   config.whiny_nils = true
@@ -38,7 +38,7 @@ Sdfb::Application.configure do
   config.serve_static_assets = false
 
   # Expands the lines which load the assets
-  config.assets.debug = false
+  config.assets.debug = true
 
   # Precompile additional assets (application.js, application.css, and all non-JS/CSS are already added)
   config.assets.precompile += %w( jquery-2.1.1.min jquery-impromptu.min.js jquery-ui.min.js accordion.js autocomplete-rails.js bootstrap.min display.js insights.standalone.js script.js pace.js typeahead.js )
@@ -48,4 +48,29 @@ Sdfb::Application.configure do
 
   # # Generate digests for assets URLs
   # config.assets.digest = true
+
+
+  #Mail settings for SDFB2
+  #ActionMailer::Base.smtp_settings = {
+  #  :user_name => 'app35236337@heroku.com',
+  #  :password => '3irsljgy5593',
+  #  :domain => 'sdfb2.herokuapp.com',
+  #  :address => 'smtp.sendgrid.net',
+  #  :port => 587,
+  #  :authentication => :plain,
+  #  :enable_starttls_auto => true
+  #}
+#config.action_mailer.default_url_options = { :host =>  "sdfb2.herokuapp.com" }  
+
+  ActionMailer::Base.smtp_settings = {
+    :user_name => 'app32983575@heroku.com',
+    :password => 'ivu6mhmu4416',
+    :domain => 'sixdegfrancisbacon.herokuapp.com',
+    :address => 'smtp.sendgrid.net',
+    :port => 587,
+    :authentication => :plain,
+    :enable_starttls_auto => true
+  }
+  config.action_mailer.default_url_options = { :host =>  "sixdegfrancisbacon.herokuapp.com" }  
+
 end

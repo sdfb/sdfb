@@ -11,10 +11,16 @@
 			    <%= label_tag :password %>
 			    <%= password_field_tag :password %>
 			  </p>
-
+			  <p>
+			    <%= label_tag :remember_me %>  
+			    <%= check_box_tag :remember_me, 1, params[:remember_me] %>  
+			  </p>
+			<h2>Password security has been updated, please reset password if unable to login</h2>
 			  <button type="submit" class="btn btn-primary">Sign in</button>
 			<% end %>
-
+			  <b>Forgot Password?</b>
+			  <%= link_to "Reset Password",  new_password_reset_path %>
+			  <br>
 			  <b>Don't have an account?</b>
 			  <%= link_to 'Sign up', new_user_path %>
 			  <br><br>

@@ -219,3 +219,16 @@ label {
   font-size: 12px !important;
   padding-top: 10px;
 }
+
+.alert{
+  margin-bottom:0px;
+  position: relative;
+  float: left;
+  width: 100%;
+  z-index: 10;
+}
+
+.alert .close{
+  float:left;
+  right:0px;
+}

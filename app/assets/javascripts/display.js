@@ -81,6 +81,7 @@ function twoDegs(id, id2, people) {
   var keys = {};
   var edges = [];
   var nodes = [];
+
   function createGraph(id, people) {
     var p = people[id];
     $.each(p.rel_sum, function(index, value) { 
@@ -102,6 +103,7 @@ function twoDegs(id, id2, people) {
     //adds main person's id referenced to keys associative array. Keys represent all data in graph
     keys[id] = {"text": p["display_name"], "size": 30, "id": id,  "cluster": getClusterRels(p["rel_sum"])}; 
   }
+
   createGraph(id, people);
   if (id2 != 0 && id2 != ""){
       createGraph(id2, people);
@@ -148,6 +150,7 @@ function twoDegs(id, id2, people) {
           });  
         accordion("edge");
     });
+
     graph.tooltip("<div class='btn' >"+"{{text}}" + "</div>");
 
     $('#zoom button.icon').click(function(e){
