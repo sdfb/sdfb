@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150428042348) do
+ActiveRecord::Schema.define(version: 20150706053300) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -209,7 +209,6 @@ ActiveRecord::Schema.define(version: 20150428042348) do
     t.string   "start_date_type"
     t.string   "end_date_type"
     t.text     "type_certainty_list",      default: "--- []\n"
-    t.integer  "max_user_rel_edit"
     t.text     "last_edit",                default: "--- []\n"
   end
 
@@ -271,6 +270,7 @@ ActiveRecord::Schema.define(version: 20150428042348) do
     t.string   "start_date_type"
     t.string   "end_date_type"
     t.text     "last_edit",            default: "--- []\n"
+    t.boolean  "is_locked",            default: false
   end
 
   create_table "users", force: true do |t|

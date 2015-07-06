@@ -140,6 +140,26 @@ rake db:populate_rel_start_end_date_100150001_100160000
 rake db:populate_rel_start_end_date_100160001_100170000
 rake db:populate_rel_start_end_date_100170001_100180000
 
+## Populate the first met records. You don't have to do this if you populated the relationships or start and end dates after July 6th
+rake db:populate_rel_met_record_100000001_100010000
+rake db:populate_rel_met_record_100010001_100020000
+rake db:populate_rel_met_record_100020001_100030000
+rake db:populate_rel_met_record_100030001_100040000
+rake db:populate_rel_met_record_100040001_100050000
+rake db:populate_rel_met_record_100050001_100060000
+rake db:populate_rel_met_record_100060001_100070000
+rake db:populate_rel_met_record_100070001_100080000
+rake db:populate_rel_met_record_100080001_100090000
+rake db:populate_rel_met_record_100090001_100100000
+rake db:populate_rel_met_record_100100001_100110000
+rake db:populate_rel_met_record_100110001_100120000
+rake db:populate_rel_met_record_100120001_100130000
+rake db:populate_rel_met_record_100130001_100140000
+rake db:populate_rel_met_record_100140001_100150000
+rake db:populate_rel_met_record_100150001_100160000
+rake db:populate_rel_met_record_100160001_100170000
+rake db:populate_rel_met_record_100170001_100180000
+
 ## IMPORTANT NOTES ON POPULATING:
 1. You must only run the following if updating people populated prior to March 12, 2015
     rake db:populate_rel_sum

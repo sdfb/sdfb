@@ -7,7 +7,7 @@
         <th>SDFB Relationship Type Assign. ID</th>
         <th>Relationship Type</th>
         <th>Certainty</th>
-        <th><%=t '.actions', :default => t("helpers.actions") %></th>
+        <th>Actions</th>
       </tr>
     </thead>
     <tbody>
@@ -20,9 +20,11 @@
             <% if can? :show, user_rel_contrib %>
               <%= link_to 'Show', user_rel_contrib, :class => 'btn btn-mini' %>
             <% end %>
-            <% if can? :update, user_rel_contrib %>
-              <%= link_to t('.edit', :default => t("helpers.links.edit")),
-                        edit_user_rel_contrib_path(user_rel_contrib), :class => 'btn btn-mini' %>
+            <% if user_rel_contrib.is_locked == false %>
+              <% if can? :update, user_rel_contrib %>
+                <%= link_to t('.edit', :default => t("helpers.links.edit")),
+                          edit_user_rel_contrib_path(user_rel_contrib), :class => 'btn btn-mini' %>
+              <% end %>
             <% end %>
           </td>
         </tr>

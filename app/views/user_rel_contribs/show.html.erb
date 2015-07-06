@@ -9,9 +9,11 @@
   <div class="span5">
     <div class="well">
       <h2>Information
-        <% if can? :update, @user_rel_contrib %> 
-        <%= link_to t('.edit', :default => t("helpers.links.edit")),
-                  edit_user_rel_contrib_path(@user_rel_contrib), :class => 'btn btn-mini' %>
+        <% if @user_rel_contrib.is_locked == false %>
+          <% if can? :update, @user_rel_contrib %> 
+          <%= link_to t('.edit', :default => t("helpers.links.edit")),
+                    edit_user_rel_contrib_path(@user_rel_contrib), :class => 'btn btn-mini' %>
+          <% end %>
         <% end %>
       </h2>
       <br>
@@ -104,9 +106,11 @@
         <dt><strong>Created:</strong></dt>
         <dd><%= @user_rel_contrib.created_at.strftime("%m/%d/%Y") %> by <%= link_to User.find(@user_rel_contrib.created_by).username,  user_path(@user_rel_contrib.created_by) %></dd>
         <% @last_edit = @user_rel_contrib.last_edit %>
-        <% if ! @last_edit.blank? %>
-          <dt><strong>Last Edit:</strong></dt>
-          <dd><%= @last_edit[1].strftime("%m/%d/%Y")%> by <%= link_to User.find(@last_edit[0]).username,  user_path(@last_edit[0]) %></dd>
+        <% if @last_edit[0] != 0 %>
+          <% if ! @last_edit[0].nil? %>    
+            <dt><strong>Last Edit:</strong></dt>
+            <dd><%= @last_edit[1].strftime("%m/%d/%Y")%> by <%= link_to User.find(@last_edit[0]).username,  user_path(@last_edit[0]) %></dd>
+          <% end %>
         <% end %>
         <% if (! current_user.blank?) && ((current_user.user_type == "Admin") || (current_user.user_type == "Curator")) %>
             <dt><strong>Is Approved?:</strong></dt>
@@ -123,6 +127,8 @@
           <dd><%= @user_rel_contrib.is_active %></dd>
           <dt><strong>Is Rejected:</strong></dt>
           <dd><%= @user_rel_contrib.is_rejected %></dd>
+          <dt>Is Locked:</dt>
+          <dd><%= @user_rel_contrib.is_locked %></dd>
         <% end %>
       </dl>
 

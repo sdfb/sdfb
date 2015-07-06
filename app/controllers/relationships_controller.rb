@@ -29,6 +29,7 @@ class RelationshipsController < ApplicationController
   def show
     @relationship = Relationship.find(params[:id])
     @user_rel_contribs = UserRelContrib.all_approved.all_for_relationship(params[:id]).highest_certainty.paginate(:page => params[:user_rel_contribs_page]).per_page(30)
+    @user_rel_contribs_averages = UserRelContrib.all_approved.all_averages_for_relationship(params[:id])
 
     respond_to do |format|
       format.html # show.html.erb
