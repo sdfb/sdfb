@@ -71,8 +71,6 @@ class UserRelContrib < ActiveRecord::Base
   before_create :check_if_approved
   after_create :update_type_list_max_certainty_on_rel
   after_update :update_type_list_max_certainty_on_rel
-  ##after_create :create_relationship_types_list ##
-  ##after_update :create_relationship_types_list
   before_create :create_start_and_end_date
   before_update :create_start_and_end_date
 
@@ -201,25 +199,6 @@ class UserRelContrib < ActiveRecord::Base
       self.end_date_type = new_end_year_type
     end
   end
-
-  #don't use this anymore
-  #This creates a new relationship types list, a 2d array with each realtionship type like [type name, certainty, start_year, end_year]
-  # def create_relationship_types_list
-  #   #find all approved user_rel_contribs for that relationship
-  #   updated_rel_types_list = []
-  #   UserRelContrib.all_approved.all_for_relationship(self.relationship_id).each do | urc |
-  #     if ((urc.is_approved == true) && (urc.is_active == true))
-  #       user_rel_contrib_record = []
-  #       user_rel_contrib_record.push(RelationshipType.find(urc.relationship_type_id).name)
-  #       user_rel_contrib_record.push(urc.certainty)
-  #       user_rel_contrib_record.push(urc.start_year)
-  #       user_rel_contrib_record.push(urc.end_year)
-  #     end
-  #     updated_rel_types_list.push(user_rel_contrib_record)
-  #   end
-
-  #   Relationship.update(self.relationship_id, types_list: updated_rel_types_list)
-  # end
 
   def update_approved
     #update approve_by

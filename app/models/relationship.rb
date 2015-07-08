@@ -2,11 +2,10 @@ class Relationship < ActiveRecord::Base
   attr_accessible :max_certainty, :created_by, :original_certainty, :person1_index, :person2_index,
   :justification, :approved_by, :approved_on, :created_at, :edge_birthdate_certainty,
   :is_approved, :start_year, :start_month, :start_day, :end_year, :end_month, :end_day,
-  :is_active, :is_rejected, :person1_autocomplete, :person2_autocomplete, :types_list,
+  :is_active, :is_rejected, :person1_autocomplete, :person2_autocomplete,
   :start_date_type, :end_date_type, :type_certainty_list, :last_edit
-  serialize :types_list,Array
-  # The type certainty list is a 2d array that includes the relationship type assignment id 
-  # and the relationship certainty for that relationship type
+  # The type certainty list is a 2d array that includes the relationship type id in the 0 index, 
+  #  ...the average certainty of all relationship assignments with that relationship type, and the relationship type name
   serialize :type_certainty_list,Array
   serialize :last_edit,Array
 
@@ -80,18 +79,18 @@ class Relationship < ActiveRecord::Base
   # Callbacks
   # -----------------------------
   before_create :init_array 
-  before_create :max_certainty_on_create
   before_create :create_start_and_end_date
   before_create :check_if_approved
   before_create :check_if_valid
+  before_create :create_max_certainty_type_list
 
   before_update :update_type_list_max_certainty_on_rel
   before_update :create_start_and_end_date
   before_update :update_peoples_rel_sum
   before_update :check_if_approved_and_update_edit
 
-  after_create :create_peoples_rel_sum
   after_create :create_met_record
+  after_create :create_peoples_rel_sum
   after_update :edit_met_record
 
 	# Custom Methods
@@ -115,6 +114,27 @@ class Relationship < ActiveRecord::Base
       u.approved_on = Time.now
       u.save!
     end
+  end
+
+  def create_max_certainty_type_list
+    self.max_certainty = self.original_certainty
+
+    # # find averages by relationship type
+    # averages_by_rel_type = UserRelContrib.all_approved.all_averages_for_relationship(self.id)
+
+    # # update the certainty list with the new array of all averages by relationship type
+    # # create the array includes the relationship type id, the average certainty for that relationship type, and the relationship type name
+    # averages_by_rel_type_array = averages_by_rel_type.map { |e| [e.relationship_type_id, e.avg_certainty.to_f, RelationshipType.find(e.relationship_type_id).name] }
+
+    # # update the relationships certainty list and max certainty
+    # self.type_certainty_list = averages_by_rel_type_array
+    averages_by_rel_type = []
+    new_rel_type_record = []
+    new_rel_type_record.push(4)
+    new_rel_type_record.push(self.original_certainty.to_f)
+    new_rel_type_record.push("Met")
+    averages_by_rel_type.push(new_rel_type_record)
+    self.type_certainty_list = averages_by_rel_type
   end
 
   def edit_met_record
@@ -261,10 +281,6 @@ class Relationship < ActiveRecord::Base
 
   def end_year_present?
     ! self.end_year.nil?
-  end
-
-  def max_certainty_on_create
-    self.max_certainty = self.original_certainty
   end
 
   def get_both_names
