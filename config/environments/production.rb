@@ -18,7 +18,7 @@ Sdfb::Application.configure do
   config.action_controller.perform_caching = true
 
   # Don't care if the mailer can't send
-  config.action_mailer.raise_delivery_errors = false
+  config.action_mailer.raise  _delivery_errors = false
 
   # Print deprecation notices to the Rails logger
   config.active_support.deprecation = :log
@@ -37,7 +37,7 @@ Sdfb::Application.configure do
   config.assets.enabled = true
   config.assets.compress = true
   config.serve_static_assets = true
-  config.assets.compile = false
+  config.assets.compile = true
   config.assets.digest = true
   # Expands the lines which load the assets
   config.assets.debug = false
