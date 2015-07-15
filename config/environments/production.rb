@@ -36,9 +36,9 @@ Sdfb::Application.configure do
   # Do not compress 
   config.assets.enabled = true
   config.assets.compress = true
-  config.serve_static_assets = true
-  config.assets.compile = true
-  config.assets.digest = true
+  config.serve_static_files = true
+  config.assets.compile = false
+  config.assets.digest = false
   # Expands the lines which load the assets
   config.assets.debug = false
 
