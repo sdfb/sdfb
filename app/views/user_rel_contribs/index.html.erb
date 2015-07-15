@@ -7,6 +7,10 @@
         <th>SDFB Relationship Type Assign. ID</th>
         <th>Relationship Type</th>
         <th>Certainty</th>
+        <th>Start Date Type</th>
+        <th>Start Date</th>
+        <th>End Date Type</th>
+        <th>End Date</th>
         <th>Actions</th>
       </tr>
     </thead>
@@ -16,6 +20,75 @@
           <td><%= user_rel_contrib.id %></td>
           <td><%= user_rel_contrib.get_person1_name %> <%= link_to RelationshipType.find(user_rel_contrib.relationship_type_id).name, relationship_type_path(user_rel_contrib.relationship_type_id) %> <%= user_rel_contrib.get_person2_name %></td>
           <td><%= user_rel_contrib.certainty %>%</td>
+          <td>
+          <% if ! user_rel_contrib.start_date_type.blank? %>
+              <% if user_rel_contrib.start_date_type == "BF" %>
+                Before
+              <% elsif user_rel_contrib.start_date_type == "AF" %>
+                After
+              <% elsif user_rel_contrib.start_date_type == "IN" %>
+                In
+              <% elsif user_rel_contrib.start_date_type == "CA" %>
+                Circa
+              <% elsif user_rel_contrib.start_date_type == "BF/IN" %>
+                Before or In
+              <% elsif user_rel_contrib.start_date_type == "AF/IN" %>
+                After or In
+              <% end %>   
+            <% else %>
+              Unknown
+            <% end %>
+          </td>
+          <td>
+            <% if ((! user_rel_contrib.start_month.blank?) || (! user_rel_contrib.start_day.blank?) || (! user_rel_contrib.start_year.blank?)) %>
+              <% if ! user_rel_contrib.start_month.blank? %>
+                <%= user_rel_contrib.start_month %>
+              <% end %>  
+              <% if ! user_rel_contrib.start_day.blank? %>
+                <%= user_rel_contrib.start_day %>,
+              <% end %>
+              <% if ! user_rel_contrib.start_year.blank? %>
+                <%= user_rel_contrib.start_year %>
+              <% end %>
+            <% else %>
+              Unknown
+            <% end %>
+          </td>
+          <td>
+            <% if ! user_rel_contrib.end_date_type.blank? %> 
+                <% if user_rel_contrib.end_date_type == "BF" %>
+                  Before
+                <% elsif user_rel_contrib.end_date_type == "AF" %>
+                  After
+                <% elsif user_rel_contrib.end_date_type == "IN" %>
+                  In
+                <% elsif user_rel_contrib.end_date_type == "CA" %>
+                  Circa
+                <% elsif user_rel_contrib.end_date_type == "BF/IN" %>
+                  Before or In
+                <% elsif user_rel_contrib.end_date_type == "AF/IN" %>
+                  After or In
+                <% end %>
+                <% else %>
+              <dd>Unknown</dd>
+            <% end %>
+          </td>
+          
+          <td>
+            <% if ((! user_rel_contrib.end_month.blank?) || (! user_rel_contrib.end_day.blank?) || (! user_rel_contrib.end_year.blank?)) %>
+            <% if ! user_rel_contrib.end_month.blank? %>
+              <%= user_rel_contrib.end_month %>
+            <% end %>  
+            <% if ! user_rel_contrib.end_day.blank? %>
+              <%= user_rel_contrib.end_day %>,
+            <% end %>
+            <% if ! user_rel_contrib.end_year.blank? %>
+              <%= user_rel_contrib.end_year %>
+            <% end %>
+            <% else %>
+              Unknown
+            <% end %>
+          </td>
           <td>
             <% if can? :show, user_rel_contrib %>
               <%= link_to 'Show', user_rel_contrib, :class => 'btn btn-mini' %>

@@ -37,6 +37,8 @@ class UserPersonContrib < ActiveRecord::Base
   before_create :init_array
   before_create :check_if_approved
   before_update :check_if_approved_and_update_edit
+  before_update :remove_trailing_spaces
+  before_create :remove_trailing_spaces
 
   # Custom Methods
   # -----------------------------
@@ -64,6 +66,15 @@ class UserPersonContrib < ActiveRecord::Base
       self.approved_by = nil
       self.approved_on = nil
     end  
+  end
+  
+  def remove_trailing_spaces
+    if ! self.annotation.nil?
+      self.annotation.strip!
+    end
+    if ! self.bibliography.nil?
+      self.bibliography.strip!
+    end
   end
 
   def annot_present?

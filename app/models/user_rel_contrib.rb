@@ -73,6 +73,8 @@ class UserRelContrib < ActiveRecord::Base
   after_update :update_type_list_max_certainty_on_rel
   before_create :create_start_and_end_date
   before_update :create_start_and_end_date
+  before_update :remove_trailing_spaces
+  before_create :remove_trailing_spaces
 
   # Custom Methods
   # -----------------------------
@@ -285,6 +287,15 @@ class UserRelContrib < ActiveRecord::Base
       return User.find(created_by).first_name + " " + User.find(created_by).last_name
     else
       return "ODNB"
+    end
+  end
+
+  def remove_trailing_spaces
+    if ! self.annotation.nil?
+      self.annotation.strip!
+    end
+    if ! self.bibliography.nil?
+      self.bibliography.strip!
     end
   end
 

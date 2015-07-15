@@ -20,9 +20,11 @@
         <dd><%= @relationship_type.id %></dd>
         <dt><strong>Relationship Type Name:</strong></dt>
         <dd><%= @relationship_type.name %></dd>
+        <dt><strong>Description:</strong></dt>
         <% if ! @relationship_type.description.blank? %>
-          <dt><strong>Description:</strong></dt>
           <dd><%= @relationship_type.description %></dd>
+        <% else %>
+          <dd>No description provided.</dd>
         <% end %>
         <% if ! @relationship_type.relationship_type_inverse.blank? %>
           <dt><strong>Relationship Type Inverse:</strong></dt>

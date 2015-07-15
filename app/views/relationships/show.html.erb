@@ -29,8 +29,8 @@
         <dd><%= link_to person1_name,  person_path(@relationship.person1_index) %></dd>
         <dt><strong>Person 2:</strong></dt>
         <dd><%= link_to person2_name,  person_path(@relationship.person2_index) %></dd>
+        <dt><strong>Start Date Type:</strong></dt>
         <% if ! @relationship.start_date_type.blank? %>
-          <dt><strong>Start Date Type:</strong></dt>
           <dd>
             <% if @relationship.start_date_type == "BF" %>
               <dd>Before</dd>
@@ -46,6 +46,8 @@
               <dd>After or In</dd>
             <% end %>
           </dd>
+        <% else %>
+          <dd>Unknown</dd>
         <% end %>
         <% if ((! @relationship.start_month.blank?) || (! @relationship.start_day.blank?) || (! @relationship.start_year.blank?)) %>
           <dt><strong>Start Date:</strong></dt>
@@ -62,8 +64,8 @@
           <dt><strong>Start Date:</strong></dt>
           <dd>Unknown</dd>
         <% end %>
-        <% if ! @relationship.end_date_type.blank? %>
-          <dt><strong>End Date Type:</strong></dt>
+        <dt><strong>End Date Type:</strong></dt>
+        <% if ! @relationship.end_date_type.blank? %> 
           <dd>
             <% if @relationship.end_date_type == "BF" %>
               <dd>Before</dd>
@@ -79,6 +81,8 @@
               <dd>After or In</dd>
             <% end %>
           </dd>
+        <% else %>
+          <dd>Unknown</dd>
         <% end %>
         <% if ((! @relationship.end_month.blank?) || (! @relationship.end_day.blank?) || (! @relationship.end_year.blank?)) %>
           <dt><strong>End Date:</strong></dt>
@@ -96,8 +100,6 @@
           <dd>Unknown</dd>
         <% end %>
         <% if (! current_user.blank?) && ((current_user.user_type == "Admin") || (current_user.user_type == "Curator")) %>
-          <dt><strong>Certainty Type List:</strong></dt>
-          <dd><%= @relationship.type_certainty_list %></dd>
           <dt><strong>Created:</strong></dt>
           <dd><%= @relationship.created_at.strftime("%m/%d/%Y") %> by <%= link_to User.find(@relationship.created_by).username,  user_path(@relationship.created_by) %></dd>
           <% @last_edit = @relationship.last_edit %>
@@ -140,38 +142,109 @@
       <h2>Relationship Types for <%= @relationship.get_person1_name + " & " + @relationship.get_person2_name%> <%= link_to 'Assign New Relationship Type',
                   new_user_rel_contrib_path(:relationship_id => @relationship.id),
                   :class => 'btn btn-primary btn-mini' %></h2>
-      <table class="table table-condensed">
-        <thead>
-          <tr>
-            <th>SDFB Assignment ID</th>
-            <th>Relationship Type</th>
-            <th>Certainty</th>
-            <th>Actions</th>
-          </tr>
-        </thead>
-        <tbody>
-          <% @user_rel_contribs.each do |user_rel_contrib| %>
+        <table class="table table-condensed">
+          <thead>
             <tr>
-              <td><%= user_rel_contrib.id %></td>
-              <td><%= person1_name %> <%= link_to RelationshipType.find(user_rel_contrib.relationship_type).name, relationship_type_path(user_rel_contrib.relationship_type) %>
-              <%= person2_name %> 
-              </td>
-              <td><%= user_rel_contrib.certainty %>%</td>
-              <td>
-                <% if can? :show, user_rel_contrib %>
-                  <%= link_to 'Show', user_rel_contrib, :class => 'btn btn-mini' %>
-                <% end %>
-                <% if user_rel_contrib.is_locked == false %>
-                  <% if can? :update, user_rel_contrib %>
-                    <%= link_to t('.edit', :default => t("helpers.links.edit")),
-                              edit_user_rel_contrib_path(user_rel_contrib), :class => 'btn btn-mini' %>
-                  <% end %>
-                <% end %>
-              </td>
+              <th>SDFB Relationship Type Assign. ID</th>
+              <th>Relationship Type</th>
+              <th>Certainty</th>
+              <th>Start Date Type</th>
+              <th>Start Date</th>
+              <th>End Date Type</th>
+              <th>End Date</th>
+              <th>Actions</th>
             </tr>
-          <% end %>
-        </tbody>
-      </table>
+          </thead>
+          <tbody>
+            <% @user_rel_contribs.each do |user_rel_contrib| %>
+              <tr>
+                <td><%= user_rel_contrib.id %></td>
+                <td><%= user_rel_contrib.get_person1_name %> <%= link_to RelationshipType.find(user_rel_contrib.relationship_type_id).name, relationship_type_path(user_rel_contrib.relationship_type_id) %> <%= user_rel_contrib.get_person2_name %></td>
+                <td><%= user_rel_contrib.certainty %>%</td>
+                <td>
+                <% if ! user_rel_contrib.start_date_type.blank? %>
+                    <% if user_rel_contrib.start_date_type == "BF" %>
+                      Before
+                    <% elsif user_rel_contrib.start_date_type == "AF" %>
+                      After
+                    <% elsif user_rel_contrib.start_date_type == "IN" %>
+                      In
+                    <% elsif user_rel_contrib.start_date_type == "CA" %>
+                      Circa
+                    <% elsif user_rel_contrib.start_date_type == "BF/IN" %>
+                      Before or In
+                    <% elsif user_rel_contrib.start_date_type == "AF/IN" %>
+                      After or In
+                    <% end %>   
+                  <% else %>
+                    Unknown
+                  <% end %>
+                </td>
+                <td>
+                  <% if ((! user_rel_contrib.start_month.blank?) || (! user_rel_contrib.start_day.blank?) || (! user_rel_contrib.start_year.blank?)) %>
+                    <% if ! user_rel_contrib.start_month.blank? %>
+                      <%= user_rel_contrib.start_month %>
+                    <% end %>  
+                    <% if ! user_rel_contrib.start_day.blank? %>
+                      <%= user_rel_contrib.start_day %>,
+                    <% end %>
+                    <% if ! user_rel_contrib.start_year.blank? %>
+                      <%= user_rel_contrib.start_year %>
+                    <% end %>
+                  <% else %>
+                    Unknown
+                  <% end %>
+                </td>
+                <td>
+                  <% if ! user_rel_contrib.end_date_type.blank? %> 
+                      <% if user_rel_contrib.end_date_type == "BF" %>
+                        Before
+                      <% elsif user_rel_contrib.end_date_type == "AF" %>
+                        After
+                      <% elsif user_rel_contrib.end_date_type == "IN" %>
+                        In
+                      <% elsif user_rel_contrib.end_date_type == "CA" %>
+                        Circa
+                      <% elsif user_rel_contrib.end_date_type == "BF/IN" %>
+                        Before or In
+                      <% elsif user_rel_contrib.end_date_type == "AF/IN" %>
+                        After or In
+                      <% end %>
+                      <% else %>
+                    <dd>Unknown</dd>
+                  <% end %>
+                </td>
+                
+                <td>
+                  <% if ((! user_rel_contrib.end_month.blank?) || (! user_rel_contrib.end_day.blank?) || (! user_rel_contrib.end_year.blank?)) %>
+                  <% if ! user_rel_contrib.end_month.blank? %>
+                    <%= user_rel_contrib.end_month %>
+                  <% end %>  
+                  <% if ! user_rel_contrib.end_day.blank? %>
+                    <%= user_rel_contrib.end_day %>,
+                  <% end %>
+                  <% if ! user_rel_contrib.end_year.blank? %>
+                    <%= user_rel_contrib.end_year %>
+                  <% end %>
+                  <% else %>
+                    Unknown
+                  <% end %>
+                </td>
+                <td>
+                  <% if can? :show, user_rel_contrib %>
+                    <%= link_to 'Show', user_rel_contrib, :class => 'btn btn-mini' %>
+                  <% end %>
+                  <% if user_rel_contrib.is_locked == false %>
+                    <% if can? :update, user_rel_contrib %>
+                      <%= link_to t('.edit', :default => t("helpers.links.edit")),
+                                edit_user_rel_contrib_path(user_rel_contrib), :class => 'btn btn-mini' %>
+                    <% end %>
+                  <% end %>
+                </td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
 
       <%= will_paginate @user_rel_contribs, :param_name => 'user_rel_contribs_page', :previous_label => "Previous&nbsp;", :next_label => "&nbsp;Next" %>
 
