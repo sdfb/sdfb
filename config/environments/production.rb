@@ -35,13 +35,15 @@ Sdfb::Application.configure do
 
   # Do not compress assets
   config.assets.compress = true
-  config.serve_static_assets = false
-
+  config.serve_static_assets = true
+  config.cache_classes = true
+  config.assets.compile = false
+  config.assets.digest = true
   # Expands the lines which load the assets
-  config.assets.debug = true
+  config.assets.debug = false
 
   # Precompile additional assets (application.js, application.css, and all non-JS/CSS are already added)
-  config.assets.precompile += %w( jquery-2.1.1.min jquery-impromptu.min.js jquery-ui.min.js accordion.js autocomplete-rails.js bootstrap.min display.js insights.standalone.js script.js pace.js typeahead.js )
+  # config.assets.precompile += %w( jquery-2.1.1.min jquery-impromptu.min.js jquery-ui.min.js accordion.js autocomplete-rails.js bootstrap.min display.js insights.standalone.js script.js pace.js typeahead.js )
 
   # # Don't fallback to assets pipeline if a precompiled asset is missed
   # config.assets.compile = false
