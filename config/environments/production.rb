@@ -39,6 +39,7 @@ Sdfb::Application.configure do
   config.serve_static_files = true
   config.assets.compile = true
   config.assets.digest = false
+  config.action_dispatch.x_sendfile_header = ‘X-Accel-Redirect’
   # Expands the lines which load the assets
   config.assets.debug = false
 
