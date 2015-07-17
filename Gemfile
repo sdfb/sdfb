@@ -10,7 +10,7 @@ gem 'rails', '4.1.8'
 
 # gem "less-rails" #Sprockets (what Rails 3.1 uses for its asset pipeline) supports LESS
 
-gem ‘rails_12factor’, group: :production
+gem 'rails_12factor', group: :production
 
 gem 'will_paginate'
 gem 'simple_form'

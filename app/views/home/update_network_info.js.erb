@@ -12,6 +12,14 @@ var target = "<%= @target_name%>".replace(/&amp;/g, '&')
                                 .replace(/&#x27;/g, '\'')
                                 .replace(/&#039;/g, "'");
 
+var typelist = JSON.parse("<%= @network_info_types_list %>".replace(/&amp;/g, '&')
+                                                          .replace(/&lt;/g, '<')
+                                                          .replace(/&gt;/g, '>')
+                                                          .replace(/&quot;/g, '"')
+                                                          .replace(/&#x27;/g, '\'')
+                                                          .replace(/&#039;/g, "'"));                                
+
+
   $("#edge-nodes").html(source + " & " + target);
   $("#edge-confidence").html("<%= @network_info_confidence %>" + "%");
   $("#edge-discussion").attr("href", "/relationships/" + "<%= @network_info_id %>" );
@@ -20,3 +28,11 @@ var target = "<%= @target_name%>".replace(/&amp;/g, '&')
   $("#edge-endyear").html("<%= @network_info_end_date_type %>" + " " + "<%= @network_info_end_year %>");
   $("#edge-DNBlink").attr("href", "http://www.oxforddnb.com/search/articles/?searchForm=%2Fsearch%2Ffulltext%2Findex.jsp&text1=" + target.replace(/ /g, '+') + "&textFieldLimiter1=article_text&textQualifier1=+AND+&bool1=+AND+&text2=" + source.replace(/ /g, '+') + " &textFieldLimiter2=article_text&textQualifier2=+AND+&bool2=+AND+&text3=&textFieldLimiter3=article_text&textQualifier3=EXACT&search=Search");
   $("#edge-GoogleLink").attr("href", "http://www.google.com/search?q="+ source.replace(/ /g, '+')+ "+" + target.replace(/ /g, '+'));
+  $.each( typelist, function( key, value ) {
+    $( "#relationship-table" ).append('<div class="relationship-row">' +
+                                      '<div class="relationship-type relationship-cell">' + value [2] +'</div>' +
+                                      '<div class="relationship-from relationship-cell">' + '<%= @source_id %>' + '</div>' +
+                                      '<div class="relationship-to relationship-cell">' + '<%= @target_id %>' + '</div>' +
+                                      '<div class="relationship-confidence relationship-cell">' + value [1] +'%</div>' +
+                                      '</div>' );
+  });
