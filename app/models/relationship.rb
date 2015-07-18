@@ -31,7 +31,7 @@ class Relationship < ActiveRecord::Base
   validates_inclusion_of :start_date_type, :in => DATE_TYPE_LIST, :if => :start_year_present?
   ## end date type is one included in the list
   validates_inclusion_of :end_date_type, :in => DATE_TYPE_LIST, :if => :end_year_present?
-  # custom validation that checks that start year is between or equal to 1500 and 1700 unless the people's birth years are outside of the date range
+  # custom validation that checks that start year and end years
   validate :create_check_start_and_end_date
 
   # Scope
@@ -192,7 +192,7 @@ class Relationship < ActiveRecord::Base
 
       #first make sure that the end year comes before the start year
       if self.start_year.to_i > self.end_year.to_i
-        errors.add(:start_year, "The start year must less than or equal to the end year")
+        errors.add(:start_year, "The start year must be less than or equal to the end year")
         errors.add(:end_year, "The end year must be greater than or equal to the start year")
       else
         # if start year is outside of the date range, check that there is 

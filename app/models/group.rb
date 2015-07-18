@@ -26,10 +26,11 @@ class Group < ActiveRecord::Base
   validates_length_of :name, :minimum => 3
   ## approved_on must occur on the same date or after the created at date
   #validates_date :approved_on, :on_or_after => :created_at, :message => "This group must be approved on or after the date it was created."
-  validates :start_year, :numericality => { :greater_than_or_equal_to => 1400 }, :if => :start_year_present?
-  validates :start_year, :numericality => { :less_than_or_equal_to => 1800 }, :if => :start_year_present?
-  validates :end_year, :numericality => { :greater_than_or_equal_to => 1400 }, :if => :end_year_present?
-  validates :end_year, :numericality => { :less_than_or_equal_to => 1800 }, :if => :end_year_present?
+  # validates :start_year, :numericality => { :greater_than_or_equal_to => 1400 }, :if => :start_year_present?
+  # validates :start_year, :numericality => { :less_than_or_equal_to => 1800 }, :if => :start_year_present?
+  # validates :end_year, :numericality => { :greater_than_or_equal_to => 1400 }, :if => :end_year_present?
+  # validates :end_year, :numericality => { :less_than_or_equal_to => 1800 }, :if => :end_year_present?
+  validate :create_check_start_and_end_date
   ## start date type is one included in the list
   validates_inclusion_of :start_date_type, :in => DATE_TYPE_LIST, :if => :start_year_present?
   ## end date type is one included in the list
@@ -55,28 +56,63 @@ class Group < ActiveRecord::Base
   before_create :init_array
   before_create :check_if_approved
   before_update :check_if_approved_and_update_edit
-  before_create :create_start_and_end_date
-  before_update :create_start_and_end_date
+  before_create :create_check_start_and_end_date
+  before_update :create_check_start_and_end_date
 
   # Custom Methods
   # -----------------------------
-  def create_start_and_end_date
-    if (start_year.blank?)
-      self.start_year = 1500
-      self.start_date_type = "CA"
-    end
+
+  # checks that end year is on or after start year and that start 
+  # and end years meet min_year and max_year rules
+  def create_check_start_and_end_date
+    # defining the min and max years
+    min_year = 1500
+    max_year = 1700
+
+    # add a start date type if there is none
     if (start_date_type.blank?)
-      self.start_date_type = "CA"
+      self.start_date_type = "IN"
     end
-    if (end_year.blank?)
-      self.end_year = 1700
-      self.end_date_type = "CA"
-    end   
+
+    # add an end date type if there is none
     if (end_date_type.blank?)
+      self.end_date_type = "IN"
+    end
+
+    # if the start year converted to an integer is 0 then the date was not an integer
+    if (self.start_year.to_i == 0)
+      errors.add(:start_year, "Please enter a valid start year.")
+    end
+
+    # if the end year converted to an integer is 0 then the date was not an integer
+    if (self.end_year.to_i == 0)
+      errors.add(:end_year, "Please enter a valid end year.")
+    end
+
+    # add a start year if there isn't one, check if follows rules
+    if (start_year.blank?)
+      self.start_year = min_year
+      self.start_date_type = "CA"
+    # if there is already a start year, check that start year is before max_year or throw error
+    elsif (self.start_year.to_i > max_year)
+      errors.add(:start_year, "The start year must be before #{max_year}")
+    end
+
+    # add an end year if there isn't one, check if follows rules
+    if (end_year.blank?)
+      self.end_year = max_year
       self.end_date_type = "CA"
+    # if there is already a end year, check that end year is after min_year or throw error
+    elsif (self.end_year.to_i < min_year)
+      errors.add(:end_year, "The end year must be after #{min_year}")
+    end   
+
+    # check that start year is equal to or before end year
+    if (self.start_year.to_i > self.end_year.to_i)
+      errors.add(:start_year, "The start year must be less than or equal to the end year")
+      errors.add(:end_year, "The end year must be greater than or equal to the start year")
     end
   end
-
 
   def init_array
     self.person_list = nil
