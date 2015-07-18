@@ -134,22 +134,6 @@ function twoDegs(id, id2, people) {
           });  
       accordion("node");
     });
-
-    graph.on("node:dblclick", function(d) {
-      // console.log(d);
-      // $.ajax({
-      //       type: "GET",
-      //       url:    "/node_info", // should be mapped in routes.rb
-      //       data: {node_id:d.id},
-      //       datatype:"html", // check more option
-      //       success: function(data) {
-      //                // handle response data
-      //                },
-      //       async:   true
-      //     });  
-      // //accordion("node");
-      // createGraph(d.id, people);
-    });
   
     graph.on("edge:click", function(d) {
         var id1 = parseInt(d.source.id);

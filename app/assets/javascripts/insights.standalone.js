@@ -10151,8 +10151,7 @@ Graph.prototype = {
       .attr("stroke", bind(this, this.pathStroke))
       .attr("stroke-width", PATH_STROKE_WIDTH)
       .attr("fill", "none")
-      .on("mouseout", bind(this, this.onPathOut))
-      .on("click", bind(this, this.onPathClick));
+      .on("dblclick", bind(this, this.onPathClick));
     
     var node = this.d3Nodes = this.parent.selectAll(".node")
       .data(force.nodes())
@@ -10160,12 +10159,10 @@ Graph.prototype = {
       .attr("class", "node")
       .on("mouseover", bind(this, this.onMouseOver))
       .on("mouseout", bind(this, this.onMouseOut))
-      .on("dblclick", bind(this, this.onNodeClick))
-      .on("click", bind(this, this.onCircleClick));
+      .on("dblclick", bind(this, this.onCircleClick));
 
     this.d3Circles = node.append("circle")
       .style("fill", bind(this, this.getClusterColor))
-      .style("stroke", bind(this, this.getStrokeColor))
       .attr("r", circleRadius);
 
     this.d3TitleNodes = node.append("text")
@@ -10283,31 +10280,15 @@ Graph.prototype = {
       , e = d3.event;
 
     // To avoid focusing hidden elements
-    // if (!self.isNodeVisible(d)) {
-    //   return;
-    // } else {
+    if (!self.isNodeVisible(d)) {
+      return;
+    } else {
       e.preventDefault();
       e.stopPropagation();
-    //}
+    }
 
     this.focus(d.id).update();
     this.emit("node:click", d);
-  },
-
-  onNodeClick: function(d) {
-    var self = this
-      , e = d3.event;
-
-    // To avoid focusing hidden elements
-    // if (!self.isNodeVisible(d)) {
-    //   return;
-    // } else {
-      e.preventDefault();
-      e.stopPropagation();
-    //}
-
-    this.focus(d.id).update();
-    this.emit("node:dblclick", d);
   },
 
   onPathClick: function(d) {
@@ -10327,39 +10308,6 @@ Graph.prototype = {
     this.emit("edge:click", d);
   },
 
-  onPathOver: function(d)  {
-    var self = this 
-    , e = d3.event;
-
-    // To avoid focusing hidden elements
-    if (!self.isPathVisible(d.source, d.target)) {
-      return;
-    } else {
-      e.preventDefault();
-      e.stopPropagation();
-    }
-    this.state.focused = d.source;
-    this.state.adjacents[d.target.id] = d.target;
-    this.update();
-    this.emit("edge:mouseover", d);
-  },
-
-  onPathOut: function(d) {
-    this.hideTooltip();
-
-    // if (!this.isPathVisible(d)) {
-    //   return;
-    // } 
-
-    this.emit("edge:mouseout", d);
-  },
-
-  /**
-   * Finds the first node that matches the passed fn
-   *
-   * @api private
-   */
-  
   /**
    * Handler for circle mouse over event
    *
@@ -10369,9 +10317,9 @@ Graph.prototype = {
   onMouseOver: function(d) {
     var focusedNode = this.state.focused;
 
-    // if (!this.isNodeVisible(d)) {
-    //   return;
-    // }
+    if (!this.isNodeVisible(d)) {
+      return;
+    }
 
     var offset = { 
       left: currentMousePos.x + 10, 
@@ -10391,9 +10339,9 @@ Graph.prototype = {
   onMouseOut: function(d) {
     this.hideTooltip();
 
-    // if (!this.isNodeVisible(d)) {
-    //   return;
-    // } 
+    if (!this.isNodeVisible(d)) {
+      return;
+    } 
 
     this.emit("node:mouseout", d);
   },
@@ -11203,16 +11151,6 @@ Graph.prototype = {
     }
 
     return (this.clustersObj[c] || {}).color;
-  },
-
-  getStrokeColor: function(node) {
-    var size = this.getSize(node);
-    if (size == 30) {
-      return  "#000";
-    }
-    else {
-      return "#FFF";
-    }
   },
 
   tooltip: function(tmpl) {
