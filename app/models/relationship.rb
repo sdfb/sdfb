@@ -23,29 +23,16 @@ class Relationship < ActiveRecord::Base
  	validate :check_if_valid, on: :create
   validates_presence_of :person1_index
   validates_presence_of :person2_index
-  #validates_presence_of :max_certainty
   validates_presence_of :original_certainty
   validates_presence_of :created_by
-  #validates_presence_of :approved_by
-  #validates_presence_of :approved_on
-  ## approved_on must occur on the same date or after the created at date
-  #validates_date :approved_on, :on_or_after => :created_at, :message => "This relationship must be approved on or after the date it was created."
-  ## max_certainty is less than or equal to one
-  #validates_numericality_of :max_certainty, :less_than_or_equal_to => 1
   ## justification must be at least 4 characters
   validates_length_of :justification, :minimum => 4, on: :create, :if => :just_present?
-  # edge_birthdate_certainty is one included in the list
-  ##validates_inclusion_of :edge_birthdate_certainty, :in => %w(0 1 2), :allow_blank => true
-  #validate :check_if_start_date_complete
-  #validate :check_if_end_date_complete
-  validates :start_year, :numericality => { :greater_than_or_equal_to => 1400 }, :if => :start_year_present?
-  validates :start_year, :numericality => { :less_than_or_equal_to => 1800 }, :if => :start_year_present?
-  validates :end_year, :numericality => { :greater_than_or_equal_to => 1400 }, :if => :end_year_present?
-  validates :end_year, :numericality => { :less_than_or_equal_to => 1800 }, :if => :end_year_present?
   ## start date type is one included in the list
   validates_inclusion_of :start_date_type, :in => DATE_TYPE_LIST, :if => :start_year_present?
   ## end date type is one included in the list
   validates_inclusion_of :end_date_type, :in => DATE_TYPE_LIST, :if => :end_year_present?
+  # custom validation that checks that start year is between or equal to 1500 and 1700 unless the people's birth years are outside of the date range
+  validate :create_check_start_and_end_date
 
   # Scope
   # ----------------------------- 
@@ -79,13 +66,13 @@ class Relationship < ActiveRecord::Base
   # Callbacks
   # -----------------------------
   before_create :init_array 
-  before_create :create_start_and_end_date
+  before_create :create_check_start_and_end_date
   before_create :check_if_approved
   before_create :check_if_valid
   before_create :create_max_certainty_type_list
 
   before_update :update_type_list_max_certainty_on_rel
-  before_update :create_start_and_end_date
+  before_update :create_check_start_and_end_date
   before_update :update_peoples_rel_sum
   before_update :check_if_approved_and_update_edit
 
@@ -95,6 +82,7 @@ class Relationship < ActiveRecord::Base
 
 	# Custom Methods
   # -----------------------------
+
   def init_array
     self.last_edit = nil
   end
@@ -147,17 +135,31 @@ class Relationship < ActiveRecord::Base
     end
   end
 
-  ##if a user submits a new relationship but does not include a start and end date it defaults to a start and end date based on the birth years of the people in the relationship
-  def create_start_and_end_date
-    person1_record = Person.find(self.person1_index)
-    person2_record = Person.find(self.person2_index)
-    if (! person1_record.nil?)
-      birth_year_1 = person1_record.ext_birth_year
-      death_year_1 = person1_record.ext_death_year
-    end
-    if (! person2_record.nil?)
-      birth_year_2 = person2_record.ext_birth_year
-      death_year_2 = person2_record.ext_death_year
+  ## if a user submits a new relationship but does not include a start and end date it defaults to a start and end date based on the birth years of the people in the relationship
+  ## This method also checks if the start and end date are within the defined min or max years 
+  ## If the relationship is not within the min and max years, the record will only be accepted if the people in the relationship are alive at that time
+  def create_check_start_and_end_date
+    # define defaults
+    min_year = 1100
+    max_year = 1100
+    # stores whether the there are local variables for the people birth and death years
+    retrieved_birth_death_year_flag = false
+    # stores whether the max birth year and min death year were created to avoid duplicate calculations
+    calculated_max_birth_min_death_year_flag = false
+
+    # first get people's birth and death years
+    if ((self.start_year.blank?) || (self.end_year.blank?))
+      person1_record = Person.find(self.person1_index)
+      person2_record = Person.find(self.person2_index)
+      if (! person1_record.nil?)
+        birth_year_1 = person1_record.ext_birth_year
+        death_year_1 = person1_record.ext_death_year
+      end
+      if (! person2_record.nil?)
+        birth_year_2 = person2_record.ext_birth_year
+        death_year_2 = person2_record.ext_death_year
+      end
+      retrieved_birth_death_year_flag = true
     end
 
     #Only use default start date if the user does not enter a start year
@@ -179,42 +181,136 @@ class Relationship < ActiveRecord::Base
           new_start_year = birth_year_2.to_i
         end
       else
-        ##if there is no birthdates, set start date to the default CA 1400 (around 1400)
-        new_start_year_type = "CA"
-        new_start_year = 1400
+        ##if there is no birthdates, set start date to the default after or in the min year
+        new_start_year_type = "AF/IN"
+        new_start_year = min_year
       end
-
       self.start_year = new_start_year
       self.start_date_type = new_start_year_type
+    else 
+      #if there are existing dates, check them
+
+      #first make sure that the end year comes before the start year
+      if self.start_year.to_i > self.end_year.to_i
+        errors.add(:start_year, "The start year must less than or equal to the end year")
+        errors.add(:end_year, "The end year must be greater than or equal to the start year")
+      else
+        # if start year is outside of the date range, check that there is 
+        # at least one person in the relationship that has a birth/death year outside of the range
+        # of else throw error message
+        if (self.start_year.to_i < min_year) || (self.start_year.to_i > max_year)
+          # check that the birth and death years were retrieved from the people or else retrieve them for comparisons
+          if retrieved_birth_death_year_flag == false
+            person1_record = Person.find(self.person1_index)
+            person2_record = Person.find(self.person2_index)
+            if (! person1_record.nil?)
+              birth_year_1 = person1_record.ext_birth_year
+              death_year_1 = person1_record.ext_death_year
+            end
+            if (! person2_record.nil?)
+              birth_year_2 = person2_record.ext_birth_year
+              death_year_2 = person2_record.ext_death_year
+            end
+            retrieved_birth_death_year_flag = true
+          end
+
+          #calculate the min both year of both people and the max birth year
+          if birth_year_1.to_i > birth_year_2.to_i
+            max_birth_year = birth_year_1.to_i
+          else 
+            max_birth_year = birth_year_2.to_i
+          end
+          if death_year_1.to_i < death_year_2.to_i
+            min_death_year = death_year_1.to_i
+          else 
+            min_death_year = death_year_2.to_i
+          end
+          calculated_max_birth_min_death_year_flag = true
+
+          # if the user entered start year is outside of the person's birth year then throw and error and reject the new relationship or edit
+          if (self.start_year < max_birth_year) || (self.start_year > min_death_year)
+            errors.add(:start_year, "The start year must be between #{min_year} and #{max_year} or between #{max_birth_year} (after the people were born) and #{min_death_year} (before the people died) ") 
+          end
+        end
+      end
     end 
 
-    #Only use default end date if the user does not enter an end year
+    #Only use default end date if the user does not enter a end year
     if (self.end_year.blank?)
       #decide new relationship end date
-      if ((! death_year_1.blank?) || (! death_year_2.blank?))
-        ##if there is a deathdate for at least 1 person
+      if ((! birth_year_1.blank?) || (! birth_year_2.blank?))
+        ##if there is a birthdate for at least 1 person
         new_end_year_type = "BF/IN"
-        if ((! death_year_1.blank?) && (! death_year_2.blank?))
-          ## Use min deathdate if deathdates are recorded for both people because the relationship will end by the time of the people dies
-          if death_year_1 < death_year_2
-            new_end_year = death_year_1.to_i
+        if ((! birth_year_1.blank?) && (! birth_year_2.blank?))
+          ## Use max birth year if birthdates are recorded for both people because the relationship can't start before someone is born
+          if birth_year_1 > birth_year_2
+            new_end_year = birth_year_1.to_i
           else
-            new_end_year = death_year_2.to_i
+            new_end_year = birth_year_2.to_i
           end
-        elsif (! death_year_1.blank?)
-          new_end_year = death_year_1.to_i
-        elsif (! death_year_2.blank?)
-          new_end_year = death_year_2.to_i
+        elsif (! birth_year_1.blank?)
+          new_end_year = birth_year_1.to_i
+        elsif (! birth_year_2.blank?)
+          new_end_year = birth_year_2.to_i
         end
       else
-        ##If there is no death year, set end year to the default CA 1800 (around 1800)
-        new_end_year_type = "CA"
-        new_end_year = 1800
+        ##if there is no birthdates, set start date to the default before or in the max year
+        new_end_year_type = "BF/IN"
+        new_end_year = max_year
       end
       self.end_year = new_end_year
-      self.end_date_type = new_end_year_type
-    end
+      self.start_date_type = new_end_year_type
+    else 
+      #if there are existing dates, check them
+
+      #first make sure that the end year comes before the start year
+      if self.end_year.to_i > self.end_year.to_i
+        errors.add(:end_year, "The start year must less than or equal to the end year")
+        errors.add(:end_year, "The end year must be greater than or equal to the start year")
+      else
+        # if start year is outside of the date range, check that there is 
+        # at least one person in the relationship that has a birth/death year outside of the range
+        # of else throw error message
+        if (self.end_year.to_i < min_year) || (self.end_year.to_i > max_year)
+          # check that the birth and death years were retrieved from the people or else retrieve them for comparisons
+          if retrieved_birth_death_year_flag == false
+            person1_record = Person.find(self.person1_index)
+            person2_record = Person.find(self.person2_index)
+            if (! person1_record.nil?)
+              birth_year_1 = person1_record.ext_birth_year
+              death_year_1 = person1_record.ext_death_year
+            end
+            if (! person2_record.nil?)
+              birth_year_2 = person2_record.ext_birth_year
+              death_year_2 = person2_record.ext_death_year
+            end
+            retrieved_birth_death_year_flag = true
+          end
+
+          # the if statement checks if these values were already calculated to avoid duplicate checks
+          if calculated_max_birth_min_death_year_flag == false
+            #calculate the min both year of both people and the max birth year
+            if birth_year_1.to_i > birth_year_2.to_i
+              max_birth_year = birth_year_1.to_i
+            else 
+              max_birth_year = birth_year_2.to_i
+            end
+            if death_year_1.to_i < death_year_2.to_i
+              min_death_year = death_year_1.to_i
+            else 
+              min_death_year = death_year_2.to_i
+            end
+          end
+
+          # if the user entered end year outside of the range and also outside of the person's birth year then throw and error and reject the new relationship or edit
+          if (self.end_year < max_birth_year) || (self.end_year > min_death_year)
+            errors.add(:end_year, "The end year must be between #{min_year} and #{max_year} or between #{max_birth_year} (after the people were born) and #{min_death_year} (before the people died) ") 
+          end
+        end
+      end
+    end 
   end
+
 
   def update_type_list_max_certainty_on_rel
     #only update the approved and edit status if it is not a system callback

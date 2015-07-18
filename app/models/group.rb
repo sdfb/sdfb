@@ -49,6 +49,7 @@ class Group < ActiveRecord::Base
   scope :for_user, -> (user_input) { where('created_by = ?', "#{user_input}") }
   scope :alphabetical, -> { order(name: :asc) }
   scope :order_by_sdfb_id, -> { order(id: :asc) }
+  
   # Callbacks
   # ----------------------------- 
   before_create :init_array
@@ -75,6 +76,7 @@ class Group < ActiveRecord::Base
       self.end_date_type = "CA"
     end
   end
+
 
   def init_array
     self.person_list = nil

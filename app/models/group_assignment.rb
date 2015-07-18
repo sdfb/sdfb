@@ -42,12 +42,8 @@ class GroupAssignment < ActiveRecord::Base
   validates_inclusion_of :start_date_type, :in => DATE_TYPE_LIST, :if => :start_year_present?
   ## end date type is one included in the list
   validates_inclusion_of :end_date_type, :in => DATE_TYPE_LIST, :if => :end_year_present?
-  # validates_presence_of :approved_by
-  # validates_presence_of :approved_on
-  ## approved_on must occur on the same date or after the created at date
-  #validates_date :approved_on, :on_or_after => :created_at, :message => "This group assignment must be approved on or after the date it was created."
-
-  ## approved_on must occur on the same date or after the created at date
+  # custom validation that checks that start year is between or equal to 1500 and 1700 unless the people's birth years are outside of the date range
+  validate :create_check_start_and_end_date
 
   # Callbacks
   # ----------------------------- 
@@ -56,8 +52,8 @@ class GroupAssignment < ActiveRecord::Base
   after_update :create_group_person_list
   before_create :check_if_approved_valid_create
   before_update :check_if_approved_and_update_edit
-  before_create :create_start_and_end_date
-  before_update :create_start_and_end_date
+  before_create :create_check_start_and_end_date
+  before_update :create_check_start_and_end_date
 
 
   # Custom Methods
@@ -131,72 +127,90 @@ class GroupAssignment < ActiveRecord::Base
     end
   end
 
-  ##if a user submits a new relationship but does not include a start and end date it defaults to a start and end date based on the birth years of the people in the relationship
-  def create_start_and_end_date
-    person_record = Person.find(self.person_id)
-    if (! person_record.nil?)
-      birth_year = person_record.ext_birth_year.to_i
-      death_year = person_record.ext_death_year.to_i
-    end
+  ## if there are no dates entered, use the group start and end dates
+  ## We do not use the person's birth and death dates because the group may be established before that person exists or after the person dies
+  ## if dates are entered, check that they fit within the start and end dates
+  ## use the min year and max year as a last resort if there are no group start and end dates
+
+  def create_check_start_and_end_date
+    # define defaults
+    min_year = 1500
+    max_year = 1700
+
+    # get the group start and end dates
     group_record = Group.find(self.group_id)
-    if (! group_record .nil?)
+    if (! group_record.nil?)
       group_start_year = group_record.start_year.to_i
       group_end_year = group_record.end_year.to_i
     end
     
+    # track whether default dates are used. If they are, then some checks on the dates don't
+    # have to happen
+    group_start_year_used = false
+    group_end_year_used = false
+    default_start_year_used = false
+    default_end_year_used = false
+
     #Only use default start date if the user does not enter a start year
     if (self.start_year.blank?)
-      #decide new assignment start date
-      if ((! birth_year.blank?) || (! group_start_year.blank?))
-        ##if there is a birth/group start year for at least 1 person
-        new_start_year_type = "AF/IN"
-        if ((! birth_year.blank?) && (! group_start_year.blank?))
-          ## Use max birth/group start year because the assignment can't start before someone is born or before group started
-          if ((birth_year > group_start_year) || (group_start_year.zero?) || (group_start_year.blank?) || (group_start_year.nil?))
-            new_start_year = birth_year.to_i
-          else
-            new_start_year = group_start_year.to_i
-          end
-        elsif (! birth_year.blank?)
-          new_start_year = birth_year.to_i
-        elsif (! group_start_year.blank?)
-          new_start_year = group_start_year.to_i
-        end
+      # if there is a group start year use it
+      if (! group_start_year.blank?)
+        new_start_year = group_start_year.to_i
+        group_start_year_used = true  
+      # if there is no group start year use the default
       else
-        ##if there is no group start or birth years, set start date to the default CA 1400 (around 1400)
-        new_start_year_type = "CA"
-        new_start_year = 1400
+        ##if there is no group start year, set start date to circa min year
+        new_start_year = min_year
+        default_start_year_used = true 
       end
-
+      #change the record in the database to reflect default
       self.start_year = new_start_year
-      self.start_date_type = new_start_year_type
-    end 
-
-    #Only use default end date if the user does not enter an end year
+      self.start_date_type = "AF/IN"
+        
+    end
+    # the same check needs to be done on the end year to make sure that it ends before the people die or the group ends
     if (self.end_year.blank?)
-      #decide new relationship end date
-      if ((! death_year.blank?) || (! group_end_year.blank?))
-        ##if there is a deathdate for at least 1 person
-        new_end_year_type = "BF/IN"
-        if ((! death_year.blank?) && (! group_end_year.blank?))
-          ## Use min deathdate if deathdates are recorded for both people because the relationship will end by the time of the people dies
-          if ((death_year < group_end_year) || (group_end_year.zero?) || (group_end_year.blank?) || (group_end_year.nil?))
-            new_end_year = death_year.to_i
-          else
-            new_end_year = group_end_year.to_i
-          end
-        elsif (! death_year.blank?)
-          new_end_year = death_year.to_i
-        elsif (! group_end_year.blank?)
-          new_end_year = group_end_year.to_i
-        end
+      # if a group end year exists, use that
+      if (! group_end_year.blank?)
+        new_end_year = group_end_year.to_i
+        group_end_year_used = true  
       else
-        ##If there is no death year, set end year to the default CA 1800 (around 1800)
-        new_end_year_type = "CA"
-        new_end_year = 1800
+        ##if there is no group end year, set end to circa max year
+        new_end_year = max_year
+        default_end_year_used = true 
       end
+      #change the record in the database to reflect default
       self.end_year = new_end_year
-      self.end_date_type = new_end_year_type
+      self.end_date_type = "BF/IN"
+    end
+
+    # first check that end year is after start year
+    if self.start_year.to_i > self.end_year.to_i
+      errors.add(:start_year, "The start year must be equal to or less than the end year")
+      errors.add(:end_year, "The end year must be equal to or greater than the start year")
+      if group_start_year_used == true
+        errors.add(:start_year, "Manually adjust this default start year which is based on the group's start year (#{group_start_year})")
+      elsif default_start_year_used == true
+        errors.add(:start_year, "Manually adjust this default start year which is based on the SDFB minimum year of #{min_year}")
+      end
+      if group_end_year_used == true
+        errors.add(:end_year, "Manually adjust this default end year which is based on the group's end years (#{group_end_year})")
+      elsif default_end_year_used == true
+        errors.add(:end_year, "Manually adjust this default end year which is based on the SDFB maximum year of #{max_year}")
+      end
+    end
+   
+    # need to run additional checks to make sure that dates are the group dates unless both are defaults
+    if ((default_start_year_used == false) || (default_end_year_used == false))
+      # throw an error if the start year is before the group start year or after the group end year
+
+      if (self.start_year.to_i < group_start_year) || (self.start_year.to_i > group_end_year) 
+          errors.add(:start_year, "The start year must be between the group start year (#{group_start_year}) and group end year (#{group_end_year})")
+      end
+
+      if (self.end_year.to_i < group_start_year) || (self.end_year.to_i > group_end_year)     
+          errors.add(:end_year, "The end year must be between the group start year (#{group_start_year}) and group end year (#{group_end_year})")
+      end
     end
   end
 end
