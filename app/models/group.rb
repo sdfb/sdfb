@@ -74,16 +74,6 @@ class Group < ActiveRecord::Base
       self.end_date_type = "IN"
     end
 
-    # if the start year converted to an integer is 0 then the date was not an integer
-    if (self.start_year.to_i == 0)
-      errors.add(:start_year, "Please enter a valid start year.")
-    end
-
-    # if the end year converted to an integer is 0 then the date was not an integer
-    if (self.end_year.to_i == 0)
-      errors.add(:end_year, "Please enter a valid end year.")
-    end
-
     # add a start year if there isn't one, check if follows rules
     if (start_year.blank?)
       self.start_year = min_year
@@ -100,7 +90,17 @@ class Group < ActiveRecord::Base
     # if there is already a end year, check that end year is after min_year or throw error
     elsif (self.end_year.to_i < min_year)
       errors.add(:end_year, "The end year must be after #{min_year}")
-    end   
+    end
+
+    # if the start year converted to an integer is 0 then the date was not an integer
+    if (self.start_year.to_i == 0)
+      errors.add(:start_year, "Please enter a valid start year.")
+    end
+
+    # if the end year converted to an integer is 0 then the date was not an integer
+    if (self.end_year.to_i == 0)
+      errors.add(:end_year, "Please enter a valid end year.")
+    end
 
     # check that start year is equal to or before end year
     if (self.start_year.to_i > self.end_year.to_i)
