@@ -97,10 +97,10 @@
 				<a class="icon icon-chain" id="node-icon-chain" name="person"></a>
 				<a class="icon icon-label" id="node-icon-tag" name="person"></a>
 				<p id="node-name" class="node-name">Click on a person node to see details</p>
-				<b>BIRTH DATE&nbsp;</b> 				<a id="node-bdate"></a><br>
-				<b>DEATH DATE&nbsp;</b> 				<a id="node-ddate"></a><br>
-				<b>HISTORICAL SIGNIFICANCE</b><br>		<a id="node-significance"></a><br>
-				<b>GROUPS&nbsp;</b>						<a id="node-group"></a><br>
+				<b>BIRTH DATE&nbsp;</b> 				<span id="node-bdate"></span><br>
+				<b>DEATH DATE&nbsp;</b> 				<span id="node-ddate"></span><br>
+				<b>HISTORICAL SIGNIFICANCE</b><br>		<span id="node-significance"></span><br>
+				<b>GROUPS&nbsp;</b>						<span id="node-group"></span><br>
 				<b>LINKS&nbsp;</b>
 				<a id="node-DNBlink" target="_blank"><%= image_tag "odnb_sq.gif", class: "odnb-img", alt: "ODNB" %></a>
 				<a id="node-GoogleLink" target="_blank">Google</a> <br><br>
@@ -112,7 +112,8 @@
 			<div  class="accordion_content " id="edgeinfo">
 				<a class="icon icon-annotate" id="edge-icon-annotate" name="edge"></a>
 				<p id="edge-nodes">Click on a relationship to see details</p>
-				<b id="edge-annotate"><a target="blank" href="http://sixdegreesoffrancisbacon.com/post//probabilistic-relationships-in-sdfb">CONFIDENCE&nbsp;</a></b> 	<span id="edge-confidence"></span><br>
+				<!-- <b id="edge-annotate"><a target="blank" href="http://sixdegreesoffrancisbacon.com/post//probabilistic-relationships-in-sdfb">MAX CONFIDENCE&nbsp;</a></b> 	<span id="edge-confidence"></span><br> -->
+				<b id="edge-annotate">MAX CONFIDENCE&nbsp;</b><span id="edge-confidence"></span><br>
 				<b>START YEAR&nbsp;</b> 	<span id="edge-startyear"></span><br>
 				<b>END YEAR&nbsp;</b> 	<span id="edge-endyear"></span><br>
  				<span id="relationship-table"></span>
@@ -131,7 +132,7 @@
 					<a class="icon icon-label" id="group-icon-tag" name="group"></a>
 					<p id="group-name">Search a group to see details</p>
 					<b>Description: </b><span id="group-description"></span><br>
-					<a class="talkPageLink" target="_blank" id="group-discussion">View Entry History</a>
+					<a class="talkPageLink" target="_blank" id="group-discussion">More Information</a>
 					<a class="icon icon-annotate group2" id="group-icon-annotate2"  name="group"></a>
 					<a class="icon icon-label group2" id="group-icon-tag2" name="group"></a>
 					<p id="group-name2" class="group2"></p>

@@ -207,19 +207,11 @@
 }
 
 .relationship-type{
-    width: 30px;
-}
-
-.relationship-from{
-    width: 50px;
-}
-
-.relationship-to{
-    width: 50px;
+    width: 100px;
 }
 
 .relationship-confidence{
-    width: 30px;    
+    width: 100px;    
 }
 
 .contribute-tab{
