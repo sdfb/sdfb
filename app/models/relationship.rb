@@ -140,8 +140,8 @@ class Relationship < ActiveRecord::Base
   ## If the relationship is not within the min and max years, the record will only be accepted if the people in the relationship are alive at that time
   def create_check_start_and_end_date
     # define defaults
-    min_year = 1100
-    max_year = 1100
+    min_year = 1500
+    max_year = 1700
     # stores whether the there are local variables for the people birth and death years
     retrieved_birth_death_year_flag = false
     # stores whether the max birth year and min death year were created to avoid duplicate calculations
