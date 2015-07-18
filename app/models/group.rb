@@ -24,12 +24,7 @@ class Group < ActiveRecord::Base
   #validates_presence_of :approved_on
   ## name must be at least 3 characters
   validates_length_of :name, :minimum => 3
-  ## approved_on must occur on the same date or after the created at date
-  #validates_date :approved_on, :on_or_after => :created_at, :message => "This group must be approved on or after the date it was created."
-  # validates :start_year, :numericality => { :greater_than_or_equal_to => 1400 }, :if => :start_year_present?
-  # validates :start_year, :numericality => { :less_than_or_equal_to => 1800 }, :if => :start_year_present?
-  # validates :end_year, :numericality => { :greater_than_or_equal_to => 1400 }, :if => :end_year_present?
-  # validates :end_year, :numericality => { :less_than_or_equal_to => 1800 }, :if => :end_year_present?
+  # this code validates the start and end dates with the associated method
   validate :create_check_start_and_end_date
   ## start date type is one included in the list
   validates_inclusion_of :start_date_type, :in => DATE_TYPE_LIST, :if => :start_year_present?
