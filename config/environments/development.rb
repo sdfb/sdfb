@@ -33,9 +33,9 @@ Sdfb::Application.configure do
 
   # Do not compress assets
   config.assets.compress = false
-  config.serve_static_assets = false
+  config.serve_static_assets = true
   # Expands the lines which load the assets
-  config.assets.debug = false
+  config.assets.debug = true
   config.assets.compile = true
     config.action_mailer.default_url_options = { :host => "localhost:3000" }  
 end

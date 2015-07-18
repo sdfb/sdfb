@@ -189,35 +189,37 @@
 	max-width:15px;
 }
 
-#relationship-table{
+#relationship-table, .relationship-row{
 	display:block;
 	overflow:hidden;
 	width:100%;
 	
 }
 
-.relationship-cell{
+.relationship-row{
+    float:left;
 
+}
+
+.relationship-cell{
+    padding:1px 17px 1px 0px;
+    float:left;
 }
 
 .relationship-type{
-	float:left;
-	padding:1px 10px 1px 0px;
+    width: 30px;
 }
 
 .relationship-from{
-	float:left;
-	padding:1px 10px 1px 10px;
+    width: 50px;
 }
 
 .relationship-to{
-	float:left;
-	padding:1px 10px 1px 10px;
+    width: 50px;
 }
 
 .relationship-confidence{
-	float:left;
-	padding:1px 0px 1px 10px;
+    width: 30px;    
 }
 
 .contribute-tab{

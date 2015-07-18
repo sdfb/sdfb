@@ -18,7 +18,7 @@ Sdfb::Application.configure do
   config.action_controller.perform_caching = true
 
   # Don't care if the mailer can't send
-  config.action_mailer.raise_delivery_errors = false
+  config.action_mailer.raise  _delivery_errors = false
 
   # Print deprecation notices to the Rails logger
   config.active_support.deprecation = :log
@@ -33,12 +33,14 @@ Sdfb::Application.configure do
   # with SQLite, MySQL, and PostgreSQL)
   #config.active_record.auto_explain_threshold_in_seconds = 0.5
 
-  # Do not compress assets
+  # Do not compress 
+  config.assets.enabled = true
   config.assets.compress = true
-  config.serve_static_assets = false
-
+  config.serve_static_files = true
+  config.assets.compile = true
+  config.assets.digest = false
   # Expands the lines which load the assets
-  config.assets.debug = true
+  config.assets.debug = false
 
   # Precompile additional assets (application.js, application.css, and all non-JS/CSS are already added)
   config.assets.precompile += %w( jquery-2.1.1.min jquery-impromptu.min.js jquery-ui.min.js accordion.js autocomplete-rails.js bootstrap.min display.js insights.standalone.js script.js pace.js typeahead.js )
