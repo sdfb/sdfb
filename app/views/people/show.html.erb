@@ -123,8 +123,6 @@
             <dd>No historical significance recorded.</dd>
           <% end %>
           <% if (! current_user.blank?) && ((current_user.user_type == "Admin") || (current_user.user_type == "Curator")) %>
-            <!-- <dt><strong>Relationship Summary:</strong></dt>
-            <dd><%= @person.rel_sum %></dd> -->
             <dt><strong>Created:</strong></dt>
             <dd><%= @person.created_at.strftime("%m/%d/%Y") %> by <%= link_to User.find(@person.created_by).username,  user_path(@person.created_by) %></dd>
             <% @last_edit = @person.last_edit %>

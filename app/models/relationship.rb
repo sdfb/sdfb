@@ -81,9 +81,32 @@ class Relationship < ActiveRecord::Base
   after_create :create_met_record
   after_create :create_peoples_rel_sum
   after_update :edit_met_record
+  after_destroy :delete_from_rel_sum
 
 	# Custom Methods
   # -----------------------------
+
+  # delete the relationships from the rel sums of people 1 and people 2
+  def delete_from_rel_sum
+    rel_sum_person_1 = Person.find(self.person1_index).rel_sum
+    rel_sum_person_2 = Person.find(self.person2_index).rel_sum
+
+    # locate the record for the specific relationship for person 1
+    rel_sum_person_1.each_with_index do |rel, i|
+      # if you find the record then delete it
+      if rel[2] == self.id
+        rel_sum_person_1.delete_at(i)
+      end
+    end
+    Person.update(self.person1_index, rel_sum: rel_sum_person_1)
+    rel_sum_person_2.each_with_index do |rel, i|
+      # if you find the record then delete it
+      if rel[2] == self.id
+        rel_sum_person_2.delete_at(i)
+      end
+    end
+    Person.update(self.person2_index, rel_sum: rel_sum_person_2)
+  end
 
   def init_array
     self.last_edit = nil
@@ -359,13 +382,13 @@ class Relationship < ActiveRecord::Base
 
       # locate the record for the specific relationship for person 1
       rel_sum_person_1.each do |rel|
-        if rel[3] == self.id
+        if rel[2] == self.id
           rel[1] = new_max_certainty
         end
       end
       Person.update(person1_id, rel_sum: rel_sum_person_1)
       rel_sum_person_2.each do |rel|
-        if rel[3] == self.id
+        if rel[2] == self.id
           rel[1] = new_max_certainty
         end
       end

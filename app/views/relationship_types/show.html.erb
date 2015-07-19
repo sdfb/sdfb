@@ -13,8 +13,11 @@
         <%= link_to t('.edit', :default => t("helpers.links.edit")),
                   edit_relationship_type_path(@relationship_type), :class => 'btn btn-mini' %>
         <% end %>
-        <% if can? :delete, @relationship_type %>
-            <%= link_to 'Destroy', @relationship_type, :class => 'btn btn-mini btn-danger',method: :delete, data: { confirm: 'Are you sure that you want to permanently delete this record and all associated records?' } %>
+        <!-- Do not delete the relationship type if it is the met record -->
+        <% if @relationship_type.id == 4 %>
+          <% if can? :delete, @relationship_type %>
+              <%= link_to 'Destroy', @relationship_type, :class => 'btn btn-mini btn-danger',method: :delete, data: { confirm: 'Are you sure that you want to permanently delete this record and all associated records?' } %>
+          <% end %>
         <% end %>
       </h2>
       <br>

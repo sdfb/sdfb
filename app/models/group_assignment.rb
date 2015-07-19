@@ -54,6 +54,7 @@ class GroupAssignment < ActiveRecord::Base
   before_update :check_if_approved_and_update_edit
   before_create :create_check_start_and_end_date
   before_update :create_check_start_and_end_date
+  after_destroy :create_group_person_list
 
 
   # Custom Methods
