@@ -101,13 +101,13 @@ class RelationshipCategoriesController < ApplicationController
 
   # DELETE /relationship_categories/1
   # DELETE /relationship_categories/1.json
-  # def destroy
-  #   @relationship_category = RelationshipCategory.find(params[:id])
-  #   @relationship_category.destroy
+  def destroy
+    @relationship_category = RelationshipCategory.find(params[:id])
+    @relationship_category.destroy
 
-  #   respond_to do |format|
-  #     format.html { redirect_to relationship_categories_url }
-  #     format.json { head :no_content }
-  #   end
-  # end
+    respond_to do |format|
+      format.html { redirect_to relationship_categories_url }
+      format.json { head :no_content }
+    end
+  end
 end

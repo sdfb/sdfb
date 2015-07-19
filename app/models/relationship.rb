@@ -12,7 +12,9 @@ class Relationship < ActiveRecord::Base
   # Relationships
   # -----------------------------
   belongs_to :user
-  has_many :user_rel_contribs
+  # if a relationship is deleted then all associated relationship type assignments are deleted
+  has_many :user_rel_contribs, :dependent => :destroy
+  belongs_to :person
 
   # Misc Constants
   DATE_TYPE_LIST = ["BF", "AF","IN","CA","BF/IN","AF/IN","NA"]

@@ -101,13 +101,13 @@ class GroupCategoriesController < ApplicationController
 
   # DELETE /group_categories/1
   # DELETE /group_categories/1.json
-  # def destroy
-  #   @group_category = GroupCategory.find(params[:id])
-  #   @group_category.destroy
+  def destroy
+    @group_category = GroupCategory.find(params[:id])
+    @group_category.destroy
 
-  #   respond_to do |format|
-  #     format.html { redirect_to group_categories_url }
-  #     format.json { head :no_content }
-  #   end
-  # end
+    respond_to do |format|
+      format.html { redirect_to group_categories_url }
+      format.json { head :no_content }
+    end
+  end
 end

@@ -113,15 +113,15 @@ class RelationshipsController < ApplicationController
   end
   # DELETE /relationships/1
   # DELETE /relationships/1.json
-  # def destroy
-  #   @relationship = Relationship.find(params[:id])
-  #   @relationship.destroy
+  def destroy
+    @relationship = Relationship.find(params[:id])
+    @relationship.destroy
 
-  #   respond_to do |format|
-  #     format.html { redirect_to relationships_url }
-  #     format.json { head :no_content }
-  #   end
-  # end
+    respond_to do |format|
+      format.html { redirect_to relationships_url }
+      format.json { head :no_content }
+    end
+  end
 
   def export_rels_for_rels_100000000_100020000
     @all_relationships_approved = Relationship.for_rels_100000000_100020000.all_approved

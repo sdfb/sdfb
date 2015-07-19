@@ -11,8 +11,10 @@ class Person < ActiveRecord::Base
 
   # Relationships
   # -----------------------------
-  has_many :groups, :through => :group_assignments
-  has_many :user_person_contribs
+  # if a person is deleted then all group assignment records are deleted
+  has_many :group_assignments, :dependent => :destroy
+  # if a person is deleted then all associated person notes are deleted
+  has_many :user_person_contribs, :dependent => :destroy
   belongs_to :user
 
   # Scope
@@ -92,9 +94,19 @@ class Person < ActiveRecord::Base
   before_update :check_if_approved_and_update_edit
   before_create :check_birth_death_years
   before_update :check_birth_death_years
+  before_destroy :delete_associated_relationships
 
   # Custom Methods
   # -----------------------------
+  # if you delete a person, delete any relationships associated with him/her
+  def delete_associated_relationships
+    # find all associated relationships
+    associated_relationships = Relationship.all_for_person(self.id)
+    # go through and delete each one
+    associated_relationships.each do |u|
+      Relationship.destroy(u.id)
+    end
+  end
 
   # checks that death year is on or after birth year and that birth 
   # and death years meet min_year and max_year rules

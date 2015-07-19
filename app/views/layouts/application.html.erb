@@ -5,7 +5,7 @@
     <script>
   	window.gon = <%= @data.to_json.html_safe %>
   </script>
-  <%= javascript_include_tag "jquery-2.1.1.min", "bootstrap.min", "jquery-ui.min", "jquery-impromptu.min.js",  "pace.min", "typeahead",  "autocomplete-rails" %>
+ <%= javascript_include_tag "application" %>
   <%= stylesheet_link_tag "bootstrap_and_overrides", "accordion",  "jquery-ui.min", "style" %>
   <%= csrf_meta_tags %>
 </head>

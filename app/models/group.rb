@@ -9,7 +9,10 @@ class Group < ActiveRecord::Base
   # -----------------------------
   has_many :people, :through => :group_assignments
   has_many :group_categories, :through => :group_cat_assigns
-  has_many :user_group_contribs
+  # if a group is deleted, then all associated user_group_contribs are deleted
+  has_many :user_group_contribs, :dependent => :destroy
+  # if a group is deleted, then all associated  group assignments are deleted so that the group has no members
+  has_many :group_assignments, :dependent => :destroy
   belongs_to :user
 
   # Misc Constants

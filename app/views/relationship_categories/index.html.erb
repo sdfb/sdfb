@@ -14,7 +14,11 @@
         <td><%= relationship_category.name %></td>
         <td><%= relationship_category.description %></td>
         <td><%= link_to 'Show', relationship_category, :class => 'btn btn-mini' %>
-        <%= link_to 'Edit', edit_relationship_category_path(relationship_category), :class => 'btn btn-mini' %></td>
+        <%= link_to 'Edit', edit_relationship_category_path(relationship_category), :class => 'btn btn-mini' %>
+        <% if can? :delete, relationship_category %>
+            <%= link_to 'Destroy', relationship_category, :class => 'btn btn-mini btn-danger',method: :delete, data: { confirm: 'Are you sure that you want to permanently delete this record and all associated records?' } %>
+        <% end %>
+        </td>
       </tr>
     <% end %>
 </table>

@@ -9,8 +9,6 @@ class User < ActiveRecord::Base
 
   # Relationships
   # -----------------------------
-  has_many :comments
-  has_many :flags
   has_many :user_group_contribs
   has_many :user_person_contribs
   has_many :user_rel_contribs
@@ -20,6 +18,9 @@ class User < ActiveRecord::Base
   has_many :group_assignments
   has_many :group_cat_assigns
   has_many :group_categories
+  has_many :rel_cat_assigns
+  has_many :relationship_categories
+  has_many :relationship_types
   
 
   # Misc Constants

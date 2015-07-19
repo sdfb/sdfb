@@ -18,7 +18,13 @@
       <% @user_rel_contribs.each do |user_rel_contrib| %>
         <tr>
           <td><%= user_rel_contrib.id %></td>
-          <td><%= user_rel_contrib.get_person1_name %> <%= link_to RelationshipType.find(user_rel_contrib.relationship_type_id).name, relationship_type_path(user_rel_contrib.relationship_type_id) %> <%= user_rel_contrib.get_person2_name %></td>
+          <td>
+            <% if ! user_rel_contrib.relationship_type_id.nil? %>
+              <%= user_rel_contrib.get_person1_name %> <%= link_to RelationshipType.find(user_rel_contrib.relationship_type_id).name, relationship_type_path(user_rel_contrib.relationship_type_id) %> <%= user_rel_contrib.get_person2_name %>
+            <% else %>
+              <%= user_rel_contrib.get_person1_name %> <i>Unassigned</i> <%= user_rel_contrib.get_person2_name %>
+            <% end %>
+          </td>
           <td><%= user_rel_contrib.certainty %>%</td>
           <td>
           <% if ! user_rel_contrib.start_date_type.blank? %>
@@ -97,6 +103,9 @@
               <% if can? :update, user_rel_contrib %>
                 <%= link_to t('.edit', :default => t("helpers.links.edit")),
                           edit_user_rel_contrib_path(user_rel_contrib), :class => 'btn btn-mini' %>
+              <% end %>
+              <% if can? :delete, user_rel_contrib %>
+                <%= link_to 'Destroy', user_rel_contrib, :class => 'btn btn-mini btn-danger',method: :delete, data: { confirm: 'Are you sure that you want to permanently delete this record and all associated records?' } %>
               <% end %>
             <% end %>
           </td>
