@@ -37,6 +37,8 @@ class UserGroupContrib < ActiveRecord::Base
   before_create :init_array
   before_create :check_if_approved
   before_update :check_if_approved_and_update_edit
+  before_update :remove_trailing_spaces
+  before_create :remove_trailing_spaces
 
   # Custom Methods
   # -----------------------------
@@ -46,6 +48,15 @@ class UserGroupContrib < ActiveRecord::Base
 
   def get_group_name
     return Group.find(group_id)
+  end
+
+  def remove_trailing_spaces
+    if ! self.annotation.nil?
+      self.annotation.strip!
+    end
+    if ! self.bibliography.nil?
+      self.bibliography.strip!
+    end
   end
 
   def check_if_approved

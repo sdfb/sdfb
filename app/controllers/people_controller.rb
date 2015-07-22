@@ -26,7 +26,7 @@ class PeopleController < ApplicationController
   # GET /people/1
   # GET /people/1.json
   def show
-    @person = Person.select("id, odnb_id, title, prefix, first_name, last_name, suffix, gender, search_names_all, created_by, birth_year_type, ext_birth_year, alt_birth_year, death_year_type, ext_death_year, alt_death_year, is_approved, approved_by, approved_on, justification, is_rejected, is_active, created_at, display_name, historical_significance, last_edit, rel_sum").find(params[:id])
+    @person = Person.select("id, odnb_id, title, prefix, first_name, last_name, suffix, gender, search_names_all, created_by, birth_year_type, ext_birth_year, alt_birth_year, death_year_type, ext_death_year, alt_death_year, is_approved, approved_by, approved_on, justification, is_rejected, is_active, created_at, display_name, historical_significance, last_edit").find(params[:id])
 
     respond_to do |format|
       format.html # show.html.erb
@@ -113,15 +113,15 @@ class PeopleController < ApplicationController
 
   # DELETE /people/1
   # DELETE /people/1.json
-  # def destroy
-  #   @person = Person.find(params[:id])
-  #   @person.destroy
+  def destroy
+    @person = Person.find(params[:id])
+    @person.destroy
 
-  #   respond_to do |format|
-  #     format.html { redirect_to people_url }
-  #     format.json { head :no_content }
-  #   end
-  # end
+    respond_to do |format|
+      format.html { redirect_to people_url }
+      format.json { head :no_content }
+    end
+  end
 
   def search 
     # allows for the admin to search from their dashboard

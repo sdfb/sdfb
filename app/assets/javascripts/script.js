@@ -52,7 +52,8 @@ $(document).ready(function() {
     $("#group-icon-annotate2").tooltip({placement: 'right', title: 'Add a note to this group'});
 
     $("#edge-icon-annotate").tooltip({placement: 'right', title: 'Add a relationship type and note to this relationship'});
-    $("#edge-annotate").tooltip({placement: 'right', title: 'These percentages were inferred by statistically analyzing the Oxford Dictionary of National Biography. Click for more information.'});
+    // $("#edge-annotate").tooltip({placement: 'right', title: 'These percentages were inferred by statistically analyzing the Oxford Dictionary of National Biography. Click for more information.'});
+    $("#edge-annotate").tooltip({placement: 'right', title: 'The average confidence is calculated for each relationship type. The maximum of those averages is the Max Confidence.'});
     $("#group-icon-label").tooltip({placement: 'right', title: 'Add person to group'});
     $("#group-icon-annotate").tooltip({placement: 'right', title: 'Add a note to this group'});
 

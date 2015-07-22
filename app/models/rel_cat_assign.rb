@@ -7,6 +7,7 @@ class RelCatAssign < ActiveRecord::Base
   # -----------------------------
   belongs_to :relationship_category
   belongs_to :relationship_type
+  belongs_to :user
 
   # Validations
   # -----------------------------

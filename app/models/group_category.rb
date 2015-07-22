@@ -6,6 +6,8 @@ class GroupCategory < ActiveRecord::Base
   # Relationships
   # -----------------------------
   belongs_to :user
+  # if the group category is deleted then all associated group category assignments are deleted
+  has_many :group_cat_assigns, :dependent => :destroy
 
   # Validations
   # -----------------------------

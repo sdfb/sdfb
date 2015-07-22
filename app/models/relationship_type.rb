@@ -5,8 +5,12 @@ class RelationshipType < ActiveRecord::Base
   
   # Relationships
   # -----------------------------
-  has_many :relationships, :through => :rel_cat_assigns
+  belongs_to :user
+  # if a relationship type is deleted then all associated relationship category assignments are deleted
+  has_many :rel_cat_assigns, :dependent => :destroy
   #belongs_to :relationship_type_inverse
+  # if a relationship type is deleted then all associated relationship type assignments will have a null relationship type
+  has_many :user_rel_contribs, :dependent => :nullify
 
   # Validations
   # -----------------------------
@@ -28,17 +32,30 @@ class RelationshipType < ActiveRecord::Base
   scope :alphabetical, -> { order(name: :asc) }
   scope :order_by_sdfb_id, -> { order(id: :asc) }
   scope :all_active_unrejected, -> { where(is_active: true, is_rejected: false) }
+  scope :find_where_inverse, -> (relationship_type_input) { where('relationship_type_inverse = ?', "#{relationship_type_input}") }
 
   # Callbacks
   # ----------------------------- 
   before_create :init_array
   before_create :check_if_approved
   before_update :check_if_approved_and_update_edit
+  before_destroy :make_null_if_used_for_inverse
 
   # Custom Methods
   # -----------------------------
   def init_array
     self.last_edit = nil
+  end
+
+  # This record goes through all of the records where it the relationship type is used an inverse 
+  # and makes that null
+  def make_null_if_used_for_inverse
+    # first, find all the records where the relationship type is used as an inverse in
+    used_as_inverse_in = RelationshipType.find_where_inverse(self.id)
+    # loop through all results and update them
+    used_as_inverse_in.each do |u|
+      RelationshipType.update(u.id, :relationship_type_inverse => nil)
+    end
   end
 
   def name_present?

@@ -73,6 +73,9 @@ class UserRelContrib < ActiveRecord::Base
   after_update :update_type_list_max_certainty_on_rel
   before_create :create_start_and_end_date
   before_update :create_start_and_end_date
+  before_update :remove_trailing_spaces
+  before_create :remove_trailing_spaces
+  after_destroy :type_list_max_cert_on_rel_on_destroy
 
   # Custom Methods
   # -----------------------------
@@ -216,6 +219,55 @@ class UserRelContrib < ActiveRecord::Base
     ! self.end_year.nil?
   end
 
+  # update the relationship type list and the maximum certainty when the relationship type assignment is destroyed
+  def type_list_max_cert_on_rel_on_destroy
+    if self.is_locked != true
+      # find averages by relationship type
+      averages_by_rel_type = UserRelContrib.all_approved.all_averages_for_relationship(self.relationship_id)
+
+      ###If there are no rel_types that are approved, then do nothing because this is taken care of in the relationship callback
+
+      if ! averages_by_rel_type.nil? 
+        # update the certainty list with the new array of all averages by relationship type
+        # create the array includes the relationship type id, the average certainty for that relationship type, and the relationship type name
+        averages_by_rel_type_array = averages_by_rel_type.map { |e| [e.relationship_type_id, e.avg_certainty.to_f, RelationshipType.find(e.relationship_type_id).name] }
+
+        # calculate the relationship's maximum certainty
+        new_max_certainty = averages_by_rel_type.map { |e| e.avg_certainty.to_f }.max 
+        
+        # update the relationships certainty list and max certainty
+        Relationship.update(self.relationship_id, type_certainty_list: averages_by_rel_type_array, max_certainty: new_max_certainty)
+        
+        # update the max certainty of the relationship in the people's rel_sum
+        # find the existing rel_sums for person 1 and person 2
+        relationship_record = Relationship.find(self.relationship_id)
+        person1_id = relationship_record.person1_index
+        rel_sum_person_1 = Person.find(person1_id).rel_sum
+
+        person2_id = relationship_record.person2_index
+        rel_sum_person_2 = Person.find(person2_id).rel_sum
+
+        # locate the record for the specific relationship for person 1
+        rel_sum_person_1.each_with_index do |rel, i|
+          # if you find the record then delete it
+          if rel[2] == relationship_record.id
+            rel[1] = new_max_certainty
+          end
+        end
+        Person.update(person1_id, rel_sum: rel_sum_person_1)
+        rel_sum_person_2.each_with_index do |rel, i|
+          # if you find the record then delete it
+          if rel[2] == relationship_record.id
+            rel[1] = new_max_certainty
+          end
+        end
+        Person.update(person2_id, rel_sum: rel_sum_person_2)
+      end
+    end
+  end
+
+
+  # update the relationship type list and the maximum certainty
   def update_type_list_max_certainty_on_rel
     if self.is_locked != true
       # find averages by relationship type
@@ -245,13 +297,13 @@ class UserRelContrib < ActiveRecord::Base
 
         # locate the record for the specific relationship for person 1
         rel_sum_person_1.each do |rel|
-          if rel[3] == relationship_record.id
+          if rel[2] == relationship_record.id
             rel[1] = new_max_certainty
           end
         end
         Person.update(person1_id, rel_sum: rel_sum_person_1)
         rel_sum_person_2.each do |rel|
-          if rel[3] == relationship_record.id
+          if rel[2] == relationship_record.id
             rel[1] = new_max_certainty
           end
         end
@@ -285,6 +337,15 @@ class UserRelContrib < ActiveRecord::Base
       return User.find(created_by).first_name + " " + User.find(created_by).last_name
     else
       return "ODNB"
+    end
+  end
+
+  def remove_trailing_spaces
+    if ! self.annotation.nil?
+      self.annotation.strip!
+    end
+    if ! self.bibliography.nil?
+      self.bibliography.strip!
     end
   end
 

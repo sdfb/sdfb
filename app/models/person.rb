@@ -11,8 +11,10 @@ class Person < ActiveRecord::Base
 
   # Relationships
   # -----------------------------
-  has_many :groups, :through => :group_assignments
-  has_many :user_person_contribs
+  # if a person is deleted then all group assignment records are deleted
+  has_many :group_assignments, :dependent => :destroy
+  # if a person is deleted then all associated person notes are deleted
+  has_many :user_person_contribs, :dependent => :destroy
   belongs_to :user
 
   # Scope
@@ -55,17 +57,10 @@ class Person < ActiveRecord::Base
   # validates_presence_of :last_name
   validates_presence_of :created_by
   validates_presence_of :gender
-  #validates_presence_of :display_name
-  #validates_presence_of :rel_sum
   validates_presence_of :birth_year_type
   validates_presence_of :ext_birth_year
   validates_presence_of :death_year_type
   validates_presence_of :ext_death_year
-  #validates_presence_of :alt_death_year
-  #validates_presence_of :approved_by
-  #validates_presence_of :approved_on
-
-
   ## first_name must be at least 1 character
   validates_length_of :first_name, :minimum => 1, :allow_blank => true
   ## last_name must be at least 1 character
@@ -88,6 +83,8 @@ class Person < ActiveRecord::Base
   validates_inclusion_of :death_year_type, :in => DATE_TYPE_LIST
   ## gender must be included in the gender list
   validates_inclusion_of :gender, :in => GENDER_LIST
+  # custom validation that checks the birth and death dates
+  validate :check_birth_death_years
 
   # Callbacks
   # ----------------------------- 
@@ -95,9 +92,70 @@ class Person < ActiveRecord::Base
   before_create :check_if_approved
   before_create :populate_search_names
   before_update :check_if_approved_and_update_edit
+  before_create :check_birth_death_years
+  before_update :check_birth_death_years
+  before_destroy :delete_associated_relationships
 
   # Custom Methods
   # -----------------------------
+  # if you delete a person, delete any relationships associated with him/her
+  def delete_associated_relationships
+    # find all associated relationships
+    associated_relationships = Relationship.all_for_person(self.id)
+    # go through and delete each one
+    associated_relationships.each do |u|
+      Relationship.destroy(u.id)
+    end
+  end
+
+  # checks that death year is on or after birth year and that birth 
+  # and death years meet min_year and max_year rules
+  def check_birth_death_years
+    # defining the min and max years
+    min_year = 1500
+    max_year = 1700
+
+    #initiate variables for checking if birth year and death year are valid
+    invalid_birth_year_format = false
+    invalid_death_year_format = false
+
+    # if the birth year converted to an integer is 0 then the date was not an integer
+    if (! self.ext_birth_year.blank?)
+      if (self.ext_birth_year.to_i == 0)
+        errors.add(:ext_birth_year, "Please check the format of the birth year.")
+        invalid_birth_year_format = true
+      # if valid format continue checking
+      else
+        # check that birth year is before max_year or throw error
+        if (self.ext_birth_year.to_i > max_year)
+          errors.add(:ext_birth_year, "The birth year must be before #{max_year}")
+        end
+      end
+    end
+
+    # if the death year converted to an integer is 0 then the date was not an integer
+    if (! self.ext_death_year.blank?)
+      if (self.ext_death_year.to_i == 0)
+        errors.add(:ext_death_year, "Please check the format of the death year.")
+        invalid_death_year_format = true
+      # if valid format continue checking
+      else
+        # check that death year is after min_year or throw error
+        if (self.ext_death_year.to_i < min_year)
+          errors.add(:ext_death_year, "The death year must be after #{min_year}")
+        end
+      end
+    end
+
+    # perform this check if both years are entered and the birth year and the death year formats are valid
+    if (! (self.ext_birth_year.blank? || self.ext_death_year.blank?)) && ((invalid_birth_year_format == false) && (invalid_death_year_format == false))
+      # check that birth year is equal to or before death year
+      if (self.ext_birth_year.to_i > self.ext_death_year.to_i)
+        errors.add(:ext_birth_year, "The birth year must be less than or equal to the death year")
+        errors.add(:ext_death_year, "The death year must be greater than or equal to the birth year")
+      end
+    end
+  end
 
   #populate search names with all permutations of the name on create and if empty on edit
   def populate_search_names

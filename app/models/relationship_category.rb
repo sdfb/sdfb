@@ -5,11 +5,14 @@ class RelationshipCategory < ActiveRecord::Base
 
   # Relationships
   # -----------------------------
-  has_many :relationships, :through => :rel_cat_assigns
+  # if the relationship category is deleted then all associated relationship category assignments are deleted
+  has_many :rel_cat_assigns, :dependent => :destroy
+  belongs_to :user
 
   # Validations
   # -----------------------------
   validates_presence_of :name
+  has_many :relationship_types, :through => :rel_cat_assigns
 
   # Scope
   # ----------------------------- 

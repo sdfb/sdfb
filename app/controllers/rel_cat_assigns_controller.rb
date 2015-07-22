@@ -121,13 +121,13 @@ class RelCatAssignsController < ApplicationController
 
   # DELETE /rel_cat_assigns/1
   # DELETE /rel_cat_assigns/1.json
-  # def destroy
-  #   @rel_cat_assign = RelCatAssign.find(params[:id])
-  #   @rel_cat_assign.destroy
+  def destroy
+    @rel_cat_assign = RelCatAssign.find(params[:id])
+    @rel_cat_assign.destroy
 
-  #   respond_to do |format|
-  #     format.html { redirect_to rel_cat_assigns_url }
-  #     format.json { head :no_content }
-  #   end
-  # end
+    respond_to do |format|
+      format.html { redirect_to rel_cat_assigns_url }
+      format.json { head :no_content }
+    end
+  end
 end
