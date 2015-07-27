@@ -50,6 +50,16 @@ class Ability
 
 			# A user can download relationship type assignment data
 			can :export_rel_type_assigns, UserRelContrib
+			can :export_rel_type_assigns_00000_20000, UserRelContrib
+			can :export_rel_type_assigns_20001_40000, UserRelContrib
+			can :export_rel_type_assigns_40001_60000, UserRelContrib
+			can :export_rel_type_assigns_60001_80000, UserRelContrib
+			can :export_rel_type_assigns_80001_100000, UserRelContrib
+			can :export_rel_type_assigns_100001_120000, UserRelContrib
+			can :export_rel_type_assigns_120001_140000, UserRelContrib
+			can :export_rel_type_assigns_140001_160000, UserRelContrib
+			can :export_rel_type_assigns_160001_180000, UserRelContrib
+			can :export_rel_type_assigns_greater_than_180000, UserRelContrib
 
 			# A user can download relationship data
 			can :export_relationships, Relationship

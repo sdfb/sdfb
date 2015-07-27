@@ -117,8 +117,18 @@ Sdfb::Application.routes.draw do
   # Routing for group assignments record export
   match '/export_group_assignments' => 'group_assignments#export_group_assignments', :via => [:get]
 
-  # Routing for relationship type assignments
-  match '/export_rel_type_assigns' => 'user_rel_contribs#export_rel_type_assigns', :via => [:get]
+  # Routing for relationship type assignment record export
+  get "export_rel_type_assigns" => "user_rel_contribs#export_rel_type_assigns", :as => "export_rel_type_assigns"
+  match '/rel_type_assigns_00000_20000' => 'user_rel_contribs#export_rel_type_assigns_00000_20000', :via => [:get]
+  match '/rel_type_assigns_20001_40000' => 'user_rel_contribs#export_rel_type_assigns_20001_40000', :via => [:get]
+  match '/rel_type_assigns_40001_60000' => 'user_rel_contribs#export_rel_type_assigns_40001_60000', :via => [:get]
+  match '/rel_type_assigns_60001_80000' => 'user_rel_contribs#export_rel_type_assigns_60001_80000', :via => [:get]
+  match '/rel_type_assigns_80001_100000' => 'user_rel_contribs#export_rel_type_assigns_80001_100000', :via => [:get]
+  match '/rel_type_assigns_100001_120000' => 'user_rel_contribs#export_rel_type_assigns_100001_120000', :via => [:get]
+  match '/rel_type_assigns_120001_140000' => 'user_rel_contribs#export_rel_type_assigns_120001_140000', :via => [:get]
+  match '/rel_type_assigns_140001_160000' => 'user_rel_contribs#export_rel_type_assigns_140001_160000', :via => [:get]
+  match '/rel_type_assigns_160001_180000' => 'user_rel_contribs#export_rel_type_assigns_160001_180000', :via => [:get]
+  match '/rel_type_assigns_greater_than_180000' => 'user_rel_contribs#export_rel_type_assigns_greater_than_180000', :via => [:get]
 
   # Routing for group record export
   match '/export_groups' => 'groups#export_groups', :via => [:get]
