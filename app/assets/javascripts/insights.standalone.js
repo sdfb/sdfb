@@ -10151,6 +10151,7 @@ Graph.prototype = {
       .attr("stroke", bind(this, this.pathStroke))
       .attr("stroke-width", PATH_STROKE_WIDTH)
       .attr("fill", "none")
+      .on("mouseover", bind(this, this.onPathOver))
       .on("mouseout", bind(this, this.onPathOut))
       .on("click", bind(this, this.onPathClick));
     
@@ -10282,13 +10283,13 @@ Graph.prototype = {
     var self = this
       , e = d3.event;
 
-    // To avoid focusing hidden elements
-    // if (!self.isNodeVisible(d)) {
-    //   return;
-    // } else {
+    //To avoid focusing hidden elements
+    if (!self.isNodeVisible(d)) {
+      return;
+    } else {
       e.preventDefault();
       e.stopPropagation();
-    //}
+    }
 
     this.focus(d.id).update();
     this.emit("node:click", d);
@@ -10298,13 +10299,13 @@ Graph.prototype = {
     var self = this
       , e = d3.event;
 
-    // To avoid focusing hidden elements
-    // if (!self.isNodeVisible(d)) {
-    //   return;
-    // } else {
+    //To avoid focusing hidden elements
+    if (!self.isNodeVisible(d)) {
+      return;
+    } else {
       e.preventDefault();
       e.stopPropagation();
-    //}
+    }
 
     this.focus(d.id).update();
     this.emit("node:dblclick", d);
@@ -10331,25 +10332,19 @@ Graph.prototype = {
     var self = this 
     , e = d3.event;
 
-    // To avoid focusing hidden elements
-    if (!self.isPathVisible(d.source, d.target)) {
-      return;
-    } else {
-      e.preventDefault();
-      e.stopPropagation();
-    }
-    this.state.focused = d.source;
-    this.state.adjacents[d.target.id] = d.target;
-    this.update();
+    var offset = 0;
+
+    this.showTooltip(offset, d);
+
     this.emit("edge:mouseover", d);
   },
 
   onPathOut: function(d) {
     this.hideTooltip();
 
-    // if (!this.isPathVisible(d)) {
-    //   return;
-    // } 
+    if (!this.isPathVisible(d)) {
+      return;
+    } 
 
     this.emit("edge:mouseout", d);
   },
@@ -10369,9 +10364,9 @@ Graph.prototype = {
   onMouseOver: function(d) {
     var focusedNode = this.state.focused;
 
-    // if (!this.isNodeVisible(d)) {
-    //   return;
-    // }
+    if (!this.isNodeVisible(d)) {
+      return;
+    }
 
     var offset = { 
       left: currentMousePos.x + 10, 
@@ -10391,9 +10386,9 @@ Graph.prototype = {
   onMouseOut: function(d) {
     this.hideTooltip();
 
-    // if (!this.isNodeVisible(d)) {
-    //   return;
-    // } 
+    if (!this.isNodeVisible(d)) {
+      return;
+    } 
 
     this.emit("node:mouseout", d);
   },

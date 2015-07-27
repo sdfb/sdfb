@@ -77,6 +77,12 @@ function createNodeKey(node, id) {
   return {"text": node["display_name"], "size": 10, "id": id,  "cluster": getClusterRels(node["rel_sum"])};
 }
 
+function createEdgeKey(node1, node2) {
+  var node1 = node1["id"] 
+  var node2 = node2["id"]
+  return {"n1": node1, "n2": node2}
+}
+
 function twoDegs(id, id2, people) {
   var keys = {};
   var edges = [];
@@ -88,14 +94,14 @@ function twoDegs(id, id2, people) {
       var q = value[0];
       keys[q] = createNodeKey(people[q],q);
       if (notInArray(edges, [id, value[0]])) {
-       edges.push([id, value[0]]);
+       edges.push([id, value[0]], createEdgeKey(p, people[q]));
       }
       $.each(people[q].rel_sum, function(index, value1) { 
         var r = value1[0];
         if (r in people){
           keys[r] = createNodeKey(people[r],r);
           if (notInArray(edges, [value[0], value1[0]])) {
-           edges.push([value[0], value1[0]]);
+           edges.push([value[0], value1[0]], createEdgeKey(people[q], people[r]));
           }
         }
       });
@@ -136,19 +142,15 @@ function twoDegs(id, id2, people) {
     });
 
     graph.on("node:dblclick", function(d) {
-      // console.log(d);
-      // $.ajax({
-      //       type: "GET",
-      //       url:    "/node_info", // should be mapped in routes.rb
-      //       data: {node_id:d.id},
-      //       datatype:"html", // check more option
-      //       success: function(data) {
-      //                // handle response data
-      //                },
-      //       async:   true
-      //     });  
-      // //accordion("node");
-      // createGraph(d.id, people);
+      console.log("dblclick");
+    });
+
+    graph.on("edge:mouseover", function(d) {
+      var id1 = parseInt(d.source.id);
+      var id2 = parseInt(d.target.id);
+      //console.log(people[id1]);
+      //graph.tooltip("<div class='btn' >"+"{{edgeText}}" + "</div>")
+      graph.tooltip(people[id1]["display_name"] + " & " + people[id2]["display_name"]);
     });
   
     graph.on("edge:click", function(d) {
@@ -167,7 +169,10 @@ function twoDegs(id, id2, people) {
         accordion("edge");
     });
 
-    graph.tooltip("<div class='btn' >"+"{{text}}" + "</div>");
+    graph.on("node:mouseover", function(d) {
+      //graph.tooltip("<div class='btn' >"+"{{text}}" + "</div>");
+    });
+    
 
     $('#zoom button.icon').click(function(e){
         if (this.name == 'in') {
