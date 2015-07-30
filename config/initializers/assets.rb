@@ -1,1 +1,1 @@
-Rails.application.config.assets.precompile += ['application.js', 'application.css', 'index.js']
+Rails.application.config.assets.precompile += ['application.js', 'application.css', 'index.js', 'script.js']
