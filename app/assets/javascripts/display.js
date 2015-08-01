@@ -170,7 +170,7 @@ function twoDegs(id, id2, people) {
     });
 
     graph.on("node:mouseover", function(d) {
-      //graph.tooltip("<div class='btn' >"+"{{text}}" + "</div>");
+      graph.tooltip("<div class='btn' >"+"{{text}}" + "</div>");
     });
     
 
