@@ -36,14 +36,17 @@ class GroupAssignment < ActiveRecord::Base
   validates_presence_of :group_id
   validates_presence_of :person_id
   validates_presence_of :created_by
-  # checks if the group and person assignment already exists
+  # checks if the group and person assignment already exists on create
   validate :check_if_approved_valid_create, on: :create
+  # checks if the group and person assignment already exists on update
+  validate :check_if_approved_and_update_edit, on: :update
   ## start date type is one included in the list
   validates_inclusion_of :start_date_type, :in => DATE_TYPE_LIST, :if => :start_year_present?
   ## end date type is one included in the list
   validates_inclusion_of :end_date_type, :in => DATE_TYPE_LIST, :if => :end_year_present?
   # custom validation that checks that start year is between or equal to 1500 and 1700 unless the people's birth years are outside of the date range
   validate :create_check_start_and_end_date
+
 
   # Callbacks
   # ----------------------------- 
@@ -106,6 +109,13 @@ class GroupAssignment < ActiveRecord::Base
   end
 
   def check_if_approved_and_update_edit
+    search_results_for_duplicate = GroupAssignment.find_if_exists(self.person_id, self.group_id)
+    if ! search_results_for_duplicate.empty?
+      if search_results_for_duplicate.first.id != self.id
+        errors.add(:person_id, "This person is already a member of this group.")
+      end
+    end
+
     new_last_edit = []
     new_last_edit.push(self.approved_by.to_i)
     new_last_edit.push(Time.now)

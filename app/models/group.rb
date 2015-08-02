@@ -8,7 +8,8 @@ class Group < ActiveRecord::Base
   # Relationships
   # -----------------------------
   has_many :people, :through => :group_assignments
-  has_many :group_categories, :through => :group_cat_assigns
+  # if a group is deleted, then all associated group category assignments are deleted
+  has_many :group_cat_assigns, :dependent => :destroy
   # if a group is deleted, then all associated user_group_contribs are deleted
   has_many :user_group_contribs, :dependent => :destroy
   # if a group is deleted, then all associated  group assignments are deleted so that the group has no members
@@ -33,6 +34,8 @@ class Group < ActiveRecord::Base
   validates_inclusion_of :start_date_type, :in => DATE_TYPE_LIST, :if => :start_year_present?
   ## end date type is one included in the list
   validates_inclusion_of :end_date_type, :in => DATE_TYPE_LIST, :if => :end_year_present?
+  # make sure names are unique/not duplicates
+  validates_uniqueness_of :name
 
   # Scope
   # ----------------------------- 

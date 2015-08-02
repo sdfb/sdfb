@@ -17,9 +17,10 @@ class RelationshipType < ActiveRecord::Base
   #validates_presence_of :default_rel_category
   validates :is_active, :inclusion => {:in => [true, false]}
   validates_presence_of :name
-  #validates_presence_of :relationship_type_inverse
   ## name must be at least 4 character
   validates_length_of :name, :minimum => 3, :if => :name_present?
+  # make sure names are unique/not duplicates
+  validates_uniqueness_of :name
 
   # Scope
   # ----------------------------- 

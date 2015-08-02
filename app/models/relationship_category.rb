@@ -12,7 +12,8 @@ class RelationshipCategory < ActiveRecord::Base
   # Validations
   # -----------------------------
   validates_presence_of :name
-  has_many :relationship_types, :through => :rel_cat_assigns
+  # make sure names are unique/not duplicates
+  validates_uniqueness_of :name
 
   # Scope
   # ----------------------------- 

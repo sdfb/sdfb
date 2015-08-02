@@ -14,6 +14,8 @@ class GroupCategory < ActiveRecord::Base
   #validates_presence_of :description
   validates_presence_of :name
   validates_presence_of :created_by
+  # make sure names are unique/not duplicates
+  validates_uniqueness_of :name
 
   # Scope
   # ----------------------------- 
