@@ -12,10 +12,14 @@
       </ul>
     </div>
   <% end %>
-  <% if ! @person_id.blank? %>
+  <% if (! @person_id.blank?) %>
     <%= f.label :person_id %>
     <%= Person.find(@person_id).first_name + " " + Person.find(@person_id).last_name %>
     <%= f.hidden_field :person_id, :value => @person_id %>
+  <% elsif (! @user_person_contrib.person_id.blank?) %>
+    <%= f.label :person_id %>
+    <%= Person.find(@user_person_contrib.person_id).first_name + " " + Person.find(@user_person_contrib.person_id).last_name %>
+    <%= f.hidden_field :person_id, :value => @user_person_contrib.person_id %>
   <% else %>    
     <%= f.input :person_id, as: :hidden %>
     <%= f.input :person_autocomplete, as: :autocomplete, url: autocomplete_person_search_names_all_user_person_contribs_path, input_html: { 'data-id-element' => '#user_person_contrib_person_id' }, label: "Person", placeholder: "name" %>

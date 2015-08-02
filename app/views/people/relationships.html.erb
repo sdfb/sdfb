@@ -134,14 +134,11 @@
   </div>
   <div class="span5">
       <div class="well">
-        <h2>Quicklinks for this Person</h2>
+        <h2>More Information about this Person</h2>
         <dl class="dl-horizontal">
           <dt><strong>Person Record:</strong></dt>
           <dd><%= link_to 'View',
                     controller: "people", action: "show", id: @person %></dd>
-          <dt><strong>Relationships:</strong></dt>
-          <dd><%= link_to 'View',
-                    controller: "people", action: "relationships", id: @person %></dd>
           <dt><strong>Group Membership:</strong></dt>
           <dd><%= link_to 'View',
                     controller: "people", action: "membership", id: @person %></dd></dd>

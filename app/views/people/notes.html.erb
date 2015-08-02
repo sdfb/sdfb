@@ -48,7 +48,7 @@
       </div>
     <% else %>
     <div class = "well">
-      <h2>All notes for <%= @person.display_name %> <%= link_to 'New User Person Contribution',
+      <h2>All notes for <%= @person.display_name %> <%= link_to 'New Note',
                 new_user_person_contrib_path(:person_id => @person.id),
                 :class => 'btn btn-primary btn-mini' %></h2>
       <br>
@@ -59,7 +59,7 @@
 
   <div class="span5">
     <div class="well">
-      <h2>Quicklinks for this Person</h2>
+      <h2>More Information about this Person</h2>
       <dl class="dl-horizontal">
         <dt><strong>Person Record:</strong></dt>
         <dd><%= link_to 'View',
@@ -70,9 +70,6 @@
         <dt><strong>Group Membership:</strong></dt>
         <dd><%= link_to 'View',
                   controller: "people", action: "membership", id: @person %></dd></dd>
-        <dt><strong>Notes:</strong></dt>
-        <dd><%= link_to 'View',
-                  controller: "people", action: "notes", id: @person %></dd></dd>
       </dl>
     </div>    
   </div>

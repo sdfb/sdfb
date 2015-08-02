@@ -16,6 +16,10 @@
     <%= f.label :group_id %>
     <%= Group.find(@group_id).name %>
     <%= f.hidden_field :group_id, :value => @group_id %>
+  <% elsif ! @user_group_contrib.group_id.blank? %>
+    <%= f.label :group_id %>
+    <%= Group.find(@user_group_contrib.group_id).name %>
+    <%= f.hidden_field :group_id, :value => @user_group_contrib.group_id %>
   <% else %>
     <%= f.input :group_id, :collection =>@groupOptions.collect{ |g| [g.name, g.id] }, label: "Group", prompt: "Select" %>
   <% end %>

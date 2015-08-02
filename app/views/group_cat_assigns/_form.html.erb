@@ -16,11 +16,15 @@
   <%= f.hidden_field :created_by, :value => current_user.id %>
   <% if ! @group_id.blank? %>
     <%= f.input :group_id, :collection =>@groupOptions.collect{ |g| [g.name, g.id] }, label: "Group", prompt: "Select", selected: @group_id %>
+  <% elsif ! @group_cat_assign.group_id.blank? %>
+    <%= f.input :group_id, :collection =>@groupOptions.collect{ |g| [g.name, g.id] }, label: "Group", prompt: "Select", selected: @group_cat_assign.group_id %>
   <% else %>
     <%= f.input :group_id, :collection =>@groupOptions.collect{ |g| [g.name, g.id] }, label: "Group", prompt: "Select" %>
   <% end %>
   <% if ! @group_cat_id.blank? %>
     <%= f.input :group_category_id, :collection =>@groupCatOptions.collect{ |g| [g.name, g.id] }, label: "Group Category", prompt: "Select", selected: @group_cat_id %>
+  <% elsif ! @group_cat_assign.group_category_id.blank? %>
+    <%= f.input :group_category_id, :collection =>@groupCatOptions.collect{ |g| [g.name, g.id] }, label: "Group Category", prompt: "Select", selected: @group_cat_assign.group_category_id %>
   <% else %>
     <%= f.input :group_category_id, :collection =>@groupCatOptions.collect{ |g| [g.name, g.id] }, label: "Group Category", prompt: "Select" %>
   <% end %>

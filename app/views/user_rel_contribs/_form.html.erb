@@ -17,6 +17,12 @@
     <%= f.input :relationship_type_id, :collection =>@relType.collect{ |r| [r.name, r.id] }, label: false, prompt: "Relationship Type" %>
     <%= Relationship.find(@relationship_id).get_person2_name %>
     <%= f.hidden_field :relationship_id, :value => @relationship_id %>
+  <% elsif ! @user_rel_contrib.relationship_id.blank?%>
+    <%= f.label :relationship_type_id %>
+    <%= Relationship.find(@user_rel_contrib.relationship_id).get_person1_name %>
+    <%= f.input :relationship_type_id, :collection =>@relType.collect{ |r| [r.name, r.id] }, label: false, prompt: "Relationship Type" %>
+    <%= Relationship.find(@user_rel_contrib.relationship_id).get_person2_name %>
+    <%= f.hidden_field :relationship_id, :value => @user_rel_contrib.relationship_id %>
   <% else %>
     <%= f.label :relationship_type_id %>
     <%= f.hidden_field :relationship_id, value: 0 %>

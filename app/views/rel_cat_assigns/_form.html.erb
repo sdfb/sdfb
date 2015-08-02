@@ -16,11 +16,15 @@
   <%= f.hidden_field :created_by, :value => current_user.id %>
   <% if ! @rel_type_id.blank? %>
     <%= f.input :relationship_type_id, :collection =>@relTypeOptions.collect{ |g| [g.name, g.id] }, label: "Relationship Type", prompt: "Select", selected: @rel_type_id %>
+  <% elsif ! @rel_cat_assign.relationship_type_id.blank? %>
+    <%= f.input :relationship_type_id, :collection =>@relTypeOptions.collect{ |g| [g.name, g.id] }, label: "Relationship Type", prompt: "Select", selected: @rel_cat_assign.relationship_type_id %>
   <% else %>
     <%= f.input :relationship_type_id, :collection =>@relTypeOptions.collect{ |g| [g.name, g.id] }, label: "Relationship Type", prompt: "Select" %>
   <% end %>
   <% if ! @rel_cat_id.blank? %>
     <%= f.input :relationship_category_id, :collection =>@relCatOptions.collect{ |g| [g.name, g.id] }, label: "Relationship Category", prompt: "Select", selected: @rel_cat_id %>
+  <% elsif ! @rel_cat_assign.relationship_category_id.blank? %>
+    <%= f.input :relationship_category_id, :collection =>@relCatOptions.collect{ |g| [g.name, g.id] }, label: "Relationship Category", prompt: "Select", selected: @rel_cat_assign.relationship_category_id %>
   <% else %>
     <%= f.input :relationship_category_id, :collection =>@relCatOptions.collect{ |g| [g.name, g.id] }, label: "Relationship Category", prompt: "Select" %>
   <% end %>

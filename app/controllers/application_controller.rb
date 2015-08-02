@@ -45,7 +45,7 @@ class ApplicationController < ActionController::Base
     helper_method :get_data_for_visualization
 
 	rescue_from  CanCan::AccessDenied do |exception|
-	 	flash[:error] = "Access Denied"
+	 	flash[:error] = "You do not have access to this page. Please contact the team if you believe you should have access."
 	 	redirect_to sign_in_url
 	end
 end
