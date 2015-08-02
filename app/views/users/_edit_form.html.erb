@@ -22,6 +22,7 @@
   <%= f.input :affiliation %>
   <%= f.input :about_description, label: "About Description" %>
   <%= f.hidden_field :curator_revoked, :value => false %>
+  <%= f.hidden_field :user_type, :value => "Admin" %>
   <% if current_user != nil %>
     <% if (current_user.user_type == "Admin") %>
       <%= f.input :user_type, :collection => ["Standard", "Curator","Admin"], prompt: "Select" %>
