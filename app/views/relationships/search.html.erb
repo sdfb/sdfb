@@ -1,11 +1,11 @@
-<h1>All relationship search results for "<%= Person.find(@person1Query.to_i).autocomplete_name %>" and "<%= Person.find(@person2Query.to_i).autocomplete_name %>"</h1>
-
+<h1>Relationship Search</h1>
 <div class="well">
   <%= render 'rel_search_box' %>
 </div>
 <br>
 <%if ((@person1Query != "") && (@person2Query != "")) %>
-  	<% if ! @all_results.empty? %>
+  	<% if (! @all_results.empty?) %>
+  		<h1>All relationship search results for "<%= Person.find(@person1Query.to_i).autocomplete_name %>" and "<%= Person.find(@person2Query.to_i).autocomplete_name %>"</h1>
 		<table class="table table-condensed">
 		  <thead>
 		    <tr>
@@ -39,6 +39,8 @@
 
 		<%= will_paginate @all_results, :param_name => 'all_results_page', :previous_label => "Previous&nbsp;", :next_label => "&nbsp;Next" %>
 	<% else %>
-		No relationship was found for those individuals.
+		<h1>No relationship results</h1>
 	<% end %>
+<% else %>
+	<h1>No relationship results</h1>
 <% end %>

@@ -1,11 +1,11 @@
-<h1>Person search results for "<%= Person.find(@query.to_i).autocomplete_name %>"</h1>
+<h1>Person Search</h1>
 
 <div class="well">
   <%= render 'person_search_box' %>
 </div>
 <br>
-<% if ! @query.blank? %>
-  <% if ! @all_results.empty? %>
+  <% if (! @query.blank?) && (! @all_results.empty?) %>
+    <h1>Person search results for "<%= Person.find(@query.to_i).autocomplete_name %>"</h1>
     <table class="table table-condensed">
     <thead>
       <tr>
@@ -56,9 +56,7 @@
       <% end %>
     </tbody>
   </table>
-
     <%= will_paginate @all_results, :param_name => 'all_results_page', :previous_label => "Previous&nbsp;", :next_label => "&nbsp;Next" %>
   <% else %>
-    No search results were found.
+    <h1>No Search results for "<%= @query %>"</h1>
   <% end %>
-<% end %>

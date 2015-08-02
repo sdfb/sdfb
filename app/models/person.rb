@@ -95,9 +95,20 @@ class Person < ActiveRecord::Base
   before_create :check_birth_death_years
   before_update :check_birth_death_years
   before_destroy :delete_associated_relationships
+  before_create :add_display_name_if_blank
+  before_update :add_display_name_if_blank
 
   # Custom Methods
   # -----------------------------
+
+  # if the display name is blank then add one
+  def add_display_name_if_blank
+    if self.display_name.blank?
+      new_display_name = self.get_person_name
+      self.display_name = new_display_name
+    end
+  end
+
   # if you delete a person, delete any relationships associated with him/her
   def delete_associated_relationships
     # find all associated relationships

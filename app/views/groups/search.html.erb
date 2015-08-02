@@ -1,76 +1,76 @@
-<h1>All group search results for "<%= Group.find(@query).name %>"</h1>
+<h1>Group Search</h1>
 
 <div class="well">
   <%= render 'group_search_box' %>
 </div>
 <br>
-<% if ! @query.blank? %>
-  	<% if ! @all_results.empty? %>
-		<table class="table table-condensed">
-			<thead>
-			  <tr>
-			    <th>SDFB Group ID</th>
-			    <th>Name</th>
-			    <th>Description</th>
-		        <th>Start Year Type</th>
-		        <th>Start Year</th>
-		        <th>End Year Type</th>
-		        <th>End Year</th>
-			    <th><%=t '.actions', :default => t("helpers.actions") %></th>
-			  </tr>
-			</thead>
-			<tbody>
-			  <% @all_results.each do |group| %>
-			    <tr>
-			      <td><%= group.id %></td>
-			      <td><%= group.name %></td>
-			      <td><%= group.description %></td>
-			      <td>
-		            <% if group.start_date_type == "BF" %>
-		              Before
-		            <% elsif group.start_date_type == "AF" %>
-		              After
-		            <% elsif group.start_date_type == "IN" %>
-		              In
-		            <% elsif group.start_date_type == "CA" %>
-		              Circa
-		            <% elsif group.start_date_type == "BF/IN" %>
-		              Before or In
-		            <% elsif group.start_date_type == "AF/IN" %>
-		              After or In
-		            <% end %>
-		          </td>
-		          <td><%= group.start_year %></td>
-		          <td>
-		            <% if group.end_date_type == "BF" %>
-		              Before
-		            <% elsif group.end_date_type == "AF" %>
-		              After
-		            <% elsif group.end_date_type == "IN" %>
-		              In
-		            <% elsif group.end_date_type == "CA" %>
-		              Circa
-		            <% elsif group.end_date_type == "BF/IN" %>
-		              Before or In
-		            <% elsif group.end_date_type == "AF/IN" %>
-		              After or In
-		            <% end %>
-		          </td>
-		          <td><%= group.end_year %></td>
-			      <td>
-			        <% if can? :show, group %>
-			          <%= link_to 'Show', group, :class => 'btn btn-mini' %>
-			        <% end %>
-			        <% if can? :update, group %>
-			          <%= link_to t('.edit', :default => t("helpers.links.edit")),
-			                          edit_group_path(group), :class => 'btn btn-mini' %>
-			        <% end %>
-			      </td>
-			    </tr>
-			  <% end %>
-			</tbody>
-		</table>
-	<% else %>
-		No group search results.
-	<% end %>
+<% if (! @query.blank?) && (! @all_results.empty?) %>
+	<h1>All group search results for "<%= Group.find(@query).name %>"</h1>
+	<table class="table table-condensed">
+		<thead>
+		  <tr>
+		    <th>SDFB Group ID</th>
+		    <th>Name</th>
+		    <th>Description</th>
+	        <th>Start Year Type</th>
+	        <th>Start Year</th>
+	        <th>End Year Type</th>
+	        <th>End Year</th>
+		    <th><%=t '.actions', :default => t("helpers.actions") %></th>
+		  </tr>
+		</thead>
+		<tbody>
+		  <% @all_results.each do |group| %>
+		    <tr>
+		      <td><%= group.id %></td>
+		      <td><%= group.name %></td>
+		      <td><%= group.description %></td>
+		      <td>
+	            <% if group.start_date_type == "BF" %>
+	              Before
+	            <% elsif group.start_date_type == "AF" %>
+	              After
+	            <% elsif group.start_date_type == "IN" %>
+	              In
+	            <% elsif group.start_date_type == "CA" %>
+	              Circa
+	            <% elsif group.start_date_type == "BF/IN" %>
+	              Before or In
+	            <% elsif group.start_date_type == "AF/IN" %>
+	              After or In
+	            <% end %>
+	          </td>
+	          <td><%= group.start_year %></td>
+	          <td>
+	            <% if group.end_date_type == "BF" %>
+	              Before
+	            <% elsif group.end_date_type == "AF" %>
+	              After
+	            <% elsif group.end_date_type == "IN" %>
+	              In
+	            <% elsif group.end_date_type == "CA" %>
+	              Circa
+	            <% elsif group.end_date_type == "BF/IN" %>
+	              Before or In
+	            <% elsif group.end_date_type == "AF/IN" %>
+	              After or In
+	            <% end %>
+	          </td>
+	          <td><%= group.end_year %></td>
+		      <td>
+		        <% if can? :show, group %>
+		          <%= link_to 'Show', group, :class => 'btn btn-mini' %>
+		        <% end %>
+		        <% if can? :update, group %>
+		          <%= link_to t('.edit', :default => t("helpers.links.edit")),
+		                          edit_group_path(group), :class => 'btn btn-mini' %>
+		        <% end %>
+		      </td>
+		    </tr>
+		  <% end %>
+		</tbody>
+	</table>
+<% else %>
+	<h1>No group search results for "<%= @query %>"</h1>
 <% end %>
+
