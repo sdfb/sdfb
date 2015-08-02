@@ -87,7 +87,7 @@
             <%= link_to 'Edit', edit_group_assignment_path(group_assignment), :class => 'btn btn-mini' %>
           <% end %>
           <% if can? :delete, group_assignment %>
-            <%= link_to 'Destroy', group_assignment, :class => 'btn btn-mini btn-danger',method: :delete, data: { confirm: 'Are you sure that you want to permanently delete this record and all associated records?' } %>
+            <%= link_to 'Delete', group_assignment, :class => 'btn btn-mini btn-danger',method: :delete, data: { confirm: 'Are you sure that you want to permanently delete this record and all associated records?' } %>
           <% end %>
         </td>
       </tr>

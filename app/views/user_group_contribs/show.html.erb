@@ -15,7 +15,7 @@
                 edit_user_group_contrib_path(@user_group_contrib), :class => 'btn btn-mini' %>
         <% end %>
         <% if can? :delete, @user_group_contrib %>
-          <%= link_to 'Destroy', @user_group_contrib, :class => 'btn btn-mini btn-danger',method: :delete, data: { confirm: 'Are you sure that you want to permanently delete this record and all associated records?' } %>
+          <%= link_to 'Delete', @user_group_contrib, :class => 'btn btn-mini btn-danger',method: :delete, data: { confirm: 'Are you sure that you want to permanently delete this record and all associated records?' } %>
         <% end %>
       </h2>
       <br>

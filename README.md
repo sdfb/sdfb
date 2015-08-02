@@ -175,75 +175,76 @@ navigate to http://localhost:3000/
 end this process by sending "Ctrl-C" in terminal
 ```
 
-Most Recent Brakeman 6-16-15:
+## Brakeman as of 7/27/15
 +SUMMARY+
 
 +-------------------+--------+
 | Scanned/Reported  | Total  |
 +-------------------+--------+
-| Controllers       | 19     |
+| Controllers       | 20     |
 | Models            | 16     |
-| Templates         | 177    |
-| Errors            | 2      |
-| Security Warnings | 15 (1) |
+| Templates         | 179    |
+| Errors            | 1      |
+| Security Warnings | 17 (1) |
 +-------------------+--------+
 
 +----------------------------+-------+
 | Warning Type               | Total |
 +----------------------------+-------+
+| Cross Site Scripting       | 1     |
 | Cross-Site Request Forgery | 1     |
+| Denial of Service          | 1     |
 | Mass Assignment            | 12    |
 | SQL Injection              | 1     |
 | Session Setting            | 1     |
 +----------------------------+-------+
 +Errors+
-+----------------------------------------------------------------------------->>
-| Error                                                                       >>
-+----------------------------------------------------------------------------->>
-| /Users/katarinashaw/Documents/sdfb/app/views/password_resets/edit.html.erb:3>>
-| /Users/katarinashaw/Documents/sdfb/app/views/relationships/all_rels_for_pers>>
-+----------------------------------------------------------------------------->>
++-------------------------------------------------------------------------------------------------------------------------------------+--------------->>
+| Error                                                                                                                               | Location      >>
++-------------------------------------------------------------------------------------------------------------------------------------+--------------->>
+| /Users/katarinashaw/Documents/sdfb/app/views/relationships/all_rels_for_person.html.erb:29 :: parse error on value ["do", 29] (kDO) | Could not pars>>
++-------------------------------------------------------------------------------------------------------------------------------------+--------------->>
 
 
 +SECURITY WARNINGS+
 
-+------------+--------+------------------+-----------------+------------------>>
-| Confidence | Class  | Method           | Warning Type    | Message          >>
-+------------+--------+------------------+-----------------+------------------>>
-| High       |        |                  | Session Setting | Session secret sh>>
-| Medium     | Person | first_degree_for | SQL Injection   | Possible SQL inje>>
-+------------+--------+------------------+-----------------+------------------>>
++------------+--------+------------------+----------------------+------------------------------------------------------------------------------------->>
+| Confidence | Class  | Method           | Warning Type         | Message                                                                             >>
++------------+--------+------------------+----------------------+------------------------------------------------------------------------------------->>
+| High       |        |                  | Session Setting      | Session secret should not be included in version control near line 7                >>
+| Medium     |        |                  | Cross Site Scripting | Rails 4.1.8 does not encode JSON keys (CVE-2015-3226). Upgrade to Rails version 4.1.>>
+| Medium     |        |                  | Denial of Service    | Rails 4.1.8 is vulnerable to denial of service via XML parsing (CVE-2015-3227). Upgr>>
+| Medium     | Person | first_degree_for | SQL Injection        | Possible SQL injection near line 43: select("people.*").joins("join relationships r1>>
++------------+--------+------------------+----------------------+------------------------------------------------------------------------------------->>
 
 
 
 Controller Warnings:
 
-+------------+-----------------------+----------------------------+----------->>
-| Confidence | Controller            | Warning Type               | Message   >>
-+------------+-----------------------+----------------------------+----------->>
-| Medium     | ApplicationController | Cross-Site Request Forgery | protect_fr>>
-+------------+-----------------------+----------------------------+----------->>
-
++------------+-----------------------+----------------------------+-------------------------------------------------------------------+
+| Confidence | Controller            | Warning Type               | Message                                                           |
++------------+-----------------------+----------------------------+-------------------------------------------------------------------+
+| Medium     | ApplicationController | Cross-Site Request Forgery | protect_from_forgery should be configured with 'with: :exception' |
++------------+-----------------------+----------------------------+-------------------------------------------------------------------+
 
 
 Model Warnings:
 
-+------------+-------------------+-----------------+-------------------------->>
-| Confidence | Model             | Warning Type    | Message                  >>
-+------------+-------------------+-----------------+-------------------------->>
-| Weak       | Flag              | Mass Assignment | Potentially dangerous att>>
-| Weak       | GroupAssignment   | Mass Assignment | Potentially dangerous att>>
-| Weak       | GroupAssignment   | Mass Assignment | Potentially dangerous att>>
-| Weak       | GroupCatAssign    | Mass Assignment | Potentially dangerous att>>
-| Weak       | GroupCatAssign    | Mass Assignment | Potentially dangerous att>>
-| Weak       | Person            | Mass Assignment | Potentially dangerous att>>
-| Weak       | RelCatAssign      | Mass Assignment | Potentially dangerous att>>
-| Weak       | RelCatAssign      | Mass Assignment | Potentially dangerous att>>
-| Weak       | UserGroupContrib  | Mass Assignment | Potentially dangerous att>>
-| Weak       | UserPersonContrib | Mass Assignment | Potentially dangerous att>>
-| Weak       | UserRelContrib    | Mass Assignment | Potentially dangerous att>>
-| Weak       | UserRelContrib    | Mass Assignment | Potentially dangerous att>>
-+------------+-------------------+-----------------+-------------------------->>
++------------+-------------------+-----------------+------------------------------------------------------------------------------------------+
+| Confidence | Model             | Warning Type    | Message                                                                                  |
++------------+-------------------+-----------------+------------------------------------------------------------------------------------------+
+| Weak       | Flag              | Mass Assignment | Potentially dangerous attribute available for mass assignment: :assoc_object_id          |
+| Weak       | GroupAssignment   | Mass Assignment | Potentially dangerous attribute available for mass assignment: :group_id                 |
+| Weak       | GroupAssignment   | Mass Assignment | Potentially dangerous attribute available for mass assignment: :person_id                |
+| Weak       | GroupCatAssign    | Mass Assignment | Potentially dangerous attribute available for mass assignment: :group_category_id        |
+| Weak       | GroupCatAssign    | Mass Assignment | Potentially dangerous attribute available for mass assignment: :group_id                 |
+| Weak       | Person            | Mass Assignment | Potentially dangerous attribute available for mass assignment: :odnb_id                  |
+| Weak       | RelCatAssign      | Mass Assignment | Potentially dangerous attribute available for mass assignment: :relationship_category_id |
+| Weak       | RelCatAssign      | Mass Assignment | Potentially dangerous attribute available for mass assignment: :relationship_type_id     |
+| Weak       | UserGroupContrib  | Mass Assignment | Potentially dangerous attribute available for mass assignment: :group_id                 |
+| Weak       | UserPersonContrib | Mass Assignment | Potentially dangerous attribute available for mass assignment: :person_id                |
+| Weak       | UserRelContrib    | Mass Assignment | Potentially dangerous attribute available for mass assignment: :relationship_id          |
+| Weak       | UserRelContrib    | Mass Assignment | Potentially dangerous attribute available for mass assignment: :relationship_type_id     |
++------------+-------------------+-----------------+------------------------------------------------------------------------------------------+
 
-CMU-912690:sdfb katarinashaw$ 
 

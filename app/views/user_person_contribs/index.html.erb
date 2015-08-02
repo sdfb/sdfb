@@ -27,7 +27,7 @@
                         edit_user_person_contrib_path(user_person_contrib), :class => 'btn btn-mini' %>
             <% end %>
             <% if can? :delete, user_person_contrib %>
-              <%= link_to 'Destroy', user_person_contrib, :class => 'btn btn-mini btn-danger',method: :delete, data: { confirm: 'Are you sure that you want to permanently delete this record and all associated records?' } %>
+              <%= link_to 'Delete', user_person_contrib, :class => 'btn btn-mini btn-danger',method: :delete, data: { confirm: 'Are you sure that you want to permanently delete this record and all associated records?' } %>
             <% end %>
           </td>
         </tr>
