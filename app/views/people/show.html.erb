@@ -2,7 +2,7 @@
 
 <div class="row">
   <div class="span12">
-    <h1><%= @person.display_name %>
+    <h1><%= @person.display_name %><%= link_to("Visualize", root_path(:id => @person.id), :class => 'btn btn-mini' ) %>
     </h1>
   </div>
 </div>

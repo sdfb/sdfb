@@ -5,6 +5,7 @@
     <% person1_name = @relationship.get_person1_name %>
     <% person2_name = @relationship.get_person2_name %>
     <h1>Relationship: <%= person1_name + " & " + person2_name%></h1>
+    <%= link_to("Visualize", root_path(:id => @relationship.person1_index, :id2 => @relationship.person2_index), :class => 'btn btn-mini' ) %>
   </div>
 </div>
 <br>
