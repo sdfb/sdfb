@@ -33,12 +33,14 @@ Sdfb::Application.configure do
   # with SQLite, MySQL, and PostgreSQL)
   #config.active_record.auto_explain_threshold_in_seconds = 0.5
 
-  # Do not compress 
+  # Do compress assets
   config.assets.enabled = true
+  config.assets.js_compressor = :uglifier
   config.assets.compress = true
   config.serve_static_files = true
-  config.assets.compile = true
-  config.assets.digest = false
+  config.serve_static_assets = true
+  config.assets.compile = false
+  config.assets.digest = true
   # Expands the lines which load the assets
   config.assets.debug = false
 
