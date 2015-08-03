@@ -48,7 +48,6 @@ Sdfb::Application.routes.draw do
 
   resources :users
   
-
   resources :home do
     get :autocomplete_person_search_names_all, on: :collection
     get :autocomplete_group_name, on: :collection
@@ -75,11 +74,14 @@ Sdfb::Application.routes.draw do
     get :autocomplete_person_search_names_all, on: :collection
   end
 
-
+  # how to use autocomplete
+  # this is an example of how autocomplete is setup
+  # autocomplete also must be setup in the ability.rb file so people have access to it
+  # set up is required in the forms as the option "<%= f.input :person_autocomplete, as: :autocomplete, url: autocomplete_person_search_names_all_group_assignments_path, input_html: { 'data-id-element' => '#group_assignment_person_id' }, label: "Person", placeholder: "name" %>"
+  # must also be setup in the controller: autocomplete :person, :search_names_all, full: true, :extra_data => [:display_name, :ext_birth_year], :display_value => :autocomplete_name
   resources :people do
     get :autocomplete_person_search_names_all, on: :collection
   end
-
 
   resources :user_person_contribs do
     get :autocomplete_person_search_names_all, on: :collection
@@ -90,6 +92,11 @@ Sdfb::Application.routes.draw do
     get :autocomplete_person_search_names_all, on: :collection
   end
 
+  # how to export
+  # update the controller with a method such as "def export_group_categories..." in the group_categories_controller
+  # you need to make a new route for the page here
+  # the route references the controller and the method such as 'group_categories#export_group_categories'
+  # make a link to the export of the record type's index page such as index.html.erb for group_categories "<%=link_to 'Export Data', '/export_group_categories', :class => 'btn btn-primary'%>"
   # Routing for group category record export
   match '/export_group_categories' => 'group_categories#export_group_categories', :via => [:get]
 
