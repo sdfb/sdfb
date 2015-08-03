@@ -10166,7 +10166,8 @@ Graph.prototype = {
 
     this.d3Circles = node.append("circle")
       .style("fill", bind(this, this.getClusterColor))
-      .style("stroke", bind(this, this.getStrokeColor))
+      .style("stroke", CIRCLE_STROKE)
+      .style("stroke-width", bind(this, this.getStrokeWidth))
       .attr("r", circleRadius);
 
     this.d3TitleNodes = node.append("text")
@@ -10540,6 +10541,12 @@ Graph.prototype = {
       , count = 0;
 
     this.d3Circles
+      .style("stroke-width", function(e) {
+        // if (e.getSize == 30) {
+        //   return 30; 
+        // }
+        return self.getStrokeWidth;
+      })
       .style('fill', function(e) {
         var el, $el, yes, no;
 
@@ -11213,6 +11220,16 @@ Graph.prototype = {
     }
     else {
       return "#FFF";
+    }
+  },
+
+  getStrokeWidth: function(node) {
+    var size = this.getSize(node);
+    if (size == 30) {
+      return  5;
+    }
+    else {
+      return 1;
     }
   },
 
