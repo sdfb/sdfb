@@ -4925,10 +4925,11 @@ d3 = function() {
         var l = e.region.l.index, r = e.region.r.index;
         if (graph[l][r]) return;
         graph[l][r] = graph[r][l] = true;
+        var spaceString = " & ";
         links.push({
           source: data[l],
           target: data[r],
-          text: source.text
+          text: source.text.concat(spaceString, target.text)
         });
       });
       return links;
