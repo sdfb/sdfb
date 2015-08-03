@@ -147,7 +147,7 @@ function twoDegs(id, id2, people) {
     graph.on("edge:mouseover", function(d) {
       var id1 = parseInt(d.source.id);
       var id2 = parseInt(d.target.id);
-      return ({"text": "hi"});
+      console.log(d.text);
     });
   
     graph.on("edge:click", function(d) {

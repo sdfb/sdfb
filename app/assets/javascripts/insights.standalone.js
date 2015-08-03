@@ -4925,11 +4925,15 @@ d3 = function() {
         var l = e.region.l.index, r = e.region.r.index;
         if (graph[l][r]) return;
         graph[l][r] = graph[r][l] = true;
+        var per1 = data[l].text;
+        var per2 = data[r].text;
         var spaceString = " & ";
+        var pathText = per1.concat(spaceString, per2);
         links.push({
           source: data[l],
           target: data[r],
-          text: source.text.concat(spaceString, target.text)
+          text:  $("#edge-nodes").html()
+          //text: source.text.concat(spaceString, target.text)
         });
       });
       return links;
