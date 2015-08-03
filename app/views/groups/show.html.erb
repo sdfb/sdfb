@@ -57,11 +57,16 @@
         
         <dt><strong>Start Year:</strong></dt>
         <% if ! @group.start_year.blank? %>
-          <dd><%= @group.start_year %></dd>
+          <dd>
+          <% if (@group.start_date_type == "CA") && (@group.start_year == 1500) %>
+            The default start year (<%= @group.start_year %>) is used.
+          <% else %>
+            <%= @group.start_year %>
+          <% end %>
+          </dd>
         <% else %>
           <dd>Unknown</dd>
         <% end %>
-        
         <dt><strong>End Date Type:</strong></dt>
         <% if ! @group.end_date_type.blank? %>
           <dd>
@@ -86,7 +91,13 @@
         
         <dt><strong>End Year:</strong></dt>
         <% if ! @group.end_year.blank? %>
-          <dd><%= @group.end_year %></dd>
+          <dd>
+          <% if (@group.end_date_type == "CA") && (@group.end_year == 1700) %>
+            The default end year (<%= @group.end_year %>) is used.
+          <% else %>
+            <%= @group.end_year %>
+          <% end %>
+          </dd>
         <% else %>
           <dd>Unknown</dd>
         <% end %>
@@ -121,7 +132,7 @@
           <dt><strong>Is Rejected:</strong></dt>
           <dd><%= @group.is_rejected %></dd>
         <% end %>
-      </dl>
+      </dl>      
     </div>
   </div>
     <div class="span7">
