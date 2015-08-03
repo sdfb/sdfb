@@ -78,9 +78,10 @@ function createNodeKey(node, id) {
 }
 
 function createEdgeKey(node1, node2) {
-  var node1 = node1["id"] 
-  var node2 = node2["id"]
-  return {"n1": node1, "n2": node2}
+  // var node1 = node1["id"] 
+  // var node2 = node2["id"]
+  var text = node1["display_name"] + " & " + node2["display_name"];
+  return {"n1": node1, "n2": node2, "text": "lol" };
 }
 
 function twoDegs(id, id2, people) {
@@ -142,15 +143,13 @@ function twoDegs(id, id2, people) {
     });
 
     graph.on("node:dblclick", function(d) {
-      console.log("dblclick");
     });
 
     graph.on("edge:mouseover", function(d) {
       var id1 = parseInt(d.source.id);
       var id2 = parseInt(d.target.id);
-      //console.log(people[id1]);
-      //graph.tooltip("<div class='btn' >"+"{{edgeText}}" + "</div>")
-      graph.tooltip(people[id1]["display_name"] + " & " + people[id2]["display_name"]);
+      console.log(d);
+     // $('d').tooltip({title:"hey"});
     });
   
     graph.on("edge:click", function(d) {
@@ -169,9 +168,9 @@ function twoDegs(id, id2, people) {
         accordion("edge");
     });
 
-    graph.on("node:mouseover", function(d) {
-      graph.tooltip("<div class='btn' >"+"{{text}}" + "</div>");
-    });
+
+    graph.tooltip("<div class='btn' >"+"{{text}}" + "</div>");
+  
     
 
     $('#zoom button.icon').click(function(e){

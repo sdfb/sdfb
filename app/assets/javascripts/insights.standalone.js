@@ -10332,19 +10332,25 @@ Graph.prototype = {
     var self = this 
     , e = d3.event;
 
-    var offset = 0;
+    var offset = 1;
+
+    var offset = { 
+      left: currentMousePos.x + 10, 
+      top: currentMousePos.y + 10 
+    };
 
     this.showTooltip(offset, d);
 
-    this.emit("edge:mouseover", d);
+    this.emit("edge:mouseover", d,offset);
+
   },
 
   onPathOut: function(d) {
-    this.hideTooltip();
+   this.hideTooltip();
 
-    if (!this.isPathVisible(d)) {
-      return;
-    } 
+    // if (!this.isPathVisible(d)) {
+    //   return;
+    // } 
 
     this.emit("edge:mouseout", d);
   },
