@@ -4927,7 +4927,8 @@ d3 = function() {
         graph[l][r] = graph[r][l] = true;
         links.push({
           source: data[l],
-          target: data[r]
+          target: data[r],
+          text: source.text
         });
       });
       return links;
@@ -9903,7 +9904,8 @@ Graph.prototype = {
       // build link list
       linksList.push({
         source: source,
-        target: target
+        target: target,
+        text: source.text
       });
     });
 
@@ -9981,6 +9983,10 @@ Graph.prototype = {
     }
 
     return;
+  },
+
+  pathVal: function() {
+
   },
 
   /**
@@ -10145,6 +10151,7 @@ Graph.prototype = {
 
     this.d3Path = this.parent.append("svg:g").selectAll("path")
       .data(force.links())
+      .text(function(d) {return self.getText(d)})
       .enter().append("svg:path")
       .attr("class", "edge")
       .attr("cursor", "pointer")
@@ -10339,6 +10346,10 @@ Graph.prototype = {
       left: currentMousePos.x + 10, 
       top: currentMousePos.y + 10 
     };
+
+    if (!this.isPathVisible(d)) {
+      return;
+    }
 
     this.showTooltip(offset, d);
 
@@ -10542,9 +10553,6 @@ Graph.prototype = {
 
     this.d3Circles
       .style("stroke-width", function(e) {
-        // if (e.getSize == 30) {
-        //   return 30; 
-        // }
         return self.getStrokeWidth;
       })
       .style('fill', function(e) {

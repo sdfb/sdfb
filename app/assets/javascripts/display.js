@@ -78,10 +78,8 @@ function createNodeKey(node, id) {
 }
 
 function createEdgeKey(node1, node2) {
-  // var node1 = node1["id"] 
-  // var node2 = node2["id"]
   var text = node1["display_name"] + " & " + node2["display_name"];
-  return {"n1": node1, "n2": node2, "text": "lol" };
+  return {"text": text };
 }
 
 function twoDegs(id, id2, people) {
@@ -143,13 +141,13 @@ function twoDegs(id, id2, people) {
     });
 
     graph.on("node:dblclick", function(d) {
+      // researches network
     });
 
     graph.on("edge:mouseover", function(d) {
       var id1 = parseInt(d.source.id);
       var id2 = parseInt(d.target.id);
-      console.log(d);
-     // $('d').tooltip({title:"hey"});
+      return ({"text": "hi"});
     });
   
     graph.on("edge:click", function(d) {
