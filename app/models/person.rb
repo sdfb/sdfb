@@ -97,9 +97,34 @@ class Person < ActiveRecord::Base
   before_destroy :delete_associated_relationships
   before_create :add_display_name_if_blank
   before_update :add_display_name_if_blank
+  #after_update :update_status_of_associated
 
   # Custom Methods
   # -----------------------------
+
+  # This is an example for cascade reject
+  # This method makes associated records active/rejected
+  # I don't think this makes sense for unapproved because associated records have separate approval processes
+  # This doesn't work because there are callbacks on these other entities that prevent changes from being made since that causes recursive calls
+  # def update_status_of_associated
+  #   is_active_input = self.is_active
+  #   is_rejected_input = self.is_rejected
+  #   # if the person is inactive or rejected then make associated records inactive rejected
+  #   if ((self.is_rejected == true) || (self.is_active == false))
+  #     # loop through each group assignment and update the status
+  #     GroupAssignment.all_for_person(self.id).each do |ga|
+  #       GroupAssignment.update(ga.id, is_rejected: is_rejected_input, is_active: is_active_input)
+  #     end
+  #     # loop through each note and update the status
+  #     UserPersonContrib.all_for_person(self.id).each do |upc|
+  #       UserPersonContrib.update(upc.id, is_rejected: is_rejected_input, is_active: is_active_input)
+  #     end
+  #     # loop through each relationship and update the status
+  #     Relationship.all_for_person(self.id).each do |rel|
+  #       Relationship.update(rel.id, is_rejected: is_rejected_input, is_active: is_active_input)
+  #     end
+  #   end
+  # end
 
   # if the display name is blank then add one
   def add_display_name_if_blank
