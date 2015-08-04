@@ -351,7 +351,7 @@ function init() {
     if (people[0] == "nodelimit"){
       $("#group-table").hide();
       $("#kickback").show();
-      $('#kickbackyes').attr('href', "/people_relationships?id=" + people[1]);
+      $('#kickbackyes').hide();
       $( "#kickbackno" ).click(function() {
         $("#kickback").hide();
         $("#search-network-name").val(people[2][0]["display_name"]);
