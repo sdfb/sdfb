@@ -401,7 +401,7 @@ function init() {
       $("#group-icon-tag2").attr("href", "/group_assignments/new?group_id=" + group2["id"]);
     }
     $.each(group_members, function(index, value) { 
-      $( "#group-table" ).append( "<div class='group-row'><div class='col-md'>" + group_members[index]["display_name"] + "</div><div class='col-md'>" + group_members[index]["ext_birth_year"] + "</div><div class='col-md'>" + group_members[index]["ext_death_year"] + "</div><div class='col-md'><a href='/people/" + group_members[index]["id"] + "'>" + + group_members[index]["id"] + "</a></div></div>");
+      $( "#group-table" ).append( "<tr><td>" + group_members[index]["display_name"] + "</td><td>" + group_members[index]["ext_birth_year"] + "</td><td>" + group_members[index]["ext_death_year"] + "</td><td><a href='/people/" + group_members[index]["id"] + "'>" + + group_members[index]["id"] + "</a></td></tr>");
     });
   }
 }
