@@ -399,25 +399,16 @@ class Person < ActiveRecord::Base
 		@zeroDegreePerson2Rel[person_id2] = person_id2
     if @zeroDegreePerson2[person_id2.to_i]['rel_sum'].length > 100
       @found = self.find_relationship(person_id1.to_i, @zeroDegreePerson2[person_id2.to_i]['rel_sum'])
-      if @found != "None"
-        display_name1 = Person.select("display_name").where("id = ?", person_id1.to_i)
-        display_name2 = Person.select("display_name").where("id = ?", person_id2.to_i)        
-        return ["nodelimit_network", @found[2], person_id1.to_i, person_id2.to_i, display_name1, display_name2]
-      else
-        display_name = Person.select("display_name").where("id = ?", person_id2.to_i)
-        return ["nodelimit", person_id2.to_i, display_name]
-      end
+      display_name1 = Person.select("display_name").where("id = ?", person_id1.to_i)
+      display_name2 = Person.select("display_name").where("id = ?", person_id2.to_i)        
+      return ["nodelimit_network", @found[2], person_id1.to_i, person_id2.to_i, display_name1, display_name2]
     end
     if @zeroDegreePerson1[person_id1.to_i]['rel_sum'].length > 100
       @found = self.find_relationship(person_id2.to_i, @zeroDegreePerson1[person_id1.to_i]['rel_sum'])
-      if @found != "None"
-        display_name1 = Person.select("display_name").where("id = ?", person_id1.to_i)
-        display_name2 = Person.select("display_name").where("id = ?", person_id2.to_i)
-        return ["nodelimit_network", @found[2], person_id1.to_i, person_id2.to_i, display_name1, display_name2]
-      else
-        display_name = Person.select("display_name").where("id = ?", person_id1.to_i)
-        return ["nodelimit", person_id1.to_i, display_name]
-      end
+      display_name1 = Person.select("display_name").where("id = ?", person_id1.to_i)
+      display_name2 = Person.select("display_name").where("id = ?", person_id2.to_i)
+      return ["nodelimit_network", @found[2], person_id1.to_i, person_id2.to_i, display_name1, display_name2]
+
     end
 		@zeroDegreePerson2[person_id2.to_i]['rel_sum'].each do |firstDegreePerson2|
       #check that relationship is within the date and confidence range

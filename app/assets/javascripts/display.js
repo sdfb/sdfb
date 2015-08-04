@@ -29,12 +29,12 @@ Num_rels Cluster    Color
 //returns cluster number based on number of relationships the cluster has
 
 function getClusterRels(node){
-	try{
-		var size = Object.keys(node).length;
-	}
-	catch(err) {
-		var size = 0;
-	}
+  try{
+    var size = Object.keys(node).length;
+  }
+  catch(err) {
+    var size = 0;
+  }
 
    if (size >= 50){
      return 6;
@@ -349,8 +349,10 @@ function init() {
   sidebarSearch(people);
   if (people != undefined){
     if (people[0] == "nodelimit"){
+      console.log("node limit reached")
       $("#group-table").hide();
       $("#kickback").show();
+      $('#kickbackyes').attr('href', "/people_relationships?id=" + people[1]);
       $( "#kickbackno" ).click(function() {
         $("#kickback").hide();
         $("#search-network-name").val(people[2][0]["display_name"]);
@@ -359,11 +361,11 @@ function init() {
         $("#search-button").click();
       });
     }
-  	
-	  if (people[0] == "nodelimit_network"){
+    
+    if (people[0] == "nodelimit_network"){
+      console.log("network");
       $("#group-table").hide();
       $("#kickback").show();
-      $('#kickbackyes').attr('href', "/relationships/" + people[1]);
       $('#kickbackyes').hide();
       $("#kickbackno" ).click(function() {
         $("#kickback").hide();
@@ -376,7 +378,7 @@ function init() {
         $("#search-button" ).click();
         $("#search-shared-network").click();
       });
-	  }
+    }
   }
 
   if (getParam("group").length == 0){
@@ -401,7 +403,7 @@ function init() {
       $("#group-icon-tag2").attr("href", "/group_assignments/new?group_id=" + group2["id"]);
     }
     $.each(group_members, function(index, value) { 
-      $( "#group-table" ).append( "<tr><td class='col-md'>" + group_members[index]["display_name"] + "</td><td class='col-md'>" + group_members[index]["ext_birth_year"] + "</td><td class='col-md'>" + group_members[index]["ext_death_year"] + "</td><td class='col-md'><a href='/people/" + group_members[index]["id"] + "'>" + + group_members[index]["id"] + "</a></td></tr>");
+      $( "#group-table" ).append( "<div class='group-row'><div class='col-md'>" + group_members[index]["display_name"] + "</div><div class='col-md'>" + group_members[index]["ext_birth_year"] + "</div><div class='col-md'>" + group_members[index]["ext_death_year"] + "</div><div class='col-md'><a href='/people/" + group_members[index]["id"] + "'>" + + group_members[index]["id"] + "</a></div></div>");
     });
   }
 }
