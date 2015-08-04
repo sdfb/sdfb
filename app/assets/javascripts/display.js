@@ -351,7 +351,6 @@ function init() {
     if (people[0] == "nodelimit"){
       $("#group-table").hide();
       $("#kickback").show();
-      $('#kickbackyes').hide();
       $( "#kickbackno" ).click(function() {
         $("#kickback").hide();
         $("#search-network-name").val(people[2][0]["display_name"]);
@@ -365,6 +364,7 @@ function init() {
       $("#group-table").hide();
       $("#kickback").show();
       $('#kickbackyes').attr('href', "/relationships/" + people[1]);
+      $('#kickbackyes').hide();
       $("#kickbackno" ).click(function() {
         $("#kickback").hide();
         $("#search-shared-network-name1").val(people[4][0]["display_name"]);
