@@ -77,6 +77,11 @@ function createNodeKey(node, id) {
   return {"text": node["display_name"], "size": 10, "id": id,  "cluster": getClusterRels(node["rel_sum"])};
 }
 
+function createEdgeKey(node1, node2) {
+  var text = node1["display_name"] + " & " + node2["display_name"];
+  return {"text": text };
+}
+
 function twoDegs(id, id2, people) {
   var keys = {};
   var edges = [];
@@ -88,14 +93,14 @@ function twoDegs(id, id2, people) {
       var q = value[0];
       keys[q] = createNodeKey(people[q],q);
       if (notInArray(edges, [id, value[0]])) {
-       edges.push([id, value[0]]);
+       edges.push([id, value[0]], createEdgeKey(p, people[q]));
       }
       $.each(people[q].rel_sum, function(index, value1) { 
         var r = value1[0];
         if (r in people){
           keys[r] = createNodeKey(people[r],r);
           if (notInArray(edges, [value[0], value1[0]])) {
-           edges.push([value[0], value1[0]]);
+           edges.push([value[0], value1[0]], createEdgeKey(people[q], people[r]));
           }
         }
       });
@@ -151,7 +156,10 @@ function twoDegs(id, id2, people) {
         accordion("edge");
     });
 
+
     graph.tooltip("<div class='btn' >"+"{{text}}" + "</div>");
+  
+    
 
     $('#zoom button.icon').click(function(e){
         if (this.name == 'in') {

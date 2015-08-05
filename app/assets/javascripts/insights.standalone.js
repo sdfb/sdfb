@@ -4925,9 +4925,15 @@ d3 = function() {
         var l = e.region.l.index, r = e.region.r.index;
         if (graph[l][r]) return;
         graph[l][r] = graph[r][l] = true;
+        // var per1 = data[l].text;
+        // var per2 = data[r].text;
+        // var spaceString = " & ";
+        var pathText = $("#edge-nodes").html();
         links.push({
           source: data[l],
-          target: data[r]
+          target: data[r],
+          text: pathText
+          //text: source.text.concat(spaceString, target.text)
         });
       });
       return links;
@@ -9903,7 +9909,8 @@ Graph.prototype = {
       // build link list
       linksList.push({
         source: source,
-        target: target
+        target: target,
+        text: source.text
       });
     });
 
@@ -9981,6 +9988,10 @@ Graph.prototype = {
     }
 
     return;
+  },
+
+  pathVal: function() {
+
   },
 
   /**
@@ -10145,13 +10156,17 @@ Graph.prototype = {
 
     this.d3Path = this.parent.append("svg:g").selectAll("path")
       .data(force.links())
+      .text(function(d) {return self.getText(d)})
       .enter().append("svg:path")
       .attr("class", "edge")
       .attr("cursor", "pointer")
       .attr("stroke", bind(this, this.pathStroke))
       .attr("stroke-width", PATH_STROKE_WIDTH)
       .attr("fill", "none")
-      .on("dblclick", bind(this, this.onPathClick));
+      //.on("mouseover", bind(this, this.onPathOver))
+      //.on("mouseout", bind(this, this.onPathOut))
+      .on("click", bind(this, this.onPathClick));
+
     
     var node = this.d3Nodes = this.parent.selectAll(".node")
       .data(force.nodes())
@@ -10163,6 +10178,8 @@ Graph.prototype = {
 
     this.d3Circles = node.append("circle")
       .style("fill", bind(this, this.getClusterColor))
+      .style("stroke", CIRCLE_STROKE)
+      .style("stroke-width", bind(this, this.getStrokeWidth))
       .attr("r", circleRadius);
 
     this.d3TitleNodes = node.append("text")
@@ -10279,7 +10296,6 @@ Graph.prototype = {
     var self = this
       , e = d3.event;
 
-    // To avoid focusing hidden elements
     if (!self.isNodeVisible(d)) {
       return;
     } else {
@@ -10289,6 +10305,22 @@ Graph.prototype = {
 
     this.focus(d.id).update();
     this.emit("node:click", d);
+  },
+
+  onNodeClick: function(d) {
+    var self = this
+      , e = d3.event;
+
+    //To avoid focusing hidden elements
+    if (!self.isNodeVisible(d)) {
+      return;
+    } else {
+      e.preventDefault();
+      e.stopPropagation();
+    }
+
+    this.focus(d.id).update();
+    this.emit("node:dblclick", d);
   },
 
   onPathClick: function(d) {
@@ -10308,6 +10340,43 @@ Graph.prototype = {
     this.emit("edge:click", d);
   },
 
+  onPathOver: function(d)  {
+    var self = this 
+    , e = d3.event;
+
+    var offset = 1;
+
+    var offset = { 
+      left: currentMousePos.x + 10, 
+      top: currentMousePos.y + 10 
+    };
+
+    if (!this.isPathVisible(d)) {
+      return;
+    }
+
+    this.showTooltip(offset, d);
+
+    this.emit("edge:mouseover", d,offset);
+
+  },
+
+  onPathOut: function(d) {
+   this.hideTooltip();
+
+    // if (!this.isPathVisible(d)) {
+    //   return;
+    // } 
+
+    this.emit("edge:mouseout", d);
+  },
+
+  /**
+   * Finds the first node that matches the passed fn
+   *
+   * @api private
+   */
+  
   /**
    * Handler for circle mouse over event
    *
@@ -10487,6 +10556,9 @@ Graph.prototype = {
       , count = 0;
 
     this.d3Circles
+      .style("stroke-width", function(e) {
+        return self.getStrokeWidth;
+      })
       .style('fill', function(e) {
         var el, $el, yes, no;
 
@@ -11151,6 +11223,26 @@ Graph.prototype = {
     }
 
     return (this.clustersObj[c] || {}).color;
+  },
+
+  getStrokeColor: function(node) {
+    var size = this.getSize(node);
+    if (size == 30) {
+      return  "#000";
+    }
+    else {
+      return "#FFF";
+    }
+  },
+
+  getStrokeWidth: function(node) {
+    var size = this.getSize(node);
+    if (size == 30) {
+      return  5;
+    }
+    else {
+      return 1;
+    }
   },
 
   tooltip: function(tmpl) {
