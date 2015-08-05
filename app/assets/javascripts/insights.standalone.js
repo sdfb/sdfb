@@ -4925,14 +4925,14 @@ d3 = function() {
         var l = e.region.l.index, r = e.region.r.index;
         if (graph[l][r]) return;
         graph[l][r] = graph[r][l] = true;
-        var per1 = data[l].text;
-        var per2 = data[r].text;
-        var spaceString = " & ";
-        var pathText = per1.concat(spaceString, per2);
+        // var per1 = data[l].text;
+        // var per2 = data[r].text;
+        // var spaceString = " & ";
+        var pathText = $("#edge-nodes").html();
         links.push({
           source: data[l],
           target: data[r],
-          text:  $("#edge-nodes").html()
+          text: pathText
           //text: source.text.concat(spaceString, target.text)
         });
       });
@@ -10163,8 +10163,8 @@ Graph.prototype = {
       .attr("stroke", bind(this, this.pathStroke))
       .attr("stroke-width", PATH_STROKE_WIDTH)
       .attr("fill", "none")
-      .on("mouseover", bind(this, this.onPathOver))
-      .on("mouseout", bind(this, this.onPathOut))
+      //.on("mouseover", bind(this, this.onPathOver))
+      //.on("mouseout", bind(this, this.onPathOut))
       .on("click", bind(this, this.onPathClick));
     
     var node = this.d3Nodes = this.parent.selectAll(".node")
