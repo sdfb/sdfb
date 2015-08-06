@@ -21,5 +21,4 @@
 //= require accordion
 //= require bootstrap.min
 //= require autocomplete-rails
-//= require d3
 //= require display
