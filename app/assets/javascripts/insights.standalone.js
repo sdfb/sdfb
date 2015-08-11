@@ -10174,7 +10174,7 @@ Graph.prototype = {
       .attr("class", "node")
       .on("mouseover", bind(this, this.onMouseOver))
       .on("mouseout", bind(this, this.onMouseOut))
-      .on("dblclick", bind(this, this.onCircleClick));
+      .on("click", bind(this, this.onCircleClick));
 
     this.d3Circles = node.append("circle")
       .style("fill", bind(this, this.getClusterColor))
