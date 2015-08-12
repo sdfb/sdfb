@@ -43,6 +43,9 @@ typelist_type.sort(function(a, b) {
   $("#edge-GoogleLink").attr("href", "http://www.google.com/search?q="+ source.replace(/ /g, '+')+ "+" + target.replace(/ /g, '+'));
   $("#edge-JstorLink").attr("href", "http://www.jstor.org/action/doBasicSearch?Query="+ source.replace(/ /g, '+')+ "+" + target.replace(/ /g, '+'));
 
+  $("#relationship-table").html("");
+
+
   $.each( typelist_confidence, function( key, value ) {
     $( "#relationship-table" ).append('<div class="relationship-row relationship-confidence-sort">' +
                                       '<div class="relationship-type relationship-cell">' + value [2] +'</div>' +
