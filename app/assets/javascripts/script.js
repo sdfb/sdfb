@@ -317,6 +317,8 @@ $(document).ready(function() {
             $("#nav-slider-confidence-sinput").val(ui.values[0]);
             $("#nav-slider-confidence-einput").val(ui.values[1]);            
             $("#nav-slider-confidence-result-hidden").val(ui.values[0] + " - " + ui.values[1]);
+            $("#nav-slider-confidence-result").html( sresult + " to " + eresult);
+
         }
     });
 
@@ -325,6 +327,9 @@ $(document).ready(function() {
         if ($(this).val() < range[1] && $(this).val() >= default_sconfidence){
             $("#nav-slider-confidence").slider( "option", "values", [$(this).val(), range[1]]);
             $("#nav-slider-confidence-result-hidden").val($(this).val() + " - " + range[1]);
+            var eresult = getConfidence(range[1]);
+            var sresult = getConfidence($(this).val());
+            $("#nav-slider-confidence-result").html( sresult + " to " + eresult);
         }else{
             $(this).val(range[0]);
         }
@@ -335,6 +340,9 @@ $(document).ready(function() {
         if ($(this).val() > range[0] && $(this).val() <= default_econfidence){
             $("#nav-slider-confidence").slider( "option", "values", [range[0], $(this).val()]);
             $("#nav-slider-confidence-result-hidden").val(range[0]+ " - " + $(this).val());
+            var sresult = getConfidence(range[0]);
+            var eresult = getConfidence($(this).val());
+            $("#nav-slider-confidence-result").html( sresult + " to " + eresult);
         }else{
             $(this).val(range[1]);
         }
