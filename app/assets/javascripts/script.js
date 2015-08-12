@@ -76,6 +76,17 @@ $(document).ready(function() {
         $("#search-network-show-table").attr('href', "/people/" + $("#search-network-name-id").val());
     });
 
+    $("#relationship-type").click(function(){
+        $(".relationship-type-sort").show();
+        $(".relationship-confidence-sort").hide();
+    });
+
+    $("#relationship-confidence").click(function(){
+        $(".relationship-type-sort").hide();
+        $(".relationship-confidence-sort").show();
+    });
+
+
     // Color guide
     // $("#icon-color").click(function(){
     //     if( $('#guide').css('display') == 'none' ){
