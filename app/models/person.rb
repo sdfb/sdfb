@@ -630,31 +630,31 @@ class Person < ActiveRecord::Base
 
   def get_person_name
     person_name = ""
-    if (prefix != "")
+    if (!prefix.blank?)
       person_name += prefix
     end
-    if (first_name != "")
+    if (!first_name.blank?)
       if (person_name == "")
         person_name += first_name
       else
         person_name += " " + first_name
       end
     end
-    if (last_name != "")
+    if (!last_name.blank?)
       if (person_name == "")
         person_name += last_name
       else
         person_name += " " + last_name
       end
     end
-    if (suffix != "")
+    if (!suffix.blank?)
       if (person_name == "")
         person_name += suffix
       else
         person_name += " " + suffix
       end
     end
-    if (title != "")
+    if (!title.blank?)
       if (person_name == "")
         person_name += title
       else

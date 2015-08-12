@@ -6,12 +6,12 @@ class LargeDataController < ApplicationController
 	end
 
 	def show 
-		render :text => params.inspect
-		# @data_file = LargeData.find(params[:data_id]) 
-		# duplicates = @data_file.display_duplicates_in_db
-		# duplicates = @data_file.modify_duplicates(duplicates,params)
-		# @data_file.merge_and_remove_duplicates(duplicates) if @duplicates.nil? || @duplicates.empty?
-		# @data_file.populate_new
+		#render :text => params.inspect
+		@data_file = LargeData.find(params[:data_id]) 
+		duplicates = @data_file.display_duplicates_in_db
+		duplicates = @data_file.modify_duplicates(duplicates,params)
+		@data_file.merge_and_remove_duplicates(duplicates) if @duplicates.nil? || @duplicates.empty?
+		@data_file.populate_new
 	end
 
 	def new 

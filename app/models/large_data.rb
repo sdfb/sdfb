@@ -75,13 +75,15 @@ class LargeData < ActiveRecord::Base
 			last_name_index = header_row.index("last_name")
 			birth_year_index = header_row.index("ext_birth_year")
 			death_year_index = header_row.index("ext_death_year")
-			return false if first_name_index.nil? || last_name_index.nil? || birth_year_index.nil? || death_year_index.nil?
+			gender_index = header_row.index("gender")
+			return false if gender_index.nil? || first_name_index.nil? || last_name_index.nil? || birth_year_index.nil? || death_year_index.nil?
 			
 			body_rows.each do |row|
 				return false if row[first_name_index].nil?
 				return false if row[last_name_index].nil?
 				return false if row[birth_year_index].nil?
 				return false if row[death_year_index].nil?
+				return false if row[gender_index].nil?
 			end
 
 		elsif (self.table_content_type == "Group")
@@ -374,10 +376,11 @@ class LargeData < ActiveRecord::Base
 		create_function = nil
 		data_object = CSV.read(file_path)
 		if (self.table_content_type == "Person") 
+			inspect_row = []
 
 			first_row = []
 				
-			data_object[0].each do |heading| 
+			data_object.delete_at(0).each do |heading| 
 				first_row.push(heading.to_sym)
 			end
 
@@ -392,7 +395,7 @@ class LargeData < ActiveRecord::Base
 				data.created_by = self.created_by #put in the created_by part for person, relationship, and group
 				self.meet_validations(data,self.table_content_type) #puts in data to pass the validations
 				data.save!
-			end  			
+			end  		
 
 		elsif (self.table_content_type == "Relationship") 
 
