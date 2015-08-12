@@ -266,15 +266,9 @@
     overflow: hidden;
 }
 
-.odnb-img{
-    max-width: 40px;
-    max-height: 40px;
-    padding:0px 5px 0px 5px;
-}
-
-.jstor-img{
-    max-width: 40px;
-    
+.odnb-img, .jstor-img{
+    height: 40px;
+    margin:0px 5px 0px 5px;
 }
 
 aside ::-webkit-scrollbar {  
