@@ -269,6 +269,12 @@
 .odnb-img{
     max-width: 40px;
     max-height: 40px;
+    padding:0px 5px 0px 5px;
+}
+
+.jstor-img{
+    max-width: 40px;
+    
 }
 
 aside ::-webkit-scrollbar {  
