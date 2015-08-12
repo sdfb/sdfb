@@ -1,0 +1,29 @@
+<% form_tag({controller: "large_data", action: "show"}, method: "post") %>
+	<% @duplicates.each do |row_number, match_array| %>
+		<div id = "Original">
+			<h2> Original Entry </h2>
+				<% 0.upto(@file_arrays[row_number].count-1) do |field_num| %>
+					<%= "#{@file_arrays[0][field_num]} : #{@file_arrays[row_number][field_num]}"%>
+					<br/>
+				<% end %>
+		</div>
+		<div id = "Matches">
+			<h2> Matches In Database </h2>
+				<% match_array.each do |group| %>
+					<%= radio_button_tag(row_number.to_s.to_sym, :chosen_match, group.id) %>
+					<%= label_tag(row_number.to_s.to_sym, "Name: #{group.name} - Start Date: #{group.start_year} - End Date: #{group.end_year} - Description: #{group.description} ") %>
+				<% end %>
+				<%= radio_button_tag(row_number.to_s.to_sym, :chosen_match, "none") %>
+				<%= label_tag(row_number.to_s.to_sym, "None of these are matches.") %>
+		</div>
+		<div id = "Match Edit">
+			<h2> Edit this match </h2>
+			<%= text_field_tag(row_number.to_s.to_sym, :name , "Name") %>
+			<%= text_field_tag(row_number.to_s.to_sym, :description , "Description") %>
+			<%= text_field_tag(row_number.to_s.to_sym, :start_year , "Start Year") %>
+			<%= text_field_tag(row_number.to_s.to_sym, :end_year , "End Year") %>
+		</div>
+		<%= hidden_field_tag(:data_id, @data_file.id) %>
+	<% end %>
+	<%= submit_tag("Submit Changes") %>
+

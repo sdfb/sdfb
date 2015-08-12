@@ -73,6 +73,8 @@ gem 'actionpack-action_caching'
 # This performs a security check, just run "brakeman" in the terminal and google and concerns
 gem "brakeman", :require => false
 
+gem "carrierwave"
+
 # To use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.0.0'
 

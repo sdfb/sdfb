@@ -1,0 +1,16 @@
+<h1> Success! </h1>
+<h2> The following have been added to the database: </h2>
+<table>
+	<tr>
+		<% CSV.read(@data_file.file_path)[0].each do |heading| %>
+			<th><%= heading %></th>
+		<% end %>
+	</tr>
+	<% CSV.read(@data_file.file_path).drop(1).each do |row| %>
+		<tr>
+			<% row.each do |cell| %>
+				<td><%= cell %></td>
+			<% end %>
+		</tr>
+	<% end %>
+</table>

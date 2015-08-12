@@ -1,0 +1,28 @@
+<h1> Uploading Your Data to SDFB </h1>
+	<h2> Instructions </h2>
+		<p>
+			Your uploaded file must be a CSV (Comma Seperated Values) file that contains a header row 
+			<li> Ensure no trailing whitespace, or maybe we'll take care of it
+			<li>
+			<li>
+			<li>
+		</p>
+	
+
+	 <div class="form-actions">
+	 	<h2> Submit </h2>
+    Please note that your submission must match the content type  <br>
+    submitted or the file will not be processed <br>
+    <%= form_for @data_file , :url => {action: 'edit'}, method: 'post', :html => { :multipart => true } do |f| %>
+    <%= f.label(:table_file_name, "File Name") %>
+  	<%= f.text_field :table_file_name %>
+  	<%= f.label(:table_content_type, "Entry Type") %>
+  	<%= f.select :table_content_type, [["Person", "Person"], ["Relationship","Relationship"], ["Group","Group"]] %>
+  	<%= f.label(:upload_data, "Choose File") %>
+	<%= f.file_field :upload_data %> <br>
+	<br>
+	<br>
+	<%= f.button :submit, :class => 'btn btn-primary', :value => "Upload File to SDFB" %>
+
+	<% end %>
+  </div>
