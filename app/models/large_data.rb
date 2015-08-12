@@ -42,6 +42,8 @@ class LargeData < ActiveRecord::Base
 	
 	# Manipulation Methods
 	# -------------------------------------------------------
+	
+	
 	def upload_data_will_change!
 		#Not sure what this does but it keeps carrierwave from crashing!
 	end

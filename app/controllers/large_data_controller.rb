@@ -8,9 +8,9 @@ class LargeDataController < ApplicationController
 	def show 
 		#render :text => params.inspect
 		@data_file = LargeData.find(params[:data_id]) 
-		duplicates = @data_file.display_duplicates_in_db
-		duplicates = @data_file.modify_duplicates(duplicates,params)
-		@data_file.merge_and_remove_duplicates(duplicates) if @duplicates.nil? || @duplicates.empty?
+		@duplicates = @data_file.display_duplicates_in_db
+		@duplicates = @data_file.modify_duplicates(@duplicates,params) if @duplicates.nil? || @duplicates.empty?
+		@data_file.merge_and_remove_duplicates(@duplicates) if @duplicates.nil? || @duplicates.empty?
 		@data_file.populate_new
 	end
 
@@ -22,20 +22,24 @@ class LargeDataController < ApplicationController
 
 	def edit #this is where the app will check for and show you any duplications
 		hash_required = user_params
-		
-		@data_file = LargeData.new(hash_required) #make sure this has a created by
-		@data_file.file_path = hash_required[:upload_data].path
-		@data_file.table_file_size = File.size?(@data_file.file_path)
-		@data_file.created_by = session[:user_id]
-		@data_file.save!
-
-		
-		@file_arrays = CSV.read(@data_file.file_path) 
-		@duplicates = @data_file.display_duplicates_in_db
-
-		render :new if !@data_file.file_formatted_correctly
-		redirect_to :action => :show if @duplicates.empty? && @data_file.file_formatted_correctly
-
+		if !hash_required.has_key?("upload_data")
+			redirect_to :action => :new 
+		else	
+			@data_file = LargeData.new(hash_required) #make sure this has a created by
+			@data_file.file_path = hash_required[:upload_data].path
+			@data_file.table_file_size = File.size?(@data_file.file_path)
+			@data_file.created_by = session[:user_id]
+			file_correct = @data_file.file_formatted_correctly
+			
+			if !file_correct
+				redirect_to :action => :new 
+			else
+				@data_file.save!
+				@file_arrays = CSV.read(@data_file.file_path) 
+				@duplicates = @data_file.display_duplicates_in_db
+				redirect_to :action => :show if @duplicates.empty?
+			end
+		end
 		#See if you can re-encode the file properly
 		#File.open(@data_file.file_path)#.encode("UTF-16be", :invalid=>:replace, :replace=>"?").encode('UTF-8')
 

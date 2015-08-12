@@ -1,2 +1,6 @@
-<h1>New Person</h1>
+<h1>New Person
+	<% if (current_user.user_type == "Admin") || (current_user.user_type == "Curator") %>
+		<%=link_to 'Import Data Files', '/large_data', :class => 'btn btn-primary'%>
+	<% end %>
+</h1>
 <%= render :partial => 'form' %>
