@@ -12,8 +12,18 @@ heroku run rake db:populate_people_search_names_all --app sdfb2
 heroku run rake db:populate_rels_2_20000 --app sdfb2
 heroku run rake db:populate_rels_20001_40000 --app sdfb2
 heroku run rake db:populate_rels_40001_60000 --app sdfb2
+heroku run rake db:populate_rels_60001_80000 --app sdfb2 
+heroku run rake db:populate_rels_80001_100000 --app sdfb2
+heroku run rake db:populate_rels_100001_120000 --app sdfb2
+heroku run rake db:populate_rels_120001_140000 --app sdfb2
+heroku run rake db:populate_rels_140001_160000 --app sdfb2
+heroku run rake db:populate_rels_160001_170542 --app sdfb2
 heroku run rake db:populate_user_rel_contribs_samples --app sdfb2
 heroku run rake db:populate_rel_start_end_date_20001_20367 --app sdfb2
 heroku run rake db:populate_rel_start_end_date_20368_40000 --app sdfb2
 heroku run rake db:populate_rel_start_end_date_50293_60000 --app sdfb2
+heroku run rake db:populate_rel_start_end_date_60917_80000 --app sdfb2
+heroku run rake db:populate_rel_start_end_date_82014_88072 --app sdfb2
+heroku run rake db:populate_rel_start_end_date_88073_100000 --app sdfb2
+heroku run rake db:populate_rel_start_end_date_101033_120000 --app sdfb2
 

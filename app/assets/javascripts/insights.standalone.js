@@ -10163,8 +10163,8 @@ Graph.prototype = {
       .attr("stroke", bind(this, this.pathStroke))
       .attr("stroke-width", PATH_STROKE_WIDTH)
       .attr("fill", "none")
-      //.on("mouseover", bind(this, this.onPathOver))
-      //.on("mouseout", bind(this, this.onPathOut))
+      .on("mouseover", bind(this, this.onPathOver))
+      .on("mouseout", bind(this, this.onPathOut))
       .on("click", bind(this, this.onPathClick));
     
     var node = this.d3Nodes = this.parent.selectAll(".node")
@@ -10358,7 +10358,7 @@ Graph.prototype = {
 
     this.showTooltip(offset, d);
 
-    this.emit("edge:mouseover", d,offset);
+    this.emit("edge:mouseover", self, offset);
 
   },
 
