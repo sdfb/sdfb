@@ -86,7 +86,7 @@ class Group < ActiveRecord::Base
       self.start_date_type = "CA"
     # if there is already a start year, check that start year is before max_year or throw error
     elsif (self.start_year.to_i > max_year)
-      errors.add(:start_year, "The start year must be before #{max_year}")
+      errors.add(:start_year, "The start year must be on or before #{max_year}")
     end
 
     # add an end year if there isn't one, check if follows rules
@@ -95,7 +95,7 @@ class Group < ActiveRecord::Base
       self.end_date_type = "CA"
     # if there is already a end year, check that end year is after min_year or throw error
     elsif (self.end_year.to_i < min_year)
-      errors.add(:end_year, "The end year must be after #{min_year}")
+      errors.add(:end_year, "The end year must be on or after #{min_year}")
     end
 
     # if the start year converted to an integer is 0 then the date was not an integer
