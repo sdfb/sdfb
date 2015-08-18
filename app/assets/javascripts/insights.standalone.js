@@ -4928,12 +4928,11 @@ d3 = function() {
         // var per1 = data[l].text;
         // var per2 = data[r].text;
         // var spaceString = " & ";
-        var pathText = $("#edge-nodes").html();
+        //var pathText = $("#edge-nodes").html();
         links.push({
           source: data[l],
           target: data[r],
-          text: pathText
-          //text: source.text.concat(spaceString, target.text)
+          text: source.text
         });
       });
       return links;
@@ -10156,15 +10155,14 @@ Graph.prototype = {
 
     this.d3Path = this.parent.append("svg:g").selectAll("path")
       .data(force.links())
-      .text(function(d) {return self.getText(d)})
       .enter().append("svg:path")
       .attr("class", "edge")
       .attr("cursor", "pointer")
       .attr("stroke", bind(this, this.pathStroke))
       .attr("stroke-width", PATH_STROKE_WIDTH)
       .attr("fill", "none")
-      //.on("mouseover", bind(this, this.onPathOver))
-      //.on("mouseout", bind(this, this.onPathOut))
+      .on("mouseover", bind(this, this.onPathOver))
+      .on("mouseout", bind(this, this.onPathOut))
       .on("click", bind(this, this.onPathClick));
 
     
@@ -10354,8 +10352,9 @@ Graph.prototype = {
     if (!this.isPathVisible(d)) {
       return;
     }
-
-    this.showTooltip(offset, d);
+    var stringg = d.source.text + " & " + d.target.text;
+    this._tooltip.setData({"text": stringg});
+    this._tooltip.show(0.5, this._tooltip.getData());
 
     this.emit("edge:mouseover", d,offset);
 
@@ -10364,9 +10363,9 @@ Graph.prototype = {
   onPathOut: function(d) {
    this.hideTooltip();
 
-    // if (!this.isPathVisible(d)) {
-    //   return;
-    // } 
+    if (!this.isPathVisible(d)) {
+      return;
+    } 
 
     this.emit("edge:mouseout", d);
   },
