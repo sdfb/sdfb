@@ -238,25 +238,31 @@ class LargeData < ActiveRecord::Base
 						new_hash[row_num] = []
 
 						if first_row.has_key?("odnb_id") #Absolute match
-							val = Person.find_by(odnb_id: row[first_row["odnb_id"]].to_i) 
+							val = Person.where(odnb_id: row[first_row["odnb_id"]].to_i) 
 							
-							if !val.nil? 
-								new_hash[row_num].push(val)
+							if !val.nil?
+								val.each do |ar_relation_obj| 
+									new_hash[row_num].push(Person.find_by(id: ar_relation_obj.id))
+								end
 							end 
 							#########break
 						end
 
 						if first_row.has_key?("first_name") && first_row.has_key?("last_name")
-							val = Person.find_by(first_name: row[first_row["first_name"]].capitalize  , last_name: row[first_row["last_name"]].capitalize) 
+							val = Person.where(first_name: row[first_row["first_name"]].capitalize  , last_name: row[first_row["last_name"]].capitalize) 
 							if !val.nil? 
-								new_hash[row_num].push(val)
+								val.each do |ar_relation_obj| 
+									new_hash[row_num].push(Person.find_by(id: ar_relation_obj.id))
+								end
 							end 
 						end
 
 						if first_row.has_key?("display_name")
 							val = Person.find_by(display_name: row[first_row["display_name"]])
 							if !val.nil? 
-								new_hash[row_num].push(val)
+								val.each do |ar_relation_obj| 
+									new_hash[row_num].push(Person.find_by(id: ar_relation_obj.id))
+								end
 							end 
 						end
 

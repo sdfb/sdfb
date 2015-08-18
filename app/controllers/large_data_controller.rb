@@ -15,8 +15,7 @@ class LargeDataController < ApplicationController
 	end
 
 	def new 
-		#commented out for testing but it works
-		#redirect_to :controller => 'sessions', :action => 'new' if (current_user.user_type != "Admin" && current_user.user_type != "Curator") 
+		redirect_to :controller => 'sessions', :action => 'new' if (current_user == false || (current_user.user_type != "Admin" && current_user.user_type != "Curator")) 
 		@data_file = LargeData.new
 		if params.has_key?(:error_string)
 			@errors = params[:error_string]
