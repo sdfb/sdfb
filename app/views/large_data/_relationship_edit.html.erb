@@ -1,31 +1,33 @@
-<% form_tag({controller: "large_data", action: "show"}, method: "post") %>
+<%= form_tag({controller: "large_data", action: "show"}, method: "post") %>
 	<% @duplicates.each do |row_number, match_array| %>
-		<div id = "Original">
-			<h2> Original Entry </h2>
-				<% 0.upto(@file_arrays[row_number].count-1) do |field_num| %>
-					<%= "#{@file_arrays[0][field_num]} : #{@file_arrays[row_number][field_num]}"%>
-					<br/>
-				<% end %>
-		</div>
-		<div id = "Matches">
-			<h2> Matches In Database </h2>
-				<% match_array.each do |relationship| %>
-					<%= radio_button_tag(row_number.to_s << "[chosen_match]", relationship.id) %>
-					<%= label_tag(row_number.to_s << "[chosen_match]", "Relationship between #{person.find(relationship.person1_index).first_name} #{person.find(relationship.person2_index).last_name} and #{person.find(relationship.person2_index).first_name} #{person.find(relationship.person2_index).last_name} that started on #{relationship.start_month} #{relationship.start_day}, #{relationship.start_year} and ended #{relationship.end_month} #{relationship.end_day}, #{relationship.end_year}. We are certain of this relationship #{relationship.original_certainty}%") %>
-				<% end %>
-				<%= radio_button_tag(row_number.to_s << "[chosen_match]", "none") %>
-				<%= label_tag(row_number.to_s << "[chosen_match]", "None of these are matches.") %>
-		</div>
-		<div id = "Match Edit">
-			<h2> Edit this match </h2>
-				<%= text_field_tag(row_number.to_s << "[original_certainty]" , "Certainty") %>
-				<%= text_field_tag(row_number.to_s << "[start_month]" , "Start Month") %>
-				<%= text_field_tag(row_number.to_s << "[start_day]" , "Start Day") %>
-				<%= text_field_tag(row_number.to_s << "[start_year]" , "Start Year") %>
-				<%= text_field_tag(row_number.to_s << "[end_month]" , "End Month") %>
-				<%= text_field_tag(row_number.to_s << "[end_day]" , "End Day") %>
-				<%= text_field_tag(row_number.to_s << "[end_year]" , "End Year") %>
-		</div>
-		<%= hidden_field_tag(:data_id, @data_file.id) %>
+		<div>
+			<div id = "Original">
+				<h2> Original Entry </h2>
+					<% 0.upto(@file_arrays[row_number].count-1) do |field_num| %>
+						<%= "#{@file_arrays[0][field_num]} : #{@file_arrays[row_number][field_num]}"%>
+						<br/>
+					<% end %>
+			</div>
+			<div id = "Matches">
+				<h2> Matches In Database </h2>
+					<% match_array.each do |relationship| %>
+						<%= radio_button_tag(row_number.to_s << "[chosen_match]", relationship.id) %>
+						<%= label_tag(row_number.to_s << "[chosen_match]", "Relationship between #{Person.find(relationship.person1_index).first_name} #{Person.find(relationship.person1_index).last_name} and #{Person.find(relationship.person2_index).first_name} #{Person.find(relationship.person2_index).last_name} that started on #{relationship.start_month} #{relationship.start_day}, #{relationship.start_year} and ended #{relationship.end_month} #{relationship.end_day}, #{relationship.end_year}. We are certain of this relationship #{relationship.original_certainty}%") %>
+					<% end %>
+					<%= radio_button_tag(row_number.to_s << "[chosen_match]", "none", checked = true) %>
+					<%= label_tag(row_number.to_s << "[chosen_match]", "None of these are matches.") %>
+			</div>
+			<div id = "Match Edit">
+				<h2> Edit this match </h2>
+					<%= text_field_tag(row_number.to_s << "[original_certainty]" , nil, placeholder: "Certainty") %>
+					<%= text_field_tag(row_number.to_s << "[start_month]" , nil, placeholder: "Start Month") %>
+					<%= text_field_tag(row_number.to_s << "[start_day]" , nil, placeholder: "Start Day") %>
+					<%= text_field_tag(row_number.to_s << "[start_year]" , nil, placeholder: "Start Year") %>
+					<%= text_field_tag(row_number.to_s << "[end_month]" , nil, placeholder: "End Month") %>
+					<%= text_field_tag(row_number.to_s << "[end_day]" , nil, placeholder: "End Day") %>
+					<%= text_field_tag(row_number.to_s << "[end_year]" , nil, placeholder: "End Year") %>
+			</div>
+			<%= hidden_field_tag(:data_id, @data_file.id) %>
+		</div>	
 	<% end %>
 <%= submit_tag("Submit Changes") %>

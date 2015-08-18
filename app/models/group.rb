@@ -2,7 +2,7 @@ class Group < ActiveRecord::Base
   attr_accessible :created_by, :description, :name, :justification, :approved_by, :approved_on, 
   :created_at, :is_approved, :person_list, :start_year, :end_year, :is_active, :is_rejected,
   :start_date_type, :end_date_type, :last_edit
-  serialize :person_list,Array
+  serialize :person_list,Array #We're using group assignments instead
   serialize :last_edit,Array
   
   # Relationships
@@ -35,7 +35,7 @@ class Group < ActiveRecord::Base
   ## end date type is one included in the list
   validates_inclusion_of :end_date_type, :in => DATE_TYPE_LIST, :if => :end_year_present?
   # make sure names are unique/not duplicates
-  validates_uniqueness_of :name
+  #validates_uniqueness_of :name
 
   # Scope
   # ----------------------------- 
@@ -116,7 +116,7 @@ class Group < ActiveRecord::Base
   end
 
   def init_array
-    self.person_list = nil
+    self.person_list = ["pizza","loves","me"]
     self.last_edit = nil
   end
 

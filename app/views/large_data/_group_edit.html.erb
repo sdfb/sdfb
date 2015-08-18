@@ -1,4 +1,4 @@
-<% form_tag({controller: "large_data", action: "show"}, method: "post") %>
+<%= form_tag({controller: "large_data", action: "show"}, method: "post") %>
 	<% @duplicates.each do |row_number, match_array| %>
 		<div id = "Original">
 			<h2> Original Entry </h2>
@@ -13,17 +13,17 @@
 					<%= radio_button_tag(row_number.to_s << "[chosen_match]", group.id) %>
 					<%= label_tag(row_number.to_s << "[chosen_match]", "Name: #{group.name} - Start Date: #{group.start_year} - End Date: #{group.end_year} - Description: #{group.description} ") %>
 				<% end %>
-				<%= radio_button_tag(row_number.to_s << "[chosen_match]", "none") %>
+				<%= radio_button_tag(row_number.to_s << "[chosen_match]", "none", checked = true) %>
 				<%= label_tag(row_number.to_s << "[chosen_match]", "None of these are matches.") %>
 		</div>
 		<div id = "Match Edit">
 			<h2> Edit this match </h2>
-			<%= text_field_tag(row_number.to_s << "[name]" , "Name") %>
-			<%= text_field_tag(row_number.to_s << "[description]" , "Description") %>
-			<%= text_field_tag(row_number.to_s << "[start_year]" , "Start Year") %>
-			<%= text_field_tag(row_number.to_s << "[end_year]" , "End Year") %>
+			<%= text_field_tag(row_number.to_s << "[name]" , nil, placeholder: "Name") %>
+			<%= text_field_tag(row_number.to_s << "[description]" , nil, placeholder: "Description") %>
+			<%= text_field_tag(row_number.to_s << "[start_year]" , nil, placeholder: "Start Year") %>
+			<%= text_field_tag(row_number.to_s << "[end_year]" , nil, placeholder: "End Year") %>
 		</div>
-		<%= hidden_field_tag(:data_id, @data_file.id) %>
+		<%= hidden_field_tag("data_id", @data_file.id) %>
 	<% end %>
-	<%= submit_tag("Submit Changes") %>
+<%= submit_tag("Submit Changes") %>
 

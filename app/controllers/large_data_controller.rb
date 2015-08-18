@@ -18,6 +18,11 @@ class LargeDataController < ApplicationController
 		#commented out for testing but it works
 		#redirect_to :controller => 'sessions', :action => 'new' if (current_user.user_type != "Admin" && current_user.user_type != "Curator") 
 		@data_file = LargeData.new
+		if params.has_key?(:error_string)
+			@errors = params[:error_string]
+		else
+			@errors = nil
+		end
 	end
 
 	def edit #this is where the app will check for and show you any duplications
@@ -28,16 +33,16 @@ class LargeDataController < ApplicationController
 			@data_file = LargeData.new(hash_required) #make sure this has a created by
 			@data_file.file_path = hash_required[:upload_data].path
 			@data_file.table_file_size = File.size?(@data_file.file_path)
-			@data_file.created_by = session[:user_id]
-			file_correct = @data_file.file_formatted_correctly
+			@data_file.created_by = 1000000 #session[:user_id]
+			errors = @data_file.file_formatted_correctly
 			
-			if !file_correct
-				redirect_to :action => :new 
+			if !errors.blank?
+				redirect_to :action => :new , :error_string => errors
 			else
 				@data_file.save!
 				@file_arrays = CSV.read(@data_file.file_path) 
 				@duplicates = @data_file.display_duplicates_in_db
-				redirect_to :action => :show if @duplicates.empty?
+				redirect_to :action => :show , :data_id => @data_file.id if errors.blank?
 			end
 		end
 		#See if you can re-encode the file properly
