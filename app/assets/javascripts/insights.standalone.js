@@ -10342,14 +10342,12 @@ Graph.prototype = {
     var self = this 
     , e = d3.event;
 
-    var offset = 1;
-
     var offset = { 
       left: currentMousePos.x + 10, 
       top: currentMousePos.y + 10 
     };
 
-    if (!this.isPathVisible(d)) {
+    if (!this.isPathVisible(d.source, d.target)) {
       return;
     }
     var stringg = d.source.text + " & " + d.target.text;
@@ -10363,7 +10361,7 @@ Graph.prototype = {
   onPathOut: function(d) {
    this.hideTooltip();
 
-    if (!this.isPathVisible(d)) {
+    if (!this.isPathVisible(d.source, d.target)) {
       return;
     } 
 
