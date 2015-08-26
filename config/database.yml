@@ -2,10 +2,10 @@
 development:
   adapter: postgresql
   database: my_database_development
-  host: localhost
-  port: 5432
-  user: postgres
-  password: chocolate
+  #host: localhost
+  #port: 5432
+  #user: postgres
+  #password: chocolate
   pool: 5
   timeout: 5000
 

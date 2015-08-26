@@ -1,29 +1,34 @@
-<% form_tag({controller: "large_data", action: "show"}, method: "post") %>
+<%= form_tag({controller: "large_data", action: "show"}, method: "post") %>
 	<% @duplicates.each do |row_number, match_array| %>
-		<div id = "Original">
-			<h2> Original Entry </h2>
-				<% 0.upto(@file_arrays[row_number].count-1) do |field_num| %>
-					<%= "#{@file_arrays[0][field_num]} : #{@file_arrays[row_number][field_num]}"%>
-					<br/>
-				<% end %>
-		</div>
-		<div id = "Matches">
-			<h2> Matches In Database </h2>
-				<% match_array.each do |group| %>
-					<%= radio_button_tag(row_number.to_s << "[chosen_match]", group.id) %>
-					<%= label_tag(row_number.to_s << "[chosen_match]", "Name: #{group.name} - Start Date: #{group.start_year} - End Date: #{group.end_year} - Description: #{group.description} ") %>
-				<% end %>
-				<%= radio_button_tag(row_number.to_s << "[chosen_match]", "none") %>
-				<%= label_tag(row_number.to_s << "[chosen_match]", "None of these are matches.") %>
-		</div>
-		<div id = "Match Edit">
-			<h2> Edit this match </h2>
-			<%= text_field_tag(row_number.to_s << "[name]" , "Name") %>
-			<%= text_field_tag(row_number.to_s << "[description]" , "Description") %>
-			<%= text_field_tag(row_number.to_s << "[start_year]" , "Start Year") %>
-			<%= text_field_tag(row_number.to_s << "[end_year]" , "End Year") %>
-		</div>
+		<% if !match_array.empty? %>
+			<div id = "Original">
+				<h2> Original Entry </h2>
+					<% 0.upto(@file_arrays[row_number].count-1) do |field_num| %>
+						<%= "#{@file_arrays[0][field_num]} : #{@file_arrays[row_number][field_num]}"%>
+						<br/>
+					<% end %>
+			</div>
+			<div id = "Matches">
+				<h2> Matches In Database </h2>
+					<% match_array.each do |group| %>
+						<%= radio_button_tag(row_number.to_s << "[chosen_match]", group.id) %>
+						<%= label_tag(row_number.to_s << "[chosen_match]", "Name: #{group.name} - Start Date: #{group.start_year} - End Date: #{group.end_year} - Description: #{group.description} ") %>
+					<% end %>
+					<%= radio_button_tag(row_number.to_s << "[chosen_match]", "none", checked = true) %>
+					<%= label_tag(row_number.to_s << "[chosen_match]", "None of these are matches.") %>
+			</div>
+			<div id = "Match Edit">
+				<h2> Edit this match </h2>
+				<%= text_field_tag(row_number.to_s << "[name]" , nil, placeholder: "Name") %>
+				<%= text_field_tag(row_number.to_s << "[description]" , nil, placeholder: "Description") %>
+				<%= text_field_tag(row_number.to_s << "[start_year]" , nil, placeholder: "Start Year") %>
+				<%= text_field_tag(row_number.to_s << "[end_year]" , nil, placeholder: "End Year") %>
+			</div>
+		<% else %>
+			<%= hidden_field_tag(row_number.to_s << "[chosen_match]","none") %>
+		<% end %>
 		<%= hidden_field_tag(:data_id, @data_file.id) %>
+		<%= hidden_field_tag(:people, @old_params) %>
 	<% end %>
-	<%= submit_tag("Submit Changes") %>
+<%= submit_tag("Submit Changes") %>
 

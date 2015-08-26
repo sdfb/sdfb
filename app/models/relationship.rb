@@ -288,6 +288,7 @@ class Relationship < ActiveRecord::Base
     else 
       #if there are existing dates, check them
 
+
       #first make sure that the end year comes after the start year
       if self.end_year.to_i < self.start_year.to_i
         errors.add(:start_year, "The start year must be less than or equal to the end year")

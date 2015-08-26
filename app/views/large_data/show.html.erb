@@ -1,6 +1,6 @@
 <h1> Success! </h1>
 <h2> The following have been added to the database: </h2>
-<table>
+<!-- <table>
 	<tr>
 		<% CSV.read(@data_file.file_path)[0].each do |heading| %>
 			<th><%= heading %></th>
@@ -13,4 +13,265 @@
 			<% end %>
 		</tr>
 	<% end %>
-</table>
+</table> -->
+
+<% if @data_file.table_content_type == "Person" %>
+  <table class="table table-condensed">
+    <thead>
+      <tr>
+        <th>SDFB Person ID</th>
+        <th>ODNB ID</th>
+        <th>Prefix</th>
+        <th>First Name</th>
+        <th>Last Name</th>
+        <th>Suffix</th>
+        <th>Title</th>
+        <th>Birth Year Type</th>
+        <th>Birth Year</th>
+        <th>Death Year Type</th>
+        <th>Death Year</th>
+        <th>Historical Significance</th>
+        <th><%=t '.actions', :default => t("helpers.actions") %></th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @added_model_objects.values.each do |person| %>
+        <tr>
+          <td><%= person.id %></td>
+          <% if ! (person.odnb_id == 0) %>  
+            <td><%= person.odnb_id %></td>
+          <% else %>
+            <td></td>
+          <% end %>
+          <td><%= person.prefix %></td>
+          <td><%= person.first_name %></td>
+          <td><%= person.last_name %></td>
+          <td><%= person.suffix %></td>
+          <td><%= person.title %></td>
+          <td>
+            <% if person.birth_year_type == "BF" %>
+              Before
+            <% elsif person.birth_year_type == "AF" %>
+              After
+            <% elsif person.birth_year_type == "IN" %>
+              In
+            <% elsif person.birth_year_type == "CA" %>
+              Circa
+            <% elsif person.birth_year_type == "BF/IN" %>
+              Before or In
+            <% elsif person.birth_year_type == "AF/IN" %>
+              After or In
+            <% end %>
+          </td>
+          <td><%= person.ext_birth_year %></td>
+          <td>
+            <% if person.death_year_type == "BF" %>
+              Before
+            <% elsif person.death_year_type == "AF" %>
+              After
+            <% elsif person.death_year_type == "IN" %>
+              In
+            <% elsif person.death_year_type == "CA" %>
+              Circa
+            <% elsif person.death_year_type == "BF/IN" %>
+              Before or In
+            <% elsif person.death_year_type == "AF/IN" %>
+              After or In
+            <% end %>
+          </td>
+          <td><%= person.ext_death_year %></td>
+          <td><%= person.historical_significance %></td>
+          <td>
+            <% if can? :show, person %>
+                <%= link_to 'Show', person, :class => 'btn btn-mini' %>
+            <% end %>
+            <% if can? :update, person %>      
+                <%= link_to t('.edit', :default => t("helpers.links.edit")),
+                            edit_person_path(person), :class => 'btn btn-mini' %>
+            <% end %>
+            <% if can? :delete, person %>
+              <%= link_to 'Delete', person, :class => 'btn btn-mini btn-danger',method: :delete, data: { confirm: 'Are you sure that you want to permanently delete this record and all associated records?' } %>
+            <% end %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+
+<% elsif @data_file.table_content_type == "Relationship" %>
+	<table class="table table-condensed">
+	  <thead>
+	    <tr>
+	      <th>SDFB Relationship ID</th>
+	      <th>Person 1</th>
+	      <th>Person 2</th>
+	      <th>Maximum Certainty</th>
+	      <th>Start Date Type</th>
+	      <th>Start Date</th>
+	      <th>End Date Type</th>
+	      <th>End Date</th>
+	      <th><%=t '.actions', :default => t("helpers.actions") %></th>
+	    </tr>
+	  </thead>
+	  <tbody>
+	    <% @added_model_objects.values.each do |relationship| %>
+	      <tr>
+	        <td><%= relationship.id %></td>
+	        <td><%= link_to relationship.get_person1_name, person_path(relationship.person1_index) %></td>
+	        <td><%= link_to relationship.get_person2_name, person_path(relationship.person2_index) %></td>
+	        <td><%= relationship.max_certainty %>%</td>
+	        <td>
+	        <% if ! relationship.start_date_type.blank? %>
+	            <% if relationship.start_date_type == "BF" %>
+	              Before
+	            <% elsif relationship.start_date_type == "AF" %>
+	              After
+	            <% elsif relationship.start_date_type == "IN" %>
+	              In
+	            <% elsif relationship.start_date_type == "CA" %>
+	              Circa
+	            <% elsif relationship.start_date_type == "BF/IN" %>
+	              Before or In
+	            <% elsif relationship.start_date_type == "AF/IN" %>
+	              After or In
+	            <% end %>   
+	          <% else %>
+	            Unknown
+	          <% end %>
+	        </td>
+	        <td>
+	          <% if ((! relationship.start_month.blank?) || (! relationship.start_day.blank?) || (! relationship.start_year.blank?)) %>
+	            <% if ! relationship.start_month.blank? %>
+	              <%= relationship.start_month %>
+	            <% end %>  
+	            <% if ! relationship.start_day.blank? %>
+	              <%= relationship.start_day %>,
+	            <% end %>
+	            <% if ! relationship.start_year.blank? %>
+	              <%= relationship.start_year %>
+	            <% end %>
+	          <% else %>
+	            Unknown
+	          <% end %>
+	        </td>
+	        <td>
+	          <% if ! relationship.end_date_type.blank? %> 
+	              <% if relationship.end_date_type == "BF" %>
+	                Before
+	              <% elsif relationship.end_date_type == "AF" %>
+	                After
+	              <% elsif relationship.end_date_type == "IN" %>
+	                In
+	              <% elsif relationship.end_date_type == "CA" %>
+	                Circa
+	              <% elsif relationship.end_date_type == "BF/IN" %>
+	                Before or In
+	              <% elsif relationship.end_date_type == "AF/IN" %>
+	                After or In
+	              <% end %>
+	              <% else %>
+	            <dd>Unknown</dd>
+	          <% end %>
+	        </td>
+	        
+	        <td>
+	          <% if ((! relationship.end_month.blank?) || (! relationship.end_day.blank?) || (! relationship.end_year.blank?)) %>
+	          <% if ! relationship.end_month.blank? %>
+	            <%= relationship.end_month %>
+	          <% end %>  
+	          <% if ! relationship.end_day.blank? %>
+	            <%= relationship.end_day %>,
+	          <% end %>
+	          <% if ! relationship.end_year.blank? %>
+	            <%= relationship.end_year %>
+	          <% end %>
+	          <% else %>
+	            Unknown
+	          <% end %>
+	        </td>
+	        <td>
+	          <% if can? :show, relationship %>
+	            <%= link_to 'Show', relationship, :class => 'btn btn-mini'  %>
+	          <% end %>
+	          <% if can? :update, relationship %>
+	            <%= link_to t('.edit', :default => t("helpers.links.edit")),
+	                        edit_relationship_path(relationship), :class => 'btn btn-mini' %>
+	          <% end %>
+	          <% if can? :delete, relationship %>
+	            <%= link_to 'Delete', relationship, :class => 'btn btn-mini btn-danger',method: :delete, data: { confirm: 'Are you sure that you want to permanently delete this record and all associated records?' } %>
+	          <% end %>
+	        </td>
+	      </tr>
+	    <% end %>
+	  </tbody>
+	</table>
+<% elsif @data_file.table_content_type == "Group" %>
+  <table class="table table-condensed">
+    <thead>
+      <tr>
+        <th>SDFB Group ID </th>
+        <th>Group Name</th>
+        <th>Description</th>
+        <th>Start Year Type</th>
+        <th>Start Year</th>
+        <th>End Year Type</th>
+        <th>End Year</th>
+        <th><%=t '.actions', :default => t("helpers.actions") %></th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @added_model_objects.values.each do |group| %>
+        <tr>
+          <td><%= group.id %></td>
+          <td><%= group.name %></td>
+          <td><%= group.description %></td>
+          <td>
+            <% if group.start_date_type == "BF" %>
+              Before
+            <% elsif group.start_date_type == "AF" %>
+              After
+            <% elsif group.start_date_type == "IN" %>
+              In
+            <% elsif group.start_date_type == "CA" %>
+              Circa
+            <% elsif group.start_date_type == "BF/IN" %>
+              Before or In
+            <% elsif group.start_date_type == "AF/IN" %>
+              After or In
+            <% end %>
+          </td>
+          <td><%= group.start_year %></td>
+          <td>
+            <% if group.end_date_type == "BF" %>
+              Before
+            <% elsif group.end_date_type == "AF" %>
+              After
+            <% elsif group.end_date_type == "IN" %>
+              In
+            <% elsif group.end_date_type == "CA" %>
+              Circa
+            <% elsif group.end_date_type == "BF/IN" %>
+              Before or In
+            <% elsif group.end_date_type == "AF/IN" %>
+              After or In
+            <% end %>
+          </td>
+          <td><%= group.end_year %></td>
+          <td>
+            <% if can? :show, group %>
+              <%= link_to 'Show', group, :class => 'btn btn-mini' %>
+            <% end %>
+            <% if can? :update, group %>
+              <%= link_to t('.edit', :default => t("helpers.links.edit")),
+                              edit_group_path(group), :class => 'btn btn-mini' %>
+            <% end %>
+            <% if can? :delete, group %>
+              <%= link_to 'Delete', group, :class => 'btn btn-mini btn-danger',method: :delete, data: { confirm: 'Are you sure that you want to permanently delete this record and all associated records?' } %>
+            <% end %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+
+<% end %>
