@@ -10354,7 +10354,7 @@ Graph.prototype = {
     this._tooltip.setData({"text": stringg});
     this._tooltip.show(0.5, this._tooltip.getData());
 
-    this.emit("edge:mouseover", d,offset);
+    this.emit("edge:mouseover", self, offset);
 
   },
 

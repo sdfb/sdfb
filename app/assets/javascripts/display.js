@@ -104,6 +104,7 @@ function twoDegs(id, id2, people) {
           }
         }
       });
+      console.log(edges);
     });
     //adds main person's id referenced to keys associative array. Keys represent all data in graph
     keys[id] = {"text": p["display_name"], "size": 30, "id": id,  "cluster": getClusterRels(p["rel_sum"])}; 
