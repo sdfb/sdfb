@@ -116,7 +116,7 @@ class Group < ActiveRecord::Base
   end
 
   def init_array
-    self.person_list = ["pizza","loves","me"]
+    self.person_list = nil
     self.last_edit = nil
   end
 
