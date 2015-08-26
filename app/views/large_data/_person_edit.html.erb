@@ -1,36 +1,41 @@
 <%= form_tag({controller: "large_data", action: "show"}, method: "post") %>
 	<% @duplicates.each do |row_number, match_array| %>
-		<div>
-			<div id = "Original">
-				<h2> Original Entry </h2>
-					<% 0.upto(@file_arrays[row_number].count-1) do |field_num| %>
-						<%= "#{@file_arrays[0][field_num]} : #{@file_arrays[row_number][field_num]}"%>
-						<br/>
-					<% end %>
+		<% if !match_array.empty? %>
+			<div>
+				<div id = "Original">
+					<h2> Original Entry </h2>
+						<% 0.upto(@file_arrays[row_number].count-1) do |field_num| %>
+							<%= "#{@file_arrays[0][field_num]} : #{@file_arrays[row_number][field_num]}"%>
+							<br/>
+						<% end %>
+				</div>
+				<div id = "Matches">
+					<h2> Matches In Database </h2>
+						<% match_array.each do |person| %>
+							<%= radio_button_tag(row_number.to_s << "[chosen_match]", person.id) %>
+							<%= label_tag(row_number.to_s << "[chosen_match]", "#{person.prefix} #{person.first_name} #{person.last_name if !person.last_name.nil?} #{person.suffix}, was born a #{person.gender} in #{person.ext_birth_year} and died in #{person.ext_death_year}. This Person had the title of #{person.title}. #{person.historical_significance} ") %>
+						<% end %>
+						<%= radio_button_tag(row_number.to_s << "[chosen_match]", "none", checked = true) %>
+						<%= label_tag(row_number.to_s << "[chosen_match]", "None of these are matches.") %>
+				</div>
+				<div id = "Match Edit">
+					<h2> Edit this match </h2>
+						<%= text_field_tag(row_number.to_s << "[prefix]" , nil, placeholder: "Prefix") %>
+						<%= text_field_tag(row_number.to_s << "[first_name]" , nil, placeholder: "First Name") %>
+						<%= text_field_tag(row_number.to_s << "[last_name]" , nil, placeholder: "Last Name") %>
+						<%= text_field_tag(row_number.to_s << "[suffix]" , nil, placeholder: "Suffix") %>
+						<%= text_field_tag(row_number.to_s << "[title]" , nil, placeholder: "Title") %>
+						<%= text_field_tag(row_number.to_s << "[historical_significance]", nil, placeholder: "Historical Significance") %> 
+						<%= text_field_tag(row_number.to_s << "[gender]" , nil, placeholder: "Gender") %>
+						<%= text_field_tag(row_number.to_s << "[ext_birth_year]" , nil, placeholder: "Birth Year") %>
+						<%= text_field_tag(row_number.to_s << "[ext_death_year]" , nil, placeholder: "Death Year") %>
+				</div>
 			</div>
-			<div id = "Matches">
-				<h2> Matches In Database </h2>
-					<% match_array.each do |person| %>
-						<%= radio_button_tag(row_number.to_s << "[chosen_match]", person.id) %>
-						<%= label_tag(row_number.to_s << "[chosen_match]", "#{person.prefix} #{person.first_name} #{person.last_name if !person.last_name.nil?} #{person.suffix}, was born a #{person.gender} in #{person.ext_birth_year} and died in #{person.ext_death_year}. This Person had the title of #{person.title}. #{person.historical_significance} ") %>
-					<% end %>
-					<%= radio_button_tag(row_number.to_s << "[chosen_match]", "none", checked = true) %>
-					<%= label_tag(row_number.to_s << "[chosen_match]", "None of these are matches.") %>
-			</div>
-			<div id = "Match Edit">
-				<h2> Edit this match </h2>
-					<%= text_field_tag(row_number.to_s << "[prefix]" , nil, placeholder: "Prefix") %>
-					<%= text_field_tag(row_number.to_s << "[first_name]" , nil, placeholder: "First Name") %>
-					<%= text_field_tag(row_number.to_s << "[last_name]" , nil, placeholder: "Last Name") %>
-					<%= text_field_tag(row_number.to_s << "[suffix]" , nil, placeholder: "Suffix") %>
-					<%= text_field_tag(row_number.to_s << "[title]" , nil, placeholder: "Title") %>
-					<%= text_field_tag(row_number.to_s << "[historical_significance]", nil, placeholder: "Historical Significance") %> 
-					<%= text_field_tag(row_number.to_s << "[gender]" , nil, placeholder: "Gender") %>
-					<%= text_field_tag(row_number.to_s << "[ext_birth_year]" , nil, placeholder: "Birth Year") %>
-					<%= text_field_tag(row_number.to_s << "[ext_death_year]" , nil, placeholder: "Death Year") %>
-			</div>
-			<%= hidden_field_tag("data_id", @data_file.id) %>
-		</div>
+		<% else %>
+			<%= hidden_field_tag(row_number.to_s << "[chosen_match]","none") %>
+		<% end %>
+		<%= hidden_field_tag(:data_id, @data_file.id) %>
+		<%= hidden_field_tag(:people, @old_params) %>
 	<% end %>
 <%= submit_tag("Submit Changes") %>
 

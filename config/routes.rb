@@ -165,15 +165,17 @@ Sdfb::Application.routes.draw do
     # Routing for mass upload
   match '/large_data' => 'large_data#new', :via => [:get]
 
-  match '/large_data' => 'large_data#edit', :via => [:post]
+  match '/large_data/edit' => 'large_data#edit', :via => [:get]
 
   match '/large_data/edit' => 'large_data#edit', :via => [:post]
 
   match '/large_data/show' => 'large_data#show', :via => [:post]
 
-  #match '/large_data' => 'large_data#show', :via => [:post]
+  match '/large_data/confirm_people' => 'large_data#confirm_people', :via => [:post]
 
-  match ':controller(/:action(/:id))', :via => [:get]
+  match '/large_data/show' => 'large_data#show', :via => [:get]
+
+  #match ':controller(/:action(/:id))', :via => [:get]
   # main resources  # The priority is based upon order of creation:
   # first created -> highest priority.
 

@@ -5,26 +5,24 @@ class LargeDataController < ApplicationController
 		#redirect_to(:controller =>'another_controller', :action => 'something in that controller')		
 	end
 
-	def show 
-		#render :text => params.inspect
-		@data_file = LargeData.find(params[:data_id]) 
-		@duplicates = @data_file.display_duplicates_in_db
-		@duplicates = @data_file.modify_duplicates(@duplicates,params) if @duplicates.nil? || @duplicates.empty?
-		@data_file.merge_and_remove_duplicates(@duplicates) if @duplicates.nil? || @duplicates.empty?
-		@data_file.populate_new
-	end
-
 	def new 
-		redirect_to :controller => 'sessions', :action => 'new' if (current_user == false || (current_user.user_type != "Admin" && current_user.user_type != "Curator")) 
-		@data_file = LargeData.new
-		if params.has_key?(:error_string)
-			@errors = params[:error_string]
+		if (current_user == false) 
+			redirect_to :controller => 'sessions', :action => 'new' 
 		else
-			@errors = nil
+			if (current_user.user_type != "Admin" && current_user.user_type != "Curator")	
+				render :text => "currently this feature is only available to administrators and curators" 
+			else
+				@data_file = LargeData.new
+				if params.has_key?(:error_string)
+					@errors = params[:error_string]
+				else
+					@errors = nil
+				end
+			end
 		end
 	end
 
-	def edit #this is where the app will check for and show you any duplications
+	def confirm_people 
 		hash_required = user_params
 		if !hash_required.has_key?("upload_data")
 			redirect_to :action => :new 
@@ -32,31 +30,45 @@ class LargeDataController < ApplicationController
 			@data_file = LargeData.new(hash_required) #make sure this has a created by
 			@data_file.file_path = hash_required[:upload_data].path
 			@data_file.table_file_size = File.size?(@data_file.file_path)
-			@data_file.created_by = 1000000 #session[:user_id]
+			@data_file.created_by = current_user.id
 			errors = @data_file.file_formatted_correctly
 			
 			if !errors.blank?
 				redirect_to :action => :new , :error_string => errors
 			else
-				@data_file.save!
-				@file_arrays = CSV.read(@data_file.file_path) 
-				@duplicates = @data_file.display_duplicates_in_db
-				redirect_to :action => :show , :data_id => @data_file.id if errors.blank?
+				@data_file.file_path = @data_file.store
+				@data_file.save!		
 			end
 		end
-		#See if you can re-encode the file properly
-		#File.open(@data_file.file_path)#.encode("UTF-16be", :invalid=>:replace, :replace=>"?").encode('UTF-8')
 
-		#The lines below are my attempt at using carrierwave's store method. The errors I kept getting were endless. Because of this I created a move file method which when implemented will have the files organized
-		#uploader = LargeUploader.new #figure out how to assign 
-		#the file path from this
-		#puts hash_required[:upload_data]
-		#APPARENTLY IT IS NOT THE RIGHT KIND OF FILE TO BE STORED
-		#uploader.store!(File.open(hash_required[:upload_data].path)) #Try giving it the people.csv file stored in the app and see what happens
-		#render :text => @data_file.file_formatted_correctly.inspect
-		#render :text => @data_file.display_duplicates_in_db.inspect	
+		if @data_file.table_content_type == "Person"
+			redirect_to :action => :edit, :id => @data_file.id
+		else
+			@file_arrays = CSV.read(@data_file.file_path)
+			@match_hash = @data_file.potential_person_matches 
+		end
 	end
 
+	def edit 		
+		@data_file = LargeData.find(params[:id])
+		@file_arrays = CSV.read(@data_file.file_path) 
+		params.delete :id
+		@old_params = params
+		@duplicates = @data_file.display_duplicates_in_db(params)
+		#render :text => @duplicates.to_yaml
+		redirect_to :action => :show , :data_id => @data_file.id, :people => params if @duplicates.blank?
+	end
+
+	def show 	
+		@data_file = LargeData.find(params[:data_id]) 
+		@duplicates = @data_file.display_duplicates_in_db(eval(params[:people].to_s))
+		@duplicates = @data_file.modify_duplicates(@duplicates,params) if !(@duplicates.nil? || @duplicates.empty?)
+		@added_model_objects = {} #hash of row numbers added mapped to their respective models in the db
+		@added_model_objects = @data_file.merge_and_remove_duplicates(@duplicates, @added_model_objects, eval(params[:people].to_s)) if !(@duplicates.nil? || @duplicates.empty?)		
+		
+		@added_model_objects = @data_file.populate_new(@added_model_objects, eval(params[:people].to_s))
+		#render :text => @added_model_objects.to_yaml
+	end
 
 	private
 

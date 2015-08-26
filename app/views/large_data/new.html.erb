@@ -31,7 +31,7 @@
 	 		<p> Your submission has the following errors. Please fix and resubmit. </p>
 	 		<%= @errors %>
 	 	<% end %>
-	    <%= form_for @data_file , :url => {action: 'edit'}, method: 'post', :html => { :multipart => true } do |f| %>
+	    <%= form_for @data_file , :url => {action: 'confirm_people'}, method: 'post', :html => { :multipart => true } do |f| %>
 		    <%= f.label(:table_file_name, "File Name") %>
 		  	<%= f.text_field :table_file_name %>
 		  	<%= f.label(:table_content_type, "Data Type") %>

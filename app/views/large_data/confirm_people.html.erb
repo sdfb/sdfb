@@ -1,0 +1,48 @@
+It seems we have multiple matches in our database for the people in your data file. Please select a match for each person. 
+<%= form_tag({controller: "large_data", action: "edit"}, method: "post") %>
+	<% 1.upto(@file_arrays.count-1) do |row_index| %>	
+		<div>	  	
+		<% if @data_file.table_content_type == "Relationship" %>
+			
+			<% if @match_hash[row_index][1].count > 1 %>
+				<%= "For the relationship in row #{row_index} we have the following matches for the first person, #{@match_hash[row_index][:name_one][0]} #{@match_hash[row_index][:name_one][1]}: "%>
+				</br>				
+				<% @match_hash[row_index][1].each do |person| %>
+					<%= radio_button_tag("#{row_index}[1]", person.id, checked = true) %>
+					<%= label_tag("#{row_index}[1]", "#{person.prefix} #{person.first_name} #{person.last_name if !person.last_name.nil?} #{person.suffix}, was born a #{person.gender} in #{person.ext_birth_year} and died in #{person.ext_death_year}. This Person had the title of #{person.title}. #{person.historical_significance} ") %>
+				<% end %>
+				</br>
+			<% else %>
+				<%= hidden_field_tag("#{row_index}[1]",@match_hash[row_index][1].first.id)%>
+			<% end %>
+
+			<% if @match_hash[row_index][2].count > 1 %>
+				<%= "For the relationship in row #{row_index} we have the following matches for the second person, #{@match_hash[row_index][:name_two][0]} #{@match_hash[row_index][:name_two][1]}: "%>
+				</br>
+				<% @match_hash[row_index][2].each do |person| %>
+					<%= radio_button_tag("#{row_index}[2]", person.id,checked = true) %>
+					<%= label_tag("#{row_index}[2]", "#{person.prefix} #{person.first_name} #{person.last_name if !person.last_name.nil?} #{person.suffix}, was born a #{person.gender} in #{person.ext_birth_year} and died in #{person.ext_death_year}. This Person had the title of #{person.title}. #{person.historical_significance} ") %>
+				<% end %>
+			<% else %>
+				<%= hidden_field_tag("#{row_index}[2]",@match_hash[row_index][2].first.id) %>
+			<% end %>
+		
+		
+
+		<% elsif @data_file.table_content_type == "Group" %>
+		
+			<% if @match_hash[row_index][:match].count > 1 %>
+				<%= "In the group named: #{@match_hash[row_index][:group]}, we have the following matches for #{@match_hash[row_index][:name][0]} #{@match_hash[row_index][:name][1]}: "%>
+				</br>	
+				<% @match_hash[row_index][:match].each do |person| %>
+					<%= radio_button_tag("#{row_index}", person.id, checked = true) %>
+					<%= label_tag("#{row_index}", "#{person.prefix} #{person.first_name} #{person.last_name if !person.last_name.nil?} #{person.suffix}, was born a #{person.gender} in #{person.ext_birth_year} and died in #{person.ext_death_year}. This Person had the title of #{person.title}. #{person.historical_significance} ") %>
+				<% end %>
+			<% else %>
+				<%= hidden_field_tag("#{row_index}", @match_hash[row_index][:match].first.id) %>
+			<% end %>
+		<% end %>
+		</div>
+	<% end %>
+	<%= hidden_field_tag(:id, @data_file.id) %>
+<%= submit_tag("Submit People") %>
