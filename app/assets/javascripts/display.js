@@ -104,6 +104,7 @@ function twoDegs(id, id2, people) {
           }
         }
       });
+      console.log(edges);
     });
     //adds main person's id referenced to keys associative array. Keys represent all data in graph
     keys[id] = {"text": p["display_name"], "size": 30, "id": id,  "cluster": getClusterRels(p["rel_sum"])}; 
@@ -139,6 +140,31 @@ function twoDegs(id, id2, people) {
           });  
       accordion("node");
     });
+
+    // graph.on("node:dblclick", function(d) {
+    //     $.ajax({
+    //         type: "GET",
+    //         url:    "/node_info", // should be mapped in routes.rb
+    //         data: {node_id:d.id},
+    //         datatype:"html", // check more option
+    //         success: function(data) {
+                     
+    //                  },
+    //         async:   true
+    //       });  
+
+    // // var people = window.gon.people;
+    // var ID = d.id;
+    // createGraph(ID, 0, people);
+    // showAccordion(ID, 0);
+
+    // // var ID = d.id;
+    // // createGraph(ID, people);
+    // // edges.reverse();
+    // // var graph = new Insights($("#graph")[0], nodes, edges, options).render();
+
+
+    // });
   
     graph.on("edge:click", function(d) {
         var id1 = parseInt(d.source.id);
