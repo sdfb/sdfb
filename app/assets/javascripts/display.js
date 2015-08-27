@@ -164,7 +164,7 @@ function twoDegs(id, id2, people) {
     var confidence = default_sconfidence;
     var date = default_sdate;
     if (id  && confidence && date ) {
-      window.location.href = '/?id=' + id + '&confidence=' + confidence + '&date=' + date;
+      window.location.href = '/?id=' + id + '&confidence=60,100&date=1500,1700';
     }
 
     });
