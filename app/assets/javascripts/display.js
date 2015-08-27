@@ -140,30 +140,34 @@ function twoDegs(id, id2, people) {
       accordion("node");
     });
 
-    // graph.on("node:dblclick", function(d) {
-    //     $.ajax({
-    //         type: "GET",
-    //         url:    "/node_info", // should be mapped in routes.rb
-    //         data: {node_id:d.id},
-    //         datatype:"html", // check more option
-    //         success: function(data) {
+    graph.on("node:dblclick", function(d) {
+        // $.ajax({
+        //     type: "GET",
+        //     url:    "/node_info", // should be mapped in routes.rb
+        //     data: {node_id:d.id},
+        //     datatype:"html", // check more option
+        //     success: function(data) {
                      
-    //                  },
-    //         async:   true
-    //       });  
+        //              },
+        //     async:   true
+        //   });  
 
-    // // var people = window.gon.people;
-    // var ID = d.id;
-    // createGraph(ID, 0, people);
-    // showAccordion(ID, 0);
+    var table = 'no';
+    Pace.restart();
+    // make the index equal autocomplete
+    var id = d.id;
+    if ($("#show-table").val() == 1) {
+      table = 'yes'
+    }
+    // var confidence = $("#search-network-slider-confidence-result-hidden").val().split(" - ");
+    // var date = $("#search-network-slider-date-result-hidden").val().split(" - ");
+    var confidence = default_sconfidence;
+    var date = default_sdate;
+    if (id  && confidence && date ) {
+      window.location.href = '/?id=' + id + '&confidence=' + confidence + '&date=' + date;
+    }
 
-    // // var ID = d.id;
-    // // createGraph(ID, people);
-    // // edges.reverse();
-    // // var graph = new Insights($("#graph")[0], nodes, edges, options).render();
-
-
-    // });
+    });
   
     graph.on("edge:click", function(d) {
         var id1 = parseInt(d.source.id);
