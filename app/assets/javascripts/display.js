@@ -270,7 +270,7 @@ function initGraph(people){
     var name2 = ""
   }
   if (getParam('confidence').length > 0){
-      confidence = getParam('confidence').replace(',', '% to ');
+      confidence = getParam('confidence').replace(',', '% to ').replace(',', '');
   }
   if (getParam('date').length > 0){
       date = getParam('date').replace(',', ' to ')
