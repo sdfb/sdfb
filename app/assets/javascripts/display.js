@@ -141,32 +141,20 @@ function twoDegs(id, id2, people) {
     });
 
     graph.on("node:dblclick", function(d) {
-        // $.ajax({
-        //     type: "GET",
-        //     url:    "/node_info", // should be mapped in routes.rb
-        //     data: {node_id:d.id},
-        //     datatype:"html", // check more option
-        //     success: function(data) {
-                     
-        //              },
-        //     async:   true
-        //   });  
-
-    var table = 'no';
-    Pace.restart();
-    // make the index equal autocomplete
-    var id = d.id;
-    if ($("#show-table").val() == 1) {
-      table = 'yes'
-    }
-    // var confidence = $("#search-network-slider-confidence-result-hidden").val().split(" - ");
-    // var date = $("#search-network-slider-date-result-hidden").val().split(" - ");
-    var confidence = default_sconfidence;
-    var date = default_sdate;
-    if (id  && confidence && date ) {
-      window.location.href = '/?id=' + id + '&confidence=60,100&date=1500,1700';
-    }
-
+      var table = 'no';
+      Pace.restart();
+      // make the index equal autocomplete
+      var id = d.id;
+      if ($("#show-table").val() == 1) {
+        table = 'yes'
+      }
+      var sconf = getParam('confidence').split(',')[0];
+      var econf = getParam('confidence').split(',')[1];
+      var sdate = getParam('date').split(',')[0];
+      var edate = getParam('date').split(',')[1];
+      if (id  && sconf && econf && sdate && edate ) {
+        window.location.href = '/?id=' + id + '&confidence=' + sconf + ',' + econf + ',&date=' + sdate + ',' + edate;
+      }
     });
   
     graph.on("edge:click", function(d) {
@@ -282,7 +270,7 @@ function initGraph(people){
     var name2 = ""
   }
   if (getParam('confidence').length > 0){
-      confidence = getParam('confidence').replace(',', '% to ')
+      confidence = getParam('confidence').replace(',', '% to ');
   }
   if (getParam('date').length > 0){
       date = getParam('date').replace(',', ' to ')
