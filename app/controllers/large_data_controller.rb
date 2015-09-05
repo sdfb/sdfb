@@ -38,17 +38,16 @@ class LargeDataController < ApplicationController
 				redirect_to :action => :new , :error_string => errors
 			else
 				@data_file.file_path = @data_file.store
-				@data_file.save!		
-			end
-		end
-
-		if @data_file.table_content_type == "Person"
-			redirect_to :action => :edit, :id => @data_file.id
-		else
-			@file_arrays = CSV.read(@data_file.file_path)
-			@match_hash = @data_file.potential_person_matches 
-			if @data_file.empty_matches?(@match_hash, @file_arrays) 
-				redirect_to :action => :edit, :id => @data_file.id
+				@data_file.save!	
+				if @data_file.table_content_type == "Person"
+					redirect_to :action => :edit, :id => @data_file.id
+				else
+					@file_arrays = CSV.read(@data_file.file_path)
+					@match_hash = @data_file.potential_person_matches 
+					if @data_file.empty_matches?(@match_hash, @file_arrays) 
+						redirect_to :action => :edit, :id => @data_file.id
+					end
+				end	
 			end
 		end
 	end
@@ -60,15 +59,15 @@ class LargeDataController < ApplicationController
 		@old_params = params
 		@duplicates = @data_file.display_duplicates_in_db(params)
 		#render :text => @duplicates.to_yaml
-		redirect_to :action => :show , :data_id => @data_file.id, :people => params if @duplicates.blank?
+		redirect_to :action => :show , :data_id => @data_file.id, :people => params if @data_file.empty_duplicates?(@duplicates)
 	end
 
 	def show 	
 		@data_file = LargeData.find(params[:data_id]) 
 		@duplicates = @data_file.display_duplicates_in_db(eval(params[:people].to_s))
-		@duplicates = @data_file.modify_duplicates(@duplicates,params) if !(@duplicates.nil? || @duplicates.empty?)
+		@duplicates = @data_file.modify_duplicates(@duplicates,params) if !(@duplicates.nil? ||  @data_file.empty_duplicates?(@duplicates))
 		@added_model_objects = {} #hash of row numbers added mapped to their respective models in the db
-		@added_model_objects = @data_file.merge_and_remove_duplicates(@duplicates, @added_model_objects, eval(params[:people].to_s)) if !(@duplicates.nil? || @duplicates.empty?)		
+		@added_model_objects = @data_file.merge_and_remove_duplicates(@duplicates, @added_model_objects, eval(params[:people].to_s)) if !(@duplicates.nil? || @data_file.empty_duplicates?(@duplicates))		
 		
 		@added_model_objects = @data_file.populate_new(@added_model_objects, eval(params[:people].to_s))
 		#render :text => @added_model_objects.to_yaml

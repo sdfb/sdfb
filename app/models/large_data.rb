@@ -70,6 +70,13 @@ class LargeData < ActiveRecord::Base
 		return true
 	end
 
+	def empty_duplicates?(duplicates)
+		duplicates.each do |row_number, match_array|
+			return false if !match_array.empty? 
+		end
+		return true
+	end
+
 	def file_formatted_correctly
 		#check for duplicates in the file
 		#make sure the required fields are non nil
@@ -88,7 +95,7 @@ class LargeData < ActiveRecord::Base
 			heading.strip
 			error_array << "At least one of your column headers are blank." if heading.blank? && !error_array.include?("At least one of your column headers are blank. ")
 			if !error_array.include? "At least one of your column headers are not in the valid list of column headers. "
-				error_array << heading  if self.table_content_type == "Relationship" && !["first_name 1", "last_name 1", "first_name 2", "last_name 2", "original_certainty", "max_certainty", "start_year", "start_month", "start_day", "end_year", "end_month", "end_day", "start_date_type", "end_date_type", "justification"].include?(heading)
+				error_array << "At least one of your column headers are not in the valid list of column headers. " if self.table_content_type == "Relationship" && !["first_name 1", "last_name 1", "first_name 2", "last_name 2", "original_certainty", "max_certainty", "start_year", "start_month", "start_day", "end_year", "end_month", "end_day", "start_date_type", "end_date_type", "justification"].include?(heading)
 				error_array << "At least one of your column headers are not in the valid list of column headers. " if self.table_content_type == "Person" && !["first_name", "last_name", "ext_birth_year", "ext_death_year", "gender", "odnb_id", "historical_significance", "prefix", "suffix", "title", "birth_year_type", "ext_birth_year", "alt_birth_year", "death_year_type", "ext_death_year", "alt_death_year", "justification" ].include?(heading)
 				error_array << "At least one of your column headers are not in the valid list of column headers. " if self.table_content_type == "Group" && !["name", "description", "first_name", "last_name", "justification", "start_year", "end_year", "start_date_type", "end_date_type"].include?(heading)
 			end			
@@ -112,6 +119,7 @@ class LargeData < ActiveRecord::Base
 			error_array << "One of the required column headers are missing." if (first_name_index_1.nil? || second_name_index_1.nil? || first_name_index_2.nil? || second_name_index_2.nil? || original_certainty_index.nil?)
 			row_index = 1
 			body_rows.each do |row|
+				return error_array if error_array.bytesize > 2500 
 				error_array << "Row #{row_index} is missing a first name. " if !first_name_index_1.nil? && row[first_name_index_1].nil?
 				error_array << "Row #{row_index} is missing a last name. " if !second_name_index_1.nil? && row[second_name_index_1].nil?
 				error_array << "Row #{row_index} is missing a first name. " if !first_name_index_2.nil? && row[first_name_index_2].nil? && !error_array.include?("Row #{row_index} is missing a first name.")
@@ -119,8 +127,8 @@ class LargeData < ActiveRecord::Base
 				error_array << "Row #{row_index} is missing a max_certainty. " if !original_certainty_index.nil? && row[original_certainty_index].nil?
 				error_array << "Row #{row_index} has an invalid start date type. " if !sdt_index.nil? && !date_list.include?(row[sdt_index])
 				error_array << "Row #{row_index} has an invalid end date type. " if !edt_index.nil? && !date_list.include?(row[edt_index]) 
-				first_person = Person.find_by(first_name: row[first_name_index_1], last_name: row[second_name_index_1])
-				second_person = Person.where.not(id: first_person.id).find_by(first_name: row[first_name_index_2], last_name: row[second_name_index_2])
+				first_person = Person.find_by(first_name: row[first_name_index_1], last_name: row[second_name_index_1]) if !first_name_index_1.nil? && row[first_name_index_1].nil? && !second_name_index_1.nil? && row[second_name_index_1].nil?
+				second_person = Person.where.not(id: first_person.id).find_by(first_name: row[first_name_index_2], last_name: row[second_name_index_2]) if !first_name_index_2.nil? && row[first_name_index_2].nil? && !second_name_index_2.nil? && row[second_name_index_2].nil?
 				error_array << "One of the two people in row #{row_index} are not in the database or both people are the same in the database. " if first_person.nil? || second_person.nil?
 				row_index += 1 			
 			end
@@ -136,6 +144,7 @@ class LargeData < ActiveRecord::Base
 			error_array[0] << "One of the required column headers are missing. " if gender_index.nil? || first_name_index.nil? || last_name_index.nil? || birth_year_index.nil? || death_year_index.nil?
 			row_index = 1
 			body_rows.each do |row|
+				return error_array if error_array.bytesize > 2500
 				error_array << "Row #{row_index} is missing a first name. " if !first_name_index.nil?  && row[first_name_index].nil?
 				error_array << "Row #{row_index} is missing a last name. " if !last_name_index.nil? && row[last_name_index].nil?
 				error_array << "Row #{row_index} is missing a birth year. " if !birth_year_index.nil? && row[birth_year_index].nil?
@@ -157,6 +166,7 @@ class LargeData < ActiveRecord::Base
 			error_array[0] << "One of the required column headers are missing." if group_name_index.nil? || description_index.nil? || first_name_index.nil? || last_name_index.nil?
 			row_index = 1
 			body_rows.each do |row|
+				return error_array if error_array.bytesize > 2500 
 				error_array << "Row #{row_index} is missing a group name. " if  !group_name_index.nil? && row[group_name_index].nil?  
 				error_array << "Row #{row_index} is missing a description. " if !description_index.nil? && row[description_index].nil?
 				error_array << "Row #{row_index} is missing a first name. " if  !first_name_index.nil? && row[first_name_index].nil?
