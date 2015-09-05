@@ -331,7 +331,7 @@ class Relationship < ActiveRecord::Base
         #  if (self.end_year < max_death_year) || (self.end_year > min_death_year)
         #    errors.add(:end_year, "The end year must be between #{min_year} and #{max_year} or between #{max_birth_year} (after the people were born) and #{min_death_year} (before the people died) ") 
         #  end
-        end
+        # end
       end
     end 
   end
