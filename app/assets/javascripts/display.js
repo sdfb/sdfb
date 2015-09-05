@@ -142,6 +142,7 @@ function twoDegs(id, id2, people) {
     });
 
     graph.on("node:dblclick", function(d) {
+      console.log("dblclick");
       var table = 'no';
       Pace.restart();
       // make the index equal autocomplete
