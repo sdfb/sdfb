@@ -157,6 +157,9 @@ function twoDegs(id, id2, people) {
       if (id  && sconf && econf && sdate && edate ) {
         window.location.href = '/?id=' + id + '&confidence=' + sconf + ',' + econf + ',&date=' + sdate + ',' + edate;
       }
+      else {
+        window.location.href = '/?id=' + id + '&confidence=60,100&date=1500,1700';
+      }
     });
   
     graph.on("edge:click", function(d) {
