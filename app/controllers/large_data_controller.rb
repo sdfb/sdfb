@@ -10,11 +10,12 @@ class LargeDataController < ApplicationController
 			redirect_to :controller => 'sessions', :action => 'new' 
 		else
 			if (current_user.user_type != "Admin" && current_user.user_type != "Curator")	
-				render :text => "currently this feature is only available to administrators and curators" 
+				render "error.html.erb" 
 			else
 				@data_file = LargeData.new
 				if params.has_key?(:error_string)
 					@errors = params[:error_string]
+					flash[:alert] = "Your file has the following errors: " <<@errors
 				else
 					@errors = nil
 				end
@@ -46,6 +47,9 @@ class LargeDataController < ApplicationController
 		else
 			@file_arrays = CSV.read(@data_file.file_path)
 			@match_hash = @data_file.potential_person_matches 
+			if @data_file.empty_matches?(@match_hash, @file_arrays) 
+				redirect_to :action => :edit, :id => @data_file.id
+			end
 		end
 	end
 
@@ -68,6 +72,28 @@ class LargeDataController < ApplicationController
 		
 		@added_model_objects = @data_file.populate_new(@added_model_objects, eval(params[:people].to_s))
 		#render :text => @added_model_objects.to_yaml
+	end
+
+	def download_csv
+		if params[:type] == "Person"
+			send_file(
+			    "#{Rails.root}/public/person_practice.csv",
+			    filename: "person_practice.csv",
+			    type: "text/csv"
+			 )
+		elsif params[:type] == "Relationship"
+			send_file(
+			    "#{Rails.root}/public/relationship_practice.csv",
+			    filename: "relationship_practice.csv",
+			    type: "text/csv"
+			 )
+		elsif params[:type] == "Group"
+			send_file(
+			    "#{Rails.root}/public/group_practice.csv",
+			    filename: "group_practice.csv",
+			    type: "text/csv"
+			)
+		end
 	end
 
 	private

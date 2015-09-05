@@ -20,6 +20,7 @@ class ApplicationController < ActionController::Base
 	helper_method :logged_in?
 
 	def check_login
+		#This function is obsolete and not used anywhere. You are looking for line 48
 		redirect_to sign_in_url, alert: "You need to sign in to view this page." if current_user.nil?
 	end
 
@@ -46,6 +47,6 @@ class ApplicationController < ActionController::Base
 
 	rescue_from  CanCan::AccessDenied do |exception|
 	 	flash[:error] = "You do not have access to this page. Please contact the team if you believe you should have access."
-	 	redirect_to sign_in_url
+	 	redirect_to sign_in_url(prev: (root_url << controller_name << "/" << action_name).chomp("index"))
 	end
 end

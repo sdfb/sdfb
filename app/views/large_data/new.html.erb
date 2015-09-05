@@ -6,15 +6,15 @@
 			Your uploaded file must be a CSV (Comma Seperated Values) file. It is recommended that you create the file with Excel or Numbers and then export as a CSV for simplicity. The file must contain a header row with any of the following labels (labels with an asterisk are required - do not include the asterisks in the file) : 
 		</p>
 		<p>
-			Person Headers: *first_name, *last_name, *ext_birth_year, *ext_death_year, *gender, odnb_id, historical_significance, prefix, suffix, title, birth_year_type, ext_birth_year, alt_birth_year, death_year_type, ext_death_year, alt_death_year, justification
+			Person Headers: *first_name, *last_name, display_name, *ext_birth_year, birth_year_type, alt_birth_year,  *ext_death_year, death_year_type,  alt_death_year, *gender (restricted to: "male" , "female", or "other"),  historical_significance, justification, prefix, suffix, title, odnb_id
 			
 		</p>
 		<p>
-			Relationship Headers: *first_name 1, *last_name 1, *first_name 2, *last_name 2, *original_certainty, max_certainty, start_year, start_month, start_day, end_year, end_month, end_day, start_date_type, end_date_type
+			Relationship Headers: *first_name 1, *last_name 1, *first_name 2, *last_name 2, *original_certainty, justification, start_date_type (restricted to: "BF", "AF","IN","CA","BF/IN","AF/IN","NA"), start_month, start_day, start_year, end_date_type (restricted to: "BF", "AF","IN","CA","BF/IN","AF/IN","NA"), end_month, end_day, end_year
 			
 		</p>
 		<p>
-			Group Headers: *name, *description, *first_name, *last_name, justification, start_year, end_year, start_date_type, end_date_type 
+			Group Headers: *name, *description, *first_name, *last_name, justification, start_year, end_year, start_date_type (restricted to: "BF", "AF","IN","CA","BF/IN","AF/IN","NA"), end_date_type (restricted to: "BF", "AF","IN","CA","BF/IN","AF/IN","NA")
 			
 		</p>
 		<p>
@@ -22,18 +22,13 @@
 		</p><br><br>
 		<h2> Sample Files </h2>
 
-			<%= link_to "Properly Formatted Person File", "person_practice.csv" %><br>
-			<%= link_to "Properly Formatted Relationship File", "relationship_practice.csv" %><br>
-			<%= link_to "Properly Formatted Group File", "group_practice.csv" %><br>
+			<%= link_to "Properly Formatted Person File", large_data_download_csv_url( type: "Person")%><br>
+			<%= link_to "Properly Formatted Relationship File",large_data_download_csv_url( type: "Relationship") %><br>
+			<%= link_to "Properly Formatted Group File", large_data_download_csv_url( type: "Group") %><br>
 			<br><br>
 	 	<h2> Submit </h2>
-	 	<% if !@errors.nil? %>
-	 		<p> Your submission has the following errors. Please fix and resubmit. </p>
-	 		<%= @errors %>
-	 	<% end %>
+
 	    <%= form_for @data_file , :url => {action: 'confirm_people'}, method: 'post', :html => { :multipart => true } do |f| %>
-		    <%= f.label(:table_file_name, "File Name") %>
-		  	<%= f.text_field :table_file_name %>
 		  	<%= f.label(:table_content_type, "Data Type") %>
 		  	<%= f.select :table_content_type, [["Person", "Person"], ["Relationship","Relationship"], ["Group","Group"]] %>
 		  	<%= f.label(:upload_data, "Choose File") %>

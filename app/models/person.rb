@@ -49,7 +49,7 @@ class Person < ActiveRecord::Base
 
   # Misc Constants
   DATE_TYPE_LIST = ["BF", "AF","IN","CA","BF/IN","AF/IN","NA"]
-  GENDER_LIST = ["female", "male","unknown"]
+  GENDER_LIST = ["female", "male", "other"]
 
   # Validations
   # -----------------------------

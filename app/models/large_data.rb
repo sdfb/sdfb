@@ -24,7 +24,6 @@ class LargeData < ActiveRecord::Base
 	#Validations
 	#--------------------------------------
 	validates_presence_of :upload_data 
-	validates_presence_of :table_file_name
 	validates_presence_of :table_content_type
 
 	CONTENT_TYPE_LIST = ["Person", "Relationship", "Group"]
@@ -59,6 +58,18 @@ class LargeData < ActiveRecord::Base
 		return filename
 	end
 
+	def empty_matches?(match_hash,file_arrays)
+		1.upto(file_arrays.count - 1) do |row_index|
+			if self.table_content_type == "Relationship"
+				return false if match_hash[row_index][1].count > 1
+				return false if match_hash[row_index][2].count > 1
+			elsif self.table_content_type == "Group"
+				return false if match_hash[row_index][:match].count > 1
+			end
+		end
+		return true
+	end
+
 	def file_formatted_correctly
 		#check for duplicates in the file
 		#make sure the required fields are non nil
@@ -67,7 +78,7 @@ class LargeData < ActiveRecord::Base
 		body_rows = CSV.read(self.file_path)
 		header_row = body_rows.delete_at(0)
 		date_list = ["BF", "AF","IN","CA","BF/IN","AF/IN","NA"]
-		gender_list = ["female", "male","unknown"]
+		gender_list = ["female", "male","other"]
 		
 		#Initializes error container
 		error_array = ""

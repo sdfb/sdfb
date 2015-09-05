@@ -2,22 +2,44 @@
 	<h1>Sign in</h1>
 	<div class = "container-box">
 		<div class = "well">
-			<%= form_tag sessions_path do %>
-			  <p>
-			    <%= label_tag :email %>
-			    <%= text_field_tag :email, params[:email] %>
-			  </p>
-			  <p>
-			    <%= label_tag :password %>
-			    <%= password_field_tag :password %>
-			  </p>
-			  <p>
-			    <%= label_tag :remember_me %>  
-			    <%= check_box_tag :remember_me, 1, params[:remember_me] %>  
-			  </p>
-			<h2>Password security has been updated, please reset password if unable to login</h2>
-			  <button type="submit" class="btn btn-primary">Sign in</button>
-			<% end %>
+			<% if @last_page.blank? %>
+
+				<%= form_tag sessions_path do %>
+				  <p>
+				    <%= label_tag :email %>
+				    <%= text_field_tag :email, params[:email] %>
+				  </p>
+				  <p>
+				    <%= label_tag :password %>
+				    <%= password_field_tag :password %>
+				  </p>
+				  <p>
+				    <%= label_tag :remember_me %>  
+				    <%= check_box_tag :remember_me, 1, params[:remember_me] %>  
+				  </p>
+				<h2>Password security has been updated, please reset password if unable to login</h2>
+				  <button type="submit" class="btn btn-primary">Sign in</button>
+				<% end %>
+			<% else %>
+				<%= form_tag sessions_path do %>
+				  <p>
+				  	<%= @last_page %>
+				    <%= label_tag :email %>
+				    <%= text_field_tag :email, params[:email] %>
+				  </p>
+				  <p>
+				    <%= label_tag :password %>
+				    <%= password_field_tag :password %>
+				  </p>
+				  <p>
+				    <%= label_tag :remember_me %>  
+				    <%= check_box_tag :remember_me, 1, params[:remember_me] %>  
+				  	<%= hidden_field_tag :prev , @last_page %>
+				  </p>
+				<h2>Password security has been updated, please reset password if unable to login</h2>
+				  <button type="submit" class="btn btn-primary">Sign in</button>
+				<% end %>
+			<% end %>	
 			  <b>Forgot Password?</b>
 			  <%= link_to "Reset Password",  new_password_reset_path %>
 			  <br>

@@ -175,6 +175,8 @@ Sdfb::Application.routes.draw do
 
   match '/large_data/show' => 'large_data#show', :via => [:get]
 
+  get 'large_data/download_csv'
+
   #match ':controller(/:action(/:id))', :via => [:get]
   # main resources  # The priority is based upon order of creation:
   # first created -> highest priority.
