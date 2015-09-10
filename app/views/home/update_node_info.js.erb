@@ -33,7 +33,7 @@ var d = new Date();
  	$("#node-DNBlink").attr("href", "http://www.oxforddnb.com/search/quick/?quicksearch=quicksearch&docPos=1&searchTarget=people&simpleName="+"<%= @node_info_first_name %>" + "+" + "<%= @node_info_last_name %>");
  }
  $("#node-GoogleLink").attr("href", "http://www.google.com/search?q="+"<%= @node_info_first_name %>" + "+" + "<%= @node_info_last_name %>");
- $("#node-JstorLink").attr("href", "http://www.jstor.org/action/doBasicSearch?Query='"+ "<%= @node_info_display_name %>" + "'");
+ $("#node-JstorLink").attr("href", 'http://www.jstor.org/action/doBasicSearch?Query="'+ '<%= @node_info_display_name %>' + '"');
 
  $("#node-discussion").attr("href", "/people/" + "<%= @node_id %>");
  $("#node-icon-chain").attr("href", "/relationships/new?person1_id=" + "<%= @node_id %>");

@@ -48,7 +48,7 @@ typelist_type.sort(function(a, b) {
   $("#edge-endyear").html(expand("<%= @network_info_end_date_type %>") + " " + "<%= @network_info_end_year %>");
   $("#edge-DNBlink").attr("href", "http://www.oxforddnb.com/search/articles/?searchForm=%2Fsearch%2Ffulltext%2Findex.jsp&text1=" + target.replace(/ /g, '+') + "&textFieldLimiter1=article_text&textQualifier1=+AND+&bool1=+AND+&text2=" + source.replace(/ /g, '+') + " &textFieldLimiter2=article_text&textQualifier2=+AND+&bool2=+AND+&text3=&textFieldLimiter3=article_text&textQualifier3=EXACT&search=Search");
   $("#edge-GoogleLink").attr("href", "http://www.google.com/search?q="+ source.replace(/ /g, '+')+ "+" + target.replace(/ /g, '+'));
-  $("#edge-JstorLink").attr("href", "http://www.jstor.org/action/doBasicSearch?Query='"+ source.replace(/ /g, '+')+ "'+'" + target.replace(/ /g, '+') + "'");
+  $("#edge-JstorLink").attr("href", 'http://www.jstor.org/action/doBasicSearch?Query="'+ source.replace(/ /g, '+')+ '" "' + target.replace(/ /g, '+') + '"');
 
   $("#relationship-table").html("");
 
