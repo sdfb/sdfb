@@ -273,6 +273,10 @@ a:hover {
   margin:auto;
 }
 
+#container p, #container a{
+  font-size:18px;
+}
+
 .slider, .slider-date, .slider-date2 {
   display: inline-block;
   width: 246px;
