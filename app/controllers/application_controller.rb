@@ -1,10 +1,14 @@
 class ApplicationController < ActionController::Base
   	protect_from_forgery
-  	before_filter :expire_hsts
+  	before_filter :expire_hsts, :allow_iframe_requests
 	private
 	def expire_hsts
     	response.headers["Strict-Transport-Security"] = 'max-age=0'
+
   	end
+  	def allow_iframe_requests
+	  response.headers.delete('X-Frame-Options')
+	end
 	def current_user
 		@current_user ||= User.find_by_auth_token( cookies[:auth_token]) if cookies[:auth_token]  
 		if (! @current_user)
@@ -20,7 +24,6 @@ class ApplicationController < ActionController::Base
 	helper_method :logged_in?
 
 	def check_login
-		#This function is obsolete and not used anywhere. You are looking for line 48
 		redirect_to sign_in_url, alert: "You need to sign in to view this page." if current_user.nil?
 	end
 
@@ -47,6 +50,6 @@ class ApplicationController < ActionController::Base
 
 	rescue_from  CanCan::AccessDenied do |exception|
 	 	flash[:error] = "You do not have access to this page. Please contact the team if you believe you should have access."
-	 	redirect_to sign_in_url(prev: (root_url << controller_name << "/" << action_name).chomp("index"))
+	 	redirect_to sign_in_url
 	end
 end
