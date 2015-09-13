@@ -54,11 +54,10 @@ class Group < ActiveRecord::Base
   
   # Callbacks
   # ----------------------------- 
-  before_create :init_array
-  before_create :check_if_approved
-  before_update :check_if_approved_and_update_edit
-  before_create :create_check_start_and_end_date
-  before_update :create_check_start_and_end_date
+  before_save :init_array
+  before_save :check_if_approved
+  before_save :check_if_approved_and_update_edit
+  before_save :create_check_start_and_end_date
 
   # Custom Methods
   # -----------------------------
