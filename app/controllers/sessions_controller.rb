@@ -16,7 +16,8 @@ class SessionsController < ApplicationController
       if params[:prev].blank?
         redirect_to root_url
       else
-        redirect_to params[:prev], :notice => "Logged in!" #This redirects to nil?
+        flash[:success] = "Logged in!"
+        redirect_to params[:prev]  #This redirects to nil?
       end
       cookies[:skiplanding] = "yes"  
     else
@@ -27,8 +28,9 @@ class SessionsController < ApplicationController
 
   def destroy
     session[:user_id] = nil
-    cookies.delete(:auth_token)  
-    redirect_to params[:prev], :notice => "Logged out!"
+    cookies.delete(:auth_token) 
+    flash[:error] = "Logged out!"
+    redirect_to params[:prev]
   end
 end
 
