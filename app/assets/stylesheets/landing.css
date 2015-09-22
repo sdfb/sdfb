@@ -77,6 +77,11 @@
   padding: 5px;
 }
 
+#landing-video a{
+  color: #043b54;
+
+}
+
 #skipIntro{
   color: #043b54;
   font-size: 20px;
