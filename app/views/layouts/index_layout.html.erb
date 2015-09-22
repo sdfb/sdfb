@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Six Degrees of Francis Bacon</title>
+  <title><%= yield(:title) %></title>
   <script>
   	window.gon = <%= @data.to_json.html_safe %>
   </script>
