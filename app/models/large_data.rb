@@ -72,7 +72,8 @@ class LargeData < ActiveRecord::Base
 
 	def empty_duplicates?(duplicates)
 		duplicates.each do |row_number, match_array|
-			return false if !match_array.empty? 
+			return false if match_array.class == Array && !match_array.empty?
+			return false if match_array.class != Array && !match_array.nil? 
 		end
 		return true
 	end
@@ -215,12 +216,13 @@ class LargeData < ActiveRecord::Base
 
 	def display_duplicates_in_db(params_hash)
 		#######doesn't handle the case of each of the find_by calls returning an array instead of a group
-
+		#adding multiple of the same match
 		file_path = self.file_path
 		new_hash = {} 
 		#Keys are the row numbers of information provided. values are an array of arrays of matching entries
 		row_num = 0
 		first_row = {}
+		ids_added = []
 
 		if (self.table_content_type == "Group")
 			rows_checked = []
@@ -244,10 +246,15 @@ class LargeData < ActiveRecord::Base
 					else
 						match_array = [] #array of groups similar to the one at row index
 						match = Group.find_by(name: data_rows[row_index][first_row["name"]], description: data_rows[row_index][first_row["description"]])
-						match_array << match if !match.nil?
-
+						if !match.nil? && !ids_added.include?(match.id)
+							ids_added << match.id
+							match_array << match 
+						end
 						match = Group.find_by(name: data_rows[row_index][first_row["name"]], start_year: data_rows[row_index][first_row["start_year"]], end_year: data_rows[row_index][first_row["end_year"]])
-						match_array << match if !match.nil?
+						if !match.nil? && !ids_added.include?(match.id)
+							ids_added << match.id
+							match_array << match 
+						end
 						
 						#Find Groups by similar people
 						#match = Group.find_by(name: data_rows[row_index[first_row["name"]]])
@@ -303,7 +310,10 @@ class LargeData < ActiveRecord::Base
 							
 							if !val.nil?
 								val.each do |ar_relation_obj| 
-									new_hash[row_num].push(Person.find_by(id: ar_relation_obj.id))
+									if !ids_added.include?(ar_relation_obj.id ) 
+										new_hash[row_num].push(Person.find_by(id: ar_relation_obj.id))
+										ids_added << ar_relation_obj.id 
+									end
 								end
 							end 
 							#########break
@@ -313,7 +323,10 @@ class LargeData < ActiveRecord::Base
 							val = Person.where(first_name: row[first_row["first_name"]].capitalize  , last_name: row[first_row["last_name"]].capitalize) 
 							if !val.nil? 
 								val.each do |ar_relation_obj| 
-									new_hash[row_num].push(Person.find_by(id: ar_relation_obj.id))
+									if !ids_added.include?(ar_relation_obj.id ) 
+										new_hash[row_num].push(Person.find_by(id: ar_relation_obj.id))
+										ids_added << ar_relation_obj.id 
+									end
 								end
 							end 
 						end
@@ -322,7 +335,10 @@ class LargeData < ActiveRecord::Base
 							val = Person.find_by(display_name: row[first_row["display_name"]])
 							if !val.nil? 
 								val.each do |ar_relation_obj| 
-									new_hash[row_num].push(Person.find_by(id: ar_relation_obj.id))
+									if !ids_added.include?(ar_relation_obj.id ) 
+										new_hash[row_num].push(Person.find_by(id: ar_relation_obj.id))
+										ids_added << ar_relation_obj.id 
+									end
 								end
 							end 
 						end
@@ -363,13 +379,15 @@ class LargeData < ActiveRecord::Base
 						 	#######break
 						else
 							match = Relationship.find_by(person1_index: person_one.id, person2_index: person_two.id)
-							if match.nil?
-								match = Relationship.find_by(person1_index: person_two.id, person2_index: person_one.id)
-							end
-							if match.nil?
-								######break
-							else
+							if !match.nil? && !ids_added.include?(match.id)
+								ids_added << match.id
 								new_hash[row_num].push(match)
+							elsif match.nil?
+								match = Relationship.find_by(person1_index: person_two.id, person2_index: person_one.id)
+								if !match.nil? && !ids_added.include?(match.id)
+									ids_added << match.id
+									new_hash[row_num].push(match) 
+								end
 							end
 						end
 					end
@@ -612,6 +630,7 @@ class LargeData < ActiveRecord::Base
 			data.is_approved = true
 			data.is_active = true
 			data.is_rejected = false
+			data.approved_by = self.created_by
 		elsif (content_type == "Relationship") 
 			
 			if data.start_year.present?
@@ -630,6 +649,7 @@ class LargeData < ActiveRecord::Base
 			data.is_approved = true
 			data.is_active = true
 			data.is_rejected = false
+			data.approved_by = self.created_by
 		
 		elsif (content_type == "Group")
 			
@@ -646,6 +666,7 @@ class LargeData < ActiveRecord::Base
 			data.is_approved = true
 			data.is_active = true
 			data.is_rejected = false
+			data.is_approved = self.created_by
 		end
 	end
 end

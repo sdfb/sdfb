@@ -9,13 +9,13 @@ class LargeDataController < ApplicationController
 		if (current_user == false) 
 			redirect_to :controller => 'sessions', :action => 'new' 
 		else
-			if (current_user.user_type != "Admin" && current_user.user_type != "Curator")	
+			if (current_user.user_type != "Admin" )#&& current_user.user_type != "Curator")	
 				render "error.html.erb" 
 			else
 				@data_file = LargeData.new
 				if params.has_key?(:error_string)
 					@errors = params[:error_string]
-					flash[:alert] = "Your file has the following errors: " <<@errors
+					flash[:alert] = "Your file has the following errors: " << @errors
 				else
 					@errors = nil
 				end
@@ -25,7 +25,8 @@ class LargeDataController < ApplicationController
 
 	def confirm_people 
 		hash_required = user_params
-		if !hash_required.has_key?("upload_data")
+		if !hash_required.has_key?("upload_data") || user_params[:upload_data].content_type != "text/csv"
+			flash[:alert] = "Please submit a valid CSV file. " 
 			redirect_to :action => :new 
 		else	
 			@data_file = LargeData.new(hash_required) #make sure this has a created by
@@ -58,13 +59,14 @@ class LargeDataController < ApplicationController
 		params.delete :id
 		@old_params = params
 		@duplicates = @data_file.display_duplicates_in_db(params)
-		#render :text => @duplicates.to_yaml
 		redirect_to :action => :show , :data_id => @data_file.id, :people => params if @data_file.empty_duplicates?(@duplicates)
 	end
 
 	def show 	
 		@data_file = LargeData.find(params[:data_id]) 
+		
 		@duplicates = @data_file.display_duplicates_in_db(eval(params[:people].to_s))
+		
 		@duplicates = @data_file.modify_duplicates(@duplicates,params) if !(@duplicates.nil? ||  @data_file.empty_duplicates?(@duplicates))
 		@added_model_objects = {} #hash of row numbers added mapped to their respective models in the db
 		@added_model_objects = @data_file.merge_and_remove_duplicates(@duplicates, @added_model_objects, eval(params[:people].to_s)) if !(@duplicates.nil? || @data_file.empty_duplicates?(@duplicates))		

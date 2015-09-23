@@ -129,7 +129,7 @@
             <dt><strong>Created:</strong></dt>
             <dd><%= @person.created_at.strftime("%m/%d/%Y") %> by <%= link_to User.find(@person.created_by).username,  user_path(@person.created_by) %></dd>
             <% @last_edit = @person.last_edit %>
-            <% if ! @last_edit.blank? %>
+            <% if ! (@last_edit[0].blank? || @last_edit[0] == 0)%>
               <dt><strong>Last Edit:</strong></dt>
               <dd><%= @last_edit[1].strftime("%m/%d/%Y")%> by <%= link_to User.find(@last_edit[0]).username,  user_path(@last_edit[0]) %></dd>
             <% end %>

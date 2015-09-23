@@ -67,20 +67,20 @@ class Relationship < ActiveRecord::Base
 
   # Callbacks
   # -----------------------------
-  before_create :init_array 
-  before_create :create_check_start_and_end_date
-  before_create :check_if_approved
-  before_create :check_if_valid
-  before_create :create_max_certainty_type_list
+  before_save :init_array 
+  before_save :create_check_start_and_end_date
+  before_save :check_if_approved
+  before_save :check_if_valid
+  before_save :create_max_certainty_type_list
 
   before_update :update_type_list_max_certainty_on_rel
   before_update :create_check_start_and_end_date
   before_update :update_peoples_rel_sum
   before_update :check_if_approved_and_update_edit
 
-  after_create :create_met_record
-  after_create :create_peoples_rel_sum
-  after_update :edit_met_record
+  after_save :create_met_record
+  after_save :create_peoples_rel_sum
+  after_save :edit_met_record
   after_destroy :delete_from_rel_sum
 
 	# Custom Methods
@@ -284,7 +284,7 @@ class Relationship < ActiveRecord::Base
         new_end_year = max_year
       end
       self.end_year = new_end_year
-      self.start_date_type = new_end_year_type
+      self.end_date_type = new_end_year_type
     else 
       #if there are existing dates, check them
 
@@ -334,6 +334,7 @@ class Relationship < ActiveRecord::Base
         # end
       end
     end 
+      
   end
 
 

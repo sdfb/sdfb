@@ -11,22 +11,19 @@
 </head>
 <body>
 
+
 <!-- Nav Bar Header -->
 
 <%= render :partial => 'layouts/header'%>
 <div class="container-fluid">
 	<div class="row">
 		<div class="span12">
-			<% flash.each do |name, msg| %>
-				<div class="alert alert-<%= name == :notice ? "success" : "error" %>">
-					<a class="close" data-dismiss="alert">x</a>
-					<%= msg %>
-				</div>
-			<% end %>
+			<%= render partial: "layouts/flash_messages", flash: flash %> 
 			<%= yield %>
 		</div>
 	</div>
 </div>
+
 
 <!-- Footer -->
 <%= render :partial => 'layouts/footer'%>
