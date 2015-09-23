@@ -9,7 +9,7 @@ class LargeDataController < ApplicationController
 		if (current_user == false) 
 			redirect_to :controller => 'sessions', :action => 'new' 
 		else
-			if (current_user.user_type != "Admin" && current_user.user_type != "Curator")	
+			if (current_user.user_type != "Admin" )#&& current_user.user_type != "Curator")	
 				render "error.html.erb" 
 			else
 				@data_file = LargeData.new
