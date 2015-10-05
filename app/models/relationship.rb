@@ -79,7 +79,7 @@ class Relationship < ActiveRecord::Base
   before_update :check_if_approved_and_update_edit
 
   after_save :create_met_record
-  after_save :create_peoples_rel_sum
+  after_create :create_peoples_rel_sum
   after_save :edit_met_record
   after_destroy :delete_from_rel_sum
 
