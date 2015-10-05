@@ -52,7 +52,7 @@ class GroupAssignment < ActiveRecord::Base
   # ----------------------------- 
   before_create :init_array
   after_create :create_group_person_list
-  #after_update :create_group_person_list
+  after_update :create_group_person_list
   before_create :check_if_approved_valid_create
   before_update :check_if_approved_and_update_edit
   before_create :create_check_start_and_end_date
