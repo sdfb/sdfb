@@ -88,13 +88,15 @@ class Person < ActiveRecord::Base
 
   # Callbacks
   # ----------------------------- 
-  before_save :init_array
-  before_save :check_if_approved
-  before_save :populate_search_names
-  before_save :check_if_approved_and_update_edit
-  before_save :check_birth_death_years
+  before_create :init_array
+  before_create :check_if_approved
+  before_create :populate_search_names
+  before_update :check_if_approved_and_update_edit
+  before_create :check_birth_death_years
+  before_update :check_birth_death_years
   before_destroy :delete_associated_relationships
-  before_save :add_display_name_if_blank
+  before_create :add_display_name_if_blank
+  before_update :add_display_name_if_blank
   #after_update :update_status_of_associated
 
   # Custom Methods
