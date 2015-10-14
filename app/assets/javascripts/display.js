@@ -416,6 +416,7 @@ function init() {
      accordion("group");  
     $("#filterBar").hide();
     $("#graph").hide();
+    $("#zoom").hide();
     $("#group-name").text(group["name"]);
     $("#group-description").text(group["description"]);
     $("#group-discussion").attr("href", "groups/" + group["id"])
