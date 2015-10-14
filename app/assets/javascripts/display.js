@@ -391,7 +391,6 @@ function init() {
     }
     
     if (people[0] == "nodelimit_network"){
-      console.log("network");
       $("#group-table").hide();
       $("#kickback").show();
       $('#kickbackyes').hide();
@@ -416,6 +415,7 @@ function init() {
   }else{
      accordion("group");  
     $("#filterBar").hide();
+    $("#graph").hide();
     $("#group-name").text(group["name"]);
     $("#group-description").text(group["description"]);
     $("#group-discussion").attr("href", "groups/" + group["id"])
