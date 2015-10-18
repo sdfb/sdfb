@@ -1,4 +1,4 @@
-<% content_for :title, "Group Category Assignments" %>
+<% content_for :title, "SDFB: Group Category Assignments" %>
 
 <h1>All Group Category Assignments <%= link_to 'Assign a Category to a Group', new_group_cat_assign_path, :class => 'btn btn-primary' %><% if (current_user.user_type == "Admin")%><%=link_to 'Export Data', '/export_group_cat_assigns', :class => 'btn btn-primary'%><% else %><%=link_to 'Export Data', '/export_group_cat_assign_list', :class => 'btn btn-primary'%><% end %></h1><br>
 
