@@ -88,13 +88,15 @@ class Person < ActiveRecord::Base
 
   # Callbacks
   # ----------------------------- 
-  before_save :init_array
-  before_save :check_if_approved
-  before_save :populate_search_names
-  before_save :check_if_approved_and_update_edit
-  before_save :check_birth_death_years
+  before_create :init_array
+  before_create :check_if_approved
+  before_create :populate_search_names
+  before_update :check_if_approved_and_update_edit
+  before_create :check_birth_death_years
+  before_update :check_birth_death_years
   before_destroy :delete_associated_relationships
-  before_save :add_display_name_if_blank
+  before_create :add_display_name_if_blank
+  before_update :add_display_name_if_blank
   #after_update :update_status_of_associated
 
   # Custom Methods
@@ -349,7 +351,7 @@ class Person < ActiveRecord::Base
     if @zeroDegreePerson[person_id.to_i]['rel_sum'].length <= 50
         @zeroDegreePerson[person_id.to_i]['rel_sum'].each do |firstDegreePerson|
             #check that relationship is within the date and confidence range
-            if ((firstDegreePerson[3].to_i >= min_year) && (firstDegreePerson[4].to_i <= max_year))
+            if ((firstDegreePerson[3].to_i >= min_year) || (firstDegreePerson[4].to_i <= max_year))
                 if ((firstDegreePerson[1].to_i >= min_confidence) && (firstDegreePerson[1].to_i <= max_confidence))
                     firstDegreePersonID = firstDegreePerson[0]
                     @firstDegreePerson = self.find_first_degree_for_person(firstDegreePersonID, min_confidence, max_confidence, min_year, max_year, false)
@@ -410,7 +412,7 @@ class Person < ActiveRecord::Base
     end
 		@zeroDegreePerson2[person_id2.to_i]['rel_sum'].each do |firstDegreePerson2|
       #check that relationship is within the date and confidence range
-      if ((firstDegreePerson2[3].to_i >= min_year) && (firstDegreePerson2[4].to_i <= max_year))
+      if ((firstDegreePerson2[3].to_i >= min_year) || (firstDegreePerson2[4].to_i <= max_year))
         if ((firstDegreePerson2[1].to_i >= min_confidence) && (firstDegreePerson2[1].to_i <= max_confidence))
 			    @zeroDegreePerson2Rel[firstDegreePerson2[0]] = firstDegreePerson2[0]
         end
@@ -418,7 +420,7 @@ class Person < ActiveRecord::Base
 		end
 		@zeroDegreePerson1[person_id1.to_i]['rel_sum'].each do |firstDegreePerson1|
       #check that relationship is within the date and confidence range
-      if ((firstDegreePerson1[3].to_i >= min_year) && (firstDegreePerson1[4].to_i <= max_year))
+      if ((firstDegreePerson1[3].to_i >= min_year) || (firstDegreePerson1[4].to_i <= max_year))
         if ((firstDegreePerson1[1].to_i >= min_confidence) && (firstDegreePerson1[1].to_i <= max_confidence))
           firstDegreePersonID1 = firstDegreePerson1[0]
           if (@zeroDegreePerson2Rel.include? firstDegreePersonID1)
@@ -430,14 +432,14 @@ class Person < ActiveRecord::Base
 		@zeroDegreePerson1Rel = {}
 		@zeroDegreePerson1Rel[person_id1] = person_id1
 		@zeroDegreePerson1[person_id1.to_i]['rel_sum'].each do |firstDegreePerson1|
-      if ((firstDegreePerson1[3].to_i >= min_year) && (firstDegreePerson1[4].to_i <= max_year))
+      if ((firstDegreePerson1[3].to_i >= min_year) || (firstDegreePerson1[4].to_i <= max_year))
         if ((firstDegreePerson1[1].to_i >= min_confidence) && (firstDegreePerson1[1].to_i <= max_confidence))
 			    @zeroDegreePerson1Rel[firstDegreePerson1[0]] = firstDegreePerson1[0]
         end
       end
 		end
 		@zeroDegreePerson2[person_id2.to_i]['rel_sum'].each do |firstDegreePerson2|
-      if ((firstDegreePerson2[3].to_i >= min_year) && (firstDegreePerson2[4].to_i <= max_year))
+      if ((firstDegreePerson2[3].to_i >= min_year) || (firstDegreePerson2[4].to_i <= max_year))
         if ((firstDegreePerson2[1].to_i >= min_confidence) && (firstDegreePerson2[1].to_i <= max_confidence))
           firstDegreePersonID2 = firstDegreePerson2[0]
           if (@zeroDegreePerson1Rel.include? firstDegreePersonID2)

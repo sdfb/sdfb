@@ -1,6 +1,8 @@
+<% content_for :title, "SDFB: Unapproved Records" %>
+
 <h1>All Unapproved Records</h1>
 
-<% if logged_in? %>
+<% if (logged_in?) %>
 	<%= render 'unapproved_people' %>
 	<%= render 'unapproved_user_person_contribs' %>
 	<%= render 'unapproved_relationships' %>

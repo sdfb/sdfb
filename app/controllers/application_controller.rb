@@ -2,6 +2,8 @@ class ApplicationController < ActionController::Base
   	protect_from_forgery
   	before_filter :expire_hsts, :allow_iframe_requests
   	before_action :store_location
+	
+	#origin/master
 	private
 
 	def store_location

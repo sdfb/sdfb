@@ -391,7 +391,6 @@ function init() {
     }
     
     if (people[0] == "nodelimit_network"){
-      console.log("network");
       $("#group-table").hide();
       $("#kickback").show();
       $('#kickbackyes').hide();
@@ -416,6 +415,8 @@ function init() {
   }else{
      accordion("group");  
     $("#filterBar").hide();
+    $("#graph").hide();
+    $("#zoom").hide();
     $("#group-name").text(group["name"]);
     $("#group-description").text(group["description"]);
     $("#group-discussion").attr("href", "groups/" + group["id"])
@@ -431,7 +432,7 @@ function init() {
       $("#group-icon-tag2").attr("href", "/group_assignments/new?group_id=" + group2["id"]);
     }
     $.each(group_members, function(index, value) { 
-      $( "#group-table" ).append( "<div class='group-row'><div class='col-md'>" + group_members[index]["display_name"] + "</div><div class='col-md'>" + group_members[index]["ext_birth_year"] + "</div><div class='col-md'>" + group_members[index]["ext_death_year"] + "</div><div class='col-md'><a href='/people/" + group_members[index]["id"] + "'>" + + group_members[index]["id"] + "</a></div></div>");
+      $( "#group-table" ).append( "<tr class='group-row'><td class='col-md'>" + group_members[index]["display_name"] + "</td><td class='col-md'>" + group_members[index]["ext_birth_year"] + "</td><td class='col-md'>" + group_members[index]["ext_death_year"] + "</ts><td class='col-md'><a href='/people/" + group_members[index]["id"] + "'>" + + group_members[index]["id"] + "</a></td></tr>");
     });
   }
 }
