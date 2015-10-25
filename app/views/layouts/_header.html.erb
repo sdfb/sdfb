@@ -103,11 +103,11 @@
 					<ul class="dropdown-menu">
 						<li><%= link_to "My Account", user_path(current_user) %></li>
 						<li><a href="/my_contributions">My Contributions</a></li>
-						<li><%= link_to "Sign Out", sign_out_path(prev: (root_url << controller_name << "/" << action_name)).chomp("index") %></li>
+						<li><%= link_to "Sign Out", sign_out_path(prev: session[:previous_url]) %></li>
 					</ul>
 				</li>
 			<% else %>
-				<li><%= link_to "Sign In / Sign Up", sign_in_path(prev: (root_url << controller_name << "/" << action_name)).chomp("index") %></li>
+				<li><%= link_to "Sign In / Sign Up", sign_in_path(prev: session[:previous_url]) %></li>
 			<% end %>
 				<li class="dropdown">
 				    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
@@ -125,6 +125,7 @@
 
 
 			<li><a target="blanK" href="http://goo.gl/forms/J4u7kgI6h4">Feedback</a></li>
+			
 	  	</ul>
 	</ul>
 </div>

@@ -1,7 +1,27 @@
 class ApplicationController < ActionController::Base
   	protect_from_forgery
   	before_filter :expire_hsts, :allow_iframe_requests
+  	before_action :store_location
 	private
+
+	def store_location
+	  # store last url - this is needed for post-login redirect to whatever the user last visited.
+	  return unless request.get? 
+	  if (request.path != "/sessions/new" &&
+	      request.path != "/sessions/destroy" &&
+	      request.path != "/sign_in" &&
+	      request.path != "/sign_out" &&
+	      request.path != "/sign_up" &&
+	      request.path != "/users/new" &&
+	      !request.xhr?) # don't store ajax calls
+	    session[:previous_url] = request.fullpath 
+	  end
+	end
+
+	def after_sign_in_path_for(resource)
+	  session[:previous_url] || root_path
+	end
+
 	def expire_hsts
     	response.headers["Strict-Transport-Security"] = 'max-age=0'
 
