@@ -13,18 +13,12 @@ class SessionsController < ApplicationController
       else  
         cookies[:auth_token] = user.auth_token  
       end  
-      if params[:prev].blank?
-        redirect_to root_url
-      else
-        flash[:success] = "Logged in!"
-        #redirect_to params[:prev]  #This redirects to nil?
-        redirect_to root_url
-      end
+      flash[:success] = "Logged in!"
+      redirect_to session[:previous_url]  #This redirects to nil?
       cookies[:skiplanding] = "yes"  
     else
       flash[:alert] = "Invalid email or password"
-      #redirect_to sign_in_path(:prev => params[:prev])
-      redirect_to root_url
+      redirect_to sign_in_path
     end
   end
 
@@ -32,8 +26,7 @@ class SessionsController < ApplicationController
     session[:user_id] = nil
     cookies.delete(:auth_token) 
     flash[:error] = "Logged out!"
-    #redirect_to params[:prev]
-    redirect_to root_url
+    redirect_to params[:prev]
   end
 end
 
