@@ -34,14 +34,15 @@ function remove_char(str){
 
  var confidence_param = getParam("confidence");
  var date_param = getParam("date");
- var url = "/<%= @node_id %>/";
+ var url = "?id=<%= @node_id %>";
  if (confidence_param != ""){
-    url = url + "confidence/" + confidence_param;
+    url = url + "&confidence=" + confidence_param + "";
  }
  if (date_param != ""){
-    url = url + "date/" + date_param;
+    url = url + "&date=" + date_param + "";
  }
- $("#node-name").href(url);
+ $("#node-name").attr("href", url);
+
  $("#node-bdate").text(expand("<%= @node_info_birth_year_type %>") + " " + "<%= @node_info_birth %>");
  $("#node-ddate").text(expand("<%= @node_info_death_year_type %>")+ " " + "<%= @node_info_death %>");
 
