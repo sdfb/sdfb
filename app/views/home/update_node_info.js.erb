@@ -1,3 +1,18 @@
+function getParam ( sname ){
+    var params = location.search.substr(location.search.indexOf("?")+1);
+    var sval = "";
+    params = params.split("&");
+    // split param and value into individual pieces
+    //$("#Sir-Mix-a-Lot").html(row.contributor); 
+    for (var i=0; i<params.length; i++){
+        temp = params[i].split("=");
+        if ( [temp[0]] == sname ) { 
+            sval = temp[1]; 
+        }
+    }
+    return sval;
+}
+
 function expand(abbr){
   return abbr.replace('IN', "In")
 		      .replace('BF', 'Before')
@@ -16,6 +31,17 @@ function remove_char(str){
 }
  
  $("#node-name").text(remove_char("<%= @node_info_display_name %>"));
+
+ var confidence_param = getParam("confidence");
+ var date_param = getParam("date");
+ var url = "/<%= @node_id %>/";
+ if (confidence_param != ""){
+    url = url + "confidence/" + confidence_param;
+ }
+ if (date_param != ""){
+    url = url + "date/" + date_param;
+ }
+ $("#node-name").href(url);
  $("#node-bdate").text(expand("<%= @node_info_birth_year_type %>") + " " + "<%= @node_info_birth %>");
  $("#node-ddate").text(expand("<%= @node_info_death_year_type %>")+ " " + "<%= @node_info_death %>");
 

@@ -5,8 +5,9 @@
 }
 
 #landing-video iframe{
-
-  padding:10% 0px 0px 0px;
+  height: 90%;
+  width: 90%;
+  padding:1% 0px 0px 0px;
 }
 
 #landing, #landing-video{
