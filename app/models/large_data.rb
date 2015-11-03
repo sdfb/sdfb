@@ -86,7 +86,7 @@ class LargeData < ActiveRecord::Base
 		body_rows = CSV.read(self.file_path)
 		header_row = body_rows.delete_at(0)
 		date_list = ["BF", "AF","IN","CA","BF/IN","AF/IN","NA"]
-		gender_list = ["female", "male","other"]
+		gender_list = ["female", "male", "other"]
 		
 		#Initializes error container
 		error_array = ""

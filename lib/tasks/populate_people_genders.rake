@@ -16,7 +16,7 @@ namespace :db do
         elsif genderData[1] == "female\n"
           gender_input = "female"
         else
-          gender_input = "unknown"
+          gender_input = "other"
         end
         Person.update(person_id_input, gender: gender_input)
         count += 1
