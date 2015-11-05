@@ -17,7 +17,7 @@
   <strong><%= RelationshipType.find(@user_rel_contrib.relationship_type_id).name %></strong>
   <%= Relationship.find(@user_rel_contrib.relationship_id).get_person2_name %>
 
-  <%= f.label :certainty %>
+  <%= f.input :certainty, label: "Confidence" %>
   <%= f.range_field :certainty, :min=>0, :max=>100, :class=>"slide", :id=>"slider1"%>
   <br>
   <% if ! @user_rel_contrib.certainty.blank? %>

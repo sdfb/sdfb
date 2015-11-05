@@ -129,7 +129,7 @@ class RelationshipsController < ApplicationController
     if (current_user.user_type == "Admin")
       relationship_csv = CSV.generate do |csv|
         csv << ["SDFB Relationship ID", "Person 1 ID", "Person 2 ID",
-          "Original Certainty", "Maximum Certainty", "Start Year Type", "Start Month", "Start Day", "Start Year", "End Year Type", "End Month",
+          "Original Confidence", "Maximum Confidence", "Start Year Type", "Start Month", "Start Day", "Start Year", "End Year Type", "End Month",
           "End Day", "End Year", "Edge Birthdate Certainty", "Justification", "Created By ID", "Created At", "Is approved?",
           "Approved By ID", "Approved On"]
         @all_relationships.each do |relationship|
@@ -143,7 +143,7 @@ class RelationshipsController < ApplicationController
       end
     else
     relationship_csv = CSV.generate do |csv|
-        csv << ["SDFB Relationship ID","Person 1 ID", "Person 2 ID", "Original Certainty", "Maximum Certainty", "Start Year Type",
+        csv << ["SDFB Relationship ID","Person 1 ID", "Person 2 ID", "Original Confidence", "Maximum Confidence", "Start Year Type",
           "Start Day", "Start Month", "Start Year", "End Year Type", "End Month", "End Day", "End Year"]
         @all_relationships_approved.each do |relationship|
           csv << [relationship.id, relationship.person1_index, relationship.person2_index,
@@ -161,7 +161,7 @@ class RelationshipsController < ApplicationController
     if (current_user.user_type == "Admin")
       relationship_csv = CSV.generate do |csv|
         csv << ["SDFB Relationship ID", "Person 1 ID", "Person 2 ID",
-          "Original Certainty", "Maximum Certainty", "Start Year Type", "Start Month", "Start Day", "Start Year", "End Year Type", "End Month",
+          "Original Confidence", "Maximum Confidence", "Start Year Type", "Start Month", "Start Day", "Start Year", "End Year Type", "End Month",
           "End Day", "End Year", "Edge Birthdate Certainty", "Justification", "Created By ID", "Created At", "Is approved?",
           "Approved By ID", "Approved On"]
         @all_relationships.each do |relationship|
@@ -175,7 +175,7 @@ class RelationshipsController < ApplicationController
       end
     else
     relationship_csv = CSV.generate do |csv|
-        csv << ["SDFB Relationship ID","Person 1 ID", "Person 2 ID", "Original Certainty", "Maximum Certainty", "Start Year Type",
+        csv << ["SDFB Relationship ID","Person 1 ID", "Person 2 ID", "Original Confidence", "Maximum Confidence", "Start Year Type",
           "Start Day", "Start Month", "Start Year", "End Year Type", "End Month", "End Day", "End Year"]
         @all_relationships_approved.each do |relationship|
           csv << [relationship.id, relationship.person1_index, relationship.person2_index,
@@ -193,7 +193,7 @@ class RelationshipsController < ApplicationController
       if (current_user.user_type == "Admin")
         relationship_csv = CSV.generate do |csv|
           csv << ["SDFB Relationship ID", "Person 1 ID", "Person 2 ID",
-            "Original Certainty", "Maximum Certainty", "Start Year Type", "Start Month", "Start Day", "Start Year", "End Year Type", "End Month",
+            "Original Confidence", "Maximum Confidence", "Start Year Type", "Start Month", "Start Day", "Start Year", "End Year Type", "End Month",
             "End Day", "End Year", "Edge Birthdate Certainty", "Justification", "Created By ID", "Created At", "Is approved?",
             "Approved By ID", "Approved On"]
           @all_relationships.each do |relationship|
@@ -207,7 +207,7 @@ class RelationshipsController < ApplicationController
         end
       else
       relationship_csv = CSV.generate do |csv|
-          csv << ["SDFB Relationship ID","Person 1 ID", "Person 2 ID", "Original Certainty", "Maximum Certainty", "Start Year Type",
+          csv << ["SDFB Relationship ID","Person 1 ID", "Person 2 ID", "Original Confidence", "Maximum Confidence", "Start Year Type",
             "Start Day", "Start Month", "Start Year", "End Year Type", "End Month", "End Day", "End Year"]
           @all_relationships_approved.each do |relationship|
             csv << [relationship.id, relationship.person1_index, relationship.person2_index,
@@ -225,7 +225,7 @@ class RelationshipsController < ApplicationController
     if (current_user.user_type == "Admin")
       relationship_csv = CSV.generate do |csv|
         csv << ["SDFB Relationship ID", "Person 1 ID", "Person 2 ID",
-          "Original Certainty", "Maximum Certainty", "Start Year Type", "Start Month", "Start Day", "Start Year", "End Year Type", "End Month",
+          "Original Confidence", "Maximum Confidence", "Start Year Type", "Start Month", "Start Day", "Start Year", "End Year Type", "End Month",
           "End Day", "End Year", "Edge Birthdate Certainty", "Justification", "Created By ID", "Created At", "Is approved?",
           "Approved By ID", "Approved On"]
         @all_relationships.each do |relationship|
@@ -239,7 +239,7 @@ class RelationshipsController < ApplicationController
       end
     else
     relationship_csv = CSV.generate do |csv|
-        csv << ["SDFB Relationship ID","Person 1 ID", "Person 2 ID", "Original Certainty", "Maximum Certainty", "Start Year Type",
+        csv << ["SDFB Relationship ID","Person 1 ID", "Person 2 ID", "Original Confidence", "Maximum Confidence", "Start Year Type",
           "Start Day", "Start Month", "Start Year", "End Year Type", "End Month", "End Day", "End Year"]
         @all_relationships_approved.each do |relationship|
           csv << [relationship.id, relationship.person1_index, relationship.person2_index,
@@ -257,7 +257,7 @@ class RelationshipsController < ApplicationController
     if (current_user.user_type == "Admin")
       relationship_csv = CSV.generate do |csv|
         csv << ["SDFB Relationship ID", "Person 1 ID", "Person 2 ID",
-          "Original Certainty", "Maximum Certainty", "Start Year Type", "Start Month", "Start Day", "Start Year", "End Year Type", "End Month",
+          "Original Confidence", "Maximum Confidence", "Start Year Type", "Start Month", "Start Day", "Start Year", "End Year Type", "End Month",
           "End Day", "End Year", "Edge Birthdate Certainty", "Justification", "Created By ID", "Created At", "Is approved?",
           "Approved By ID", "Approved On"]
         @all_relationships.each do |relationship|
@@ -271,7 +271,7 @@ class RelationshipsController < ApplicationController
       end
     else
     relationship_csv = CSV.generate do |csv|
-        csv << ["SDFB Relationship ID","Person 1 ID", "Person 2 ID", "Original Certainty", "Maximum Certainty", "Start Year Type",
+        csv << ["SDFB Relationship ID","Person 1 ID", "Person 2 ID", "Original Confidence", "Maximum Confidence", "Start Year Type",
           "Start Day", "Start Month", "Start Year", "End Year Type", "End Month", "End Day", "End Year"]
         @all_relationships_approved.each do |relationship|
           csv << [relationship.id, relationship.person1_index, relationship.person2_index,
@@ -289,7 +289,7 @@ class RelationshipsController < ApplicationController
     if (current_user.user_type == "Admin")
       relationship_csv = CSV.generate do |csv|
         csv << ["SDFB Relationship ID", "Person 1 ID", "Person 2 ID",
-          "Original Certainty", "Maximum Certainty", "Start Year Type", "Start Month", "Start Day", "Start Year", "End Year Type", "End Month",
+          "Original Confidence", "Maximum Confidence", "Start Year Type", "Start Month", "Start Day", "Start Year", "End Year Type", "End Month",
           "End Day", "End Year", "Edge Birthdate Certainty", "Justification", "Created By ID", "Created At", "Is approved?",
           "Approved By ID", "Approved On"]
         @all_relationships.each do |relationship|
@@ -303,7 +303,7 @@ class RelationshipsController < ApplicationController
       end
     else
     relationship_csv = CSV.generate do |csv|
-        csv << ["SDFB Relationship ID","Person 1 ID", "Person 2 ID", "Original Certainty", "Maximum Certainty", "Start Year Type",
+        csv << ["SDFB Relationship ID","Person 1 ID", "Person 2 ID", "Original Confidence", "Maximum Confidence", "Start Year Type",
           "Start Day", "Start Month", "Start Year", "End Year Type", "End Month", "End Day", "End Year"]
         @all_relationships_approved.each do |relationship|
           csv << [relationship.id, relationship.person1_index, relationship.person2_index,
@@ -321,7 +321,7 @@ class RelationshipsController < ApplicationController
     if (current_user.user_type == "Admin")
       relationship_csv = CSV.generate do |csv|
         csv << ["SDFB Relationship ID", "Person 1 ID", "Person 2 ID",
-          "Original Certainty", "Maximum Certainty", "Start Year Type", "Start Month", "Start Day", "Start Year", "End Year Type", "End Month",
+          "Original Confidence", "Maximum Confidence", "Start Year Type", "Start Month", "Start Day", "Start Year", "End Year Type", "End Month",
           "End Day", "End Year", "Edge Birthdate Certainty", "Justification", "Created By ID", "Created At", "Is approved?",
           "Approved By ID", "Approved On"]
         @all_relationships.each do |relationship|
@@ -335,7 +335,7 @@ class RelationshipsController < ApplicationController
       end
     else
     relationship_csv = CSV.generate do |csv|
-        csv << ["SDFB Relationship ID","Person 1 ID", "Person 2 ID", "Original Certainty", "Maximum Certainty", "Start Year Type",
+        csv << ["SDFB Relationship ID","Person 1 ID", "Person 2 ID", "Original Confidence", "Maximum Confidence", "Start Year Type",
           "Start Day", "Start Month", "Start Year", "End Year Type", "End Month", "End Day", "End Year"]
         @all_relationships_approved.each do |relationship|
           csv << [relationship.id, relationship.person1_index, relationship.person2_index,
@@ -353,7 +353,7 @@ class RelationshipsController < ApplicationController
     if (current_user.user_type == "Admin")
       relationship_csv = CSV.generate do |csv|
         csv << ["SDFB Relationship ID", "Person 1 ID", "Person 2 ID",
-          "Original Certainty", "Maximum Certainty", "Start Year Type", "Start Month", "Start Day", "Start Year", "End Year Type", "End Month",
+          "Original Confidence", "Maximum Confidence", "Start Year Type", "Start Month", "Start Day", "Start Year", "End Year Type", "End Month",
           "End Day", "End Year", "Edge Birthdate Certainty", "Justification", "Created By ID", "Created At", "Is approved?",
           "Approved By ID", "Approved On"]
         @all_relationships.each do |relationship|
@@ -367,7 +367,7 @@ class RelationshipsController < ApplicationController
       end
     else
       relationship_csv = CSV.generate do |csv|
-        csv << ["SDFB Relationship ID","Person 1 ID", "Person 2 ID", "Original Certainty", "Maximum Certainty", "Start Year Type",
+        csv << ["SDFB Relationship ID","Person 1 ID", "Person 2 ID", "Original Confidence", "Maximum Confidence", "Start Year Type",
           "Start Day", "Start Month", "Start Year", "End Year Type", "End Month", "End Day", "End Year"]
         @all_relationships_approved.each do |relationship|
           csv << [relationship.id, relationship.person1_index, relationship.person2_index,
@@ -385,7 +385,7 @@ class RelationshipsController < ApplicationController
       if (current_user.user_type == "Admin")
         relationship_csv = CSV.generate do |csv|
           csv << ["SDFB Relationship ID", "Person 1 ID", "Person 2 ID",
-            "Original Certainty", "Maximum Certainty", "Start Year Type", "Start Month", "Start Day", "Start Year", "End Year Type", "End Month",
+            "Original Confidence", "Maximum Confidence", "Start Year Type", "Start Month", "Start Day", "Start Year", "End Year Type", "End Month",
             "End Day", "End Year", "Edge Birthdate Certainty", "Justification", "Created By ID", "Created At", "Is approved?",
             "Approved By ID", "Approved On"]
           @all_relationships.each do |relationship|
@@ -399,7 +399,7 @@ class RelationshipsController < ApplicationController
         end
       else
       relationship_csv = CSV.generate do |csv|
-          csv << ["SDFB Relationship ID","Person 1 ID", "Person 2 ID", "Original Certainty", "Maximum Certainty", "Start Year Type",
+          csv << ["SDFB Relationship ID","Person 1 ID", "Person 2 ID", "Original Confidence", "Maximum Confidence", "Start Year Type",
             "Start Day", "Start Month", "Start Year", "End Year Type", "End Month", "End Day", "End Year"]
           @all_relationships_approved.each do |relationship|
             csv << [relationship.id, relationship.person1_index, relationship.person2_index,
@@ -417,7 +417,7 @@ class RelationshipsController < ApplicationController
     if (current_user.user_type == "Admin")
       relationship_csv = CSV.generate do |csv|
         csv << ["SDFB Relationship ID", "Person 1 ID", "Person 2 ID",
-          "Original Certainty", "Maximum Certainty", "Start Year Type", "Start Month", "Start Day", "Start Year", "End Year Type", "End Month",
+          "Original Confidence", "Maximum Confidence", "Start Year Type", "Start Month", "Start Day", "Start Year", "End Year Type", "End Month",
           "End Day", "End Year", "Edge Birthdate Certainty", "Justification", "Created By ID", "Created At", "Is approved?",
           "Approved By ID", "Approved On"]
         @all_relationships.each do |relationship|
@@ -431,7 +431,7 @@ class RelationshipsController < ApplicationController
       end
     else
     relationship_csv = CSV.generate do |csv|
-        csv << ["SDFB Relationship ID","Person 1 ID", "Person 2 ID", "Original Certainty", "Maximum Certainty", "Start Year Type",
+        csv << ["SDFB Relationship ID","Person 1 ID", "Person 2 ID", "Original Confidence", "Maximum Confidence", "Start Year Type",
           "Start Day", "Start Month", "Start Year", "End Year Type", "End Month", "End Day", "End Year"]
         @all_relationships_approved.each do |relationship|
           csv << [relationship.id, relationship.person1_index, relationship.person2_index,

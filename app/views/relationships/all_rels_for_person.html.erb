@@ -13,10 +13,10 @@
       <th>Person 2</th>
       <% if current_user != nil %>
           <% if (current_user.user_type == "Admin")  %>
-              <th>Original Certainty</th>
+              <th>Original Confidence</th>
           <% end %>
       <% end %>
-      <th>Maximum Certainty</th>
+      <th>Maximum Confidence</th>
       <% if current_user != nil %>
           <% if (current_user.user_type == "Admin")  %>
               <th>Created by</th>

@@ -26,9 +26,9 @@
       <dl class="dl-horizontal">
         <dt><strong>SDFB Relationship ID:</strong></dt>
         <dd><%= @relationship.id %></dd>
-        <dt><strong>Maximum Certainty:</strong></dt>
+        <dt><strong>Maximum Confidence:</strong></dt>
         <dd><%= @relationship.max_certainty %>%</dd>
-        <dt><strong>Creator's Certainty:</strong></dt>
+        <dt><strong>Creator's Confidence:</strong></dt>
         <dd><%= @relationship.original_certainty %>%</dd>
         <dt><strong>Person 1:</strong></dt>
         <dd><%= link_to person1_name,  person_path(@relationship.person1_index) %></dd>
@@ -152,7 +152,7 @@
             <tr>
               <th>SDFB Relationship Type Assign. ID</th>
               <th>Relationship Type</th>
-              <th>Certainty</th>
+              <th>Confidence</th>
               <th>Start Date Type</th>
               <th>Start Date</th>
               <th>End Date Type</th>
