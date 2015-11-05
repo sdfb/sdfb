@@ -1,4 +1,6 @@
 class UserGroupContrib < ActiveRecord::Base
+  # this class is known as "Group Notes" to the user
+  
   attr_accessible :annotation, :bibliography, :group_id, :created_by, :approved_by,
   :approved_on, :created_at, :is_approved, :is_active, :is_rejected, :last_edit
   serialize :last_edit,Array

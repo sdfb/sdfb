@@ -1,4 +1,6 @@
 class UserPersonContrib < ActiveRecord::Base
+  # this class is known as "Person Notes" to the user
+  
   attr_accessible :annotation, :bibliography, :created_by, :person_id, :approved_by,
   :approved_on, :created_at, :is_approved, :is_active, :is_rejected, :person_autocomplete, :last_edit
   serialize :last_edit,Array

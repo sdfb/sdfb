@@ -1,4 +1,6 @@
 class UserRelContribsController < ApplicationController
+  # this class is known as "Relationship Type Assignments" to the user
+
   # GET /user_rel_contribs
   # GET /user_rel_contribs.json
   

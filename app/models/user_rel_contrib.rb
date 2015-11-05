@@ -1,4 +1,6 @@
 class UserRelContrib < ActiveRecord::Base
+  # this class is known as "Relationship Type Assignment" to the user
+  
   attr_accessible :annotation, :bibliography, :certainty, :created_by, :relationship_id, :relationship_type_id, 
   :approved_by, :approved_on, :created_at, :is_approved, :start_year, :start_month, 
   :start_day, :end_year, :end_month, :end_day, :is_active, :is_rejected, :person1_autocomplete,

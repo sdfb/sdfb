@@ -1,4 +1,6 @@
 class UserGroupContribsController < ApplicationController
+  # this class is known as "Group Notes" to the user
+
   # GET /user_group_contribs
   # GET /user_group_contribs.json
 
@@ -87,7 +89,7 @@ class UserGroupContribsController < ApplicationController
     @all_user_group_contribs = UserGroupContrib.all_active_unrejected
     if (current_user.user_type == "Admin")
       user_group_contribs_csv = CSV.generate do |csv|
-        csv << ["SDFB Contribution ID", "Group ID", "Annotation", "Bibliography", "Created By", "Created At", "Is Approved?", "Approved By ID", "Approved On"]
+        csv << ["SDFB Contribution ID", "Group ID", "Note", "Citation", "Created By", "Created At", "Is Approved?", "Approved By ID", "Approved On"]
         @all_user_group_contribs.each do |user_group_contrib|
           csv << [user_group_contrib.id, user_group_contrib.group_id,
           user_group_contrib.annotation, user_group_contrib.bibliography, user_group_contrib.created_by, user_group_contrib.created_at,
@@ -96,7 +98,7 @@ class UserGroupContribsController < ApplicationController
       end
     else
       user_group_contribs_csv = CSV.generate do |csv|
-        csv << ["SDFB Contribution ID", "Group ID", "Annotation", "Bibliography", "Created By", "Created At"]
+        csv << ["SDFB Contribution ID", "Group ID", "Note", "Citation", "Created By", "Created At"]
         @all_user_group_contribs_approved.each do |user_group_contrib|
           csv << [user_group_contrib.id, user_group_contrib.group_id,
           user_group_contrib.annotation, user_group_contrib.bibliography, user_group_contrib.created_by, user_group_contrib.created_at]
