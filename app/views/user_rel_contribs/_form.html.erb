@@ -32,7 +32,9 @@
     <%= f.input :relationship_type_id, :collection =>@relType.collect{ |r| [r.name, r.id] }, label: false, prompt: "Relationship Type" %>
     <%= f.input :person2_autocomplete, as: :autocomplete, url: autocomplete_person_search_names_all_user_rel_contribs_path, input_html: { 'data-id-element' => '#user_rel_contrib_person2_selection' }, label: false, placeholder: "Person 2", required: true %>
   <% end %>
-  <%= f.input :certainty, label: "Confidence" %>
+  <br>
+ <h6><b>CONFIDENCE</b></h6>
+ <br>
   <%= f.range_field :certainty, :min=>0, :max=>100, :class=>"slide", :id=>"slider1"%>
   <br>
   <% if ! @user_rel_contrib.certainty.blank? %>
