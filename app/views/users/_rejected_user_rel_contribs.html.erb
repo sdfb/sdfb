@@ -8,7 +8,8 @@
           <th>SDFB Rel. Type Assign. ID</th>
           <th>Relationship Type</th>
           <th>Confidence</th>
-          <th>Note</th>
+          <th>Justification</th>
+          <th>Citation</th>
           <th><%=t '.actions', :default => t("helpers.actions") %></th>
         </tr>
       </thead>
@@ -21,6 +22,7 @@
             <td><%= person1_name %> <%= link_to RelationshipType.find(user_rel_contrib.relationship_type_id).name, relationship_type_path(user_rel_contrib.relationship_type_id) %> <%= person2_name %></td>
             <td><%= user_rel_contrib.certainty %>%</td>
             <td><%= user_rel_contrib.annotation %></td>
+            <td><%= user_rel_contrib.bibliography %></td>
             <td>
               <% if can? :show, user_rel_contrib %>
                 <%= link_to 'Show', user_rel_contrib, :class => 'btn btn-mini' %>
