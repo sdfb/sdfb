@@ -115,7 +115,12 @@ class Relationship < ActiveRecord::Base
   def create_met_record
     new_met_record = UserRelContrib.new do |u| 
       u.relationship_id = self.id
-      u.is_approved = true
+      # only set to automatically approved if the original relationship is approved, otherwise needs admin approval
+      if self.is_approved
+        u.is_approved = true
+      else
+        u.is_approved = false
+      end
       u.is_rejected = false
       u.is_active = true
       u.is_locked = true
