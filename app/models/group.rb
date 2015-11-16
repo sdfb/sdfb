@@ -44,7 +44,7 @@ class Group < ActiveRecord::Base
   scope :all_rejected, -> { where(is_rejected: true, is_active: true) }
   scope :all_active_unrejected, -> { where(is_active: true, is_rejected: false) }
   scope :all_unapproved, -> { where(is_approved: false, is_rejected: false, is_active: true) }
-  scope :all_recent, -> { order(created_at: :desc) }
+  scope :all_recent, -> { order(updated_at: :desc) }
   scope :for_id, -> (id_input) { where('id = ?', "#{id_input}") }
   scope :exact_name_match, -> (search_input) { where('name like ?', "#{search_input}") }
   scope :similar_name_match, -> (search_input) { where('name like ?', "%#{search_input}%") }

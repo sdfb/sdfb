@@ -62,7 +62,7 @@ class Relationship < ActiveRecord::Base
   scope :for_rels_100140001_100160000, -> { where("id between 100140001 and 100160000") }
   scope :for_rels_100160001_100180000, -> { where("id between 100160001 and 100180000") }
   scope :for_rels_greater_than_100180000, -> { where("id > 100180000") }
-  scope :all_recent, -> { order(created_at: :desc) }
+  scope :all_recent, -> { order(updated_at: :desc) }
   scope :order_by_sdfb_id, -> { order(id: :asc) }
 
   # Callbacks

@@ -23,13 +23,18 @@
     <%= f.input :person2_index, as: :hidden %>
     <%= f.input :person2_autocomplete, as: :autocomplete, url: autocomplete_person_search_names_all_relationships_path, input_html: { 'data-id-element' => '#relationship_person2_index' }, label: "Person 2", placeholder: "name" %>
   <br>
+<<<<<<< Updated upstream
   <%= f.label :original_certainty, label: "Estimated Confidence" %>
   <%= f.range_field :original_certainty, :min=>0, :max=>100, :class=>"slide", :id=>"slider1"%>
+=======
+  <%= f.label :original_certainty, label: "Estimated Certainty" %>
+  <%= f.range_field :original_certainty, :min=>0, :max=>100, :class=>"slide", :id=>"slider1", :value => "60"%>
+>>>>>>> Stashed changes
   <br>
     <% if ! @relationship.original_certainty.blank? %>
         <text id="formCertainty">Possible Relationships @ <%= @relationship.original_certainty %>%</text><br>
     <% else %>
-      <text id="formCertainty">Possible Relationships @ 50%</text><br>
+      <text id="formCertainty">Possible Relationships @ 60%</text><br>
     <% end %>
   <br>
   <%= f.label :start_date_type, label: "Start Date" %>

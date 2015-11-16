@@ -23,7 +23,7 @@ class Person < ActiveRecord::Base
   scope :all_inactive, -> { where(is_active: false) }
   scope :all_rejected, -> { where(is_rejected: true, is_active: true) }
   scope :all_unapproved, -> { where(is_approved: false, is_rejected: false, is_active: true) }
-  scope :all_recent,  -> { order(created_at: :desc) }
+  scope :all_recent,  -> { order(updated_at: :desc) }
   scope :all_active_unrejected, -> { where(is_active: true, is_rejected: false) }
   scope :for_user, -> (user_input) { where('created_by = ?', "#{user_input}") }
   scope :for_odnb_id, -> (odnb_id_input) { where('odnb_id like ?', "%#{odnb_id_input}%") }

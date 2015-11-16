@@ -30,7 +30,7 @@ class UserPersonContrib < ActiveRecord::Base
   scope :all_for_person, -> (personID) {
       select('user_person_contribs.*')
       .where('person_id = ?', personID)}
-  scope :all_recent, -> { order(created_at: :desc) }
+  scope :all_recent, -> { order(updated_at: :desc) }
   scope :order_by_sdfb_id, -> { order(id: :asc) }
   scope :all_active_unrejected, -> { where(is_active: true, is_rejected: false) }
 

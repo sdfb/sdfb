@@ -25,7 +25,7 @@ class RelCatAssign < ActiveRecord::Base
   scope :for_rel_cat, -> (rel_cat_id_input) { where('relationship_category_id = ?', "#{rel_cat_id_input}") }
   scope :for_rel_type, -> (rel_type_id_input) { where('relationship_type_id = ?', "#{rel_type_id_input}") }
   scope :find_if_exists, -> (rel_cat_id_input, rel_type_id_input) { where('(relationship_category_id = ?) and (relationship_type_id = ?)', rel_cat_id_input, rel_type_id_input) }
-  scope :all_recent, -> { order(created_at: :desc) }
+  scope :all_recent, -> { order(updated_at: :desc) }
   scope :for_user, -> (user_input) { where('created_by = ?', "#{user_input}") }
   scope :order_by_sdfb_id, -> { order(id: :asc) }
   scope :all_active_unrejected, -> { where(is_active: true, is_rejected: false) }

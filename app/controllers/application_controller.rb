@@ -20,13 +20,13 @@ class ApplicationController < ActionController::Base
 	  end
 	end
 
-	# def after_sign_in_path_for(resource)
-	#   if current_user
-	#   	session[:previous_url] || root_path 
-	#   else
-	#   	"/sign_in"
-	#   end
-	# end
+	def after_sign_in_path_for(resource)
+	  if current_user
+	  	session[:previous_url] || root_path 
+	  else
+	  	"/sign_in"
+	  end
+	end
 
 	def expire_hsts
     	response.headers["Strict-Transport-Security"] = 'max-age=0'

@@ -17,7 +17,7 @@ class GroupAssignment < ActiveRecord::Base
   scope :all_active_unrejected, -> { where(is_active: true, is_rejected: false) }
   scope :all_rejected, -> { where(is_rejected: true, is_active: true) }
   scope :all_unapproved, -> { where(is_approved: false, is_rejected: false, is_active: true) }
-  scope :all_recent, -> { order(created_at: :desc) }
+  scope :all_recent, -> { order(updated_at: :desc) }
   scope :all_for_person, -> (personID) {
       select('group_assignments.*')
       .where('(person_id = ?)', personID)}
