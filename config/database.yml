@@ -4,7 +4,7 @@ development:
   database: my_database_development
   host: localhost
   port: 5432
-  pool: 5
+  pool: 15
   timeout: 5000
 
 
@@ -14,13 +14,13 @@ development:
 test:
   adapter: postgresql
   database: my_database_test
-  pool: 5
+  pool: 15
   timeout: 5000
 
 production:
   adapter: postgresql
   database: sixdfbor_sdfb
-  pool: 5
+  pool: 15
   timeout: 5000
   username: sixdfbor_admin
   password: NovumOrganum1620
