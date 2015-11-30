@@ -144,6 +144,7 @@ class UsersController < ApplicationController
   end
 
   def all_recent
+    flash[:alert] = "The recent records page is currently under construction." 
     redirect_to root_path
     # @recent_people = Person.all_recent.all_approved.paginate(:page => params[:recent_people_page]).per_page(5)
     # @recent_groups = Group.all_recent.all_approved.paginate(:page => params[:recent_groups_page]).per_page(5)
