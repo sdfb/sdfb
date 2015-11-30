@@ -106,7 +106,7 @@ class Ability
 			can :all_unapproved, User
 
 			# A user can see recent contributions
-			can :all_recent, User
+			# can :all_recent, User
 			
 			# A user can see the autocomplete dropdowns for people and relationships
 			can :autocomplete_person_search_names_all, [Relationship, Person, UserRelContrib, GroupAssignment]
@@ -217,7 +217,7 @@ class Ability
 			can :my_contributions, User
 
 			# A user can see recent contributions
-			can :all_recent, User
+			# can :all_recent, User
 
 			# A user can see the autocomplete dropdowns for people and relationships
 			can :autocomplete_person_search_names_all, [Relationship, Person, UserRelContrib, GroupAssignment]
@@ -256,7 +256,7 @@ class Ability
 			can :autocomplete_group_name, Group
 
 			# A user can see recent contributions
-			can :all_recent, User
+			# can :all_recent, User
 
 			# Make sure that all users can use the tabs on the people show page
 			can :membership, Person
