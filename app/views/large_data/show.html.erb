@@ -14,8 +14,8 @@
 		</tr>
 	<% end %>
 </table> -->
-
-<% if @data_file.table_content_type == "Person" %>
+<%= "Table Content Type: " + @data_file.table_content_type %>
+<% if @data_file.table_content_type == "Person" %> 
   <table class="table table-condensed">
     <thead>
       <tr>
