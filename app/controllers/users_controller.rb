@@ -144,7 +144,7 @@ class UsersController < ApplicationController
   end
 
   def all_recent
-    @recent_people = Person.all_recent.all_approved.paginate(:page => params[:recent_people_page], :total_entries => 100).per_page(10)
+    @recent_people = Person.all_recent.all_approved.paginate(:page => params[:recent_people_page], :total_entries => 100).per_page(5)
     @recent_groups = Group.all_recent.all_approved.paginate(:page => params[:recent_groups_page], :total_entries => 100).per_page(5)
     @recent_relationships = Relationship.all_recent.all_approved.paginate(:page => params[:recent_relationships_page], :total_entries => 100).per_page(5)
     @recent_group_assigns = GroupAssignment.all_recent.all_approved.paginate(:page => params[:recent_group_assigns_page], :total_entries => 100).per_page(5)
