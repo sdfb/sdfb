@@ -4,10 +4,13 @@
 # User-agent: *
 # Disallow: /
 
+# Commenting out crawl delay not respected by Google, problematic spiders
+# User-agent: *
+# Disallow:
+# Crawl-delay: 60
+
+# Disallow problematic spiders
 User-agent: Baiduspider
 User-agent: Baiduspider-video
 User-agent: Baiduspider-image
 Disallow: /
-
-User-agent: *
-Crawl-delay: 60
