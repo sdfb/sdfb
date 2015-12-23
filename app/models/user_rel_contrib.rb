@@ -126,7 +126,7 @@ class UserRelContrib < ActiveRecord::Base
 # Checks if associated rel is approved, if it is -> auto approve this rel_contrib, otherwise set is_approved to false so needs admin approval
   def auto_approve 
     if self.relationship_id != nil 
-      if Relationship.find(self.relationship_id).is_approved
+      if Relationship.find(self.relationship_id).is_approved = true
         self.is_approved = true
       else
         self.is_approved = false
