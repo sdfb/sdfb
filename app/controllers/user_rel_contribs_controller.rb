@@ -38,6 +38,7 @@ class UserRelContribsController < ApplicationController
     @relOptions = Relationship.all_approved
     @relationship_id = params[:relationship_id]
     @relType = RelationshipType.all_approved.alphabetical
+    
 
     respond_to do |format|
       format.html # new.html.erb

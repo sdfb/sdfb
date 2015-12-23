@@ -25,6 +25,12 @@
       <%= f.hidden_field :approved_by, :value => current_user.id %>
       <%= f.hidden_field :approved_on, :value => Time.now %>
     <% end %>
+  <% else %>
+    <% if @rel.is_approved %>
+          <%= f.hidden_field :approved_by, :value => current_user.id %>
+          <%= f.hidden_field :approved_on, :value => Time.now %>
+    <% end %>
+   <%= f.hidden_field :is_approved, :value => false %>
   <% end %>
   <div class="form-actions">
     Please note that your submission will not appear on SDFB <br>
