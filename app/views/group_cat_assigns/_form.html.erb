@@ -28,6 +28,8 @@
   <% else %>
     <%= f.input :group_category_id, :collection =>@groupCatOptions.collect{ |g| [g.name, g.id] }, label: "Group Category", prompt: "Select" %>
   <% end %>
+  <%= f.input :annotation, input_html: { rows:"5" }, label: "Justification", required: true %>
+  <%= f.input :bibliography, input_html: { rows:"5" }, label: "Citation" %>
   <% if current_user.user_type == "Admin" %>
     <%= f.input :is_approved %>
     <%= f.input :is_active %>

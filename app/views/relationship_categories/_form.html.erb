@@ -22,6 +22,8 @@
     <%= f.hidden_field :approved_by, :value => current_user.id %>
     <%= f.hidden_field :approved_on, :value => Time.now %>
   <% end %>
+  <%= f.input :annotation, input_html: { rows:"5" }, label: "Justification" %>
+  <%= f.input :bibliography, input_html: { rows:"5" }, label: "Citation" %>
   <div class="form-actions">
     Please note that your submission will not appear on SDFB <br>
     until it is reviewed by a SDFB administrator. <br>

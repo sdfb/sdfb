@@ -15,6 +15,8 @@
   <%= f.hidden_field :created_by, :value => current_user.id %>
   <%= f.input :name %>
   <%= f.input :description %>
+  <%= f.input :annotation, input_html: { rows:"5" }, label: "Justification", required: true %>
+  <%= f.input :bibliography, input_html: { rows:"5" }, label: "Citation" %>
   <% if current_user.user_type == "Admin" %>
     <%= f.input :is_approved %>
     <%= f.input :is_active %>

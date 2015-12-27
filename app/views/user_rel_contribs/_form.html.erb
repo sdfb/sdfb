@@ -52,7 +52,7 @@
   <%= f.input :end_month, :collection =>["January","February","March","April","May","June","July","August","September","October","November","December"], label: false, prompt: "Month", :include_blank => true %>
   <%= f.input :end_day, label: false, :collection => 1..31, prompt: "Day", :include_blank => true %>
   <%= f.input :end_year, label: false, as: :string, placeholder: "Year" %>
-  <%= f.input :annotation, input_html: { rows:"5" }, label: "Justification" %>
+  <%= f.input :annotation, input_html: { rows:"5" }, label: "Justification", required: true %>
   <%= f.input :bibliography, input_html: { rows:"5" }, label: "Citation" %>
   <%= f.hidden_field :created_by, :value => current_user.id %>
   <br>
@@ -71,8 +71,6 @@
   <% end %>
   
   <div class="form-actions">
-    Please note that your submission will not appear on SDFB <br>
-    until it is reviewed by a SDFB curator or administrator. <br>
     <%= f.button :submit, :class => 'btn btn-primary', :value => "Assign Relationship Type" %>
   </div>
 <% end %>

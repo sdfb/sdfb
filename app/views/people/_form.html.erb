@@ -28,7 +28,8 @@
   <%= f.input :ext_death_year, label: "Death Year" %>
   <%= f.input :alt_death_year, label: "Alternative Death Year" %>
   <%= f.input :historical_significance, input_html: { rows:"5" }, label: "Historical Significance" %>
-  <%= f.input :justification, input_html: { rows:"5" }, label: "Justification for Person Creation" %>
+  <%= f.input :justification, input_html: { rows:"5" }, label: "Justification for Person Creation", required: true %>
+  <%= f.input :bibliography, input_html: { rows:"5" }, label: "Citation" %>
   <% if (current_user.user_type == "Admin") || (current_user.user_type == "Curator") %>
     <%= f.input :is_approved %>
     <%= f.input :is_active %>

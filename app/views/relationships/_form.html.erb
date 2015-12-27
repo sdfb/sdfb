@@ -43,7 +43,8 @@
   <%= f.input :end_day, label: false, :collection => 1..31, prompt: "Day", :include_blank => true %>
   <%= f.input :end_year, label: false, as: :string, placeholder: "Year" %>
 
-  <%= f.input :justification, input_html: { rows:"5" }, required: true, label: "Justification for Relationship Creation" %>
+  <%= f.input :justification, input_html: { rows:"5" }, required: true, label: "Justification for Relationship Creation", required: true %>
+  <%= f.input :bibliography, input_html: { rows:"5" }, label: "Citation" %>
   <%= f.hidden_field :created_by, :value => current_user.id %>
   <% if (current_user.user_type == "Admin") || (current_user.user_type == "Curator") %>
     <%= f.input :is_approved %>
