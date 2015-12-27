@@ -81,6 +81,7 @@ class HomeController < ApplicationController
     @network_info_end_date_type = @network_info[0][:end_date_type]
     @network_info_end_year = @network_info[0][:end_year]
     @network_info_types_list = @network_info[0][:type_certainty_list]
+    
     respond_to do |format|
       format.js
     end
