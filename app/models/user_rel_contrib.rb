@@ -80,7 +80,6 @@ class UserRelContrib < ActiveRecord::Base
   # ----------------------------- 
   before_create :init_array
   before_create :autocomplete_to_rel
-  after_create :auto_approve
   before_update :check_if_approved_and_update_edit
   before_create :check_if_approved
   after_create :update_type_list_max_certainty_on_rel
@@ -120,20 +119,6 @@ class UserRelContrib < ActiveRecord::Base
           errors.add(:person2_autocomplete, "Please select people from the autocomplete dropdown menus.")
         end
       end
-    end
-  end
-
-# Checks if associated rel is approved, if it is -> auto approve this rel_contrib, otherwise set is_approved to false so needs admin approval
-  def auto_approve 
-    if self.relationship_id != nil 
-      if Relationship.find(self.relationship_id).is_approved = true
-        self.is_approved = true
-      else
-        self.is_approved = false
-      end
-    else
-      # Needs admin approval
-      self.is_approved = false
     end
   end
 
