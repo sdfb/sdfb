@@ -80,7 +80,7 @@ class UserRelContrib < ActiveRecord::Base
   # ----------------------------- 
   before_create :init_array
   before_create :autocomplete_to_rel
-  before_create :auto_approve
+  after_create :auto_approve
   before_update :check_if_approved_and_update_edit
   before_create :check_if_approved
   after_create :update_type_list_max_certainty_on_rel

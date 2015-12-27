@@ -122,8 +122,6 @@ class Relationship < ActiveRecord::Base
       u.certainty = self.original_certainty
       u.created_by = 3
       u.annotation = "This record was automatically generated when the relationship was created."
-      u.approved_by = 3
-      u.approved_on = Time.now
       u.save!
     end
   end
