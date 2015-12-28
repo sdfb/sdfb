@@ -81,6 +81,7 @@ class HomeController < ApplicationController
     @network_info_end_date_type = @network_info[0][:end_date_type]
     @network_info_end_year = @network_info[0][:end_year]
     @network_info_types_list = @network_info[0][:type_certainty_list]
+    @network_rel_types = UserRelContrib.select("start_date_type, start_year, end_date_type, end_year").where("relationship_id = ?", @network_info_id)
     
     respond_to do |format|
       format.js

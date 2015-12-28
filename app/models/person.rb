@@ -324,7 +324,7 @@ class Person < ActiveRecord::Base
     #return Person.first_degree_for(10000473)
   end
 
-  def self.find_two_degree_for_person(id, confidence_range, date_range)
+  def self.find_two_degree_for_person(id, confidence_range, date_range, rel_type_filter)
     twoPeopleRecordsForReturn = {}
     if (id)
       person_id = id
@@ -354,8 +354,19 @@ class Person < ActiveRecord::Base
             if ((firstDegreePerson[3].to_i >= min_year) || ((firstDegreePerson[4].to_i <= max_year) && (firstDegreePerson[3].to_i >= min_year)))
                 if ((firstDegreePerson[1].to_i >= min_confidence) && (firstDegreePerson[1].to_i <= max_confidence))
                     firstDegreePersonID = firstDegreePerson[0]
-                    @firstDegreePerson = self.find_first_degree_for_person(firstDegreePersonID, min_confidence, max_confidence, min_year, max_year, false)
-                    twoPeopleRecordsForReturn.update(@firstDegreePerson)
+
+                    if (rel_type_filter)
+                      relID = Relationship.select("id").where("person1_index = ? AND person2_index = ? OR person1_index = ? AND person2_index = ? ", @zeroDegreePerson.person_id, firstDegreePersonID, firstDegreePersonID, @zeroDegreePerson.person_id)
+                      rel_type_id = UserRelContrib.select("relationship_type_id").where("relationship_id = ?", relID)
+                      if (rel_type_id == rel_type_filter)
+                        @firstDegreePerson = self.find_first_degree_for_person(firstDegreePersonID, min_confidence, max_confidence, min_year, max_year, false)
+                        twoPeopleRecordsForReturn.update(@firstDegreePerson)
+                      end
+                    else
+                      @firstDegreePerson = self.find_first_degree_for_person(firstDegreePersonID, min_confidence, max_confidence, min_year, max_year, false)
+                      twoPeopleRecordsForReturn.update(@firstDegreePerson)
+                    end
+                    
                 end
             end
         end
