@@ -356,7 +356,7 @@ class Person < ActiveRecord::Base
                     firstDegreePersonID = firstDegreePerson[0]
 
                     if (rel_type_filter)
-                      relID = Relationship.select("id").where("person1_index = ? AND person2_index = ? OR person1_index = ? AND person2_index = ? ", @zeroDegreePerson.person_id, firstDegreePersonID, firstDegreePersonID, @zeroDegreePerson.person_id)
+                      relID = Relationship.select("id").where("person1_index = ? AND person2_index = ? OR person1_index = ? AND person2_index = ? ", @zeroDegreePerson[person_id.to_i]['id'], firstDegreePersonID, firstDegreePersonID, @zeroDegreePerson[person_id.to_i]['id'])
                       rel_type_id = UserRelContrib.select("relationship_type_id").where("relationship_id = ?", relID)
                       if (rel_type_id == rel_type_filter)
                         @firstDegreePerson = self.find_first_degree_for_person(firstDegreePersonID, min_confidence, max_confidence, min_year, max_year, false)
@@ -366,7 +366,7 @@ class Person < ActiveRecord::Base
                       @firstDegreePerson = self.find_first_degree_for_person(firstDegreePersonID, min_confidence, max_confidence, min_year, max_year, false)
                       twoPeopleRecordsForReturn.update(@firstDegreePerson)
                     end
-                    
+
                 end
             end
         end
