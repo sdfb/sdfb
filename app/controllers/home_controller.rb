@@ -10,10 +10,10 @@ class HomeController < ApplicationController
     if (params[:group].nil?)
       #detect if this is a one degree search or a two degree search
       if (params[:id2].nil?)
-        @data['people'] = Person.find_two_degree_for_person(params[:id], params[:confidence], params[:date])
+        @data['people'] = Person.find_two_degree_for_person(params[:id], params[:confidence], params[:date], "")
       else
         #The field will return searched node 1, searched node 2, shared nodes, and the first degree relationship of the shared network nodes
-        @data['people'] = Person.find_two_degree_for_network(params[:id], params[:id2], params[:confidence], params[:date])
+        @data['people'] = Person.find_two_degree_for_network(params[:id], params[:id2], params[:confidence], params[:date], "")
       end
 
     #@data['all_people'] = Person.all_approved.select("id, first_name, last_name, ext_birth_year, prefix, suffix, title")
