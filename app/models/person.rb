@@ -355,7 +355,7 @@ class Person < ActiveRecord::Base
                 if ((firstDegreePerson[1].to_i >= min_confidence) && (firstDegreePerson[1].to_i <= max_confidence))
                     firstDegreePersonID = firstDegreePerson[0]
 
-                    if (rel_type_filter)
+                    if (rel_type_filter != "")
                       relID = Relationship.select("id").where("person1_index = ? AND person2_index = ? OR person1_index = ? AND person2_index = ? ", @zeroDegreePerson[person_id.to_i]['id'], firstDegreePersonID, firstDegreePersonID, @zeroDegreePerson[person_id.to_i]['id'])
                       rel_type_id = UserRelContrib.select("relationship_type_id").where("relationship_id = ?", relID)
                       if (rel_type_id == rel_type_filter)
