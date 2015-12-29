@@ -81,7 +81,18 @@ class HomeController < ApplicationController
     @network_info_end_date_type = @network_info[0][:end_date_type]
     @network_info_end_year = @network_info[0][:end_year]
     @network_info_types_list = @network_info[0][:type_certainty_list]
-    @network_rel_types = UserRelContrib.select("start_date_type, start_year, end_date_type, end_year").where("relationship_id = ?", @network_info_id)
+    @network_dates = UserRelContrib.select("start_date_type, start_year, end_date_type, end_year").where("relationship_id = ?", @network_info_id)
+
+    @network_info_dates = Array.new
+
+    @network_dates.each do |i|
+      @temp_date = Array.new
+      @temp_date.push i[:start_date_type]
+      @temp_date.push i[:start_year]
+      @temp_date.push i[:end_date_type]
+      @temp_date.push i[:end_year]
+      @network_info_dates.push @temp_date
+    end
     
     respond_to do |format|
       format.js
