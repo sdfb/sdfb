@@ -13,8 +13,8 @@ namespace :db do
         id_input = relTypeData[0]
         name_input = relTypeData[1]
         rt_inverse_input = relTypeData[2]
-        created_by_input = User.for_email("sdfb_admin@example.com")[0].id
-        approved_by_input = User.for_email("sdfb_admin@example.com")[0].id
+        created_by_input = User.for_email("sdfbadmin@example.com")[0].id
+        approved_by_input = User.for_email("sdfbadmin@example.com")[0].id
         approved_on_input = Time.now
         count += 1
 
