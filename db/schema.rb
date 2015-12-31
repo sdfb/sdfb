@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151231225242) do
+ActiveRecord::Schema.define(version: 20151231225927) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -58,6 +58,7 @@ ActiveRecord::Schema.define(version: 20151231225242) do
     t.string   "end_date_type"
     t.text     "last_edit",           default: "--- []\n"
     t.text     "annotation"
+    t.text     "bibliography"
   end
 
   create_table "group_cat_assigns", force: true do |t|
@@ -73,6 +74,7 @@ ActiveRecord::Schema.define(version: 20151231225242) do
     t.datetime "updated_at",                             null: false
     t.text     "last_edit",         default: "--- []\n"
     t.text     "annotation"
+    t.text     "bibliography"
   end
 
   create_table "group_categories", force: true do |t|
@@ -81,13 +83,14 @@ ActiveRecord::Schema.define(version: 20151231225242) do
     t.integer  "created_by"
     t.string   "approved_by"
     t.string   "approved_on"
-    t.boolean  "is_approved", default: false
-    t.boolean  "is_active",   default: true
-    t.boolean  "is_rejected", default: false
-    t.datetime "created_at",                       null: false
-    t.datetime "updated_at",                       null: false
-    t.text     "last_edit",   default: "--- []\n"
+    t.boolean  "is_approved",  default: false
+    t.boolean  "is_active",    default: true
+    t.boolean  "is_rejected",  default: false
+    t.datetime "created_at",                        null: false
+    t.datetime "updated_at",                        null: false
+    t.text     "last_edit",    default: "--- []\n"
     t.text     "annotation"
+    t.text     "bibliography"
   end
 
   create_table "groups", force: true do |t|
@@ -108,6 +111,7 @@ ActiveRecord::Schema.define(version: 20151231225242) do
     t.string   "start_date_type"
     t.string   "end_date_type"
     t.text     "last_edit",       default: "--- []\n"
+    t.text     "bibliography"
   end
 
   create_table "large_data", force: true do |t|
@@ -149,6 +153,7 @@ ActiveRecord::Schema.define(version: 20151231225242) do
     t.string   "display_name"
     t.text     "search_names_all"
     t.text     "last_edit",               default: "--- []\n"
+    t.text     "bibliography"
   end
 
   create_table "rel_cat_assigns", force: true do |t|
@@ -164,21 +169,23 @@ ActiveRecord::Schema.define(version: 20151231225242) do
     t.datetime "updated_at",                                    null: false
     t.text     "last_edit",                default: "--- []\n"
     t.text     "annotation"
+    t.text     "bibliography"
   end
 
   create_table "relationship_categories", force: true do |t|
     t.string   "name"
     t.text     "description"
-    t.boolean  "is_approved", default: false
+    t.boolean  "is_approved",  default: false
     t.integer  "approved_by"
     t.datetime "approved_on"
     t.integer  "created_by"
-    t.boolean  "is_active",   default: true
-    t.boolean  "is_rejected", default: false
-    t.datetime "created_at",                       null: false
-    t.datetime "updated_at",                       null: false
-    t.text     "last_edit",   default: "--- []\n"
+    t.boolean  "is_active",    default: true
+    t.boolean  "is_rejected",  default: false
+    t.datetime "created_at",                        null: false
+    t.datetime "updated_at",                        null: false
+    t.text     "last_edit",    default: "--- []\n"
     t.text     "annotation"
+    t.text     "bibliography"
   end
 
   create_table "relationship_types", force: true do |t|
@@ -196,6 +203,7 @@ ActiveRecord::Schema.define(version: 20151231225242) do
     t.datetime "updated_at",                                     null: false
     t.text     "last_edit",                 default: "--- []\n"
     t.text     "annotation"
+    t.text     "bibliography"
   end
 
   create_table "relationships", force: true do |t|
@@ -226,6 +234,7 @@ ActiveRecord::Schema.define(version: 20151231225242) do
     t.string   "end_date_type"
     t.text     "type_certainty_list",      default: "--- []\n"
     t.text     "last_edit",                default: "--- []\n"
+    t.text     "bibliography"
   end
 
   create_table "user_group_contribs", force: true do |t|
