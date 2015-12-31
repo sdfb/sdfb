@@ -12,8 +12,8 @@ namespace :db do
         relCatAssignData = rel_cat_assign.split("\t")
         rel_type_input = relCatAssignData[0]
         rel_category_input = relCatAssignData[1]
-        created_by_input = User.for_email("sdfb_admin@example.com")[0].id
-        approved_by_input = User.for_email("sdfb_admin@example.com")[0].id
+        created_by_input = User.for_email("sdfbadmin@example.com")[0].id
+        approved_by_input = User.for_email("sdfbadmin@example.com")[0].id
         approved_on_input = Time.now
         count += 1
 

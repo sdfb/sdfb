@@ -5,9 +5,11 @@
     <script>
   	window.gon = <%= @data.to_json.html_safe %>
   </script>
- <%= javascript_include_tag "application" %>
-  <%= stylesheet_link_tag "application" %>
+  <%= javascript_include_tag "index" %>
+
+  <%= stylesheet_link_tag "index" %>
   <%= csrf_meta_tags %>
+  <link href="<%= image_path("favicon.ico") %>" rel="shortcut icon" type="image/vnd.microsoft.icon" />
 </head>
 <body>
 

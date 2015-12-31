@@ -68,7 +68,7 @@ namespace :db do
     odnb_admin = User.new
     odnb_admin.first_name = "ODNB"
     odnb_admin.last_name = "Admin"
-    odnb_admin.email = "odnb_admin@example.com"
+    odnb_admin.email = "odnbadmin@example.com"
     odnb_admin.password = "admin@FrancisBacon1"
     odnb_admin.password_confirmation = "admin@FrancisBacon1"
     odnb_admin.user_type = "Admin"
@@ -80,7 +80,7 @@ namespace :db do
     sdfb_admin = User.new
     sdfb_admin.first_name = "SDFB"
     sdfb_admin.last_name = "Admin"
-    sdfb_admin.email = "sdfb_admin@example.com"
+    sdfb_admin.email = "sdfbadmin@example.com"
     sdfb_admin.password = "admin@FrancisBacon1"
     sdfb_admin.password_confirmation = "admin@FrancisBacon1"
     sdfb_admin.user_type = "Admin"

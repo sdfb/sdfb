@@ -13,17 +13,45 @@ function getConfidence(n) {
 }
 
 $(document).ready(function() {
-    
+    //min/max of all sliders
     var default_sdate = 1500
     var default_edate = 1700
-    var default_certainty = 60
-    var range_default_certainty = [60,100]
     var default_sconfidence = 0
     var default_econfidence = 100
+    var range_default_certainty = [60,100]
+    var range_default_date = [1500, 1700]
+    if (getParam('confidence').length > 0){
+      range_default_certainty= getParam('confidence').split(',');   
+    }
+    if (getParam('date').length > 0){
+       range_default_date = getParam('date').split(','); 
+    }
 
+    //populate all date and certainty fields intitially
 
-     $("#colorlegend").dialog({autoOpen: false, height: "auto", show: "slideDown", position: { my: "right top", at: "right-10% top+10%", of: window }});
-     $(".ui-dialog-titlebar-close").html("X");
+    $("#search-network-slider-confidence-sinput").val(range_default_certainty[0]);
+    $("#search-network-slider-confidence-einput").val(range_default_certainty[1]);
+    $("#search-network-slider-confidence-result-hidden").val(range_default_certainty[0] + " - " + range_default_certainty[1]);    
+    $("#search-network-slider-date-sinput").val(range_default_date[0]);
+    $("#search-network-slider-date-einput").val(range_default_date[1]);
+    $("#search-network-slider-date-result-hidden").val(range_default_date[0] + " - " + range_default_date[1]);       
+
+    $("#search-shared-network-slider-confidence-sinput").val(range_default_certainty[0]);
+    $("#search-shared-network-slider-confidence-einput").val(range_default_certainty[1]);
+    $("#search-shared-network-slider-confidence-result-hidden").val(range_default_certainty[0] + " - " + range_default_certainty[1]);    
+    $("#search-shared-network-slider-date-sinput").val(range_default_date[0]);
+    $("#search-shared-network-slider-date-einput").val(range_default_date[1]);  
+    $("#search-shared-network-slider-date-result-hidden").val(range_default_date[0] + " - " + range_default_date[1]);        
+
+    $("#nav-slider-confidence-sinput").val(range_default_certainty[0]);
+    $("#nav-slider-confidence-einput").val(range_default_certainty[1]);
+    $("#nav-slider-confidence-result-hidden").val(range_default_certainty[0] + " - " + range_default_certainty[1]);    
+    $("#nav-slider-date-sinput").val(range_default_date[0]);
+    $("#nav-slider-date-einput").val(range_default_date[1]);  
+    $("#nav-slider-date-result-hidden").val(range_default_date[0] + " - " + range_default_date[1]);  
+
+    $("#colorlegend").dialog({autoOpen: false, height: "auto", show: "slideDown", position: { my: "right top", at: "right-10% top+10%", of: window }});
+    $(".ui-dialog-titlebar-close").html("X");
 
     //Tooltips
 	$("#search-network").tooltip({placement: 	'right', title: 'First- and second-degree network connections of one person'});
@@ -69,6 +97,87 @@ $(document).ready(function() {
 
     $("#nav-slider-confidence").tooltip({placement: 'right', title: 'Choose the Confidence Level, then Click Filter'});
     $("#nav-slider-date").tooltip({placement: 'right', title: 'Choose the Date Range, then Click Filter'});
+
+    //Add a Person Page
+    $("#person_display_name").tooltip({placement: 'right', title: 'This is the name that will be displayed in the network visualization. It will be automatically generated from the first and last name if you leave this field blank.'});
+    $("#person_prefix").tooltip({placement: 'right', title: 'Bishop, King, Queen, Sir, etc.'});
+    $("#person_first_name").tooltip({placement: 'right', title: 'First name.'});
+    $("#person_last_name").tooltip({placement: 'right', title: 'Last/Surname.'});
+    $("#person_suffix").tooltip({placement: 'right', title: 'the Elder, III, of Rires, etc.'});
+    $("#person_title").tooltip({placement: 'right', title: 'Archbishop of Canterbury, King/Queen of England, etc.'});
+    $("#person_gender").tooltip({placement: 'right', title: 'Please only use the "other" category to indicate people who - historically - did not identify with a binary gender, rather than people who modern scholars would not identify as female or male.'});
+    $("#person_odnb_id").tooltip({placement: 'right', title: 'For people with biographies in the Oxford Dictionary of National Biography.  Their ID can be found at the bottom of their biography or in the URL as the number XXXXX at the end of the URL http://www.oxforddnb.com/ view/article/XXXXX.'});
+    $("#person_birth_year_type").tooltip({placement: 'right', title: 'BF = Before, AF = After, IN = In, CA = Circa, BF/IN = Before or In, AF/IN = After or In'});
+    $("#person_ext_birth_year").tooltip({placement: 'right', title: 'Either the estimated birth year or the earliest possible birth year for a person.  I.e. 1540 for a person born in January 1540/1 or 1607 for a person born between 1607 and 1610.'});
+    $("#person_alt_birth_year").tooltip({placement: 'right', title: 'Either an alternative birth year or the latest possible birth year for a person.  I.e. 1541 for a person born in January 1540/1 or 1610 for a person born between 1607 and 1610.'});
+    $("#person_death_year_type").tooltip({placement: 'right', title: 'BF = Before, AF = After, IN = In, CA = Circa, BF/IN = Before or In, AF/IN = After or In'});    
+    $("#person_ext_death_year").tooltip({placement: 'right', title: 'Either the estimated birth year or the earliest possible birth year for a person.  I.e. 1540 for a person born in January 1540/1 or 1607 for a person born between 1607 and 1610.'});
+    $("#person_alt_death_year").tooltip({placement: 'right', title: 'Either an alternative birth year or the latest possible birth year for a person.  I.e. 1541 for a person who died in January 1540/1 or 1610 for a person who died between 1607 and 1610.'});
+    $("#person_historical_significance").tooltip({placement: 'right', title: 'Generally the person\'s title, occupation, or most important relationships.'});
+    $("#person_justification").tooltip({placement: 'right', title: 'Why this person should be added to the SDFB database.'});        
+
+    //User Person Contribs
+    $("#user_person_contrib_person_autocomplete").tooltip({placement: 'right', title: 'Please type the beginning of the person\'s name, then select them from the autocomplete list once they appear.'});
+    $("#user_person_contrib_annotation").tooltip({placement: 'right', title: 'Information/comment you wish to add to the person\'s entry.'});
+    $("#user_person_contrib_bibliography").tooltip({placement: 'right', title: 'Citation for information, if appropriate.'});    
+
+    //new Relationships Page
+    $("#relationship_person1_autocomplete").tooltip({placement: 'right', title: 'Please type the beginning of the person\'s name, then select them from the autocomplete list once they appear.'});
+    $("#relationship_person2_autocomplete").tooltip({placement: 'right', title: 'Please type the beginning of the person\'s name, then select them from the autocomplete list once they appear.'});
+    $(".relationship_confidence").tooltip({placement: 'right', title: 'Please move the slider as appropriate to indicate your estimated confidence for the relationship.  80-100 is certain; 60-80 is very likely; 40-60 is possible; 20-40 is unlikely; 0-20 is very unlikely.'});
+    $("#relationship_start_date_type").tooltip({placement: 'right', title: 'BF = Before, AF = After, IN = In, CA = Circa, BF/IN = Before or In, AF/IN = After or In'});    
+    $("#relationship_start_year").tooltip({placement: 'right', title: 'If you leave this field blank, the approximate start date will be automatically generated from the later of the two birth dates of the people in the relationship.'});
+    $("#relationship_end_date_type").tooltip({placement: 'right', title: 'BF = Before, AF = After, IN = In, CA = Circa, BF/IN = Before or In, AF/IN = After or In'});
+    $("#relationship_end_year").tooltip({placement: 'right', title: 'If you leave this field blank, the approximate start date will be automatically generated from the later of the two birth dates of the people in the relationship.'});
+    $("#relationship_justification").tooltip({placement: 'right', title: 'Why this relationship should be added to the SDFB database.'});                
+
+    //relationship type assignments
+    $("#user_rel_contrib_person1_autocomplete").tooltip({placement: 'right', title: 'Please type the beginning of the person\'s name, then select them from the autocomplete list once they appear.'});
+    $("#user_rel_contrib_relationship_type_id").tooltip({placement: 'right', title: 'Please select the appropriate relationship type.  For directional relationships, read as \'Person 1 is xxxx of Person 2.\'  For full relationship type definitions, please use the \'View Records\' dropdown menu to visit the Relationship Types index page.'});
+    $("#user_rel_contrib_person2_autocomplete").tooltip({placement: 'right', title: 'Please type the beginning of the person\'s name, then select them from the autocomplete list once they appear.'});
+    $(".user_rel_contrib_confidence").tooltip({placement: 'right', title: 'Please move the slider as appropriate to indicate your estimated confidence for the relationship.  80-100 is certain; 60-80 is very likely; 40-60 is possible; 20-40 is unlikely; 0-20 is very unlikely.'});
+    $("#user_rel_contrib_start_date_type").tooltip({placement: 'right', title: 'BF = Before, AF = After, IN = In, CA = Circa, BF/IN = Before or In, AF/IN = After or In'});
+    $("#user_rel_contrib_start_year").tooltip({placement: 'right', title: 'If you leave this field blank, the approximate start date will be automatically generated from the later of the two birth dates of the people in the relationship.'});
+    $("#user_rel_contrib_end_date_type").tooltip({placement: 'right', title: 'BF = Before, AF = After, IN = In, CA = Circa, BF/IN = Before or In, AF/IN = After or In'});
+    $("#user_rel_contrib_end_year").tooltip({placement: 'right', title: 'If you leave this field blank, the approximate end date will be automatically generated from the earlier of the two death dates of the people in the relationship.'});
+    $("#user_rel_contrib_annotation").tooltip({placement: 'right', title: 'Why this relationship type information should be added to the SDFB database.'});
+    $("#user_rel_contrib_bibliography").tooltip({placement: 'right', title: 'Citation for information, if appropriate.'});        
+
+
+    //new group
+    $("#group_name").tooltip({placement: 'right', title: 'Name of group.'});
+    $("#group_description").tooltip({placement: 'right', title: 'Description of group, including membership criteria if relevant.'});
+    $("#group_start_date_type").tooltip({placement: 'right', title: 'BF = Before, AF = After, IN = In, CA = Circa, BF/IN = Before or In, AF/IN = After or In'});
+    $("#group_start_year").tooltip({placement: 'right', title: 'If you leave this field blank, the approximate start date will be automatically generated as 1500.'});
+    $("#group_end_date_type").tooltip({placement: 'right', title: 'BF = Before, AF = After, IN = In, CA = Circa, BF/IN = Before or In, AF/IN = After or In'});
+    $("#group_end_year").tooltip({placement: 'right', title: 'If you leave this field blank, the approximate start date will be automatically generated as 1700.'});     
+    $("#group_justification").tooltip({placement: 'right', title: 'Why this group should be added to the SDFB database.'});                
+
+    //new group assignment
+    $("#group_assignment_group_id").tooltip({placement: 'right', title: 'Please select the appropriate group from the drop-down menu.'});
+    $("#group_assignment_person_autocomplete").tooltip({placement: 'right', title: 'Please type the beginning of the person\'s name, then select them from the autocomplete list once they appear.'});    
+    $("#group_assignment_start_date_type").tooltip({placement: 'right', title: 'BF = Before, AF = After, IN = In, CA = Circa, BF/IN = Before or In, AF/IN = After or In'});
+    $("#group_assignment_start_year").tooltip({placement: 'right', title: 'If you leave this field blank, the approximate start date will be automatically generated from the later of the person\'s birth date and the group\'s start date.'});    
+    $("#group_assignment_end_date_type").tooltip({placement: 'right', title: 'BF = Before, AF = After, IN = In, CA = Circa, BF/IN = Before or In, AF/IN = After or In'});
+    $("#group_assignment_end_year").tooltip({placement: 'right', title: 'If you leave this field blank, the approximate end date will be automatically generated from the earlier of the person\'s death date and the group\'s end date.'});            
+
+    //group note
+    $("#user_group_contrib_group_id").tooltip({placement: 'right', title: 'Please select the appropriate group from the drop-down menu.'});
+    $("#user_group_contrib_annotation").tooltip({placement: 'right', title: 'Information/comment you wish to add to the group\'s entry.'});    
+    $("#user_group_contrib_bibliography").tooltip({placement: 'right', title: 'Citation for information, if appropriate.'});    
+
+    //user information
+    $("#user_prefix").tooltip({placement: 'right', title: 'Sir, Dr., etc.'});
+    $("#user_first_name").tooltip({placement: 'right', title: 'First name.'});
+    $("#user_last_name").tooltip({placement: 'right', title: 'Last/Surname.'});
+    $("#user_username").tooltip({placement: 'right', title: 'Note: this information may be viewable by other registered users.'});
+    $("#user_email").tooltip({placement: 'right', title: 'This email address will be used for logging into the website and for resetting your password if necessary.'});
+    $("#user_password").tooltip({placement: 'right', title: 'Your password must include at least one number, at least one letter, and at least 7 characters.'});
+    $("#user_password_confirmation").tooltip({placement: 'right', title: 'Your password must include at least one number, at least one letter, and at least 7 characters.'});
+    $("#user_orcid").tooltip({placement: 'right', title: 'Unique researcher identifier from http://orcid.org.'});
+    $("#user_affiliation").tooltip({placement: 'right', title: 'Institutional affiliation, if appropriate.'});
+    $("#user_about_description").tooltip({placement: 'right', title: 'Note: this information may be viewable by other registered users.'});  
+
 
 	$('#search-network-form').css('display','block');
 
@@ -185,7 +294,7 @@ $(document).ready(function() {
         min: default_sdate,
         max: default_edate,
         step: 1,
-        values: [ default_sdate, default_edate ],
+        values: range_default_date,
         slide: function( event, ui ) {
             $("#search-network-slider-date-sinput").val(ui.values[0]);
             $("#search-network-slider-date-einput").val(ui.values[1]);            
@@ -223,7 +332,7 @@ $(document).ready(function() {
     $("#search-shared-network-slider-confidence").slider({
         animate: true,
         range: true,
-        value: default_certainty,
+        value: range_default_certainty[0],
         min: default_sconfidence,
         max: default_econfidence,
         step: 1,
@@ -272,7 +381,7 @@ $(document).ready(function() {
         min: default_sdate,
         max: default_edate,
         step: 1,
-        values: [ default_sdate, default_edate ],
+        values: range_default_date,
         slide: function( event, ui ) {
             $("#search-shared-network-slider-date-sinput").val(ui.values[0]);
             $("#search-shared-network-slider-date-einput").val(ui.values[1]);    
@@ -320,7 +429,7 @@ $(document).ready(function() {
         min: default_sconfidence,
         max: default_econfidence,
         step: 1,
-        values: [default_sconfidence, default_econfidence],
+        values: range_default_certainty,
         // Gets a live reading of the value and prints it on the page
         slide: function( event, ui ) {
             var sresult = getConfidence(ui.values[0]);
@@ -367,7 +476,7 @@ $(document).ready(function() {
         min: default_sdate,
         max: default_edate,
         step: 1,
-        values: [ default_sdate, default_edate],
+        values: range_default_date,
         slide: function( event, ui ) {
             $("#nav-slider-date-sinput").val(ui.values[0]);
             $("#nav-slider-date-einput").val(ui.values[1]);

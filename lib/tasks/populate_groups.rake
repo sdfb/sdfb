@@ -31,8 +31,8 @@ namespace :db do
           end_year_input = nil
           end_date_type_input = nil
         end
-        created_by_input = User.for_email("sdfb_admin@example.com")[0].id
-        approved_by_input = User.for_email("sdfb_admin@example.com")[0].id
+        created_by_input = User.for_email("sdfbadmin@example.com")[0].id
+        approved_by_input = User.for_email("sdfbadmin@example.com")[0].id
         approved_on_input = Time.now
         count += 1
 

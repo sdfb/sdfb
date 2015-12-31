@@ -369,12 +369,16 @@ function sidebarSearch(people){
 }
 
 function init() {
-  var people = window.gon.people;
-  var group_data = window.gon.group_data;
-  var group = window.gon.group;
-  var group2 = window.gon.group2;
-  var group_members = window.gon.group_members;
-  sidebarSearch(people);
+  if (window.gon != null){
+    var people = window.gon.people;
+    var group_data = window.gon.group_data;
+    var group = window.gon.group;
+    var group2 = window.gon.group2;
+    var group_members = window.gon.group_members;
+    sidebarSearch(people);
+  }else{
+    return;
+  }
   if (people != undefined){
     if (people[0] == "nodelimit"){
       console.log("node limit reached")
