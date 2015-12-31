@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150728161432) do
+ActiveRecord::Schema.define(version: 20151231225242) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -21,8 +21,8 @@ ActiveRecord::Schema.define(version: 20150728161432) do
     t.integer  "associated_contrib"
     t.integer  "created_by"
     t.text     "content"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",         null: false
+    t.datetime "updated_at",         null: false
   end
 
   create_table "flags", force: true do |t|
@@ -32,8 +32,8 @@ ActiveRecord::Schema.define(version: 20150728161432) do
     t.integer  "created_by"
     t.integer  "resolved_by"
     t.datetime "resolved_at"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",        null: false
+    t.datetime "updated_at",        null: false
   end
 
   create_table "group_assignments", force: true do |t|
@@ -51,12 +51,13 @@ ActiveRecord::Schema.define(version: 20150728161432) do
     t.boolean  "is_approved"
     t.boolean  "is_active",           default: true
     t.boolean  "is_rejected",         default: false
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",                               null: false
+    t.datetime "updated_at",                               null: false
     t.string   "person_autocomplete"
     t.string   "start_date_type"
     t.string   "end_date_type"
     t.text     "last_edit",           default: "--- []\n"
+    t.text     "annotation"
   end
 
   create_table "group_cat_assigns", force: true do |t|
@@ -68,9 +69,10 @@ ActiveRecord::Schema.define(version: 20150728161432) do
     t.boolean  "is_approved",       default: false
     t.boolean  "is_active",         default: true
     t.boolean  "is_rejected",       default: false
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",                             null: false
+    t.datetime "updated_at",                             null: false
     t.text     "last_edit",         default: "--- []\n"
+    t.text     "annotation"
   end
 
   create_table "group_categories", force: true do |t|
@@ -82,9 +84,10 @@ ActiveRecord::Schema.define(version: 20150728161432) do
     t.boolean  "is_approved", default: false
     t.boolean  "is_active",   default: true
     t.boolean  "is_rejected", default: false
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",                       null: false
+    t.datetime "updated_at",                       null: false
     t.text     "last_edit",   default: "--- []\n"
+    t.text     "annotation"
   end
 
   create_table "groups", force: true do |t|
@@ -100,8 +103,8 @@ ActiveRecord::Schema.define(version: 20150728161432) do
     t.text     "person_list",     default: "--- []\n"
     t.boolean  "is_active",       default: true
     t.boolean  "is_rejected",     default: false
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",                           null: false
+    t.datetime "updated_at",                           null: false
     t.string   "start_date_type"
     t.string   "end_date_type"
     t.text     "last_edit",       default: "--- []\n"
@@ -115,17 +118,6 @@ ActiveRecord::Schema.define(version: 20150728161432) do
     t.string   "file_path"
     t.string   "upload_data"
     t.integer  "created_by"
-  end
-
-  create_table "large_datas", force: true do |t|
-    t.string   "table_file_name"
-    t.string   "table_content_type"
-    t.integer  "table_file_size"
-    t.datetime "image_updated_at"
-    t.string   "upload_data_file_name"
-    t.string   "upload_data_content_type"
-    t.integer  "upload_data_file_size"
-    t.datetime "upload_data_updated_at"
   end
 
   create_table "people", force: true do |t|
@@ -152,8 +144,8 @@ ActiveRecord::Schema.define(version: 20150728161432) do
     t.text     "group_list",              default: "--- []\n"
     t.boolean  "is_active",               default: true
     t.boolean  "is_rejected",             default: false
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",                                   null: false
+    t.datetime "updated_at",                                   null: false
     t.string   "display_name"
     t.text     "search_names_all"
     t.text     "last_edit",               default: "--- []\n"
@@ -168,9 +160,10 @@ ActiveRecord::Schema.define(version: 20150728161432) do
     t.boolean  "is_approved",              default: false
     t.boolean  "is_active",                default: true
     t.boolean  "is_rejected",              default: false
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",                                    null: false
+    t.datetime "updated_at",                                    null: false
     t.text     "last_edit",                default: "--- []\n"
+    t.text     "annotation"
   end
 
   create_table "relationship_categories", force: true do |t|
@@ -182,9 +175,10 @@ ActiveRecord::Schema.define(version: 20150728161432) do
     t.integer  "created_by"
     t.boolean  "is_active",   default: true
     t.boolean  "is_rejected", default: false
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",                       null: false
+    t.datetime "updated_at",                       null: false
     t.text     "last_edit",   default: "--- []\n"
+    t.text     "annotation"
   end
 
   create_table "relationship_types", force: true do |t|
@@ -198,9 +192,10 @@ ActiveRecord::Schema.define(version: 20150728161432) do
     t.boolean  "is_approved",               default: false
     t.integer  "created_by"
     t.boolean  "is_rejected",               default: false
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",                                     null: false
+    t.datetime "updated_at",                                     null: false
     t.text     "last_edit",                 default: "--- []\n"
+    t.text     "annotation"
   end
 
   create_table "relationships", force: true do |t|
@@ -223,8 +218,8 @@ ActiveRecord::Schema.define(version: 20150728161432) do
     t.boolean  "is_approved",              default: false
     t.boolean  "is_active",                default: true
     t.boolean  "is_rejected",              default: false
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",                                    null: false
+    t.datetime "updated_at",                                    null: false
     t.string   "person1_autocomplete"
     t.string   "person2_autocomplete"
     t.string   "start_date_type"
@@ -243,8 +238,8 @@ ActiveRecord::Schema.define(version: 20150728161432) do
     t.boolean  "is_approved",  default: true
     t.boolean  "is_active",    default: true
     t.boolean  "is_rejected",  default: false
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",                        null: false
+    t.datetime "updated_at",                        null: false
     t.text     "last_edit",    default: "--- []\n"
   end
 
@@ -258,8 +253,8 @@ ActiveRecord::Schema.define(version: 20150728161432) do
     t.boolean  "is_approved",         default: true
     t.boolean  "is_active",           default: true
     t.boolean  "is_rejected",         default: false
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",                               null: false
+    t.datetime "updated_at",                               null: false
     t.string   "person_autocomplete"
     t.text     "last_edit",           default: "--- []\n"
   end
@@ -282,8 +277,8 @@ ActiveRecord::Schema.define(version: 20150728161432) do
     t.boolean  "is_approved",          default: true
     t.boolean  "is_active",            default: true
     t.boolean  "is_rejected",          default: false
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",                                null: false
+    t.datetime "updated_at",                                null: false
     t.string   "person1_autocomplete"
     t.string   "person2_autocomplete"
     t.string   "person1_selection"
@@ -312,8 +307,8 @@ ActiveRecord::Schema.define(version: 20150728161432) do
     t.boolean  "is_curator",             default: false
     t.boolean  "curator_revoked",        default: false
     t.string   "username"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",                             null: false
+    t.datetime "updated_at",                             null: false
     t.string   "auth_token"
     t.string   "password_reset_token"
     t.datetime "password_reset_sent_at"
