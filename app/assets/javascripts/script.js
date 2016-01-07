@@ -111,10 +111,11 @@ $(document).ready(function() {
     $("#person_ext_birth_year").tooltip({placement: 'right', title: 'Either the estimated birth year or the earliest possible birth year for a person.  I.e. 1540 for a person born in January 1540/1 or 1607 for a person born between 1607 and 1610.'});
     $("#person_alt_birth_year").tooltip({placement: 'right', title: 'Either an alternative birth year or the latest possible birth year for a person.  I.e. 1541 for a person born in January 1540/1 or 1610 for a person born between 1607 and 1610.'});
     $("#person_death_year_type").tooltip({placement: 'right', title: 'BF = Before, AF = After, IN = In, CA = Circa, BF/IN = Before or In, AF/IN = After or In'});    
-    $("#person_ext_death_year").tooltip({placement: 'right', title: 'Either the estimated birth year or the earliest possible birth year for a person.  I.e. 1540 for a person born in January 1540/1 or 1607 for a person born between 1607 and 1610.'});
-    $("#person_alt_death_year").tooltip({placement: 'right', title: 'Either an alternative birth year or the latest possible birth year for a person.  I.e. 1541 for a person who died in January 1540/1 or 1610 for a person who died between 1607 and 1610.'});
+    $("#person_ext_death_year").tooltip({placement: 'right', title: 'Either the estimated death year or the earliest possible death year for a person.  I.e. 1540 for a person who died in January 1540/1 or 1607 for a person who died between 1607 and 1610.'});
+    $("#person_alt_death_year").tooltip({placement: 'right', title: 'Either an alternative death year or the latest possible death year for a person.  I.e. 1541 for a person who died in January 1540/1 or 1610 for a person who died between 1607 and 1610.'});
     $("#person_historical_significance").tooltip({placement: 'right', title: 'Generally the person\'s title, occupation, or most important relationships.'});
-    $("#person_justification").tooltip({placement: 'right', title: 'Why this person should be added to the SDFB database.'});        
+    $("#person_justification").tooltip({placement: 'right', title: 'Why this person should be added to the SDFB database.'}); 
+    $("#person_bibliography").tooltip({placement: 'right', title: 'Citation for information, if appropriate.'});            
 
     //User Person Contribs
     $("#user_person_contrib_person_autocomplete").tooltip({placement: 'right', title: 'Please type the beginning of the person\'s name, then select them from the autocomplete list once they appear.'});
@@ -128,8 +129,9 @@ $(document).ready(function() {
     $("#relationship_start_date_type").tooltip({placement: 'right', title: 'BF = Before, AF = After, IN = In, CA = Circa, BF/IN = Before or In, AF/IN = After or In'});    
     $("#relationship_start_year").tooltip({placement: 'right', title: 'If you leave this field blank, the approximate start date will be automatically generated from the later of the two birth dates of the people in the relationship.'});
     $("#relationship_end_date_type").tooltip({placement: 'right', title: 'BF = Before, AF = After, IN = In, CA = Circa, BF/IN = Before or In, AF/IN = After or In'});
-    $("#relationship_end_year").tooltip({placement: 'right', title: 'If you leave this field blank, the approximate start date will be automatically generated from the later of the two birth dates of the people in the relationship.'});
-    $("#relationship_justification").tooltip({placement: 'right', title: 'Why this relationship should be added to the SDFB database.'});                
+    $("#relationship_end_year").tooltip({placement: 'right', title: 'If you leave this field blank, the approximate end date will be automatically generated from the earlier of the two death dates of the people in the relationship.'});
+    $("#relationship_justification").tooltip({placement: 'right', title: 'Why this relationship should be added to the SDFB database.'});    
+    $("#relationship_bibliography").tooltip({placement: 'right', title: 'Citation for information, if appropriate.'});                     
 
     //relationship type assignments
     $("#user_rel_contrib_person1_autocomplete").tooltip({placement: 'right', title: 'Please type the beginning of the person\'s name, then select them from the autocomplete list once they appear.'});
@@ -151,7 +153,8 @@ $(document).ready(function() {
     $("#group_start_year").tooltip({placement: 'right', title: 'If you leave this field blank, the approximate start date will be automatically generated as 1500.'});
     $("#group_end_date_type").tooltip({placement: 'right', title: 'BF = Before, AF = After, IN = In, CA = Circa, BF/IN = Before or In, AF/IN = After or In'});
     $("#group_end_year").tooltip({placement: 'right', title: 'If you leave this field blank, the approximate start date will be automatically generated as 1700.'});     
-    $("#group_justification").tooltip({placement: 'right', title: 'Why this group should be added to the SDFB database.'});                
+    $("#group_justification").tooltip({placement: 'right', title: 'Why this group should be added to the SDFB database.'});   
+    $("#group_bibliography").tooltip({placement: 'right', title: 'Citation for information, if appropriate.'});                    
 
     //new group assignment
     $("#group_assignment_group_id").tooltip({placement: 'right', title: 'Please select the appropriate group from the drop-down menu.'});
@@ -160,6 +163,8 @@ $(document).ready(function() {
     $("#group_assignment_start_year").tooltip({placement: 'right', title: 'If you leave this field blank, the approximate start date will be automatically generated from the later of the person\'s birth date and the group\'s start date.'});    
     $("#group_assignment_end_date_type").tooltip({placement: 'right', title: 'BF = Before, AF = After, IN = In, CA = Circa, BF/IN = Before or In, AF/IN = After or In'});
     $("#group_assignment_end_year").tooltip({placement: 'right', title: 'If you leave this field blank, the approximate end date will be automatically generated from the earlier of the person\'s death date and the group\'s end date.'});            
+	$("#group_assignment_annotation").tooltip({placement: 'right', title: 'Why this group assignment should be added to the SDFB database.'}); 
+	$("#group_assignment_bibliography").tooltip({placement: 'right', title: 'Citation for information, if appropriate.'}); 	           
 
     //group note
     $("#user_group_contrib_group_id").tooltip({placement: 'right', title: 'Please select the appropriate group from the drop-down menu.'});
