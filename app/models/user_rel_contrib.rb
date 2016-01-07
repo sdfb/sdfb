@@ -84,6 +84,7 @@ class UserRelContrib < ActiveRecord::Base
   before_create :check_if_approved
   after_create :update_type_list_max_certainty_on_rel
   after_update :update_type_list_max_certainty_on_rel
+  after_create :update_approve
   before_create :create_start_and_end_date
   before_update :create_start_and_end_date
   before_update :remove_trailing_spaces
@@ -119,6 +120,13 @@ class UserRelContrib < ActiveRecord::Base
           errors.add(:person2_autocomplete, "Please select people from the autocomplete dropdown menus.")
         end
       end
+    end
+  end
+
+  def update_approve
+    if (self.is_approved == true)
+      self.approved_by = current_user
+      self.approved_on = Time.now
     end
   end
 
