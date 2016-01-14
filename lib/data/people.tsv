@@ -1,6 +1,6 @@
 10000001	NA	16081		John	A Lasco			John A Lasco, John Laski	John A Lasco	John Laski								&Agrave; Lasco [Laski], John	IN	1499	1499	IN	1560	1560	1499-1560	evangelical reformer	3582	1510	1884	NA	NA	NA
 10000002	NA	14346		Iaco	ab Dewi			Iaco ab Dewi	Iaco ab Dewi									Iaco ab Dewi	IN	1647	1648	IN	1722	1722	1647/8-1722	copyist and translator	922	1659	1712	NA	NA	NA
-10000003	NA	48541		Dafydd	ab Edmwnd			Dafydd ab Edmwnd	Dafydd ab Edmwnd									Dafydd ab Edmwnd	BF	1450	1450	AF	1497	1497	fl. 1450-1497	poet	683	1636	1636	NA	NA	NA
+10000003	NA	48541		Dafydd	ab Edmwnd			Dafydd ab Edmwnd	Dafydd ab Edmwnd									Dafydd ab Edmwnd	BF	1450	1450	AF	1500	1497	fl. 1450-1497	poet	683	1636	1636	NA	NA	NA
 10000004	NA	93721		Dafydd	ab Ieuan ab Iorwerth			Dafydd ab Ieuan ab Iorwerth	Dafydd ab Ieuan ab Iorwerth									Dafydd ab Ieuan ab Iorwerth	AF	1393	NA	BF/IN	1503	1503	d. in or before 1503	abbot of Valle Crucis and bishop of St Asaph	1004	1503	1503	NA	NA	NA
 10000005	NA	74045		Gruffudd	ab Ieuan ap Llywelyn Fychan			Gruffudd ab Ieuan ap Llywelyn Fychan	Gruffudd ab Ieuan ap Llywelyn Fychan									Gruffudd ab Ieuan ap Llywelyn Fychan	IN	1485	1485	IN	1553	1553	c.1485-1553	poet	557	1522	1601	NA	NA	NA
 10000006	NA	27210		Tomas	ab Ieuan ap Rhys			Tomas ab Ieuan ap Rhys	Tomas ab Ieuan ap Rhys									Tomas ab Ieuan ap Rhys	IN	1510	1510	IN	1560	1560	c.1510-c.1560	poet	598	1553	1597	NA	NA	NA
@@ -1112,7 +1112,7 @@
 10001112	NA	2507		Ofspring	Blackall			Ofspring Blackall	Ofspring Blackall									Blackall, Ofspring	IN	1655	1655	IN	1716	1716	bap. 1655, d. 1716	bishop of Exeter and religious controversialist	1535	1621	1723	NA	NA	NA
 10001113	NA	65786		Robert	Blackborne			Robert Blackborne	Robert Blackborne									Blackborne, Robert	IN	1620	1620	IN	1701	1701	c.1620-1701	naval official	914	1633	1700	NA	NA	NA
 10001114	NA	2509		John	Blackbourne			John Blackbourne	John Blackbourne									Blackbourne, John	IN	1683	1683	IN	1741	1741	1683-1741	bishop of the nonjuring Church of England	504	1549	1732	NA	NA	NA
-10001115	NA	NA		Peter	Blackburn			Peter Blackburn	Peter Blackburn									NA	BF	1680	NA	IN	1616	NA	NA	bishop of Aberdeen	NA	NA	NA	1581	1855	6
+10001115	NA	NA		Peter	Blackburn			Peter Blackburn	Peter Blackburn									NA	BF	1580	NA	IN	1616	NA	NA	bishop of Aberdeen	NA	NA	NA	1581	1855	6
 10001116	NA	2515		John	Blackburne			John Blackburne	John Blackburne									Blackburne, John	IN	1694	1694	IN	1786	1786	bap. 1694, d. 1786	horticulturist	292	1694	1786	NA	NA	NA
 10001117	NA	2516		Lancelot	Blackburne			Lancelot Blackburne	Lancelot Blackburne									Blackburne, Lancelot	IN	1658	1658	IN	1743	1743	1658-1743	archbishop of York	1786	1658	1822	NA	NA	NA
 10001118	NA	2517		Richard	Blackburne			Richard Blackburne	Richard Blackburne									Blackburne, Richard	IN	1651	1652	IN	1716	1716	1651/2-1716	physician and writer	893	1665	1750	NA	NA	NA
@@ -1221,7 +1221,7 @@
 10001221	NA	2757	Sir	Josias	Bodley			Josias Bodley	Josias Bodley									Bodley, Sir Josias	IN	1550	1550	IN	1617	1617	c.1550-1617	soldier and military engineer	1460	1581	1616	NA	NA	NA
 10001222	NA	2758		Laurence	Bodley			Laurence Bodley	Laurence Bodley									Bodley, Laurence	IN	1547	1548	IN	1615	1615	1547/8-1615	Church of England clergyman	740	1549	1610	NA	NA	NA
 10001223	NA	2759	Sir	Thomas	Bodley			Thomas Bodley	Thomas Bodley									Bodley, Sir Thomas	IN	1545	1545	IN	1613	1613	1545-1613	scholar, diplomat, and founder of the Bodleian Library, Oxford	3479	1545	1754	NA	NA	NA
-10001224	NA	50248	Sir	Henry	Bodrugan			Sir Henry Bodrugan, Sir Henry Trenowith	Sir Henry Bodrugan	Sir Henry Trenowith								Bodrugan [Trenowith], Sir Henry	CA	1426	1426	IN	1487	1503	c.1426-1487x1503	landowner and rebel	771	1602	1602	NA	NA	NA
+10001224	NA	50248	Sir	Henry	Bodrugan			Sir Henry Bodrugan, Sir Henry Trenowith	Sir Henry Bodrugan	Sir Henry Trenowith								Bodrugan [Trenowith], Sir Henry	CA	1426	1426	IN	1503	1487	c.1426-1487x1503	landowner and rebel	771	1602	1602	NA	NA	NA
 10001225	NA	74043		William	Bodwrda			William Bodwrda	William Bodwrda									Bodwrda, William	IN	1592	1593	IN	1660	1660	1592/3-1660	Church of England clergyman and manuscript copyist	430	1588	1660	NA	NA	NA
 10001226	NA	2760		Hector	Boece			Hector Boece, Hector Boethius	Hector Boece	Hector Boethius								Boece [Boethius], Hector	IN	1465	1465	IN	1536	1536	c.1465-1536	historian and college head	3052	1505	1729	NA	NA	NA
 10001227	NA	2761		Anthony William	Boehm			Anthony William Boehm	Anthony William Boehm									Boehm, Anthony William	IN	1673	1673	IN	1722	1722	1673-1722	Lutheran minister and religious writer	958	1673	1722	NA	NA	NA
@@ -1399,7 +1399,7 @@
 10001399	NA	95021		Mary	Box			Mary Box, Mary Allen	Mary Box	Mary Allen								Mary Box [Allen]	AF	1569	NA	IN	1679	1679	d. 1679	educational benefactor	126	1556	1679	NA	NA	NA
 10001400	NA	3094		John	Boxall			John Boxall	John Boxall									Boxall, John	IN	1524	1525	IN	1571	1571	1524/5-1571	administrator	1086	1538	1558	NA	NA	NA
 10001401	NA	47302		Hugh	Boyd			Hugh Boyd	Hugh Boyd									Boyd, Hugh	IN	1690	1690	IN	1765	1765	1690-1765	entrepreneur	651	1685	1763	NA	NA	NA
-10001402	NA	NA		Marion	Boyd			Marion Boyd	Marion Boyd									NA	BF	1492	NA	AF	1494	NA	NA	royal mistress	NA	NA	NA	1500	1513	6
+10001402	NA	NA		Marion	Boyd			Marion Boyd	Marion Boyd									NA	BF	1492	NA	AF	1500	NA	NA	royal mistress	NA	NA	NA	1500	1513	6
 10001403	NA	3109		Mark Alexander	Boyd			Mark Alexander Boyd	Mark Alexander Boyd									Boyd, Mark Alexander	IN	1563	1563	IN	1601	1601	1563-1601	humanist scholar and writer	1100	1563	1595	NA	NA	NA
 10001404	NA	3111		Robert	Boyd			Robert Boyd	Robert Boyd									Boyd, Robert	IN	1517	1517	IN	1590	1590	c.1517-1590	nobleman	1591	1535	1601	NA	NA	NA
 10001405	NA	3112		Robert	Boyd	of Trochrig		Robert Boyd of Trochrig	Robert Boyd of Trochrig									Boyd, Robert, of Trochrig	IN	1578	1578	IN	1627	1627	1578-1627	theological writer and poet	883	1581	1654	NA	NA	NA
@@ -1749,7 +1749,7 @@
 10001749	NA	3904		Henry	Bull			Henry Bull	Henry Bull									Bull, Henry	AF	1467	NA	IN	1577	1577	d. 1577	theological writer and physician	1011	1537	1590	NA	NA	NA
 10001750	NA	3906		John	Bull			John Bull	John Bull									Bull, John	AF	1532	NA	IN	1642	1642	d. 1642	self-proclaimed prophet	894	1600	1646	NA	NA	NA
 10001751	NA	3905		John	Bull			John Bull	John Bull									Bull, John	IN	1559	1563	IN	1628	1628	1559x63-1628	composer	2025	1538	1628	NA	NA	NA
-10001752	NA	68195		John	Bull			John Bull	John Bull									Bull, John	BF	1712	1712	AF	1712	1712	supp. fl. 1712-	fictitious epitomist of Englishness and British imperialism	1697	1712	1885	NA	NA	NA
+10001752	NA	68195		John	Bull			John Bull	John Bull									Bull, John	BF	1700	1712	AF	1712	1712	supp. fl. 1712-	fictitious epitomist of Englishness and British imperialism	1697	1712	1885	NA	NA	NA
 10001753	NA	3908		Thomas	Bullaker			Thomas Bullaker	Thomas Bullaker									Bullaker, Thomas	IN	1598	1598	IN	1642	1642	bap. 1598, d. 1642	Franciscan friar	320	1574	1642	NA	NA	NA
 10001754	NA	3909		Richard	Bullein			Richard Bullein	Richard Bullein									Richard Bullein	AF	1453	NA	IN	1563	1563	d. 1563	priest	114	1559	1563	NA	NA	NA
 10001755	NA	3916		John	Bullingham			John Bullingham	John Bullingham									Bullingham, John	AF	1488	NA	IN	1598	1598	d. 1598	bishop of Gloucester	1348	1550	1598	NA	NA	NA
@@ -1943,7 +1943,7 @@
 10001943	NA	4403		Robert	Callis			Robert Callis	Robert Callis									Callis, Robert	IN	1577	1577	IN	1642	1642	c.1577-1642	barrister	618	1596	1648	NA	NA	NA
 10001944	NA	4406	Sir	Charles	Calthorpe			Sir Charles Calthorpe, Sir Charles Calthrope	Sir Charles Calthorpe	Sir Charles Calthrope								Calthorpe [Calthrope], Sir Charles	AF	1506	NA	IN	1616	1616	d. 1616	judge	700	1560	1616	NA	NA	NA
 10001945	NA	4405	Sir	Henry	Calthorpe			Henry Calthorpe	Henry Calthorpe									Calthorpe, Sir Henry	IN	1586	1586	IN	1637	1637	1586-1637	lawyer	691	1605	1636	NA	NA	NA
-10001946	NA	NA	Sir	James	Calthorpe			James Calthorpe	James Calthorpe									NA	BF	1670	NA	AF	1625	NA	NA	NA	NA	NA	NA	1605	1775	5
+10001946	NA	NA	Sir	James	Calthorpe			James Calthorpe	James Calthorpe									NA	BF	1570	NA	AF	1625	NA	NA	NA	NA	NA	NA	1605	1775	5
 10001947	NA	4408		Edward	Calver			Edward Calver	Edward Calver									Calver, Edward	CA	1598	1598	BF	1708	NA	bap. 1598?	poet	504	1598	1649	NA	NA	NA
 10001948	NA	4410		Henry	Calverley			Henry Calverley	Henry Calverley									Henry Calverley	IN	1604	1604	IN	1661	1661	1604-1661	landowner	119	1661	1661	NA	NA	NA
 10001949	NA	39774		William	Calverley			William Calverley	William Calverley									Calverley, William	AF	1462	NA	IN	1572	1572	d. 1572	writer	224	1536	1572	NA	NA	NA
@@ -5548,7 +5548,7 @@
 10005548	NA	12341		John	Harley			John Harley	John Harley									Harley, John	AF	1447	NA	IN	1557	1558	d. 1557/8	bishop of Hereford	539	1536	1552	NA	NA	NA
 10005549	NA	12343	Sir	Robert	Harley			Robert Harley	Robert Harley									Harley, Sir Robert	IN	1579	1579	IN	1656	1656	bap. 1579, d. 1656	politician	1575	1579	1656	NA	NA	NA
 10005550	NA	12344		Robert	Harley			Robert Harley	Robert Harley									Harley, Robert	IN	1661	1661	IN	1724	1724	1661-1724	politician	8829	1661	1750	NA	NA	NA
-10005551	NA	12346		Richard	Harliston			Richard Harliston	Richard Harliston									Harliston, Richard	AF	1385	NA	AF	1495	1495	d. after 1495	administrator	445	NA	NA	NA	NA	NA
+10005551	NA	12346		Richard	Harliston			Richard Harliston	Richard Harliston									Harliston, Richard	AF	1385	NA	AF	1500	1495	d. after 1495	administrator	445	NA	NA	NA	NA	NA
 10005552	NA	12349		Thomas	Harlow			Thomas Harlow	Thomas Harlow									Harlow, Thomas	AF	1631	NA	IN	1741	1741	d. 1741	naval officer	459	1690	1741	NA	NA	NA
 10005553	NA	61063		Edmund	Harman			Edmund Harman	Edmund Harman									Harman, Edmund	IN	1509	1509	IN	1577	1577	c.1509-1577	barber	646	1528	1546	NA	NA	NA
 10005554	NA	12351	Sir	John	Harman			John Harman	John Harman									Harman, Sir John	AF	1563	NA	IN	1673	1673	d. 1673	naval officer	1202	1646	1673	NA	NA	NA
@@ -6754,7 +6754,7 @@
 10006754	NA	72315		Henrik	Kalmeter			Henrik Kalmeter	Henrik Kalmeter									Henrik Kalmeter	IN	1693	1693	IN	1750	1750	1693-1750	mining engineer	183	1716	1734	NA	NA	NA
 10006755	NA	15182		Richard	Kane			Richard Kane, Richard O'Cahan	Richard Kane	Richard O'Cahan								Kane [O'Cahan], Richard	IN	1662	1662	IN	1736	1736	1662-1736	army officer	600	1662	1754	NA	NA	NA
 10006756	NA	15190		Cahir Mac Art	Kavanagh			Cahir Mac Art Kavanagh	Cahir Mac Art Kavanagh									Kavanagh, Cahir Mac Art	AF	1444	NA	CA	1554	1554	d. 1554?	chieftain	748	1534	1554	NA	NA	NA
-10006757	NA	4350		John	Kay			John Kay, John Caius	John Kay	John Caius								Kay [Caius], John	BF	1482	1482	AF	1482	1482	fl. c.1482	translator	375	1504	1504	NA	NA	NA
+10006757	NA	4350		John	Kay			John Kay, John Caius	John Kay	John Caius								Kay [Caius], John	BF	1482	1482	AF	1500	1500	fl. c.1482	translator	375	1504	1504	NA	NA	NA
 10006758	NA	NA	Sir	Arthur	Kaye	of Woodsome, Yorkshire		Arthur Kaye	Arthur Kaye									NA	BF	1695	NA	AF	1726	NA	NA	NA	NA	NA	NA	1589	1752	5
 10006759	NA	15202		Benjamin	Keach			Benjamin Keach	Benjamin Keach									Keach, Benjamin	IN	1640	1640	IN	1704	1704	1640-1704	Particular Baptist minister	1289	1640	1727	NA	NA	NA
 10006760	NA	15209		Andreas	Kearne			Andreas Kearne	Andreas Kearne									Kearne, Andreas	IN	1627	1627	IN	1641	1641	fl. 1627-1641	sculptor	575	1627	1650	NA	NA	NA
@@ -7738,10 +7738,10 @@
 10007738	NA	72768		Diarmaid	mac Laoisigh Mhic an Bhaird			Diarmaid mac Laoisigh Mhic an Bhaird	Diarmaid mac Laoisigh Mhic an Bhaird									Diarmaid mac Laoisigh Mhic an Bhaird	IN	1675	1675	IN	1695	1695	fl. 1675-1695		263	NA	NA	NA	NA	NA
 10007739	NA	17686		Hugh Oge	Mac Mahon			Hugh Oge Mac Mahon, Hugh Oge MacMahon	Hugh Oge Mac Mahon	Hugh Oge MacMahon								Mac Mahon [MacMahon], Hugh Oge	IN	1606	1607	IN	1644	1644	1606/7-1644	conspirator	567	1640	1642	NA	NA	NA
 10007740	NA	17329		John	Macalpine			John Macalpine	John Macalpine									Macalpine, John	AF	1447	NA	IN	1557	1557	d. 1557	Dominican friar and protestant reformer	604	1525	1557	NA	NA	NA
-10007741	NA	76526		Angus	MacArthur			Angus MacArthur	Angus MacArthur									Angus MacArthur	BF	1715	1715	AF	1715	1715	fl. 1715		24	1715	1715	NA	NA	NA
+10007741	NA	76526		Angus	MacArthur			Angus MacArthur	Angus MacArthur									Angus MacArthur	BF	1700	1715	AF	1715	1715	fl. 1715		24	1715	1715	NA	NA	NA
 10007742	NA	17384		George	Macartney			George Macartney	George Macartney									Macartney, George	IN	1660	1660	IN	1730	1730	c.1660-1730	army officer	1042	1626	1715	NA	NA	NA
 10007743	NA	65572		Carola	Macaulay			Carola Macaulay, Carola Young	Carola Macaulay	Carola Young								Macaulay [Young], Carola	IN	1682	1682	BF	1792	NA	b. 1682	milliner and shopkeeper	362	1682	1682	NA	NA	NA
-10007744	NA	17359		Philip	Macbrady			Philip Macbrady	Philip Macbrady									Macbrady, Philip	BF	1711	1711	AF	1711	1711	fl. 1711	Irish scholar	233	1689	1711	NA	NA	NA
+10007744	NA	17359		Philip	Macbrady			Philip Macbrady	Philip Macbrady									Macbrady, Philip	BF	1700	1711	AF	1711	1711	fl. 1711	Irish scholar	233	1689	1711	NA	NA	NA
 10007745	NA	17372		Hugh	MacCaghwell			Hugh MacCaghwell	Hugh MacCaghwell									MacCaghwell, Hugh	CA	1571	1571	IN	1626	1626	1571?-1626	Roman Catholic archbishop of Armagh and theologian	659	1571	1618	NA	NA	NA
 10007746	NA	77130		Euphame	MacCalzean			Euphame MacCalzean	Euphame MacCalzean									Euphame MacCalzean	AF	1481	NA	IN	1591	1591	d. 1591		14	NA	NA	NA	NA	NA
 10007747	NA	17376		Cormac Oge Laidhir	MacCarthy			Cormac Oge Laidhir MacCarthy	Cormac Oge Laidhir MacCarthy									MacCarthy, Cormac Oge Laidhir	AF	1426	NA	IN	1536	1536	d. 1536	chieftain	378	1501	1536	NA	NA	NA
@@ -7838,7 +7838,7 @@
 10007838	NA	17677	Sir	Norman	Macleod	of Berneray		Norman Macleod of Berneray	Norman Macleod of Berneray									Macleod, Sir Norman, of Berneray	IN	1606	1606	IN	1705	1705	c.1606-1705	royalist army officer	974	1614	1662	NA	NA	NA
 10007839	NA	69932		Roderick	MacLeod			Roderick MacLeod	Roderick MacLeod									MacLeod, Roderick	AF	1485	NA	IN	1595	1595	d. 1595	highland chief	978	1501	1613	NA	NA	NA
 10007840	NA	NA		Torquil	MacLeod	of Lewis		Torquil MacLeod	Torquil MacLeod									NA	BF	1490	NA	AF	1506	NA	NA	NA	NA	NA	NA	1502	1563	6
-10007841	NA	17536		William	Maclyn			William Maclyn, William de Machlinia	William Maclyn	William de Machlinia								Maclyn [ de Machlinia], William	BF	1482	1482	AF	1490	1490	fl. 1482-1490	printer	297	NA	NA	NA	NA	NA
+10007841	NA	17536		William	Maclyn			William Maclyn, William de Machlinia	William Maclyn	William de Machlinia								Maclyn [ de Machlinia], William	BF	1482	1482	AF	1500	1490	fl. 1482-1490	printer	297	NA	NA	NA	NA	NA
 10007842	NA	17685		Heber	MacMahon			Heber MacMahon	Heber MacMahon									MacMahon, Heber	IN	1600	1600	IN	1650	1650	1600-1650	Roman Catholic bishop of Clogher	1519	1617	1650	NA	NA	NA
 10007843	NA	72424		Cathal	MacMhuirich			Cathal MacMhuirich	Cathal MacMhuirich									Cathal MacMhuirich	IN	1615	1615	IN	1649	1649	fl. c.1615-1649	poet	129	1629	1634	NA	NA	NA
 10007844	NA	72425		Niall	MacMhuirich			Niall MacMhuirich	Niall MacMhuirich									Niall MacMhuirich	AF	1616	NA	IN	1726	1726	d. 1726		64	1715	1726	NA	NA	NA
@@ -7912,7 +7912,7 @@
 10007912	NA	17921		Peter	Manby			Peter Manby	Peter Manby									Peter Manby	IN	1681	1681	BF	1791	NA	b. 1681		54	1681	1724	NA	NA	NA
 10007913	NA	70466		Thomas	Manby			Thomas Manby	Thomas Manby									Manby, Thomas	CA	1611	1611	IN	1679	1679	bap. 1611?, d. 1679	legal writer	707	1611	1679	NA	NA	NA
 10007914	NA	17922		Thomas	Manby			Thomas Manby	Thomas Manby									Manby, Thomas	CA	1633	1633	IN	1695	1695	bap. 1633?, d. 1695	landscape painter	345	1633	1696	NA	NA	NA
-10007915	NA	50257		Domenico	Mancini			Domenico Mancini	Domenico Mancini									Mancini, Domenico	BF	1434	1434	IN	1494	1514	b. before 1434, d. 1494x1514	scholar and chronicler	756	1508	1508	NA	NA	NA
+10007915	NA	50257		Domenico	Mancini			Domenico Mancini	Domenico Mancini									Mancini, Domenico	BF	1434	1434	IN	1514	1494	b. before 1434, d. 1494x1514	scholar and chronicler	756	1508	1508	NA	NA	NA
 10007916	NA	17924		William	Manderston			William Manderston, William Manderstown	William Manderston	William Manderstown								Manderston [Manderstown], William	IN	1485	1485	IN	1552	1552	c.1485-1552	philosopher and logician	660	1503	1546	NA	NA	NA
 10007917	NA	17925		Robert	Mandevile			Robert Mandevile, Robert Mandevil	Robert Mandevile	Robert Mandevil								Mandevile [Mandevil], Robert	IN	1578	1579	IN	1618	1618	1578/9-1618	Church of England clergyman	190	1596	1607	NA	NA	NA
 10007918	NA	17926		Bernard	Mandeville			Bernard Mandeville	Bernard Mandeville									Mandeville, Bernard	IN	1670	1670	IN	1733	1733	bap. 1670, d. 1733	physician and political philosopher	5172	1580	1755	NA	NA	NA
@@ -8010,7 +8010,7 @@
 10008010	NA	67713		M.	Marsin			M. Marsin, M. Mersin, M. Mercin	M. Marsin	M. Mersin	M. Mercin							Marsin [Mersin, Mercin], M.	IN	1696	1696	IN	1701	1701	fl. 1696-1701	theologian	971	1683	1701	NA	NA	NA
 10008011	NA	18164		John	Marston			John Marston	John Marston									Marston, John	IN	1576	1576	IN	1634	1634	bap. 1576, d. 1634	poet and playwright	2752	1575	1878	NA	NA	NA
 10008012	NA	18173		Anthony	Marten			Anthony Marten, Anthony Martin	Anthony Marten	Anthony Martin								Marten [Martin], Anthony	IN	1542	1542	IN	1597	1597	c.1542-1597	courtier and author	907	1531	1595	NA	NA	NA
-10008013	NA	57715		Benjamin	Marten			Benjamin Marten	Benjamin Marten									Marten, Benjamin	BF	1722	1722	AF	1722	1722	fl. 1722	medical writer	796	1680	1751	NA	NA	NA
+10008013	NA	57715		Benjamin	Marten			Benjamin Marten	Benjamin Marten									Marten, Benjamin	BF	1700	1722	AF	1722	1722	fl. 1722	medical writer	796	1680	1751	NA	NA	NA
 10008014	NA	18167	Sir	Henry	Marten			Henry Marten	Henry Marten									Marten, Sir Henry	IN	1561	1561	IN	1641	1641	c.1561-1641	civil lawyer and judge	1706	1581	1640	NA	NA	NA
 10008015	NA	18168		Henry	Marten			Henry Marten, Henry Martin, Harry Marten, Harry Martin	Henry Marten	Henry Martin	Harry Marten	Harry Martin						Marten [Martin], Henry [Harry]	IN	1601	1602	IN	1680	1680	1601/2-1680	politician and regicide	4114	1617	1680	NA	NA	NA
 10008016	NA	56721		John	Marten			John Marten	John Marten									Marten, John	IN	1692	1692	IN	1737	1737	fl. 1692-1737	surgeon	762	1692	1711	NA	NA	NA
@@ -9143,7 +9143,7 @@
 10009143	NA	20792		Richard	Onslow			Richard Onslow	Richard Onslow									Onslow, Richard	IN	1527	1528	IN	1571	1571	1527/8-1571	lawyer and speaker of the House of Commons	743	1545	1602	NA	NA	NA
 10009144	NA	20793	Sir	Richard	Onslow			Richard Onslow	Richard Onslow									Onslow, Sir Richard	IN	1601	1601	IN	1664	1664	bap. 1601, d. 1664	politician	1368	1601	1679	NA	NA	NA
 10009145	NA	20794		Richard	Onslow			Richard Onslow	Richard Onslow									Onslow, Richard	IN	1654	1654	IN	1717	1717	1654-1717	speaker of the House of Commons	723	1654	1718	NA	NA	NA
-10009146	NA	20798		Johannes	Opicius			Johannes Opicius	Johannes Opicius									Opicius, Johannes	BF	1492	1492	AF	1493	1493	fl. 1492-1493	poet	254	NA	NA	NA	NA	NA
+10009146	NA	20798		Johannes	Opicius			Johannes Opicius	Johannes Opicius									Opicius, Johannes	BF	1492	1492	AF	1500	1493	fl. 1492-1493	poet	254	NA	NA	NA	NA	NA
 10009147	NA	37823		William	Orchard			William Orchard	William Orchard									Orchard, William	AF	1394	NA	IN	1504	1504	d. 1504	master mason	633	1503	1504	NA	NA	NA
 10009148	NA	20826		William	Orem			William Orem	William Orem									William Orem	AF	1582	NA	IN	1692	1692	d. 1692	town clerk of Old Aberdeen	28	1692	1832	NA	NA	NA
 10009149	NA	20838		Oliver	Ormerod			Oliver Ormerod	Oliver Ormerod									Ormerod, Oliver	AF	1516	NA	IN	1626	1626	d. 1626	Church of England clergyman and religious controversialist	691	1596	1626	NA	NA	NA
@@ -9186,7 +9186,7 @@
 10009186	TRUE	NA		Richard	Overton			Richard Overton	Richard Overton									NA	BF	1625	NA	AF	1663	NA	NA	Leveller and pamphleteer	NA	NA	NA	1642	1658	17
 10009187	NA	20975		Robert	Overton			Robert Overton	Robert Overton									Overton, Robert	IN	1608	1609	IN	1678	1679	1608/9-1678/9	parliamentarian army officer	2654	1627	1894	NA	NA	NA
 10009188	NA	20976		William	Overton			William Overton	William Overton									Overton, William	IN	1524	1525	IN	1609	1609	1524/5?-1609	bishop of Coventry and Lichfield	1497	1539	1601	NA	NA	NA
-10009189	NA	20982		Gutun	Owain			Gutun Owain	Gutun Owain									Owain, Gutun	BF	1451	1451	AF	1498	1498	fl. c.1451-1498	poet	790	NA	NA	NA	NA	NA
+10009189	NA	20982		Gutun	Owain			Gutun Owain	Gutun Owain									Owain, Gutun	BF	1451	1451	AF	1500	1498	fl. c.1451-1498	poet	790	NA	NA	NA	NA	NA
 10009190	NA	20984		Alice	Owen			Alice Owen, Alice Wilkes	Alice Owen	Alice Wilkes								Owen [Wilkes], Alice	IN	1547	1547	IN	1613	1613	1547-1613	philanthropist	854	1570	1617	NA	NA	NA
 10009191	NA	20986		Cadwallader	Owen			Cadwallader Owen	Cadwallader Owen									Cadwallader Owen	IN	1562	1562	IN	1617	1617	c.1562-1617	Church of England clergyman	135	1581	1617	NA	NA	NA
 10009192	NA	20987		Charles	Owen			Charles Owen	Charles Owen									Owen, Charles	AF	1636	NA	IN	1746	1746	d. 1746	Presbyterian minister and nonconformist tutor	856	1690	1750	NA	NA	NA
@@ -10518,7 +10518,7 @@
 10010518	NA	95246		John	Roysse			John Roysse	John Roysse									Roysse, John	IN	1500	1501	IN	1571	1571	1500/01-1571	mercer and benefactor	1450	1500	1571	NA	NA	NA
 10010519	NA	24240		Richard	Royston			Richard Royston	Richard Royston									Royston, Richard	IN	1601	1601	IN	1686	1686	1601-1686	bookseller and publisher	1571	1601	1686	NA	NA	NA
 10010520	NA	72770		Eoghan	Ruadh Mac an Bhaird			Eoghan Ruadh Mac an Bhaird	Eoghan Ruadh Mac an Bhaird									Eoghan Ruadh Mac an Bhaird	CA	1570	1570	AF	1625	1625	b. c.1570, d. after 1625		281	1570	1649	NA	NA	NA
-10010521	NA	76534		Donald	Ruadh MacCrimmon			Donald Ruadh MacCrimmon	Donald Ruadh MacCrimmon									Donald Ruadh MacCrimmon	BF	1731	1731	AF	1731	1731	fl. 1731		319	1614	1746	NA	NA	NA
+10010521	NA	76534		Donald	Ruadh MacCrimmon			Donald Ruadh MacCrimmon	Donald Ruadh MacCrimmon									Donald Ruadh MacCrimmon	BF	1700	1731	AF	1731	1731	fl. 1731		319	1614	1746	NA	NA	NA
 10010522	NA	77093		Griogair	Ruadh MacGregor			Griogair Ruadh MacGregor, Gregor Roy MacGregor	Griogair Ruadh MacGregor	Gregor Roy MacGregor								Griogair Ruadh [Gregor Roy] MacGregor	AF	1460	NA	IN	1570	1570	d. 1570		660	1552	1594	NA	NA	NA
 10010523	NA	63010	Sir	Peter Paul	Rubens			Peter Paul Rubens	Peter Paul Rubens									Rubens, Sir Peter Paul	IN	1577	1577	IN	1640	1640	1577-1640	painter	1798	1568	1636	NA	NA	NA
 10010524	NA	24242		Thomas	Rud			Thomas Rud	Thomas Rud									Rud, Thomas	IN	1667	1668	IN	1733	1733	1667/8-1733	schoolmaster and librarian	479	1582	1825	NA	NA	NA
@@ -11408,7 +11408,7 @@
 10011408	NA	24491	Sir	Richard	St George			Richard St George	Richard St George									St George, Sir Richard	IN	1554	1555	IN	1635	1635	1554/5-1635	herald	772	1569	1648	NA	NA	NA
 10011409	NA	24493		Christopher	St German			Christopher St German	Christopher St German									St German, Christopher	CA	1460	1460	IN	1540	1541	c.1460-1540/41	legal writer	1932	1502	1886	NA	NA	NA
 10011410	NA	24496		Henry	St John			Henry St John	Henry St John									St John, Henry	IN	1678	1678	IN	1751	1751	1678-1751	politician, diplomatist, and author	13582	1500	1754	NA	NA	NA
-10011411	NA	NA	Sir	John	St John	of Bletsoe, Bedfordshire		John St John of Bletsoe	John St John of Bletsoe									NA	BF	1486	NA	NA	NA	NA	NA	NA	NA	NA	NA	1503	1600	6
+10011411	NA	NA	Sir	John	St John	of Bletsoe, Bedfordshire		John St John of Bletsoe	John St John of Bletsoe									NA	BF	1486	NA	AF	1500	NA	NA	NA	NA	NA	NA	1503	1600	6
 10011412	NA	24501		Oliver	St John			Oliver St John	Oliver St John									St John, Oliver	IN	1559	1559	IN	1630	1630	1559-1630	lord deputy of Ireland	1589	1577	1631	NA	NA	NA
 10011413	NA	24503		Oliver	St John			Oliver St John	Oliver St John									St John, Oliver	IN	1584	1584	IN	1646	1646	c.1584-1646	politician	721	1559	1655	NA	NA	NA
 10011414	NA	24504		Oliver	St John			Oliver St John	Oliver St John									St John, Oliver	IN	1598	1598	IN	1673	1673	c.1598-1673	lawyer and politician	5924	1614	1698	NA	NA	NA
@@ -12108,7 +12108,7 @@
 10012108	NA	27779		Thomas	Trussell			Thomas Trussell	Thomas Trussell									Trussell, Thomas	BF/IN	1564	1564	IN	1640	1640	b. in or before 1564, d. 1640	army officer and military writer	985	1564	1900	NA	NA	NA
 10012109	NA	45830		Mary	Trye			Mary Trye, Mary O'Dowde	Mary Trye	Mary O'Dowde								Trye [O'Dowde], Mary	BF	1675	1675	AF	1675	1675	fl. 1675	medical practitioner	401	1665	1675	NA	NA	NA
 10012110	NA	27783		Thomas	Tryon			Thomas Tryon	Thomas Tryon									Tryon, Thomas	IN	1634	1634	IN	1703	1703	1634-1703	vegetarian and author	1941	1634	1805	NA	NA	NA
-10012111	NA	27576		James	Tuchet			James Tuchet	James Tuchet									Tuchet, James	BF	1463	1463	AF	1497	1497	c.1463-1497	rebel leader	921	1532	1532	NA	NA	NA
+10012111	NA	27576		James	Tuchet			James Tuchet	James Tuchet									Tuchet, James	BF	1463	1463	AF	1500	1497	c.1463-1497	rebel leader	921	1532	1532	NA	NA	NA
 10012112	NA	70100		John	Tucke			John Tucke	John Tucke									Tucke, John	CA	1482	1482	AF/IN	1540	1540	b. c.1482, d. in or after 1540	schoolmaster and musician	610	1501	1540	NA	NA	NA
 10012113	NA	67975		William	Tucker			William Tucker	William Tucker									Tucker, William	CA	1622	1622	IN	1679	1679	bap. 1622?, d. 1679	musician and composer	486	1622	1685	NA	NA	NA
 10012114	NA	27794		Anthony	Tuckney			Anthony Tuckney	Anthony Tuckney									Tuckney, Anthony	IN	1599	1599	IN	1670	1670	1599-1670	Church of England clergyman and college head	2075	1599	1679	NA	NA	NA
