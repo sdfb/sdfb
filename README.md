@@ -42,6 +42,7 @@ If populating the entire database you can run the file herokupop.sh which will r
     ```
 
     ## To populate this file run the following commands in order:
+    ## Note, as of January 2016 you may have to first create users with email addresses "sdfbadmin@example.com" and "odbnadmin@example.com" - this is to set up artificial users who will referenced in the created_by and approved_by fields for the original database entries
 
     ```
     rake db:populate_people
