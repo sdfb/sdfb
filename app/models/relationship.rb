@@ -115,6 +115,11 @@ class Relationship < ActiveRecord::Base
   def create_met_record
     new_met_record = UserRelContrib.new do |u| 
       u.relationship_id = self.id
+      if (Relationship.find(u.relationship_id).is_approved == true)
+        u.is_approved = true
+      else
+        u.is_approved == false
+      end
       u.is_rejected = false
       u.is_active = true
       u.is_locked = true

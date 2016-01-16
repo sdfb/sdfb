@@ -125,7 +125,7 @@ class UserRelContrib < ActiveRecord::Base
 
   def update_approve
     if (self.is_approved == true)
-      self.approved_by = current_user
+      self.approved_by = "Admin"
       self.approved_on = Time.now
     end
   end

@@ -283,7 +283,7 @@ ActiveRecord::Schema.define(version: 20151231225927) do
     t.integer  "end_day"
     t.integer  "approved_by"
     t.date     "approved_on"
-    t.boolean  "is_approved",          default: true
+    t.boolean  "is_approved",          default:false
     t.boolean  "is_active",            default: true
     t.boolean  "is_rejected",          default: false
     t.datetime "created_at"
