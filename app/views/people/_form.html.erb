@@ -16,6 +16,7 @@
   <%= f.input :prefix %>
   <%= f.input :first_name, label: "First Name" %>
   <%= f.input :last_name, label: "Last Name" %>
+  <%= f.input :aliases, label: "Aliases or Alternate Names - separated by commas " %>
   <%= f.input :suffix %>
   <%= f.input :title %>
   <%= f.hidden_field :created_by, :value => current_user.id %>

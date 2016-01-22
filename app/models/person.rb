@@ -193,6 +193,14 @@ class Person < ActiveRecord::Base
     end
   end
 
+  def list_of_alt_names
+    if (! self.aliases.blank?)
+      name_list = self.aliases.split(',')
+      return name_list
+    end
+  end
+
+
   #populate search names with all permutations of the name on create and if empty on edit
   def populate_search_names
     search_names_all_input = ""
@@ -284,6 +292,15 @@ class Person < ActiveRecord::Base
         search_names_all_input += self.first_name + " " + self.suffix
       end
     end
+
+    if (! self.aliases.blank?)
+      # Aliases + Alternate Names
+      name_list = self.aliases.split(',')
+      for name in name_list
+        search_names_all_input += ", " + name
+      end
+    end
+
     self.search_names_all = search_names_all_input
   end
 
