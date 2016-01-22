@@ -66,7 +66,7 @@ namespace :db do
           p.last_name = last_name_input
           p.suffix = suffix_input
           p.title = title_input
-          p.gender = "other"
+          p.gender = "gender_nonconforming"
           p.search_names_all = search_names_input 
           p.birth_year_type = birth_year_type_input
           p.ext_birth_year = ext_birth_year_input
