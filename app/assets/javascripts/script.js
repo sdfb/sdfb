@@ -105,7 +105,7 @@ $(document).ready(function() {
     $("#person_last_name").tooltip({placement: 'right', title: 'Last/Surname.'});
     $("#person_suffix").tooltip({placement: 'right', title: 'the Elder, III, of Rires, etc.'});
     $("#person_title").tooltip({placement: 'right', title: 'Archbishop of Canterbury, King/Queen of England, etc.'});
-    $("#person_gender").tooltip({placement: 'right', title: 'Please only use the "other" category to indicate people who - historically - did not identify with a binary gender, rather than people who modern scholars would not identify as female or male.'});
+    $("#person_gender").tooltip({placement: 'right', title: 'Please only use the "gender_nonconforming" category to indicate people who - historically - did not identify with a binary gender, rather than people who modern scholars would not identify as female or male.'});
     $("#person_odnb_id").tooltip({placement: 'right', title: 'For people with biographies in the Oxford Dictionary of National Biography.  Their ID can be found at the bottom of their biography or in the URL as the number XXXXX at the end of the URL http://www.oxforddnb.com/ view/article/XXXXX.'});
     $("#person_birth_year_type").tooltip({placement: 'right', title: 'BF = Before, AF = After, IN = In, CA = Circa, BF/IN = Before or In, AF/IN = After or In'});
     $("#person_ext_birth_year").tooltip({placement: 'right', title: 'Either the estimated birth year or the earliest possible birth year for a person.  I.e. 1540 for a person born in January 1540/1 or 1607 for a person born between 1607 and 1610.'});
