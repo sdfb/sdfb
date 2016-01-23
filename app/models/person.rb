@@ -2,7 +2,7 @@ class Person < ActiveRecord::Base
   attr_accessible :odnb_id, :first_name, :last_name, :created_by, :historical_significance, :uncertain, :unlikely, :possible,
   :likely, :certain, :rel_sum, :prefix, :suffix, :search_names_all, :title, :birth_year_type, :ext_birth_year, :alt_birth_year, :death_year_type,
   :ext_death_year, :alt_death_year, :justification, :approved_by, :approved_on, :created_at, :is_approved, :group_list, :gender,
-  :is_active, :is_rejected, :display_name, :last_edit
+  :is_active, :is_rejected, :display_name, :last_edit, :aliases
   serialize :rel_sum,Array
   serialize :group_list,Array
   serialize :last_edit,Array
