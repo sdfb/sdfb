@@ -33,7 +33,7 @@ Sdfb::Application.configure do
 
   # Do not compress assets
   config.assets.compress = false
-  config.serve_static_assets = true
+  config.assets.precompile += %w( jquery-2.1.1.min jquery-impromptu.min.js jquery-ui.min.js accordion.js autocomplete-rails.js bootstrap.min display.js insights.standalone.js script.js pace.js typeahead.js google_analytics.js)
   # Expands the lines which load the assets
   config.assets.debug = true
   config.assets.compile = true
