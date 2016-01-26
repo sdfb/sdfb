@@ -10,7 +10,7 @@ gem 'rails', '4.1.8'
 
 # gem "less-rails" #Sprockets (what Rails 3.1 uses for its asset pipeline) supports LESS
 
-gem 'rails_12factor', group: :production
+gem 'rails_12factor'
 
 # Paginate is how you automatically add page numbers to tables. 
 # You need to change the controller with code like ".paginate(:page => params[:group_category_approved_page]).per_page(30)"
