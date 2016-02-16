@@ -68,7 +68,7 @@
   </div>
   <div class="span7">
     <div class="well">
-        <h2>All Relationship Category Assignments for <%= @relationship_type.name %><% if ! current_user.nil? && (current_user.user_type == "Admin")%><%= link_to 'New Relationship Category Assignment', new_rel_cat_assign_path(:rel_type_id => @relationship_type.id), :class => 'btn btn-primary btn-mini' %><% end %></h2><br>
+        <h2>All Relationship Category Assignments for <%= @relationship_type.name %><% if ! current_user.blank? && (current_user.user_type == "Admin")%><%= link_to 'New Relationship Category Assignment', new_rel_cat_assign_path(:rel_type_id => @relationship_type.id), :class => 'btn btn-primary btn-mini' %><% end %></h2><br>
         <% if ! @rel_cat_assigns_approved.empty? %>
           <table class="table table-condensed">
             <thead>

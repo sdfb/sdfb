@@ -28,7 +28,7 @@ class Ability
 			end
 
 			# Curators can list all groups, people, and relationships
-			can :index, [Group, GroupAssignment, Person, Relationship, UserGroupContrib, UserPersonContrib, UserRelContrib, GroupCatAssign, RelCatAssign]
+			can :index, [Group, GroupAssignment, Person, Relationship, RelationshipType, UserGroupContrib, UserPersonContrib, UserRelContrib, GroupCatAssign, RelCatAssign]
 
 			# A user can view search results
 			can :search, Group
@@ -182,8 +182,8 @@ class Ability
 				x.id == user.id
 			end
 
-			# A user can list all groups, people, relationships
-			can :index, [Group, Person, Relationship]
+			# A user can list all groups, people, relationships, relationship types
+			can :index, [Group, Person, Relationship, RelationshipType]
 
 			# A user can view search results
 			can :search, Group
@@ -212,6 +212,9 @@ class Ability
 			can :export_rels_for_rels_100140001_100160000, Relationship
 			can :export_rels_for_rels_100160001_100180000, Relationship
 			can :export_rels_for_rels_greater_than_100180000, Relationship
+			
+			# A user can export relationship type records
+			can :export_rel_types, RelationshipType
 
 			# A user can view their dashboard
 			can :my_contributions, User
@@ -234,8 +237,8 @@ class Ability
 			# Anyone can sign up
 			can [:new, :create], User
 			
-			# Anyone can list all groups, people, and relationships
-			can :index, [Group, Person, Relationship]
+			# Anyone can list all groups, people, relationships, relationship types
+			can :index, [Group, Person, Relationship, RelationshipType]
 
 			# Anyone can view search results
 			can :search, Group
@@ -246,8 +249,8 @@ class Ability
 			# Curators can view search results
 			can :search, Relationship
 
-			# Anyone can view the details of a groups, people, and relationships
-			can :show, [Group, Person, Relationship], :is_approved => true
+			# Anyone can view the details of a groups, people, relationships, relationship types
+			can :show, [Group, Person, Relationship, RelationshipType], :is_approved => true
 
 			# Anyone can see the autocomplete dropdowns for people and relationships
 			can :autocomplete_person_search_names_all, [Relationship, Person, UserRelContrib, GroupAssignment]

@@ -22,7 +22,9 @@
             <td></td>
         <% end %>
         <td><%= link_to 'Show', relationship_type, :class => 'btn btn-mini' %>
-        <%= link_to 'Edit', edit_relationship_type_path(relationship_type), :class => 'btn btn-mini' %>
+        <% if can? :update, relationship_type %>      
+        	<%= link_to 'Edit', edit_relationship_type_path(relationship_type), :class => 'btn btn-mini' %>
+        <% end %>
         <% if can? :delete, relationship_type %>
             <%= link_to 'Delete', relationship_type, :class => 'btn btn-mini btn-danger',method: :delete, data: { confirm: 'Are you sure that you want to permanently delete this record and all associated records?' } %>
         <% end %>
