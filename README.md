@@ -35,6 +35,7 @@
 ## POPULATING HEROKU
 To run any script for heroku you need to add "heroku run" before "rake". For example, to migrate run "heroku run rake db:migrate" in the command line.
 If populating the entire database you can run the file herokupop.sh which will run all the scripts. There are a bunch of commands:
+    
     ## To populate everything:
 
     ```
@@ -43,6 +44,7 @@ If populating the entire database you can run the file herokupop.sh which will r
 
     ## To populate this file run the following commands in order:
     ## Note, as of January 2016 you may have to first create users with email addresses "sdfbadmin@example.com" and "odnbadmin@example.com" - this is to set up artificial users who will referenced in the created_by and approved_by fields for the original database entries. To do this, make sure postgres is open, start the server with 'rails s' and go directly to http://localhost:3000/sign_up to create the two accounts. (The http://localhost:3000 landing page will not function properly until after you have populated the people, as the lack of a Francis Bacon node throws up an error.)
+    ## If you get a server connection error and cannot create/populate anything, try Daniel's answer in http://stackoverflow.com/questions/23348774/fatal-no-pg-hba-conf-entry-for-host-fe801lo0
 
     ```
     rake db:populate_people
@@ -65,6 +67,7 @@ If populating the entire database you can run the file herokupop.sh which will r
     rake db:populate_rels_140001_160000
     rake db:populate_rels_160001_170542
     rake db:populate_user_rel_contribs_samples
+    
     # Populate start and end dates (only need to do this if you originally populated relationships before May 1, 2015)
     rake db:populate_rel_start_end_date_100000001_100010000
     rake db:populate_rel_start_end_date_100010001_100020000
@@ -84,6 +87,7 @@ If populating the entire database you can run the file herokupop.sh which will r
     rake db:populate_rel_start_end_date_100150001_100160000
     rake db:populate_rel_start_end_date_100160001_100170000
     rake db:populate_rel_start_end_date_100170001_100180000
+
 
     ## Populate the first met records. You don't have to do this if you populated the relationships or start and end dates after July 6th
     rake db:populate_rel_met_record_100000001_100010000
