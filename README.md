@@ -42,7 +42,7 @@ If populating the entire database you can run the file herokupop.sh which will r
     ```
 
     ## To populate this file run the following commands in order:
-    ## Note, as of January 2016 you may have to first create users with email addresses "sdfbadmin@example.com" and "odbnadmin@example.com" - this is to set up artificial users who will referenced in the created_by and approved_by fields for the original database entries
+    ## Note, as of January 2016 you may have to first create users with email addresses "sdfbadmin@example.com" and "odnbadmin@example.com" - this is to set up artificial users who will referenced in the created_by and approved_by fields for the original database entries. To do this, make sure postgres is open, start the server with 'rails s' and go directly to http://localhost:3000/sign_up to create the two accounts. (The http://localhost:3000 landing page will not function properly until after you have populated the people, as the lack of a Francis Bacon node throws up an error.)
 
     ```
     rake db:populate_people
