@@ -90,4 +90,4 @@ gem "carrierwave"
 # To use debugger
 # gem 'debugger'
 
-
+ruby '2.2.1'
