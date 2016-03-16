@@ -405,7 +405,7 @@ class Person < ActiveRecord::Base
     return "None"
   end
 
-  def self.find_two_degree_for_network(person_id1, person_id2, confidence_range, date_range)
+  def self.find_two_degree_for_network(person_id1, person_id2, confidence_range, date_range, var1)
     twoPeopleRecordsForReturn = {}
     if (confidence_range)
       min_confidence = confidence_range.split(",")[0].to_i
