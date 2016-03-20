@@ -75,6 +75,7 @@ class UserRelContrib < ActiveRecord::Base
   scope :for_rel_type_assigns_140001_160000, -> { where("id between 140001 and 160000") }
   scope :for_rel_type_assigns_160001_180000, -> { where("id between 160001 and 180000") }
   scope :for_rel_type_assigns_greater_than_180000, -> { where("id > 180000") }
+  scope :approved_user, -> (user_id) { where('approved_by = ?', user_id) }
 
   # Callbacks
   # ----------------------------- 

@@ -78,6 +78,25 @@ class User < ActiveRecord::Base
   # Custom methods
   # -----------------------------
 
+  def calculate_points
+    points = 0
+    UserGroupContrib.for_user(self.id).where('is_approved = ?', true).to_a.each do |contrib|
+      points += 1
+    end
+    UserPersonContrib.for_user(self.id).where('is_approved = ?', true).to_a.each do |contrib|
+      points += 1
+    end
+    UserRelContrib.for_user(self.id).where('is_approved = ?', true).to_a.each do |contrib|
+      points += 1
+    end
+    if self.user_type == "Curator"
+        points += UserGroupContrib.approved_user(self.id).to_a.count()
+        points += UserPersonContrib.approved_user(self.id).to_a.count()
+        points += UserRelContrib.approved_user(self.id).to_a.count()
+    end
+    return points
+  end
+
   def first_name_present?
     !first_name.nil?
   end

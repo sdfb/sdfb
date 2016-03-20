@@ -33,6 +33,7 @@ class UserPersonContrib < ActiveRecord::Base
   scope :all_recent, -> { order(updated_at: :desc) }
   scope :order_by_sdfb_id, -> { order(id: :asc) }
   scope :all_active_unrejected, -> { where(is_active: true, is_rejected: false) }
+  scope :approved_user, -> (user_id){ where('approved_by = ?', user_id) }
 
   # Callbacks
   # ----------------------------- 

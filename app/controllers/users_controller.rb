@@ -21,7 +21,20 @@ class UsersController < ApplicationController
   # GET /users/1.json
   def show
     @user = User.find(params[:id])
+    @points = @user.calculate_points
+    @user_rel_contribs = UserRelContrib.for_user(current_user.id).order_by_sdfb_id.paginate(:page => params[:user_rel_contribs_page]).per_page(5)
+    @user_person_contribs = UserPersonContrib.for_user(current_user.id).order_by_sdfb_id.paginate(:page => params[:user_person_contribs_page]).per_page(5)
+    @user_group_contribs = UserGroupContrib.for_user(current_user.id).order_by_sdfb_id.paginate(:page => params[:user_group_contribs_page]).per_page(5)
+    @new_people = Person.for_user(current_user.id).order_by_sdfb_id.paginate(:page => params[:people_page]).per_page(5)
+    @new_groups = Group.for_user(current_user.id).order_by_sdfb_id.paginate(:page => params[:groups_page]).per_page(5)
+    @new_relationships = Relationship.for_user(current_user.id).order_by_sdfb_id.paginate(:page => params[:relationships_page]).per_page(5)
+    @group_assignments = GroupAssignment.for_user(current_user.id).order_by_sdfb_id.paginate(:page => params[:group_assignments_page]).per_page(5)
 
+    @group_cat_assign = GroupCatAssign.for_user(current_user.id).order_by_sdfb_id.paginate(:page => params[:group_cat_assigns_page]).per_page(5)
+    @group_cats = GroupCategory.for_user(current_user.id).order_by_sdfb_id.paginate(:page => params[:group_cats_page]).per_page(5)
+    @rel_type_cat_assigns = RelCatAssign.for_user(current_user.id).order_by_sdfb_id.paginate(:page => params[:rel_type_cat_assigns_page]).per_page(5)
+    @rel_cats = RelationshipCategory.for_user(current_user.id).order_by_sdfb_id.paginate(:page => params[:rel_cats_page]).per_page(5)
+    @rel_types = RelationshipType.for_user(current_user.id).order_by_sdfb_id.paginate(:page => params[:rel_types_page]).per_page(5)
     respond_to do |format|
       format.html # show.html.erb
       format.json { render json: @user }
