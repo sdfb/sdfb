@@ -29,12 +29,23 @@ class UsersController < ApplicationController
     @new_groups = Group.for_user(current_user.id).order_by_sdfb_id.paginate(:page => params[:groups_page]).per_page(5)
     @new_relationships = Relationship.for_user(current_user.id).order_by_sdfb_id.paginate(:page => params[:relationships_page]).per_page(5)
     @group_assignments = GroupAssignment.for_user(current_user.id).order_by_sdfb_id.paginate(:page => params[:group_assignments_page]).per_page(5)
-
     @group_cat_assign = GroupCatAssign.for_user(current_user.id).order_by_sdfb_id.paginate(:page => params[:group_cat_assigns_page]).per_page(5)
     @group_cats = GroupCategory.for_user(current_user.id).order_by_sdfb_id.paginate(:page => params[:group_cats_page]).per_page(5)
     @rel_type_cat_assigns = RelCatAssign.for_user(current_user.id).order_by_sdfb_id.paginate(:page => params[:rel_type_cat_assigns_page]).per_page(5)
     @rel_cats = RelationshipCategory.for_user(current_user.id).order_by_sdfb_id.paginate(:page => params[:rel_cats_page]).per_page(5)
     @rel_types = RelationshipType.for_user(current_user.id).order_by_sdfb_id.paginate(:page => params[:rel_types_page]).per_page(5)
+    @unapproved_people = Person.all_unapproved.order_by_sdfb_id.paginate(:page => params[:unapproved_people_page]).per_page(5)
+    @unapproved_groups = Group.all_unapproved.order_by_sdfb_id.paginate(:page => params[:unapproved_groups_page]).per_page(5)
+    @unapproved_relationships = Relationship.all_unapproved.order_by_sdfb_id.paginate(:page => params[:unapproved_relationships_page]).per_page(5)
+    @unapproved_group_assigns = GroupAssignment.all_unapproved.order_by_sdfb_id.paginate(:page => params[:unapproved_group_assigns_page]).per_page(5)
+    @unapproved_user_group_contribs = UserGroupContrib.all_unapproved.order_by_sdfb_id.paginate(:page => params[:unapproved_user_group_contribs_page]).per_page(5)
+    @unapproved_user_rel_contribs = UserRelContrib.all_unapproved.order_by_sdfb_id.paginate(:page => params[:unapproved_user_rel_contribs_page]).per_page(5)
+    @unapproved_user_person_contribs = UserPersonContrib.all_unapproved.order_by_sdfb_id.paginate(:page => params[:unapproved_user_person_contribs_page]).per_page(5)
+    @unapproved_group_cat_assign = GroupCatAssign.all_unapproved.order_by_sdfb_id.paginate(:page => params[:unapproved_group_cat_assigns_page]).per_page(5)
+    @unapproved_group_cats = GroupCategory.all_unapproved.order_by_sdfb_id.paginate(:page => params[:unapproved_group_cats_page]).per_page(5)
+    @unapproved_rel_type_cat_assigns = RelCatAssign.all_unapproved.order_by_sdfb_id.paginate(:page => params[:unapproved_rel_type_cat_assigns_page]).per_page(5)
+    @unapproved_rel_cats = RelationshipCategory.all_unapproved.order_by_sdfb_id.paginate(:page => params[:unapproved_rel_cats_page]).per_page(5)
+    @unapproved_rel_types = RelationshipType.all_unapproved.order_by_sdfb_id.paginate(:page => params[:unapproved_rel_types_page]).per_page(5)
     respond_to do |format|
       format.html # show.html.erb
       format.json { render json: @user }

@@ -145,3 +145,7 @@ var revertText = function(){
         document.getElementById('under').innerHTML ='<br>To Next Level';
     }
 };
+
+$('#account-help-btn').click(function(){
+    $('#account-help').slideToggle();
+});
