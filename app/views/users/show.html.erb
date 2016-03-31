@@ -4,8 +4,9 @@
 <div class="row">
   <div class="span7">
   <h1>Account
-    <%= link_to t('.edit', :default => t("helpers.links.edit")),
-                  edit_user_path(@user), :class => 'btn btn-mini' %>
+    <% if logged_in? && current_user.id == @user.id %> 
+    <%= link_to t('.edit', :default => t("helpers.links.edit")), edit_user_path(@user), :class => 'btn btn-mini' %>
+    <% end %>
     <a class="btn btn-mini" id="account-help-btn">?</a>
   </h1>
   <h5 id="account-help"><b>Approved contributions</b> are worth 1 point.<br>
@@ -18,8 +19,10 @@
     <div class="userdata">
         <h1 id="fullname"><%= @user.first_name + " " + @user.last_name %></h1>
         <h3 id="username">
+            <% if logged_in? && current_user.id == @user.id %> 
             username: <i><%= @user.username %></i><br>
             email: <i><%= @user.email %></i><br>
+            <% end %>
             <% if ! @user.affiliation.blank? %>
             affiliation: <i><%= @user.affiliation %></i><br>
             <% end %>
@@ -38,10 +41,10 @@
     </div>
   </div>
   </div>
+  <% if logged_in? && current_user.id == @user.id %>
   <div class="span5">
     <h1>Unapproved Contributions</h1>
     <br>
-    <% if logged_in? %>
       <% if ! @unapproved_group_assigns.empty? %>
         <%= render 'unapproved_group_assignments' %>
       <% end %>
@@ -81,14 +84,14 @@
       <% if @unapproved_group_assigns.empty? && @unapproved_group_cat_assign.empty? && @unapproved_group_cats.empty? && @unapproved_groups.empty? && @unapproved_people.empty? && @unapproved_rel_cats.empty? && @unapproved_rel_type_cat_assigns.empty? && @unapproved_rel_types.empty? && @unapproved_relationships.empty? && @unapproved_user_group_contribs.empty? && @unapproved_user_person_contribs.empty? && @unapproved_user_rel_contribs.empty? %>
         <h5>No unapproved contributions at this time.</h5>
       <% end %>
-    <% end %>
   </div>
+  <% end %>
 </div>
+<% if logged_in? && current_user.id == @user.id %>
 <div class="row">
   <div class="span12">
     <h1>Approved Contributions</h1>
     <br>
-    <% if logged_in? %>
       <%= render 'people_for_user' %>
       <%= render 'user_person_contribs_for_user' %>
       <%= render 'relationships_for_user' %>
@@ -111,9 +114,9 @@
       <% if (current_user.user_type == "Admin") || (current_user.user_type == "Curator")  %>
         <%= render 'group_cat_assigns_for_user' %>
       <% end %>
-    <% end %>
   </div>
 </div>
+<% end %>
 <!--   <div class="span7">
     <div class="well">
       <h2>Information
