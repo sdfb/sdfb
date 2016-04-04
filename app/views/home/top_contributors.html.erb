@@ -1,0 +1,36 @@
+<% content_for :title, "SDFB: Recent Records" %>
+
+<h1>All Recent Records</h1>
+
+<% @test1 = ((Person.all_recent.all_approved.limit(1000)) + (Group.all_recent.all_approved.limit(1000)) + (Relationship.all_recent.all_approved.limit(1000)) + (GroupAssignment.all_recent.all_approved.limit(1000)) + (UserGroupContrib.all_recent.all_approved.limit(1000)) + (UserRelContrib.all_recent.all_approved.limit(1000)) + (UserPersonContrib.all_recent.all_approved.limit(1000))) %>
+
+<% @test = (Person.all_recent.all_approved.limit(1000)) + (Group.all_recent.all_approved.limit(1000))%>
+<% @test.sort { |a, b| a.approved_on <=> b.approved_on } %>
+
+
+
+<!-- group assignment onwards no show :/ except for userrelcontrib -->
+	<table>
+		<% m = 1 %>
+		<% @test.each do |i| %>
+		<tr>
+			<td><%= m %>. </td>
+			<td><%= i %></td>
+			<td><%= i.approved_on %></td>
+		</tr>
+		<% m += 1 %>
+		<% end %>
+	</table>
+
+
+		<table>
+		<% m = 1 %>
+		<% UserRelContrib.all_recent.all_approved.limit(1000).each do |i| %>
+		<tr>
+			<td><%= m %> ||  </td>
+			<td><%= i %></td>
+			<td><%= i.created_by %></td>
+		</tr>
+		<% m += 1 %>
+		<% end %>
+	</table>

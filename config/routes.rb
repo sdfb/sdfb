@@ -6,6 +6,7 @@ Sdfb::Application.routes.draw do
   get "tos" => "static_pages#tos", :as => "tos"
   get "guide" => "static_pages#guide", :as => "guide"
   get "tutorial" => "static_pages#tutorial", :as => "tutorial"
+  get "top_contributors" => "home#top_contributors", :as => "top_contributors"
 
   resources :comments
   resources :relationship_types
