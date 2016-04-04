@@ -148,7 +148,45 @@
 					<span class="fill"></span>
 				</div>
 
+<!--  -->
+			<!-- leaderboard information bar -->
+			<!-- header and icon -->
+			<h3 class="accordion_btn" id="tab-leader"><span class="icon-leader"></span>Leaderboard</h3>
+				<div class="accordion_content" id="leaderinfo" name="leader">
+					<!-- user icon -->
+					<a class="icon icon-user" id="leader-icon-user"  name="leader"></a>
+					<p id="leader-name">Top Contributors</p>
+					<p id="leader-clarify">(Last 1000 Contributions)</p>
+					<table id="leaderboard">
+						<tr class="title">
+							<th>RANK&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th>
+							<th>USERNAME&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th>
+							<th>PERCENTAGE</th>
+						</tr>
+						<% (1..10).each do |i| %>
+							<% if i == 7 %>
+								<tr class="user">
+									<td>&nbsp;&nbsp;&nbsp;<%= i %>.</td>
+									<td>&nbsp;Username</td>
+									<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;5%</td>
+								</tr>
+							<% else %>
+								<tr>
+									<td>&nbsp;&nbsp;&nbsp;<%= i %>.</td>
+									<td>&nbsp;Username</td>
+									<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;5%</td>
+								</tr>
+							<% end %>
+						<% end %>
+					</table>
+						<% Person.all_recent.all_approved.limit(1000) %>
 
+
+
+					<span class="fill"></span>
+				</div>
+<!-- 
+ -->
 			<!-- contribution bar -->
 			<h3 class="accordion_btn"><span class="icon-add"></span>Contribute</h3>
 			<div  class="accordion_content tabs" id="add">

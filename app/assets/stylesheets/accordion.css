@@ -162,6 +162,7 @@
 	overflow:hidden;
 }
 
+
 .group2{
     display: none;
 }
@@ -172,6 +173,11 @@
 }
 
 #group_name{
+
+    width:200px;
+}
+
+#leader_name{
 
     width:200px;
 }
@@ -230,9 +236,18 @@
 	color: #fff;
 }
 
-#nodeinfo p, #edgeinfo p, #groupinfo p {
+#nodeinfo p, #edgeinfo p, #groupinfo p, #leaderinfo p {
 	color: #fff;
 	font-size:14px;
+}
+
+#leaderinfo p#leader-name {
+    margin: 0 0 -5px 0;
+}
+
+#leaderinfo p#leader-clarify {
+    font-size: 12px;
+    margin: 0 0 0 0;
 }
 .fill{
     height: 10px;
@@ -325,13 +340,6 @@ a.icon, button.icon, a.icon:hover {
     background-image: url(us.png);
 }
 
-.icon-magnify {
-    background-image: url(search.png);
-}
-
-.icon-node {
-    background-image: url(node.png);
-}
 .icon-group {
     background-image: url(group.png);
 }
@@ -372,4 +380,20 @@ a.icon, button.icon, a.icon:hover {
 
 .icon-color {
     background-image: url(colors.png);
+}
+
+.icon-user, .icon-user:hover {
+    background-image: url(user.png);
+}
+
+.icon-node {
+    background-image: url(node.png);
+}
+
+.icon-magnify {
+    background-image: url(search.png);
+}
+
+.icon-leader {
+    background-image: url(leader.png);
 }
