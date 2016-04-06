@@ -64,6 +64,7 @@ class Relationship < ActiveRecord::Base
   scope :for_rels_greater_than_100180000, -> { where("id > 100180000") }
   scope :all_recent, -> { order(updated_at: :desc) }
   scope :order_by_sdfb_id, -> { order(id: :asc) }
+  scope :approved_user, -> (user_id){ where('approved_by = ?', user_id) }
 
   # Callbacks
   # -----------------------------
