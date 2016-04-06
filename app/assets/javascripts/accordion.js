@@ -9,6 +9,10 @@ $(document).ready(function(){
 			$("#accordion div").css("max-height", h - 203 + 'px');
 		}
 	});
+
+	// $("#filterBar").mouseenter(function(){
+	// 	$("#filterBar").css("opacity", 1);
+	// });
 });
 
 // When a user clicks on a node or edge.
