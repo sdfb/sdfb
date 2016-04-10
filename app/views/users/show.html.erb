@@ -25,16 +25,16 @@
             end%>
         </h1>
         <h3 id="username">
-            <% if logged_in? && current_user.id == @user.id || current_user.user_type == "Admin"%> 
+            <% if logged_in? && (current_user.id == @user.id || current_user.user_type == "Admin")%> 
             username: <i><%= @user.username %></i><br>
             <% end %>
             <% if ! @user.user_type.blank? && @user.user_type != 'Standard' %>
             user type: <i><%= @user.user_type %></i><br>
             <% end %>
-            <% if logged_in? && current_user.id == @user.id || current_user.user_type == "Admin"%> 
+            <% if logged_in? && (current_user.id == @user.id || current_user.user_type == "Admin")%> 
             email: <i><%= @user.email %></i><br>
             <% end %>
-            <% if ! @user.affiliation.blank? && current_user.id == @user.id || current_user.user_type == "Admin"%>
+            <% if (! @user.affiliation.blank?) && (current_user.id == @user.id || current_user.user_type == "Admin")%>
             affiliation: <i><%= @user.affiliation %></i><br>
             <% end %>
             <% if current_user.id == @user.id || current_user.user_type == "Admin" %>
@@ -45,7 +45,7 @@
             <% else %>
             No description provided.
             <% end %><br>
-            <% if ! @user.orcid.blank? && current_user.id == @user.id || current_user.user_type == "Admin" %>
+            <% if (! @user.orcid.blank?) && (current_user.id == @user.id || current_user.user_type == "Admin") %>
             ORCID: <i><%= @user.orcid %></i><br>
             <% end %>
             <b>Level <span id="userlevel"></span></b>/<span id="levelcount"></span><br>

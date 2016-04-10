@@ -46,7 +46,7 @@ class Person < ActiveRecord::Base
   	select('id, rel_sum')
   	.where("id = ? and (ext_birth_year < ? or ext_death_year > ?)", '%#{id}', '%#{edate}', '%#{sdate}')}
   scope :order_by_sdfb_id, -> { order(:id) }
-  scope :approved_user, -> (user_id){ where('approved_by = ?', user_id) }
+  scope :approved_user, -> (user_id){ where('approved_by = ?', "#{user_id}") }
 
   # Misc Constants
   DATE_TYPE_LIST = ["BF", "AF","IN","CA","BF/IN","AF/IN","NA"]
