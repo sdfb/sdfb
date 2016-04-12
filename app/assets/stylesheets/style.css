@@ -93,6 +93,11 @@ li {
   padding:10px;
 }
 
+#filterBar:hover{
+  cursor: pointer;
+  opacity: .6;
+}
+
 a:hover {
   background: rgba(0,0,0,0);
   color: #1c7098;
@@ -128,7 +133,7 @@ a:hover {
 
 #zoom {
   position: fixed;
-  top: 110px;
+  top: 120px;
   right: 10px;
   width: 30px;
   z-index:5;

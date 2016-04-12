@@ -53,11 +53,9 @@ h4{
 
 .progress-text{
     position: absolute;
-    font-family: 'Lato', serif;
     font-size: 40px;
     top: 38%;
     text-align: center;
-    font-weight: 700;
     width: 200px;
     height: 100px;
     transition: .2s;
