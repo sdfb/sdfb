@@ -81,7 +81,7 @@ li {
 #filterBar {
   display:block;
   background-color: #FBF3E1;
-  line-height: 34px;
+  line-height: 41px;
   height: auto;
   font-weight: lighter;
   letter-spacing: 2px;
@@ -93,11 +93,6 @@ li {
   padding:10px;
 }
 
-#filterBar:hover{
-  cursor: pointer;
-  opacity: .6;
-}
-
 a:hover {
   background: rgba(0,0,0,0);
   color: #1c7098;
@@ -106,12 +101,12 @@ a:hover {
 
 
 #results {
-    color: #555;
+    color: #000;
     background: none;
     text-align: center;
-    font-weight: lighter;
-    letter-spacing: 2px;
-    font-size: 14px;
+    font-weight: 500;
+    letter-spacing: 1px;
+    font-size: 13px;
 }
 
 #graph {

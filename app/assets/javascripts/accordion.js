@@ -2,37 +2,40 @@ $(document).ready(function(){
 	$("#accordion h3").click(function(){
 		$('#accordion h3').removeClass('on');
 		$(this).addClass('on');
-		$("#accordion div").slideUp();
+		$("#accordion .accordion_content").slideUp();
 		if(!$(this).next().is(":visible")) {
 			$(this).next().slideDown();
 			var h = $( window ).height();
-			$("#accordion div").css("max-height", h - 203 + 'px');
+			$("#accordion .accordion_content").css("max-height", h - 203 + 'px');
 		}
 	});
 
-	$("#filterBar a").click(function(e) {
-	   e.stopPropagation();
-	})
+	$("#filterBar").css("top", "-40px");
+	$("#zoom").css("top", "75px");
+	$("#filterBar p").html("▼");
 
-	$("#filterBar").click(function(){
+
+	$(".bottomFilter").click(function(){
 		if ($("#filterBar").css("top") == "0px" || $("#filterBar").css("top") == "auto"){
 			$("#filterBar").animate({
-				top: "-70"
+				top: "-40"
 			}, 300);
 			$("#zoom").animate({
-				top: "50"
+				top: "75"
 			}, 300);
+			$("#filterBar p").html("▼");
 		}
 	});
 
-	$("#filterBar").mouseenter(function(){
-		if ($("#filterBar").css("top") == "-70px"){
+	$(".bottomFilter").click(function(){
+		if ($("#filterBar").css("top") == "-40px"){
 			$("#filterBar").animate({
 				top: "0"
 			}, 300);
 			$("#zoom").animate({
 				top: "120"
 			}, 300);
+			$("#filterBar p").html("▲");
 		}
 	});
 

@@ -50,7 +50,7 @@
 .close-right{
     width: 10px;
     height: 100%;
-    background-color: #248cbe;
+    background-color: #185D80;
     left: 300px;
     position: absolute;
     float: left;
@@ -211,7 +211,7 @@
 }
 
 #contribute-add-person, #contribute-add-group, #contribute-add-relationship{
-    padding: 0px 27px;
+    padding: 0px 27.1px;
 }
 
 .show-table{
@@ -401,4 +401,18 @@ a.icon, button.icon, a.icon:hover {
 
 .icon-color {
     background-image: url(colors.png);
+}
+
+.bottomFilter{
+    height: 12px;
+    line-height: 12px;
+    background-color: #FBF3E1;
+    color: #000;
+    font-size: 7px;
+    text-align: center;
+}
+
+.bottomFilter:hover{
+    cursor: pointer;
+    opacity: .6;
 }
