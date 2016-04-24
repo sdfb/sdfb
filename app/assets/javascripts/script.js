@@ -513,6 +513,10 @@ $(document).ready(function() {
         $("#nav-slider").toggleClass("nav-slider-show");
     });
 
+    $("#nav-slider p").click(function(){
+        $("#nav-slider").toggleClass("nav-slider-show");
+    });
+
     //This is for the slider in Rails to update the confidence based on the slider selection
     $("#slider1").change(function () {                    
     var newValue = $('#slider1').val();
