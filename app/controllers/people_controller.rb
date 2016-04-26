@@ -72,6 +72,15 @@ class PeopleController < ApplicationController
     end
   end
 
+  def new_2
+    @person = Person.new
+
+    respond_to do |format|
+      format.html
+      format.json { render json: @person }
+    end
+  end
+
   # GET /people/1/edit
   def edit
     @person = Person.find(params[:id])

@@ -1,0 +1,135 @@
+<%= simple_form_for @person, :html => { id: "wf-form-Person-Contribution", class: "person-form" } do |f| %>
+
+  <div class="w-section form-section">
+    <div class="w-form person-form-wrapper">
+        <div class="w-container intro-wrapper">
+          <div class="six-degrees-form-heading">
+            <div data-ix="load-reveal" class="six-degrees-form-heading"><strong class="text"> &nbsp; PERSON CONTRIBUTION</strong>
+            </div>
+          </div>
+        </div>
+        <div data-ix="click-to-reveal" class="person-question-div" data-ix= "click-to-reveal-person-text">
+          <%= image_tag("question_mark.png", class: "person-question-mark") %>
+        </div>
+        <div class="person-question-text">
+          <div class="person-question-text"><strong>Note:</strong> Any fields marked with a * indicates that it must be filled out before you can continue on with the form. Once you have finished all required fields, press the SUBMIT button to finish.</div>
+        </div>
+        <div id="person-div-1" data-ix="load-reveal-3" class="div-1">
+          <h1 class="form-heading">Citation</h1>
+          <label for="Citation" class="label-1">CITATION</label>
+          <%= f.input :bibliography, input_html: { id: "Citation", class: "w-input field-1" } %>
+        </div>
+        <div data-ix="load-reveal-4" class="w-clearfix form-button-div-block"><a href="#person-div-2" data-ix="move-next-button" class="w-button next-button-1">CONTINUE</a>
+        </div>
+        <div id="person-div-2" class="div-2">
+          <h1 class="form-heading">General Information</h1>
+          <label for="Display-name" class="label-2">DISPLAY NAME</label>
+          <%= f.input :display_name, input_html: { id: "Display-name", class: "w-input field-2" } %>
+          <label for="Prefix" class="label-8">PREFIX</label>
+          <%= f.input :prefix, input_html: { id: "Prefix", class: "w-input field-8" } %>
+          <div class="w-row row-1">
+            <div class="w-col w-col-6 column-1">
+              <label for="First-name" class="label-3">FIRST NAME*</label>
+              <%= f.input :first_name, input_html: { id: "First-name", class: "w-input field-3" }, required: true %>
+            </div>
+            <div class="w-col w-col-6 column-2">
+              <label for="Last-name" class="label-4">LAST NAME</label>
+              <%= f.input :last_name, input_html: { id: "Last-name", class: "w-input field-4" } %>
+            </div>
+          </div>
+          <div class="w-row row-1">
+            <div class="w-col w-col-6 column-1">
+              <label for="Alias" class="label-5">ALIASES</label>
+              <%= f.input :aliases, input_html: { id: "Alias", class: "w-input field-5" } %>
+            </div>
+            <div class="w-col w-col-6 column-2">
+              <label for="Suffix" class="label-6">SUFFIX</label>
+              <%= f.input :suffix, input_html: { id: "Suffix", class: "w-input field-6" } %>
+            </div>
+          </div>
+          <label for="Title" class="label-7">TITLE</label>
+          <%= f.input :title, input_html: { id: "Title", class: "w-input field-7" } %>
+          <label for="ONIB-ID" class="onib-label">ONIB ID</label>
+          <%= f.input :odnb_id, input_html: { id: "ONIB-ID", class: "w-input onib-field" } %>
+          <%= f.hidden_field :created_by, :value => current_user.id %>
+          <label for="field" class="gender-label">GENDER*</label>
+          <%= f.input :gender, :collection => ["female", "male", "gender_noncoforing"], prompt: "Select one...", input_html: { id: "field", class: "w-select gender-selection" }, requried: true %>
+        </div>
+        <div class="w-clearfix form-button-div-block"><a href="#person-div-3" data-ix="move-next-button-2" class="w-button next-button-2">CONTINUE</a>
+        </div>
+        <div id="person-div-3" class="div-3">
+          <h1 class="form-heading">Date Information</h1>
+          <label for="Birth-Year-Type" class="birth-year-label">BIRTH YEAR TYPE*</label>
+            <%= f.input :birth_year_type, :collection => ["BF", "AF","IN","CA","BF/IN","AF/IN"], prompt: "Select one...", hint: " BF = Before, AF = After, IN = In, CA = Circa, BF/IN = Before or In, AF/IN = After or In", input_html: { id: "Birth-Year-Type", class: "w-select birth-year-field" } %>
+          <div class="w-row row-1">
+            <div class="w-col w-col-6 column-1">
+              <label for="Birth-Year" class="label-9">BIRTH YEAR*</label>
+              <%= f.input :ext_birth_year, input_html: { id: "Birth-Year", class: "w-input field-9" } %>
+            </div>
+            <div class="w-col w-col-6 column-2">
+              <label for="Alternative-Birth-Year" class="label-10">ALTERNATIVE BIRTH YEAR</label>
+              <%= f.input :alt_birth_year, input_html: { id: "Alternative-Birth-Year", class: "w-input field-10" } %>
+            </div>
+          </div>
+          <label for="field-3" class="death-year-label">DEATH YEAR TYPE*</label>
+          <%= f.input :death_year_type, :collection =>["BF", "AF","IN","CA","BF/IN","AF/IN"], prompt: "Select one...", hint: " BF = Before, AF = After, IN = In, CA = Circa, BF/IN = Before or In, AF/IN = After or In", input_html: {id: "field-3", class: "death-year-select" } %>
+          <div class="w-row row-1">
+            <div class="w-col w-col-6 column-1">
+              <label for="Death-Year" class="label-11">DEATH YEAR*</label>
+              <%= f.input :ext_death_year, input_html: { id: "Death-Year", class: "w-input field-11" } %>
+            </div>
+            <div class="w-col w-col-6 column-2">
+              <label for="Alternative-Death-Year" class="label-12">ALTERNATIVE DEATH YEAR</label>
+              <%= f.input :alt_death_year, input_html: { id: "Alternative-Death-Year", class: "w-input field-12" } %>
+            </div>
+          </div>
+        </div>
+        <div class="w-clearfix form-button-div-block"><a href="#person-div-4" data-ix="move-next-button-3" class="w-button next-button-3">CONTINUE</a>
+        </div>
+        <div id="person-div-4" class="div-4">
+          <h1 class="form-heading">Historical Significance</h1>
+          <label for="Historical-Significance" class="label-13">HISTORICAL SIGNIFICANCE</label>
+          <%= f.input :historical_significance, input_html: { id: "Historical-Significance", class: "w-input field-13" } %>
+          <label for="Justification-for-Person-Citation" class="rel-new-label-3">JUSTIFICATION FOR PERSON CREATION*</label>
+          <%= f.input :justification, input_html: { id: "Justification-for-Person-Citation", class: "w-input field-14" }, required:true %>
+        </div>
+        <div class="w-clearfix form-div">
+          <%= f.button :submit, :class => "w-button form-button", :value => "Add Person to SDFB" %>
+        </div>
+          <% if (current_user.user_type == "Admin") || (current_user.user_type == "Curator") %>
+            <%= f.input :is_approved %>
+            <%= f.input :is_active %>
+            <%= f.input :is_rejected %>
+            <%= f.hidden_field :approved_by, :value => current_user.id %>
+            <%= f.hidden_field :approved_on, :value => Time.now %>
+          <% end %>
+        <div class="breadcrumb-section">
+          <div class="w-row breadcrumbs">
+            <div class="w-col w-col-3">
+              <div class="breadcrumb-1">
+                <br><a class="breadcrumb-1" href="#person-div-1">1. Citation</a>
+              </div>
+            </div>
+            <div class="w-col w-col-3">
+              <div class="breadcrumb-2">
+                <br><a class="breadcrumb-2" href="#person-div-2">2. General Information</a>
+              </div>
+            </div>
+            <div class="w-col w-col-3">
+              <div class="breadcrumb-3">
+                <a class="breadcrumb-3" href="#person-div-3">
+                  <br>3. Date Information</a>
+              </div>
+            </div>
+            <div class="w-col w-col-3">
+              <div class="breadcrumb-4">
+                <a class="breadcrumb-4" href="#person-div-4">
+                  <br>4. Historical Significance</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  <% end %>

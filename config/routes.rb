@@ -30,6 +30,8 @@ Sdfb::Application.routes.draw do
   get "all_rejected" => "users#all_rejected", :as => "all_rejected"
   get "all_recent" => "users#all_recent", :as => "all_recent"
 
+  get "new_forms" => "people#new_2", :as => "new_forms"
+
   # set the root
   root :to => "home#index"
 

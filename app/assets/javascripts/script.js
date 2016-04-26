@@ -62,6 +62,7 @@ $(document).ready(function() {
     $("#contribute-add-person").tooltip({placement:   'right', title: 'Add a new person to the database'});
     $("#contribute-add-group").tooltip({placement:  'right', title: 'Add a new group to the database'});
     $("#contribute-add-relationship").tooltip({placement:   'right', title: 'Add a new, untyped relationship between two people in the database'});
+    $("#contribute-add-new").tooltip({placement: 'right', title: 'Check out our new way of contributing to the database!'});
 
     $("#icon-tag").tooltip({placement:  'right', title: 'Tag group'});
     $("#icon-link").tooltip({placement: 'right', title: 'Add a new, untyped relationship for this person'});
