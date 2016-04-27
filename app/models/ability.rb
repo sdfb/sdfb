@@ -232,6 +232,7 @@ class Ability
 			can :membership, Person
 			can :relationships, Person
 			can :notes, Person
+			can :new_2, Person
 
 		else
 			# Anyone can sign up
