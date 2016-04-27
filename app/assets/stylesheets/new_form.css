@@ -1,3 +1,7 @@
+a:visited{
+  color: #fff;
+}
+
 .francis-bacon-section {
   display: block;
   height: 900px;
@@ -58,7 +62,7 @@
 
 .form-heading {
   font-family: 'Droid Serif', serif;
-  font-size: 30px;
+  font-size: 30px !important;
   text-align: center;
 }
 
@@ -437,7 +441,7 @@
   margin-bottom: 10px;
   background-color: transparent;
   color: #000;
-  font-size: 18px;
+  font-size: 18px !important;
 }
 
 .label-2 {
@@ -453,10 +457,9 @@
 }
 
 .field-2 {
-  height: 50px;
+  height: 50px !important;
   margin-top: 5px;
   margin-bottom: 0px;
-  border-color: #000;
   border-radius: 15px;
 }
 
