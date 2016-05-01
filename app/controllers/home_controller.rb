@@ -41,6 +41,45 @@ class HomeController < ApplicationController
     end
   end
 
+# grabs the 1000 most recent contributions for the leaderboard
+  def recent_contributions
+    recent_contrib = ((Person.all_recent.all_approved.limit(1000)) + 
+                      (Group.all_recent.all_approved.limit(1000)) + 
+                      (Relationship.all_recent.all_approved.limit(1000)) + 
+                      (GroupAssignment.all_recent.all_approved.limit(1000)) + 
+                      (UserGroupContrib.all_recent.all_approved.limit(1000)) + 
+                      (UserPersonContrib.all_recent.all_approved.limit(1000))) + 
+                      (UserRelContrib.all_recent.all_approved.limit(1000))
+    recent_contrib.sort! {|a,b| a.updated_at <=> b.updated_at}.reverse!
+    @recent_contrib = recent_contrib.take(1000)
+  end
+
+# calculates, based off of the 1000 most recent contributions, which users have contributed and how much
+  def recent_user_points
+    users_rank = Hash.new
+    @recent_contrib.each do |i|
+      if users_rank.key?(i.created_by)
+        users_rank[i.created_by] += 1
+      else
+        users_rank[i.created_by] = 1
+      end
+    end
+    @users_rank = users_rank.sort_by! { |created_by, points| points }.reverse
+  end
+
+# usernames on the leaderboard based off of id from recent_user_points
+  def get_username(id)
+    # user id will go through the method
+    # search through all users
+    # if user id == the user's id in the loop
+    # return that username yay
+    user = User.find([id])
+    @username = user[0].username
+    # @username = user.read_attribute(username)
+  end
+
+
+
   def update_node_info
     @node_id = params[:node_id]
     @node_info = Person.select("display_name, first_name, last_name, ext_birth_year, ext_death_year, birth_year_type, death_year_type, group_list, historical_significance, odnb_id, prefix, suffix, title").where("id = ?", @node_id)

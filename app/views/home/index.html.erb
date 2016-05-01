@@ -151,10 +151,18 @@
 <!--  -->
 			<!-- leaderboard information bar -->
 			<!-- header and icon -->
-			<h3 class="accordion_btn" id="tab-leader"><span class="icon-leader"></span>Leaderboard</h3>
+			<h3 class="accordion_btn" id="tab-leader"><span class="icon-leader"></span>Leader Board</h3>
 				<div class="accordion_content" id="leaderinfo" name="leader">
 					<!-- user icon -->
-					<a class="icon icon-user" id="leader-icon-user"  name="leader"></a>
+					<% if logged_in? %>
+						<a class="icon icon-user" id="leader-icon-user-loggedin"  name="leader" href="/users/3/"></a>
+						<!-- if user logged in but not on leaderboard -->
+<!-- 					elsif
+						<a class="icon icon-user" id="leader-icon-user-no-recent"  name="leader" href="/sign_in?prev=%2F"></a> -->
+						<!-- if user not logged in, asked to sign in -->
+					<% else %>
+						<a class="icon icon-user" id="leader-icon-user"  name="leader" href="/sign_in?prev=%2F"></a>
+					<% end %>
 					<p id="leader-name">Top Contributors</p>
 					<p id="leader-clarify">(Last 1000 Contributions)</p>
 					<table id="leaderboard">
@@ -162,26 +170,31 @@
 							<th>RANK&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th>
 							<th>USERNAME&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th>
 							<th>PERCENTAGE</th>
-						</tr>
-						<% (1..10).each do |i| %>
-							<% if i == 7 %>
-								<tr class="user">
-									<td>&nbsp;&nbsp;&nbsp;<%= i %>.</td>
-									<td>&nbsp;Username</td>
-									<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;5%</td>
-								</tr>
-							<% else %>
-								<tr>
-									<td>&nbsp;&nbsp;&nbsp;<%= i %>.</td>
-									<td>&nbsp;Username</td>
-									<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;5%</td>
-								</tr>
-							<% end %>
+            <tr>
+              <% recent_contributions %>
+              <% recent_user_points %>
+              <% rank = 1 %>
+              <% on_leaderboard = false %>
+              <% @users_rank.each do |i| %>
+              <% break if rank == 11 %>
+              <% if logged_in? && current_user.id == i[0] %>
+              	<tr class="user">
+              		<% on_leaderboard = true %>
+              <% else %>
+              	<tr>
+              <% end %>
+              <% get_username(i[0]) %>
+                <td><%= link_to rank, user_path(i[0]) %>. </td>
+                <td><%= link_to @username, user_path(i[0]) %></td>
+                <td><%= link_to (i[1]/1000.0*100).round(2), user_path(i[0]) %>%</td>
+                <% rank += 1 %>
+            </tr>
+            <% end %>
+
+						</table>
+						<% if !on_leaderboard %>
+							<p align="center"> No Recent Contributions </p>
 						<% end %>
-					</table>
-						<% Person.all_recent.all_approved.limit(1000) %>
-
-
 
 					<span class="fill"></span>
 				</div>

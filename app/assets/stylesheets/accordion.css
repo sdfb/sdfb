@@ -366,6 +366,14 @@ a.icon, button.icon, a.icon:hover {
     background-image: url(link.png);
 }
 
+.icon-user, .icon-user:hover {
+    background-image: url(user.png);
+}
+
+.icon-user::before{
+    content: none !important;
+}
+
 .icon-zoomin {
     background-image: url(zoomin.png);
 }
@@ -380,10 +388,6 @@ a.icon, button.icon, a.icon:hover {
 
 .icon-color {
     background-image: url(colors.png);
-}
-
-.icon-user, .icon-user:hover {
-    background-image: url(user.png);
 }
 
 .icon-node {
