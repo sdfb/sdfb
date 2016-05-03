@@ -186,17 +186,22 @@ a:hover {
   background: #78A7BF;
 }
 
-#leaderboard tr.user{
+#leaderboard tr:hover {
+  background-color: #0978AC;
+  opacity: 0.5;
+  color: #000000;
+  font-style: black;
+}
+
+#leaderboard a:link, a:visited, a:active {
+  text-decoration: none;
+}
+
+#leaderboard tr.user, tr.user a:hover, tr.user a:link, tr.user a:visited, tr.user a:active{
   background: #0978AC;
   color: #ffffff;
   font-weight: bold;
   text-decoration: none;
-}
-
-#leaderboard tr:hover {
-  background-color: #0978AC;
-  opacity: 0.5;
-  color: #ffffff;
 }
 
 #leaderboard tr.title{
@@ -205,6 +210,7 @@ a:hover {
   opacity: 1.0;
   /*text-align: center;*/
 }
+
 
 /*TABLE FORMAT*/
 #twogroupsmenu {

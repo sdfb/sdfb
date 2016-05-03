@@ -64,20 +64,14 @@ class HomeController < ApplicationController
         users_rank[i.created_by] = 1
       end
     end
-    @users_rank = users_rank.sort_by! { |created_by, points| points }.reverse
+    @users_rank = users_rank.sort_by { |created_by, points| points }.reverse
   end
 
 # usernames on the leaderboard based off of id from recent_user_points
   def get_username(id)
-    # user id will go through the method
-    # search through all users
-    # if user id == the user's id in the loop
-    # return that username yay
     user = User.find([id])
     @username = user[0].username
-    # @username = user.read_attribute(username)
   end
-
 
 
   def update_node_info
