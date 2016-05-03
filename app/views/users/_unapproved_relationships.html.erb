@@ -7,7 +7,7 @@
           <th>SDFB Relationship ID</th>
           <th>Person 1</th>
           <th>Person 2</th>
-          <th>Maximum Confidence</th>
+<!--           <th>Maximum Confidence</th> -->
           <th><%=t '.actions', :default => t("helpers.actions") %></th>
         </tr>
       </thead>
@@ -17,7 +17,7 @@
             <td><%= relationship.id %></td>
             <td><%= link_to relationship.get_person1_name, person_path(relationship.person1_index) %></td>
             <td><%= link_to relationship.get_person2_name, person_path(relationship.person2_index) %></td>
-            <td><%= relationship.max_certainty %>%</td>
+<!--             <td><%= relationship.max_certainty %>%</td> -->
             <td>
               <% if can? :show, relationship %>
                 <%= link_to 'Show', relationship, :class => 'btn btn-mini'  %>

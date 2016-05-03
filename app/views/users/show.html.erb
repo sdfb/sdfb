@@ -3,39 +3,108 @@
 <%- model_class = User -%>
 <div class="row">
   <div class="span7">
-  <h1>Account</h1>
+  <h1>Account
+    <% if logged_in? && current_user.id == @user.id %> 
+    <%= link_to t('.edit', :default => t("helpers.links.edit")), edit_user_path(@user), :class => 'btn btn-mini' %>
+    <% end %>
+    <a class="btn btn-mini" id="account-help-btn">?</a>
+  </h1>
+  <h5 id="account-help"><b>Approved contributions</b> are worth 1 point.<br>
+    Gaining 100 points grants a user <b>Curator Status,</b> which allows them to approve other contributions.</h5>
   <div class="user-profile">
-    <%= link_to t('.edit', :default => t("helpers.links.edit")),
-                  edit_user_path(@user), :class => 'new-btn top-right' %>
     <div class="completion" id="circle-bar" data-width="20" data-size="200" data-points=<%= @points %>>
         <canvas id="circle-canvas"></canvas>
         <span class="under-text" id="under"><br>To Next Level</span>
     </div>
     <div class="userdata">
-        <h1 id="fullname"><%= @user.first_name + " " + @user.last_name %></h1>
+        <h1 id="fullname">
+          <%= if (logged_in? && current_user.id == @user.id || current_user.user_type == "Admin") 
+            @user.first_name + " " + @user.last_name
+            else
+              @user.username
+            end%>
+        </h1>
         <h3 id="username">
+            <% if logged_in? && (current_user.id == @user.id || current_user.user_type == "Admin")%> 
             username: <i><%= @user.username %></i><br>
+            <% end %>
+            <% if ! @user.user_type.blank? && @user.user_type != 'Standard' %>
+            user type: <i><%= @user.user_type %></i><br>
+            <% end %>
+            <% if logged_in? && (current_user.id == @user.id || current_user.user_type == "Admin")%> 
             email: <i><%= @user.email %></i><br>
+            <% end %>
+            <% if (! @user.affiliation.blank?) && (current_user.id == @user.id || current_user.user_type == "Admin")%>
+            affiliation: <i><%= @user.affiliation %></i><br>
+            <% end %>
+            <% if current_user.id == @user.id || current_user.user_type == "Admin" %>
+            user since: <i><%= @user.created_at.strftime('%B %-d, %Y') %></i><br>
+            <% end %>
+            <% if ! @user.about_description.blank? %>
+            <%= @user.about_description %>
+            <% else %>
+            No description provided.
+            <% end %><br>
+            <% if (! @user.orcid.blank?) && (current_user.id == @user.id || current_user.user_type == "Admin") %>
+            ORCID: <i><%= @user.orcid %></i><br>
+            <% end %>
             <b>Level <span id="userlevel"></span></b>/<span id="levelcount"></span><br>
             <b id="totalpoints"></b> Curation Points<br>
-            <b id="pointsleft"></b> Left Until Curator Status
+            <b id="pointsleft"></b> Left Until Curator Status<br>
         </h3>
-<!--         <hr style="border-top: 2px solid #999; border-bottom: 0px solid #999">
-        <a class="new-btn" href="#">See Contributions</a>
-        <a class="new-btn" href="#">Link ORCID</a> -->
     </div>
   </div>
   </div>
+  <% if logged_in? && (current_user.id == @user.id || current_user.user_type == "Admin" || current_user.user_type == "Curator")%>
   <div class="span5">
-    <h1>User Information</h1>
-
+    <h1>Unapproved Contributions</h1>
+    <br>
+      <% if ! @unapproved_group_assigns.empty? %>
+        <%= render 'unapproved_group_assignments' %>
+      <% end %>
+      <% if ! @unapproved_group_cat_assign.empty? %>
+        <%= render 'unapproved_group_cat_assigns' %>
+      <% end %>
+      <% if ! @unapproved_group_cats.empty? %>
+        <%= render 'unapproved_group_cats' %>
+      <% end %>
+      <% if ! @unapproved_groups.empty? %>
+        <%= render 'unapproved_groups' %>
+      <% end %>
+      <% if ! @unapproved_people.empty? %>
+        <%= render 'unapproved_people' %>
+      <% end %>
+      <% if ! @unapproved_rel_cats.empty? %>
+        <%= render 'unapproved_rel_cats' %>
+      <% end %>
+      <% if ! @unapproved_rel_type_cat_assigns.empty? %>
+        <%= render 'unapproved_rel_type_cat_assign' %>
+      <% end %>
+      <% if ! @unapproved_rel_types.empty? %>
+        <%= render 'unapproved_rel_types' %>
+      <% end %>
+      <% if ! @unapproved_relationships.empty? %>
+        <%= render 'unapproved_relationships' %>
+      <% end %>
+      <% if ! @unapproved_user_group_contribs.empty? %>
+        <%= render 'unapproved_user_group_contribs' %>
+      <% end %>
+      <% if ! @unapproved_user_person_contribs.empty? %>
+        <%= render 'unapproved_user_person_contribs' %>
+      <% end %>
+      <% if ! @unapproved_user_rel_contribs.empty? %>
+        <%= render 'unapproved_user_rel_contribs' %>
+      <% end %>
+      <% if @unapproved_group_assigns.empty? && @unapproved_group_cat_assign.empty? && @unapproved_group_cats.empty? && @unapproved_groups.empty? && @unapproved_people.empty? && @unapproved_rel_cats.empty? && @unapproved_rel_type_cat_assigns.empty? && @unapproved_rel_types.empty? && @unapproved_relationships.empty? && @unapproved_user_group_contribs.empty? && @unapproved_user_person_contribs.empty? && @unapproved_user_rel_contribs.empty? %>
+        <h5>No unapproved contributions at this time.</h5>
+      <% end %>
   </div>
+  <% end %>
 </div>
 <div class="row">
   <div class="span12">
     <h1>Approved Contributions</h1>
     <br>
-    <% if logged_in? %>
       <%= render 'people_for_user' %>
       <%= render 'user_person_contribs_for_user' %>
       <%= render 'relationships_for_user' %>
@@ -58,66 +127,6 @@
       <% if (current_user.user_type == "Admin") || (current_user.user_type == "Curator")  %>
         <%= render 'group_cat_assigns_for_user' %>
       <% end %>
-    <% end %>
   </div>
 </div>
-<!--   <div class="span7">
-    <div class="well">
-      <h2>Information
-        <% if can? :update, @user %> 
-        <%= link_to t('.edit', :default => t("helpers.links.edit")),
-                  edit_user_path(@user), :class => 'btn btn-mini' %>
-        <% end %>
-      </h2>
-      <br>
-      <dl class="dl-horizontal">
-        <% if ! current_user.nil? && (current_user.user_type == "Admin") %>
-          <dt><strong>SDFB User ID:</strong></dt>
-          <dd><%= @user.id %></dd>
-        <% end %>
-        <dt><strong>Username:</strong></dt>
-        <dd><%= @user.username %></dd>
-        <% if ! @user.orcid.blank? %>
-          <dt><strong>ORCID:</strong></dt>
-          <dd><%= @user.orcid %></dd>
-        <% end %>
-        <dt><strong>About Description:</strong></dt>
-        <dd>
-          <% if ! @user.about_description.blank? %>
-            <%= @user.about_description %>
-          <% else %>
-            No description was provided by this user.
-          <% end %>
-        </dd>
-        <% if ! current_user.nil? && (current_user.user_type == "Admin") %>
-          <% if ! @user.affiliation.blank? %>
-            <dt><strong>Affiliation:</strong></dt>
-            <dd><%= @user.affiliation %></dd>
-          <% end %>
-          <dt><strong>Email:</strong></dt>
-          <dd><%= @user.email %></dd>
-          <% if ! @user.prefix.blank? %>
-            <dt><strong>Prefix:</strong></dt>
-            <dd><%= @user.prefix %></dd>
-          <% end %>
-          <dt><strong>First Name:</strong></dt>
-          <dd><%= @user.first_name %></dd>
-          <dt><strong>Last Name:</strong></dt>
-          <dd><%= @user.last_name %></dd>
-          <dt><strong>Is Active:</strong></dt>
-          <dd><%= @user.is_active %></dd>
-          <% if ! @user.user_type.blank? %>
-            <dt><strong>User Type:</strong></dt>
-            <dd><%= @user.user_type %></dd>
-          <% end %>
-          <dt><strong>Curator Revoked?:</strong></dt>
-          <dd><%= @user.curator_revoked %></dd>
-        <% end %>
-        <% if ! current_user.nil? && (current_user.user_type == "Admin") %>
-          <dt><strong>User Since:</strong></dt>
-          <dd><%= @user.created_at %></dd>
-        <% end %>
-      </dl>
-    </div>
-  </div> -->
 <%= javascript_include_tag "user_partial" %>

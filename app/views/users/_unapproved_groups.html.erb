@@ -6,9 +6,9 @@
         <tr>
           <th>SDFB Group ID</th>
           <th>Name</th>
-          <th>Description</th>
+<!--           <th>Description</th>
           <th>Start Year</th>
-          <th>End Year</th>
+          <th>End Year</th> -->
           <th><%=t '.actions', :default => t("helpers.actions") %></th>
         </tr>
       </thead>
@@ -17,9 +17,9 @@
           <tr>
             <td><%= group.id %></td>
             <td><%= group.name %></td>
-            <td><%= group.description %></td>
+<!--             <td><%= group.description %></td>
             <td><%= group.start_year %></td>
-            <td><%= group.end_year %></td>
+            <td><%= group.end_year %></td> -->
             <td>
               <% if can? :show, group %>
                 <%= link_to 'Show', group, :class => 'btn btn-mini' %>

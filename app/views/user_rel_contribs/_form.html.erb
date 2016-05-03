@@ -61,11 +61,15 @@
   <% end %>
   <h6>Your contribution will be automatically approved if the related relationship is already approved, otherwise an admin must approve the relationship first</h6>
 
-  <%= params[:relationship_id] %>
+ 
   <% relid = @relationship_id %>
-  <% @is_approved = Relationship.find(params[:relationship_id]).is_approved %>
-  <% if (@is_approved != nil) %>
-    <%= f.hidden_field :is_approved, :value => @is_approved %>
+  <% if params[:relationship_id].nil? %>
+    <%= f.input :is_approved %>
+  <% else %>
+    <% @is_approved = Relationship.find(params[:relationship_id]).is_approved %>
+    <% if (@is_approved != nil) %>
+      <%= f.hidden_field :is_approved, :value => @is_approved %>
+    <% end %>
   <% end %>
   
   <div class="form-actions">

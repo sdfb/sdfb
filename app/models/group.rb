@@ -51,6 +51,7 @@ class Group < ActiveRecord::Base
   scope :for_user, -> (user_input) { where('created_by = ?', "#{user_input}") }
   scope :alphabetical, -> { order(name: :asc) }
   scope :order_by_sdfb_id, -> { order(id: :asc) }
+  scope :approved_user, -> (user_id){ where('approved_by = ?', "#{user_id}") }
   
   # Callbacks
   # ----------------------------- 

@@ -80,18 +80,26 @@ class User < ActiveRecord::Base
 
   def calculate_points
     points = 0
-    UserGroupContrib.for_user(self.id).where('is_approved = ?', true).to_a.each do |contrib|
+    Group.for_user(self.id).where('is_approved = ?', true).to_a.each do |contrib|
       points += 1
     end
-    UserPersonContrib.for_user(self.id).where('is_approved = ?', true).to_a.each do |contrib|
+    GroupAssignment.for_user(self.id).where('is_approved = ?', true).to_a.each do |contrib|
+      points += 1
+    end
+    Person.for_user(self.id).where('is_approved = ?', true).to_a.each do |contrib|
+      points += 1
+    end
+    Relationship.for_user(self.id).where('is_approved = ?', true).to_a.each do |contrib|
       points += 1
     end
     UserRelContrib.for_user(self.id).where('is_approved = ?', true).to_a.each do |contrib|
       points += 1
     end
-    if self.user_type == "Curator"
-        points += UserGroupContrib.approved_user(self.id).to_a.count()
-        points += UserPersonContrib.approved_user(self.id).to_a.count()
+    if self.user_type == "Curator" || self.user_type == "Admin"
+        points += Group.approved_user(self.id).to_a.count()
+        points += GroupAssignment.approved_user(self.id).to_a.count()
+        points += Person.approved_user(self.id).to_a.count()
+        points += Relationship.approved_user(self.id).to_a.count()
         points += UserRelContrib.approved_user(self.id).to_a.count()
     end
     return points

@@ -17,12 +17,6 @@ h4{
   margin: 50px;
 }
 
-.top-right{
-    position: absolute;
-    right: 15px;
-    top: 12px;
-}
-
 .new-btn{
     background-color: #fff;
     color: #196B94;
@@ -84,4 +78,8 @@ h4{
     text-align: center;
     font-style: italic;
     width: 50%;
+}
+
+#account-help{
+    display: none;
 }
