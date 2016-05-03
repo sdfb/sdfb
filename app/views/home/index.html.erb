@@ -157,13 +157,9 @@
 				<div class="accordion_content" id="leaderinfo" name="leader">
 					<!-- user icon -->
 					<% if logged_in? %>
-						<a class="icon icon-user" id="leader-icon-user-loggedin"  name="leader" href="/users/3/"></a>
-						<!-- if user logged in but not on leaderboard -->
-<!-- 					elsif
-						<a class="icon icon-user" id="leader-icon-user-no-recent"  name="leader" href="/sign_in?prev=%2F"></a> -->
-						<!-- if user not logged in, asked to sign in -->
+						<a class="icon icon-node" id="leader-icon-user-loggedin"  name="leader" href="/users/3/"></a>
 					<% else %>
-						<a class="icon icon-user" id="leader-icon-user"  name="leader" href="/sign_in?prev=%2F"></a>
+						<a class="icon icon-node" id="leader-icon-user"  name="leader" href="/sign_in?prev=%2F"></a>
 					<% end %>
 					<p id="leader-name">Top Contributors</p>
 					<p id="leader-clarify">(Last 1000 Contributions)</p>
