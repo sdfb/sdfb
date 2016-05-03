@@ -5,7 +5,7 @@
     position:relative;
     float:left;
     display:block;
-    width: 310px;
+    width: 300px;
     height:100%;
     overflow:visible;
 	background: #78A7BF;
@@ -40,35 +40,6 @@
     margin-right: 10px;
     position: relative;
     top: 5px;
-}
-
-.left-accordion{
-    width: 300px;
-    float: left;
-}
-
-.close-right{
-    width: 10px;
-    height: 100%;
-    background-color: #185D80;
-    left: 300px;
-    position: absolute;
-    float: left;
-}
-
-.close-right:hover{
-    opacity: .5;
-    cursor: pointer;
-}
-
-.close-right p{
-    position: relative;
-    top: 50%;
-    transform: translateY(-50%);
-    font-size: 8px;
-    color: #fff;
-    transition-duration: .6s;
-    padding-left: 1px;
 }
 
 #nodeinfo, #add, #about{
@@ -191,7 +162,6 @@
 	overflow:hidden;
 }
 
-
 .group2{
     display: none;
 }
@@ -202,11 +172,6 @@
 }
 
 #group_name{
-
-    width:200px;
-}
-
-#leader_name{
 
     width:200px;
 }
@@ -265,18 +230,9 @@
 	color: #fff;
 }
 
-#nodeinfo p, #edgeinfo p, #groupinfo p, #leaderinfo p {
+#nodeinfo p, #edgeinfo p, #groupinfo p {
 	color: #fff;
 	font-size:14px;
-}
-
-#leaderinfo p#leader-name {
-    margin: 0 0 -5px 0;
-}
-
-#leaderinfo p#leader-clarify {
-    font-size: 12px;
-    margin: 0 0 0 0;
 }
 .fill{
     height: 10px;
@@ -402,14 +358,6 @@ a.icon, button.icon, a.icon:hover {
     background-image: url(link.png);
 }
 
-.icon-user, .icon-user:hover {
-    background-image: url(user.png);
-}
-
-.icon-user::before{
-    content: none !important;
-}
-
 .icon-zoomin {
     background-image: url(zoomin.png);
 }
@@ -424,30 +372,4 @@ a.icon, button.icon, a.icon:hover {
 
 .icon-color {
     background-image: url(colors.png);
-}
-
-.bottomFilter{
-    height: 12px;
-    line-height: 12px;
-    background-color: #FBF3E1;
-    color: #000;
-    font-size: 7px;
-    text-align: center;
-}
-
-.bottomFilter:hover{
-    cursor: pointer;
-    opacity: .6;
-}
-
-.icon-node {
-    background-image: url(node.png);
-}
-
-.icon-magnify {
-    background-image: url(search.png);
-}
-
-.icon-leader {
-    background-image: url(leader.png);
 }

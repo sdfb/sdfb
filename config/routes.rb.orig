@@ -6,8 +6,11 @@ Sdfb::Application.routes.draw do
   get "tos" => "static_pages#tos", :as => "tos"
   get "guide" => "static_pages#guide", :as => "guide"
   get "tutorial" => "static_pages#tutorial", :as => "tutorial"
+<<<<<<< HEAD
   get "new_form_menu" => "static_pages#new_form_menu", :as => "new_form_menu"
+=======
   get "top_contributors" => "home#top_contributors", :as => "top_contributors"
+>>>>>>> amyali
 
   resources :comments
   resources :relationship_types

@@ -5,7 +5,7 @@
     position:relative;
     float:left;
     display:block;
-    width: 310px;
+    width: 300px;
     height:100%;
     overflow:visible;
 	background: #78A7BF;
@@ -40,35 +40,6 @@
     margin-right: 10px;
     position: relative;
     top: 5px;
-}
-
-.left-accordion{
-    width: 300px;
-    float: left;
-}
-
-.close-right{
-    width: 10px;
-    height: 100%;
-    background-color: #185D80;
-    left: 300px;
-    position: absolute;
-    float: left;
-}
-
-.close-right:hover{
-    opacity: .5;
-    cursor: pointer;
-}
-
-.close-right p{
-    position: relative;
-    top: 50%;
-    transform: translateY(-50%);
-    font-size: 8px;
-    color: #fff;
-    transition-duration: .6s;
-    padding-left: 1px;
 }
 
 #nodeinfo, #add, #about{
@@ -369,13 +340,6 @@ a.icon, button.icon, a.icon:hover {
     background-image: url(us.png);
 }
 
-.icon-magnify {
-    background-image: url(search.png);
-}
-
-.icon-node {
-    background-image: url(node.png);
-}
 .icon-group {
     background-image: url(group.png);
 }
@@ -424,20 +388,6 @@ a.icon, button.icon, a.icon:hover {
 
 .icon-color {
     background-image: url(colors.png);
-}
-
-.bottomFilter{
-    height: 12px;
-    line-height: 12px;
-    background-color: #FBF3E1;
-    color: #000;
-    font-size: 7px;
-    text-align: center;
-}
-
-.bottomFilter:hover{
-    cursor: pointer;
-    opacity: .6;
 }
 
 .icon-node {
