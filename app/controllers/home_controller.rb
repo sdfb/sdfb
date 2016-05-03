@@ -39,6 +39,7 @@ class HomeController < ApplicationController
         @data['group_members'] = Person.all_members_of_2_groups(params[:group], params[:group2])
       end 
     end
+    @data['recent_user_points'] = recent_user_points()
   end
 
 # grabs the 1000 most recent contributions for the leaderboard
@@ -57,6 +58,7 @@ class HomeController < ApplicationController
 # calculates, based off of the 1000 most recent contributions, which users have contributed and how much
   def recent_user_points
     users_rank = Hash.new
+    @recent_contrib = recent_contributions
     @recent_contrib.each do |i|
       if users_rank.key?(i.created_by)
         users_rank[i.created_by] += 1
@@ -72,6 +74,7 @@ class HomeController < ApplicationController
     user = User.find([id])
     @username = user[0].username
   end
+  helper_method :get_username
 
 
   def update_node_info

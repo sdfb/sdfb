@@ -1,3 +1,4 @@
+
 <% content_for :title, "Six Degrees of Francis Bacon" %>
 	<div id="everything">
 		<div id="graph"></div>		
@@ -172,29 +173,32 @@
 							<th>USERNAME&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th>
 							<th>PERCENTAGE</th>
             <tr>
-              <% recent_contributions %>
-              <% recent_user_points %>
               <% rank = 1 %>
               <% on_leaderboard = false %>
-              <% @users_rank.each do |i| %>
+              <% @data['recent_user_points'].each do |i| %>
               <% break if rank == 11 %>
               <% if logged_in? && current_user.id == i[0] %>
               	<tr class="user">
               		<% on_leaderboard = true %>
+  		            <script>
+						$("#leader-icon-user-loggedin").tooltip({placement: 'right', title: ('Your Rank: ' + <%= rank %>)});
+					</script>
               <% else %>
               	<tr>
               <% end %>
-              <% get_username(i[0]) %>
-                <td><%= link_to rank, user_path(i[0]) %>. </td>
-                <td><%= link_to @username, user_path(i[0]) %></td>
-                <td><%= link_to (i[1]/1000.0*100).round(2), user_path(i[0]) %>%</td>
+                <td style="color:#fff;padding-left:10px"><%= link_to rank, user_path(i[0]), style:"color:#fff" %>. </td>
+                <td><%= link_to get_username(i[0]), user_path(i[0]), style:"color:#fff" %></td>
+                <td style="color:#fff"><%= link_to (i[1]/1000.0*100).round(2), user_path(i[0]), style:"color:#fff" %>%</td>
                 <% rank += 1 %>
             </tr>
             <% end %>
 
 						</table>
-						<% if !on_leaderboard %>
-							<p align="center"> No Recent Contributions </p>
+						<% if !on_leaderboard and logged_in? %>
+							<p align="center" style="padding-top:10px;margin:0"> You Have No Recent Contributions </p>
+							  	<script>
+									$("#leader-icon-user-loggedin").tooltip({placement: 'right', title: 'You have no recent contributions.'});
+								</script>
 						<% end %>
 
 					<span class="fill"></span>

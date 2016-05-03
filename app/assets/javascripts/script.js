@@ -86,7 +86,6 @@ $(document).ready(function() {
     $("#group-icon-label").tooltip({placement: 'right', title: 'Add person to group'});
     $("#group-icon-annotate").tooltip({placement: 'right', title: 'Add a note to this group'});
     $("#leader-icon-user").tooltip({placement: 'right', title: 'Sign in'});
-    $("#leader-icon-user-loggedin").tooltip({placement: 'right', title: 'Your Rank: 2'});
 
     $(".icon-zoomin").tooltip({placement:  'left', title: 'Zoom In'});
     $(".icon-zoomout").tooltip({placement:  'left', title: 'Zoom Out'});

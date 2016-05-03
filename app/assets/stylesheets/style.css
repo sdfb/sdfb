@@ -200,7 +200,6 @@ a:hover {
 #leaderboard tr.user, tr.user a:hover, tr.user a:link, tr.user a:visited, tr.user a:active{
   background: #0978AC;
   color: #ffffff;
-  font-weight: bold;
   text-decoration: none;
 }
 
