@@ -94,7 +94,6 @@ li {
 }
 
 a:hover {
-  background: rgba(0,0,0,0);
   color: #1c7098;
   text-decoration: none;
 }
