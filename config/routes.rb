@@ -6,6 +6,7 @@ Sdfb::Application.routes.draw do
   get "tos" => "static_pages#tos", :as => "tos"
   get "guide" => "static_pages#guide", :as => "guide"
   get "tutorial" => "static_pages#tutorial", :as => "tutorial"
+  get "new_form_menu" => "static_pages#new_form_menu", :as => "new_form_menu"
 
   resources :comments
   resources :relationship_types
@@ -30,7 +31,9 @@ Sdfb::Application.routes.draw do
   get "all_rejected" => "users#all_rejected", :as => "all_rejected"
   get "all_recent" => "users#all_recent", :as => "all_recent"
 
-  get "new_forms" => "people#new_2", :as => "new_forms"
+  get "new_person_form" => "people#new_2", :as => "new_person_form"
+  get "new_relationship_form" => "relationships#new_2", :as => "new_relationship_form"
+  get "reroute_relationship_form" => "relationships#reroute_relationship_form", :as => "reroute_relationship_form"
 
   # set the root
   root :to => "home#index"

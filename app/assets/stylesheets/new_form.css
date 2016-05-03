@@ -1073,6 +1073,10 @@ a:visited{
   font-size: 18px;
 }
 
+.relationship-start-button:hover{
+  background-color: #005f8e;
+}
+
 .relationship-start-button-div {
   display: -webkit-box;
   display: -webkit-flex;
@@ -1189,7 +1193,6 @@ a:visited{
 
 .month-field.relationship-new-start-month {
   height: 50px;
-  border-color: #000;
   border-radius: 15px;
   font-family: 'Droid Sans', sans-serif;
 }
@@ -1203,7 +1206,6 @@ a:visited{
 
 .day-field.relationship-new-start-day {
   height: 50px;
-  border-color: #000;
   border-radius: 15px;
   font-family: 'Droid Sans', sans-serif;
 }

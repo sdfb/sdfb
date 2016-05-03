@@ -24,6 +24,24 @@ class RelationshipsController < ApplicationController
     active_record_get_autocomplete_items(parameters).where("approved_by is not null and is_active is true and is_rejected is false")
   end
 
+  def reroute_relationship_form
+    id1 = params[:relationship][:person1_index]
+    id2 = params[:relationship][:person2_index]
+    #person related to self
+    if (id1 == id2)
+      redirect_to 'new_relationship_form'
+      return
+    end
+    #person already related
+    if (! Relationship.for_2_people(id1, id2).empty?)
+      #redirect_to new_existing_relationship_form_path(person1: id1, person2: id2)
+      puts 'EXISTS'
+    else
+      #redirect_to new_new_relationship_form_path(person1: id1, person2: id2)
+      puts 'DOES NOT EXIST'
+    end
+  end
+
   # GET /relationships/1
   # GET /relationships/1.json
   def show
@@ -40,6 +58,17 @@ class RelationshipsController < ApplicationController
   # GET /relationships/new
   # GET /relationships/new.json
   def new
+    @person1_id = params[:person1_id]
+    @relationship = Relationship.new
+    @personOptions = Person.all_approved.alphabetical
+
+    respond_to do |format|
+      format.html # new.html.erb
+      format.json { render json: @relationship }
+    end
+  end
+
+  def new_2
     @person1_id = params[:person1_id]
     @relationship = Relationship.new
     @personOptions = Person.all_approved.alphabetical

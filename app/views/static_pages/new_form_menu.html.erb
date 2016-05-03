@@ -1,0 +1,71 @@
+<%= javascript_include_tag "modernizr.js" %>
+<%= javascript_include_tag "webflow.js" %>
+  <script>
+      if ($(".alert")){
+          $(".alert").css("float", "initial");
+      }
+  </script>
+
+<%= stylesheet_link_tag "components.css" %>
+<%= stylesheet_link_tag "new_form.css" %>
+<%= stylesheet_link_tag "normalize.css" %>
+<div class="w-section main-section">
+  <div class="w-container main-container">
+    <div class="six-degrees-form-heading">
+      <div data-ix="load-reveal" class="six-degrees-form-heading"><strong>NEW CONTRIBUTION FORMS</strong>
+      </div>
+    </div>
+    <div class="question-mark-div">
+      <div data-ix="click-to-reveal">
+        <%= image_tag("question_mark.png", class: "person-question-mark") %>
+      </div>
+    </div>
+    <div class="w-row help-row">
+      <div data-ix="hide-play-blocks" class="w-col w-col-4 how-to-play-block">
+        <div>
+          <%= image_tag("choose_icon.png", class: "how-to-play-image") %>
+          <h3 class="how-to-play-heading">Choose A Contribution</h3>
+          <p class="how-to-play-text">First pick what kind of contribution you're trying to make: a person, a relationship, or a group.</p>
+        </div>
+      </div>
+      <div data-ix="hide-play-blocks" class="w-col w-col-4 how-to-play-block">
+        <div>
+          <%= image_tag("form_icon.png", class: "how-to-play-image") %>
+          <h3 class="how-to-play-heading">Fill the Form</h3>
+          <p class="how-to-play-text">After choosing what kind of contribution you're going to make, fill out all the required fields on the form.</p>
+        </div>
+      </div>
+      <div data-ix="hide-play-blocks" class="w-col w-col-4 how-to-play-block">
+        <div>
+          <%= image_tag("level_up_icon.png", class: "how-to-play-image") %>
+          <h3 class="how-to-play-heading">Increase Your Rank</h3>
+          <p class="how-to-play-text">Once your contribution gets approved by a curator, you'll earn a point. Accumulate 100 points to become a curator yourself!</p>
+        </div>
+      </div>
+    </div>
+    <div data-ix="contribution-type-row-start" class="w-row contribution-type-row">
+      <div data-ix="load-reveal-3" class="w-col w-col-4 contribution-button-div"><a href="/new_person_form" data-ix="person-button-text-reveal" class="w-button contribution-button person-contribution-button">Person <br>Contribution</a>
+      </div>
+      <div data-ix="load-reveal-3" class="w-col w-col-4 contribution-button-div"><a href="/new_relationship_form" data-ix="relationship-button-text-reveal" class="w-button contribution-button relationship-contribution-button">Relationship<br>Contribution</a>
+      </div>
+      <div data-ix="load-reveal-3" class="w-col w-col-4 contribution-button-div"><a href="group-contribution.html" data-ix="relationship-button-text-reveal-2" class="w-button contribution-button group-contribution-button">Group&nbsp;<br>Contribution</a>
+      </div>
+    </div>
+    <div data-ix="contribution-type-text-row-start" class="contribution-type-text-row">
+      <div class="w-row">
+        <div class="w-col w-col-4">
+          <div class="person-contribution-type-text">
+            <br>Add a new person to the database</div>
+        </div>
+        <div class="w-col w-col-4">
+          <div class="relationship-contribution-type-text">Add a new, untyped relationship between
+            <br>two people to the database, or assign a new type of relationship between two people</div>
+        </div>
+        <div class="w-col w-col-4">
+          <div class="group-contribution-type-text">Add a new group to the database, or
+            <br>add new members to an existing group</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
