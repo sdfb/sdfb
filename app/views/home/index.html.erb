@@ -154,7 +154,7 @@
 			<!-- leaderboard information bar -->
 			<!-- header and icon -->
 			<h3 class="accordion_btn" id="tab-leader"><span style="height:0"><%= image_tag "leader.png", class: "leader-img", style:"margin-bottom:15px" %></span>Leader Board</h3>
-				<div class="accordion_content" id="leaderinfo" name="leader">
+				<div class="accordion_content" id="leaderinfo" name="leader" style="overflow:hidden">
 					<!-- user icon -->
 					<% if logged_in? %>
 						<a class="icon icon-node" id="leader-icon-user-loggedin"  name="leader" href="/users/3/"></a>

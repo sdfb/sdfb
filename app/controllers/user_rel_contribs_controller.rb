@@ -46,6 +46,19 @@ class UserRelContribsController < ApplicationController
     end
   end
 
+  def new_2
+    @user_rel_contrib = UserRelContrib.new
+    @relOptions = Relationship.all_approved
+    @relationship_id = params[:relationship_id]
+    @relType = RelationshipType.all_approved.alphabetical
+    
+
+    respond_to do |format|
+      format.html # new.html.erb
+      format.json { render json: @user_rel_contrib }
+    end
+  end
+
   # GET /user_rel_contribs/1/edit
   def edit
     @user_rel_contrib = UserRelContrib.find(params[:id])

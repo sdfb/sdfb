@@ -1,7 +1,7 @@
 
   <div class="w-section form-section">
     <div class="w-form relationship-form-wrapper">
-      <%= simple_form_for @relationship, html: { id: "wf-form-relationship-Contribution", class: "relationship-form" } do |f| %>
+      <%= simple_form_for @relationship, html: { id: "wf-form-relationship-Contribution", class: "relationship-form" }, :url => relationship_create_2_path, :method => :get do |f| %>
         <div class="w-container intro-wrapper">
           <div class="six-degrees-form-heading">
             <div data-ix="load-reveal" class="six-degrees-form-heading"><strong class="text"> &nbsp; RELATIONSHIP&nbsp;CONTRIBUTION</strong>
@@ -17,6 +17,9 @@
         <div id="relationship-new-div-1" data-ix="load-reveal-3" class="div-1">
           <h1 class="form-heading">Citation</h1>
           <label for="Relationship-New-Citation-2" class="rel-new-label-1">CITATION</label>
+          <%= f.hidden_field :person1_index, :value => params['person1'] %>
+          <%= f.hidden_field :person2_index, :value => params['person2'] %>
+          <%= f.hidden_field :created_by, :value => current_user.id %>
           <%= f.input :bibliography, input_html: {id: "Relationship-New-Citation-2", class: "w-input rel-field-1" }, label: false %>
         </div>
         <div data-ix="load-reveal-4" class="w-clearfix form-button-div-block"><a href="#relationship-new-div-2" data-ix="move-next-button" class="w-button next-button-1">CONTINUE</a>

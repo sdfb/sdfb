@@ -232,9 +232,9 @@ class Ability
 			can :membership, Person
 			can :relationships, Person
 			can :notes, Person
-			can :new_2, Person
-			can :new_2, Relationship
-			can :new_2, Group
+			can :new_2, [Person, Relationship, Group, UserRelContrib]
+			can :new_new_relationship_form, Relationship
+			can :create_2, Relationship
 			can :reroute_relationship_form, Relationship
 
 		else
