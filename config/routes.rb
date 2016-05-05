@@ -35,6 +35,8 @@ Sdfb::Application.routes.draw do
   get "new_person_form" => "people#new_2", :as => "new_person_form"
   get "new_relationship_form" => "relationships#new_2", :as => "new_relationship_form"
   get "reroute_relationship_form" => "relationships#reroute_relationship_form", :as => "reroute_relationship_form"
+  get "new_group_form" => "groups#new_2", :as => "new_group_form"
+  get "reroute_group_form" => "groups#reroute_group_form", :as => "reroute_group_form"
 
   # set the root
   root :to => "home#index"

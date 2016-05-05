@@ -234,6 +234,7 @@ class Ability
 			can :notes, Person
 			can :new_2, Person
 			can :new_2, Relationship
+			can :new_2, Group
 			can :reroute_relationship_form, Relationship
 
 		else
