@@ -18,7 +18,7 @@
         <div id="person-div-1" data-ix="load-reveal-3" class="div-1">
           <h1 class="form-heading">Citation</h1>
           <label for="Citation" class="label-1">CITATION</label>
-          <%= f.input :bibliography, input_html: { id: "Citation", class: "w-input field-2" }, label: false %>
+          <%= f.input :bibliography, input_html: { id: "Citation", class: "w-input field-2"}, label: false %>
         </div>
         <div data-ix="load-reveal-4" class="w-clearfix form-button-div-block"><a href="#person-div-2" data-ix="move-next-button" class="w-button next-button-1">CONTINUE</a>
         </div>
@@ -50,8 +50,8 @@
           </div>
           <label for="Title" class="label-1">TITLE</label>
           <%= f.input :title, input_html: { id: "Title", class: "w-input field-2" }, label: false %>
-          <label for="ONIB-ID" class="label-1">ONIB ID</label>
-          <%= f.input :odnb_id, input_html: { id: "ONIB-ID", class: "w-input field-2" }, label: false %>
+          <label for="ONIB-ID" class="label-1">ODNB ID</label>
+          <%= f.input :odnb_id, input_html: { id: "ODNB-ID", class: "w-input field-2" }, label: false %>
           <%= f.hidden_field :created_by, :value => current_user.id %>
           <label for="field" class="label-1">GENDER*</label>
           <%= f.input :gender, :collection => ["female", "male", "gender_noncoforing"], prompt: "Select one...", input_html: { id: "field", class: "w-select gender-selection" }, requried: true, label: false %>
@@ -72,8 +72,8 @@
               <%= f.input :alt_birth_year, input_html: { id: "Alternative-Birth-Year", class: "w-input field-2" }, label: false %>
             </div>
           </div>
-          <label for="field-3" class="label-1">DEATH YEAR TYPE*</label>
-          <%= f.input :death_year_type, :collection =>["BF", "AF","IN","CA","BF/IN","AF/IN"], prompt: "Select one...", hint: " BF = Before, AF = After, IN = In, CA = Circa, BF/IN = Before or In, AF/IN = After or In", input_html: {id: "field-3", class: "w-select field-2" }, label: false %>
+          <label for="death_year" class="label-1">DEATH YEAR TYPE*</label>
+          <%= f.input :death_year_type, :collection =>["BF", "AF","IN","CA","BF/IN","AF/IN"], prompt: "Select one...", hint: " BF = Before, AF = After, IN = In, CA = Circa, BF/IN = Before or In, AF/IN = After or In", input_html: {id: "death_year", class: "w-select field-2" }, label: false %>
           <div class="w-row row-1">
             <div class="w-col w-col-6 column-1">
               <label for="Death-Year" class="label-1">DEATH YEAR*</label>
