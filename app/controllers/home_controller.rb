@@ -13,7 +13,7 @@ class HomeController < ApplicationController
         @data['people'] = Person.find_two_degree_for_person(params[:id], params[:confidence], params[:date], "")
       else
         #The field will return searched node 1, searched node 2, shared nodes, and the first degree relationship of the shared network nodes
-        @data['people'] = Person.find_two_degree_for_network(params[:id], params[:id2], params[:confidence], params[:date])
+        @data['people'] = Person.find_two_degree_for_network(params[:id], params[:id2], params[:confidence], params[:date], params[:var1])
       end
 
     #@data['all_people'] = Person.all_approved.select("id, first_name, last_name, ext_birth_year, prefix, suffix, title")
