@@ -1,7 +1,19 @@
 
   <div class="w-section form-section">
     <div class="w-form relationship-form-wrapper">
-      <%= simple_form_for @user_rel_contrib, html: { id: "wf-form-relationship-Contribution", class: "relationship-form" } do |f| %>
+      <%= simple_form_for @user_rel_contrib, html: { id: "wf-form-relationship-Contribution", class: "relationship-form" }, :url => user_rel_contribs_create_2_path do |f| %>
+        <% if @user_rel_contrib.errors.any? %>
+          <div id="error_explanation">
+            <h2><%= pluralize(@user_rel_contrib.errors.count, "error") %> prohibited this user_rel_contrib from being saved:</h2>
+            <ul>
+            <% @user_rel_contrib.errors.full_messages.each do |msg| %>
+              <br>
+                <li>- <%= msg %></li>
+              <br>
+            <% end %>
+            </ul>
+          </div>
+        <% end %>
         <div class="w-container intro-wrapper">
           <div class="six-degrees-form-heading">
             <div data-ix="load-reveal" class="six-degrees-form-heading"><strong class="text"> &nbsp; RELATIONSHIP<br><br>TYPE&nbsp;CONTRIBUTION</strong>
@@ -13,8 +25,8 @@
         </div>
         <div>
           <%= f.hidden_field :relationship_id, value: 0 %>
-          <%= f.hidden_field :person1_selection %>
-          <%= f.hidden_field :person2_selection %>
+          <%= f.hidden_field :person1_selection, :value => params['person1'] %>
+          <%= f.hidden_field :person2_selection, :value => params['person2'] %>
           <%= Person.find_by_id(params['person1']).display_name %>
 
           <%= f.input :relationship_type_id, :collection =>@relType.collect{ |r| [r.name, r.id] }, label: false, input_html: { id: "Relationship-New-Citation-3", class: "w-input rel-new-field-1" }, prompt: "Relationship Type" %>

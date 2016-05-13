@@ -33,6 +33,7 @@ Sdfb::Application.routes.draw do
   get "all_recent" => "users#all_recent", :as => "all_recent"
 
   get "new_person_form" => "people#new_2", :as => "new_person_form"
+  post "create_new_person_form" => "people#create_2", :as => "create_new_person_form"
   get "new_relationship_form" => "relationships#new_2", :as => "new_relationship_form"
   get "reroute_relationship_form" => "relationships#reroute_relationship_form", :as => "reroute_relationship_form"
   get "new_existing_relationship_form" => "user_rel_contribs#new_2"
@@ -40,6 +41,7 @@ Sdfb::Application.routes.draw do
   get "new_group_form" => "groups#new_2", :as => "new_group_form"
   get "reroute_group_form" => "groups#reroute_group_form", :as => "reroute_group_form"
   get "relationship_create_2" => "relationships#create_2", :as => "relationship_create_2"
+  post "user_rel_contribs_create_2" => "user_rel_contribs#create_2"
 
   # set the root
   root :to => "home#index"

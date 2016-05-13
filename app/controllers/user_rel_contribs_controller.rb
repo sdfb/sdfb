@@ -88,6 +88,25 @@ class UserRelContribsController < ApplicationController
     end
   end
 
+    # POST /user_rel_contribs
+  # POST /user_rel_contribs.json
+  def create_2
+    @user_rel_contrib = UserRelContrib.new(params[:user_rel_contrib])
+    @relOptions = Relationship.all_approved
+    @relationship_id = params[:relationship_id]
+    @relType = RelationshipType.all_approved.alphabetical
+
+    respond_to do |format|
+      if @user_rel_contrib.save
+        format.html { redirect_to @user_rel_contrib, notice: 'User rel contrib was successfully created.' }
+        format.json { render json: @user_rel_contrib, status: :created, location: @user_rel_contrib }
+      else
+        format.html { redirect_to new_existing_relationship_form_path(person1: @user_rel_contrib.person1_selection, person2: @user_rel_contrib.person2_selection) }
+        format.json { render json: @user_rel_contrib.errors, status: :unprocessable_entity }
+      end
+    end
+  end
+
   # PUT /user_rel_contribs/1
   # PUT /user_rel_contribs/1.json
   def update

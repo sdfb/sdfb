@@ -2,7 +2,20 @@
 
   <div class="w-section form-section">
     <div class="w-form person-form-wrapper">
-      <%= simple_form_for @person, :html => { id: "wf-form-Person-Contribution", class: "person-form" } do |f| %>
+      <%= simple_form_for @person, :html => { id: "wf-form-Person-Contribution", class: "person-form" }, :url => create_new_person_form_path(@person) do |f| %>
+        <% if @person.errors.any? %>
+          <div id="error_explanation">
+            <h2><%= pluralize(@person.errors.count, "error") %> prohibited this person from being saved:</h2>
+
+            <ul>
+            <% @person.errors.full_messages.each do |msg| %>
+              <br>
+                <li>- <%= msg %></li>
+              <br>
+            <% end %>
+            </ul>
+          </div>
+        <% end %>
         <div class="w-container intro-wrapper">
           <div class="six-degrees-form-heading">
             <div data-ix="load-reveal" class="six-degrees-form-heading"><strong class="text"> &nbsp; PERSON CONTRIBUTION</strong>

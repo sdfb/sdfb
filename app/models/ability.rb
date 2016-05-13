@@ -234,7 +234,7 @@ class Ability
 			can :notes, Person
 			can :new_2, [Person, Relationship, Group, UserRelContrib]
 			can :new_new_relationship_form, Relationship
-			can :create_2, Relationship
+			can :create_2, [Relationship, Person, UserRelContrib]
 			can :reroute_relationship_form, Relationship
 
 		else
