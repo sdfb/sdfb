@@ -56,13 +56,13 @@ class HomeController < ApplicationController
 
 # grabs the 1000 most recent contributions for the leaderboard
   def recent_contributions
-    recent_contrib = ((Person.all_recent.all_approved.limit(100)) + 
-                      (Group.all_recent.all_approved.limit(100)) + 
-                      (Relationship.all_recent.all_approved.limit(100)) + 
-                      (GroupAssignment.all_recent.all_approved.limit(100)) + 
-                      (UserGroupContrib.all_recent.all_approved.limit(100)) + 
-                      (UserPersonContrib.all_recent.all_approved.limit(100))) + 
-                      (UserRelContrib.all_recent.all_approved.limit(100))
+    recent_contrib = ((Person.all_recent.all_approved.limit(2000)) + 
+                      (Group.all_recent.all_approved.limit(2000)) + 
+                      (Relationship.all_recent.all_approved.limit(2000)) + 
+                      (GroupAssignment.all_recent.all_approved.limit(2000)) + 
+                      (UserGroupContrib.all_recent.all_approved.limit(2000)) + 
+                      (UserPersonContrib.all_recent.all_approved.limit(2000))) + 
+                      (UserRelContrib.all_recent.all_approved.limit(2000))
     recent_contrib.sort! {|a,b| a.updated_at <=> b.updated_at}.reverse!
     recent_contrib = remove_users(recent_contrib)
     @recent_contrib = recent_contrib.take(1000)
