@@ -233,6 +233,8 @@ class Ability
 			can :relationships, Person
 			can :notes, Person
 			can :new_2, [Person, Relationship, Group, UserRelContrib]
+			can :new_3, Group
+			can :reroute_group_form, Group
 			can :new_new_relationship_form, Relationship
 			can :create_2, [Relationship, Person, UserRelContrib]
 			can :reroute_relationship_form, Relationship

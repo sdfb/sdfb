@@ -59,6 +59,16 @@ class GroupsController < ApplicationController
     @group = Group.new
     @groupOptions = Group.all_approved.alphabetical
 
+    respond_to do |format|
+      format.html # new.html.erb
+      format.json { render json: @group }
+    end
+  end
+
+  def new_3
+    @group = Group.new
+    @groupOptions = Group.all_approved.alphabetical
+
 
     respond_to do |format|
       format.html # new.html.erb
@@ -69,8 +79,8 @@ class GroupsController < ApplicationController
   def reroute_group_form
     group_id = params[:group][:name]
     #user chose'Create New Group' option
-    if group_id nil
-      redirect_to new_group_form_path
+    if group_id == ""
+      redirect_to new_new_group_form_path
     #user chose an existing group
     else
       redirect_to group_add_person_path(group_id: group_id)

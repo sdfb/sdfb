@@ -39,6 +39,7 @@ Sdfb::Application.routes.draw do
   get "new_existing_relationship_form" => "user_rel_contribs#new_2"
   get "new_new_relationship_form" => "relationships#new_new_relationship_form"
   get "new_group_form" => "groups#new_2", :as => "new_group_form"
+  get "new_new_group_form" => "groups#new_3"
   get "reroute_group_form" => "groups#reroute_group_form", :as => "reroute_group_form"
   get "relationship_create_2" => "relationships#create_2", :as => "relationship_create_2"
   post "user_rel_contribs_create_2" => "user_rel_contribs#create_2"

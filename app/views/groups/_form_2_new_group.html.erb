@@ -1,18 +1,20 @@
 
   <div class="w-section form-section">
     <div class="w-form relationship-form-wrapper">
-        <%= simple_form_for @group, html: { id: "wf-form-relationship-Contribution", class: "relationship-form" do |f| } %>
+        <%= simple_form_for @group, html: { id: "wf-form-relationship-Contribution", class: "relationship-form" } do |f| %>
         <div class="w-container intro-wrapper">
           <div class="six-degrees-form-heading">
             <div data-ix="load-reveal" class="six-degrees-form-heading"><strong class="text"> &nbsp; NEW<br><br>GROUP&nbsp;CONTRIBUTION</strong>
             </div>
           </div>
         </div>
-        <div data-ix="click-to-reveal" class="question-mark-div"><img src="images/question_mark.png" data-ix="reveal-relationship-question-text" class="relationship-question-mark">
+        <div data-ix="click-to-reveal-relationship-text" class="question-mark-div">
+          <%= image_tag("question_mark.png", class: "relationship-question-mark") %>
         </div>
         <div class="relationship-question-div">
           <div class="relationship-new-question-text"><strong>Note:</strong> Any fields marked with a * indicates that it must be filled out before you can continue on with the form. Once you have finished all required fields, press the SUBMIT button to finish.</div>
         </div>
+        <%= f.hidden_field :created_by, :value => current_user.id %>
         <div id="relationship-new-div-1" data-ix="load-reveal-3" class="div-1">
           <h1 class="form-heading">Citation</h1>
           <label for="Relationship-New-Citation-2" class="rel-new-label-1">CITATION</label>
@@ -39,14 +41,6 @@
           <label for="Relationship-New-Start-Date-Type-2" class="start-date-label">START DATE TYPE</label>
           <%= f.input :start_date_type, :collection => ["BF", "AF","IN","CA","BF/IN","AF/IN"], input_html: { id: "Relationship-New-Start-Date-Type-2", class: "w-select birth-year-field"}, label: false, prompt: "Year Type", hint: " BF = Before, AF = After, IN = In, CA = Circa, BF/IN = Before or In, AF/IN = After or In" %>
           <div class="w-row row-1">
-            <div class="w-col w-col-4 column-1">
-              <label for="Relationship-New-Start-Month-2" class="_14px-label">MONTH</label>
-              <%= f.input :start_month, input_html: { id: "Relationship-Nwe-Start-Month-2", class: "w-select month-field relationship-new-start-month"}, label: "Start Date", :collection =>["January","February","March","April","Ma","June","July","August","September","October","November","December"], label: false, prompt: "Month", include_blank: true %>
-            </div>
-            <div class="w-col w-col-4 column-2">
-              <label for="Relationship-New-Start-Day-2" class="_14px-label">DAY</label>
-              <%= f.input :start_day, input_html: { id: "Relationship-New-Start-Day-2", class: "w-select day-field relationship-new-start-day" }, label: false, :collection => 1..31, prompt: "Day", include_blank: true %>
-            </div>
             <div class="w-col w-col-4">
               <div>
               <label for="Relationship-New-Start-Year-2" class="_14px-label">YEAR</label>
@@ -56,20 +50,10 @@
           </div>
           <label for="Relationship-New-End-Date-Type-2" class="end-date-label">END DATE TYPE</label>
           <%= f.input :end_date_type, input_html: { id: "Relationship-New-End-Date-Type-2", class: "w-select death-year-select" }, :collection => ["BF", "AF","IN","CA","BF/IN","AF/IN"], label: false, prompt: "Year Type", hint: " BF = Before, AF = After, IN = In, CA = Circa, BF/IN = Before or In, AF/IN = After or In" %>
-          <div class="w-row row-1">
-            <div class="w-col w-col-4 column-1">
-              <label for="Relationship-New-End-Month-2" class="_14px-label">MONTH</label>
-              <%= f.input :end_month, input_html: { id: "Relationship-New-End-Month-2", class: "w-select month-field relationship-new-end-month"}, :collection => ["January","February","March","April","May","June","July","August","September","October","November","December"], label: false, prompt: "Month", :include_blank => true %>
-            </div>
-            <div class="w-col w-col-4 column-2">
-              <label for="Relationship-New-End-Day-2" class="_14px-label">DAY</label>
-                <%= f.input :end_day, input_html: { id: "Relationship-New-End-Day-2", class: "w-select day-field relationship-new-end-day" }, label: false, :collection => 1..31, prompt: "Day", :include_blank => true %>
-            </div>
-            <div class="w-col w-col-4">
-              <div>
-                <label for="Relationship-New-End-Year-2" class="_14px-label">YEAR</label>
-                <%= f.input :end_year, input_html: { id: "Relationship-New-End-Year-2", class: "w-input end-year-field"}, label: false, as: :string, label: false, placeholder: "Year" %>
-              </div>
+          <div class="w-col w-col-4">
+            <div>
+              <label for="Relationship-New-End-Year-2" class="_14px-label">YEAR</label>
+              <%= f.input :end_year, input_html: { id: "Relationship-New-End-Year-2", class: "w-input end-year-field"}, label: false, as: :string, label: false, placeholder: "Year" %>
             </div>
           </div>
         </div>
@@ -126,5 +110,6 @@
           </div>
         </div>
       </div>
+      <% end %>
     </div>
   </div>
