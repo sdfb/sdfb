@@ -184,7 +184,13 @@
               <% end %>
                 <td style="color:#fff;padding-left:10px"><%= link_to rank, user_path(i[0]), style:"color:#fff" %>. </td>
                 <td><%= link_to get_username(i[0]), user_path(i[0]), style:"color:#fff" %></td>
-                <td style="color:#fff"><%= link_to (i[1]/1000.0*100).round(2), user_path(i[0]), style:"color:#fff" %>%</td>
+                <td style="color:#fff">
+                	<% if (((i[1]/1000.0*100).round(2)) < 5.0) %>
+                		<%= link_to "< 5.0", user_path(i[0]), style:"color:#fff" %>
+                	<% else %>
+                		<%= link_to (i[1]/1000.0*100).round(2), user_path(i[0]), style:"color:#fff" %>
+                	<% end %>
+                	%</td>
                 <% rank += 1 %>
             </tr>
             <% end %>
