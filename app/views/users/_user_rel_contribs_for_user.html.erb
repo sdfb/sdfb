@@ -38,7 +38,7 @@
               <% if can? :show, user_rel_contrib %>
                 <%= link_to 'Show', user_rel_contrib, :class => 'btn btn-mini' %>
               <% end %>
-              <% if user_rel_contrib.is_locked == false %>
+              <% if user_rel_contrib.is_locked == true %>
                 <% if can? :update, user_rel_contrib %>
                   <%= link_to t('.edit', :default => t("helpers.links.edit")),
                             edit_user_rel_contrib_path(user_rel_contrib), :class => 'btn btn-mini' %>
