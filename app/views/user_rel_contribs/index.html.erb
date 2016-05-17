@@ -105,7 +105,7 @@
             <% if (current_user.user_type == "Admin") %>
                 <%= link_to 'Delete', user_rel_contrib, :class => 'btn btn-mini btn-danger',method: :delete, data: { confirm: 'Are you sure that you want to permanently delete this record and all associated records?' } %>
             <% else %>
-              <% if user_rel_contrib.is_locked == true %>
+              <% if user_rel_contrib.is_locked == false %>
                 <% if can? :update, user_rel_contrib %>
                   <%= link_to t('.edit', :default => t("helpers.links.edit")),
                             edit_user_rel_contrib_path(user_rel_contrib), :class => 'btn btn-mini' %>
