@@ -77,7 +77,7 @@ class GroupsController < ApplicationController
   end
 
   def reroute_group_form
-    group_id = params[:group][:name]
+    group_id = params[:group][:id]
     #user chose'Create New Group' option
     if group_id == ""
       redirect_to new_new_group_form_path
@@ -105,6 +105,20 @@ class GroupsController < ApplicationController
         format.json { render json: @group, status: :created, location: @group }
       else
         format.html { render action: "new" }
+        format.json { render json: @group.errors, status: :unprocessable_entity }
+      end
+    end
+  end
+
+  def create_2
+    @group = Group.new(params[:group])
+
+    respond_to do |format|
+      if @group.save
+        format.html { redirect_to @group, notice: 'Group was successfully created.' }
+        format.json { render json: @group, status: :created, location: @group }
+      else
+        format.html { render action: "new_3" }
         format.json { render json: @group.errors, status: :unprocessable_entity }
       end
     end
