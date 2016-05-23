@@ -118,10 +118,10 @@ class UserRelContribsController < ApplicationController
     @all_user_rel_contribs = UserRelContrib.for_rel_type_assigns_00000_20000.all_active_unrejected
     if (current_user.user_type == "Admin")
       user_rel_contribs_csv = CSV.generate do |csv|
-          csv << ["SDFB Relationship Type Assignment ID", "SDFB Relationship ID", "Relationship Type", "Confidence", "Start Date Type", "Start Month", "Start Day", "Start Year", "End Date Type", "End Month", "End Day", "End Year", "Justification", "Citation", "Created By ID", "Created At", "Is approved?", "Approved By ID", "Approved On"]
+          csv << ["SDFB Relationship Type Assignment ID", "SDFB Relationship ID", "SDFB Relationship Type ID", "Confidence", "Start Date Type", "Start Month", "Start Day", "Start Year", "End Date Type", "End Month", "End Day", "End Year", "Justification", "Citation", "Created By ID", "Created At", "Is approved?", "Approved By ID", "Approved On"]
           @all_user_rel_contribs.each do |user_rel_contrib|
               csv << [user_rel_contrib.id, user_rel_contrib.relationship_id,
-              RelationshipType.find(user_rel_contrib.relationship_type_id).name, user_rel_contrib.certainty, 
+              user_rel_contrib.relationship_type_id, user_rel_contrib.certainty, 
               user_rel_contrib.start_date_type, user_rel_contrib.start_month, user_rel_contrib.start_day,
               user_rel_contrib.start_year, user_rel_contrib.end_date_type,  user_rel_contrib.end_month,
               user_rel_contrib.end_day, user_rel_contrib.end_year,
@@ -131,10 +131,10 @@ class UserRelContribsController < ApplicationController
       end
     else
       user_rel_contribs_csv = CSV.generate do |csv|
-        csv << ["SDFB Relationship Type Assignment ID", "SDFB Relationship ID", "Relationship Type", "Confidence", "Start Year Type", "Start Month", "Start Day", "Start Year", "End Date Type", "End Month", "End Day", "End Year"]
+        csv << ["SDFB Relationship Type Assignment ID", "SDFB Relationship ID", "SDFB Relationship Type ID", "Confidence", "Start Year Type", "Start Month", "Start Day", "Start Year", "End Date Type", "End Month", "End Day", "End Year"]
         @all_user_rel_contribs_approved.each do |user_rel_contrib|
             csv << [user_rel_contrib.id, user_rel_contrib.relationship_id,
-            RelationshipType.find(user_rel_contrib.relationship_type_id).name, user_rel_contrib.certainty,
+            user_rel_contrib.relationship_type_id, user_rel_contrib.certainty,
             user_rel_contrib.start_date_type, user_rel_contrib.start_month, user_rel_contrib.start_day,
             user_rel_contrib.start_year, user_rel_contrib.end_date_type,  user_rel_contrib.end_month,
             user_rel_contrib.end_day, user_rel_contrib.end_year]
@@ -149,10 +149,10 @@ class UserRelContribsController < ApplicationController
     @all_user_rel_contribs = UserRelContrib.for_rel_type_assigns_20001_40000.all_active_unrejected
     if (current_user.user_type == "Admin")
       user_rel_contribs_csv = CSV.generate do |csv|
-          csv << ["SDFB Relationship Type Assignment ID", "SDFB Relationship ID", "Relationship Type", "Confidence", "Start Date Type", "Start Month", "Start Day", "Start Year", "End Date Type", "End Month", "End Day", "End Year", "Justification", "Citation", "Created By ID", "Created At", "Is approved?", "Approved By ID", "Approved On"]
+          csv << ["SDFB Relationship Type Assignment ID", "SDFB Relationship ID", "SDFB Relationship Type ID", "Confidence", "Start Date Type", "Start Month", "Start Day", "Start Year", "End Date Type", "End Month", "End Day", "End Year", "Justification", "Citation", "Created By ID", "Created At", "Is approved?", "Approved By ID", "Approved On"]
           @all_user_rel_contribs.each do |user_rel_contrib|
               csv << [user_rel_contrib.id, user_rel_contrib.relationship_id,
-              RelationshipType.find(user_rel_contrib.relationship_type_id).name, user_rel_contrib.certainty, 
+              user_rel_contrib.relationship_type_id, user_rel_contrib.certainty, 
               user_rel_contrib.start_date_type, user_rel_contrib.start_month, user_rel_contrib.start_day,
               user_rel_contrib.start_year, user_rel_contrib.end_date_type,  user_rel_contrib.end_month,
               user_rel_contrib.end_day, user_rel_contrib.end_year,
@@ -162,10 +162,10 @@ class UserRelContribsController < ApplicationController
       end
     else
       user_rel_contribs_csv = CSV.generate do |csv|
-        csv << ["SDFB Relationship Type Assignment ID", "SDFB Relationship ID", "Relationship Type", "Confidence", "Start Year Type", "Start Month", "Start Day", "Start Year", "End Date Type", "End Month", "End Day", "End Year"]
+        csv << ["SDFB Relationship Type Assignment ID", "SDFB Relationship ID", "SDFB Relationship Type ID", "Confidence", "Start Year Type", "Start Month", "Start Day", "Start Year", "End Date Type", "End Month", "End Day", "End Year"]
         @all_user_rel_contribs_approved.each do |user_rel_contrib|
             csv << [user_rel_contrib.id, user_rel_contrib.relationship_id,
-            RelationshipType.find(user_rel_contrib.relationship_type_id).name, user_rel_contrib.certainty,
+            user_rel_contrib.relationship_type_id, user_rel_contrib.certainty,
             user_rel_contrib.start_date_type, user_rel_contrib.start_month, user_rel_contrib.start_day,
             user_rel_contrib.start_year, user_rel_contrib.end_date_type,  user_rel_contrib.end_month,
             user_rel_contrib.end_day, user_rel_contrib.end_year]
@@ -180,10 +180,10 @@ class UserRelContribsController < ApplicationController
     @all_user_rel_contribs = UserRelContrib.for_rel_type_assigns_40001_60000.all_active_unrejected
     if (current_user.user_type == "Admin")
       user_rel_contribs_csv = CSV.generate do |csv|
-          csv << ["SDFB Relationship Type Assignment ID", "SDFB Relationship ID", "Relationship Type", "Confidence", "Start Date Type", "Start Month", "Start Day", "Start Year", "End Date Type", "End Month", "End Day", "End Year", "Justification", "Citation", "Created By ID", "Created At", "Is approved?", "Approved By ID", "Approved On"]
+          csv << ["SDFB Relationship Type Assignment ID", "SDFB Relationship ID", "SDFB Relationship Type ID", "Confidence", "Start Date Type", "Start Month", "Start Day", "Start Year", "End Date Type", "End Month", "End Day", "End Year", "Justification", "Citation", "Created By ID", "Created At", "Is approved?", "Approved By ID", "Approved On"]
           @all_user_rel_contribs.each do |user_rel_contrib|
               csv << [user_rel_contrib.id, user_rel_contrib.relationship_id,
-              RelationshipType.find(user_rel_contrib.relationship_type_id).name, user_rel_contrib.certainty, 
+              user_rel_contrib.relationship_type_id, user_rel_contrib.certainty, 
               user_rel_contrib.start_date_type, user_rel_contrib.start_month, user_rel_contrib.start_day,
               user_rel_contrib.start_year, user_rel_contrib.end_date_type,  user_rel_contrib.end_month,
               user_rel_contrib.end_day, user_rel_contrib.end_year,
@@ -193,10 +193,10 @@ class UserRelContribsController < ApplicationController
       end
     else
       user_rel_contribs_csv = CSV.generate do |csv|
-        csv << ["SDFB Relationship Type Assignment ID", "SDFB Relationship ID", "Relationship Type", "Confidence", "Start Year Type", "Start Month", "Start Day", "Start Year", "End Date Type", "End Month", "End Day", "End Year"]
+        csv << ["SDFB Relationship Type Assignment ID", "SDFB Relationship ID", "SDFB Relationship Type ID", "Confidence", "Start Year Type", "Start Month", "Start Day", "Start Year", "End Date Type", "End Month", "End Day", "End Year"]
         @all_user_rel_contribs_approved.each do |user_rel_contrib|
             csv << [user_rel_contrib.id, user_rel_contrib.relationship_id,
-            RelationshipType.find(user_rel_contrib.relationship_type_id).name, user_rel_contrib.certainty,
+            user_rel_contrib.relationship_type_id, user_rel_contrib.certainty,
             user_rel_contrib.start_date_type, user_rel_contrib.start_month, user_rel_contrib.start_day,
             user_rel_contrib.start_year, user_rel_contrib.end_date_type,  user_rel_contrib.end_month,
             user_rel_contrib.end_day, user_rel_contrib.end_year]
@@ -212,10 +212,10 @@ class UserRelContribsController < ApplicationController
     @all_user_rel_contribs = UserRelContrib.for_rel_type_assigns_60001_80000.all_active_unrejected
     if (current_user.user_type == "Admin")
       user_rel_contribs_csv = CSV.generate do |csv|
-          csv << ["SDFB Relationship Type Assignment ID", "SDFB Relationship ID", "Relationship Type", "Confidence", "Start Date Type", "Start Month", "Start Day", "Start Year", "End Date Type", "End Month", "End Day", "End Year", "Justification", "Citation", "Created By ID", "Created At", "Is approved?", "Approved By ID", "Approved On"]
+          csv << ["SDFB Relationship Type Assignment ID", "SDFB Relationship ID", "SDFB Relationship Type ID", "Confidence", "Start Date Type", "Start Month", "Start Day", "Start Year", "End Date Type", "End Month", "End Day", "End Year", "Justification", "Citation", "Created By ID", "Created At", "Is approved?", "Approved By ID", "Approved On"]
           @all_user_rel_contribs.each do |user_rel_contrib|
               csv << [user_rel_contrib.id, user_rel_contrib.relationship_id,
-              RelationshipType.find(user_rel_contrib.relationship_type_id).name, user_rel_contrib.certainty, 
+              user_rel_contrib.relationship_type_id, user_rel_contrib.certainty, 
               user_rel_contrib.start_date_type, user_rel_contrib.start_month, user_rel_contrib.start_day,
               user_rel_contrib.start_year, user_rel_contrib.end_date_type,  user_rel_contrib.end_month,
               user_rel_contrib.end_day, user_rel_contrib.end_year,
@@ -225,10 +225,10 @@ class UserRelContribsController < ApplicationController
       end
     else
       user_rel_contribs_csv = CSV.generate do |csv|
-        csv << ["SDFB Relationship Type Assignment ID", "SDFB Relationship ID", "Relationship Type", "Confidence", "Start Year Type", "Start Month", "Start Day", "Start Year", "End Date Type", "End Month", "End Day", "End Year"]
+        csv << ["SDFB Relationship Type Assignment ID", "SDFB Relationship ID", "SDFB Relationship Type ID", "Confidence", "Start Year Type", "Start Month", "Start Day", "Start Year", "End Date Type", "End Month", "End Day", "End Year"]
         @all_user_rel_contribs_approved.each do |user_rel_contrib|
             csv << [user_rel_contrib.id, user_rel_contrib.relationship_id,
-            RelationshipType.find(user_rel_contrib.relationship_type_id).name, user_rel_contrib.certainty,
+            user_rel_contrib.relationship_type_id, user_rel_contrib.certainty,
             user_rel_contrib.start_date_type, user_rel_contrib.start_month, user_rel_contrib.start_day,
             user_rel_contrib.start_year, user_rel_contrib.end_date_type,  user_rel_contrib.end_month,
             user_rel_contrib.end_day, user_rel_contrib.end_year]
@@ -243,10 +243,10 @@ class UserRelContribsController < ApplicationController
     @all_user_rel_contribs = UserRelContrib.for_rel_type_assigns_80001_100000.all_active_unrejected
     if (current_user.user_type == "Admin")
       user_rel_contribs_csv = CSV.generate do |csv|
-          csv << ["SDFB Relationship Type Assignment ID", "SDFB Relationship ID", "Relationship Type", "Confidence", "Start Date Type", "Start Month", "Start Day", "Start Year", "End Date Type", "End Month", "End Day", "End Year", "Justification", "Citation", "Created By ID", "Created At", "Is approved?", "Approved By ID", "Approved On"]
+          csv << ["SDFB Relationship Type Assignment ID", "SDFB Relationship ID", "SDFB Relationship Type ID", "Confidence", "Start Date Type", "Start Month", "Start Day", "Start Year", "End Date Type", "End Month", "End Day", "End Year", "Justification", "Citation", "Created By ID", "Created At", "Is approved?", "Approved By ID", "Approved On"]
           @all_user_rel_contribs.each do |user_rel_contrib|
               csv << [user_rel_contrib.id, user_rel_contrib.relationship_id,
-              RelationshipType.find(user_rel_contrib.relationship_type_id).name, user_rel_contrib.certainty, 
+              user_rel_contrib.relationship_type_id, user_rel_contrib.certainty, 
               user_rel_contrib.start_date_type, user_rel_contrib.start_month, user_rel_contrib.start_day,
               user_rel_contrib.start_year, user_rel_contrib.end_date_type,  user_rel_contrib.end_month,
               user_rel_contrib.end_day, user_rel_contrib.end_year,
@@ -256,10 +256,10 @@ class UserRelContribsController < ApplicationController
       end
     else
       user_rel_contribs_csv = CSV.generate do |csv|
-        csv << ["SDFB Relationship Type Assignment ID", "SDFB Relationship ID", "Relationship Type", "Confidence", "Start Year Type", "Start Month", "Start Day", "Start Year", "End Date Type", "End Month", "End Day", "End Year"]
+        csv << ["SDFB Relationship Type Assignment ID", "SDFB Relationship ID", "SDFB Relationship Type ID", "Confidence", "Start Year Type", "Start Month", "Start Day", "Start Year", "End Date Type", "End Month", "End Day", "End Year"]
         @all_user_rel_contribs_approved.each do |user_rel_contrib|
             csv << [user_rel_contrib.id, user_rel_contrib.relationship_id,
-            RelationshipType.find(user_rel_contrib.relationship_type_id).name, user_rel_contrib.certainty,
+            user_rel_contrib.relationship_type_id, user_rel_contrib.certainty,
             user_rel_contrib.start_date_type, user_rel_contrib.start_month, user_rel_contrib.start_day,
             user_rel_contrib.start_year, user_rel_contrib.end_date_type,  user_rel_contrib.end_month,
             user_rel_contrib.end_day, user_rel_contrib.end_year]
@@ -274,10 +274,10 @@ class UserRelContribsController < ApplicationController
     @all_user_rel_contribs = UserRelContrib.for_rel_type_assigns_100001_120000.all_active_unrejected
     if (current_user.user_type == "Admin")
       user_rel_contribs_csv = CSV.generate do |csv|
-          csv << ["SDFB Relationship Type Assignment ID", "SDFB Relationship ID", "Relationship Type", "Confidence", "Start Date Type", "Start Month", "Start Day", "Start Year", "End Date Type", "End Month", "End Day", "End Year", "Justification", "Citation", "Created By ID", "Created At", "Is approved?", "Approved By ID", "Approved On"]
+          csv << ["SDFB Relationship Type Assignment ID", "SDFB Relationship ID", "SDFB Relationship Type ID", "Confidence", "Start Date Type", "Start Month", "Start Day", "Start Year", "End Date Type", "End Month", "End Day", "End Year", "Justification", "Citation", "Created By ID", "Created At", "Is approved?", "Approved By ID", "Approved On"]
           @all_user_rel_contribs.each do |user_rel_contrib|
               csv << [user_rel_contrib.id, user_rel_contrib.relationship_id,
-              RelationshipType.find(user_rel_contrib.relationship_type_id).name, user_rel_contrib.certainty, 
+              user_rel_contrib.relationship_type_id, user_rel_contrib.certainty, 
               user_rel_contrib.start_date_type, user_rel_contrib.start_month, user_rel_contrib.start_day,
               user_rel_contrib.start_year, user_rel_contrib.end_date_type,  user_rel_contrib.end_month,
               user_rel_contrib.end_day, user_rel_contrib.end_year,
@@ -287,10 +287,10 @@ class UserRelContribsController < ApplicationController
       end
     else
       user_rel_contribs_csv = CSV.generate do |csv|
-        csv << ["SDFB Relationship Type Assignment ID", "SDFB Relationship ID", "Relationship Type", "Confidence", "Start Year Type", "Start Month", "Start Day", "Start Year", "End Date Type", "End Month", "End Day", "End Year"]
+        csv << ["SDFB Relationship Type Assignment ID", "SDFB Relationship ID", "SDFB Relationship Type ID", "Confidence", "Start Year Type", "Start Month", "Start Day", "Start Year", "End Date Type", "End Month", "End Day", "End Year"]
         @all_user_rel_contribs_approved.each do |user_rel_contrib|
             csv << [user_rel_contrib.id, user_rel_contrib.relationship_id,
-            RelationshipType.find(user_rel_contrib.relationship_type_id).name, user_rel_contrib.certainty,
+            user_rel_contrib.relationship_type_id, user_rel_contrib.certainty,
             user_rel_contrib.start_date_type, user_rel_contrib.start_month, user_rel_contrib.start_day,
             user_rel_contrib.start_year, user_rel_contrib.end_date_type,  user_rel_contrib.end_month,
             user_rel_contrib.end_day, user_rel_contrib.end_year]
@@ -305,10 +305,10 @@ class UserRelContribsController < ApplicationController
     @all_user_rel_contribs = UserRelContrib.for_rel_type_assigns_120001_140000.all_active_unrejected
     if (current_user.user_type == "Admin")
       user_rel_contribs_csv = CSV.generate do |csv|
-          csv << ["SDFB Relationship Type Assignment ID", "SDFB Relationship ID", "Relationship Type", "Confidence", "Start Date Type", "Start Month", "Start Day", "Start Year", "End Date Type", "End Month", "End Day", "End Year", "Justification", "Citation", "Created By ID", "Created At", "Is approved?", "Approved By ID", "Approved On"]
+          csv << ["SDFB Relationship Type Assignment ID", "SDFB Relationship ID", "SDFB Relationship Type ID", "Confidence", "Start Date Type", "Start Month", "Start Day", "Start Year", "End Date Type", "End Month", "End Day", "End Year", "Justification", "Citation", "Created By ID", "Created At", "Is approved?", "Approved By ID", "Approved On"]
           @all_user_rel_contribs.each do |user_rel_contrib|
               csv << [user_rel_contrib.id, user_rel_contrib.relationship_id,
-              RelationshipType.find(user_rel_contrib.relationship_type_id).name, user_rel_contrib.certainty, 
+              user_rel_contrib.relationship_type_id, user_rel_contrib.certainty, 
               user_rel_contrib.start_date_type, user_rel_contrib.start_month, user_rel_contrib.start_day,
               user_rel_contrib.start_year, user_rel_contrib.end_date_type,  user_rel_contrib.end_month,
               user_rel_contrib.end_day, user_rel_contrib.end_year,
@@ -318,10 +318,10 @@ class UserRelContribsController < ApplicationController
       end
     else
       user_rel_contribs_csv = CSV.generate do |csv|
-        csv << ["SDFB Relationship Type Assignment ID", "SDFB Relationship ID", "Relationship Type", "Confidence", "Start Year Type", "Start Month", "Start Day", "Start Year", "End Date Type", "End Month", "End Day", "End Year"]
+        csv << ["SDFB Relationship Type Assignment ID", "SDFB Relationship ID", "SDFB Relationship Type ID", "Confidence", "Start Year Type", "Start Month", "Start Day", "Start Year", "End Date Type", "End Month", "End Day", "End Year"]
         @all_user_rel_contribs_approved.each do |user_rel_contrib|
             csv << [user_rel_contrib.id, user_rel_contrib.relationship_id,
-            RelationshipType.find(user_rel_contrib.relationship_type_id).name, user_rel_contrib.certainty,
+            user_rel_contrib.relationship_type_id, user_rel_contrib.certainty,
             user_rel_contrib.start_date_type, user_rel_contrib.start_month, user_rel_contrib.start_day,
             user_rel_contrib.start_year, user_rel_contrib.end_date_type,  user_rel_contrib.end_month,
             user_rel_contrib.end_day, user_rel_contrib.end_year]
@@ -336,10 +336,10 @@ class UserRelContribsController < ApplicationController
     @all_user_rel_contribs = UserRelContrib.for_rel_type_assigns_140001_160000.all_active_unrejected
     if (current_user.user_type == "Admin")
       user_rel_contribs_csv = CSV.generate do |csv|
-          csv << ["SDFB Relationship Type Assignment ID", "SDFB Relationship ID", "Relationship Type", "Confidence", "Start Date Type", "Start Month", "Start Day", "Start Year", "End Date Type", "End Month", "End Day", "End Year", "Justification", "Citation", "Created By ID", "Created At", "Is approved?", "Approved By ID", "Approved On"]
+          csv << ["SDFB Relationship Type Assignment ID", "SDFB Relationship ID", "SDFB Relationship Type ID", "Confidence", "Start Date Type", "Start Month", "Start Day", "Start Year", "End Date Type", "End Month", "End Day", "End Year", "Justification", "Citation", "Created By ID", "Created At", "Is approved?", "Approved By ID", "Approved On"]
           @all_user_rel_contribs.each do |user_rel_contrib|
               csv << [user_rel_contrib.id, user_rel_contrib.relationship_id,
-              RelationshipType.find(user_rel_contrib.relationship_type_id).name, user_rel_contrib.certainty, 
+              user_rel_contrib.relationship_type_id, user_rel_contrib.certainty, 
               user_rel_contrib.start_date_type, user_rel_contrib.start_month, user_rel_contrib.start_day,
               user_rel_contrib.start_year, user_rel_contrib.end_date_type,  user_rel_contrib.end_month,
               user_rel_contrib.end_day, user_rel_contrib.end_year,
@@ -349,10 +349,10 @@ class UserRelContribsController < ApplicationController
       end
     else
       user_rel_contribs_csv = CSV.generate do |csv|
-        csv << ["SDFB Relationship Type Assignment ID", "SDFB Relationship ID", "Relationship Type", "Confidence", "Start Year Type", "Start Month", "Start Day", "Start Year", "End Date Type", "End Month", "End Day", "End Year"]
+        csv << ["SDFB Relationship Type Assignment ID", "SDFB Relationship ID", "SDFB Relationship Type ID", "Confidence", "Start Year Type", "Start Month", "Start Day", "Start Year", "End Date Type", "End Month", "End Day", "End Year"]
         @all_user_rel_contribs_approved.each do |user_rel_contrib|
             csv << [user_rel_contrib.id, user_rel_contrib.relationship_id,
-            RelationshipType.find(user_rel_contrib.relationship_type_id).name, user_rel_contrib.certainty,
+            user_rel_contrib.relationship_type_id, user_rel_contrib.certainty,
             user_rel_contrib.start_date_type, user_rel_contrib.start_month, user_rel_contrib.start_day,
             user_rel_contrib.start_year, user_rel_contrib.end_date_type,  user_rel_contrib.end_month,
             user_rel_contrib.end_day, user_rel_contrib.end_year]
@@ -367,10 +367,10 @@ class UserRelContribsController < ApplicationController
     @all_user_rel_contribs = UserRelContrib.for_rel_type_assigns_160001_180000.all_active_unrejected
     if (current_user.user_type == "Admin")
       user_rel_contribs_csv = CSV.generate do |csv|
-          csv << ["SDFB Relationship Type Assignment ID", "SDFB Relationship ID", "Relationship Type", "Confidence", "Start Date Type", "Start Month", "Start Day", "Start Year", "End Date Type", "End Month", "End Day", "End Year", "Justification", "Citation", "Created By ID", "Created At", "Is approved?", "Approved By ID", "Approved On"]
+          csv << ["SDFB Relationship Type Assignment ID", "SDFB Relationship ID", "SDFB Relationship Type ID", "Confidence", "Start Date Type", "Start Month", "Start Day", "Start Year", "End Date Type", "End Month", "End Day", "End Year", "Justification", "Citation", "Created By ID", "Created At", "Is approved?", "Approved By ID", "Approved On"]
           @all_user_rel_contribs.each do |user_rel_contrib|
               csv << [user_rel_contrib.id, user_rel_contrib.relationship_id,
-              RelationshipType.find(user_rel_contrib.relationship_type_id).name, user_rel_contrib.certainty, 
+              user_rel_contrib.relationship_type_id, user_rel_contrib.certainty, 
               user_rel_contrib.start_date_type, user_rel_contrib.start_month, user_rel_contrib.start_day,
               user_rel_contrib.start_year, user_rel_contrib.end_date_type,  user_rel_contrib.end_month,
               user_rel_contrib.end_day, user_rel_contrib.end_year,
@@ -380,10 +380,10 @@ class UserRelContribsController < ApplicationController
       end
     else
       user_rel_contribs_csv = CSV.generate do |csv|
-        csv << ["SDFB Relationship Type Assignment ID", "SDFB Relationship ID", "Relationship Type", "Confidence", "Start Year Type", "Start Month", "Start Day", "Start Year", "End Date Type", "End Month", "End Day", "End Year"]
+        csv << ["SDFB Relationship Type Assignment ID", "SDFB Relationship ID", "SDFB Relationship Type ID", "Confidence", "Start Year Type", "Start Month", "Start Day", "Start Year", "End Date Type", "End Month", "End Day", "End Year"]
         @all_user_rel_contribs_approved.each do |user_rel_contrib|
             csv << [user_rel_contrib.id, user_rel_contrib.relationship_id,
-            RelationshipType.find(user_rel_contrib.relationship_type_id).name, user_rel_contrib.certainty,
+            user_rel_contrib.relationship_type_id, user_rel_contrib.certainty,
             user_rel_contrib.start_date_type, user_rel_contrib.start_month, user_rel_contrib.start_day,
             user_rel_contrib.start_year, user_rel_contrib.end_date_type,  user_rel_contrib.end_month,
             user_rel_contrib.end_day, user_rel_contrib.end_year]
@@ -398,10 +398,10 @@ class UserRelContribsController < ApplicationController
     @all_user_rel_contribs = UserRelContrib.for_rel_type_assigns_greater_than_180000.all_active_unrejected
     if (current_user.user_type == "Admin")
       user_rel_contribs_csv = CSV.generate do |csv|
-          csv << ["SDFB Relationship Type Assignment ID", "SDFB Relationship ID", "Relationship Type", "Confidence", "Start Date Type", "Start Month", "Start Day", "Start Year", "End Date Type", "End Month", "End Day", "End Year", "Justification", "Citation", "Created By ID", "Created At", "Is approved?", "Approved By ID", "Approved On"]
+          csv << ["SDFB Relationship Type Assignment ID", "SDFB Relationship ID", "SDFB Relationship Type ID", "Confidence", "Start Date Type", "Start Month", "Start Day", "Start Year", "End Date Type", "End Month", "End Day", "End Year", "Justification", "Citation", "Created By ID", "Created At", "Is approved?", "Approved By ID", "Approved On"]
           @all_user_rel_contribs.each do |user_rel_contrib|
               csv << [user_rel_contrib.id, user_rel_contrib.relationship_id,
-              RelationshipType.find(user_rel_contrib.relationship_type_id).name, user_rel_contrib.certainty, 
+              user_rel_contrib.relationship_type_id, user_rel_contrib.certainty, 
               user_rel_contrib.start_date_type, user_rel_contrib.start_month, user_rel_contrib.start_day,
               user_rel_contrib.start_year, user_rel_contrib.end_date_type,  user_rel_contrib.end_month,
               user_rel_contrib.end_day, user_rel_contrib.end_year,
@@ -411,10 +411,10 @@ class UserRelContribsController < ApplicationController
       end
     else
       user_rel_contribs_csv = CSV.generate do |csv|
-        csv << ["SDFB Relationship Type Assignment ID", "SDFB Relationship ID", "Relationship Type", "Confidence", "Start Year Type", "Start Month", "Start Day", "Start Year", "End Date Type", "End Month", "End Day", "End Year"]
+        csv << ["SDFB Relationship Type Assignment ID", "SDFB Relationship ID", "SDFB Relationship Type ID", "Confidence", "Start Year Type", "Start Month", "Start Day", "Start Year", "End Date Type", "End Month", "End Day", "End Year"]
         @all_user_rel_contribs_approved.each do |user_rel_contrib|
             csv << [user_rel_contrib.id, user_rel_contrib.relationship_id,
-            RelationshipType.find(user_rel_contrib.relationship_type_id).name, user_rel_contrib.certainty,
+            user_rel_contrib.relationship_type_id, user_rel_contrib.certainty,
             user_rel_contrib.start_date_type, user_rel_contrib.start_month, user_rel_contrib.start_day,
             user_rel_contrib.start_year, user_rel_contrib.end_date_type,  user_rel_contrib.end_month,
             user_rel_contrib.end_day, user_rel_contrib.end_year]
