@@ -31,7 +31,7 @@ class RelationshipCategory < ActiveRecord::Base
   # ----------------------------- 
   before_create :init_array
   before_create :check_if_approved
-  before_update :check_if_approved_and_update_edit
+  #before_update :check_if_approved_and_update_edit
 
   # Custom Methods
   # -----------------------------
