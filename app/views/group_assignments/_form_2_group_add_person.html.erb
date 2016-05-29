@@ -2,7 +2,21 @@
   <div class="w-section form-section">
     <div class="w-form relationship-form-wrapper">
       <%= simple_form_for @group_assignment, html: { id: "wf-form-relationship-Contribution", class: "relationship-form" }, :url => group_add_person_create_path, :method => :get do |f| %>
+        <% if @group_assignment.errors.any? %>
+          <div id="error_explanation">
+            <h2><%= pluralize(@group_assignment.errors.count, "error") %> prohibited this person from being saved:</h2>
+
+            <ul>
+            <% @group_assignment.errors.full_messages.each do |msg| %>
+              <br>
+              <li>- <%= msg %></li>
+              <br>
+            <% end %>
+            </ul>
+          </div>
+        <% end %>
         <%= f.hidden_field :group_id, :value => params['group_id'] %>
+        <%= f.hidden_field :created_by, :value => current_user.id %>
         <div class="w-container intro-wrapper">
           <div class="six-degrees-form-heading">
             <div data-ix="load-reveal" class="six-degrees-form-heading"><strong class="text"> &nbsp; GROUP&nbsp;PERSON&nbsp;CONTRIBUTION</strong>

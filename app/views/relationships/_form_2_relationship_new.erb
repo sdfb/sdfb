@@ -1,4 +1,9 @@
 
+  <script type="text/javascript">
+    function updateTextInput(val) {
+      document.getElementById('percentText').innerHTML=val+"%"; 
+    }
+  </script>
   <div class="w-section form-section">
     <div class="w-form relationship-form-wrapper">
       <%= simple_form_for @relationship, html: { id: "wf-form-relationship-Contribution", class: "relationship-form" }, :url => relationship_create_2_path, :method => :get do |f| %>
@@ -42,7 +47,8 @@
         </div>
         <div id="relationship-new-div-2" class="div-2">
           <h1 class="form-heading">Estimated Confidence*</h1>
-          <%= f.range_field :original_certainty, :min=>0, :max=>100, :class=>"slide relationship_confidence", :id=>"slider1", :value => "60"%>
+          <h4 id="percentText" style="display:inline-block;padding-right:10px">60%</h4>
+          <%= f.range_field :original_certainty, :min=>0, :max=>100, :class=>"slide relationship_confidence", :id=>"slider1", :value => "60", :onchange => "updateTextInput(this.value);", :oninput => "updateTextInput(this.value);" %>
         </div>
         <div class="w-clearfix form-button-div-block"><a href="#relationship-new-div-3" data-ix="move-next-button-2" class="w-button next-button-2">CONTINUE</a>
         </div>

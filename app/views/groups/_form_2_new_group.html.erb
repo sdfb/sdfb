@@ -2,6 +2,20 @@
   <div class="w-section form-section">
     <div class="w-form relationship-form-wrapper">
         <%= simple_form_for @group, html: { id: "wf-form-relationship-Contribution", class: "relationship-form" }, :url => group_create_2_path, :method => :get do |f| %>
+        <% if @group.errors.any? %>
+          <div id="error_explanation">
+            <h2><%= pluralize(@group.errors.count, "error") %> prohibited this person from being saved:</h2>
+
+            <ul>
+            <% @group.errors.full_messages.each do |msg| %>
+              <br>
+              <li>- <%= msg %></li>
+              <br>
+            <% end %>
+            </ul>
+          </div>
+        <% end %>
+        <%= f.hidden_field :created_by, :value => current_user.id %>
         <div class="w-container intro-wrapper">
           <div class="six-degrees-form-heading">
             <div data-ix="load-reveal" class="six-degrees-form-heading"><strong class="text"> &nbsp; NEW<br><br>GROUP&nbsp;CONTRIBUTION</strong>
@@ -14,7 +28,6 @@
         <div>
           <div class="person-question-text"><strong>Note:</strong> Any fields marked with a * indicates that it must be filled out before you can continue on with the form. Once you have finished all required fields, press the SUBMIT button to finish.</div>
         </div>
-        <%= f.hidden_field :created_by, :value => current_user.id %>
         <div id="relationship-new-div-1" data-ix="load-reveal-3" class="div-1">
           <h1 class="form-heading">Citation</h1>
           <label for="Relationship-New-Citation-2" class="rel-new-label-1">CITATION</label>

@@ -101,7 +101,7 @@ class GroupAssignmentsController < ApplicationController
         format.html { redirect_to @group_assignment, notice: 'Group assignment was successfully created.' }
         format.json { render json: @group_assignment, status: :created, location: @group_assignment }
       else
-        format.html { redirect_to group_add_person_path(group_id: @group_assignment.group_id) }
+        format.html { render action: "new_2" }
         format.json { render json: @group_assignment.errors, status: :unprocessable_entity }
       end
     end

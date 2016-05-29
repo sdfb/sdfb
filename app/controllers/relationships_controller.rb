@@ -119,7 +119,7 @@ class RelationshipsController < ApplicationController
         format.html { redirect_to new_existing_relationship_form_path(person1: @relationship.person1_index, person2: @relationship.person2_index) }
         format.json { render json: @relationship, status: :created, location: @relationship }
       else
-        format.html { redirect_to new_new_relationship_form_path(person1: @relationship.person1_index, person2: @relationship.person2_index) }
+        format.html { render action: "new_2" }
         format.json { render json: @relationship.errors, status: :unprocessable_entity }
       end
     end
