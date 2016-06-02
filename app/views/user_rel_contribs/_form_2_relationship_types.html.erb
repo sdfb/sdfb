@@ -6,7 +6,7 @@
   </script>
   <div class="w-section form-section">
     <div class="w-form relationship-form-wrapper">
-      <%= simple_form_for @user_rel_contrib, html: { id: "wf-form-relationship-Contribution", class: "relationship-form" }, :url => user_rel_contribs_create_2_path do |f| %>
+      <%= simple_form_for @user_rel_contrib, html: { id: "wf-form-relationship-Contribution", class: "relationship-form" }, :url => { :action => :create_2, :person1 => params['person1'], :person2 => params['person2'] } do |f| %>
         <% if @user_rel_contrib.errors.any? %>
           <div id="error_explanation">
             <h2><%= pluralize(@user_rel_contrib.errors.count, "error") %> prohibited this user_rel_contrib from being saved:</h2>
@@ -32,6 +32,7 @@
           <%= f.hidden_field :relationship_id, value: 0 %>
           <%= f.hidden_field :person1_selection, :value => params['person1'] %>
           <%= f.hidden_field :person2_selection, :value => params['person2'] %>
+          <%= f.hidden_field :created_by, :value => current_user.id %>
           <%= Person.find_by_id(params['person1']).display_name %>
 
           <%= f.input :relationship_type_id, :collection =>@relType.collect{ |r| [r.name, r.id] }, label: false, input_html: { id: "Relationship-New-Citation-3", class: "w-input rel-new-field-1" }, prompt: "Relationship Type" %>
@@ -52,7 +53,7 @@
         <div id="relationship-new-div-2" class="div-2">
           <h1 class="form-heading">Estimated Confidence*</h1>
           <h4 id="percentText" style="display:inline-block;padding-right:10px">60%</h4>
-            <%= f.range_field :original_certainty, :min=>0, :max=>100, :class=>"slide relationship_confidence", :id=>"slider1", :value => "60", :onchange => "updateTextInput(this.value);", :oninput => "updateTextInput(this.value);"%>
+            <%= f.range_field :certainty, :min=>0, :max=>100, :class=>"slide relationship_confidence", :id=>"slider1", :value => "60", :onchange => "updateTextInput(this.value);", :oninput => "updateTextInput(this.value);"%>
         </div>
         <div class="w-clearfix form-button-div-block"><a href="#relationship-new-div-3" data-ix="move-next-button-2" class="w-button next-button-2">CONTINUE</a>
         </div>
@@ -70,10 +71,8 @@
               <%= f.input :start_day, input_html: { id: "Relationship-New-Start-Day-2", class: "w-select day-field relationship-new-start-day" }, label: false, :collection => 1..31, prompt: "Day", include_blank: true %>
             </div>
             <div class="w-col w-col-4">
-              <div>
               <label for="Relationship-New-Start-Year-2" class="_14px-label">YEAR</label>
-                  <%= f.input :start_year, as: :string, input_html: { id: "Relationship-New-Start-Year-2", class: "w-input start-year-field" }, label: false, placeholder: "Year" %>
-              </div>
+                  <%= f.input :start_year, as: :string, input_html: { id: "Relationship-New-Start-Year-2", class: "w-input day-field relationship-new-start-day" }, label: false, placeholder: "Year" %>
             </div>
           </div>
           <label for="Relationship-New-End-Date-Type-2" class="end-date-label">END DATE TYPE</label>
@@ -88,10 +87,8 @@
                 <%= f.input :end_day, input_html: { id: "Relationship-New-End-Day-2", class: "w-select day-field relationship-new-end-day" }, label: false, :collection => 1..31, prompt: "Day", :include_blank => true %>
             </div>
             <div class="w-col w-col-4">
-              <div>
                 <label for="Relationship-New-End-Year-2" class="_14px-label">YEAR</label>
-                <%= f.input :end_year, input_html: { id: "Relationship-New-End-Year-2", class: "w-input end-year-field"}, label: false, as: :string, label: false, placeholder: "Year" %>
-              </div>
+                <%= f.input :end_year, input_html: { id: "Relationship-New-End-Year-2", class: "w-input day-field relationship-new-start-day"}, label: false, as: :string, label: false, placeholder: "Year" %>
             </div>
           </div>
         </div>
