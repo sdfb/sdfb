@@ -42,16 +42,29 @@ class HomeController < ApplicationController
     @data['recent_user_points'] = recent_user_points()
   end
 
+# removes certain users from the leader board's most recent 1000 contribution selection
+# for now removes users 1,2, and 3
+  def remove_users(contrib_type)
+    type = contrib_type.clone
+    type.each do |i|
+      type.delete_if {|i| i.created_by == 1 }
+      type.delete_if {|i| i.created_by == 2 }
+      type.delete_if {|i| i.created_by == 3 }
+    end
+    return type
+  end
+
 # grabs the 1000 most recent contributions for the leaderboard
   def recent_contributions
-    recent_contrib = ((Person.all_recent.all_approved.limit(1000)) + 
-                      (Group.all_recent.all_approved.limit(1000)) + 
-                      (Relationship.all_recent.all_approved.limit(1000)) + 
-                      (GroupAssignment.all_recent.all_approved.limit(1000)) + 
-                      (UserGroupContrib.all_recent.all_approved.limit(1000)) + 
-                      (UserPersonContrib.all_recent.all_approved.limit(1000))) + 
-                      (UserRelContrib.all_recent.all_approved.limit(1000))
+    recent_contrib = ((Person.all_recent.all_approved.limit(2000)) + 
+                      (Group.all_recent.all_approved.limit(2000)) + 
+                      (Relationship.all_recent.all_approved.limit(2000)) + 
+                      (GroupAssignment.all_recent.all_approved.limit(2000)) + 
+                      (UserGroupContrib.all_recent.all_approved.limit(2000)) + 
+                      (UserPersonContrib.all_recent.all_approved.limit(2000))) + 
+                      (UserRelContrib.all_recent.all_approved.limit(2000))
     recent_contrib.sort! {|a,b| a.updated_at <=> b.updated_at}.reverse!
+    recent_contrib = remove_users(recent_contrib)
     @recent_contrib = recent_contrib.take(1000)
   end
 
