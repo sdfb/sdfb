@@ -44,7 +44,7 @@ Sdfb::Application.routes.draw do
   get "reroute_group_form" => "groups#reroute_group_form", :as => "reroute_group_form"
   get "group_create_2" => "groups#create_2"
   get "group_add_person" => "group_assignments#new_2"
-  get "group_add_person_create" => "group_assignments#create_2"
+  post "group_add_person_create" => "group_assignments#create_2"
   get "relationship_create_2" => "relationships#create_2", :as => "relationship_create_2"
   post "user_rel_contribs_create_2" => "user_rel_contribs#create_2"
 
