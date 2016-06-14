@@ -67,7 +67,7 @@
           <%= f.input :odnb_id, input_html: { id: "ODNB-ID", class: "w-input field-2" }, label: false %>
           <%= f.hidden_field :created_by, :value => current_user.id %>
           <label for="field" class="label-1">GENDER*</label>
-          <%= f.input :gender, :collection => ["female", "male", "gender_noncoforing"], prompt: "Select one...", input_html: { id: "field", class: "w-select gender-selection" }, requried: true, label: false %>
+          <%= f.input :gender, :collection => ["female", "male", "gender_nonconforming"], prompt: "Select one...", input_html: { id: "field", class: "w-select gender-selection" }, requried: true, label: false %>
         </div>
         <div class="w-clearfix form-button-div-block"><a href="#person-div-3" data-ix="move-next-button-2" class="w-button next-button-2">CONTINUE</a>
         </div>

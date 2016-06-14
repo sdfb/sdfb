@@ -6,7 +6,7 @@
   </script>
   <div class="w-section form-section">
     <div class="w-form relationship-form-wrapper">
-      <%= simple_form_for @relationship, html: { id: "wf-form-relationship-Contribution", class: "relationship-form" }, :url => relationship_create_2_path, :method => :get do |f| %>
+      <%= simple_form_for @relationship, html: { id: "wf-form-relationship-Contribution", class: "relationship-form" }, :url => {:action => :create_2, :person1 => params['person1'], :person2 => params['person2']} do |f| %>
         <% if @relationship.errors.any? %>
           <div id="error_explanation">
             <h2><%= pluralize(@relationship.errors.count, "error") %> prohibited this person from being saved:</h2>
