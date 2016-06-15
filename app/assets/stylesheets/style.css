@@ -81,7 +81,7 @@ li {
 #filterBar {
   display:block;
   background-color: #FBF3E1;
-  line-height: 34px;
+  line-height: 41px;
   height: auto;
   font-weight: lighter;
   letter-spacing: 2px;
@@ -94,19 +94,18 @@ li {
 }
 
 a:hover {
-  background: rgba(0,0,0,0);
   color: #1c7098;
   text-decoration: none;
 }
 
 
 #results {
-    color: #555;
+    color: #000;
     background: none;
     text-align: center;
-    font-weight: lighter;
-    letter-spacing: 2px;
-    font-size: 14px;
+    font-weight: 500;
+    letter-spacing: 1px;
+    font-size: 13px;
 }
 
 #graph {
@@ -128,7 +127,7 @@ a:hover {
 
 #zoom {
   position: fixed;
-  top: 110px;
+  top: 120px;
   right: 10px;
   width: 30px;
   z-index:5;
@@ -173,6 +172,43 @@ a:hover {
 .col-sm{
   width:100px;
 }
+
+
+ /*LEADERBOARD FORMAT*/
+ /*General styling & styling when logged_in user is on the leader board*/
+
+#leaderboard {
+  float: center;
+}
+
+#leaderboard tr{
+  background: #78A7BF;
+}
+
+#leaderboard tr:hover {
+  background-color: #0978AC;
+  opacity: 0.5;
+  color: #000000;
+  font-style: black;
+}
+
+#leaderboard a:link, a:visited, a:active {
+  text-decoration: none;
+}
+
+#leaderboard tr.user, tr.user a:hover, tr.user a:link, tr.user a:visited, tr.user a:active{
+  background: #0978AC;
+  color: #ffffff;
+  text-decoration: none;
+}
+
+#leaderboard tr.title{
+  background: #78A7BF;
+  color: #000000;
+  opacity: 1.0;
+  /*text-align: center;*/
+}
+
 
 /*TABLE FORMAT*/
 #twogroupsmenu {

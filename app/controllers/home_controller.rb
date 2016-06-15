@@ -39,7 +39,56 @@ class HomeController < ApplicationController
         @data['group_members'] = Person.all_members_of_2_groups(params[:group], params[:group2])
       end 
     end
+    @data['recent_user_points'] = recent_user_points()
   end
+
+# removes certain users from the leader board's most recent 1000 contribution selection
+# for now removes users 1,2, and 3
+  def remove_users(contrib_type)
+    type = contrib_type.clone
+    type.each do |i|
+      type.delete_if {|i| i.created_by == 1 }
+      type.delete_if {|i| i.created_by == 2 }
+      type.delete_if {|i| i.created_by == 3 }
+    end
+    return type
+  end
+
+# grabs the 1000 most recent contributions for the leaderboard
+  def recent_contributions
+    recent_contrib = ((Person.all_recent.all_approved.limit(2000)) + 
+                      (Group.all_recent.all_approved.limit(2000)) + 
+                      (Relationship.all_recent.all_approved.limit(2000)) + 
+                      (GroupAssignment.all_recent.all_approved.limit(2000)) + 
+                      (UserGroupContrib.all_recent.all_approved.limit(2000)) + 
+                      (UserPersonContrib.all_recent.all_approved.limit(2000))) + 
+                      (UserRelContrib.all_recent.all_approved.limit(2000))
+    recent_contrib.sort! {|a,b| a.updated_at <=> b.updated_at}.reverse!
+    recent_contrib = remove_users(recent_contrib)
+    @recent_contrib = recent_contrib.take(1000)
+  end
+
+# calculates, based off of the 1000 most recent contributions, which users have contributed and how much
+  def recent_user_points
+    users_rank = Hash.new
+    @recent_contrib = recent_contributions
+    @recent_contrib.each do |i|
+      if users_rank.key?(i.created_by)
+        users_rank[i.created_by] += 1
+      else
+        users_rank[i.created_by] = 1
+      end
+    end
+    @users_rank = users_rank.sort_by { |created_by, points| points }.reverse
+  end
+
+# usernames on the leaderboard based off of id from recent_user_points
+  def get_username(id)
+    user = User.find([id])
+    @username = user[0].username
+  end
+  helper_method :get_username
+
 
   def update_node_info
     @node_id = params[:node_id]

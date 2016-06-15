@@ -1,0 +1,144 @@
+
+  <script type="text/javascript">
+    function updateTextInput(val) {
+      document.getElementById('percentText').innerHTML=val+"%"; 
+    }
+  </script>
+  <div class="w-section form-section">
+    <div class="w-form relationship-form-wrapper">
+      <%= simple_form_for @user_rel_contrib, html: { id: "wf-form-relationship-Contribution", class: "relationship-form" }, :url => { :action => :create_2, :person1 => params['person1'], :person2 => params['person2'] } do |f| %>
+        <% if @user_rel_contrib.errors.any? %>
+          <div id="error_explanation">
+            <h2><%= pluralize(@user_rel_contrib.errors.count, "error") %> prohibited this user_rel_contrib from being saved:</h2>
+            <ul>
+            <% @user_rel_contrib.errors.full_messages.each do |msg| %>
+              <br>
+                <li>- <%= msg %></li>
+              <br>
+            <% end %>
+            </ul>
+          </div>
+        <% end %>
+        <div class="w-container intro-wrapper">
+          <div class="six-degrees-form-heading">
+            <div data-ix="load-reveal" class="six-degrees-form-heading"><strong class="text"> &nbsp; RELATIONSHIP<br><br>TYPE&nbsp;CONTRIBUTION</strong>
+            </div>
+          </div>
+        </div>
+        <div data-ix="reveal-relationship-question-text" class="question-mark-div">
+          <%= image_tag("question_mark.png", class: "person-question-mark") %>
+        </div>
+        <div>
+          <%= f.hidden_field :relationship_id, value: 0 %>
+          <%= f.hidden_field :person1_selection, :value => params['person1'] %>
+          <%= f.hidden_field :person2_selection, :value => params['person2'] %>
+          <%= f.hidden_field :created_by, :value => current_user.id %>
+          <%= Person.find_by_id(params['person1']).display_name %>
+
+          <%= f.input :relationship_type_id, :collection =>@relType.collect{ |r| [r.name, r.id] }, label: false, input_html: { id: "Relationship-New-Citation-3", class: "w-input rel-new-field-1" }, prompt: "Relationship Type" %>
+          <%= Person.find_by_id(params['person2']).display_name %>
+        </div>
+        <div class="relationship-question-div">
+          <div class="relationship-new-question-text"><strong>Note:</strong> Any fields marked with a * indicates that it must be filled out before you can continue on with the form. Once you have finished all required fields, press the SUBMIT button to finish.</div>
+        </div>
+
+        <div id="relationship-new-div-1" data-ix="load-reveal-3" class="div-1">
+          <h1 class="form-heading">Citation</h1>
+          <label for="Relationship-New-Citation-2" class="rel-new-label-1">CITATION</label>
+          <%= f.input :bibliography, input_html: {id: "Relationship-New-Citation-2", class: "w-input rel-field-1" }, label: false %>
+        </div>
+        <div data-ix="load-reveal-4" class="w-clearfix form-button-div-block"><a href="#relationship-new-div-2" data-ix="move-next-button" class="w-button next-button-1">CONTINUE</a>
+        </div>
+        
+        <div id="relationship-new-div-2" class="div-2">
+          <h1 class="form-heading">Estimated Confidence*</h1>
+          <h4 id="percentText" style="display:inline-block;padding-right:10px">60%</h4>
+            <%= f.range_field :certainty, :min=>0, :max=>100, :class=>"slide relationship_confidence", :id=>"slider1", :value => "60", :onchange => "updateTextInput(this.value);", :oninput => "updateTextInput(this.value);"%>
+        </div>
+        <div class="w-clearfix form-button-div-block"><a href="#relationship-new-div-3" data-ix="move-next-button-2" class="w-button next-button-2">CONTINUE</a>
+        </div>
+        <div id="relationship-new-div-3" class="div-3">
+          <h1 class="form-heading">Date Information</h1>
+          <label for="Relationship-New-Start-Date-Type-2" class="start-date-label">START DATE TYPE</label>
+          <%= f.input :start_date_type, :collection => ["BF", "AF","IN","CA","BF/IN","AF/IN"], input_html: { id: "Relationship-New-Start-Date-Type-2", class: "w-select birth-year-field"}, label: false, prompt: "Year Type", hint: " BF = Before, AF = After, IN = In, CA = Circa, BF/IN = Before or In, AF/IN = After or In" %>
+          <div class="w-row row-1">
+            <div class="w-col w-col-4 column-1">
+              <label for="Relationship-New-Start-Month-2" class="_14px-label">MONTH</label>
+              <%= f.input :start_month, input_html: { id: "Relationship-Nwe-Start-Month-2", class: "w-select month-field relationship-new-start-month"}, label: "Start Date", :collection =>["January","February","March","April","Ma","June","July","August","September","October","November","December"], label: false, prompt: "Month", include_blank: true %>
+            </div>
+            <div class="w-col w-col-4 column-2">
+              <label for="Relationship-New-Start-Day-2" class="_14px-label">DAY</label>
+              <%= f.input :start_day, input_html: { id: "Relationship-New-Start-Day-2", class: "w-select day-field relationship-new-start-day" }, label: false, :collection => 1..31, prompt: "Day", include_blank: true %>
+            </div>
+            <div class="w-col w-col-4">
+              <label for="Relationship-New-Start-Year-2" class="_14px-label">YEAR</label>
+                  <%= f.input :start_year, as: :string, input_html: { id: "Relationship-New-Start-Year-2", class: "w-input day-field relationship-new-start-day" }, label: false, placeholder: "Year" %>
+            </div>
+          </div>
+          <label for="Relationship-New-End-Date-Type-2" class="end-date-label">END DATE TYPE</label>
+          <%= f.input :end_date_type, input_html: { id: "Relationship-New-End-Date-Type-2", class: "w-select death-year-select" }, :collection => ["BF", "AF","IN","CA","BF/IN","AF/IN"], label: false, prompt: "Year Type", hint: " BF = Before, AF = After, IN = In, CA = Circa, BF/IN = Before or In, AF/IN = After or In" %>
+          <div class="w-row row-1">
+            <div class="w-col w-col-4 column-1">
+              <label for="Relationship-New-End-Month-2" class="_14px-label">MONTH</label>
+              <%= f.input :end_month, input_html: { id: "Relationship-New-End-Month-2", class: "w-select month-field relationship-new-end-month"}, :collection => ["January","February","March","April","May","June","July","August","September","October","November","December"], label: false, prompt: "Month", :include_blank => true %>
+            </div>
+            <div class="w-col w-col-4 column-2">
+              <label for="Relationship-New-End-Day-2" class="_14px-label">DAY</label>
+                <%= f.input :end_day, input_html: { id: "Relationship-New-End-Day-2", class: "w-select day-field relationship-new-end-day" }, label: false, :collection => 1..31, prompt: "Day", :include_blank => true %>
+            </div>
+            <div class="w-col w-col-4">
+                <label for="Relationship-New-End-Year-2" class="_14px-label">YEAR</label>
+                <%= f.input :end_year, input_html: { id: "Relationship-New-End-Year-2", class: "w-input day-field relationship-new-start-day"}, label: false, as: :string, label: false, placeholder: "Year" %>
+            </div>
+          </div>
+        </div>
+        <div class="w-clearfix form-button-div-block"><a href="#relationship-new-div-4" data-ix="move-next-button-3" class="w-button next-button-3">CONTINUE</a>
+        </div>
+        <div id="relationship-new-div-4" class="div-4">
+          <h1 class="form-heading">Justification</h1>
+          <label for="Justification-for-Person-Citation-3" class="rel-new-label-3">JUSTIFICATION</label>
+            <%= f.input :annotation, input_html: { id: "Justification-for-Person-Citation-3", class: "w-input rel-new-field-3" }, required: true, label: "Justification for Relationship Creation" %>
+        </div>
+        <div class="w-clearfix form-div">
+          <input type="submit" value="SUBMIT" data-wait="Please wait..." class="w-button form-button">
+        </div>
+        <% if (current_user.user_type == "Admin") || (current_user.user_type == "Curator") %>
+          <%= f.input :is_approved %>
+          <%= f.input :is_active %>
+          <%= f.input :is_rejected %>
+          <%= f.hidden_field :approved_by, :value => current_user.id %>
+          <%= f.hidden_field :approved_on, :value => Time.now %>
+        <% else %>
+          <%= f.hidden_field :is_approved, :value => false %>
+        <% end %>
+        
+        <div class="breadcrumb-section">
+          <div class="w-row breadcrumbs">
+            <div class="w-col w-col-1">
+              <div class="breadcrumb-1">
+                <br><a class="breadcrumb-1" href="#relationship-new-div-1">1. Citation</a>
+              </div>
+            </div>
+            <div class="w-col w-col-2">
+              <div class="breadcrumb-2">
+                <br><a class="breadcrumb-2" href="#relationship-new-div-2"><span>2. Estimated Confidence</span><br></a>
+              </div>
+            </div>
+            <div class="w-col w-col-3">
+              <div class="breadcrumb-3">
+                <a class="breadcrumb-3" href="#relationship-new-div-3">
+                  <br>3. Date Information</a>
+              </div>
+            </div>
+            <div class="w-col w-col-4">
+              <div class="breadcrumb-4">
+                <a class="breadcrumb-4" href="#relationship-new-div-4">
+                  <br>4. Justification</span>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  </div>

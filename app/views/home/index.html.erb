@@ -1,3 +1,4 @@
+
 <% content_for :title, "Six Degrees of Francis Bacon" %>
 	<div id="everything">
 		<div id="graph"></div>		
@@ -11,9 +12,10 @@
 			<img src="assets/colorchart2.png" />
 		</div> 
 		<div id="accordion">
+			<div class="left-accordion">
 			<!-- search bar -->
 			<h3 class="accordion_btn on" id="search-button"><span class="icon-magnify"></span>Search</h3>
-			<div class="accordion_content active" id="search">
+			<div class="accordion_content active" id="search" style="overflow:hidden">
 				<ul class="search-table">
 					<li id="search-network" class="clicked btnl">Network</li>		
 					<li id="search-shared-network" class="btnl">Shared network</li>
@@ -91,7 +93,7 @@
 
 			<!-- person information bar -->
 			<h3 class="accordion_btn"><span class="icon-node"></span>Person</h3>
-			<div  class="accordion_content " id="nodeinfo">
+			<div  class="accordion_content " id="nodeinfo" style="overflow:hidden">
 				<p id="node-info-text"></p>
 				<a class="icon icon-annotate" id="node-icon-annotate"  name="person"></a>
 				<a class="icon icon-chain" id="node-icon-chain" name="person"></a>
@@ -110,7 +112,7 @@
 
 			<!-- relationship information bar -->
 			<h3 class="accordion_btn"><span class="icon-edge"></span>Relationship</h3>
-			<div  class="accordion_content " id="edgeinfo">
+			<div  class="accordion_content " id="edgeinfo" style="overflow:hidden">
 				<a class="icon icon-annotate" id="edge-icon-annotate" name="edge"></a>
 				<p id="edge-nodes">Click on a relationship to see details</p>
 				<!-- <b id="edge-annotate"><a target="blank" href="http://sixdegreesoffrancisbacon.com/post//probabilistic-relationships-in-sdfb">MAX CONFIDENCE&nbsp;</a></b> 	<span id="edge-confidence"></span><br> -->
@@ -134,7 +136,7 @@
 
 			<!-- group information bar -->
 			<h3 class="accordion_btn" id="tab-group"><span class="icon-group"></span>Group</h3>
-				<div class="accordion_content" id="groupinfo" name="group">
+				<div class="accordion_content" id="groupinfo" name="group" style="overflow:hidden">
 					<a class="icon icon-annotate" id="group-icon-annotate"  name="group"></a>
 					<a class="icon icon-label" id="group-icon-tag" name="group"></a>
 					<p id="group-name">Search a group to see details</p>
@@ -148,27 +150,90 @@
 					<span class="fill"></span>
 				</div>
 
+<!--  -->
+			<!-- leaderboard information bar -->
+			<!-- header and icon -->
+			<h3 class="accordion_btn" id="tab-leader"><span style="height:0"><%= image_tag "leader.png", class: "leader-img", style:"margin-bottom:15px" %></span>Leader Board</h3>
+				<div class="accordion_content" id="leaderinfo" name="leader" style="overflow:hidden">
+					<!-- user icon -->
+					<% if logged_in? %>
+						<a class="icon icon-node" id="leader-icon-user-loggedin"  name="leader" href="/users/3/"></a>
+					<% else %>
+						<a class="icon icon-node" id="leader-icon-user"  name="leader" href="/sign_in?prev=%2F"></a>
+					<% end %>
+					<p id="leader-name">Top Contributors</p>
+					<p id="leader-clarify">(Last 1000 Contributions)</p>
+					<table id="leaderboard">
+						<tr class="title">
+							<th>RANK&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th>
+							<th>USERNAME&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th>
+							<th>PERCENTAGE</th>
+            <tr>
+              <% rank = 1 %>
+              <% on_leaderboard = false %>
+              <% @data['recent_user_points'].each do |i| %>
+              <% break if rank == 11 %>
+              <% if logged_in? && current_user.id == i[0] %>
+              	<tr class="user">
+              		<% on_leaderboard = true %>
+  		            <script>
+						$("#leader-icon-user-loggedin").tooltip({placement: 'right', title: ('Your Rank: ' + <%= rank %>)});
+					</script>
+              <% else %>
+              	<tr>
+              <% end %>
+                <td style="color:#fff;padding-left:10px"><%= link_to rank, user_path(i[0]), style:"color:#fff" %>. </td>
+                <td><%= link_to get_username(i[0]), user_path(i[0]), style:"color:#fff" %></td>
+                <td style="color:#fff">
+                	<% if (((i[1]/1000.0*100).round(2)) < 5.0) %>
+                		<%= link_to "< 5.0", user_path(i[0]), style:"color:#fff" %>
+                	<% else %>
+                		<%= link_to (i[1]/1000.0*100).round(2), user_path(i[0]), style:"color:#fff" %>
+                	<% end %>
+                	%</td>
+                <% rank += 1 %>
+            </tr>
+            <% end %>
 
+						</table>
+						<% if !on_leaderboard and logged_in? %>
+							<p align="center" style="padding-top:10px;margin:0"> You Have No Recent Contributions </p>
+							  	<script>
+									$("#leader-icon-user-loggedin").tooltip({placement: 'right', title: 'You have no recent contributions.'});
+								</script>
+						<% end %>
+
+					<span class="fill"></span>
+				</div>
+<!-- 
+ -->
 			<!-- contribution bar -->
 			<h3 class="accordion_btn"><span class="icon-add"></span>Contribute</h3>
-			<div  class="accordion_content tabs" id="add">
+			<div  class="accordion_content tabs" id="add" style="overflow:hidden">
 				<ul class="clearfix">
 					<a href="/people/new"><li id="contribute-add-person">Person</li></a>
 					<a href="/relationships/new"><li id="contribute-add-relationship">Relationship</li></a>
 					<a href="/groups/new"><li id="contribute-add-group">Group</li></a>
 				</ul>
+				<ul class="clearfix">
+					<a href="/new_form_menu"><li id="contribute-add-new" style="padding:0;width:100%"><span style="background-color:red;padding:2px;border-radius:2px">New</span> Guided Contribution Forms</li></a>
+				</ul>
 			</div>
+		  </div>
+		  <div class="close-right">
+		  	<p>◀</p>
+		  </div>
 		</div>	
 		<div id="filterBar">
-			<ul>
+			<ul style="margin-bottom:0px">
 				<li id="results"></li>
+				<li style="position:absolute;right:-20px;letter-spacing:1.2px"><a id="nav-anchor" class="talkPageLink">Apply Filters</a></li>
 			</ul>
-			<ul>
-				<li><a id="nav-anchor">Apply Filters</a></li>
-			</ul>
+			<div class="bottomFilter"><p>▲</p></div>
 		</div>
 		<div id="nav-slider" class="nav-hover">
 			<label for="nav-slider-confidence">Confidence Level:</label>
+			<p id="nav-anchor" style="position:absolute;right:10px; top:7px;cursor:pointer">X</p>
 			<span id="slidenav" ><article id="nav-slider-confidence" class="slider" name="1"></article></span>
 			<article class="slider-result" id="nav-slider-confidence-result">Very Unlikely to Certain</article>
 			 @ <input id="nav-slider-confidence-sinput" type="number" class="range-input" min="0" max ="100" value="0">

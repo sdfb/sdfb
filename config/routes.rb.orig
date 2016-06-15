@@ -6,8 +6,11 @@ Sdfb::Application.routes.draw do
   get "tos" => "static_pages#tos", :as => "tos"
   get "guide" => "static_pages#guide", :as => "guide"
   get "tutorial" => "static_pages#tutorial", :as => "tutorial"
+<<<<<<< HEAD
   get "new_form_menu" => "static_pages#new_form_menu", :as => "new_form_menu"
+=======
   get "top_contributors" => "home#top_contributors", :as => "top_contributors"
+>>>>>>> amyali
 
   resources :comments
   resources :relationship_types
@@ -33,20 +36,8 @@ Sdfb::Application.routes.draw do
   get "all_recent" => "users#all_recent", :as => "all_recent"
 
   get "new_person_form" => "people#new_2", :as => "new_person_form"
-  post "create_new_person_form" => "people#create_2", :as => "create_new_person_form"
-  
   get "new_relationship_form" => "relationships#new_2", :as => "new_relationship_form"
   get "reroute_relationship_form" => "relationships#reroute_relationship_form", :as => "reroute_relationship_form"
-  get "new_existing_relationship_form" => "user_rel_contribs#new_2"
-  get "new_new_relationship_form" => "relationships#new_new_relationship_form"
-  get "new_group_form" => "groups#new_2", :as => "new_group_form"
-  get "new_new_group_form" => "groups#new_3"
-  get "reroute_group_form" => "groups#reroute_group_form", :as => "reroute_group_form"
-  get "group_create_2" => "groups#create_2"
-  get "group_add_person" => "group_assignments#new_2"
-  post "group_add_person_create" => "group_assignments#create_2"
-  post "relationship_create_2" => "relationships#create_2", :as => "relationship_create_2"
-  post "user_rel_contribs_create_2" => "user_rel_contribs#create_2"
 
   # set the root
   root :to => "home#index"

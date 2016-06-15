@@ -44,7 +44,9 @@ if (settings.points < LEVELS[LEVELS.length - 1]){
     var percentComplete = progressToNextLevel / pointsBetweenLevels;
     // Changes the text when the mouse enters and leaves the center
     span.onmouseenter = function(){
-        updateText((nextLevelPoints - settings.points), '<br>Points To <br> Next Level');
+        if (settings.points < LEVELS[LEVELS.length - 1]){
+            updateText((nextLevelPoints - settings.points), '<br>Points To <br> Next Level');
+        }
     };
     span.onmouseleave = function(){
         revertText();

@@ -62,6 +62,7 @@ $(document).ready(function() {
     $("#contribute-add-person").tooltip({placement:   'right', title: 'Add a new person to the database'});
     $("#contribute-add-group").tooltip({placement:  'right', title: 'Add a new group to the database'});
     $("#contribute-add-relationship").tooltip({placement:   'right', title: 'Add a new, untyped relationship between two people in the database'});
+    $("#contribute-add-new").tooltip({placement: 'right', title: 'Check out our new guided contribution forms!'});
 
     $("#icon-tag").tooltip({placement:  'right', title: 'Tag group'});
     $("#icon-link").tooltip({placement: 'right', title: 'Add a new, untyped relationship for this person'});
@@ -84,6 +85,7 @@ $(document).ready(function() {
     $("#edge-annotate").tooltip({placement: 'right', title: 'The average confidence is calculated for each relationship type. The maximum of those averages is the Max Confidence.'});
     $("#group-icon-label").tooltip({placement: 'right', title: 'Add person to group'});
     $("#group-icon-annotate").tooltip({placement: 'right', title: 'Add a note to this group'});
+    $("#leader-icon-user").tooltip({placement: 'right', title: 'Sign in'});
 
     $(".icon-zoomin").tooltip({placement:  'left', title: 'Zoom In'});
     $(".icon-zoomout").tooltip({placement:  'left', title: 'Zoom Out'});
@@ -510,6 +512,10 @@ $(document).ready(function() {
     });      
 
     $("#nav-anchor").click(function() {
+        $("#nav-slider").toggleClass("nav-slider-show");
+    });
+
+    $("#nav-slider p").click(function(){
         $("#nav-slider").toggleClass("nav-slider-show");
     });
 

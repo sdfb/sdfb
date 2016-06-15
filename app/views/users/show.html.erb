@@ -9,12 +9,11 @@
     <% end %>
     <a class="btn btn-mini" id="account-help-btn">?</a>
   </h1>
-  <h5 id="account-help"><b>Approved contributions</b> are worth 1 point.<br>
-    Gaining 100 points grants a user <b>Curator Status,</b> which allows them to approve other contributions.</h5>
+  <h5 id="account-help"><b>Approved contributions</b> are each worth 1 curation point.  With 100 curation points, users become <b>Curators of Six Degrees of Francis Bacon.</b>  Curators approve or reject contributions–in short, <b>Curate Bacon.</b>  </h5>
   <div class="user-profile">
     <div class="completion" id="circle-bar" data-width="20" data-size="200" data-points=<%= @points %>>
         <canvas id="circle-canvas"></canvas>
-        <span class="under-text" id="under"><br>To Next Level</span>
+        <span class="under-text" id="under"><br><% if @points < 100 %>To Next Level<% end %></span>
     </div>
     <div class="userdata">
         <h1 id="fullname">
@@ -28,7 +27,7 @@
             <% if logged_in? && (current_user.id == @user.id || current_user.user_type == "Admin")%> 
             username: <i><%= @user.username %></i><br>
             <% end %>
-            <% if ! @user.user_type.blank? && @user.user_type != 'Standard' %>
+            <% if ! @user.user_type.blank? && (@user.user_type != 'Standard' || current_user.id == @user.id) %>
             user type: <i><%= @user.user_type %></i><br>
             <% end %>
             <% if logged_in? && (current_user.id == @user.id || current_user.user_type == "Admin")%> 
@@ -40,11 +39,9 @@
             <% if current_user.id == @user.id || current_user.user_type == "Admin" %>
             user since: <i><%= @user.created_at.strftime('%B %-d, %Y') %></i><br>
             <% end %>
-            <% if ! @user.about_description.blank? %>
-            <%= @user.about_description %>
-            <% else %>
-            No description provided.
-            <% end %><br>
+            <% if ! @user.about_description.blank? && ! @user.user_type.blank? && (@user.user_type != 'Standard' || current_user.id == @user.id) %>
+            <%= @user.about_description %><br>
+            <% end %>
             <% if (! @user.orcid.blank?) && (current_user.id == @user.id || current_user.user_type == "Admin") %>
             ORCID: <i><%= @user.orcid %></i><br>
             <% end %>
