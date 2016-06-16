@@ -11546,7 +11546,7 @@ COPY people (id, odnb_id, prefix, first_name, last_name, suffix, title, gender, 
 10011545	70624	Sir	Francis	Stewart			unknown	Francis Stewart	IN	1588	1589	IN	1634	1635	courtier and naval officer	[]	true	2	2	2015-02-09 03:38:25 -0700	2015-02-09 03:38:25 -0700	2015-02-09 03:38:25 -0700
 10011546	26472		Henry	Stewart			unknown	Henry Stewart	CA	1495	1495	IN	1553	1554	courtier and administrator	[]	true	2	2	2015-02-09 03:38:25 -0700	2015-02-09 03:38:25 -0700	2015-02-09 03:38:25 -0700
 10011547	26473		Henry	Stewart			unknown	Henry Stewart	IN	1545	1546	IN	1567	1567	second consort of Mary, queen of Scots	[]	true	2	2	2015-02-09 03:38:25 -0700	2015-02-09 03:38:25 -0700	2015-02-09 03:38:25 -0700
-10011548	54326		James	Stewart			unknown	James Stewart	IN	1441	1442	IN	1499	1500	magnate	[]	true	2	2	2015-02-09 03:38:25 -0700	2015-02-09 03:38:25 -0700	2015-02-09 03:38:25 -0700
+10011548	54326		James	Stewart			unknown	James Stewart	IN	1441	1442	IN	1500	1499	magnate	[]	true	2	2	2015-02-09 03:38:25 -0700	2015-02-09 03:38:25 -0700	2015-02-09 03:38:25 -0700
 10011549	14590		James	Stewart	IV		unknown	James IV	IN	1473	1473	IN	1513	1513	king of Scots	[]	true	2	2	2015-02-09 03:38:25 -0700	2015-02-09 03:38:25 -0700	2015-02-09 03:38:25 -0700
 10011550	26477		James	Stewart			unknown	James Stewart	IN	1476	1476	IN	1504	1504	archbishop-designate of St Andrews	[]	true	2	2	2015-02-09 03:38:25 -0700	2015-02-09 03:38:25 -0700	2015-02-09 03:38:25 -0700
 10011551	26478		James	Stewart			unknown	James Stewart	IN	1500	1500	IN	1544	1545	nobleman	[]	true	2	2	2015-02-09 03:38:25 -0700	2015-02-09 03:38:25 -0700	2015-02-09 03:38:25 -0700

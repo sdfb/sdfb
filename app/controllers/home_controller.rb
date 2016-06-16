@@ -13,6 +13,8 @@ class HomeController < ApplicationController
         @data['people'] = Person.find_two_degree_for_person(params[:id], params[:confidence], params[:date], "")
       else
         #The field will return searched node 1, searched node 2, shared nodes, and the first degree relationship of the shared network nodes
+        #in a previous iteration, the final parameter was ,"" as in the if statement, instead of params[:var1] (a dummy variable?)
+        #presumably the extra variable relates to partial/incomplete code set up for passing relationship types assignment info into the search
         @data['people'] = Person.find_two_degree_for_network(params[:id], params[:id2], params[:confidence], params[:date], params[:var1])
       end
 
@@ -56,13 +58,13 @@ class HomeController < ApplicationController
 
 # grabs the 1000 most recent contributions for the leaderboard
   def recent_contributions
-    recent_contrib = ((Person.all_recent.all_approved.limit(2000)) + 
-                      (Group.all_recent.all_approved.limit(2000)) + 
-                      (Relationship.all_recent.all_approved.limit(2000)) + 
-                      (GroupAssignment.all_recent.all_approved.limit(2000)) + 
-                      (UserGroupContrib.all_recent.all_approved.limit(2000)) + 
-                      (UserPersonContrib.all_recent.all_approved.limit(2000))) + 
-                      (UserRelContrib.all_recent.all_approved.limit(2000))
+    recent_contrib = ((Person.all_recent.all_approved.limit(1000)) + 
+                      (Group.all_recent.all_approved.limit(1000)) + 
+                      (Relationship.all_recent.all_approved.limit(1000)) + 
+                      (GroupAssignment.all_recent.all_approved.limit(1000)) + 
+                      (UserGroupContrib.all_recent.all_approved.limit(1000)) + 
+                      (UserPersonContrib.all_recent.all_approved.limit(1000))) + 
+                      (UserRelContrib.all_recent.all_approved.limit(1000))
     recent_contrib.sort! {|a,b| a.updated_at <=> b.updated_at}.reverse!
     recent_contrib = remove_users(recent_contrib)
     @recent_contrib = recent_contrib.take(1000)

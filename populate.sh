@@ -1,3 +1,5 @@
+# now obsolete rake db statements are commented out, but preserved for reference
+
 rake db:populate_people
 rake db:populate_groups
 rake db:populate_people_genders
@@ -6,6 +8,8 @@ rake db:populate_rel_cats
 rake db:populate_rel_types
 rake db:populate_rel_cat_assigns
 rake db:populate_group_cat_assigns
+# rake db:populate_people_display_names
+# rake db:populate_people_search_names_all
 rake db:populate_rels_2_20000
 rake db:populate_rels_20001_40000
 rake db:populate_rels_40001_60000
@@ -16,4 +20,39 @@ rake db:populate_rels_120001_140000
 rake db:populate_rels_140001_160000
 rake db:populate_rels_160001_170542
 rake db:populate_user_rel_contribs_samples
-
+# rake db:populate_rel_start_end_date_100000000_100010000
+# rake db:populate_rel_start_end_date_100010001_100020000
+# rake db:populate_rel_start_end_date_100020001_100030000
+# rake db:populate_rel_start_end_date_100030001_100040000
+# rake db:populate_rel_start_end_date_100040001_100050000
+# rake db:populate_rel_start_end_date_100050001_100060000
+# rake db:populate_rel_start_end_date_100060001_100070000
+# rake db:populate_rel_start_end_date_100070001_100080000
+# rake db:populate_rel_start_end_date_100080001_100090000
+# rake db:populate_rel_start_end_date_100090001_100100000
+# rake db:populate_rel_start_end_date_100100001_100110000
+# rake db:populate_rel_start_end_date_100110001_100120000
+# rake db:populate_rel_start_end_date_100120001_100130000
+# rake db:populate_rel_start_end_date_100130001_100140000
+# rake db:populate_rel_start_end_date_100140001_100150000
+# rake db:populate_rel_start_end_date_100150001_100160000
+# rake db:populate_rel_start_end_date_100160001_100170000
+# rake db:populate_rel_start_end_date_100170001_100180000
+# rake db:populate_rel_met_record_100000000_100010000
+# rake db:populate_rel_met_record_100010001_100020000
+# rake db:populate_rel_met_record_100020001_100030000
+# rake db:populate_rel_met_record_100030001_100040000
+# rake db:populate_rel_met_record_100040001_100050000
+# rake db:populate_rel_met_record_100050001_100060000
+# rake db:populate_rel_met_record_100060001_100070000
+# rake db:populate_rel_met_record_100070001_100080000
+# rake db:populate_rel_met_record_100080001_100090000
+# rake db:populate_rel_met_record_100090001_100100000
+# rake db:populate_rel_met_record_100100001_100110000
+# rake db:populate_rel_met_record_100110001_100120000
+# rake db:populate_rel_met_record_100120001_100130000
+# rake db:populate_rel_met_record_100130001_100140000
+# rake db:populate_rel_met_record_100140001_100150000
+# rake db:populate_rel_met_record_100150001_100160000
+# rake db:populate_rel_met_record_100160001_100170000
+# rake db:populate_rel_met_record_100170001_100180000
