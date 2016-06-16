@@ -427,7 +427,7 @@ class RelationshipsController < ApplicationController
   end
 
     def export_rels_for_rels_100160001_100180000
-      @all_relationships_approved = Relationship.for_rels_100000000_100020000.all_approved
+      @all_relationships_approved = Relationship.for_rels_100160001_100180000.all_approved
       @all_relationships = Relationship.for_rels_100160001_100180000.all_active_unrejected
       if (current_user.user_type == "Admin")
         relationship_csv = CSV.generate do |csv|
