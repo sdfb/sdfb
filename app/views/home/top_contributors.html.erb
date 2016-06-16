@@ -1,17 +1,17 @@
 <%
 def recent_contributions
-    recent_contrib = ((Person.all_recent.all_approved.limit(1000)) + 
-                      (Group.all_recent.all_approved.limit(1000)) + 
-                      (Relationship.all_recent.all_approved.limit(1000)) + 
-                      (GroupAssignment.all_recent.all_approved.limit(1000)) + 
-                      (UserGroupContrib.all_recent.all_approved.limit(1000)) + 
-                      (UserPersonContrib.all_recent.all_approved.limit(1000))) + 
-                      (UserRelContrib.all_recent.all_approved.limit(1000))
+    recent_contrib = ((Person.all_recent.all_approved.limit(100)) + 
+                      (Group.all_recent.all_approved.limit(100)) + 
+                      (Relationship.all_recent.all_approved.limit(100)) + 
+                      (GroupAssignment.all_recent.all_approved.limit(100)) + 
+                      (UserGroupContrib.all_recent.all_approved.limit(100)) + 
+                      (UserPersonContrib.all_recent.all_approved.limit(100))) + 
+                      (UserRelContrib.all_recent.all_approved.limit(100))
     recent_contrib.sort! {|a,b| a.updated_at <=> b.updated_at}.reverse!
-    @recent_contrib = recent_contrib.take(1000)
+    @recent_contrib = recent_contrib.take(100)
   end
 
-# calculates, based off of the 1000 most recent contributions, which users have contributed and how much
+# calculates, based off of the 100 most recent contributions, which users have contributed and how much
   def recent_user_points
     users_rank = Hash.new
     @recent_contrib.each do |i|
@@ -37,7 +37,7 @@ def recent_contributions
   %>
 
   <p id="leader-name">Top Contributors</p>
-          <p id="leader-clarify">(Last 1000 Contributions)</p>
+          <p id="leader-clarify">(Last 100 Contributions)</p>
           <table id="leaderboard">
             <tr class="title">
               <th>RANK&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th>
@@ -57,7 +57,7 @@ def recent_contributions
               <% get_username(i[0]) %>
                 <td><%= link_to rank, user_path(i[0]) %>. </td>
                 <td><%= link_to @username, user_path(i[0]) %></td>
-                <td><%= link_to (i[1]/1000.0*100).round(2), user_path(i[0]) %>%</td>
+                <td><%= link_to i[1], user_path(i[0]) %>%</td>
                 <% rank += 1 %>
             </tr>
             <% end %>

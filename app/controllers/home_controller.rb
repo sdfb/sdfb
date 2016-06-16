@@ -44,7 +44,7 @@ class HomeController < ApplicationController
     @data['recent_user_points'] = recent_user_points()
   end
 
-# removes certain users from the leader board's most recent 1000 contribution selection
+# removes certain users from the leader board's most recent 100 contribution selection
 # for now removes users 1,2, and 3
   def remove_users(contrib_type)
     type = contrib_type.clone
@@ -56,21 +56,21 @@ class HomeController < ApplicationController
     return type
   end
 
-# grabs the 1000 most recent contributions for the leaderboard
+# grabs the 100 most recent contributions for the leaderboard
   def recent_contributions
-    recent_contrib = ((Person.all_recent.all_approved.limit(1000)) + 
-                      (Group.all_recent.all_approved.limit(1000)) + 
-                      (Relationship.all_recent.all_approved.limit(1000)) + 
-                      (GroupAssignment.all_recent.all_approved.limit(1000)) + 
-                      (UserGroupContrib.all_recent.all_approved.limit(1000)) + 
-                      (UserPersonContrib.all_recent.all_approved.limit(1000))) + 
-                      (UserRelContrib.all_recent.all_approved.limit(1000))
+    recent_contrib = ((Person.all_recent.all_approved.limit(100)) + 
+                      (Group.all_recent.all_approved.limit(100)) + 
+                      (Relationship.all_recent.all_approved.limit(100)) + 
+                      (GroupAssignment.all_recent.all_approved.limit(100)) + 
+                      (UserGroupContrib.all_recent.all_approved.limit(100)) + 
+                      (UserPersonContrib.all_recent.all_approved.limit(100))) + 
+                      (UserRelContrib.all_recent.all_approved.limit(100))
     recent_contrib.sort! {|a,b| a.updated_at <=> b.updated_at}.reverse!
     recent_contrib = remove_users(recent_contrib)
-    @recent_contrib = recent_contrib.take(1000)
+    @recent_contrib = recent_contrib.take(100)
   end
 
-# calculates, based off of the 1000 most recent contributions, which users have contributed and how much
+# calculates, based off of the 100 most recent contributions, which users have contributed and how much
   def recent_user_points
     users_rank = Hash.new
     @recent_contrib = recent_contributions
