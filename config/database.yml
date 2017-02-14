@@ -6,6 +6,8 @@ development:
   port: 5432
   pool: 15
   timeout: 5000
+  username: postgres 
+  password: d3f@ult$
 
 
 # Warning: The database defined as "test" will be erased and
@@ -17,10 +19,20 @@ test:
   pool: 15
   timeout: 5000
 
+#production:
+#  adapter: postgresql
+#  database: sixdfbor_sdfb
+#  pool: 15
+#  timeout: 5000
+#  username: sixdfbor_admin
+#  password: NovumOrganum1620
+#
 production:
   adapter: postgresql
-  database: sixdfbor_sdfb
+  database: my_database_development
+  host: localhost
+  port: 5432
   pool: 15
   timeout: 5000
-  username: sixdfbor_admin
-  password: NovumOrganum1620
+  username: postgres 
+  password: d3f@ult$

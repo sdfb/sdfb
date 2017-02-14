@@ -175,11 +175,12 @@ PLATFORMS
 DEPENDENCIES
   actionpack-action_caching
   actionpack-page_caching
-  activemodel (= 4.1.8)
+  activemodel
   bcrypt
   brakeman
   cancan
   carrierwave
+  coffee-rails
   gon
   jquery-rails
   jquery-turbolinks
@@ -187,19 +188,22 @@ DEPENDENCIES
   pg
   protected_attributes
   puma
-  rack-timeout (~> 0.2.4)
-  rails (= 4.1.8)
+  rack-timeout
+  rails
   rails-observers
   rails3-jquery-autocomplete
   rails_12factor
-  railties (= 4.1.8)
+  railties
   sass-rails
   simple_form
   therubyracer
   twitter-bootstrap-rails (= 2.1.7)
-  uglifier (>= 1.0.3)
+  uglifier
   validates_timeliness
   will_paginate
 
+RUBY VERSION
+   ruby 2.3.0p0
+
 BUNDLED WITH
-   1.11.2
+   1.13.6
