@@ -26,13 +26,13 @@
         <th>Death Year Type</th>
         <th>Death Year</th>
         <th>Historical Significance</th>
-        <th><%=t '.actions', :default => t("helpers.actions") %></th>
+        <th></th>
       </tr>
     </thead>
     <tbody>
       <% @people_approved.each do |person| %>
         <tr>
-          <td><%= person.id %></td>
+          <td><%= link_to person.id, person %></td>
           <% if ! (person.odnb_id == 0) %>  
             <td><%= person.odnb_id %></td>
           <% else %>
@@ -77,15 +77,9 @@
           <td><%= person.ext_death_year %></td>
           <td><%= person.historical_significance %></td>
           <td>
-            <% if can? :show, person %>
-                <%= link_to 'Show', person, :class => 'btn btn-mini' %>
-            <% end %>
             <% if can? :update, person %>      
                 <%= link_to t('.edit', :default => t("helpers.links.edit")),
                             edit_person_path(person), :class => 'btn btn-mini' %>
-            <% end %>
-            <% if can? :delete, person %>
-              <%= link_to 'Delete', person, :class => 'btn btn-mini btn-danger',method: :delete, data: { confirm: 'Are you sure that you want to permanently delete this record and all associated records?' } %>
             <% end %>
           </td>
         </tr>

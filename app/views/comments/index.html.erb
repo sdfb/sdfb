@@ -15,15 +15,13 @@
 
 <% @comments.each do |comment| %>
   <tr>
-    <td><%= comment.id %></td>
+    <td><%= link_to comment.id, comment %></td>
     <td><%= comment.comment_type %></td>
     <td><%= comment.associated_contrib %></td>
     <td><%= comment.created_by %></td>
     <td><%= comment.content %></td>
     <td><%= comment.created_at %></td>
-    <td><%= link_to 'Show', comment %></td>
     <td><%= link_to 'Edit', edit_comment_path(comment) %></td>
-    <td><%= link_to 'Delete', comment, method: :delete, data: { confirm: 'Are you sure?' } %></td>
   </tr>
 <% end %>
 </table>

@@ -18,9 +18,6 @@
           <%= link_to t('.edit', :default => t("helpers.links.edit")),
                   edit_relationship_path(@relationship), :class => 'btn btn-mini' %>
         <% end %>
-        <% if can? :delete, @relationship %>
-          <%= link_to 'Delete', @relationship, :class => 'btn btn-mini btn-danger',method: :delete, data: { confirm: 'Are you sure that you want to permanently delete this record and all associated records?' } %>
-        <% end %>
       </h2>
       <br>
       <dl class="dl-horizontal">
@@ -157,13 +154,13 @@
               <th>Start Date</th>
               <th>End Date Type</th>
               <th>End Date</th>
-              <th>Actions</th>
+              <th></th>
             </tr>
           </thead>
           <tbody>
             <% @user_rel_contribs.each do |user_rel_contrib| %>
               <tr>
-                <td><%= user_rel_contrib.id %></td>
+                <td><%= link_to user_rel_contrib.id, user_rel_contrib %></td>
                 <td><%= user_rel_contrib.get_person1_name %> <%= link_to RelationshipType.find(user_rel_contrib.relationship_type_id).name, relationship_type_path(user_rel_contrib.relationship_type_id) %> <%= user_rel_contrib.get_person2_name %></td>
                 <td><%= user_rel_contrib.certainty %>%</td>
                 <td>
@@ -236,9 +233,6 @@
                   <% end %>
                 </td>
                 <td>
-                  <% if can? :show, user_rel_contrib %>
-                    <%= link_to 'Show', user_rel_contrib, :class => 'btn btn-mini' %>
-                  <% end %>
                   <% if user_rel_contrib.is_locked == false %>
                     <% if can? :update, user_rel_contrib %>
                       <%= link_to t('.edit', :default => t("helpers.links.edit")),

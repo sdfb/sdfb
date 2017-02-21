@@ -14,9 +14,6 @@
           <%= link_to t('.edit', :default => t("helpers.links.edit")),
                   edit_group_category_path(@group_category), :class => 'btn btn-mini' %>
         <% end %>
-        <% if can? :delete, @group_category %>
-            <%= link_to 'Delete', @group_category, :class => 'btn btn-mini btn-danger',method: :delete, data: { confirm: 'Are you sure that you want to permanently delete this record and all associated records?' } %>
-          <% end %>
       </h2>
       <br>
       <dl class="dl-horizontal">
@@ -63,18 +60,15 @@
               <tr>
                 <th>SDFB Group/Category Assignment ID</th>
                 <th>Group</th>
-                <th><%=t '.actions', :default => t("helpers.actions") %></th>
+                <th></th>
               </tr>
             </thead>
             <tbody>
               <% @group_cat_assigns_approved.each do |group_cat_assign| %>
                 <tr>
-                  <td><%= group_cat_assign.id %></td>
+                  <td><%= link_to group_cat_assign.id, group_cat_assign %></td>
                   <td><%= link_to Group.find(group_cat_assign.group_id).name, group_path(group_cat_assign.group_id) %></td>
                   <td>
-                    <% if can? :show, group_cat_assign %>
-                      <%= link_to 'Show', group_cat_assign, :class => 'btn btn-mini' %>
-                    <% end %>
                     <% if can? :update, group_cat_assign %>
                       <%= link_to t('.edit', :default => t("helpers.links.edit")),
                                       edit_group_cat_assign_path(group_cat_assign), :class => 'btn btn-mini' %>

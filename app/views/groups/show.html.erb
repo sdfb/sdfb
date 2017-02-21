@@ -19,9 +19,6 @@
           <%= link_to t('.edit', :default => t("helpers.links.edit")),
                   edit_group_path(@group), :class => 'btn btn-mini' %>
         <% end %>
-        <% if can? :delete, @group %>
-          <%= link_to 'Delete', @group, :class => 'btn btn-mini btn-danger',method: :delete, data: { confirm: 'Are you sure that you want to permanently delete this record and all associated records?' } %>
-        <% end %>
       </h2>
       <br>
       <dl class="dl-horizontal">
@@ -150,19 +147,16 @@
               <th>Note ID</th>
               <th>Note</th>
               <th>Citation</th>
-              <th><%=t '.actions', :default => t("helpers.actions") %></th>
+              <th></th>
             </tr>
           </thead>
           <tbody>
             <% @user_group_contribs.each do |user_group_contrib| %>
               <tr>
-                <td><%= user_group_contrib.id %></td>
+                <td><%= link_to user_group_contrib.id, user_group_contrib %></td>
                 <td><%= user_group_contrib.annotation %></td>
                 <td><%= user_group_contrib.bibliography %></td>
                 <td>
-                  <% if can? :show, user_group_contrib %>
-                      <%= link_to 'Show', user_group_contrib, :class => 'btn btn-mini' %>
-                  <% end %>
                   <% if can? :update, user_group_contrib %>
                       <%= link_to t('.edit', :default => t("helpers.links.edit")),
                                 edit_user_group_contrib_path(user_group_contrib), :class => 'btn btn-mini' %>
@@ -197,13 +191,13 @@
               <th>Person</th>
               <th>Start Date</th>
               <th>End Date</th>
-              <th><%=t '.actions', :default => t("helpers.actions") %></th>
+              <th></th>
             </tr>
             </thead>
             <tbody>
               <% @people.each do |group_assignment| %>
                 <tr>
-                  <td><%= group_assignment.id %></td>
+                  <td><%= link_to group_assignment.id, group_assignment %></td>
                   <td><%= link_to group_assignment.get_person_name, person_path(group_assignment.person_id) %></td>
                   <td>
                     <% if ((! group_assignment.start_month.blank?) || (! group_assignment.start_day.blank?) || (! group_assignment.start_year.blank?)) %>
@@ -232,9 +226,6 @@
                     <% end %>
                   </td>
                   <td>
-                    <% if can? :show, group_assignment %>
-                      <%= link_to 'Show', group_assignment, :class => 'btn btn-mini' %>
-                    <% end %>
                     <% if can? :update, group_assignment %>
                       <%= link_to 'Edit', edit_group_assignment_path(group_assignment), :class => 'btn btn-mini' %>
                     <% end %>
@@ -259,18 +250,15 @@
               <tr>
                 <th>Assignment ID</th>
                 <th>Category</th>
-                <th><%=t '.actions', :default => t("helpers.actions") %></th>
+                <th></th>
               </tr>
             </thead>
             <tbody>
               <% @group_cat_assigns_approved.each do |group_cat_assign| %>
                 <tr>
-                  <td><%= group_cat_assign.id %></td>
+                  <td><%= link_to group_cat_assign.id, group_cat_assign %></td>
                   <td><%= link_to GroupCategory.find(group_cat_assign.group_category_id).name, group_category_path(group_cat_assign.group_category_id) %></td>
                   <td>
-                    <% if can? :show, group_cat_assign %>
-                      <%= link_to 'Show', group_cat_assign, :class => 'btn btn-mini' %>
-                    <% end %>
                     <% if can? :update, group_cat_assign %>
                       <%= link_to t('.edit', :default => t("helpers.links.edit")),
                                       edit_group_cat_assign_path(group_cat_assign), :class => 'btn btn-mini' %>

@@ -19,13 +19,13 @@
 	        <th>Start Year</th>
 	        <th>End Year Type</th>
 	        <th>End Year</th>
-		    <th><%=t '.actions', :default => t("helpers.actions") %></th>
+		    <th></th>
 		  </tr>
 		</thead>
 		<tbody>
 		  <% @all_results.each do |group| %>
 		    <tr>
-		      <td><%= group.id %></td>
+		      <td><%= link_to group.id, group %></td>
 		      <td><%= group.name %></td>
 		      <td><%= group.description %></td>
 		      <td>
@@ -61,9 +61,6 @@
 	          </td>
 	          <td><%= group.end_year %></td>
 		      <td>
-		        <% if can? :show, group %>
-		          <%= link_to 'Show', group, :class => 'btn btn-mini' %>
-		        <% end %>
 		        <% if can? :update, group %>
 		          <%= link_to t('.edit', :default => t("helpers.links.edit")),
 		                          edit_group_path(group), :class => 'btn btn-mini' %>

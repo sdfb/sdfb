@@ -7,13 +7,13 @@
           <th>SDFB Group Note ID</th>
           <th>Group</th>
           <th>Status</th>
-          <th><%=t '.actions', :default => t("helpers.actions") %></th>
+          <th></th>
         </tr>
       </thead>
       <tbody>
         <% @user_group_contribs.each do |user_group_contrib| %>
           <tr>
-            <td><%= user_group_contrib.id %></td>
+            <td><%= link_to user_group_contrib.id, user_group_contrib %></td>
             <td><%= link_to Group.find(user_group_contrib.group_id).name, group_path(user_group_contrib.group_id) %></td>
             <td>
               <% if (user_group_contrib.is_active == true) %>
@@ -31,9 +31,6 @@
               <% end %>
             </td>
             <td>
-              <% if can? :show, user_group_contrib %>
-                  <%= link_to 'Show', user_group_contrib, :class => 'btn btn-mini' %>
-              <% end %>
               <% if can? :update, user_group_contrib %>
                   <%= link_to t('.edit', :default => t("helpers.links.edit")),
                             edit_user_group_contrib_path(user_group_contrib), :class => 'btn btn-mini' %>

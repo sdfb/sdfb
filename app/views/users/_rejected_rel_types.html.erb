@@ -11,14 +11,14 @@
 
 		    <% @rejected_rel_types.each do |relationship_type| %>
 		      <tr>
-		        <td><%= relationship_type.id %></td>
+		        <td><%= link_to relationship_type.id, relationship_type %></td>
 		        <td><%= relationship_type.name %></td>
 		        <% if ! relationship_type.relationship_type_inverse.blank? %>
 		            <td><%= link_to RelationshipType.find(relationship_type.relationship_type_inverse).name, relationship_type_path(relationship_type.relationship_type_inverse) %></td>
 		        <% else %>
 		            <td></td>
 		        <% end %>
-		        <td><%= link_to 'Show', relationship_type, :class => 'btn btn-mini' %>
+		        <td>
 		        <%= link_to 'Edit', edit_relationship_type_path(relationship_type), :class => 'btn btn-mini' %></td>
 		      </tr>
 		    <% end %>

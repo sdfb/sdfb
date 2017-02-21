@@ -30,13 +30,13 @@
             <th>Start Date</th>
             <th>End Date Type</th>
             <th>End Date</th>
-            <th><%=t '.actions', :default => t("helpers.actions") %></th>
+            <th></th>
           </tr>
         </thead>
         <tbody>
           <% @approved_relationships.each do |relationship| %>
             <tr>
-              <td><%= relationship.id %></td>
+              <td><%= link_to relationship.id, relationship %></td>
               <td><%= @person.display_name %></td>
               <td>
               <% if relationship.get_person2_name == @person.display_name %>
@@ -115,9 +115,6 @@
                 <% end %>
               </td>
               <td>
-                <% if can? :show, relationship %>
-                  <%= link_to 'Show', relationship, :class => 'btn btn-mini'  %>
-                <% end %>
                 <% if can? :update, relationship %>
                   <%= link_to t('.edit', :default => t("helpers.links.edit")),
                               edit_relationship_path(relationship), :class => 'btn btn-mini' %>

@@ -7,19 +7,16 @@
           <th>SDFB Group Category ID</th>
           <th>Group Category Name</th>
           <th>Description</th>
-          <th><%=t '.actions', :default => t("helpers.actions") %></th>
+          <th></th>
         </tr>
       </thead>
       <tbody>
         <% @unapproved_group_cats.each do |group_category| %>
           <tr>
-            <td><%= group_category.id %></td>
+            <td><%= link_to group_category.id, group_category %></td>
             <td><%= group_category.name %></td>
             <td><%= group_category.description %></td>
             <td>
-              <% if can? :show, group_category %>
-                <%= link_to 'Show', group_category, :class => 'btn btn-mini' %>
-              <% end %>
               <% if can? :update, group_category %>
                 <%= link_to t('.edit', :default => t("helpers.links.edit")),
                                 edit_group_category_path(group_category), :class => 'btn btn-mini' %>

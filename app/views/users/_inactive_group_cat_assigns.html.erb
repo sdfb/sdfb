@@ -7,19 +7,16 @@
         <th>SDFB Group Category Assignment ID </th>
         <th>Group</th>
         <th>Group Category</th>
-        <th><%=t '.actions', :default => t("helpers.actions") %></th>
+        <th></th>
       </tr>
     </thead>
     <tbody>
       <% @inactive_group_cat_assign.each do |group_cat_assign| %>
         <tr>
-          <td><%= group_cat_assign.id %></td>
+          <td><%= link_to group_cat_assign.id, group_cat_assign %></td>
           <td><%= link_to Group.find(group_cat_assign.group_id).name, group_path(group_cat_assign.group_id) %></td>
           <td><%= link_to GroupCategory.find(group_cat_assign.group_category_id).name, group_category_path(group_cat_assign.group_category_id) %></td>
           <td>
-            <% if can? :show, group_cat_assign %>
-              <%= link_to 'Show', group_cat_assign, :class => 'btn btn-mini' %>
-            <% end %>
             <% if can? :update, group_cat_assign %>
               <%= link_to t('.edit', :default => t("helpers.links.edit")),
                               edit_group_cat_assign_path(group_cat_assign), :class => 'btn btn-mini' %>
