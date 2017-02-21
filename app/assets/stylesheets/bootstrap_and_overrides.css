@@ -66,11 +66,13 @@ a:visited {
 
 a:visited:hover {
   color: #003651;
+  text-decoration: underline !important;
   /*color: #000000;*/
 }
 
 a:hover {
   color: #003651;
+  text-decoration: underline !important;
   /*color: #000000;*/
 }
 
