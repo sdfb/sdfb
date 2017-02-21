@@ -23,8 +23,8 @@
         <thead>
           <tr>
             <th>SDFB Relationship ID</th>
-            <th>Person 1</th>
-            <th>Person 2</th>
+            <th>Person</th>
+            <th>Person</th>
             <th>Maximum Confidence</th>
             <th>Start Date Type</th>
             <th>Start Date</th>
@@ -37,9 +37,14 @@
           <% @approved_relationships.each do |relationship| %>
             <tr>
               <td><%= relationship.id %></td>
-              <td><%= link_to relationship.get_person1_name, person_path(relationship.person1_index) %></td>
-              <td><%= link_to relationship.get_person2_name, person_path(relationship.person2_index) %></td>
-              <td><%= relationship.max_certainty %>%</td>
+              <td><%= @person.display_name %></td>
+              <td>
+              <% if relationship.get_person2_name == @person.display_name %>
+    	          <%= link_to relationship.get_person1_name, person_path(relationship.person1_index) %>
+              <% else %>
+              	  <%= link_to relationship.get_person2_name, person_path(relationship.person2_index) %>
+              <% end %> </td>
+        	  <td><%= relationship.max_certainty %>%</td>
               <td>
               <% if ! relationship.start_date_type.blank? %>
                   <% if relationship.start_date_type == "BF" %>
