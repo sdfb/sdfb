@@ -5,7 +5,7 @@ class RelationshipCategoriesController < ApplicationController
   load_and_authorize_resource
   
   def index
-    @relationship_categories = RelationshipCategory.all_approved.order_by_sdfb_id.paginate(:page => params[:rel_category_approved_page]).per_page(30)
+    @relationship_categories = RelationshipCategory.all_approved.order_by_sdfb_id.paginate(:page => params[:rel_category_approved_page]).per_page(100)
 
     respond_to do |format|
       format.html # index.html.erb
@@ -17,7 +17,7 @@ class RelationshipCategoriesController < ApplicationController
   # GET /relationship_categories/1.json
   def show
     @relationship_category = RelationshipCategory.find(params[:id])
-    @rel_cat_assigns_approved = RelCatAssign.all_approved.for_rel_cat(params[:id]).order_by_sdfb_id.paginate(:page => params[:rel_cat_assigns_approved_page]).per_page(30)
+    @rel_cat_assigns_approved = RelCatAssign.all_approved.for_rel_cat(params[:id]).order_by_sdfb_id.paginate(:page => params[:rel_cat_assigns_approved_page]).per_page(100)
 
     respond_to do |format|
       format.html # show.html.erb

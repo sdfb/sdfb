@@ -9,7 +9,7 @@ class UsersController < ApplicationController
   load_and_authorize_resource
 
   def index
-    @active_users = User.active.order_by_sdfb_id.paginate(:page => params[:active_users_page]).per_page(30)
+    @active_users = User.active.order_by_sdfb_id.paginate(:page => params[:active_users_page]).per_page(100)
 
     respond_to do |format|
       format.html # index.html.erb

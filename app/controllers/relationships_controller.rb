@@ -12,7 +12,7 @@ class RelationshipsController < ApplicationController
   helper PeopleHelper
 
   def index
-    @approved_relationships = Relationship.all_approved.order_by_sdfb_id.paginate(:page => params[:approved_relationships_page]).per_page(30)
+    @approved_relationships = Relationship.all_approved.order_by_sdfb_id.paginate(:page => params[:approved_relationships_page]).per_page(100)
 
     respond_to do |format|
       format.html # index.html.erb
@@ -46,7 +46,7 @@ class RelationshipsController < ApplicationController
   # GET /relationships/1.json
   def show
     @relationship = Relationship.find(params[:id])
-    @user_rel_contribs = UserRelContrib.all_approved.all_for_relationship(params[:id]).highest_certainty.paginate(:page => params[:user_rel_contribs_page]).per_page(30)
+    @user_rel_contribs = UserRelContrib.all_approved.all_for_relationship(params[:id]).highest_certainty.paginate(:page => params[:user_rel_contribs_page]).per_page(100)
     @user_rel_contribs_averages = UserRelContrib.all_approved.all_averages_for_relationship(params[:id])
 
     respond_to do |format|
