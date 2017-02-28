@@ -2,9 +2,7 @@
 
 import psycopg2
 import networkx as nx
-import json#, community
-from networkx.algorithms import centrality as cn
-from networkx.algorithms import connectivity as ct
+import json
 
 # Connect to database and open cursor
 conn = psycopg2.connect('dbname=mysdfb')
@@ -55,16 +53,10 @@ G = nx.Graph()
 G.add_nodes_from(node_ids)
 G.add_weighted_edges_from(edges)
 
-# Calculate three centrality measures
-# degree = cn.degree_centrality(G)
-# groups = community.best_partition(G)
-#betweenness = cn.betweenness_centrality(G, weight='weight')
-#eigenvector = cn.eigenvector_centrality(G, weight='weight')
 
 # Add display_name and centrality as node attributes
 nx.set_node_attributes(G, 'name', name_dict)
-nx.set_node_attributes(G, 'degree',  G.degree(G.nodes()))#degree)
-# nx.set_node_attributes(G, 'group', groups)
+nx.set_node_attributes(G, 'degree',  G.degree(G.nodes()))
 nx.set_node_attributes(G, 'historical_significance', sig_dict)
 nx.set_node_attributes(G, 'birth_year', birth_dict)
 nx.set_node_attributes(G, 'death_year', death_dict)
@@ -79,15 +71,23 @@ two_degree = list(set(sum([G.neighbors(n) for n in one_degree], [])))
 
 all_nodes = [bacon] + one_degree + two_degree
 connected_dict = {}
+source_dict = {}
 for a in all_nodes:
     if a in one_degree or a == bacon:
-        connected_dict[a] = False
-    else:
         connected_dict[a] = True
+    else:
+        connected_dict[a] = False
+
+for a in all_nodes:
+    if a == bacon:
+        source_dict[a] = True
+    else:
+        source_dict[a] = False
 
 SG = G.subgraph(all_nodes)
 
 nx.set_node_attributes(SG, 'connected', connected_dict)
+nx.set_node_attributes(SG, 'is_source', source_dict)
 
 # Create a dictionary for the JSON needed by D3.
 new_data = dict(
@@ -96,6 +96,7 @@ new_data = dict(
             name=SG.node[n]['name'],
             degree=SG.node[n]['degree'],
             one_degree=SG.node[n]['connected'],
+            is_source=SG.node[n]['is_source'],
             # group=SG.node[n]['group'],
             historical_significance=SG.node[n]['historical_significance'],
             birth_year=SG.node[n]['birth_year'],
