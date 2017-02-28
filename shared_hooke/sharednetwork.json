@@ -1,0 +1,546 @@
+{
+    "links":[
+        {
+          "altered":true,
+          "source":10002223,
+          "target":10,
+          "weight":90
+        },
+        {
+          "altered":true,
+          "source":10004875,
+          "target":10,
+          "weight":90
+        },
+        {
+            "altered":false,
+            "source":10002177,
+            "target":10004875,
+            "weight":60
+        },
+        {
+            "altered":true,
+            "source":10054787,
+            "target":10002223,
+            "weight":100
+        },
+        {
+            "altered":false,
+            "source":10009157,
+            "target":10002223,
+            "weight":64
+        },
+        {
+            "altered":false,
+            "source":10003080,
+            "target":10004875,
+            "weight":80
+        },
+        {
+            "altered":false,
+            "source":10001419,
+            "target":10011691,
+            "weight":93
+        },
+        {
+            "altered":false,
+            "source":10001419,
+            "target":10011671,
+            "weight":66
+        },
+        {
+            "altered":false,
+            "source":10001419,
+            "target":10004875,
+            "weight":79
+        },
+        {
+            "altered":false,
+            "source":10001419,
+            "target":10011389,
+            "weight":69
+        },
+        {
+            "altered":false,
+            "source":10001419,
+            "target":10012887,
+            "weight":93
+        },
+        {
+            "altered":false,
+            "source":10002381,
+            "target":10002223,
+            "weight":79
+        },
+        {
+            "altered":true,
+            "source":10054799,
+            "target":10002223,
+            "weight":100
+        },
+        {
+            "altered":false,
+            "source":10002230,
+            "target":10002223,
+            "weight":100
+        },
+        {
+            "altered":false,
+            "source":10008468,
+            "target":10011691,
+            "weight":69
+        },
+        {
+            "altered":false,
+            "source":10008468,
+            "target":10004875,
+            "weight":83
+        },
+        {
+            "altered":false,
+            "source":10011671,
+            "target":10002223,
+            "weight":79
+        },
+        {
+            "altered":false,
+            "source":10011671,
+            "target":10011315,
+            "weight":92
+        },
+        {
+            "altered":false,
+            "source":10011671,
+            "target":10007966,
+            "weight":100
+        },
+        {
+            "altered":false,
+            "source":10011671,
+            "target":10012887,
+            "weight":65
+        },
+        {
+            "altered":false,
+            "source":10011035,
+            "target":10004875,
+            "weight":74
+        },
+        {
+            "altered":false,
+            "source":10011035,
+            "target":10011315,
+            "weight":97
+        },
+        {
+            "altered":false,
+            "source":10004875,
+            "target":10011691,
+            "weight":84
+        },
+        {
+            "altered":false,
+            "source":10004875,
+            "target":10012887,
+            "weight":75
+        },
+        {
+            "altered":false,
+            "source":10004875,
+            "target":10011315,
+            "weight":76
+        },
+        {
+            "altered":false,
+            "source":10004875,
+            "target":10011389,
+            "weight":83
+        },
+        {
+            "altered":false,
+            "source":10007966,
+            "target":10002223,
+            "weight":100
+        },
+        {
+            "altered":false,
+            "source":10007966,
+            "target":10001916,
+            "weight":100
+        },
+        {
+            "altered":false,
+            "source":10007648,
+            "target":10007652,
+            "weight":71
+        },
+        {
+            "altered":false,
+            "source":10007648,
+            "target":10002223,
+            "weight":100
+        },
+        {
+            "altered":false,
+            "source":10007650,
+            "target":10007652,
+            "weight":93
+        },
+        {
+            "altered":false,
+            "source":10007650,
+            "target":10002223,
+            "weight":73
+        },
+        {
+            "altered":true,
+            "source":10007652,
+            "target":10052342,
+            "weight":100
+        },
+        {
+            "altered":false,
+            "source":10007652,
+            "target":10002223,
+            "weight":100
+        },
+        {
+            "altered":true,
+            "source":10006438,
+            "target":10002223,
+            "weight":74
+        },
+        {
+            "altered":false,
+            "source":10002217,
+            "target":10002223,
+            "weight":100
+        },
+        {
+            "altered":true,
+            "source":10054698,
+            "target":10002223,
+            "weight":73
+        },
+        {
+            "altered":false,
+            "source":10011691,
+            "target":10012887,
+            "weight":63
+        },
+        {
+            "altered":true,
+            "source":10002223,
+            "target":10054792,
+            "weight":100
+        },
+        {
+            "altered":true,
+            "source":10002223,
+            "target":10054773,
+            "weight":100
+        },
+        {
+            "altered":true,
+            "source":10002223,
+            "target":10052342,
+            "weight":100
+        },
+        {
+            "altered":true,
+            "source":10002223,
+            "target":10001916,
+            "weight":100
+        },
+        {
+            "altered":true,
+            "source":10002223,
+            "target":10003903,
+            "weight":100
+        },
+        {
+            "altered":false,
+            "source":10011315,
+            "target":10011389,
+            "weight":70
+        },
+        {
+            "altered":false,
+            "source":10011389,
+            "target":10012887,
+            "weight":67
+        }
+    ],
+    "nodes":[
+        {
+            "birth_year":"1599",
+            "color":0,
+            "death_year":"1671",
+            "degree":6,
+            "historical_significance":"scholar and divine",
+            "id":10002177,
+            "name":"Meric Casaubon"
+        },
+        {
+            "birth_year":"1605",
+            "color":4,
+            "death_year":"1639",
+            "degree":1,
+            "historical_significance":"older sister of Margaret Cavendish; daughter of Thomas Lucas and Elizabeth Lucas (Leighton)",
+            "id":10054787,
+            "name":"Catherine Lucas"
+        },
+        {
+            "birth_year":"1627",
+            "color":4,
+            "death_year":"1695",
+            "degree":6,
+            "historical_significance":"letter writer",
+            "id":10009157,
+            "name":"Dorothy Osborne"
+        },
+        {
+            "birth_year":"1604",
+            "color":0,
+            "death_year":"1683",
+            "degree":1,
+            "historical_significance":"writer on philosophy and Church of England clergyman",
+            "id":10003080,
+            "name":"Robert Crosse"
+        },
+        {
+            "birth_year":"1627",
+            "color":1,
+            "death_year":"1691",
+            "degree":43,
+            "historical_significance":"natural philosopher",
+            "id":10001419,
+            "name":"Robert Boyle"
+        },
+        {
+            "birth_year":"1620",
+            "color":4,
+            "death_year":"1669",
+            "degree":2,
+            "historical_significance":"poet and royalist noblewoman",
+            "id":10002381,
+            "name":"Lady Jane Cheyne"
+        },
+        {
+            "birth_year":"1580",
+            "color":3,
+            "death_year":"1647",
+            "degree":2,
+            "historical_significance":null,
+            "id":10052342,
+            "name":"Elizabeth Leighton"
+        },
+        {
+            "birth_year":"1610",
+            "color":4,
+            "death_year":"1670",
+            "degree":1,
+            "historical_significance":"sister of Margaret Cavendish; daughter of Thomas and Elizabeth Lucas (Leighton)",
+            "id":10054799,
+            "name":"Anne Lucas"
+        },
+        {
+            "birth_year":"1614",
+            "color":1,
+            "death_year":"1687",
+            "degree":12,
+            "historical_significance":"philosopher, poet, and theologian",
+            "id":10008468,
+            "name":"Henry More"
+        },
+        {
+            "birth_year":"1614",
+            "color":1,
+            "death_year":"1672",
+            "degree":32,
+            "historical_significance":"theologian and natural philosopher",
+            "id":10012887,
+            "name":"John Wilkins"
+        },
+        {
+            "birth_year":"1630",
+            "color":3,
+            "death_year":"1685",
+            "degree":478,
+            "historical_significance":"king of England, Scotland, and Ireland",
+            "id":10011671,
+            "name":"King Charles II"
+        },
+        {
+            "birth_year":"1639",
+            "color":1,
+            "death_year":"1707",
+            "degree":25,
+            "historical_significance":"Church of England clergyman and religious controversialist",
+            "id":10011035,
+            "name":"William Sherlock"
+        },
+        {
+            "birth_year":"1636",
+            "color":0,
+            "death_year":"1680",
+            "degree":9,
+            "historical_significance":"Church of England clergyman",
+            "id":10004875,
+            "name":"Joseph Glanvill"
+        },
+        {
+            "birth_year":"1609",
+            "color":3,
+            "death_year":"1669",
+            "degree":62,
+            "historical_significance":"queen of England, Scotland, and Ireland, consort of Charles I",
+            "id":10007966,
+            "name":"Queen Henrietta Maria"
+        },
+        {
+            "birth_year":"1612",
+            "color":3,
+            "death_year":"1648",
+            "degree":6,
+            "historical_significance":"royalist army officer",
+            "id":10007648,
+            "name":"Sir Charles Lucas"
+        },
+        {
+            "birth_year":"1606",
+            "color":3,
+            "death_year":"1671",
+            "degree":5,
+            "historical_significance":"royalist landowner",
+            "id":10007650,
+            "name":"John Lucas"
+        },
+        {
+            "birth_year":"1597",
+            "color":3,
+            "death_year":"1648",
+            "degree":5,
+            "historical_significance":"royalist army officer",
+            "id":10007652,
+            "name":"Sir Thomas Lucas"
+        },
+        {
+            "birth_year":"1596",
+            "color":4,
+            "death_year":"1687",
+            "degree":4,
+            "historical_significance":"NA",
+            "id":10006438,
+            "name":"Sir Constantijn Huygens"
+        },
+        {
+            "birth_year":"1595",
+            "color":4,
+            "death_year":"1654",
+            "degree":4,
+            "historical_significance":"mathematician",
+            "id":10002217,
+            "name":"Sir Charles Cavendish"
+        },
+        {
+            "birth_year":"1664",
+            "color":4,
+            "death_year":"1664",
+            "degree":1,
+            "historical_significance":"daughter of Antwerp merchant",
+            "id":10054698,
+            "name":"Eleanor Duarti"
+        },
+        {
+            "birth_year":"1632",
+            "color":1,
+            "death_year":"1676",
+            "degree":12,
+            "historical_significance":"author and physician",
+            "id":10011691,
+            "name":"Henry Stubbe"
+        },
+        {
+            "birth_year":"1623",
+            "color":4,
+            "death_year":"1673",
+            "degree":18,
+            "historical_significance":"writer",
+            "id":10002223,
+            "name":"Margaret Cavendish"
+        },
+        {
+            "birth_year":"1605",
+            "color":4,
+            "death_year":"1648",
+            "degree":1,
+            "historical_significance":"sister of Margaret Cavendish, daughter of Elizabeth Lucas (Leighton) and Thomas Lucas",
+            "id":10054792,
+            "name":"Mary Lucas"
+        },
+        {
+            "birth_year":"1634",
+            "color":1,
+            "death_year":"1716",
+            "degree":16,
+            "historical_significance":"Church of England clergyman and theologian",
+            "id":10011315,
+            "name":"Robert South"
+        },
+        {
+            "birth_year":"1630",
+            "color":4,
+            "death_year":"1670",
+            "degree":1,
+            "historical_significance":"M. Cavendish's handmaiden, delivered M. Cavendish's manuscripts to publisher",
+            "id":10054773,
+            "name":"Elizabeth Chaplain"
+        },
+        {
+            "birth_year":"1593",
+            "color":4,
+            "death_year":"1676",
+            "degree":10,
+            "historical_significance":"writer, patron, and royalist army officer",
+            "id":10002230,
+            "name":"William Cavendish"
+        },
+        {
+            "birth_year":"1590",
+            "color":3,
+            "death_year":"1651",
+            "degree":2,
+            "historical_significance":"physician",
+            "id":10001916,
+            "name":"Sir Thomas Cademan"
+        },
+        {
+            "birth_year":"1635",
+            "color":1,
+            "death_year":"1713",
+            "degree":14,
+            "historical_significance":"bishop of Rochester",
+            "id":10011389,
+            "name":"Thomas Sprat"
+        },
+        {
+            "birth_year":"1626",
+            "color":4,
+            "death_year":"1663",
+            "degree":2,
+            "historical_significance":"writer",
+            "id":10003903,
+            "name":"Elizabeth Egerton"
+        },
+        {
+          "birth_year":"2",
+          "color":2,
+          "death_year":"2000",
+          "degree":50,
+          "historical_significance":"principal investigator",
+          "id":10,
+          "name": "Chris Warren"
+        }
+    ]
+}

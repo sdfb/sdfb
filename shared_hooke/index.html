@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<style>
+
+.links line, .links path {
+  stroke: #000;
+  fill: none;
+  /*stroke: #000;*/
+  shape-rendering: geometricPrecision;
+  /*stroke-opacity: 1;*/
+}
+
+.nodes circle {
+  stroke: #fff;
+  stroke-width: 1.5px;
+}
+
+.node text {
+  pointer-events: none;
+  font: 10px sans-serif;
+}
+#tools div {
+  display: inline;
+}
+
+form, select {
+  float: right;
+  display: inline;
+}
+
+</style>
+<body>
+<div id='tools'></div>
+<svg width="1500" height="1150"></svg>
+<script src="https://d3js.org/d3.v4.min.js"></script>
+<script src="https://d3js.org/d3-scale-chromatic.v1.min.js"></script>
+<script>
+
+var svg = d3.select("svg"),
+    width = +svg.attr("width"),
+    height = +svg.attr("height");
+
+var graph;
+
+svg.append('rect')
+    .attr('width', '100%')
+    .attr('height', '100%')
+    .attr('fill', '#FFFFFF');
+
+// Call zoom for svg container.
+svg.call(d3.zoom().on('zoom', zoomed)).on("dblclick.zoom", null);
+
+var color = d3.scaleOrdinal()
+    .domain([0,1,2,3,4])
+    .range(['#df0a1d','#ee7588','#d1cee5','#87a9cf','#1253a0']);
+
+var M = 50;
+
+var container = svg.append('g');
+
+// Create form for search (see function below).
+var search = d3.select("div#tools").append('form').attr('onsubmit', 'return false;');
+
+var degreeSize = function(value, graph) {
+
+  var result = d3.scaleLinear()
+    .domain([0,500])//[d3.min(graph.nodes, function(d) { if (d.connected == false) {return d.degree;} }),d3.max(graph.nodes, function(d) { if (d.connected == false) {return d.degree;} })])
+    .range([10,25]);
+
+  return result(value);
+}
+
+var box = search.append('input')
+	.attr('type', 'text')
+	.attr('id', 'searchTerm')
+	.attr('placeholder', 'Type to search...');
+
+var button = search.append('input')
+	.attr('type', 'button')
+	.attr('value', 'Search')
+	.on('click', function () { searchNodes(); });
+
+// Toggle for ego networks on click (below).
+var toggle = 0;
+
+var link = container.append("g")
+    .attr("class", "links")
+  .selectAll(".link"),
+    node = container.append("g")
+      .attr("class", "nodes")
+    .selectAll(".node");
+
+
+// A function to handle click toggling based on neighboring graph.nodes.
+function toggleClick(d) {
+
+
+  // Make object of all neighboring graph.nodes.
+   connectedNodes = {};
+   connectedNodes[d.id] = true;
+   graph.links.forEach(function(l) {
+	   if (l.source.id == d.id) { connectedNodes[l.target.id] = true; }
+	   else if (l.target.id == d.id) { connectedNodes[l.source.id] = true; };
+   });
+
+      if (toggle == 0) {
+	      // Ternary operator restyles graph.links and graph.nodes if they are adjacent.
+	      d3.selectAll('.link').style('stroke', function (l) {
+		      return l.target == d || l.source == d ? 1 : '#D3D3D3';
+	      });
+	      d3.selectAll('.node').style('fill', function (n) {
+		      if (n.id in connectedNodes) { return color(n.color); }
+		      else { return '#D3D3D3'; };
+	      });
+
+		// Show information when node is clicked
+		d3.select('div#tools').append('span').text("Name: " + d.name + "  |  Historical Significance: " + d.historical_significance + "  |  Lived: " + d.birth_year + "-" + d.death_year);
+	      toggle = 1;
+      }
+      else {
+	      // Restore graph.nodes and graph.links to normal opacity.
+	      d3.selectAll('.link').style('stroke', '#000');
+	      d3.selectAll('.node').style('fill', function(d) { return color(d.color); });
+	      d3.selectAll('span').remove();
+	      toggle = 0;
+      }
+}
+
+
+d3.json("sharednetwork.json", function(error, json) {
+  if (error) throw error;
+
+  graph = json;
+
+  update(graph.nodes, graph.links);
+
+
+  	// A slider (using only d3 and HTML5) that removes graph.nodes below the input threshold.
+	var slider = d3.select('div#tools').append('div').text('Confidence Estimate (1- and 2-degree only): ');
+
+	var sliderLabel = slider.append('label')
+		.attr('for', 'threshold')
+		.text('60');
+	var sliderMain = slider.append('input')
+		.attr('type', 'range')
+		.attr('min', d3.min(graph.links, function(d) {return d.weight; }))
+		.attr('max', d3.max(graph.links, function(d) {return d.weight; }) )
+		.attr('value', 60)
+		.attr('id', 'threshold')
+		.style('width', '50%')
+		.style('display', 'block')
+		.on('input', function () {
+			var threshold = this.value;
+
+			d3.select('label').text(threshold);
+
+			// Find the graph.links that are at or above the threshold.
+			var newLinks = [];
+			graph.links.forEach( function (d) {
+				if (d.weight >= threshold) {
+					newLinks.push(d);
+				};
+			});
+
+			var newNodes = [];
+			graph.nodes.forEach( function(d) {
+				newLinks.forEach( function(l) {
+					if (l.source == d || l.target == d) { newNodes.push(d); };
+				});
+			});
+
+			newNodes = Array.from(new Set(newNodes));
+
+      update(newNodes, newLinks);
+
+		});
+
+	// A pathDropdown menu with three different graph layouts (based on more limited subsets of graph.nodes).
+	var pathDropdown = d3.select('div#tools')
+		.append('select')
+		.on('change', function() {
+			var val = this.value;
+			if (val == "1- and 2-Degree Connections") {
+				var newNodes = graph.nodes;
+				var newLinks = graph.links;
+				sliderMain.attr('disabled', null);
+			};
+			if (val == "1-Degree Connections Only") {
+				var newNodes = [];
+				graph.nodes.forEach( function(d) {
+					if (d.connected == false) {newNodes.push(d); };
+				});
+
+				var newLinks = [];
+				graph.links.forEach( function(l) {
+					if (newNodes.includes(l.source) && newNodes.includes(l.target)) {
+						newLinks.push(l);
+					};
+				});
+				sliderMain.attr('disabled', 'disabled');
+			};
+
+			update(newNodes, newLinks);
+
+			sliderLabel.text('60');
+			document.getElementById("threshold").stepDown(40);
+
+		});
+
+	pathDropdown.selectAll('option')
+		.data(["1- and 2-Degree Connections", '1-Degree Connections Only'])
+		.enter().append('option')
+		.attr('value', function(d) { return d; })
+		.text(function(d) { return d; });
+
+
+});
+
+
+// function dragstarted(d) {
+//   if (!d3.event.active) simulation.alphaTarget(0.3).restart();
+//   d.fx = d.x;
+//   d.fy = d.y;
+// }
+//
+// function dragged(d) {
+//   d.fx = d3.event.x;
+//   d.fy = d3.event.y;
+// }
+//
+// function dragended(d) {
+//   if (!d3.event.active) simulation.alphaTarget(0);
+//   d.fx = null;
+//   d.fy = null;
+// }
+
+// Zooming function translates the size of the svg container.
+function zoomed() {
+	  container.attr("transform", "translate(" + d3.event.transform.x + ", " + d3.event.transform.y + ") scale(" + d3.event.transform.k + ")");
+}
+
+// Search for graph.nodes by making all unmatched graph.nodes temporarily transparent.
+function searchNodes() {
+	var term = document.getElementById('searchTerm').value;
+	var selected = container.selectAll('.node').filter(function (d, i) {
+		return d.name.toLowerCase().search(term.toLowerCase()) == -1;
+	});
+	selected.style('opacity', '0');
+	var link = container.selectAll('.link');
+	link.style('stroke-opacity', '0');
+	d3.selectAll('.node').transition()
+		.duration(5000)
+		.style('opacity', '1');
+	d3.selectAll('.link').transition().duration(5000).style('stroke-opacity', '0.6');
+}
+
+function update(newNodes, newLinks) {
+
+  var simulation = d3.forceSimulation(newNodes)
+      // .velocityDecay(.5)
+      .force("link", d3.forceLink(newLinks).id(function(d) { return d.id; }))
+      .force("charge", d3.forceManyBody().strength([-1200]))//.distanceMax([500]))
+      .force("center", d3.forceCenter(width / 2, height / 2))
+      .force("x", d3.forceX())
+      .force("y", d3.forceY())
+      .stop();
+
+  for (var i = 0, n = Math.ceil(Math.log(simulation.alphaMin()) / Math.log(1 - simulation.alphaDecay())); i < n; ++i) {
+    simulation.tick();
+  }
+
+  // Data join with only those new links and corresponding nodes.
+  link = link.data(newLinks, function(d) {return d.source.id + ', ' + d.target.id;});
+  link.exit().remove();
+  var linkEnter = link.enter().append('path')
+    .attr('class', 'link');
+      link = linkEnter.merge(link)
+      .attr("d", function(d) {
+              return draw_curve(d.source.x, d.source.y, d.target.x, d.target.y, M);
+          })
+      .attr('stroke-opacity', function(l) { if (l.altered == true) { return 1;} else {return .35;} });
+
+  // When adding and removing graph.nodes, reassert attributes and behaviors.
+  node = node.data(newNodes, function(d) {return d.id;});
+  node.exit().remove();
+  var nodeEnter = node.enter().append('circle')
+  .attr('r', function(d) { return degreeSize(d.degree, graph);})
+  // Color by degree centrality calculation in NetworkX.
+  .attr("fill", function(d) { return color(d.color); })
+    .attr('class', 'node')
+    .attr('id', function(d) { return "n" + d.id.toString(); })
+    .attr('clickToggle', 0)
+    .attr("cx", function(d) { return d.x; })
+    .attr("cy", function(d) { return d.y; })
+    // On click, toggle ego networks for the selected node. (See function above.)
+    .on('click', function(d) { toggleClick(d); });
+    // .call(d3.drag()
+    //     .on("start", dragstarted)
+    //     .on("drag", dragged)
+    //     .on("end", dragended));
+
+
+  node = nodeEnter.merge(node);
+
+    node.append("title")
+        .text(function(d) { return d.name; });
+
+  // Restart simulation with new node and link data.
+  // simulation
+  //   .nodes(newNodes).on('tick', ticked)
+  //   .force("link").links(newLinks, function(d) {return d.source.id + ', ' + d.target.id;});
+  //
+  // simulation.alphaTarget(0.1).restart();
+  //
+  // function ticked() {
+  //   link
+  //       .attr("x1", function(d) { return d.source.x; })
+  //       .attr("y1", function(d) { return d.source.y; })
+  //       .attr("x2", function(d) { return d.target.x; })
+  //       .attr("y2", function(d) { return d.target.y; });
+  //
+  //   node
+  //       .attr("cx", function(d) { return d.x; })
+  //       .attr("cy", function(d) { return d.y; });
+  // }
+
+}
+
+function draw_curve(Ax, Ay, Bx, By, M) {
+
+    // side is either 1 or -1 depending on which side you want the curve to be on.
+    // Find midpoint J
+    var Jx = Ax + (Bx - Ax) / 2
+    var Jy = Ay + (By - Ay) / 2
+
+    // We need a and b to find theta, and we need to know the sign of each to make sure that the orientation is correct.
+    var a = Bx - Ax
+    var asign = (a < 0 ? -1 : 1)
+    var b = By - Ay
+    var bsign = (b < 0 ? -1 : 1)
+    var theta = Math.atan(b / a)
+
+    // Find the point that's perpendicular to J on side
+    var costheta = asign * Math.cos(theta)
+    var sintheta = asign * Math.sin(theta)
+
+    // Find c and d
+    var c = M * sintheta
+    var d = M * costheta
+
+    // Use c and d to find Kx and Ky
+    var Kx = Jx - c
+    var Ky = Jy + d
+
+    return "M" + Ax + "," + Ay +
+           "Q" + Kx + "," + Ky +
+           " " + Bx + "," + By
+}
+
+</script>
+</body>
