@@ -99,82 +99,38 @@ var confidenceSliderMain = confidenceSlider.append('input')
 
 	});
 
-  // A slider for network complexity.
+  // Radio buttons for network complexity.
 
-  var pathDropdown = d3.select('div#tools')
-		.append('select')
-		.on('change', function() {
-			var val = this.value;
-			if (val == "1- and 2-Degree Connections") {
-				var newNodes = graph.nodes;
-				var newLinks = graph.links;
-				sliderMain.attr('disabled', null);
-			};
-			if (val == "1-Degree Connections Only") {
-				var newNodes = [];
-				graph.nodes.forEach( function(d) {
-					if (d.connected == false) {newNodes.push(d); };
-				});
+var complexityForm = d3.select('div#tools').append('form')
 
-				var newLinks = [];
-				graph.links.forEach( function(l) {
-					if (newNodes.includes(l.source) && newNodes.includes(l.target)) {
-						newLinks.push(l);
-					};
-				});
-				sliderMain.attr('disabled', 'disabled');
-			};
+var complexityLabel = complexityForm.append('label')
+    .text('Network Complexity: 2.5 ')
+    .attr('id', 'complexityLabel');
 
-			update(newNodes, newLinks);
+var complexityButtons = complexityForm.selectAll('input')
+    .data(['1','1.5','1.75','2','2.5'])
+    .enter().append('input')
+    .attr('type', 'radio')
+    .attr('name', 'complexity')
+    .attr('value', function(d) {return d;})
+    .attr('id', function(d) {return 'complexity'+d;});
 
-			sliderLabel.text('60');
-			document.getElementById("threshold").stepDown(40);
-
-		});
-
-	pathDropdown.selectAll('option')
-		.data(["1- and 2-Degree Connections", '1-Degree Connections Only'])
-		.enter().append('option')
-		.attr('value', function(d) { return d; })
-		.text(function(d) { return d; });
-
-var complexitySlider = d3.select('div#tools').append('div').text('Network Complexity: ');
-
-var complexitySliderLabel = complexitySlider.append('label')
-  .attr('for', 'complexity')
-  .attr('id', 'complexityLabel')
-  .text('2.5');
-var complexitySliderMain = complexitySlider.append('input')
-  .attr('type', 'range')
-  .attr('min', 1)
-  .attr('max', 2.5 )
-  .attr('step', .25)
-  .attr('value', 2.5)
-  .attr('id', 'complexity')
-  .style('width', '50%')
-  .style('display', 'block')
-  .on('input', function () {
-
+complexityButtons.on('change', function () {
 
     var complexity = this.value;
 
-    d3.select('#complexityLabel').text(complexity);
+    d3.select("#complexityLabel").text("Network Complexity: "+complexity+" ");
 
     if (complexity == 1) {
       var newNodes = graph.nodes.filter(function(d) { if (d.one_degree == true) {return d;}; });
-
       var newLinks = graph.links.filter(function(l) { if (l.source.is_source == true || l.target.is_source == true) {return l;}; });
-
       update(newNodes, newLinks);
     }
 
     if (complexity == 1.5) {
       var newNodes = graph.nodes.filter(function(d) { if (d.one_degree == true) {return d;}; });
-
       var newLinks = graph.links.filter(function(l) { if (l.source.one_degree == true && l.target.one_degree == true) {return l;}; });
-
       update(newNodes, newLinks);
-
     }
 
     if (complexity == 1.75) {
@@ -190,28 +146,18 @@ var complexitySliderMain = complexitySlider.append('input')
           if (count >= 2) {newNodes.push(d);}
         }
       });
-
       var newLinks = graph.links.filter(function(l) { if (newNodes.indexOf(l.source) != -1 && newNodes.indexOf(l.target) != -1) {return l;}; });
-
       update(newNodes, newLinks);
-
     }
 
-
     if (complexity == 2) {
-
       var newLinks = graph.links.filter(function(l) { if (l.source.one_degree == true || l.target.one_degree == true) {return l;}; });
-
       update(graph.nodes, newLinks);
     }
 
     if (complexity == 2.5) { update(graph.nodes, graph.links); }
 
-  });
-
-
-
-
+});
 
 function update(newNodes, newLinks) {
 
