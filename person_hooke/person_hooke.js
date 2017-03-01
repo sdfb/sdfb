@@ -161,6 +161,8 @@ complexityButtons.on('change', function () {
 
 function update(newNodes, newLinks) {
 
+  d3.select('.source-node').remove();
+
   var simulation = d3.forceSimulation(newNodes)
       // .velocityDecay(.5)
       .force("link", d3.forceLink(newLinks).id(function(d) { return d.id; }))
@@ -190,14 +192,14 @@ function update(newNodes, newLinks) {
   .attr("cy", function(d) { return d.y; });
   node.exit().remove();
   var nodeEnter = node.enter().append('circle')
-  .attr('r', function(d) { return degreeSize(d.degree, graph);})
+  .attr('r', function(d) { return degreeSize(d.degree);})
   // Color by degree centrality calculation in NetworkX.
   .attr("fill", function(d) { return color(d.one_degree); })
     .attr('class', 'node')
     .attr('id', function(d) { return "n" + d.id.toString(); })
-    .attr('clickToggle', 0)
     .attr("cx", function(d) { return d.x; })
     .attr("cy", function(d) { return d.y; })
+    .attr("is_source", function(d) {return d.is_source;})
     // On click, toggle ego networks for the selected node. (See function above.)
     .on('click', function(d) { toggleClick(d); });
 
@@ -206,6 +208,12 @@ function update(newNodes, newLinks) {
     node.append("title")
         .text(function(d) { return d.name; });
 
+  d3.select('.nodes').insert('circle', '[is_source="true"]')
+    .attr('r', degreeSize(d3.select('[is_source="true"]').data()[0].degree) + 7)
+    .attr('fill', 'orange')//color(d3.select('[is_source="true"]').data()[0].one_degree))
+    .attr('class', 'source-node')
+    .attr("cx", d3.select('[is_source="true"]').data()[0].x)
+    .attr("cy", d3.select('[is_source="true"]').data()[0].y);
 }
 
 // A function to handle click toggling based on neighboring graph.nodes.
@@ -221,6 +229,7 @@ function toggleClick(d) {
    });
 
       if (toggle == 0) {
+        recursivePulse(d);
         // Ternary operator restyles graph.links and graph.nodes if they are adjacent.
         d3.selectAll('.link').style('stroke', function (l) {
           return l.target == d || l.source == d ? 1 : '#D3D3D3';
@@ -238,6 +247,7 @@ function toggleClick(d) {
         // Restore graph.nodes and graph.links to normal opacity.
         d3.selectAll('.link').style('stroke', '#000');
         d3.selectAll('.node').style('fill', function(d) { return color(d.one_degree); });
+        d3.select('#n' + d.id.toString()).transition().duration(200).style('opacity', '1');
         d3.selectAll('span').remove();
         toggle = 0;
       }
@@ -292,4 +302,16 @@ function draw_curve(Ax, Ay, Bx, By, M) {
     return "M" + Ax + "," + Ay +
            "Q" + Kx + "," + Ky +
            " " + Bx + "," + By
+}
+
+function recursivePulse(d) {
+  pulse();
+
+  function pulse() {
+    d3.select('#n' + d.id.toString())
+    .transition().duration(1500).style('opacity', '.5')
+    .transition().duration(1500).style('opacity', '1')
+    .on('end', pulse);
+  }
+
 }
