@@ -166,8 +166,6 @@ function update(currentNodes, currentLinks, threshold) {
 
   d3.select('.source-node').remove(); //Get rid of old source node highlight.
 
-  if (typeof(currentLinks[0].source) == 'number') { console.log('Yowza!'); };
-
   // Find the links and nodes that are at or above the threshold.
   var newLinks = currentLinks.filter(function(d) { if (d.weight >= threshold) {return d; }; });
 

@@ -9,11 +9,11 @@ conn = psycopg2.connect('dbname=mysdfb')
 cur = conn.cursor()
 
 # Get nodes as list of tuples from database
-cur.execute("SELECT id, display_name, historical_significance, ext_birth_year, ext_death_year, group_list FROM people;")
+cur.execute("SELECT id, display_name, historical_significance, ext_birth_year, ext_death_year, group_list FROM people WHERE is_approved = true;")
 node_tuples = cur.fetchall()
 
 # Get edges as list of tuples from database
-cur.execute("SELECT person1_index, person2_index, max_certainty, last_edit, types_list FROM relationships WHERE max_certainty >=60;")
+cur.execute("SELECT person1_index, person2_index, max_certainty, last_edit, types_list FROM relationships WHERE is_approved = true and max_certainty >=60;")
 edge_tuples = cur.fetchall()
 
 print('Total number of nodes:', len(node_tuples))
@@ -36,7 +36,8 @@ edges = []
 altered = {}
 for e in edge_tuples:
     edges.append((e[0], e[1], e[2]))
-    if e[3] == None:
+    print(e[3])
+    if e[3] == None or e[3] == '--- []\n':
         altered[(e[0], e[1])] = False
         print('none!')
     elif e[3].split()[2] == '2':# and e[4] != '--- []\n':
@@ -46,7 +47,7 @@ for e in edge_tuples:
         altered[(e[0], e[1])] = True
 
 
-print('Number of edges with confidence 60% and above:', len(edges))
+print('Number of edges:', len(edges))
 
 # Build full network using NetworkX
 G = nx.Graph()

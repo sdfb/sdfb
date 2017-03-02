@@ -187,12 +187,6 @@
             "weight":100
         },
         {
-            "altered":true,
-            "source":10000473,
-            "target":10050161,
-            "weight":79
-        },
-        {
             "altered":false,
             "source":10004371,
             "target":10000188,
@@ -325,12 +319,6 @@
             "weight":60
         },
         {
-            "altered":true,
-            "source":10008090,
-            "target":10050018,
-            "weight":100
-        },
-        {
             "altered":false,
             "source":10008090,
             "target":10003359,
@@ -443,18 +431,6 @@
             "source":10011322,
             "target":10000471,
             "weight":68
-        },
-        {
-            "altered":true,
-            "source":10011322,
-            "target":10011921,
-            "weight":93
-        },
-        {
-            "altered":true,
-            "source":10011322,
-            "target":10011928,
-            "weight":91
         },
         {
             "altered":false,
@@ -599,12 +575,6 @@
             "source":10002120,
             "target":10006905,
             "weight":67
-        },
-        {
-            "altered":true,
-            "source":10002120,
-            "target":10050038,
-            "weight":76
         },
         {
             "altered":false,
@@ -3697,12 +3667,6 @@
             "weight":70
         },
         {
-            "altered":true,
-            "source":10012117,
-            "target":10050178,
-            "weight":100
-        },
-        {
             "altered":false,
             "source":10012117,
             "target":10011271,
@@ -4619,12 +4583,6 @@
             "source":10012117,
             "target":10000375,
             "weight":70
-        },
-        {
-            "altered":true,
-            "source":10012038,
-            "target":10050034,
-            "weight":79
         },
         {
             "altered":false,
@@ -12971,7 +12929,7 @@
         {
             "birth_year":"1561",
             "death_year":"1626",
-            "degree":32,
+            "degree":31,
             "distance":0,
             "historical_significance":"lord chancellor, politician, and philosopher",
             "id":10000473,
@@ -12998,7 +12956,7 @@
         {
             "birth_year":"1577",
             "death_year":"1655",
-            "degree":14,
+            "degree":13,
             "distance":1,
             "historical_significance":"writer and courtier",
             "id":10008090,
@@ -13025,7 +12983,7 @@
         {
             "birth_year":"1585",
             "death_year":"1631",
-            "degree":7,
+            "degree":5,
             "distance":1,
             "historical_significance":"maid of honour to Elizabeth I",
             "id":10011322,
@@ -13061,7 +13019,7 @@
         {
             "birth_year":"1585",
             "death_year":"1645",
-            "degree":24,
+            "degree":23,
             "distance":1,
             "historical_significance":"favourite of James I",
             "id":10002120,
@@ -13124,7 +13082,7 @@
         {
             "birth_year":"1533",
             "death_year":"1603",
-            "degree":239,
+            "degree":238,
             "distance":1,
             "historical_significance":"queen of England and Ireland",
             "id":10012117,
@@ -13133,7 +13091,7 @@
         {
             "birth_year":"1573",
             "death_year":"1622",
-            "degree":3,
+            "degree":2,
             "distance":1,
             "historical_significance":"gentlewoman and benefactor",
             "id":10012038,
@@ -13255,15 +13213,6 @@
             "historical_significance":"lawyer, legal writer, and politician",
             "id":10002626,
             "name":"Sir Edward Coke"
-        },
-        {
-            "birth_year":"1534",
-            "death_year":"1604",
-            "degree":1,
-            "distance":1,
-            "historical_significance":"Son of the staunchly Protestant merchant John Peryam who was twice mayor of Exeter, he became Chief Baron of the Exchequer (1593 - 1603) 'frequently in commissions for trials of political crimes, particularly those of Mary, queen of Scots, the earls of Arundel and Essex, and Sir John Perrot...'(ODNB)",
-            "id":10050161,
-            "name":"William Periam"
         },
         {
             "birth_year":"1566",
@@ -13547,7 +13496,7 @@
         {
             "birth_year":"1548",
             "death_year":"1618",
-            "degree":7,
+            "degree":6,
             "distance":2,
             "historical_significance":"",
             "id":10000472,
@@ -13898,7 +13847,7 @@
         {
             "birth_year":"1548",
             "death_year":"1593",
-            "degree":3,
+            "degree":2,
             "distance":2,
             "historical_significance":"landowner",
             "id":10010794,
@@ -14348,7 +14297,7 @@
         {
             "birth_year":"1523",
             "death_year":"1604",
-            "degree":2,
+            "degree":1,
             "distance":2,
             "historical_significance":"silkwoman and benefactor",
             "id":10000690,
@@ -14994,15 +14943,6 @@
             "name":"Sir William Coventry"
         },
         {
-            "birth_year":"1544",
-            "death_year":"1628",
-            "degree":1,
-            "distance":2,
-            "historical_significance":"",
-            "id":10050018,
-            "name":"Tobie Matthews"
-        },
-        {
             "birth_year":"1530",
             "death_year":"1595",
             "degree":11,
@@ -15093,15 +15033,6 @@
             "name":"William Goodwin"
         },
         {
-            "birth_year":"1567",
-            "death_year":"1603",
-            "degree":1,
-            "distance":2,
-            "historical_significance":"landowner and local politician",
-            "id":10050034,
-            "name":"Sir John Townshend"
-        },
-        {
             "birth_year":"1555",
             "death_year":"1625",
             "degree":2,
@@ -15120,13 +15051,13 @@
             "name":"Lady Mary Wroth"
         },
         {
-            "birth_year":"1586",
-            "death_year":"1586",
-            "degree":1,
+            "birth_year":"1511",
+            "death_year":"1596",
+            "degree":13,
             "distance":2,
-            "historical_significance":"border chieftain and administrator",
-            "id":10050038,
-            "name":"Sir Thomas Ker"
+            "historical_significance":"politician",
+            "id":10007028,
+            "name":"Sir Francis Knollys"
         },
         {
             "birth_year":"1547",
@@ -15138,13 +15069,13 @@
             "name":"Sir Thomas Coventry"
         },
         {
-            "birth_year":"1511",
-            "death_year":"1596",
-            "degree":13,
+            "birth_year":"1518",
+            "death_year":"1573",
+            "degree":7,
             "distance":2,
-            "historical_significance":"politician",
-            "id":10007028,
-            "name":"Sir Francis Knollys"
+            "historical_significance":"courtier and landowner",
+            "id":10013174,
+            "name":"Sir Thomas Wroth"
         },
         {
             "birth_year":"1518",
@@ -15154,15 +15085,6 @@
             "historical_significance":"",
             "id":10050041,
             "name":"Jane Ferneley"
-        },
-        {
-            "birth_year":"1518",
-            "death_year":"1573",
-            "degree":7,
-            "distance":2,
-            "historical_significance":"courtier and landowner",
-            "id":10013174,
-            "name":"Sir Thomas Wroth"
         },
         {
             "birth_year":"1588",
@@ -15653,7 +15575,7 @@
         {
             "birth_year":"1515",
             "death_year":"1560",
-            "degree":24,
+            "degree":23,
             "distance":2,
             "historical_significance":"queen of Scots, consort of James V, and regent of Scotland",
             "id":10013287,
@@ -15703,15 +15625,6 @@
             "historical_significance":"MP for Bossiney: courtier. Married Elizabeth Bacon (1545), eldest daughter of Sir Nicholas Bacon.",
             "id":10050176,
             "name":"Sir Robert Doyley"
-        },
-        {
-            "birth_year":"1552",
-            "death_year":"1618",
-            "degree":1,
-            "distance":2,
-            "historical_significance":"Famous Explorer, sank the spanish armada",
-            "id":10050178,
-            "name":"Walter Raleigh"
         },
         {
             "birth_year":"1573",
@@ -17685,15 +17598,6 @@
             "name":"Sir Clement Heigham"
         },
         {
-            "birth_year":"1557",
-            "death_year":"1626",
-            "degree":1,
-            "distance":2,
-            "historical_significance":"NA",
-            "id":10011921,
-            "name":"Sir Arthur Throckmorton"
-        },
-        {
             "birth_year":"1548",
             "death_year":"1611",
             "degree":5,
@@ -17712,15 +17616,6 @@
             "name":"Sir John Forster"
         },
         {
-            "birth_year":"1515",
-            "death_year":"1571",
-            "degree":16,
-            "distance":2,
-            "historical_significance":"diplomat and member of parliament",
-            "id":10011928,
-            "name":"Sir Nicholas Throckmorton"
-        },
-        {
             "birth_year":"1492",
             "death_year":"1602",
             "degree":3,
@@ -17728,6 +17623,15 @@
             "historical_significance":"political agent and spy",
             "id":10001688,
             "name":"Robert Bruce"
+        },
+        {
+            "birth_year":"1515",
+            "death_year":"1571",
+            "degree":15,
+            "distance":2,
+            "historical_significance":"diplomat and member of parliament",
+            "id":10011928,
+            "name":"Sir Nicholas Throckmorton"
         },
         {
             "birth_year":"1566",
@@ -17966,7 +17870,7 @@
         {
             "birth_year":"1593",
             "death_year":"1631",
-            "degree":11,
+            "degree":10,
             "distance":2,
             "historical_significance":"convicted rapist and sodomite",
             "id":10012020,
@@ -18029,7 +17933,7 @@
         {
             "birth_year":"1583",
             "death_year":"1649",
-            "degree":7,
+            "degree":6,
             "distance":2,
             "historical_significance":"poet",
             "id":10012039,
@@ -18389,7 +18293,7 @@
         {
             "birth_year":"1508",
             "death_year":"1565",
-            "degree":9,
+            "degree":8,
             "distance":2,
             "historical_significance":"printer and legal writer",
             "id":10010118,
