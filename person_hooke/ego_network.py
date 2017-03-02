@@ -70,24 +70,19 @@ one_degree = G.neighbors(bacon)
 two_degree = list(set(sum([G.neighbors(n) for n in one_degree], [])))
 
 all_nodes = [bacon] + one_degree + two_degree
-connected_dict = {}
+distance_dict = {}
 source_dict = {}
 for a in all_nodes:
-    if a in one_degree or a == bacon:
-        connected_dict[a] = True
-    else:
-        connected_dict[a] = False
-
-for a in all_nodes:
     if a == bacon:
-        source_dict[a] = True
+        distance_dict[a] = 0
+    elif a in one_degree:
+        distance_dict[a] = 1
     else:
-        source_dict[a] = False
+        distance_dict[a] = 2
 
 SG = G.subgraph(all_nodes)
 
-nx.set_node_attributes(SG, 'connected', connected_dict)
-nx.set_node_attributes(SG, 'is_source', source_dict)
+nx.set_node_attributes(SG, 'distance', distance_dict)
 
 # Create a dictionary for the JSON needed by D3.
 new_data = dict(
@@ -95,9 +90,7 @@ new_data = dict(
             id=n,
             name=SG.node[n]['name'],
             degree=SG.node[n]['degree'],
-            one_degree=SG.node[n]['connected'],
-            is_source=SG.node[n]['is_source'],
-            # group=SG.node[n]['group'],
+            distance=SG.node[n]['distance'],
             historical_significance=SG.node[n]['historical_significance'],
             birth_year=SG.node[n]['birth_year'],
             death_year=SG.node[n]['death_year']) for n in SG.nodes()],
