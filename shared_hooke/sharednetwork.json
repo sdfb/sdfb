@@ -1,546 +1,2289 @@
 {
     "links":[
         {
-          "altered":true,
-          "source":10002223,
-          "target":10,
-          "weight":90
-        },
-        {
-          "altered":true,
-          "source":10004875,
-          "target":10,
-          "weight":90
+            "altered":false,
+            "source":10003718,
+            "target":10005397,
+            "weight":77
         },
         {
             "altered":false,
-            "source":10002177,
-            "target":10004875,
-            "weight":60
-        },
-        {
-            "altered":true,
-            "source":10054787,
-            "target":10002223,
-            "weight":100
-        },
-        {
-            "altered":false,
-            "source":10009157,
-            "target":10002223,
-            "weight":64
-        },
-        {
-            "altered":false,
-            "source":10003080,
-            "target":10004875,
-            "weight":80
-        },
-        {
-            "altered":false,
-            "source":10001419,
-            "target":10011691,
-            "weight":93
-        },
-        {
-            "altered":false,
-            "source":10001419,
-            "target":10011671,
-            "weight":66
-        },
-        {
-            "altered":false,
-            "source":10001419,
-            "target":10004875,
-            "weight":79
-        },
-        {
-            "altered":false,
-            "source":10001419,
-            "target":10011389,
-            "weight":69
-        },
-        {
-            "altered":false,
-            "source":10001419,
-            "target":10012887,
-            "weight":93
-        },
-        {
-            "altered":false,
-            "source":10002381,
-            "target":10002223,
-            "weight":79
-        },
-        {
-            "altered":true,
-            "source":10054799,
-            "target":10002223,
-            "weight":100
-        },
-        {
-            "altered":false,
-            "source":10002230,
-            "target":10002223,
-            "weight":100
-        },
-        {
-            "altered":false,
-            "source":10008468,
-            "target":10011691,
-            "weight":69
-        },
-        {
-            "altered":false,
-            "source":10008468,
-            "target":10004875,
-            "weight":83
-        },
-        {
-            "altered":false,
-            "source":10011671,
-            "target":10002223,
-            "weight":79
-        },
-        {
-            "altered":false,
-            "source":10011671,
-            "target":10011315,
-            "weight":92
-        },
-        {
-            "altered":false,
-            "source":10011671,
-            "target":10007966,
-            "weight":100
-        },
-        {
-            "altered":false,
-            "source":10011671,
-            "target":10012887,
-            "weight":65
-        },
-        {
-            "altered":false,
-            "source":10011035,
-            "target":10004875,
-            "weight":74
-        },
-        {
-            "altered":false,
-            "source":10011035,
-            "target":10011315,
-            "weight":97
-        },
-        {
-            "altered":false,
-            "source":10004875,
-            "target":10011691,
-            "weight":84
-        },
-        {
-            "altered":false,
-            "source":10004875,
-            "target":10012887,
-            "weight":75
-        },
-        {
-            "altered":false,
-            "source":10004875,
-            "target":10011315,
+            "source":10003718,
+            "target":10008309,
             "weight":76
         },
         {
             "altered":false,
-            "source":10004875,
-            "target":10011389,
+            "source":10007724,
+            "target":10010937,
+            "weight":65
+        },
+        {
+            "altered":false,
+            "source":10011918,
+            "target":10010937,
             "weight":83
         },
         {
             "altered":false,
-            "source":10007966,
-            "target":10002223,
+            "source":10000399,
+            "target":10008309,
+            "weight":73
+        },
+        {
+            "altered":true,
+            "source":10050065,
+            "target":10050032,
+            "weight":92
+        },
+        {
+            "altered":true,
+            "source":10050065,
+            "target":10010937,
+            "weight":95
+        },
+        {
+            "altered":true,
+            "source":10050065,
+            "target":10005658,
+            "weight":100
+        },
+        {
+            "altered":true,
+            "source":10050065,
+            "target":10050030,
+            "weight":91
+        },
+        {
+            "altered":true,
+            "source":10050065,
+            "target":10054817,
             "weight":100
         },
         {
             "altered":false,
-            "source":10007966,
-            "target":10001916,
+            "source":10000147,
+            "target":10001776,
+            "weight":95
+        },
+        {
+            "altered":false,
+            "source":10000147,
+            "target":10005810,
             "weight":100
         },
         {
             "altered":false,
-            "source":10007648,
-            "target":10007652,
+            "source":10000147,
+            "target":10010937,
+            "weight":75
+        },
+        {
+            "altered":false,
+            "source":10000147,
+            "target":10011642,
+            "weight":68
+        },
+        {
+            "altered":false,
+            "source":10000147,
+            "target":10007630,
             "weight":71
         },
         {
             "altered":false,
-            "source":10007648,
-            "target":10002223,
+            "source":10000147,
+            "target":10001775,
+            "weight":68
+        },
+        {
+            "altered":true,
+            "source":10011670,
+            "target":10011681,
             "weight":100
         },
         {
             "altered":false,
-            "source":10007650,
-            "target":10007652,
-            "weight":93
+            "source":10011670,
+            "target":10003693,
+            "weight":68
         },
         {
             "altered":false,
-            "source":10007650,
-            "target":10002223,
-            "weight":73
+            "source":10011670,
+            "target":10006917,
+            "weight":81
+        },
+        {
+            "altered":false,
+            "source":10011670,
+            "target":10008309,
+            "weight":75
+        },
+        {
+            "altered":false,
+            "source":10009112,
+            "target":10003801,
+            "weight":75
         },
         {
             "altered":true,
-            "source":10007652,
-            "target":10052342,
+            "source":10009112,
+            "target":10008309,
+            "weight":85
+        },
+        {
+            "altered":false,
+            "source":10009112,
+            "target":10006703,
+            "weight":67
+        },
+        {
+            "altered":false,
+            "source":10002969,
+            "target":10006720,
+            "weight":88
+        },
+        {
+            "altered":false,
+            "source":10002969,
+            "target":10010937,
+            "weight":85
+        },
+        {
+            "altered":false,
+            "source":10002969,
+            "target":10008272,
+            "weight":64
+        },
+        {
+            "altered":false,
+            "source":10002969,
+            "target":10004397,
+            "weight":84
+        },
+        {
+            "altered":false,
+            "source":10005786,
+            "target":10001776,
+            "weight":94
+        },
+        {
+            "altered":false,
+            "source":10005786,
+            "target":10011681,
+            "weight":71
+        },
+        {
+            "altered":false,
+            "source":10005786,
+            "target":10009671,
+            "weight":65
+        },
+        {
+            "altered":false,
+            "source":10005786,
+            "target":10010937,
             "weight":100
         },
         {
             "altered":false,
-            "source":10007652,
-            "target":10002223,
+            "source":10005786,
+            "target":10002731,
             "weight":100
         },
         {
             "altered":true,
-            "source":10006438,
-            "target":10002223,
-            "weight":74
-        },
-        {
-            "altered":false,
-            "source":10002217,
-            "target":10002223,
-            "weight":100
-        },
-        {
-            "altered":true,
-            "source":10054698,
-            "target":10002223,
-            "weight":73
-        },
-        {
-            "altered":false,
-            "source":10011691,
-            "target":10012887,
-            "weight":63
-        },
-        {
-            "altered":true,
-            "source":10002223,
-            "target":10054792,
-            "weight":100
-        },
-        {
-            "altered":true,
-            "source":10002223,
-            "target":10054773,
-            "weight":100
-        },
-        {
-            "altered":true,
-            "source":10002223,
-            "target":10052342,
-            "weight":100
-        },
-        {
-            "altered":true,
-            "source":10002223,
-            "target":10001916,
-            "weight":100
-        },
-        {
-            "altered":true,
-            "source":10002223,
-            "target":10003903,
+            "source":10005786,
+            "target":10003389,
             "weight":100
         },
         {
             "altered":false,
-            "source":10011315,
-            "target":10011389,
+            "source":10054684,
+            "target":10008309,
+            "weight":80
+        },
+        {
+            "altered":true,
+            "source":10050032,
+            "target":10005658,
+            "weight":100
+        },
+        {
+            "altered":true,
+            "source":10050032,
+            "target":10050030,
+            "weight":100
+        },
+        {
+            "altered":true,
+            "source":10050032,
+            "target":10010937,
+            "weight":98
+        },
+        {
+            "altered":false,
+            "source":10011681,
+            "target":10001776,
             "weight":70
         },
         {
             "altered":false,
-            "source":10011389,
-            "target":10012887,
+            "source":10011681,
+            "target":10006720,
+            "weight":80
+        },
+        {
+            "altered":false,
+            "source":10011681,
+            "target":10004724,
+            "weight":80
+        },
+        {
+            "altered":false,
+            "source":10011681,
+            "target":10002279,
+            "weight":100
+        },
+        {
+            "altered":false,
+            "source":10011681,
+            "target":10012328,
+            "weight":91
+        },
+        {
+            "altered":false,
+            "source":10011681,
+            "target":10010937,
+            "weight":90
+        },
+        {
+            "altered":false,
+            "source":10011681,
+            "target":10003259,
+            "weight":85
+        },
+        {
+            "altered":false,
+            "source":10011681,
+            "target":10008272,
+            "weight":73
+        },
+        {
+            "altered":false,
+            "source":10011681,
+            "target":10003677,
+            "weight":77
+        },
+        {
+            "altered":false,
+            "source":10008612,
+            "target":10008272,
+            "weight":100
+        },
+        {
+            "altered":false,
+            "source":10008612,
+            "target":10002370,
+            "weight":99
+        },
+        {
+            "altered":false,
+            "source":10008612,
+            "target":10003677,
+            "weight":88
+        },
+        {
+            "altered":false,
+            "source":10008612,
+            "target":10008213,
+            "weight":63
+        },
+        {
+            "altered":false,
+            "source":10008612,
+            "target":10010937,
+            "weight":93
+        },
+        {
+            "altered":false,
+            "source":10008612,
+            "target":10005810,
+            "weight":86
+        },
+        {
+            "altered":false,
+            "source":10008612,
+            "target":10003389,
+            "weight":76
+        },
+        {
+            "altered":false,
+            "source":10006821,
+            "target":10001776,
+            "weight":62
+        },
+        {
+            "altered":false,
+            "source":10006821,
+            "target":10010937,
+            "weight":96
+        },
+        {
+            "altered":false,
+            "source":10006821,
+            "target":10005810,
+            "weight":66
+        },
+        {
+            "altered":false,
+            "source":10006821,
+            "target":10007630,
+            "weight":85
+        },
+        {
+            "altered":false,
+            "source":10006821,
+            "target":10000278,
+            "weight":79
+        },
+        {
+            "altered":false,
+            "source":10012711,
+            "target":10010937,
             "weight":67
+        },
+        {
+            "altered":true,
+            "source":10050089,
+            "target":10008309,
+            "weight":100
+        },
+        {
+            "altered":true,
+            "source":10050090,
+            "target":10008309,
+            "weight":100
+        },
+        {
+            "altered":false,
+            "source":10002731,
+            "target":10001776,
+            "weight":64
+        },
+        {
+            "altered":false,
+            "source":10002731,
+            "target":10006720,
+            "weight":64
+        },
+        {
+            "altered":false,
+            "source":10002731,
+            "target":10002279,
+            "weight":81
+        },
+        {
+            "altered":false,
+            "source":10002731,
+            "target":10010937,
+            "weight":100
+        },
+        {
+            "altered":false,
+            "source":10002731,
+            "target":10009671,
+            "weight":77
+        },
+        {
+            "altered":false,
+            "source":10005810,
+            "target":10006720,
+            "weight":68
+        },
+        {
+            "altered":false,
+            "source":10005810,
+            "target":10002370,
+            "weight":93
+        },
+        {
+            "altered":false,
+            "source":10005810,
+            "target":10005669,
+            "weight":88
+        },
+        {
+            "altered":false,
+            "source":10005810,
+            "target":10007980,
+            "weight":92
+        },
+        {
+            "altered":false,
+            "source":10005810,
+            "target":10003677,
+            "weight":61
+        },
+        {
+            "altered":false,
+            "source":10005810,
+            "target":10001776,
+            "weight":75
+        },
+        {
+            "altered":false,
+            "source":10005810,
+            "target":10011642,
+            "weight":76
+        },
+        {
+            "altered":false,
+            "source":10005810,
+            "target":10005908,
+            "weight":94
+        },
+        {
+            "altered":false,
+            "source":10005810,
+            "target":10008213,
+            "weight":91
+        },
+        {
+            "altered":false,
+            "source":10005810,
+            "target":10010937,
+            "weight":94
+        },
+        {
+            "altered":false,
+            "source":10005810,
+            "target":10012634,
+            "weight":77
+        },
+        {
+            "altered":false,
+            "source":10005810,
+            "target":10003389,
+            "weight":99
+        },
+        {
+            "altered":false,
+            "source":10006068,
+            "target":10006720,
+            "weight":84
+        },
+        {
+            "altered":false,
+            "source":10006068,
+            "target":10010937,
+            "weight":71
+        },
+        {
+            "altered":false,
+            "source":10011103,
+            "target":10008309,
+            "weight":80
+        },
+        {
+            "altered":false,
+            "source":10011103,
+            "target":10011102,
+            "weight":100
+        },
+        {
+            "altered":true,
+            "source":10010936,
+            "target":10010937,
+            "weight":95
+        },
+        {
+            "altered":false,
+            "source":10010937,
+            "target":10007936,
+            "weight":68
+        },
+        {
+            "altered":false,
+            "source":10010937,
+            "target":10010247,
+            "weight":81
+        },
+        {
+            "altered":false,
+            "source":10010937,
+            "target":10007980,
+            "weight":72
+        },
+        {
+            "altered":false,
+            "source":10010937,
+            "target":10010513,
+            "weight":71
+        },
+        {
+            "altered":false,
+            "source":10010937,
+            "target":10005908,
+            "weight":92
+        },
+        {
+            "altered":false,
+            "source":10010937,
+            "target":10008213,
+            "weight":73
+        },
+        {
+            "altered":false,
+            "source":10010937,
+            "target":10000278,
+            "weight":91
+        },
+        {
+            "altered":true,
+            "source":10010937,
+            "target":10005658,
+            "weight":100
+        },
+        {
+            "altered":true,
+            "source":10010937,
+            "target":10054817,
+            "weight":100
+        },
+        {
+            "altered":false,
+            "source":10010937,
+            "target":10005669,
+            "weight":62
+        },
+        {
+            "altered":false,
+            "source":10010937,
+            "target":10012328,
+            "weight":75
+        },
+        {
+            "altered":false,
+            "source":10010937,
+            "target":10007630,
+            "weight":88
+        },
+        {
+            "altered":false,
+            "source":10010937,
+            "target":10004397,
+            "weight":90
+        },
+        {
+            "altered":false,
+            "source":10010937,
+            "target":10011359,
+            "weight":93
+        },
+        {
+            "altered":false,
+            "source":10010937,
+            "target":10004406,
+            "weight":80
+        },
+        {
+            "altered":false,
+            "source":10010937,
+            "target":10010938,
+            "weight":72
+        },
+        {
+            "altered":false,
+            "source":10010937,
+            "target":10003259,
+            "weight":65
+        },
+        {
+            "altered":false,
+            "source":10010937,
+            "target":10003389,
+            "weight":66
+        },
+        {
+            "altered":false,
+            "source":10010937,
+            "target":10002366,
+            "weight":85
+        },
+        {
+            "altered":false,
+            "source":10010937,
+            "target":10006720,
+            "weight":100
+        },
+        {
+            "altered":false,
+            "source":10010937,
+            "target":10002370,
+            "weight":78
+        },
+        {
+            "altered":false,
+            "source":10010937,
+            "target":10009671,
+            "weight":95
+        },
+        {
+            "altered":false,
+            "source":10010937,
+            "target":10008522,
+            "weight":100
+        },
+        {
+            "altered":false,
+            "source":10010937,
+            "target":10008908,
+            "weight":68
+        },
+        {
+            "altered":false,
+            "source":10010937,
+            "target":10004302,
+            "weight":72
+        },
+        {
+            "altered":false,
+            "source":10010937,
+            "target":10008272,
+            "weight":76
+        },
+        {
+            "altered":false,
+            "source":10010937,
+            "target":10002279,
+            "weight":73
+        },
+        {
+            "altered":false,
+            "source":10010937,
+            "target":10012634,
+            "weight":86
+        },
+        {
+            "altered":false,
+            "source":10010937,
+            "target":10003677,
+            "weight":85
+        },
+        {
+            "altered":false,
+            "source":10010937,
+            "target":10007973,
+            "weight":76
+        },
+        {
+            "altered":false,
+            "source":10010937,
+            "target":10005858,
+            "weight":67
+        },
+        {
+            "altered":false,
+            "source":10010937,
+            "target":10000361,
+            "weight":70
+        },
+        {
+            "altered":false,
+            "source":10010937,
+            "target":10000741,
+            "weight":75
+        },
+        {
+            "altered":false,
+            "source":10010937,
+            "target":10007655,
+            "weight":60
+        },
+        {
+            "altered":false,
+            "source":10010937,
+            "target":10010348,
+            "weight":61
+        },
+        {
+            "altered":false,
+            "source":10010937,
+            "target":10003693,
+            "weight":83
+        },
+        {
+            "altered":true,
+            "source":10010937,
+            "target":10050030,
+            "weight":92
+        },
+        {
+            "altered":false,
+            "source":10010937,
+            "target":10001775,
+            "weight":68
+        },
+        {
+            "altered":false,
+            "source":10010937,
+            "target":10001776,
+            "weight":100
+        },
+        {
+            "altered":false,
+            "source":10010937,
+            "target":10003314,
+            "weight":61
+        },
+        {
+            "altered":false,
+            "source":10010937,
+            "target":10004724,
+            "weight":69
+        },
+        {
+            "altered":false,
+            "source":10010937,
+            "target":10001783,
+            "weight":71
+        },
+        {
+            "altered":false,
+            "source":10010937,
+            "target":10011642,
+            "weight":72
+        },
+        {
+            "altered":false,
+            "source":10010937,
+            "target":10007146,
+            "weight":67
+        },
+        {
+            "altered":false,
+            "source":10010937,
+            "target":10010366,
+            "weight":61
+        },
+        {
+            "altered":false,
+            "source":10003259,
+            "target":10006720,
+            "weight":95
+        },
+        {
+            "altered":false,
+            "source":10003259,
+            "target":10003314,
+            "weight":61
+        },
+        {
+            "altered":false,
+            "source":10003259,
+            "target":10004406,
+            "weight":97
+        },
+        {
+            "altered":true,
+            "source":10011359,
+            "target":10007192,
+            "weight":100
+        },
+        {
+            "altered":true,
+            "source":10011359,
+            "target":10008309,
+            "weight":80
+        },
+        {
+            "altered":false,
+            "source":10003528,
+            "target":10008309,
+            "weight":82
+        },
+        {
+            "altered":false,
+            "source":10009676,
+            "target":10009672,
+            "weight":85
+        },
+        {
+            "altered":false,
+            "source":10009676,
+            "target":10008309,
+            "weight":100
+        },
+        {
+            "altered":false,
+            "source":10013261,
+            "target":10008779,
+            "weight":99
+        },
+        {
+            "altered":false,
+            "source":10013261,
+            "target":10008309,
+            "weight":100
+        },
+        {
+            "altered":false,
+            "source":10000722,
+            "target":10008309,
+            "weight":77
+        },
+        {
+            "altered":false,
+            "source":10008048,
+            "target":10006697,
+            "weight":100
+        },
+        {
+            "altered":false,
+            "source":10008048,
+            "target":10008309,
+            "weight":100
+        },
+        {
+            "altered":false,
+            "source":10003801,
+            "target":10010352,
+            "weight":64
+        },
+        {
+            "altered":false,
+            "source":10003801,
+            "target":10008309,
+            "weight":62
+        },
+        {
+            "altered":true,
+            "source":10003801,
+            "target":10006697,
+            "weight":100
+        },
+        {
+            "altered":false,
+            "source":10008668,
+            "target":10008309,
+            "weight":76
+        },
+        {
+            "altered":true,
+            "source":10050141,
+            "target":10009244,
+            "weight":100
+        },
+        {
+            "altered":true,
+            "source":10050141,
+            "target":10008309,
+            "weight":100
+        },
+        {
+            "altered":false,
+            "source":10005858,
+            "target":10007192,
+            "weight":66
+        },
+        {
+            "altered":false,
+            "source":10005858,
+            "target":10006720,
+            "weight":87
+        },
+        {
+            "altered":false,
+            "source":10009187,
+            "target":10008309,
+            "weight":63
+        },
+        {
+            "altered":false,
+            "source":10002279,
+            "target":10001776,
+            "weight":60
+        },
+        {
+            "altered":false,
+            "source":10004844,
+            "target":10008309,
+            "weight":60
+        },
+        {
+            "altered":false,
+            "source":10005394,
+            "target":10009672,
+            "weight":66
+        },
+        {
+            "altered":false,
+            "source":10005394,
+            "target":10008309,
+            "weight":76
+        },
+        {
+            "altered":false,
+            "source":10001775,
+            "target":10001776,
+            "weight":84
+        },
+        {
+            "altered":false,
+            "source":10001775,
+            "target":10011642,
+            "weight":89
+        },
+        {
+            "altered":false,
+            "source":10001776,
+            "target":10006720,
+            "weight":92
+        },
+        {
+            "altered":false,
+            "source":10001776,
+            "target":10007630,
+            "weight":74
+        },
+        {
+            "altered":false,
+            "source":10001776,
+            "target":10003389,
+            "weight":63
+        },
+        {
+            "altered":false,
+            "source":10003314,
+            "target":10006720,
+            "weight":68
+        },
+        {
+            "altered":false,
+            "source":10003314,
+            "target":10003677,
+            "weight":63
+        },
+        {
+            "altered":false,
+            "source":10012023,
+            "target":10002322,
+            "weight":75
+        },
+        {
+            "altered":false,
+            "source":10012023,
+            "target":10008309,
+            "weight":81
+        },
+        {
+            "altered":false,
+            "source":10010492,
+            "target":10008309,
+            "weight":63
+        },
+        {
+            "altered":false,
+            "source":10008213,
+            "target":10006720,
+            "weight":66
+        },
+        {
+            "altered":false,
+            "source":10008213,
+            "target":10005908,
+            "weight":63
+        },
+        {
+            "altered":false,
+            "source":10008213,
+            "target":10005658,
+            "weight":68
+        },
+        {
+            "altered":false,
+            "source":10008213,
+            "target":10003677,
+            "weight":60
+        },
+        {
+            "altered":false,
+            "source":10003945,
+            "target":10009524,
+            "weight":60
+        },
+        {
+            "altered":false,
+            "source":10003945,
+            "target":10008309,
+            "weight":100
+        },
+        {
+            "altered":false,
+            "source":10006917,
+            "target":10008309,
+            "weight":83
+        },
+        {
+            "altered":false,
+            "source":10006918,
+            "target":10008309,
+            "weight":100
+        },
+        {
+            "altered":false,
+            "source":10008460,
+            "target":10008309,
+            "weight":88
+        },
+        {
+            "altered":false,
+            "source":10003693,
+            "target":10006720,
+            "weight":100
+        },
+        {
+            "altered":false,
+            "source":10003693,
+            "target":10003389,
+            "weight":68
+        },
+        {
+            "altered":false,
+            "source":10010513,
+            "target":10008272,
+            "weight":98
+        },
+        {
+            "altered":false,
+            "source":10010513,
+            "target":10012634,
+            "weight":78
+        },
+        {
+            "altered":false,
+            "source":10010513,
+            "target":10005908,
+            "weight":85
+        },
+        {
+            "altered":false,
+            "source":10010513,
+            "target":10003389,
+            "weight":76
+        },
+        {
+            "altered":false,
+            "source":10002322,
+            "target":10008309,
+            "weight":76
+        },
+        {
+            "altered":false,
+            "source":10005908,
+            "target":10012634,
+            "weight":95
+        },
+        {
+            "altered":false,
+            "source":10005908,
+            "target":10003389,
+            "weight":96
+        },
+        {
+            "altered":false,
+            "source":10005397,
+            "target":10008272,
+            "weight":71
+        },
+        {
+            "altered":false,
+            "source":10005397,
+            "target":10008779,
+            "weight":95
+        },
+        {
+            "altered":false,
+            "source":10005397,
+            "target":10008309,
+            "weight":70
+        },
+        {
+            "altered":false,
+            "source":10007192,
+            "target":10008309,
+            "weight":100
+        },
+        {
+            "altered":true,
+            "source":10005658,
+            "target":10050030,
+            "weight":100
+        },
+        {
+            "altered":true,
+            "source":10050159,
+            "target":10008309,
+            "weight":100
+        },
+        {
+            "altered":false,
+            "source":10009244,
+            "target":10009524,
+            "weight":89
+        },
+        {
+            "altered":false,
+            "source":10009244,
+            "target":10008309,
+            "weight":82
+        },
+        {
+            "altered":false,
+            "source":10006697,
+            "target":10008309,
+            "weight":100
+        },
+        {
+            "altered":false,
+            "source":10006697,
+            "target":10006703,
+            "weight":100
+        },
+        {
+            "altered":false,
+            "source":10007980,
+            "target":10003389,
+            "weight":62
+        },
+        {
+            "altered":false,
+            "source":10004397,
+            "target":10006720,
+            "weight":87
+        },
+        {
+            "altered":false,
+            "source":10006703,
+            "target":10008309,
+            "weight":100
+        },
+        {
+            "altered":true,
+            "source":10009672,
+            "target":10054852,
+            "weight":100
+        },
+        {
+            "altered":false,
+            "source":10009672,
+            "target":10008308,
+            "weight":72
+        },
+        {
+            "altered":false,
+            "source":10009672,
+            "target":10008309,
+            "weight":99
+        },
+        {
+            "altered":false,
+            "source":10009524,
+            "target":10008309,
+            "weight":100
+        },
+        {
+            "altered":false,
+            "source":10004406,
+            "target":10006720,
+            "weight":65
+        },
+        {
+            "altered":false,
+            "source":10003389,
+            "target":10006720,
+            "weight":98
+        },
+        {
+            "altered":false,
+            "source":10003389,
+            "target":10008272,
+            "weight":100
+        },
+        {
+            "altered":false,
+            "source":10003389,
+            "target":10002370,
+            "weight":98
+        },
+        {
+            "altered":false,
+            "source":10003389,
+            "target":10005669,
+            "weight":87
+        },
+        {
+            "altered":false,
+            "source":10003389,
+            "target":10003677,
+            "weight":93
+        },
+        {
+            "altered":false,
+            "source":10003389,
+            "target":10012634,
+            "weight":100
+        },
+        {
+            "altered":false,
+            "source":10002366,
+            "target":10006720,
+            "weight":74
+        },
+        {
+            "altered":false,
+            "source":10006720,
+            "target":10002370,
+            "weight":65
+        },
+        {
+            "altered":false,
+            "source":10006720,
+            "target":10007630,
+            "weight":77
+        },
+        {
+            "altered":false,
+            "source":10006720,
+            "target":10003677,
+            "weight":73
+        },
+        {
+            "altered":false,
+            "source":10006720,
+            "target":10011642,
+            "weight":60
+        },
+        {
+            "altered":false,
+            "source":10006720,
+            "target":10008272,
+            "weight":96
+        },
+        {
+            "altered":false,
+            "source":10002370,
+            "target":10005669,
+            "weight":93
+        },
+        {
+            "altered":false,
+            "source":10002370,
+            "target":10012634,
+            "weight":75
+        },
+        {
+            "altered":false,
+            "source":10002370,
+            "target":10003677,
+            "weight":69
+        },
+        {
+            "altered":true,
+            "source":10054852,
+            "target":10008308,
+            "weight":100
+        },
+        {
+            "altered":true,
+            "source":10054852,
+            "target":10008309,
+            "weight":100
+        },
+        {
+            "altered":false,
+            "source":10008522,
+            "target":10008308,
+            "weight":100
+        },
+        {
+            "altered":false,
+            "source":10008779,
+            "target":10008309,
+            "weight":85
+        },
+        {
+            "altered":false,
+            "source":10008272,
+            "target":10012634,
+            "weight":91
+        },
+        {
+            "altered":false,
+            "source":10011102,
+            "target":10008309,
+            "weight":90
+        },
+        {
+            "altered":false,
+            "source":10011885,
+            "target":10008309,
+            "weight":72
+        },
+        {
+            "altered":false,
+            "source":10010352,
+            "target":10008309,
+            "weight":72
+        },
+        {
+            "altered":false,
+            "source":10008307,
+            "target":10008308,
+            "weight":63
+        },
+        {
+            "altered":false,
+            "source":10008307,
+            "target":10008309,
+            "weight":77
+        },
+        {
+            "altered":true,
+            "source":10008308,
+            "target":10008309,
+            "weight":100
         }
     ],
     "nodes":[
         {
-            "birth_year":"1599",
-            "color":0,
-            "death_year":"1671",
+            "birth_year":"1573",
+            "death_year":"1640",
+            "degree":3,
+            "distance":1,
+            "historical_significance":"bookseller",
+            "id":10000361,
+            "name":"William Aspley"
+        },
+        {
+            "birth_year":"1601",
+            "death_year":"1684",
             "degree":6,
-            "historical_significance":"scholar and divine",
-            "id":10002177,
-            "name":"Meric Casaubon"
+            "distance":5,
+            "historical_significance":"Church of England clergyman and religious controversialist",
+            "id":10003718,
+            "name":"Peter Du Moulin"
         },
         {
-            "birth_year":"1605",
-            "color":4,
-            "death_year":"1639",
+            "birth_year":"1571",
+            "death_year":"1642",
+            "degree":3,
+            "distance":1,
+            "historical_significance":"translator",
+            "id":10007724,
+            "name":"James Mabbe"
+        },
+        {
+            "birth_year":"1571",
+            "death_year":"1625",
+            "degree":5,
+            "distance":1,
+            "historical_significance":"bookseller",
+            "id":10011918,
+            "name":"Thomas Thorpe"
+        },
+        {
+            "birth_year":"1645",
+            "death_year":"1646",
             "degree":1,
-            "historical_significance":"older sister of Margaret Cavendish; daughter of Thomas Lucas and Elizabeth Lucas (Leighton)",
-            "id":10054787,
-            "name":"Catherine Lucas"
+            "distance":5,
+            "historical_significance":"Baptist preacher",
+            "id":10000399,
+            "name":"Mrs Attaway"
         },
         {
-            "birth_year":"1627",
-            "color":4,
-            "death_year":"1695",
+            "birth_year":"1583",
+            "death_year":"1649",
             "degree":6,
-            "historical_significance":"letter writer",
-            "id":10009157,
-            "name":"Dorothy Osborne"
+            "distance":1,
+            "historical_significance":"daughter of William Shakespeare ",
+            "id":10050065,
+            "name":"Susanna Shakespeare"
         },
         {
-            "birth_year":"1604",
-            "color":0,
-            "death_year":"1683",
-            "degree":1,
-            "historical_significance":"writer on philosophy and Church of England clergyman",
-            "id":10003080,
-            "name":"Robert Crosse"
+            "birth_year":"1566",
+            "death_year":"1626",
+            "degree":8,
+            "distance":1,
+            "historical_significance":"actor, theatre entrepreneur, and founder of Dulwich College",
+            "id":10000147,
+            "name":"Edward Alleyn"
         },
         {
-            "birth_year":"1627",
-            "color":1,
-            "death_year":"1691",
-            "degree":43,
-            "historical_significance":"natural philosopher",
-            "id":10001419,
-            "name":"Robert Boyle"
+            "birth_year":"1600",
+            "death_year":"1649",
+            "degree":420,
+            "distance":4,
+            "historical_significance":"king of England, Scotland, and Ireland",
+            "id":10011670,
+            "name":"King Charles I"
         },
         {
-            "birth_year":"1620",
-            "color":4,
-            "death_year":"1669",
-            "degree":2,
-            "historical_significance":"poet and royalist noblewoman",
-            "id":10002381,
-            "name":"Lady Jane Cheyne"
+            "birth_year":"1619",
+            "death_year":"1677",
+            "degree":17,
+            "distance":5,
+            "historical_significance":"scientific correspondent and secretary of the Royal Society",
+            "id":10009112,
+            "name":"Henry Oldenburg"
         },
         {
-            "birth_year":"1580",
-            "color":3,
-            "death_year":"1647",
-            "degree":2,
-            "historical_significance":null,
-            "id":10052342,
-            "name":"Elizabeth Leighton"
+            "birth_year":"1589",
+            "death_year":"1632",
+            "degree":6,
+            "distance":1,
+            "historical_significance":"poet and scribe",
+            "id":10002969,
+            "name":"Ralph Crane"
+        },
+        {
+            "birth_year":"1566",
+            "death_year":"1630",
+            "degree":8,
+            "distance":1,
+            "historical_significance":"editor of Shakespeare's first folio",
+            "id":10005786,
+            "name":"John Heminges"
         },
         {
             "birth_year":"1610",
-            "color":4,
-            "death_year":"1670",
+            "death_year":"1700",
             "degree":1,
-            "historical_significance":"sister of Margaret Cavendish; daughter of Thomas and Elizabeth Lucas (Leighton)",
-            "id":10054799,
-            "name":"Anne Lucas"
-        },
-        {
-            "birth_year":"1614",
-            "color":1,
-            "death_year":"1687",
-            "degree":12,
-            "historical_significance":"philosopher, poet, and theologian",
-            "id":10008468,
-            "name":"Henry More"
-        },
-        {
-            "birth_year":"1614",
-            "color":1,
-            "death_year":"1672",
-            "degree":32,
-            "historical_significance":"theologian and natural philosopher",
-            "id":10012887,
-            "name":"John Wilkins"
-        },
-        {
-            "birth_year":"1630",
-            "color":3,
-            "death_year":"1685",
-            "degree":478,
-            "historical_significance":"king of England, Scotland, and Ireland",
-            "id":10011671,
-            "name":"King Charles II"
-        },
-        {
-            "birth_year":"1639",
-            "color":1,
-            "death_year":"1707",
-            "degree":25,
-            "historical_significance":"Church of England clergyman and religious controversialist",
-            "id":10011035,
-            "name":"William Sherlock"
-        },
-        {
-            "birth_year":"1636",
-            "color":0,
-            "death_year":"1680",
-            "degree":9,
-            "historical_significance":"Church of England clergyman",
-            "id":10004875,
-            "name":"Joseph Glanvill"
-        },
-        {
-            "birth_year":"1609",
-            "color":3,
-            "death_year":"1669",
-            "degree":62,
-            "historical_significance":"queen of England, Scotland, and Ireland, consort of Charles I",
-            "id":10007966,
-            "name":"Queen Henrietta Maria"
-        },
-        {
-            "birth_year":"1612",
-            "color":3,
-            "death_year":"1648",
-            "degree":6,
-            "historical_significance":"royalist army officer",
-            "id":10007648,
-            "name":"Sir Charles Lucas"
-        },
-        {
-            "birth_year":"1606",
-            "color":3,
-            "death_year":"1671",
-            "degree":5,
-            "historical_significance":"royalist landowner",
-            "id":10007650,
-            "name":"John Lucas"
-        },
-        {
-            "birth_year":"1597",
-            "color":3,
-            "death_year":"1648",
-            "degree":5,
-            "historical_significance":"royalist army officer",
-            "id":10007652,
-            "name":"Sir Thomas Lucas"
-        },
-        {
-            "birth_year":"1596",
-            "color":4,
-            "death_year":"1687",
-            "degree":4,
-            "historical_significance":"NA",
-            "id":10006438,
-            "name":"Sir Constantijn Huygens"
-        },
-        {
-            "birth_year":"1595",
-            "color":4,
-            "death_year":"1654",
-            "degree":4,
-            "historical_significance":"mathematician",
-            "id":10002217,
-            "name":"Sir Charles Cavendish"
-        },
-        {
-            "birth_year":"1664",
-            "color":4,
-            "death_year":"1664",
-            "degree":1,
-            "historical_significance":"daughter of Antwerp merchant",
-            "id":10054698,
-            "name":"Eleanor Duarti"
-        },
-        {
-            "birth_year":"1632",
-            "color":1,
-            "death_year":"1676",
-            "degree":12,
-            "historical_significance":"author and physician",
-            "id":10011691,
-            "name":"Henry Stubbe"
-        },
-        {
-            "birth_year":"1623",
-            "color":4,
-            "death_year":"1673",
-            "degree":18,
-            "historical_significance":"writer",
-            "id":10002223,
-            "name":"Margaret Cavendish"
+            "distance":5,
+            "historical_significance":"printer, Baptist minister, and colonial administrator",
+            "id":10054684,
+            "name":"Gregory Dexter"
         },
         {
             "birth_year":"1605",
-            "color":4,
-            "death_year":"1648",
-            "degree":1,
-            "historical_significance":"sister of Margaret Cavendish, daughter of Elizabeth Lucas (Leighton) and Thomas Lucas",
-            "id":10054792,
-            "name":"Mary Lucas"
+            "death_year":"1673",
+            "degree":4,
+            "distance":5,
+            "historical_significance":"merchant and law reformer",
+            "id":10010352,
+            "name":"Henry Robinson"
         },
         {
-            "birth_year":"1634",
-            "color":1,
-            "death_year":"1716",
+            "birth_year":"1566",
+            "death_year":"1625",
+            "degree":400,
+            "distance":2,
+            "historical_significance":"king of Scotland, England, and Ireland",
+            "id":10011681,
+            "name":"King James I and VI"
+        },
+        {
+            "birth_year":"1560",
+            "death_year":"1633",
             "degree":16,
-            "historical_significance":"Church of England clergyman and theologian",
-            "id":10011315,
-            "name":"Robert South"
+            "distance":1,
+            "historical_significance":"playwright and translator",
+            "id":10008612,
+            "name":"Anthony Munday"
+        },
+        {
+            "birth_year":"1500",
+            "death_year":"1610",
+            "degree":6,
+            "distance":1,
+            "historical_significance":"actor",
+            "id":10006821,
+            "name":"William Kemp"
+        },
+        {
+            "birth_year":"1515",
+            "death_year":"1582",
+            "degree":3,
+            "distance":1,
+            "historical_significance":"musician and theatrical entrepreneur",
+            "id":10012711,
+            "name":"Sebastian Westcote"
+        },
+        {
+            "birth_year":"1625",
+            "death_year":"1652",
+            "degree":1,
+            "distance":5,
+            "historical_significance":"",
+            "id":10050089,
+            "name":"Mary Powell"
+        },
+        {
+            "birth_year":"1628",
+            "death_year":"1658",
+            "degree":1,
+            "distance":5,
+            "historical_significance":"",
+            "id":10050090,
+            "name":"Katherine Woodcock"
+        },
+        {
+            "birth_year":"1576",
+            "death_year":"1627",
+            "degree":6,
+            "distance":1,
+            "historical_significance":"actor and editor of Shakespeare's first folio",
+            "id":10002731,
+            "name":"Henry Condell"
+        },
+        {
+            "birth_year":"1555",
+            "death_year":"1616",
+            "degree":25,
+            "distance":1,
+            "historical_significance":"theatre financier",
+            "id":10005810,
+            "name":"Philip Henslowe"
+        },
+        {
+            "birth_year":"1563",
+            "death_year":"1633",
+            "degree":3,
+            "distance":1,
+            "historical_significance":"poet",
+            "id":10006068,
+            "name":"Hugh Holland"
+        },
+        {
+            "birth_year":"1640",
+            "death_year":"1687",
+            "degree":3,
+            "distance":5,
+            "historical_significance":"printer",
+            "id":10011103,
+            "name":"Samuel Simmons"
+        },
+        {
+            "birth_year":"1530",
+            "death_year":"1601",
+            "degree":2,
+            "distance":1,
+            "historical_significance":"",
+            "id":10010936,
+            "name":"John Shakespeare"
+        },
+        {
+            "birth_year":"1564",
+            "death_year":"1616",
+            "degree":60,
+            "distance":0,
+            "historical_significance":"playwright and poet",
+            "id":10010937,
+            "name":"William Shakespeare"
+        },
+        {
+            "birth_year":"1526",
+            "death_year":"1636",
+            "degree":1,
+            "distance":1,
+            "historical_significance":"actor",
+            "id":10010938,
+            "name":"John Shank"
+        },
+        {
+            "birth_year":"1562",
+            "death_year":"1619",
+            "degree":19,
+            "distance":1,
+            "historical_significance":"poet and historian",
+            "id":10003259,
+            "name":"Samuel Daniel"
+        },
+        {
+            "birth_year":"1495",
+            "death_year":"1605",
+            "degree":4,
+            "distance":1,
+            "historical_significance":"actor",
+            "id":10009671,
+            "name":"Augustine Phillips"
         },
         {
             "birth_year":"1630",
-            "color":4,
-            "death_year":"1670",
-            "degree":1,
-            "historical_significance":"M. Cavendish's handmaiden, delivered M. Cavendish's manuscripts to publisher",
-            "id":10054773,
-            "name":"Elizabeth Chaplain"
+            "death_year":"1696",
+            "degree":9,
+            "distance":5,
+            "historical_significance":"writer and biographer",
+            "id":10009672,
+            "name":"Edward Phillips"
         },
         {
-            "birth_year":"1593",
-            "color":4,
-            "death_year":"1676",
-            "degree":10,
-            "historical_significance":"writer, patron, and royalist army officer",
-            "id":10002230,
-            "name":"William Cavendish"
-        },
-        {
-            "birth_year":"1590",
-            "color":3,
-            "death_year":"1651",
-            "degree":2,
-            "historical_significance":"physician",
-            "id":10001916,
-            "name":"Sir Thomas Cademan"
-        },
-        {
-            "birth_year":"1635",
-            "color":1,
-            "death_year":"1713",
-            "degree":14,
-            "historical_significance":"bishop of Rochester",
-            "id":10011389,
-            "name":"Thomas Sprat"
-        },
-        {
-            "birth_year":"1626",
-            "color":4,
-            "death_year":"1663",
-            "degree":2,
+            "birth_year":"1631",
+            "death_year":"1706",
+            "degree":6,
+            "distance":5,
             "historical_significance":"writer",
-            "id":10003903,
-            "name":"Elizabeth Egerton"
+            "id":10009676,
+            "name":"John Phillips"
         },
         {
-          "birth_year":"2",
-          "color":2,
-          "death_year":"2000",
-          "degree":50,
-          "historical_significance":"principal investigator",
-          "id":10,
-          "name": "Chris Warren"
+            "birth_year":"1587",
+            "death_year":"1655",
+            "degree":5,
+            "distance":5,
+            "historical_significance":"Church of England clergyman and college head",
+            "id":10013261,
+            "name":"Thomas Young"
+        },
+        {
+            "birth_year":"1578",
+            "death_year":"1641",
+            "degree":7,
+            "distance":1,
+            "historical_significance":"courtier and gentlewoman",
+            "id":10004302,
+            "name":"Mary Fitton"
+        },
+        {
+            "birth_year":"1625",
+            "death_year":"1683",
+            "degree":1,
+            "distance":5,
+            "historical_significance":"physician and lawyer of the army",
+            "id":10000722,
+            "name":"Samuel Barrow"
+        },
+        {
+            "birth_year":"1596",
+            "death_year":"1680",
+            "degree":19,
+            "distance":5,
+            "historical_significance":"preacher and ecumenist",
+            "id":10003801,
+            "name":"John Durie"
+        },
+        {
+            "birth_year":"1568",
+            "death_year":"1637",
+            "degree":2,
+            "distance":1,
+            "historical_significance":"author",
+            "id":10007973,
+            "name":"Gervase Markham"
+        },
+        {
+            "birth_year":"1603",
+            "death_year":"1657",
+            "degree":4,
+            "distance":5,
+            "historical_significance":"diplomat",
+            "id":10008668,
+            "name":"Hermann Mylius"
+        },
+        {
+            "birth_year":"1638",
+            "death_year":"1737",
+            "degree":2,
+            "distance":5,
+            "historical_significance":"third wife of John Milton ",
+            "id":10050141,
+            "name":"Elizabeth Minshull"
+        },
+        {
+            "birth_year":"1591",
+            "death_year":"1674",
+            "degree":12,
+            "distance":2,
+            "historical_significance":"poet",
+            "id":10005858,
+            "name":"Robert Herrick"
+        },
+        {
+            "birth_year":"1608",
+            "death_year":"1678",
+            "degree":3,
+            "distance":5,
+            "historical_significance":"parliamentarian army officer",
+            "id":10009187,
+            "name":"Robert Overton"
+        },
+        {
+            "birth_year":"1605",
+            "death_year":"1675",
+            "degree":3,
+            "distance":1,
+            "historical_significance":"schoolmaster",
+            "id":10000741,
+            "name":"John Barton"
+        },
+        {
+            "birth_year":"1553",
+            "death_year":"1628",
+            "degree":45,
+            "distance":1,
+            "historical_significance":"letter writer",
+            "id":10002279,
+            "name":"John Chamberlain"
+        },
+        {
+            "birth_year":"1569",
+            "death_year":"1645",
+            "degree":9,
+            "distance":1,
+            "historical_significance":"poet",
+            "id":10007146,
+            "name":"Emilia Lanier"
+        },
+        {
+            "birth_year":"1532",
+            "death_year":"1600",
+            "degree":4,
+            "distance":1,
+            "historical_significance":"gentleman",
+            "id":10007655,
+            "name":"Sir Thomas Lucy"
+        },
+        {
+            "birth_year":"1596",
+            "death_year":"1642",
+            "degree":1,
+            "distance":5,
+            "historical_significance":"headmaster and poet",
+            "id":10004844,
+            "name":"Alexander Gil the younger"
+        },
+        {
+            "birth_year":"1582",
+            "death_year":"1649",
+            "degree":4,
+            "distance":5,
+            "historical_significance":"Church of Ireland bishop of Cork and Ross and college head",
+            "id":10002322,
+            "name":"William Chappell"
+        },
+        {
+            "birth_year":"1612",
+            "death_year":"1662",
+            "degree":5,
+            "distance":5,
+            "historical_significance":"millenarian and tolerationist",
+            "id":10050159,
+            "name":"Moses Wall"
+        },
+        {
+            "birth_year":"1568",
+            "death_year":"1619",
+            "degree":18,
+            "distance":1,
+            "historical_significance":"actor",
+            "id":10001776,
+            "name":"Richard Burbage"
+        },
+        {
+            "birth_year":"1564",
+            "death_year":"1618",
+            "degree":8,
+            "distance":1,
+            "historical_significance":"poet and writing-master",
+            "id":10003314,
+            "name":"John Davies"
+        },
+        {
+            "birth_year":"1597",
+            "death_year":"1658",
+            "degree":2,
+            "distance":5,
+            "historical_significance":"Church of England clergyman",
+            "id":10012023,
+            "name":"Nathaniel Tovey"
+        },
+        {
+            "birth_year":"1574",
+            "death_year":"1652",
+            "degree":1,
+            "distance":5,
+            "historical_significance":"librarian",
+            "id":10010492,
+            "name":"John Rouse"
+        },
+        {
+            "birth_year":"1574",
+            "death_year":"1656",
+            "degree":25,
+            "distance":4,
+            "historical_significance":"bishop of Norwich, religious writer, and satirist",
+            "id":10005397,
+            "name":"Joseph Hall"
+        },
+        {
+            "birth_year":"1575",
+            "death_year":"1622",
+            "degree":2,
+            "distance":1,
+            "historical_significance":"lawyer and diarist",
+            "id":10007936,
+            "name":"John Manningham"
+        },
+        {
+            "birth_year":"1576",
+            "death_year":"1639",
+            "degree":5,
+            "distance":5,
+            "historical_significance":"Church of Ireland bishop of Elphin",
+            "id":10006917,
+            "name":"Edward King"
+        },
+        {
+            "birth_year":"1611",
+            "death_year":"1637",
+            "degree":6,
+            "distance":5,
+            "historical_significance":"friend of John Milton",
+            "id":10006918,
+            "name":"Edward King"
+        },
+        {
+            "birth_year":"1542",
+            "death_year":"1617",
+            "degree":4,
+            "distance":1,
+            "historical_significance":"soldier and author",
+            "id":10010247,
+            "name":"Barnaby Rich"
+        },
+        {
+            "birth_year":"1616",
+            "death_year":"1670",
+            "degree":2,
+            "distance":5,
+            "historical_significance":"Reformed church minister and writer",
+            "id":10008460,
+            "name":"Alexander More"
+        },
+        {
+            "birth_year":"1602",
+            "death_year":"1666",
+            "degree":3,
+            "distance":5,
+            "historical_significance":"bookseller and collector of civil-war tracts",
+            "id":10011885,
+            "name":"George Thomason"
+        },
+        {
+            "birth_year":"1585",
+            "death_year":"1626",
+            "degree":11,
+            "distance":1,
+            "historical_significance":"actor and playwright",
+            "id":10010513,
+            "name":"William Rowley"
+        },
+        {
+            "birth_year":"1627",
+            "death_year":"1656",
+            "degree":5,
+            "distance":5,
+            "historical_significance":"poet and writer",
+            "id":10005394,
+            "name":"John Hall"
+        },
+        {
+            "birth_year":"1573",
+            "death_year":"1641",
+            "degree":21,
+            "distance":1,
+            "historical_significance":"playwright and poet",
+            "id":10005908,
+            "name":"Thomas Heywood"
+        },
+        {
+            "birth_year":"1565",
+            "death_year":"1647",
+            "degree":14,
+            "distance":1,
+            "historical_significance":"writer and translator",
+            "id":10008213,
+            "name":"Francis Meres"
+        },
+        {
+            "birth_year":"1563",
+            "death_year":"1615",
+            "degree":2,
+            "distance":1,
+            "historical_significance":"actor and comic writer",
+            "id":10000278,
+            "name":"Robert Armin"
+        },
+        {
+            "birth_year":"1596",
+            "death_year":"1662",
+            "degree":19,
+            "distance":4,
+            "historical_significance":"singer and composer",
+            "id":10007192,
+            "name":"Henry Lawes"
+        },
+        {
+            "birth_year":"1555",
+            "death_year":"1623",
+            "degree":6,
+            "distance":1,
+            "historical_significance":"",
+            "id":10005658,
+            "name":"Anne Hathaway"
+        },
+        {
+            "birth_year":"1531",
+            "death_year":"1597",
+            "degree":7,
+            "distance":1,
+            "historical_significance":"actor",
+            "id":10001775,
+            "name":"James Burbage"
+        },
+        {
+            "birth_year":"1615",
+            "death_year":"1679",
+            "degree":4,
+            "distance":5,
+            "historical_significance":"physician",
+            "id":10009244,
+            "name":"Nathan Paget"
+        },
+        {
+            "birth_year":"1608",
+            "death_year":"1670",
+            "degree":4,
+            "distance":1,
+            "historical_significance":"Shakespeare's granddaughter; royalist supporter",
+            "id":10054817,
+            "name":"Lady Elizabeth Barnard"
+        },
+        {
+            "birth_year":"1495",
+            "death_year":"1605",
+            "degree":9,
+            "distance":1,
+            "historical_significance":"playwright",
+            "id":10005669,
+            "name":"William Haughton"
+        },
+        {
+            "birth_year":"1573",
+            "death_year":"1655",
+            "degree":8,
+            "distance":1,
+            "historical_significance":"maid of honour to Elizabeth I",
+            "id":10012328,
+            "name":"Elizabeth Vernon Countess of Southampton"
+        },
+        {
+            "birth_year":"1615",
+            "death_year":"1691",
+            "degree":23,
+            "distance":5,
+            "historical_significance":"noblewoman associated with the Hartlib circle",
+            "id":10006697,
+            "name":"Katherine Jones"
+        },
+        {
+            "birth_year":"1564",
+            "death_year":"1593",
+            "degree":14,
+            "distance":1,
+            "historical_significance":"playwright and poet",
+            "id":10007980,
+            "name":"Christopher Marlowe"
+        },
+        {
+            "birth_year":"1579",
+            "death_year":"1625",
+            "degree":12,
+            "distance":1,
+            "historical_significance":"playwright",
+            "id":10004397,
+            "name":"John Fletcher"
+        },
+        {
+            "birth_year":"1641",
+            "death_year":"1712",
+            "degree":5,
+            "distance":5,
+            "historical_significance":"politician",
+            "id":10006703,
+            "name":"Richard Jones"
+        },
+        {
+            "birth_year":"1609",
+            "death_year":"1638",
+            "degree":2,
+            "distance":5,
+            "historical_significance":"friend of John Milton",
+            "id":10003528,
+            "name":"Charles Diodati"
+        },
+        {
+            "birth_year":"1584",
+            "death_year":"1661",
+            "degree":14,
+            "distance":5,
+            "historical_significance":"local politician and regicide",
+            "id":10009524,
+            "name":"Isaac Penington"
+        },
+        {
+            "birth_year":"1553",
+            "death_year":"1625",
+            "degree":9,
+            "distance":1,
+            "historical_significance":"author and teacher of languages",
+            "id":10004406,
+            "name":"John Florio"
+        },
+        {
+            "birth_year":"1562",
+            "death_year":"1647",
+            "degree":6,
+            "distance":4,
+            "historical_significance":"composer",
+            "id":10008308,
+            "name":"John Milton"
+        },
+        {
+            "birth_year":"1572",
+            "death_year":"1632",
+            "degree":32,
+            "distance":1,
+            "historical_significance":"playwright and pamphleteer",
+            "id":10003389,
+            "name":"Thomas Dekker"
+        },
+        {
+            "birth_year":"1586",
+            "death_year":"1604",
+            "degree":5,
+            "distance":1,
+            "historical_significance":"Chaplain to Sir John Salusbury of Lleweni: poet\r\n\r\n",
+            "id":10002366,
+            "name":"Robert Chester"
+        },
+        {
+            "birth_year":"1608",
+            "death_year":"1674",
+            "degree":42,
+            "distance":6,
+            "historical_significance":"poet and polemicist",
+            "id":10008309,
+            "name":"John Milton"
+        },
+        {
+            "birth_year":"1572",
+            "death_year":"1637",
+            "degree":77,
+            "distance":1,
+            "historical_significance":"poet and playwright",
+            "id":10006720,
+            "name":"Benjamin Jonson"
+        },
+        {
+            "birth_year":"1493",
+            "death_year":"1603",
+            "degree":13,
+            "distance":1,
+            "historical_significance":"printer and playwright",
+            "id":10002370,
+            "name":"Henry Chettle"
+        },
+        {
+            "birth_year":"1608",
+            "death_year":"1640",
+            "degree":4,
+            "distance":5,
+            "historical_significance":"older sister of poet John Milton",
+            "id":10054852,
+            "name":"Anne Milton"
+        },
+        {
+            "birth_year":"1535",
+            "death_year":"1603",
+            "degree":2,
+            "distance":1,
+            "historical_significance":"translator",
+            "id":10008908,
+            "name":"Sir Thomas North"
+        },
+        {
+            "birth_year":"1556",
+            "death_year":"1602",
+            "degree":6,
+            "distance":2,
+            "historical_significance":"composer",
+            "id":10008522,
+            "name":"Thomas Morley"
+        },
+        {
+            "birth_year":"1559",
+            "death_year":"1669",
+            "degree":10,
+            "distance":5,
+            "historical_significance":"clergyman and ejected minister and religious controversialist",
+            "id":10008779,
+            "name":"Matthew Newcomen"
+        },
+        {
+            "birth_year":"1580",
+            "death_year":"1627",
+            "degree":12,
+            "distance":2,
+            "historical_significance":"playwright",
+            "id":10008272,
+            "name":"Thomas Middleton"
+        },
+        {
+            "birth_year":"1576",
+            "death_year":"1653",
+            "degree":7,
+            "distance":1,
+            "historical_significance":"actor",
+            "id":10007630,
+            "name":"John Lowin"
+        },
+        {
+            "birth_year":"1578",
+            "death_year":"1638",
+            "degree":10,
+            "distance":1,
+            "historical_significance":"poet and playwright",
+            "id":10012634,
+            "name":"John Webster"
+        },
+        {
+            "birth_year":"1563",
+            "death_year":"1631",
+            "degree":24,
+            "distance":1,
+            "historical_significance":"poet",
+            "id":10003677,
+            "name":"Michael Drayton"
+        },
+        {
+            "birth_year":"1608",
+            "death_year":"1654",
+            "degree":3,
+            "distance":5,
+            "historical_significance":"bookseller and printer",
+            "id":10011102,
+            "name":"Matthew Simmons"
+        },
+        {
+            "birth_year":"1559",
+            "death_year":"1637",
+            "degree":8,
+            "distance":3,
+            "historical_significance":"noblewoman",
+            "id":10011359,
+            "name":"Alice Spencer"
+        },
+        {
+            "birth_year":"1554",
+            "death_year":"1664",
+            "degree":4,
+            "distance":1,
+            "historical_significance":"clergyman and ejected minister",
+            "id":10001783,
+            "name":"Anthony Burgess"
+        },
+        {
+            "birth_year":"1639",
+            "death_year":"1713",
+            "degree":12,
+            "distance":5,
+            "historical_significance":"religious controversialist",
+            "id":10003945,
+            "name":"Thomas Ellwood"
+        },
+        {
+            "birth_year":"1566",
+            "death_year":"1566",
+            "degree":3,
+            "distance":1,
+            "historical_significance":"ballad writer",
+            "id":10010348,
+            "name":"Clement Robinson"
+        },
+        {
+            "birth_year":"1585",
+            "death_year":"1649",
+            "degree":8,
+            "distance":2,
+            "historical_significance":"poet and pamphleteer",
+            "id":10003693,
+            "name":"William Drummond of Hawthornden"
+        },
+        {
+            "birth_year":"1585",
+            "death_year":"1596",
+            "degree":4,
+            "distance":1,
+            "historical_significance":"son of Shakespeare ",
+            "id":10050030,
+            "name":"Hamnet Shakespeare"
+        },
+        {
+            "birth_year":"1621",
+            "death_year":"1678",
+            "degree":20,
+            "distance":5,
+            "historical_significance":"poet and politician",
+            "id":10008048,
+            "name":"Andrew Marvell"
+        },
+        {
+            "birth_year":"1615",
+            "death_year":"1693",
+            "degree":3,
+            "distance":5,
+            "historical_significance":"judge",
+            "id":10008307,
+            "name":"Sir Christopher Milton"
+        },
+        {
+            "birth_year":"1512",
+            "death_year":"1622",
+            "degree":7,
+            "distance":1,
+            "historical_significance":"colonial governor",
+            "id":10004724,
+            "name":"Sir Thomas Gates"
+        },
+        {
+            "birth_year":"1585",
+            "death_year":"1662",
+            "degree":5,
+            "distance":1,
+            "historical_significance":"second daughter of Shakespeare",
+            "id":10050032,
+            "name":"Judith Shakespeare"
+        },
+        {
+            "birth_year":"1553",
+            "death_year":"1609",
+            "degree":5,
+            "distance":1,
+            "historical_significance":"builder",
+            "id":10011642,
+            "name":"Peter Street"
+        },
+        {
+            "birth_year":"1595",
+            "death_year":"1648",
+            "degree":1,
+            "distance":1,
+            "historical_significance":"actor",
+            "id":10010366,
+            "name":"Richard Robinson"
         }
     ]
 }

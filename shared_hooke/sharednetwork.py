@@ -11,11 +11,11 @@ conn = psycopg2.connect('dbname=mysdfb')
 cur = conn.cursor()
 
 # Get nodes as list of tuples from database
-cur.execute("SELECT id, display_name, historical_significance, ext_birth_year, ext_death_year FROM people;")
+cur.execute("SELECT id, display_name, historical_significance, ext_birth_year, ext_death_year FROM people WHERE is_approved = true;")
 node_tuples = cur.fetchall()
 
 # Get edges as list of tuples from database
-cur.execute("SELECT person1_index, person2_index, max_certainty, last_edit, types_list FROM relationships WHERE max_certainty >=60;")
+cur.execute("SELECT person1_index, person2_index, max_certainty, last_edit, types_list FROM relationships WHERE max_certainty >=60 AND is_approved = true;")
 edge_tuples = cur.fetchall()
 
 print('Total number of nodes:', len(node_tuples))
@@ -69,51 +69,54 @@ nx.set_node_attributes(G, 'birth_year', birth_dict)
 nx.set_node_attributes(G, 'death_year', death_dict)
 
 nx.set_edge_attributes(G, 'altered', altered)
-# Create subgraph based on Cavendish and Glanvill:
+# Create subgraph based on milton and shakespeare:
 
-    # 1. Get ids for Glanvill and Cavendish
-glanvill_id = [n[0] for n in node_tuples if n[1] == "Joseph Glanvill"]
-cavendish_ids = [n[0] for n in node_tuples if n[1] == "Margaret Cavendish"] #There are 3 Margaret Cavendishes in the database, I know I need the second one (index #1)
+    # 1. Get ids for shakespeare and milton
+# shakespeare_id = [n[0] for n in node_tuples if n[1] == "Joseph Glanvill"]
+# milton_ids = [n[0] for n in node_tuples if n[1] == "Margaret Cavendish"] #There are 3 Margaret miltones in the database, I know I need the second one (index #1)
+# shakespeare = shakespeare_id[0]
+# milton = milton_ids[1]
 
-glanvill_neighbors = G.neighbors(glanvill_id[0])
-cavendish_neighbors = G.neighbors(cavendish_ids[1])
-one_degree = glanvill_neighbors + cavendish_neighbors + [glanvill_id[0], cavendish_ids[1]]
+# TESTING IDS: Now using Shakespeare and Milton instead of Glanvill and Cavendish
+shakespeare = 10010937
+milton = 10008309
+
+shakespeare_neighbors = G.neighbors(shakespeare)
+milton_neighbors = G.neighbors(milton)
+one_degree = shakespeare_neighbors + milton_neighbors + [shakespeare, milton]
 print(one_degree)
 
 
 SG = G.subgraph(one_degree)
 
-color_dict = {}
+distance_dict = {}
 for n in SG.nodes():
-    if n == glanvill_id[0]:
-        color_dict[n] = 0
-    if n in glanvill_neighbors and SG.degree(n) == 1:
-        color_dict[n] = 0
-    if n == cavendish_ids[1]:
-        color_dict[n] = 4
-    if n in cavendish_neighbors and SG.degree(n) == 1:
-        color_dict[n] = 4
-    if n in glanvill_neighbors and n in cavendish_neighbors:
-        color_dict[n] = 2
-    if n in cavendish_neighbors and n not in glanvill_neighbors and SG.degree(n) != 1:
-        color_dict[n] = 3
-    if n in glanvill_neighbors and n not in cavendish_neighbors and SG.degree(n) != 1:
-        color_dict[n] = 1
+    if n == shakespeare:
+        distance_dict[n] = 0
+    if n in shakespeare_neighbors and nx.shortest_path_length(SG,n,milton) > 2:
+        distance_dict[n] = 1
+    if n in shakespeare_neighbors and nx.shortest_path_length(SG,n,milton) == 2:
+        distance_dict[n] = 2
+    if n in shakespeare_neighbors and n in milton_neighbors:
+        distance_dict[n] = 3
+    if n in milton_neighbors and nx.shortest_path_length(SG,n,shakespeare) == 2:
+        distance_dict[n] = 4
+    if n in milton_neighbors and nx.shortest_path_length(SG,n,shakespeare) > 2:
+        distance_dict[n] = 5
+    if n == milton:
+        distance_dict[n] = 6
 
-print(SG.edges(data=True))
-nx.set_node_attributes(SG, 'color', color_dict)
+nx.set_node_attributes(SG, 'distance', distance_dict)
 # Create a dictionary for the JSON needed by D3.
 new_data = dict(
         nodes=[dict(
             id=n,
             name=SG.node[n]['name'],
             degree=SG.node[n]['degree'],
-            # connected_path=SG.node[n]['connected_path'],
-            # shortest_path=SG.node[n]['shortest_path'],
             historical_significance=SG.node[n]['historical_significance'],
             birth_year=SG.node[n]['birth_year'],
             death_year=SG.node[n]['death_year'],
-            color=SG.node[n]['color']) for n in SG.nodes()],
+            distance=SG.node[n]['distance']) for n in SG.nodes()],
         links=[dict(
             source=e[0],
             target=e[1],
