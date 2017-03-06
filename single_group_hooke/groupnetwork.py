@@ -11,11 +11,11 @@ conn = psycopg2.connect('dbname=mysdfb')
 cur = conn.cursor()
 
 # Get nodes as list of tuples from database
-cur.execute("SELECT id, display_name, historical_significance, ext_birth_year, ext_death_year, group_list FROM people;")
+cur.execute("SELECT id, display_name, historical_significance, ext_birth_year, ext_death_year, group_list FROM people WHERE is_approved = true;")
 node_tuples = cur.fetchall()
 
 # Get edges as list of tuples from database
-cur.execute("SELECT person1_index, person2_index, max_certainty, last_edit, types_list FROM relationships WHERE max_certainty >=60;")
+cur.execute("SELECT person1_index, person2_index, max_certainty, last_edit, types_list FROM relationships WHERE is_approved = true and max_certainty >=60;")
 edge_tuples = cur.fetchall()
 
 print('Total number of nodes:', len(node_tuples))
@@ -74,20 +74,20 @@ nx.set_edge_attributes(G, 'altered', altered)
 # Create subgraph based on Virginia Company
 vc_ids = [k for k,v in groups_dict.items() if type(v) == str and "Virginia Company" in v]
 
-all_connected = list(set(sum([G.neighbors(k) for k in vc_ids], [])))
-print(all_connected+vc_ids)
-all_vc_nodes = all_connected+vc_ids
-connected_dict = {}
+all_distance = list(set(sum([G.neighbors(k) for k in vc_ids], [])))
+print(all_distance+vc_ids)
+all_vc_nodes = all_distance+vc_ids
+distance_dict = {}
 for a in all_vc_nodes:
     if a in vc_ids:
-        connected_dict[a] = False
+        distance_dict[a] = 0
     else:
-        connected_dict[a] = True
+        distance_dict[a] = 1
 
 
 SG = G.subgraph(all_vc_nodes)
 
-nx.set_node_attributes(SG, 'connected', connected_dict)
+nx.set_node_attributes(SG, 'distance', distance_dict)
 
 
 # Create a dictionary for the JSON needed by D3.
@@ -96,7 +96,7 @@ new_data = dict(
             id=n,
             name=SG.node[n]['name'],
             degree=SG.node[n]['degree'],
-            connected=SG.node[n]['connected'],
+            distance=SG.node[n]['distance'],
             historical_significance=SG.node[n]['historical_significance'],
             birth_year=SG.node[n]['birth_year'],
             death_year=SG.node[n]['death_year']) for n in SG.nodes()],
@@ -105,7 +105,7 @@ new_data = dict(
             target=e[1],
             weight=e[2]['weight'],
             altered=e[2]['altered']) for e in SG.edges(data=True)])
-            
+
 # Output json of the graph.
 with open('groupnetwork.json', 'w') as output:
         json.dump(new_data, output, sort_keys=True, indent=4, separators=(',',':'))
