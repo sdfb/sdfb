@@ -27,8 +27,6 @@ svg.append('rect')
 // Call zoom for svg container.
 svg.call(d3.zoom().on('zoom', zoomed));//.on("dblclick.zoom", null);
 
-var M = 50;
-
 var container = svg.append('g');
 
 // Create form for search (see function below).
@@ -201,9 +199,7 @@ function update(currentNodes, currentLinks, threshold) {
   var linkEnter = link.enter().append('path')
     .attr('class', 'link');
       link = linkEnter.merge(link)
-      .attr("d", function(d) {
-              return draw_curve(d.source.x, d.source.y, d.target.x, d.target.y, M);
-          })
+      .attr("d", linkArc)
       .attr('stroke-opacity', function(l) { if (l.altered == true) { return 1;} else {return .35;} });
 
   // When adding and removing nodes, reassert attributes and behaviors.
@@ -286,35 +282,11 @@ function searchNodes() {
 	d3.selectAll('.link').transition().duration(5000).style('stroke-opacity', '0.6');
 }
 
-function draw_curve(Ax, Ay, Bx, By, M) {
-
-    // side is either 1 or -1 depending on which side you want the curve to be on.
-    // Find midpoint J
-    var Jx = Ax + (Bx - Ax) / 2
-    var Jy = Ay + (By - Ay) / 2
-
-    // We need a and b to find theta, and we need to know the sign of each to make sure that the orientation is correct.
-    var a = Bx - Ax
-    var asign = (a < 0 ? -1 : 1)
-    var b = By - Ay
-    var bsign = (b < 0 ? -1 : 1)
-    var theta = Math.atan(b / a)
-
-    // Find the point that's perpendicular to J on side
-    var costheta = asign * Math.cos(theta)
-    var sintheta = asign * Math.sin(theta)
-
-    // Find c and d
-    var c = M * sintheta
-    var d = M * costheta
-
-    // Use c and d to find Kx and Ky
-    var Kx = Jx - c
-    var Ky = Jy + d
-
-    return "M" + Ax + "," + Ay +
-           "Q" + Kx + "," + Ky +
-           " " + Bx + "," + By
+function linkArc(d) {
+  var dx = d.target.x - d.source.x,
+      dy = d.target.y - d.source.y,
+      dr = Math.sqrt(dx * dx + dy * dy);
+  return "M" + d.source.x + "," + d.source.y + "A" + dr + "," + dr + " 0 0,1 " + d.target.x + "," + d.target.y;
 }
 
 function recursivePulse(d) {
