@@ -179,6 +179,13 @@ function update(currentNodes, currentLinks, threshold) {
   });
   newNodes = Array.from(new Set(newNodes));
 
+  newNodes.forEach( function(d) {
+    if (d.distance == 0) {
+      d.fx = width/2;
+      d.fy = height/2;
+    }
+  })
+
   var simulation = d3.forceSimulation(newNodes)
       // .velocityDecay(.5)
       .force("link", d3.forceLink(newLinks).id(function(d) { return d.id; }))

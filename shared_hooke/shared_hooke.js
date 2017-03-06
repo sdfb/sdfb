@@ -162,7 +162,7 @@ complexityButtons.on('change', function () {
 
 function update(currentNodes, currentLinks, threshold) {
 
-  d3.select('.source-node').remove(); //Get rid of old source node highlight.
+  d3.selectAll('.source-node').remove(); //Get rid of old source node highlight.
 
   // Find the links and nodes that are at or above the threshold.
   var newLinks = currentLinks.filter(function(d) { if (d.weight >= threshold) {return d; }; });
@@ -179,10 +179,21 @@ function update(currentNodes, currentLinks, threshold) {
   });
   newNodes = Array.from(new Set(newNodes));
 
+  newNodes.forEach( function(d) {
+    if (d.distance == 0) {
+      d.fx = width/4;
+      d.fy = height/2;
+    }
+    else if (d.distance == 6) {
+      d.fx = width * (3/4)
+      d.fy = height/2
+    }
+  })
+
   var simulation = d3.forceSimulation(newNodes)
       // .velocityDecay(.5)
       .force("link", d3.forceLink(newLinks).id(function(d) { return d.id; }))
-      .force("charge", d3.forceManyBody().strength([-1200]))//.distanceMax([500]))
+      .force("charge", d3.forceManyBody().strength([-300]))//.distanceMax([500]))
       .force("center", d3.forceCenter(width / 2, height / 2))
       .force("collide", d3.forceCollide().radius( function (d) { return degreeSize(d.degree); }))
       .force("x", d3.forceX())
