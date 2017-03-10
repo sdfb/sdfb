@@ -92,6 +92,7 @@ gem "carrierwave"
 
 group :development do
   gem 'foreman'
+  gem 'brakeman'
 end
 
 ruby '2.2.1'
