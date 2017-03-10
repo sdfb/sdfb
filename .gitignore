@@ -9,3 +9,4 @@ tmp
 tmp
 .env
 Procfile.development
+.DS_Store
