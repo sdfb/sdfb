@@ -55,6 +55,17 @@ CSV.foreach(Rails.root.join('lib', 'data', 'rel_types.tsv'), tsv_options) do |li
 end
 
 
+# Add all of the Relationship Category Assignment data from the dump
+CSV.foreach(Rails.root.join('lib', 'data', 'rel_cat_assignments.tsv'), tsv_options) do |line|
+  RelCatAssign.where(
+    relationship_type_id:      line[0],
+    relationship_category_id:  line[1],
+    is_approved:     true,
+    created_by:      sdfb_admin_id,
+    approved_by:     sdfb_admin_id.to_s,
+  ).first_or_create!
+end
+
 # Preload some important people.
 francis = Person.where(
   id: 10000473,
