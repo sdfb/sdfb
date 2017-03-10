@@ -89,6 +89,8 @@ gem "carrierwave"
 # gem 'debugger'
 
 group :development do
+  gem 'binding_of_caller'
+  gem 'better_errors'
   gem 'foreman'
   # This performs a security check, just run "brakeman" in the terminal and google and concerns
   gem "brakeman", :require => false
