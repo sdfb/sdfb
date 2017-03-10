@@ -11,7 +11,7 @@ development:
 # Warning: The database defined as "test" will be erased and
 # re-generated from your development database when you run "rake".
 # Do not set this db to the same as development or production.
-test:
+test: &test
   adapter: postgresql
   database: my_database_test
   pool: 15
@@ -24,3 +24,6 @@ production:
   timeout: 5000
   username: sixdfbor_admin
   password: NovumOrganum1620
+
+cucumber:
+  <<: *test
