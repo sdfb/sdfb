@@ -70,8 +70,6 @@ gem 'rails-observers'
 gem 'actionpack-page_caching'
 gem 'actionpack-action_caching'
 
-# This performs a security check, just run "brakeman" in the terminal and google and concerns
-gem "brakeman", :require => false
 
 gem "carrierwave"
 
@@ -92,7 +90,8 @@ gem "carrierwave"
 
 group :development do
   gem 'foreman'
-  gem 'brakeman'
+  # This performs a security check, just run "brakeman" in the terminal and google and concerns
+  gem "brakeman", :require => false
 end
 
 ruby '2.2.1'
