@@ -1,3 +1,30 @@
+## Installation Instructions
+
+```
+    git clone https://github.com/sdfb/sdfb.git
+    gem install bundler
+    bundle install
+```
+
+At this point, you'll need to start up PostgreSQL manually.
+
+```
+    rake db:setup
+```
+
+
+*(You may have to change `Procfile.development` to reflect the way that you start up your database.*)
+
+## Starting Up the Server (in Development Mode)
+
+```
+    foreman start --procfile=Procfile.development
+```
+
+-------
+
+*(Everything below this line is from the original readme, kept for posterity until we're sure that everything mentioned is captured somewhere important.)*
+
 ## HEROKU SETUP TO PUSH TO EITHER THE SANDBOX OR THE LIVE HEROKU VERSION
 1. Following these instructions, download the Heroku toolbelt so you can run from the command line
 2. In the command line, run heroku login
@@ -41,10 +68,6 @@ If populating the entire database you can run the file herokupop.sh which will r
     ```
     populate.sh
     ```
-
-    ## To populate this file run the following commands in order:
-    ## Note, as of January 2016 you may have to first create users with email addresses "sdfbadmin@example.com" and "odnbadmin@example.com" - this is to set up artificial users who will referenced in the created_by and approved_by fields for the original database entries. To do this, make sure postgres is open, start the server with 'rails s' and go directly to http://localhost:3000/sign_up to create the two accounts. (The http://localhost:3000 landing page will not function properly until after you have populated the people, as the lack of a Francis Bacon node throws up an error.)
-    ## If you get a server connection error and cannot create/populate anything, try Daniel's answer in http://stackoverflow.com/questions/23348774/fatal-no-pg-hba-conf-entry-for-host-fe801lo0
 
     ```
     rake db:populate_people
@@ -115,17 +138,7 @@ If populating the entire database you can run the file herokupop.sh which will r
     2. To populate the first time, you must comment out the following before populating (then comment back in after you are done):
         In app>models>person.rb, "validates_presence_of :display_name"
 
-## Code to restart localhost server if there is an error that says there are several servers running
-kill -9 $(lsof -i tcp:3000 -t)
 
-## Brakeman 
-Brakeman is a gem that runs checks against the app to identify security flaws
-to use run the command 'brakeman' in the Terminal
-
-google any issues
-
-## COMMENTS AND FLAGS
-This functionality does not exist yet
 
 ## ENTITY NAME CHANGES
 Note that user_group_contribs is referred to as group notes
@@ -158,6 +171,32 @@ converted back into a string and stored.
 
 ## Alternatively, I think the query below runs in O(n), 
 I'm also not sompletely sure the way above converges.
+```sql
+ SELECT t1.person1_index AS pid, 
+   ARRAY(( 
+    SELECT t2.person2_index 
+    FROM relationships t2 
+    WHERE t2.person1_index = t1.person1_index
+   )) AS rels 
+FROM relationships t1 
+GROUP BY t1.person1_index;
+```
+And if we must store this field, 
+this runs almost as fast.
+```sql
+UPDATE people AS p SET rel_sum = t3.rels FROM (
+    SELECT t1.person1_index as pid, 
+    ARRAY(( 
+       SELECT t2.person2_index 
+       FROM relationships t2 
+       WHERE t2.person1_index = t1.person1_index
+    )) AS rels 
+    FROM relationships t1 
+    GROUP BY t1.person1_index
+ ) t3 WHERE p.id = t3.pid;
+```
+
+s.
 ```sql
  SELECT t1.person1_index AS pid, 
    ARRAY(( 
