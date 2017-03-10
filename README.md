@@ -13,7 +13,7 @@ At this point, you'll need to start up PostgreSQL manually.
 ```
 
 
-*(You may have to change `Procfile.development` to reflect the way that you start up your database.*)
+*(You will need to copy `Procfile.development.example` to `Procfile.development` and modify it to reflect the way that you start up your instance of the database.*)
 
 ## Starting Up the Server (in Development Mode)
 
