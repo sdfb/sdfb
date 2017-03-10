@@ -61,7 +61,7 @@ gem 'validates_timeliness'
 
 gem 'puma'
 
-gem "rack-timeout", '~> 0.2.4'
+gem 'rack-timeout'
 
 gem 'newrelic_rpm'
 
@@ -70,8 +70,6 @@ gem 'rails-observers'
 gem 'actionpack-page_caching'
 gem 'actionpack-action_caching'
 
-# This performs a security check, just run "brakeman" in the terminal and google and concerns
-gem "brakeman", :require => false
 
 gem "carrierwave"
 
@@ -89,5 +87,19 @@ gem "carrierwave"
 
 # To use debugger
 # gem 'debugger'
+
+group :development do
+  gem 'binding_of_caller'
+  gem 'better_errors'
+  gem 'foreman'
+  # This performs a security check, just run "brakeman" in the terminal and google and concerns
+  gem "brakeman", :require => false
+end
+
+group :test do
+  gem 'cucumber-rails', require: false
+  gem 'database_cleaner'
+  gem 'cucumber-api', require: false
+end
 
 ruby '2.2.1'

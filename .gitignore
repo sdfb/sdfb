@@ -5,6 +5,6 @@ tmp/**/*
 app/assets/stylesheets/bootstrap_and_overrides.css.less
 public/assets/*
 tmp
-tmp
-tmp
 .env
+Procfile.development
+.DS_Store
