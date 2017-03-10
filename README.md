@@ -21,6 +21,12 @@ At this point, you'll need to start up PostgreSQL manually.
     foreman start --procfile=Procfile.development
 ```
 
+## Running the Tests
+
+```
+    cucumber
+```
+
 -------
 
 *(Everything below this line is from the original readme, kept for posterity until we're sure that everything mentioned is captured somewhere important.)*
