@@ -2,6 +2,7 @@ require File.expand_path('../boot', __FILE__)
 
 require 'csv'
 require 'rails/all'
+require 'active_support/core_ext/numeric/bytes'
 
 if defined?(Bundler)
   # If you precompile assets before deploying to production, use this line
@@ -60,9 +61,7 @@ module Sdfb
 
     # Version of your assets, change this if you want to expire all your assets
     config.assets.version = '1.0'
-		require 'active_support/core_ext/numeric/bytes'
-		config.cache_store = :memory_store, {:size => 2048.megabytes}
-      
+    config.cache_store = :memory_store, {:size => 2048.megabytes}
   end
 
 
