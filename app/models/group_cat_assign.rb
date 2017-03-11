@@ -35,16 +35,13 @@ class GroupCatAssign < ActiveRecord::Base
 
   # Callbacks
   # ----------------------------- 
-  before_create :init_array
   before_create :check_if_already_exists
   before_update :check_if_duplicate
 
 
   # Custom Methods
   # -----------------------------
-  def init_array
-    self.last_edit = nil
-  end
+
 
   def check_if_already_exists
     errors.add(:group_id, "This group already has this group category.") if (! GroupCatAssign.find_if_exists(self.group_category_id, self.group_id).empty?)

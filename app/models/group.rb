@@ -58,7 +58,7 @@ class Group < ActiveRecord::Base
   
   # Callbacks
   # ----------------------------- 
-  before_create :init_array
+  before_create :init_person_list
   before_save   :create_check_start_and_end_date
 
   # Custom Methods
@@ -116,7 +116,7 @@ class Group < ActiveRecord::Base
     end
   end
 
-  def init_array
+  def init_person_list
     self.person_list = nil
   end
 
