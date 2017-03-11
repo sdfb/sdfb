@@ -10,10 +10,12 @@ module TrackLastEdit
 
   protected 
   
+  #-----------------------------------------------------------------------------
   def initialize_last_edit
     self.last_edit = nil
   end
 
+  #-----------------------------------------------------------------------------
   def check_if_approved
     if (self.is_approved != true)
       self.approved_by = nil
@@ -21,6 +23,7 @@ module TrackLastEdit
     end  
   end
 
+  #-----------------------------------------------------------------------------
   def check_if_approved_and_update_edit
     new_last_edit = []
     new_last_edit.push(self.approved_by.to_i)
