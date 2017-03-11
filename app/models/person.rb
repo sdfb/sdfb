@@ -8,6 +8,7 @@ class Person < ActiveRecord::Base
   LATEST_YEAR    = 1700
 
   include TrackLastEdit
+  include WhitespaceStripper
 
   # TODO: Figure out if :group_list is actually used anywhere.
   # TODO: Figure out how many of these actually need to be writable.
@@ -113,6 +114,8 @@ class Person < ActiveRecord::Base
   before_save    :check_birth_death_years
   before_save    :add_display_name_if_blank
   before_destroy :delete_associated_relationships
+  before_save    { remove_trailing_spaces(:prefix, :title, :first_name, :last_name, :suffix, :display_name, :aliases)}
+
 
 
   # Custom Methods
