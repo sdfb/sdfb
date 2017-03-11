@@ -1,8 +1,10 @@
 class GroupAssignment < ActiveRecord::Base
+
+  include TrackLastEdit
+
   attr_accessible :created_by, :group_id, :approved_by, :approved_on, :person_id, :start_date, :end_date, :created_at,
   :is_approved, :is_active, :is_rejected, :start_year, :start_month, :start_day, :end_year, :end_month, :end_day,
-  :person_autocomplete, :start_date_type, :end_date_type, :last_edit
-  serialize :last_edit,Array
+  :person_autocomplete, :start_date_type, :end_date_type
   
   # Relationships
   # -----------------------------
@@ -51,21 +53,15 @@ class GroupAssignment < ActiveRecord::Base
 
   # Callbacks
   # ----------------------------- 
-  before_create :init_array
-  after_create :create_group_person_list
-  after_update :create_group_person_list
-  before_create :check_if_approved_valid_create
-  before_update :check_if_approved_and_update_edit
-  before_create :create_check_start_and_end_date
-  before_update :create_check_start_and_end_date
+  before_create :check_if_already_exists
+  before_update :check_if_duplicate
+  before_save   :create_check_start_and_end_date
+  after_save    :create_group_person_list
   after_destroy :create_group_person_list
 
 
   # Custom Methods
   # -----------------------------
-  def init_array
-    self.last_edit = nil
-  end
 
   def create_group_person_list
     if (self.is_approved == true)
@@ -101,34 +97,17 @@ class GroupAssignment < ActiveRecord::Base
   end
 
   # checks if the group and person assignment already exists and if approved
-  def check_if_approved_valid_create
+  def check_if_already_exists
     errors.add(:person_id, "This person is already a member of this group.") if (! GroupAssignment.find_if_exists(self.person_id, self.group_id).empty?)
-    if (self.is_approved != true)
-      self.approved_by = nil
-      self.approved_on = nil
-    end  
   end
 
-  def check_if_approved_and_update_edit
+  def check_if_duplicate
     search_results_for_duplicate = GroupAssignment.find_if_exists(self.person_id, self.group_id)
     if ! search_results_for_duplicate.empty?
       if search_results_for_duplicate.first.id != self.id
         errors.add(:person_id, "This person is already a member of this group.")
       end
     end
-
-    new_last_edit = []
-    new_last_edit.push(self.approved_by.to_i)
-    new_last_edit.push(Time.now)
-    self.last_edit = new_last_edit
-
-    # update approval
-    if (self.is_approved == true)
-      self.approved_on = Time.now
-    else
-      self.approved_by = nil
-      self.approved_on = nil
-    end  
   end
 
   def get_users_name
