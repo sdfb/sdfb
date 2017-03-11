@@ -17,7 +17,7 @@ module TrackLastEdit
 
   #-----------------------------------------------------------------------------
   def check_if_approved
-    if (self.is_approved != true)
+    unless self.is_approved
       self.approved_by = nil
       self.approved_on = nil
     end  
@@ -31,7 +31,7 @@ module TrackLastEdit
     self.last_edit = new_last_edit
 
     # update approval
-    if (self.is_approved == true)
+    unless self.is_approved
       self.approved_on = Time.now
     else
       self.approved_by = nil

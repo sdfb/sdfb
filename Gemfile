@@ -17,6 +17,7 @@ gem 'pg'
 gem 'puma'
 gem 'rack-timeout'
 gem 'newrelic_rpm'
+gem 'rails_12factor'
 
 # Presentation Helper Libraries
 gem 'will_paginate'
@@ -36,8 +37,6 @@ gem 'cancan'
 gem "carrierwave"
 gem 'bcrypt', :require => "bcrypt"
 
-# 12 Factor stuff.  Need to determine if used.
-gem 'rails_12factor'
 
 group :development do
   gem 'binding_of_caller'

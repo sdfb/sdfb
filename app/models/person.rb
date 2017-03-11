@@ -34,8 +34,8 @@ class Person < ActiveRecord::Base
 
   # Relationships
   # -----------------------------
-  has_many :group_assignments,    :dependent => :destroy
-  has_many :user_person_contribs, :dependent => :destroy
+  has_many :group_assignments,    dependent: :destroy
+  has_many :user_person_contribs, dependent: :destroy
   belongs_to :user
 
   # Scope
@@ -147,28 +147,28 @@ class Person < ActiveRecord::Base
     invalid_death_year_format = false
 
     # if the birth year converted to an integer is 0 then the date was not an integer
-    if (self.ext_birth_year.present?)
-      if (self.ext_birth_year.to_i == 0)
+    if self.ext_birth_year.present?
+      if self.ext_birth_year.to_i == 0
         errors.add(:ext_birth_year, "Please check the format of the birth year.")
         invalid_birth_year_format = true
       # if valid format continue checking
       else
         # check that birth year is before LATEST_YEAR or throw error
-        if (self.ext_birth_year.to_i > LATEST_YEAR)
+        if self.ext_birth_year.to_i > LATEST_YEAR
           errors.add(:ext_birth_year, "The birth year must be before #{LATEST_YEAR}")
         end
       end
     end
 
     # if the death year converted to an integer is 0 then the date was not an integer
-    if (! self.ext_death_year.blank?)
-      if (self.ext_death_year.to_i == 0)
+    if self.ext_death_year.present?
+      if self.ext_death_year.to_i == 0
         errors.add(:ext_death_year, "Please check the format of the death year.")
         invalid_death_year_format = true
       # if valid format continue checking
       else
         # check that death year is after EARLIEST_YEAR or throw error
-        if (self.ext_death_year.to_i < EARLIEST_YEAR)
+        if self.ext_death_year.to_i < EARLIEST_YEAR
           errors.add(:ext_death_year, "The death year must be after #{EARLIEST_YEAR}")
         end
       end
