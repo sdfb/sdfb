@@ -3,7 +3,7 @@
 <head>
    <title><%= yield(:title) %></title>
     <script>
-  	window.gon = <%= @data.to_json.html_safe %>
+  	window.sdfb_data = <%= @data.to_json.html_safe %>
   </script>
   <%= javascript_include_tag "index" %>
 

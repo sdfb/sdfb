@@ -369,12 +369,12 @@ function sidebarSearch(people){
 }
 
 function init() {
-  if (window.gon != null){
-    var people = window.gon.people;
-    var group_data = window.gon.group_data;
-    var group = window.gon.group;
-    var group2 = window.gon.group2;
-    var group_members = window.gon.group_members;
+  if (window.sdfb_data != null){
+    var people = window.sdfb_data.people;
+    var group_data = window.sdfb_data.group_data;
+    var group = window.sdfb_data.group;
+    var group2 = window.sdfb_data.group2;
+    var group_members = window.sdfb_data.group_members;
     sidebarSearch(people);
   }else{
     return;

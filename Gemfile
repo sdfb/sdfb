@@ -52,10 +52,6 @@ gem 'bcrypt', :require => "bcrypt"
 # you need to make sure each controller has "load_and_authorize_resource" or else people can access it
 gem 'cancan'
 
-# This gem is used to pass data from Ruby to JavaScript
-# I don't think we use this anymore
-gem 'gon'
-
 # Validates dates such as before or after. I mostly made my own functions though because I wrote the dates as separate months, days, and years
 gem 'validates_timeliness'
 
