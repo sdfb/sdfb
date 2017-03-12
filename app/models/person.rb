@@ -2,10 +2,8 @@ class Person < ActiveRecord::Base
   
   # Misc Constants
   # -----------------------------
-  DATE_TYPE_LIST = ["BF", "AF","IN","CA","BF/IN","AF/IN","NA"]
   GENDER_LIST    = ["female", "male", "gender_nonconforming"]
-  EARLIEST_YEAR  = 1500
-  LATEST_YEAR    = 1700
+  
 
   include TrackLastEdit
   include WhitespaceStripper
@@ -97,9 +95,9 @@ class Person < ActiveRecord::Base
   ## justification must be at least 4 characters
   validates_length_of :justification, :minimum => 4, :allow_blank => true
   ## birth year type is one included in the list
-  validates_inclusion_of :birth_year_type, :in => DATE_TYPE_LIST
+  validates_inclusion_of :birth_year_type, :in => SDFB::DATE_TYPES
   ## birth year type is one included in the list
-  validates_inclusion_of :death_year_type, :in => DATE_TYPE_LIST
+  validates_inclusion_of :death_year_type, :in => SDFB::DATE_TYPES
   ## gender must be included in the gender list
   validates_inclusion_of :gender, :in => GENDER_LIST
   # custom validation that checks the birth and death dates
@@ -141,7 +139,7 @@ class Person < ActiveRecord::Base
   end
 
   # checks that death year is on or after birth year and that birth 
-  # and death years meet EARLIEST_YEAR and LATEST_YEAR rules
+  # and death years meet SDFB::EARLIEST_YEAR and SDFB::LATEST_YEAR rules
   #-----------------------------------------------------------------------------
   def check_birth_death_years
 
@@ -156,9 +154,9 @@ class Person < ActiveRecord::Base
         invalid_birth_year_format = true
       # if valid format continue checking
       else
-        # check that birth year is before LATEST_YEAR or throw error
-        if self.ext_birth_year.to_i > LATEST_YEAR
-          errors.add(:ext_birth_year, "The birth year must be before #{LATEST_YEAR}")
+        # check that birth year is before SDFB::LATEST_YEAR or throw error
+        if self.ext_birth_year.to_i > SDFB::LATEST_YEAR
+          errors.add(:ext_birth_year, "The birth year must be before #{SDFB::LATEST_YEAR}")
         end
       end
     end
@@ -170,9 +168,9 @@ class Person < ActiveRecord::Base
         invalid_death_year_format = true
       # if valid format continue checking
       else
-        # check that death year is after EARLIEST_YEAR or throw error
-        if self.ext_death_year.to_i < EARLIEST_YEAR
-          errors.add(:ext_death_year, "The death year must be after #{EARLIEST_YEAR}")
+        # check that death year is after SDFB::EARLIEST_YEAR or throw error
+        if self.ext_death_year.to_i < SDFB::EARLIEST_YEAR
+          errors.add(:ext_death_year, "The death year must be after #{SDFB::EARLIEST_YEAR}")
         end
       end
     end
@@ -328,7 +326,6 @@ class Person < ActiveRecord::Base
 		end
     peopleRecordsForReturn[@PersonRecord[0].id] = {'rel_sum' => @adjustedrel, 'display_name' => @PersonRecord[0].display_name}
 		return peopleRecordsForReturn
-    #return Person.first_degree_for(10000473)
   end
 
   def self.find_two_degree_for_person(id, confidence_range, date_range, rel_type_filter)
@@ -336,7 +333,7 @@ class Person < ActiveRecord::Base
     if (id)
       person_id = id
     else
-      person_id = 10000473
+      person_id = SDFB::FRANCIS_BACON
     end
     if (confidence_range)
       min_confidence = confidence_range.split(",")[0].to_i

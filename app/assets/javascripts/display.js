@@ -1,9 +1,6 @@
-var francisID = 10000473;
 var default_sconfidence = 60;
-var default_econfidence = 100;
-var default_sdate = 1500;
-var default_edate = 1700;
-  
+var default_econfidence = 100; 
+
 /*
 Num_rels Cluster    Color
  0      0        grey
@@ -156,7 +153,7 @@ function twoDegs(id, id2, people) {
         window.location.href = '/?id=' + id + '&confidence=' + sconf + ',' + econf + ',&date=' + sdate + ',' + edate;
       }
       else {
-        window.location.href = '/?id=' + id + '&confidence=60,100&date=1500,1700';
+        window.location.href = '/?id=' + id + '&confidence=60,100&date=' + window.sdfb_data.earliestYear + ',' + window.sdfb_data.latestYear;
       }
     });
   
@@ -253,7 +250,7 @@ function filterGraph(people){
         ID2 = 0;
     } 
     if(ID == ""){
-        ID = francisID;
+        ID = window.sdfb_data.francisID;
     }
     twoDegs(ID, ID2, people);
     showAccordion(ID, ID2);
@@ -261,11 +258,11 @@ function filterGraph(people){
 
 function initGraph(people){
   var confidence = default_sconfidence + " to " + default_econfidence
-  var date = default_sdate + " - " + default_edate
+  var date = window.sdfb_data.earliestYear + " - " + window.sdfb_data.latestYear
   if (getParam('id') > 0){
     var name = people[parseInt(getParam('id'))].display_name
   }else{
-    var name = people[francisID].display_name
+    var name = people[window.sdfb_data.francisID].display_name
   }
   if (getParam('id2') > 0){
     var name2 = " and " + people[parseInt(getParam('id2'))].display_name
@@ -352,7 +349,7 @@ function sidebarSearch(people){
       window.location.href = '/?id=' + ID + ID2Str + '&confidence=' + confidence + '&date=' + date;
     }
     if (ID == ""){
-      window.location.href = '/?id=' + francisID + ID2Str + '&confidence=' + confidence + '&date=' + date;  
+      window.location.href = '/?id=' + window.sdfb_data.francisID + ID2Str + '&confidence=' + confidence + '&date=' + date;  
     }
   });
 

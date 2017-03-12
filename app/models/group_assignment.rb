@@ -31,9 +31,6 @@ class GroupAssignment < ActiveRecord::Base
   scope :order_by_sdfb_id, -> { order(id: :asc) }
   scope :approved_user, -> (user_id){ where('approved_by = ?', "#{user_id}") }
 
-  # Misc Constants
-  DATE_TYPE_LIST = ["BF", "AF","IN","CA","BF/IN","AF/IN","NA"]
-
   # Validations
   # -----------------------------
   validates_presence_of :group_id
@@ -44,9 +41,9 @@ class GroupAssignment < ActiveRecord::Base
   # checks if the group and person assignment already exists on update
   validate :check_if_approved_and_update_edit, on: :update
   ## start date type is one included in the list
-  validates_inclusion_of :start_date_type, :in => DATE_TYPE_LIST, :if => :start_year_present?
+  validates_inclusion_of :start_date_type, :in => SDFB::DATE_TYPES, :if => :start_year_present?
   ## end date type is one included in the list
-  validates_inclusion_of :end_date_type, :in => DATE_TYPE_LIST, :if => :end_year_present?
+  validates_inclusion_of :end_date_type, :in => SDFB::DATE_TYPES, :if => :end_year_present?
   # custom validation that checks that start year is between or equal to 1500 and 1700 unless the people's birth years are outside of the date range
   validate :create_check_start_and_end_date
 
@@ -124,10 +121,7 @@ class GroupAssignment < ActiveRecord::Base
   ## use the min year and max year as a last resort if there are no group start and end dates
 
   def create_check_start_and_end_date
-    # define defaults
-    min_year = 1500
-    max_year = 1700
-
+    
     # get the group start and end dates
     group_record = Group.find(self.group_id)
     if (! group_record.nil?)
@@ -151,7 +145,7 @@ class GroupAssignment < ActiveRecord::Base
       # if there is no group start year use the default
       else
         ##if there is no group start year, set start date to circa min year
-        new_start_year = min_year
+        new_start_year = SDFB::EARLIEST_YEAR
         default_start_year_used = true 
       end
       #change the record in the database to reflect default
@@ -167,7 +161,7 @@ class GroupAssignment < ActiveRecord::Base
         group_end_year_used = true  
       else
         ##if there is no group end year, set end to circa max year
-        new_end_year = max_year
+        new_end_year = SDFB::LATEST_YEAR
         default_end_year_used = true 
       end
       #change the record in the database to reflect default
@@ -182,12 +176,12 @@ class GroupAssignment < ActiveRecord::Base
       if group_start_year_used == true
         errors.add(:start_year, "Manually adjust this default start year which is based on the group's start year (#{group_start_year})")
       elsif default_start_year_used == true
-        errors.add(:start_year, "Manually adjust this default start year which is based on the SDFB minimum year of #{min_year}")
+        errors.add(:start_year, "Manually adjust this default start year which is based on the SDFB minimum year of #{SDFB::EARLIEST_YEAR}")
       end
       if group_end_year_used == true
         errors.add(:end_year, "Manually adjust this default end year which is based on the group's end years (#{group_end_year})")
       elsif default_end_year_used == true
-        errors.add(:end_year, "Manually adjust this default end year which is based on the SDFB maximum year of #{max_year}")
+        errors.add(:end_year, "Manually adjust this default end year which is based on the SDFB maximum year of #{SDFB::LATEST_YEAR}")
       end
     end
    
