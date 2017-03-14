@@ -36,8 +36,8 @@ var color = d3.scaleOrdinal()
     .domain([0,1,2])
     .range(['#1253a0','#1253a0','#87a9cf']);
 
-var degreeSize = d3.scaleLinear()
-    .domain([0,500])
+var degreeSize = d3.scaleLog()
+    .domain([1,500])
     .range([10,35]);
 
 var box = search.append('input')
