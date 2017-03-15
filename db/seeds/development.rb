@@ -14,6 +14,7 @@ CSV.foreach(Rails.root.join('lib', 'data', 'group_categories.tsv'), tsv_options)
     approved_by:     sdfb_admin_id.to_s
   ).first_or_create!
 end
+ActiveRecord::Base.connection.reset_pk_sequence!("group_categories")
 
 # Add all of the Group data from the dump
 CSV.foreach(Rails.root.join('lib', 'data', 'groups.tsv'), tsv_options) do |line|
@@ -30,6 +31,7 @@ CSV.foreach(Rails.root.join('lib', 'data', 'groups.tsv'), tsv_options) do |line|
     approved_by:     sdfb_admin_id.to_s
   ).first_or_create!
 end
+ActiveRecord::Base.connection.reset_pk_sequence!("groups")
 
 # Add all of the Relationship Category data from the dump
 CSV.foreach(Rails.root.join('lib', 'data', 'rel_categories.tsv'), tsv_options) do |line|
@@ -41,6 +43,8 @@ CSV.foreach(Rails.root.join('lib', 'data', 'rel_categories.tsv'), tsv_options) d
     approved_by:     sdfb_admin_id.to_s,
   ).first_or_create!
 end
+ActiveRecord::Base.connection.reset_pk_sequence!("relationship_categories")
+
 
 # Add all of the Relationship Type data from the dump
 CSV.foreach(Rails.root.join('lib', 'data', 'rel_types.tsv'), tsv_options) do |line|
@@ -53,6 +57,7 @@ CSV.foreach(Rails.root.join('lib', 'data', 'rel_types.tsv'), tsv_options) do |li
     approved_by:     sdfb_admin_id.to_s,
   ).first_or_create!
 end
+ActiveRecord::Base.connection.reset_pk_sequence!("relationship_types")
 
 
 # Add all of the Relationship Category Assignment data from the dump
@@ -65,6 +70,8 @@ CSV.foreach(Rails.root.join('lib', 'data', 'rel_cat_assignments.tsv'), tsv_optio
     approved_by:     sdfb_admin_id.to_s,
   ).first_or_create!
 end
+ActiveRecord::Base.connection.reset_pk_sequence!("rel_cat_assigns")
+
 
 # Preload some important people.
 francis = Person.where(

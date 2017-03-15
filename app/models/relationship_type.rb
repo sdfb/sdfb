@@ -1,7 +1,9 @@
 class RelationshipType < ActiveRecord::Base
+
+  include TrackLastEdit
+
   attr_accessible :default_rel_category, :description, :is_active, :name, :relationship_type_inverse, 
-  :created_at, :is_approved, :approved_by, :approved_on, :created_by, :is_active, :is_rejected, :last_edit
-  serialize :last_edit,Array
+  :created_at, :is_approved, :approved_by, :approved_on, :created_by, :is_active, :is_rejected
   
   # Relationships
   # -----------------------------
@@ -37,16 +39,11 @@ class RelationshipType < ActiveRecord::Base
 
   # Callbacks
   # ----------------------------- 
-  before_create :init_array
-  before_create :check_if_approved
-  before_update :check_if_approved_and_update_edit
   before_destroy :make_null_if_used_for_inverse
 
   # Custom Methods
   # -----------------------------
-  def init_array
-    self.last_edit = nil
-  end
+
 
   # This record goes through all of the records where it the relationship type is used an inverse 
   # and makes that null
@@ -63,25 +60,4 @@ class RelationshipType < ActiveRecord::Base
     !name.nil?
   end
 
-  def check_if_approved
-    if (self.is_approved != true)
-      self.approved_by = nil
-      self.approved_on = nil
-    end  
-  end
-
-  def check_if_approved_and_update_edit
-    new_last_edit = []
-    new_last_edit.push(self.approved_by.to_i)
-    new_last_edit.push(Time.now)
-    self.last_edit = new_last_edit
-
-    # update approval
-    if (self.is_approved == true)
-      self.approved_on = Time.now
-    else
-      self.approved_by = nil
-      self.approved_on = nil
-    end  
-  end
 end
