@@ -1,9 +1,10 @@
 class UserGroupContrib < ActiveRecord::Base
   # this class is known as "Group Notes" to the user
+
+  include TrackLastEdit
   
   attr_accessible :annotation, :bibliography, :group_id, :created_by, :approved_by,
-  :approved_on, :created_at, :is_approved, :is_active, :is_rejected, :last_edit
-  serialize :last_edit,Array
+  :approved_on, :created_at, :is_approved, :is_active, :is_rejected
 
   # Relationships
   # -----------------------------
@@ -15,10 +16,8 @@ class UserGroupContrib < ActiveRecord::Base
   validates_presence_of :annotation
   validates_presence_of :created_by
   validates_presence_of :group_id
-  ## annotation must be at least 10 characters
-  validates_length_of :annotation, :minimum => 10, :if => :annot_present?
-  ## bibliography must be at least 10 characters
-  validates_length_of :bibliography, :minimum => 10, :if => :bib_present?
+  validates_length_of   :annotation, :minimum => 10, :if => :annot_present?
+  validates_length_of   :bibliography, :minimum => 10, :if => :bib_present?
 
   # Scope
   # ----------------------------- 
@@ -37,17 +36,11 @@ class UserGroupContrib < ActiveRecord::Base
 
   # Callbacks
   # ----------------------------- 
-  before_create :init_array
-  before_create :check_if_approved
-  before_update :check_if_approved_and_update_edit
-  before_update :remove_trailing_spaces
-  before_create :remove_trailing_spaces
+
+  before_save :remove_trailing_spaces
 
   # Custom Methods
   # -----------------------------
-  def init_array
-    self.last_edit = nil
-  end
 
   def get_group_name
     return Group.find(group_id)
@@ -62,27 +55,6 @@ class UserGroupContrib < ActiveRecord::Base
     end
   end
 
-  def check_if_approved
-    if (self.is_approved != true)
-      self.approved_by = nil
-      self.approved_on = nil
-    end  
-  end
-
-  def check_if_approved_and_update_edit
-    new_last_edit = []
-    new_last_edit.push(self.approved_by.to_i)
-    new_last_edit.push(Time.now)
-    self.last_edit = new_last_edit
-
-    # update approval
-    if (self.is_approved == true)
-      self.approved_on = Time.now
-    else
-      self.approved_by = nil
-      self.approved_on = nil
-    end  
-  end
 
   def annot_present?
     !self.annotation.blank?

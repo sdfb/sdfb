@@ -106,7 +106,7 @@ class Person < ActiveRecord::Base
 
   # Callbacks
   # ----------------------------- 
-  before_create  :init_array
+  before_create  :init_rel_sum_and_group_list
   before_create  :check_if_approved
   before_create  :populate_search_names
   before_update  :check_if_approved_and_update_edit
@@ -500,7 +500,7 @@ class Person < ActiveRecord::Base
   end
 
   #-----------------------------------------------------------------------------
-  def init_array
+  def init_rel_sum_and_group_list
     self.rel_sum = nil
     self.group_list = nil
   end
