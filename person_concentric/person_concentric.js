@@ -317,8 +317,8 @@ function recursivePulse(d) {
 
 function positionCircle(nodelist, r) {
   angle = 360/nodelist.length;
-  for (i=0; i < nodelist.length; i++) {
-    nodelist[i].fx = (Math.cos(angle*(i+1))*r)+(width/2)
-    nodelist[i].fy = (Math.sin(angle*(i+1))*r)+(height/2)
-  }
+  nodelist.forEach( function(n, i) {
+    n.fx = (Math.cos(angle*(i+1))*r)+(width/2);
+    n.fy = (Math.sin(angle*(i+1))*r)+(height/2);
+  });
 }
