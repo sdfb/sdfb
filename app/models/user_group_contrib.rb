@@ -2,6 +2,7 @@ class UserGroupContrib < ActiveRecord::Base
   # this class is known as "Group Notes" to the user
 
   include TrackLastEdit
+  include WhitespaceStripper
   
   attr_accessible :annotation, :bibliography, :group_id, :created_by, :approved_by,
   :approved_on, :created_at, :is_approved, :is_active, :is_rejected
@@ -36,23 +37,13 @@ class UserGroupContrib < ActiveRecord::Base
 
   # Callbacks
   # ----------------------------- 
-
-  before_save :remove_trailing_spaces
+  before_save { remove_trailing_spaces(:annotation, :bibliography)}
 
   # Custom Methods
   # -----------------------------
 
   def get_group_name
     return Group.find(group_id)
-  end
-
-  def remove_trailing_spaces
-    if ! self.annotation.nil?
-      self.annotation.strip!
-    end
-    if ! self.bibliography.nil?
-      self.bibliography.strip!
-    end
   end
 
 

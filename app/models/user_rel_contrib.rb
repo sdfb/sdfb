@@ -2,6 +2,7 @@ class UserRelContrib < ActiveRecord::Base
   # this class is known as "Relationship Type Assignment" to the user
   
   include TrackLastEdit
+  include WhitespaceStripper
 
   attr_accessible :annotation, :bibliography, :certainty, :created_by, :relationship_id, :relationship_type_id, 
   :approved_by, :approved_on, :created_at, :is_approved, :start_year, :start_month, 
@@ -84,7 +85,7 @@ class UserRelContrib < ActiveRecord::Base
   after_create :update_approve
   after_save :update_type_list_max_certainty_on_rel
   before_save :create_start_and_end_date
-  before_save :remove_trailing_spaces
+  before_save { remove_trailing_spaces(:annotation, :bibliography)}
   after_destroy :type_list_max_cert_on_rel_on_destroy
 
   # Custom Methods
@@ -328,12 +329,4 @@ class UserRelContrib < ActiveRecord::Base
     end
   end
 
-  def remove_trailing_spaces
-    if ! self.annotation.nil?
-      self.annotation.strip!
-    end
-    if ! self.bibliography.nil?
-      self.bibliography.strip!
-    end
-  end
 end
