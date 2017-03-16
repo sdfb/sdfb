@@ -15,7 +15,7 @@ class RelCatAssign < ActiveRecord::Base
   # -----------------------------
   validates_presence_of :relationship_category_id
   validates_presence_of :relationship_type_id
-  validate :check_if_approved_valid_create, on: :create
+  #validate :check_if_approved_valid_create, on: :create
   validate :check_if_approved_and_update_edit, on: :update
 
   # Scope
