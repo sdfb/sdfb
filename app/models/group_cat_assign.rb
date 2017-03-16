@@ -16,7 +16,8 @@ class GroupCatAssign < ActiveRecord::Base
   validates_presence_of :group_category_id
   validates_presence_of :group_id
   validates_presence_of :created_by
-  validate :check_if_approved_valid_create, on: :create
+  # Commented out instead of deleted. Needs further evaluation in a cleanup of the app.
+  # validate :check_if_approved_valid_create, on: :create
   validate :check_if_approved_and_update_edit, on: :update
 
   # Scope
