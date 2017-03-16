@@ -15,6 +15,7 @@ class RelCatAssign < ActiveRecord::Base
   # -----------------------------
   validates_presence_of :relationship_category_id
   validates_presence_of :relationship_type_id
+  # Commented out instead of deleted. Needs further evaluation in a cleanup of the app.
   #validate :check_if_approved_valid_create, on: :create
   validate :check_if_approved_and_update_edit, on: :update
 

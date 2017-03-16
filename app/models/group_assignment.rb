@@ -40,7 +40,8 @@ class GroupAssignment < ActiveRecord::Base
   validates_presence_of :person_id
   validates_presence_of :created_by
   # checks if the group and person assignment already exists on create
-  validate :check_if_approved_valid_create, on: :create
+  # Commented out instead of deleted. Needs further evaluation in a cleanup of the app.
+  # validate :check_if_approved_valid_create, on: :create
   # checks if the group and person assignment already exists on update
   validate :check_if_approved_and_update_edit, on: :update
   ## start date type is one included in the list
