@@ -7,6 +7,8 @@ class Person < ActiveRecord::Base
 
   include TrackLastEdit
   include WhitespaceStripper
+  include Approvable
+
 
   # TODO: Figure out if :group_list is actually used anywhere.
   # TODO: Figure out how many of these actually need to be writable.
@@ -17,10 +19,9 @@ class Person < ActiveRecord::Base
                   # :uncertain, :unlikely, :likely, :possible, :certain,       # none of these appear in the code. - DGN 3/11/2017            
                   :birth_year_type, :ext_birth_year, :alt_birth_year,       
                   :death_year_type, :ext_death_year, :alt_death_year,
-                  :is_approved, :is_rejected, :is_active,    
                   :rel_sum, :group_list,
                   :created_by, :created_at,
-                  :approved_by, :approved_on
+
 
 
   serialize :rel_sum,    Array
@@ -39,12 +40,7 @@ class Person < ActiveRecord::Base
 
   # Scope
   # ----------------------------- 
-  scope :all_approved, -> { where(is_approved: true, is_active: true, is_rejected: false) }
-  scope :all_inactive, -> { where(is_active: false) }
-  scope :all_rejected, -> { where(is_rejected: true, is_active: true) }
-  scope :all_unapproved, -> { where(is_approved: false, is_rejected: false, is_active: true) }
   scope :all_recent,  -> { order(updated_at: :desc) }
-  scope :all_active_unrejected, -> { where(is_active: true, is_rejected: false) }
   scope :for_user, -> (user_input) { where('created_by = ?', "#{user_input}") }
   scope :for_odnb_id, -> (odnb_id_input) { where('odnb_id like ?', "%#{odnb_id_input}%") }
   scope :for_first_name, -> (first_name_input) { where('first_name like ?', "%#{first_name_input}")}
@@ -66,7 +62,6 @@ class Person < ActiveRecord::Base
   	select('id, rel_sum')
   	.where("id = ? and (ext_birth_year < ? or ext_death_year > ?)", '%#{id}', '%#{edate}', '%#{sdate}')}
   scope :order_by_sdfb_id, -> { order(:id) }
-  scope :approved_user, -> (user_id){ where('approved_by = ?', "#{user_id}") }
 
 
 

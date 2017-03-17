@@ -1,9 +1,10 @@
 class GroupAssignment < ActiveRecord::Base
 
   include TrackLastEdit
+  include Approvable
 
-  attr_accessible :created_by, :group_id, :approved_by, :approved_on, :person_id, :start_date, :end_date, :created_at,
-  :is_approved, :is_active, :is_rejected, :start_year, :start_month, :start_day, :end_year, :end_month, :end_day,
+  attr_accessible :created_by, :group_id, :person_id, :start_date, :end_date, :created_at,
+   :start_year, :start_month, :start_day, :end_year, :end_month, :end_day,
   :person_autocomplete, :start_date_type, :end_date_type
   
   # Relationships
@@ -14,11 +15,6 @@ class GroupAssignment < ActiveRecord::Base
 
   # Scope
   # ----------------------------- 
-  scope :all_approved, -> { where(is_approved: true, is_active: true, is_rejected:false) }
-  scope :all_inactive, -> { where(is_active: false) }
-  scope :all_active_unrejected, -> { where(is_active: true, is_rejected: false) }
-  scope :all_rejected, -> { where(is_rejected: true, is_active: true) }
-  scope :all_unapproved, -> { where(is_approved: false, is_rejected: false, is_active: true) }
   scope :all_recent, -> { order(updated_at: :desc) }
   scope :all_for_person, -> (personID) {
       select('group_assignments.*')
@@ -29,25 +25,14 @@ class GroupAssignment < ActiveRecord::Base
   scope :for_user, lambda {|user_input| where('created_by = ?', "#{user_input}") }
   scope :find_if_exists, lambda {|person_input, group_input| where('(person_id = ?) and (group_id = ?) and is_approved is true', person_input, group_input) }
   scope :order_by_sdfb_id, -> { order(id: :asc) }
-  scope :approved_user, -> (user_id){ where('approved_by = ?', "#{user_id}") }
 
   # Validations
   # -----------------------------
   validates_presence_of :group_id
   validates_presence_of :person_id
   validates_presence_of :created_by
-  # checks if the group and person assignment already exists on create
-  # Commented out instead of deleted. Needs further evaluation in a cleanup of the app.
-  # validate :check_if_approved_valid_create, on: :create
-  # checks if the group and person assignment already exists on update
-  validate :check_if_approved_and_update_edit, on: :update
-  ## start date type is one included in the list
   validates_inclusion_of :start_date_type, :in => SDFB::DATE_TYPES, :if => :start_year_present?
-  ## end date type is one included in the list
   validates_inclusion_of :end_date_type, :in => SDFB::DATE_TYPES, :if => :end_year_present?
-  # custom validation that checks that start year is between or equal to 1500 and 1700 unless the people's birth years are outside of the date range
-  validate :create_check_start_and_end_date
-
 
   # Callbacks
   # ----------------------------- 
@@ -57,7 +42,6 @@ class GroupAssignment < ActiveRecord::Base
   after_save    :create_group_person_list
   after_destroy :create_group_person_list
 
-
   # Custom Methods
   # -----------------------------
 
@@ -66,7 +50,10 @@ class GroupAssignment < ActiveRecord::Base
       #adds the person's id to the Group
         #find all approved group_assignments for that group
         #map by first name last name (birth year)
-        updated_group_person_list = GroupAssignment.all_approved.all_for_group(self.group_id).map{|ga| Person.find(ga.person_id).first_name + " " + Person.find(ga.person_id).last_name + " (" + Person.find(ga.person_id).ext_birth_year + ")"}
+        updated_group_person_list = GroupAssignment.all_approved.all_for_group(self.group_id).map do |ga| 
+          str  = Person.find(ga.person_id).first_name + " " 
+          str += Person.find(ga.person_id).last_name 
+          str += " (" + Person.find(ga.person_id).ext_birth_year + ")"}
         Group.update(self.group_id, person_list: updated_group_person_list)
         
 

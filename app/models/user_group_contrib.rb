@@ -3,9 +3,9 @@ class UserGroupContrib < ActiveRecord::Base
 
   include TrackLastEdit
   include WhitespaceStripper
-  
-  attr_accessible :annotation, :bibliography, :group_id, :created_by, :approved_by,
-  :approved_on, :created_at, :is_approved, :is_active, :is_rejected
+  include Approvable
+
+  attr_accessible :annotation, :bibliography, :group_id, :created_by, :created_at
 
   # Relationships
   # -----------------------------
@@ -22,18 +22,12 @@ class UserGroupContrib < ActiveRecord::Base
 
   # Scope
   # ----------------------------- 
-  scope :all_approved, -> { where(is_approved: true, is_active: true, is_rejected: false) }
-  scope :all_inactive, -> { where(is_active: false) }
-  scope :all_rejected, -> { where(is_rejected: true, is_active: true) }
-  scope :all_unapproved, -> { where(is_approved: false, is_rejected: false, is_active: true) }
   scope :for_user, -> ( user_input) { where('created_by = ?', "#{user_input}") }
   scope :all_for_group, -> (groupID) {
       select('user_group_contribs.*')
       .where('group_id = ?', groupID)}
   scope :all_recent, -> { order(updated_at: :desc) }
   scope :order_by_sdfb_id, -> { order(id: :asc) }
-  scope :all_active_unrejected, -> { where(is_active: true, is_rejected: false) }
-  scope :approved_user, -> (user_id){ where('approved_by = ?', user_id) }
 
   # Callbacks
   # ----------------------------- 

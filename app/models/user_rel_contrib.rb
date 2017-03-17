@@ -3,10 +3,11 @@ class UserRelContrib < ActiveRecord::Base
   
   include TrackLastEdit
   include WhitespaceStripper
+  include Approvable
 
   attr_accessible :annotation, :bibliography, :certainty, :created_by, :relationship_id, :relationship_type_id, 
-  :approved_by, :approved_on, :created_at, :is_approved, :start_year, :start_month, 
-  :start_day, :end_year, :end_month, :end_day, :is_active, :is_rejected, :person1_autocomplete,
+  :created_at,  :start_year, :start_month, 
+  :start_day, :end_year, :end_month, :end_day, :person1_autocomplete,
   :person2_autocomplete, :person1_selection, :person2_selection, :start_date_type, :end_date_type, :is_locked
 
   # Relationships
@@ -45,11 +46,6 @@ class UserRelContrib < ActiveRecord::Base
 
   # Scope
   # ----------------------------- 
-  scope :all_approved, -> { where(is_approved: true, is_active: true, is_rejected: false) }
-  scope :all_inactive, -> { where(is_active: false) }
-  scope :all_active_unrejected, -> { where(is_active: true, is_rejected: false) }
-  scope :all_rejected, -> { where(is_rejected: true, is_active: true) }
-  scope :all_unapproved, -> { where(is_approved: false, is_rejected: false, is_active: true) }
   scope :for_user, -> (user_input) { where('created_by = ?', "#{user_input}") }
   scope :all_for_relationship, -> (relID) {
       select('user_rel_contribs.*')
@@ -74,7 +70,6 @@ class UserRelContrib < ActiveRecord::Base
   scope :for_rel_type_assigns_140001_160000, -> { where("id between 140001 and 160000") }
   scope :for_rel_type_assigns_160001_180000, -> { where("id between 160001 and 180000") }
   scope :for_rel_type_assigns_greater_than_180000, -> { where("id > 180000") }
-  scope :approved_user, -> (user_id) { where('approved_by = ?', "#{user_id}") }
 
   # Callbacks
   # ----------------------------- 

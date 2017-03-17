@@ -1,9 +1,10 @@
 class RelationshipType < ActiveRecord::Base
 
   include TrackLastEdit
+  include Approvable
 
   attr_accessible :default_rel_category, :description, :is_active, :name, :relationship_type_inverse, 
-  :created_at, :is_approved, :approved_by, :approved_on, :created_by, :is_active, :is_rejected
+  :created_at,  :created_by
   
   # Relationships
   # -----------------------------
@@ -26,15 +27,10 @@ class RelationshipType < ActiveRecord::Base
 
   # Scope
   # ----------------------------- 
-  scope :all_approved, -> { where(is_approved: true, is_active: true, is_rejected: false) }
-  scope :all_inactive, -> { where(is_active: false) }
-  scope :all_rejected, -> { where(is_rejected: true, is_active: true) }
-  scope :all_unapproved, -> { where(is_approved: false, is_rejected: false, is_active: true) }
   scope :all_recent, -> { order(updated_at: :desc) }
   scope :for_user, -> (user_input) { where('created_by = ?', "#{user_input}") }
   scope :alphabetical, -> { order(name: :asc) }
   scope :order_by_sdfb_id, -> { order(id: :asc) }
-  scope :all_active_unrejected, -> { where(is_active: true, is_rejected: false) }
   scope :find_where_inverse, -> (relationship_type_input) { where('relationship_type_inverse = ?', "#{relationship_type_input}") }
 
   # Callbacks

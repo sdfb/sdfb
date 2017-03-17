@@ -1,57 +1,39 @@
 class Group < ActiveRecord::Base
 
   include TrackLastEdit
+  include Approvable
 
-  attr_accessible :created_by, :description, :name, :justification, :approved_by, :approved_on, 
-  :created_at, :is_approved, :person_list, :start_year, :end_year, :is_active, :is_rejected,
-  :start_date_type, :end_date_type
+  attr_accessible  :description, :name, :justification,
+                   :start_year, :end_year, :start_date_type, :end_date_type,
+                   :created_by, :created_at, 
+                   :person_list
 
-  serialize :person_list,Array #We're using group assignments instead
+  serialize :person_list, Array #We're using group assignments instead
   
   # Relationships
   # -----------------------------
-  has_many :people, :through => :group_assignments
-  # if a group is deleted, then all associated group category assignments are deleted
-  has_many :group_cat_assigns, :dependent => :destroy
-  # if a group is deleted, then all associated user_group_contribs are deleted
-  has_many :user_group_contribs, :dependent => :destroy
-  # if a group is deleted, then all associated  group assignments are deleted so that the group has no members
-  has_many :group_assignments, :dependent => :destroy
+  has_many :people, through: :group_assignments
+  has_many :group_cat_assigns,   dependent: :destroy
+  has_many :user_group_contribs, dependent: :destroy
+  has_many :group_assignments,   dependent: :destroy
   belongs_to :user
 
   # Validations
   # -----------------------------
-  validates_presence_of :name
-  validates_presence_of :description
-  validates_presence_of :created_by
-  #validates_presence_of :approved_by
-  #validates_presence_of :approved_on
-  ## name must be at least 3 characters
-  validates_length_of :name, :minimum => 3
-  # this code validates the start and end dates with the associated method
-  validate :create_check_start_and_end_date
-  ## start date type is one included in the list
-  validates_inclusion_of :start_date_type, :in => SDFB::DATE_TYPES, :if => :start_year_present?
-  ## end date type is one included in the list
-  validates_inclusion_of :end_date_type, :in => SDFB::DATE_TYPES, :if => :end_year_present?
-  # make sure names are unique/not duplicates
-  #validates_uniqueness_of :name
+  validates_presence_of  :name
+  validates_presence_of  :description
+  validates_presence_of  :created_by
+  validates_length_of    :name, :minimum => 3
+  validates_inclusion_of :start_date_type, :in => SDFB::DATE_TYPES, :if => "self.start_year.present?"
+  validates_inclusion_of :end_date_type,   :in => SDFB::DATE_TYPES, :if => "self.end_year.present?"
 
   # Scope
   # ----------------------------- 
-  scope :all_approved, -> { where(is_approved: true, is_active: true, is_rejected: false) }
-  scope :all_inactive, -> { where(is_active: false) }
-  scope :all_rejected, -> { where(is_rejected: true, is_active: true) }
-  scope :all_active_unrejected, -> { where(is_active: true, is_rejected: false) }
-  scope :all_unapproved, -> { where(is_approved: false, is_rejected: false, is_active: true) }
-  scope :all_recent, -> { order(updated_at: :desc) }
-  scope :for_id, -> (id_input) { where('id = ?', "#{id_input}") }
-  scope :exact_name_match, -> (search_input) { where('name like ?', "#{search_input}") }
-  scope :similar_name_match, -> (search_input) { where('name like ?', "%#{search_input}%") }
-  scope :for_user, -> (user_input) { where('created_by = ?', "#{user_input}") }
-  scope :alphabetical, -> { order(name: :asc) }
-  scope :order_by_sdfb_id, -> { order(id: :asc) }
-  scope :approved_user, -> (user_id){ where('approved_by = ?', "#{user_id}") }
+  scope :all_recent,            -> { order(updated_at: :desc) }
+  scope :for_id,                -> (id_input) { where('id = ?', "#{id_input}") }
+  scope :for_user,              -> (user_input) { where('created_by = ?', "#{user_input}") }
+  scope :alphabetical,          -> { order(name: :asc) }
+  scope :order_by_sdfb_id,      -> { order(id: :asc) }
   
   # Callbacks
   # ----------------------------- 
@@ -122,14 +104,6 @@ class Group < ActiveRecord::Base
     end
   end
 
-
-  def start_year_present?
-    ! self.start_year.nil?
-  end
-
-  def end_year_present?
-    ! self.end_year.nil?
-  end
 
   # searches for people by name
   def self.search_approved(search)

@@ -3,9 +3,9 @@ class UserPersonContrib < ActiveRecord::Base
 
   include TrackLastEdit
   include WhitespaceStripper
+  include Approvable
 
-  attr_accessible :annotation, :bibliography, :created_by, :person_id, :approved_by,
-  :approved_on, :created_at, :is_approved, :is_active, :is_rejected, :person_autocomplete
+  attr_accessible :annotation, :bibliography, :created_by, :person_id, :created_at, :person_autocomplete
 
   # Relationships
   # -----------------------------
@@ -24,18 +24,12 @@ class UserPersonContrib < ActiveRecord::Base
 
   # Scope
   # ----------------------------- 
-  scope :all_approved, -> { where(is_approved: true, is_active: true, is_rejected: false) }
-  scope :all_inactive, -> { where(is_active: false) }
-  scope :all_rejected, -> { where(is_rejected: true, is_active: true) }
-  scope :all_unapproved, -> { where(is_approved: false, is_rejected: false, is_active: true) }
   scope :for_user, -> (user_input) { where('created_by = ?', "#{user_input}") }
   scope :all_for_person, -> (personID) {
       select('user_person_contribs.*')
       .where('person_id = ?', personID)}
   scope :all_recent, -> { order(updated_at: :desc) }
   scope :order_by_sdfb_id, -> { order(id: :asc) }
-  scope :all_active_unrejected, -> { where(is_active: true, is_rejected: false) }
-  scope :approved_user, -> (user_id){ where('approved_by = ?', user_id) }
 
   # Callbacks
   # ----------------------------- 

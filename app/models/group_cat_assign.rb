@@ -1,9 +1,10 @@
 class GroupCatAssign < ActiveRecord::Base
 
   include TrackLastEdit
+  include Approvable
 
-  attr_accessible :group_category_id, :group_id, :created_by, :created_at, :approved_by, :approved_on, :is_approved,
-  :is_active, :is_rejected
+  attr_accessible :group_category_id, :group_id, :created_by, :created_at
+  
 
   # Relationships
   # -----------------------------
@@ -22,17 +23,12 @@ class GroupCatAssign < ActiveRecord::Base
 
   # Scope
   # ----------------------------- 
-  scope :all_approved, -> { where(is_approved: true, is_active: true, is_rejected: false) }
-  scope :all_inactive, -> { where(is_active: false) }
-  scope :all_rejected, -> { where(is_rejected: true, is_active: true) }
-  scope :all_unapproved, -> { where(is_approved: false, is_rejected: false, is_active: true) }
   scope :all_recent, -> { order(updated_at: :desc) }
   scope :for_group, -> (group_id_input) { where('group_id = ?', "#{group_id_input}") }
   scope :for_group_category, -> (group_category_id_input) { where('group_category_id = ?', "#{group_category_id_input}") }
   scope :find_if_exists, -> ( group_category_id_input, group_id_input) { where('(group_category_id = ?) and (group_id = ?)', group_category_id_input, group_id_input) }
   scope :for_user, -> (user_input) { where('created_by = ?', "#{user_input}") }
   scope :order_by_sdfb_id, -> { order(id: :asc) }
-  scope :all_active_unrejected, -> { where(is_active: true, is_rejected: false) }
 
   # Callbacks
   # ----------------------------- 
