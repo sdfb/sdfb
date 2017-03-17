@@ -268,11 +268,11 @@ class UserRelContrib < ActiveRecord::Base
   end
 
   def get_person1_name
-    return Person.find(Relationship.find(relationship_id).person1_index).display_name
+    Person.find(Relationship.find(relationship_id).person1_index).display_name
   end
 
   def get_person2_name
-    return Person.find(Relationship.find(relationship_id).person2_index).display_name
+    Person.find(Relationship.find(relationship_id).person2_index).display_name
   end
 
   def get_both_names
