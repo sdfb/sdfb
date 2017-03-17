@@ -23,9 +23,9 @@ CSV.foreach(Rails.root.join('lib', 'data', 'groups.tsv'), tsv_options) do |line|
     name:            line[1],
     is_approved:     true,
     description:     line[2] || "-",
-    start_year:      line[3] || 1500,
+    start_year:      line[3] || SDFB::EARLIEST_YEAR,
     start_date_type: line[3].present? ? "IN" : "CA",
-    end_year:        line[4] || 1700,
+    end_year:        line[4] || SDFB::LATEST_YEAR,
     end_date_type:   line[4].present? ? "IN" : "CA",
     created_by:      sdfb_admin_id,
     approved_by:     sdfb_admin_id.to_s
@@ -75,7 +75,7 @@ ActiveRecord::Base.connection.reset_pk_sequence!("rel_cat_assigns")
 
 # Preload some important people.
 francis = Person.where(
-  id: 10000473,
+  id: SDFB::FRANCIS_BACON,
   first_name: 'Francis',
   last_name: 'Bacon',
   created_by: sdfb_admin_id,

@@ -5,7 +5,13 @@ class HomeController < ApplicationController
   def index
     #If there are no relationships, only return the person node
     # @people = Person.find_first_degree_for(params[:id])
-    @data = {}
+    
+    @data = {
+      francisID: SDFB::FRANCIS_BACON,
+      earliestYear: SDFB::EARLIEST_YEAR,
+      latestYear: SDFB::LATEST_YEAR
+    }
+
     #only return people if there is no group search because if there is a group search it will be displayed separately
     if (params[:group].nil?)
       #detect if this is a one degree search or a two degree search

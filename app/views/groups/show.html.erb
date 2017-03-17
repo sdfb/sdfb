@@ -58,7 +58,7 @@
         <dt><strong>Start Year:</strong></dt>
         <% if ! @group.start_year.blank? %>
           <dd>
-          <% if (@group.start_date_type == "CA") && (@group.start_year == 1500) %>
+          <% if (@group.start_date_type == "CA") && (@group.start_year == SDFB::EARLIEST_YEAR) %>
             The default start year (<%= @group.start_year %>) is used.
           <% else %>
             <%= @group.start_year %>
@@ -92,7 +92,7 @@
         <dt><strong>End Year:</strong></dt>
         <% if ! @group.end_year.blank? %>
           <dd>
-          <% if (@group.end_date_type == "CA") && (@group.end_year == 1700) %>
+          <% if (@group.end_date_type == "CA") && (@group.end_year == SDFB::LATEST_YEAR) %>
             The default end year (<%= @group.end_year %>) is used.
           <% else %>
             <%= @group.end_year %>

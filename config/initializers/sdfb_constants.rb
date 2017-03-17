@@ -1,0 +1,7 @@
+module SDFB
+  FRANCIS_BACON = 10000473
+
+  DATE_TYPES = ["BF","AF","IN","CA","BF/IN","AF/IN","NA"]
+  EARLIEST_YEAR  = 1500
+  LATEST_YEAR    = 1700
+end
