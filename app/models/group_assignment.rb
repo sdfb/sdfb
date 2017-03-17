@@ -36,17 +36,20 @@ class GroupAssignment < ActiveRecord::Base
   validates_presence_of :group_id
   validates_presence_of :person_id
   validates_presence_of :created_by
+
+  validates_presence_of :start_date_type, if: 'start_year.present?'
+  validates_presence_of :end_date_type, if: 'end_year.present?'
+  validates_inclusion_of :start_date_type, in: SDFB::DATE_TYPES, if: 'start_year.present?'
+  validates_inclusion_of :end_date_type, in: SDFB::DATE_TYPES, if: 'end_year.present?'
+
+  # Big commented out block of validations with side effects
   # checks if the group and person assignment already exists on create
   # Commented out instead of deleted. Needs further evaluation in a cleanup of the app.
   # validate :check_if_approved_valid_create, on: :create
   # checks if the group and person assignment already exists on update
-  validate :check_if_approved_and_update_edit, on: :update
-  ## start date type is one included in the list
-  validates_inclusion_of :start_date_type, :in => SDFB::DATE_TYPES, :if => :start_year_present?
-  ## end date type is one included in the list
-  validates_inclusion_of :end_date_type, :in => SDFB::DATE_TYPES, :if => :end_year_present?
+  #validate :check_if_approved_and_update_edit, on: :update
   # custom validation that checks that start year is between or equal to 1500 and 1700 unless the people's birth years are outside of the date range
-  validate :create_check_start_and_end_date
+  # validate :create_check_start_and_end_date
 
 
   # Callbacks
@@ -117,15 +120,15 @@ class GroupAssignment < ActiveRecord::Base
   end
 
   def set_start_year
-    possible_dates = [person.ext_birth_year, group.start_year, SDFB::EARLIEST_YEAR]
-    possible_dates.map!(&:to_i)
+    possible_dates = [person.ext_birth_year, group.start_year]
+    possible_dates.map!{|year| year.present? ? year.to_i : SDFB::EARLIEST_YEAR}
     self.start_year = possible_dates.max
     self.start_date_type = "AF/IN"
   end
 
   def set_end_year
-    possible_dates = [person.ext_death_year, group.end_year, SDFB::LATEST_YEAR]
-    possible_dates.map!(&:to_i)
+    possible_dates = [person.ext_death_year, group.end_year]
+    possible_dates.map!{|year| year.present? ? year.to_i : SDFB::LATEST_YEAR}
     self.end_year = possible_dates.min
     self.end_date_type = "BF/IN"
   end
