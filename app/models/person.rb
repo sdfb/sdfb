@@ -1,14 +1,11 @@
 class Person < ActiveRecord::Base
-  
   # Misc Constants
   # -----------------------------
   GENDER_LIST    = ["female", "male", "gender_nonconforming"]
-  
 
   include TrackLastEdit
   include WhitespaceStripper
   include Approvable
-
 
   # TODO: Figure out if :group_list is actually used anywhere.
   # TODO: Figure out how many of these actually need to be writable.
@@ -20,9 +17,7 @@ class Person < ActiveRecord::Base
                   :birth_year_type, :ext_birth_year, :alt_birth_year,       
                   :death_year_type, :ext_death_year, :alt_death_year,
                   :rel_sum, :group_list,
-                  :created_by, :created_at,
-
-
+                  :created_by, :created_at
 
   serialize :rel_sum,    Array
   serialize :group_list, Array
