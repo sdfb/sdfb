@@ -51,3 +51,7 @@ group :test do
   gem 'database_cleaner'
   gem 'cucumber-api', require: false
 end
+
+group :development, :test do
+  gem 'pry'
+end
