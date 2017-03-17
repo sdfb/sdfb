@@ -1,26 +1,32 @@
 Given(/^a person exists$/) do
+  @person_birth_year = SDFB::EARLIEST_YEAR + 5
+  @person_death_year = SDFB::LATEST_YEAR - 5
+
   @person = Person.create(
     first_name: 'Grouper',
     last_name: 'McMember',
     created_by: @sdfbadmin.id,
     gender: 'male',
     birth_year_type: 'IN',
-    ext_birth_year: '1580',
+    ext_birth_year: @person_birth_year.to_s,
     death_year_type: 'IN',
-    ext_death_year: '1610',
+    ext_death_year: @person_death_year.to_s,
     approved_by: @sdfbadmin.id,
     is_approved: true
   )
 end
 
 Given(/^a group exists$/) do
+  @group_start_year = SDFB::EARLIEST_YEAR + 1
+  @group_end_year = SDFB::LATEST_YEAR - 1
+
   @group = Group.create(
     name:            'Everyone is Cool Club',
     is_approved:     true,
     description:     "-",
-    start_year:      SDFB::EARLIEST_YEAR,
+    start_year:      @group_start_year,
     start_date_type: "IN",
-    end_year:        SDFB::LATEST_YEAR,
+    end_year:        @group_end_year,
     end_date_type:   "IN",
     created_by:      @sdfbadmin.id,
     approved_by:     @sdfbadmin.id.to_s
@@ -70,22 +76,53 @@ Given(/^the person has an unknown death date$/) do
   @person.save(validate: false)
 end
 
-Given(/^I know when the person joined or departed the group$/) do
-  @group_start_year = 1590
-  @group_end_year = 1592
-  @group_start_date_type = 'IN'
-  @group_end_date_type = 'IN'
+Given(/^I know when the person joined and departed the group$/) do
+  @group_assignment_start_year = 1590
+  @group_assignment_end_year = 1592
+  @group_assignment_start_date_type = 'IN'
+  @group_assignment_end_date_type = 'IN'
+end
+
+Given(/^I do not know the group assignment start date type$/) do
+  @group_assignment_start_date_type = nil
+end
+
+Given(/^I do not know the group assignment end date type$/) do
+  @group_assignment_end_date_type = nil
+end
+
+Given(/^the start date I choose is before the group existed$/) do
+  @group_assignment_start_year = @group_start_year - 1
+end
+
+Given(/^the start date I choose is before the person existed$/) do
+  @group_assignment_start_year = @person_birth_year - 1
+  @group_assignment_end_year = @group_assignment_start_year + 1
+end
+
+Given(/^the start date I choose is after the group existed$/) do
+  @group_assignment_end_year = @group_end_year + 1
+end
+
+Given(/^the start date I choose is after the person existed$/) do
+  @group_assignment_start_year = @person.ext_death_year.to_i + 1
+  @group_assignment_end_year = @group_assignment_start_year + 1
+end
+
+Given(/^the start date I choose is after the end date I choose$/) do
+  @group_assignment_start_year = 1592
+  @group_assignment_end_year = 1590
 end
 
 When(/^I assign the person to the group$/) do
-  GroupAssignment.create!(
+  @group_assignment = GroupAssignment.create(
     person_id: @person.id,
     group_id: @group.id,
     created_by: @sdfbadmin.id,
-    start_year: @group_start_year,
-    end_year: @group_end_year,
-    start_date_type: @group_start_date_type,
-    end_date_type: @group_end_date_type
+    start_year: @group_assignment_start_year,
+    end_year: @group_assignment_end_year,
+    start_date_type: @group_assignment_start_date_type,
+    end_date_type: @group_assignment_end_date_type
   )
 end
 
@@ -127,17 +164,25 @@ Then(/^the group membership's end date type is "([^"]*)"$/) do |date_type|
 end
 
 Then(/^the group membership's start date is the known group assignment start date$/) do
-  expect(GroupAssignment.last.start_year).to eq @group_start_year
+  expect(GroupAssignment.last.start_year).to eq @group_assignment_start_year
 end
 
 Then(/^the group membership's start date type is the known group assignment start date type$/) do
-  expect(GroupAssignment.last.start_date_type).to eq @group_start_date_type
+  expect(GroupAssignment.last.start_date_type).to eq @group_assignment_start_date_type
 end
 
 Then(/^the group membership's end date is the known group assignment end date$/) do
-  expect(GroupAssignment.last.end_year).to eq @group_end_year
+  expect(GroupAssignment.last.end_year).to eq @group_assignment_end_year
 end
 
 Then(/^the group membership's end date type is the known group assignment end date type$/) do
-  expect(GroupAssignment.last.end_date_type).to eq @group_end_date_type
+  expect(GroupAssignment.last.end_date_type).to eq @group_assignment_end_date_type
+end
+
+Then(/^the assignment is invalid$/) do
+  expect(@group_assignment.valid?).to be false
+end
+
+Then(/^the assignment is valid$/) do
+  expect(@group_assignment.valid?).to be true
 end
