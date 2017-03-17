@@ -1,8 +1,10 @@
 class GroupAssignment < ActiveRecord::Base
+
+  include TrackLastEdit
+
   attr_accessible :created_by, :group_id, :approved_by, :approved_on, :person_id, :start_date, :end_date, :created_at,
   :is_approved, :is_active, :is_rejected, :start_year, :start_month, :start_day, :end_year, :end_month, :end_day,
-  :person_autocomplete, :start_date_type, :end_date_type, :last_edit
-  serialize :last_edit,Array
+  :person_autocomplete, :start_date_type, :end_date_type
   
   # Relationships
   # -----------------------------
@@ -29,43 +31,35 @@ class GroupAssignment < ActiveRecord::Base
   scope :order_by_sdfb_id, -> { order(id: :asc) }
   scope :approved_user, -> (user_id){ where('approved_by = ?', "#{user_id}") }
 
-  # Misc Constants
-  DATE_TYPE_LIST = ["BF", "AF","IN","CA","BF/IN","AF/IN","NA"]
-
   # Validations
   # -----------------------------
   validates_presence_of :group_id
   validates_presence_of :person_id
   validates_presence_of :created_by
   # checks if the group and person assignment already exists on create
-  validate :check_if_approved_valid_create, on: :create
+  # Commented out instead of deleted. Needs further evaluation in a cleanup of the app.
+  # validate :check_if_approved_valid_create, on: :create
   # checks if the group and person assignment already exists on update
   validate :check_if_approved_and_update_edit, on: :update
   ## start date type is one included in the list
-  validates_inclusion_of :start_date_type, :in => DATE_TYPE_LIST, :if => :start_year_present?
+  validates_inclusion_of :start_date_type, :in => SDFB::DATE_TYPES, :if => :start_year_present?
   ## end date type is one included in the list
-  validates_inclusion_of :end_date_type, :in => DATE_TYPE_LIST, :if => :end_year_present?
+  validates_inclusion_of :end_date_type, :in => SDFB::DATE_TYPES, :if => :end_year_present?
   # custom validation that checks that start year is between or equal to 1500 and 1700 unless the people's birth years are outside of the date range
   validate :create_check_start_and_end_date
 
 
   # Callbacks
   # ----------------------------- 
-  before_create :init_array
-  after_create :create_group_person_list
-  after_update :create_group_person_list
-  before_create :check_if_approved_valid_create
-  before_update :check_if_approved_and_update_edit
-  before_create :create_check_start_and_end_date
-  before_update :create_check_start_and_end_date
+  before_create :check_if_already_exists
+  before_update :check_if_duplicate
+  before_save   :create_check_start_and_end_date
+  after_save    :create_group_person_list
   after_destroy :create_group_person_list
 
 
   # Custom Methods
   # -----------------------------
-  def init_array
-    self.last_edit = nil
-  end
 
   def create_group_person_list
     if (self.is_approved == true)
@@ -101,34 +95,17 @@ class GroupAssignment < ActiveRecord::Base
   end
 
   # checks if the group and person assignment already exists and if approved
-  def check_if_approved_valid_create
+  def check_if_already_exists
     errors.add(:person_id, "This person is already a member of this group.") if (! GroupAssignment.find_if_exists(self.person_id, self.group_id).empty?)
-    if (self.is_approved != true)
-      self.approved_by = nil
-      self.approved_on = nil
-    end  
   end
 
-  def check_if_approved_and_update_edit
+  def check_if_duplicate
     search_results_for_duplicate = GroupAssignment.find_if_exists(self.person_id, self.group_id)
     if ! search_results_for_duplicate.empty?
       if search_results_for_duplicate.first.id != self.id
         errors.add(:person_id, "This person is already a member of this group.")
       end
     end
-
-    new_last_edit = []
-    new_last_edit.push(self.approved_by.to_i)
-    new_last_edit.push(Time.now)
-    self.last_edit = new_last_edit
-
-    # update approval
-    if (self.is_approved == true)
-      self.approved_on = Time.now
-    else
-      self.approved_by = nil
-      self.approved_on = nil
-    end  
   end
 
   def get_users_name
@@ -145,10 +122,7 @@ class GroupAssignment < ActiveRecord::Base
   ## use the min year and max year as a last resort if there are no group start and end dates
 
   def create_check_start_and_end_date
-    # define defaults
-    min_year = 1500
-    max_year = 1700
-
+    
     # get the group start and end dates
     group_record = Group.find(self.group_id)
     if (! group_record.nil?)
@@ -172,7 +146,7 @@ class GroupAssignment < ActiveRecord::Base
       # if there is no group start year use the default
       else
         ##if there is no group start year, set start date to circa min year
-        new_start_year = min_year
+        new_start_year = SDFB::EARLIEST_YEAR
         default_start_year_used = true 
       end
       #change the record in the database to reflect default
@@ -188,7 +162,7 @@ class GroupAssignment < ActiveRecord::Base
         group_end_year_used = true  
       else
         ##if there is no group end year, set end to circa max year
-        new_end_year = max_year
+        new_end_year = SDFB::LATEST_YEAR
         default_end_year_used = true 
       end
       #change the record in the database to reflect default
@@ -203,12 +177,12 @@ class GroupAssignment < ActiveRecord::Base
       if group_start_year_used == true
         errors.add(:start_year, "Manually adjust this default start year which is based on the group's start year (#{group_start_year})")
       elsif default_start_year_used == true
-        errors.add(:start_year, "Manually adjust this default start year which is based on the SDFB minimum year of #{min_year}")
+        errors.add(:start_year, "Manually adjust this default start year which is based on the SDFB minimum year of #{SDFB::EARLIEST_YEAR}")
       end
       if group_end_year_used == true
         errors.add(:end_year, "Manually adjust this default end year which is based on the group's end years (#{group_end_year})")
       elsif default_end_year_used == true
-        errors.add(:end_year, "Manually adjust this default end year which is based on the SDFB maximum year of #{max_year}")
+        errors.add(:end_year, "Manually adjust this default end year which is based on the SDFB maximum year of #{SDFB::LATEST_YEAR}")
       end
     end
    

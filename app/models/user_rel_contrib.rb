@@ -1,11 +1,13 @@
 class UserRelContrib < ActiveRecord::Base
   # this class is known as "Relationship Type Assignment" to the user
   
+  include TrackLastEdit
+  include WhitespaceStripper
+
   attr_accessible :annotation, :bibliography, :certainty, :created_by, :relationship_id, :relationship_type_id, 
   :approved_by, :approved_on, :created_at, :is_approved, :start_year, :start_month, 
   :start_day, :end_year, :end_month, :end_day, :is_active, :is_rejected, :person1_autocomplete,
-  :person2_autocomplete, :person1_selection, :person2_selection, :start_date_type, :end_date_type, :last_edit, :is_locked
-  serialize :last_edit,Array
+  :person2_autocomplete, :person1_selection, :person2_selection, :start_date_type, :end_date_type, :is_locked
 
   # Relationships
   # -----------------------------
@@ -19,9 +21,6 @@ class UserRelContrib < ActiveRecord::Base
 
   ###need rel type for directional
   ###need inverse rel type for directional
-
-  # Misc Constants
-  DATE_TYPE_LIST = ["BF", "AF","IN","CA","BF/IN","AF/IN","NA"]
 
   # Validations
   # -----------------------------
@@ -39,9 +38,9 @@ class UserRelContrib < ActiveRecord::Base
   validates :end_year, :numericality => { :greater_than_or_equal_to => 1400 }, :if => :end_year_present?
   validates :end_year, :numericality => { :less_than_or_equal_to => 1800 }, :if => :end_year_present?
   ## start date type is one included in the list
-  validates_inclusion_of :start_date_type, :in => DATE_TYPE_LIST, :if => :start_year_present?
+  validates_inclusion_of :start_date_type, :in => SDFB::DATE_TYPES, :if => :start_year_present?
   ## end date type is one included in the list
-  validates_inclusion_of :end_date_type, :in => DATE_TYPE_LIST, :if => :end_year_present?
+  validates_inclusion_of :end_date_type, :in => SDFB::DATE_TYPES, :if => :end_year_present?
   validate :autocomplete_to_rel, :on => :create
 
   # Scope
@@ -79,28 +78,16 @@ class UserRelContrib < ActiveRecord::Base
 
   # Callbacks
   # ----------------------------- 
-  before_create :init_array
   before_create :autocomplete_to_rel
-  before_update :check_if_approved_and_update_edit
-  before_create :check_if_approved
-  after_create :update_type_list_max_certainty_on_rel
-  after_update :update_type_list_max_certainty_on_rel
   after_create :update_approve
-  before_create :create_start_and_end_date
-  before_update :create_start_and_end_date
-  before_update :remove_trailing_spaces
-  before_create :remove_trailing_spaces
+  after_save :update_type_list_max_certainty_on_rel
+  before_save :create_start_and_end_date
+  before_save { remove_trailing_spaces(:annotation, :bibliography)}
   after_destroy :type_list_max_cert_on_rel_on_destroy
 
   # Custom Methods
   # -----------------------------
 
-  # end
-
-  def init_array
-    self.last_edit = nil
-  end
-  
   #This converts the person1_selected and the person2_selected into the relationship_id foreign key
   def autocomplete_to_rel
     #find the relationship_id given the two people
@@ -129,29 +116,6 @@ class UserRelContrib < ActiveRecord::Base
       self.approved_by = "Admin"
       self.approved_on = Time.now
     end
-  end
-
-  #this checks if the record is approved
-  def check_if_approved
-    if (self.is_approved == false)
-      self.approved_by = nil
-      self.approved_on = nil
-    end  
-  end
-
-  def check_if_approved_and_update_edit
-    new_last_edit = []
-    new_last_edit.push(self.approved_by.to_i)
-    new_last_edit.push(Time.now)
-    self.last_edit = new_last_edit
-
-    # update approval
-    if (self.is_approved == true)
-      self.approved_on = Time.now
-    else
-      self.approved_by = nil
-      self.approved_on = nil
-    end  
   end
 
   ##if a user submits a new relationship but does not include a start and end date it defaults to a start and end date based on the birth years of the people in the relationship
@@ -362,12 +326,4 @@ class UserRelContrib < ActiveRecord::Base
     end
   end
 
-  def remove_trailing_spaces
-    if ! self.annotation.nil?
-      self.annotation.strip!
-    end
-    if ! self.bibliography.nil?
-      self.bibliography.strip!
-    end
-  end
 end

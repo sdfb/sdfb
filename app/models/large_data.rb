@@ -85,7 +85,6 @@ class LargeData < ActiveRecord::Base
 		#need to check that all the headings converted to symbols are in the accessible attributes list
 		body_rows = CSV.read(self.file_path)
 		header_row = body_rows.delete_at(0)
-		date_list = ["BF", "AF","IN","CA","BF/IN","AF/IN","NA"]
 		gender_list = ["female", "male", "gender_nonconforming"]
 		
 		#Initializes error container
@@ -126,8 +125,8 @@ class LargeData < ActiveRecord::Base
 				error_array << "Row #{row_index} is missing a first name. " if !first_name_index_2.nil? && row[first_name_index_2].nil? && !error_array.include?("Row #{row_index} is missing a first name.")
 				error_array << "Row #{row_index} is missing a last name. " if !second_name_index_2.nil? && row[second_name_index_2].nil? && !error_array.include?("Row #{row_index} is missing a last name.")
 				error_array << "Row #{row_index} is missing a max_certainty. " if !original_certainty_index.nil? && row[original_certainty_index].nil?
-				error_array << "Row #{row_index} has an invalid start date type. " if !sdt_index.nil? && !date_list.include?(row[sdt_index])
-				error_array << "Row #{row_index} has an invalid end date type. " if !edt_index.nil? && !date_list.include?(row[edt_index]) 
+				error_array << "Row #{row_index} has an invalid start date type. " if !sdt_index.nil? && !SDFB::SDFB::DATE_TYPES.include?(row[sdt_index])
+				error_array << "Row #{row_index} has an invalid end date type. " if !edt_index.nil? && !SDFB::SDFB::DATE_TYPES.include?(row[edt_index]) 
 				first_person = Person.find_by(first_name: row[first_name_index_1], last_name: row[second_name_index_1]) if !first_name_index_1.nil? && row[first_name_index_1].nil? && !second_name_index_1.nil? && row[second_name_index_1].nil?
 				second_person = Person.where.not(id: first_person.id).find_by(first_name: row[first_name_index_2], last_name: row[second_name_index_2]) if !first_name_index_2.nil? && row[first_name_index_2].nil? && !second_name_index_2.nil? && row[second_name_index_2].nil?
 				error_array << "One of the two people in row #{row_index} are not in the database or both people are the same in the database. " if first_person.nil? || second_person.nil?
@@ -152,8 +151,8 @@ class LargeData < ActiveRecord::Base
 				error_array << "Row #{row_index} is missing a death year. " if !death_year_index.nil? && row[death_year_index].nil?
 				error_array << "Row #{row_index} is missing a gender. " if !gender_index.nil? && row[gender_index].nil?
 				error_array << "In row #{row_index}, the gender is not a valid type. " if !gender_index.nil? && !gender_list.include?(row[gender_index]) 
-				error_array << "Row #{row_index} has an invalid birth year type. " if !byt_index.nil? && !row[byt_index].nil? && !date_list.include?(row[byt_index])
-				error_array << "Row #{row_index} has an invalid death year type. " if !dyt_index.nil? && !row[dyt_index].nil? && !date_list.include?(row[dyt_index]) 
+				error_array << "Row #{row_index} has an invalid birth year type. " if !byt_index.nil? && !row[byt_index].nil? && !SDFB::SDFB::DATE_TYPES.include?(row[byt_index])
+				error_array << "Row #{row_index} has an invalid death year type. " if !dyt_index.nil? && !row[dyt_index].nil? && !SDFB::SDFB::DATE_TYPES.include?(row[dyt_index]) 
 				row_index += 1
 			end
 
@@ -174,8 +173,8 @@ class LargeData < ActiveRecord::Base
 				error_array << "Row #{row_index} is missing a last name. " if !last_name_index.nil? && row[last_name_index].nil?
 				error_array << "Group names must be a minimum of 3 characters. " if group_name_index.nil? && row[group_name_index].length < 3
 				error_array << "Person in row #{row_index} is not in the database. " if !first_name_index.nil? && !last_name_index.nil? && Person.find_by(first_name: row[first_name_index], last_name: row[last_name_index]).nil?
-				error_array << "Row #{row_index} has an invalid start_date_type. " if !sdt_index.nil? && !date_list.include?(row[sdt_index])
-				error_array << "Row #{row_index} has an invalid end_date_type. " if !edt_index.nil? && !date_list.include?(row[edt_index])
+				error_array << "Row #{row_index} has an invalid start_date_type. " if !sdt_index.nil? && !SDFB::SDFB::DATE_TYPES.include?(row[sdt_index])
+				error_array << "Row #{row_index} has an invalid end_date_type. " if !edt_index.nil? && !SDFB::SDFB::DATE_TYPES.include?(row[edt_index])
 				row_index += 1
 			end
 
@@ -621,10 +620,9 @@ class LargeData < ActiveRecord::Base
 	end
 
 	def meet_validations(data, content_type)
-		date_types = ["BF", "AF","IN","CA","BF/IN","AF/IN","NA"]
 		if (content_type == "Person")
-			data.birth_year_type = "IN" if data.birth_year_type == nil || data.birth_year_type == "" || !date_types.include?(data.birth_year_type)
-			data.death_year_type = "IN" if data.death_year_type == nil || data.death_year_type == "" || !date_types.include?(data.death_year_type)
+			data.birth_year_type = "IN" if data.birth_year_type == nil || data.birth_year_type == "" || !SDFB::DATE_TYPES.include?(data.birth_year_type)
+			data.death_year_type = "IN" if data.death_year_type == nil || data.death_year_type == "" || !SDFB::DATE_TYPES.include?(data.death_year_type)
 			data.ext_birth_year = "unknown" if data.ext_birth_year == nil || data.ext_birth_year == ""
 			data.ext_death_year = "unknown" if data.ext_death_year == nil || data.ext_death_year == ""
 			data.is_approved = true
@@ -636,14 +634,14 @@ class LargeData < ActiveRecord::Base
 			if data.start_year.present?
 				data.start_year = nil if data.start_year < 1400 
 				data.start_year = nil if data.start_year > 1800
-				data.start_date_type = "IN" if !data.start_year.nil? && (data.start_date_type == nil || !date_types.include?(data.start_date_type))
+				data.start_date_type = "IN" if !data.start_year.nil? && (data.start_date_type == nil || !SDFB::DATE_TYPES.include?(data.start_date_type))
 				data.start_date_type = nil if data.start_year.nil?
 			end
 
 			if data.end_year.present?
 				data.end_year = nil if data.end_year < 1400 
 				data.end_year = nil if data.end_year > 1800
-				data.end_date_type = "IN" if !data.end_year.nil? && (data.end_date_type == nil || !date_types.include?(data.end_date_type))
+				data.end_date_type = "IN" if !data.end_year.nil? && (data.end_date_type == nil || !SDFB::DATE_TYPES.include?(data.end_date_type))
 				data.end_date_type = nil if data.end_year.nil?
 			end
 			data.is_approved = true
@@ -656,12 +654,12 @@ class LargeData < ActiveRecord::Base
 			if data.start_year.present?
 				data.start_year = nil if data.start_year < 1400 
 				data.start_year = nil if data.start_year > 1800
-				data.start_date_type = "IN" if !data.start_year.nil? && !date_types.include?(data.start_date_type)
+				data.start_date_type = "IN" if !data.start_year.nil? && !SDFB::DATE_TYPES.include?(data.start_date_type)
 			end
 			if data.end_year.present?
 				data.end_year = nil if data.end_year < 1400 
 				data.end_year = nil if data.end_year > 1800
-				data.end_date_type = "IN" if !data.end_year.nil? && !date_types.include?(data.end_date_type)
+				data.end_date_type = "IN" if !data.end_year.nil? && !SDFB::DATE_TYPES.include?(data.end_date_type)
 			end
 			data.is_approved = true
 			data.is_active = true

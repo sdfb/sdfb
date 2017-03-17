@@ -1,9 +1,11 @@
 class UserPersonContrib < ActiveRecord::Base
   # this class is known as "Person Notes" to the user
-  
+
+  include TrackLastEdit
+  include WhitespaceStripper
+
   attr_accessible :annotation, :bibliography, :created_by, :person_id, :approved_by,
-  :approved_on, :created_at, :is_approved, :is_active, :is_rejected, :person_autocomplete, :last_edit
-  serialize :last_edit,Array
+  :approved_on, :created_at, :is_approved, :is_active, :is_rejected, :person_autocomplete
 
   # Relationships
   # -----------------------------
@@ -37,48 +39,11 @@ class UserPersonContrib < ActiveRecord::Base
 
   # Callbacks
   # ----------------------------- 
-  before_create :init_array
-  before_create :check_if_approved
-  before_update :check_if_approved_and_update_edit
-  before_update :remove_trailing_spaces
-  before_create :remove_trailing_spaces
+  before_save { remove_trailing_spaces(:annotation, :bibliography)}
+
 
   # Custom Methods
   # -----------------------------
-  def init_array
-    self.last_edit = nil
-  end
-
-  def check_if_approved
-    if (self.is_approved != true)
-      self.approved_by = nil
-      self.approved_on = nil
-    end  
-  end
-
-  def check_if_approved_and_update_edit
-    new_last_edit = []
-    new_last_edit.push(self.approved_by.to_i)
-    new_last_edit.push(Time.now)
-    self.last_edit = new_last_edit
-
-    # update approval
-    if (self.is_approved == true)
-      self.approved_on = Time.now
-    else
-      self.approved_by = nil
-      self.approved_on = nil
-    end  
-  end
-  
-  def remove_trailing_spaces
-    if ! self.annotation.nil?
-      self.annotation.strip!
-    end
-    if ! self.bibliography.nil?
-      self.bibliography.strip!
-    end
-  end
 
   def annot_present?
     !annotation.blank?

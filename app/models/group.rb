@@ -1,9 +1,12 @@
 class Group < ActiveRecord::Base
+
+  include TrackLastEdit
+
   attr_accessible :created_by, :description, :name, :justification, :approved_by, :approved_on, 
   :created_at, :is_approved, :person_list, :start_year, :end_year, :is_active, :is_rejected,
-  :start_date_type, :end_date_type, :last_edit
+  :start_date_type, :end_date_type
+
   serialize :person_list,Array #We're using group assignments instead
-  serialize :last_edit,Array
   
   # Relationships
   # -----------------------------
@@ -15,9 +18,6 @@ class Group < ActiveRecord::Base
   # if a group is deleted, then all associated  group assignments are deleted so that the group has no members
   has_many :group_assignments, :dependent => :destroy
   belongs_to :user
-
-  # Misc Constants
-  DATE_TYPE_LIST = ["BF", "AF","IN","CA","BF/IN","AF/IN","NA"]
 
   # Validations
   # -----------------------------
@@ -31,9 +31,9 @@ class Group < ActiveRecord::Base
   # this code validates the start and end dates with the associated method
   validate :create_check_start_and_end_date
   ## start date type is one included in the list
-  validates_inclusion_of :start_date_type, :in => DATE_TYPE_LIST, :if => :start_year_present?
+  validates_inclusion_of :start_date_type, :in => SDFB::DATE_TYPES, :if => :start_year_present?
   ## end date type is one included in the list
-  validates_inclusion_of :end_date_type, :in => DATE_TYPE_LIST, :if => :end_year_present?
+  validates_inclusion_of :end_date_type, :in => SDFB::DATE_TYPES, :if => :end_year_present?
   # make sure names are unique/not duplicates
   #validates_uniqueness_of :name
 
@@ -55,21 +55,15 @@ class Group < ActiveRecord::Base
   
   # Callbacks
   # ----------------------------- 
-  before_create :init_array
-  before_create :check_if_approved
-  before_update :check_if_approved_and_update_edit
-  before_create :create_check_start_and_end_date
-  before_update :create_check_start_and_end_date
+  before_create :init_person_list
+  before_save   :create_check_start_and_end_date
 
   # Custom Methods
   # -----------------------------
 
   # checks that end year is on or after start year and that start 
-  # and end years meet min_year and max_year rules
+  # and end years meet SDFB::EARLIEST_YEAR and SDFB::LATEST_YEAR rules
   def create_check_start_and_end_date
-    # defining the min and max years
-    min_year = 1500
-    max_year = 1700
 
     # add a start date type if there is none
     if (start_date_type.blank?)
@@ -83,20 +77,20 @@ class Group < ActiveRecord::Base
 
     # add a start year if there isn't one, check if follows rules
     if (start_year.blank?)
-      self.start_year = min_year
+      self.start_year = SDFB::EARLIEST_YEAR
       self.start_date_type = "CA"
-    # if there is already a start year, check that start year is before max_year or throw error
-    elsif (self.start_year.to_i > max_year)
-      errors.add(:start_year, "The start year must be on or before #{max_year}")
+    # if there is already a start year, check that start year is before SDFB::LATEST_YEAR or throw error
+    elsif (self.start_year.to_i > SDFB::LATEST_YEAR)
+      errors.add(:start_year, "The start year must be on or before #{SDFB::LATEST_YEAR}")
     end
 
     # add an end year if there isn't one, check if follows rules
     if (end_year.blank?)
-      self.end_year = max_year
+      self.end_year = SDFB::LATEST_YEAR
       self.end_date_type = "CA"
-    # if there is already a end year, check that end year is after min_year or throw error
-    elsif (self.end_year.to_i < min_year)
-      errors.add(:end_year, "The end year must be on or after #{min_year}")
+    # if there is already a end year, check that end year is after SDFB::EARLIEST_YEAR or throw error
+    elsif (self.end_year.to_i < SDFB::EARLIEST_YEAR)
+      errors.add(:end_year, "The end year must be on or after #{SDFB::EARLIEST_YEAR}")
     end
 
     # if the start year converted to an integer is 0 then the date was not an integer
@@ -116,9 +110,8 @@ class Group < ActiveRecord::Base
     end
   end
 
-  def init_array
+  def init_person_list
     self.person_list = nil
-    self.last_edit = nil
   end
 
   def get_users_name
@@ -129,29 +122,6 @@ class Group < ActiveRecord::Base
     end
   end
 
-  def check_if_approved
-    if (self.is_approved == true)
-      self.approved_on = Time.now
-    else
-      self.approved_by = nil
-      self.approved_on = nil
-    end  
-  end
-
-  def check_if_approved_and_update_edit
-    new_last_edit = []
-    new_last_edit.push(self.approved_by.to_i)
-    new_last_edit.push(Time.now)
-    self.last_edit = new_last_edit
-
-    # update approval
-    if (self.is_approved == true)
-      self.approved_on = Time.now
-    else
-      self.approved_by = nil
-      self.approved_on = nil
-    end  
-  end
 
   def start_year_present?
     ! self.start_year.nil?
