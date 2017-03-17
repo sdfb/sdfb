@@ -27,6 +27,14 @@ At this point, you'll need to start up PostgreSQL manually.
     cucumber
 ```
 
+Alternatively you can use foreman, which will also start a database for you.
+In order to use foreman you must follow similar steps to above, this time
+moving `Procfile.test.example` to `Procfile.test`
+
+```
+    foreman start -f Procfile.test
+```
+
 -------
 
 *(Everything below this line is from the original readme, kept for posterity until we're sure that everything mentioned is captured somewhere important.)*
