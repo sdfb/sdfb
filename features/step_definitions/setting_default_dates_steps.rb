@@ -71,10 +71,10 @@ Given(/^the person has an unknown death date$/) do
 end
 
 Given(/^I know when the person joined or departed the group$/) do
-  @group_join_date = 1590
-  @group_leave_date = 1592
-  @group_join_date_type = 'IN'
-  @group_leave_date_type = 'IN'
+  @group_start_year = 1590
+  @group_end_year = 1592
+  @group_start_date_type = 'IN'
+  @group_end_date_type = 'IN'
 end
 
 When(/^I assign the person to the group$/) do
@@ -82,10 +82,10 @@ When(/^I assign the person to the group$/) do
     person_id: @person.id,
     group_id: @group.id,
     created_by: @sdfbadmin.id,
-    start_year: @group_join_date,
-    end_year: @group_leave_date,
-    start_date_type: @group_join_date_type,
-    end_date_type: @group_leave_date_type
+    start_year: @group_start_year,
+    end_year: @group_end_year,
+    start_date_type: @group_start_date_type,
+    end_date_type: @group_end_date_type
   )
 end
 
@@ -127,17 +127,17 @@ Then(/^the group membership's end date type is "([^"]*)"$/) do |date_type|
 end
 
 Then(/^the group membership's start date is the known group assignment start date$/) do
-  expect(GroupAssignment.last.start_year).to eq @group_join_date
+  expect(GroupAssignment.last.start_year).to eq @group_start_year
 end
 
 Then(/^the group membership's start date type is the known group assignment start date type$/) do
-  expect(GroupAssignment.last.start_date_type).to eq @group_join_date_type
+  expect(GroupAssignment.last.start_date_type).to eq @group_start_date_type
 end
 
 Then(/^the group membership's end date is the known group assignment end date$/) do
-  expect(GroupAssignment.last.end_year).to eq @group_leave_date
+  expect(GroupAssignment.last.end_year).to eq @group_end_year
 end
 
 Then(/^the group membership's end date type is the known group assignment end date type$/) do
-  expect(GroupAssignment.last.end_date_type).to eq @group_leave_date_type
+  expect(GroupAssignment.last.end_date_type).to eq @group_end_date_type
 end
