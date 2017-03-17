@@ -116,12 +116,26 @@ class GroupAssignment < ActiveRecord::Base
     end
   end
 
-  ## if there are no dates entered, use the group start and end dates
-  ## We do not use the person's birth and death dates because the group may be established before that person exists or after the person dies
-  ## if dates are entered, check that they fit within the start and end dates
-  ## use the min year and max year as a last resort if there are no group start and end dates
+  def set_start_year
+    possible_dates = [person.ext_birth_year, group.start_year, SDFB::EARLIEST_YEAR]
+    possible_dates.map!(&:to_i)
+    self.start_year = possible_dates.max
+    self.start_date_type = "AF/IN"
+  end
+
+  def set_end_year
+    possible_dates = [person.ext_death_year, group.end_year, SDFB::LATEST_YEAR]
+    possible_dates.map!(&:to_i)
+    self.end_year = possible_dates.min
+    self.end_date_type = "BF/IN"
+  end
 
   def create_check_start_and_end_date
+    set_start_year if start_year.blank?
+    set_end_year if end_year.blank?
+    return
+
+    self.start_year = new_start_year
     
     # get the group start and end dates
     group_record = Group.find(self.group_id)

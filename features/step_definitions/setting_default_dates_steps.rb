@@ -58,9 +58,9 @@ Then(/^a group membership is created for the person and the group$/) do
 end
 
 Then(/^the group membership's start date is the person's birth date$/) do
-  expect(GroupAssignment.last.start_year).to eq @person.ext_birth_year
+  expect(GroupAssignment.last.start_year).to eq @person.ext_birth_year.to_i
 end
 
 Then(/^the group membership's end date is the person's death date$/) do
-  expect(GroupAssignment.last.end_year).to eq @person.ext_death_year
+  expect(GroupAssignment.last.end_year).to eq @person.ext_death_year.to_i
 end
