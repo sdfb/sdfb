@@ -3,10 +3,11 @@ class UserRelContrib < ActiveRecord::Base
   
   include TrackLastEdit
   include WhitespaceStripper
+  include Approvable
 
   attr_accessible :annotation, :bibliography, :certainty, :created_by, :relationship_id, :relationship_type_id, 
-  :approved_by, :approved_on, :created_at, :is_approved, :start_year, :start_month, 
-  :start_day, :end_year, :end_month, :end_day, :is_active, :is_rejected, :person1_autocomplete,
+  :created_at,  :start_year, :start_month, 
+  :start_day, :end_year, :end_month, :end_day, :person1_autocomplete,
   :person2_autocomplete, :person1_selection, :person2_selection, :start_date_type, :end_date_type, :is_locked
 
   # Relationships
@@ -17,10 +18,6 @@ class UserRelContrib < ActiveRecord::Base
 
   # Misc Constants
   # -----------------------------
-  USER_EST_CERTAINTY_LIST = ["Certain", "Highly Likely", "Possible", "Unlikely", "Very Unlikely"]
-
-  ###need rel type for directional
-  ###need inverse rel type for directional
 
   # Validations
   # -----------------------------
@@ -29,27 +26,15 @@ class UserRelContrib < ActiveRecord::Base
   validates_presence_of :created_by
   validates_presence_of :relationship_id
   validates_presence_of :relationship_type_id
-  ## annotation must be at least 10 characters
-  validates_length_of :annotation, :minimum => 10, :if => :annot_present?
-  ## bibliography must be at least 10 characters
-  validates_length_of :bibliography, :minimum => 10, :if => :bib_present?
-  validates :start_year, :numericality => { :greater_than_or_equal_to => 1400 }, :if => :start_year_present?
-  validates :start_year, :numericality => { :less_than_or_equal_to => 1800 }, :if => :start_year_present?
-  validates :end_year, :numericality => { :greater_than_or_equal_to => 1400 }, :if => :end_year_present?
-  validates :end_year, :numericality => { :less_than_or_equal_to => 1800 }, :if => :end_year_present?
-  ## start date type is one included in the list
-  validates_inclusion_of :start_date_type, :in => SDFB::DATE_TYPES, :if => :start_year_present?
-  ## end date type is one included in the list
-  validates_inclusion_of :end_date_type, :in => SDFB::DATE_TYPES, :if => :end_year_present?
-  validate :autocomplete_to_rel, :on => :create
+  validates_length_of   :annotation, minimum: 10
+  validates_length_of   :bibliography, minimum: 10, allow_blank: true
+  validates :start_year, numericality: { greater_than_or_equal_to: 1400, less_than_or_equal_to: 1800 }, allow_nil: true
+  validates :end_year,   numericality: { greater_than_or_equal_to: 1400, less_than_or_equal_to: 1800 }, allow_nil: true
+  validates_inclusion_of :start_date_type, in: SDFB::DATE_TYPES, if: "self.start_year.present?"
+  validates_inclusion_of :end_date_type, in: SDFB::DATE_TYPES, if: "self.end_year.present?"
 
   # Scope
   # ----------------------------- 
-  scope :all_approved, -> { where(is_approved: true, is_active: true, is_rejected: false) }
-  scope :all_inactive, -> { where(is_active: false) }
-  scope :all_active_unrejected, -> { where(is_active: true, is_rejected: false) }
-  scope :all_rejected, -> { where(is_rejected: true, is_active: true) }
-  scope :all_unapproved, -> { where(is_approved: false, is_rejected: false, is_active: true) }
   scope :for_user, -> (user_input) { where('created_by = ?', "#{user_input}") }
   scope :all_for_relationship, -> (relID) {
       select('user_rel_contribs.*')
@@ -74,15 +59,14 @@ class UserRelContrib < ActiveRecord::Base
   scope :for_rel_type_assigns_140001_160000, -> { where("id between 140001 and 160000") }
   scope :for_rel_type_assigns_160001_180000, -> { where("id between 160001 and 180000") }
   scope :for_rel_type_assigns_greater_than_180000, -> { where("id > 180000") }
-  scope :approved_user, -> (user_id) { where('approved_by = ?', "#{user_id}") }
 
   # Callbacks
   # ----------------------------- 
   before_create :autocomplete_to_rel
-  after_create :update_approve
-  after_save :update_type_list_max_certainty_on_rel
   before_save :create_start_and_end_date
   before_save { remove_trailing_spaces(:annotation, :bibliography)}
+  after_save :update_type_list_max_certainty_on_rel
+  after_create :set_approval_metadata
   after_destroy :type_list_max_cert_on_rel_on_destroy
 
   # Custom Methods
@@ -111,7 +95,7 @@ class UserRelContrib < ActiveRecord::Base
     end
   end
 
-  def update_approve
+  def set_approval_metadata
     if (self.is_approved == true)
       self.approved_by = "Admin"
       self.approved_on = Time.now
@@ -189,21 +173,6 @@ class UserRelContrib < ActiveRecord::Base
     end
   end
 
-  def update_approved
-    #update approve_by
-    if (self.is_approved == false)
-      self.approved_by = nil
-      self.approved_on = nil
-    end
-  end
-  
-  def start_year_present?
-    ! self.start_year.nil?
-  end
-
-  def end_year_present?
-    ! self.end_year.nil?
-  end
 
   # update the relationship type list and the maximum certainty when the relationship type assignment is destroyed
   def type_list_max_cert_on_rel_on_destroy
@@ -298,24 +267,16 @@ class UserRelContrib < ActiveRecord::Base
     end
   end
 
-  def annot_present?
-    ! self.annotation.blank?
-  end
-
-  def bib_present?
-    ! self.bibliography.blank?
-  end
-
   def get_person1_name
-    return Person.find(Relationship.find(relationship_id).person1_index).display_name
+    Person.find(Relationship.find(relationship_id).person1_index).display_name
   end
 
   def get_person2_name
-    return Person.find(Relationship.find(relationship_id).person2_index).display_name
+    Person.find(Relationship.find(relationship_id).person2_index).display_name
   end
 
   def get_both_names
-    return Person.find(Relationship.find(relationship_id).person1_index).display_name + " & " + Person.find(Relationship.find(relationship_id).person2_index).display_name
+    get_person1_name + " & " + get_person2_name
   end
 
   def get_users_name

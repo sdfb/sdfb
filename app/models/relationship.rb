@@ -1,8 +1,12 @@
 class Relationship < ActiveRecord::Base
+
+  include Approvable
+
+
   attr_accessible :max_certainty, :created_by, :original_certainty, :person1_index, :person2_index,
-  :justification, :approved_by, :approved_on, :created_at, :edge_birthdate_certainty,
-  :is_approved, :start_year, :start_month, :start_day, :end_year, :end_month, :end_day,
-  :is_active, :is_rejected, :person1_autocomplete, :person2_autocomplete,
+  :justification, :created_at, :edge_birthdate_certainty,
+   :start_year, :start_month, :start_day, :end_year, :end_month, :end_day,
+  :person1_autocomplete, :person2_autocomplete,
   :start_date_type, :end_date_type, :type_certainty_list, :last_edit
   # The type certainty list is a 2d array that includes the relationship type id in the 0 index, 
   #  ...the average certainty of all relationship assignments with that relationship type, and the relationship type name
@@ -37,12 +41,7 @@ class Relationship < ActiveRecord::Base
 
   # Scope
   # ----------------------------- 
-  scope :all_approved, -> { where(is_approved: true, is_active: true, is_rejected: false) }
-  scope :all_inactive, -> { where(is_active: false) }
-  scope :all_active_unrejected,  -> { where(is_active: true, is_rejected: false) }
-  scope :all_rejected, -> { where(is_rejected: true, is_active: true) }
   scope :all_no_dates, -> { where("start_year IS NULL or end_year IS NULL") }
-  scope :all_unapproved, -> { where(is_approved: false, is_rejected: false, is_active: true) }
   scope :for_user, -> (user_input) { where('created_by = ?', "#{user_input}") }
   scope :highest_certainty, -> { order(max_certainty: :desc) }
   scope :all_for_person, -> (personID) {
@@ -63,7 +62,6 @@ class Relationship < ActiveRecord::Base
   scope :for_rels_greater_than_100180000, -> { where("id > 100180000") }
   scope :all_recent, -> { order(updated_at: :desc) }
   scope :order_by_sdfb_id, -> { order(id: :asc) }
-  scope :approved_user, -> (user_id){ where('approved_by = ?', "#{user_id}") }
 
   # Callbacks
   # -----------------------------
