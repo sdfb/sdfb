@@ -2,7 +2,8 @@ class UserPersonContrib < ActiveRecord::Base
   # this class is known as "Person Notes" to the user
 
   include TrackLastEdit
-  
+  include WhitespaceStripper
+
   attr_accessible :annotation, :bibliography, :created_by, :person_id, :approved_by,
   :approved_on, :created_at, :is_approved, :is_active, :is_rejected, :person_autocomplete
 
@@ -38,19 +39,11 @@ class UserPersonContrib < ActiveRecord::Base
 
   # Callbacks
   # ----------------------------- 
-  before_save :remove_trailing_spaces
+  before_save { remove_trailing_spaces(:annotation, :bibliography)}
+
 
   # Custom Methods
   # -----------------------------
-  
-  def remove_trailing_spaces
-    if ! self.annotation.nil?
-      self.annotation.strip!
-    end
-    if ! self.bibliography.nil?
-      self.bibliography.strip!
-    end
-  end
 
   def annot_present?
     !annotation.blank?
