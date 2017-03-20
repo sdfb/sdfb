@@ -96,69 +96,6 @@ var confidenceSliderMain = confidenceSlider.append('input')
 
 	});
 
-  // Radio buttons for network complexity.
-//
-// var complexityForm = d3.select('div#tools').append('form')
-//
-// var complexityLabel = complexityForm.append('label')
-//     .text('Network Complexity: 2.5 ')
-//     .attr('id', 'complexityLabel');
-//
-// var complexityButtons = complexityForm.selectAll('input')
-//     .data(['1','1.5','1.75','2','2.5'])
-//     .enter().append('input')
-//     .attr('type', 'radio')
-//     .attr('name', 'complexity')
-//     .attr('value', function(d) {return d;})
-//     .attr('id', function(d) {return 'complexity'+d;});
-//
-// complexityButtons.on('change', function () {
-//
-//     var complexity = this.value;
-//
-//     d3.select("#complexityLabel").text("Network Complexity: "+complexity+" ");
-//
-//     if (complexity == 1) {
-//       currentNodes = graph.nodes.filter(function(d) { if (d.distance == 1 || d.distance == 0) {return d;}; });
-//       currentLinks = graph.links.filter(function(l) { if (l.source.distance == 0 || l.target.distance == 0) {return l;}; });
-//       update(currentNodes, currentLinks, threshold);
-//     }
-//
-//     if (complexity == 1.5) {
-//       currentNodes = graph.nodes.filter(function(d) { if (d.distance == 0 || d.distance == 1) {return d;}; });
-//       currentLinks = graph.links.filter(function(l) { if ((l.source.distance == 0 || l.source.distance == 1) && (l.target.distance == 0 || l.target.distance ==1)) {return l;}; });
-//       update(currentNodes, currentLinks, threshold);
-//     }
-//
-//     if (complexity == 1.75) {
-//       currentNodes = [];
-//       graph.nodes.forEach(function(d) {
-//         if (d.distance == 1 || d.distance == 0) {currentNodes.push(d);}
-//         else if (d.distance == 2) {
-//           count = 0
-//           graph.links.forEach(function(l){
-//             if (l.source.id == d.id && (l.target.distance == 0 || l.target.distance == 1)) { count += 1; }
-//             else if (l.target.id == d.id && (l.source.distance == 0 || l.source.distance ==1)) { count += 1; }
-//           });
-//           if (count >= 2) {currentNodes.push(d);}
-//         }
-//       });
-//       currentLinks = graph.links.filter(function(l) { if (currentNodes.indexOf(l.source) != -1 && currentNodes.indexOf(l.target) != -1) {return l;}; });
-//       update(currentNodes, currentLinks, threshold);
-//     }
-//
-//     if (complexity == 2) {
-//       currentNodes = graph.nodes;
-//       currentLinks = graph.links.filter(function(l) { if ((l.source.distance == 0 || l.source.distance == 1) || (l.target.distance == 0 || l.target.distance == 1)) {return l;}; });
-//       update(currentNodes, currentLinks, threshold);
-//     }
-//
-//     if (complexity == 2.5) {
-//       currentNodes = graph.nodes;
-//       currentLinks = graph.links;
-//       update(currentNodes, currentLinks, threshold); }
-//
-// });
 
 function update(currentNodes, currentLinks, threshold) {
 
@@ -238,14 +175,14 @@ function update(currentNodes, currentLinks, threshold) {
 
   d3.select('.nodes').insert('circle', '[is_source="0"]')
     .attr('r', degreeSize(d3.select('[is_source="0"]').data()[0].degree) + 7)
-    .attr('fill', 'orange')
+    .attr('fill', color(d3.select('[is_source="0"]').data()[0].distance))
     .attr('class', 'source-node')
     .attr("cx", d3.select('[is_source="0"]').data()[0].x)
     .attr("cy", d3.select('[is_source="0"]').data()[0].y);
 
   d3.select('.nodes').insert('circle', '[is_source="6"]')
     .attr('r', degreeSize(d3.select('[is_source="6"]').data()[0].degree) + 7)
-    .attr('fill', 'orange')
+    .attr('fill', color(d3.select('[is_source="6"]').data()[0].distance))
     .attr('class', 'source-node')
     .attr("cx", d3.select('[is_source="6"]').data()[0].x)
     .attr("cy", d3.select('[is_source="6"]').data()[0].y);

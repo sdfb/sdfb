@@ -53,12 +53,10 @@ var button = search.append('input')
 // Toggle for ego networks on click (below).
 var toggle = 0;
 
-var link = container.append("g")
-    .attr("class", "links")
-  .selectAll(".link"),
-    node = container.append("g")
-      .attr("class", "nodes")
-    .selectAll(".node");
+var linkContainer = container.append("g")
+      .attr("class", "links"),
+    nodeContainer = container.append("g")
+      .attr("class", "nodes");
 
 
 d3.json("baconnetwork.json", function(error, json) {
@@ -162,8 +160,6 @@ complexityButtons.on('change', function () {
 
 function update(currentNodes, currentLinks, threshold) {
 
-  d3.select('.source-node').remove(); //Get rid of old source node highlight.
-
   // Find the links and nodes that are at or above the threshold.
   var newLinks = currentLinks.filter(function(d) { if (d.weight >= threshold) {return d; }; });
 
@@ -194,36 +190,44 @@ function update(currentNodes, currentLinks, threshold) {
 
 
   var simulation = d3.forceSimulation(newNodes)
-      .force("link", d3.forceLink(newLinks).id(function(d) { return d.id; }));
-      // .force("charge", d3.forceManyBody().strength([-300]))//.distanceMax([500]))
-      // .force("center", d3.forceCenter(width / 2, height / 2))
-      // .force("collide", d3.forceCollide().radius( function (d) { return degreeSize(d.degree); }))
-      // .force("x", d3.forceX())
-      // .force("y", d3.forceY())
-      // .stop();
+      .force("link", d3.forceLink(newLinks).id(function(d) { return d.id; }))
+      .force("charge", d3.forceManyBody().strength([-300]))//.distanceMax([500]))
+      .force("center", d3.forceCenter(width / 2, height / 2))
+      .force("collide", d3.forceCollide().radius( function (d) { return degreeSize(d.degree); }))
+      .force("x", d3.forceX())
+      .force("y", d3.forceY())
+      .stop();
 
   for (var i = 0, n = Math.ceil(Math.log(simulation.alphaMin()) / Math.log(1 - simulation.alphaDecay())); i < n; ++i) {
     simulation.tick();
   }
 
   // Data join with only those new links and corresponding nodes.
-  link = link.data(newLinks, function(d) {return d.source.id + ', ' + d.target.id;});
+  var link = linkContainer.selectAll('.link')
+    .data(newLinks, function(d) {return d.source.id + ', ' + d.target.id;});
+
   link.exit().remove();
+
   var linkEnter = link.enter().append('path')
     .attr('class', 'link');
-      link = linkEnter.merge(link)
-      .attr("d", linkArc)
-      .attr('stroke-opacity', function(l) { if (l.altered == true) { return 1;} else {return .35;} });
+
+  link = linkEnter.merge(link)
+    .attr("d", linkArc)
+    .attr('stroke-opacity', function(l) { if (l.altered == true) { return 1;} else {return .35;} });
+
+
 
   // When adding and removing nodes, reassert attributes and behaviors.
-  node = node.data(newNodes, function(d) {return d.id;})
-  .attr("cx", function(d) { return d.x; })
-  .attr("cy", function(d) { return d.y; });
+  var node = nodeContainer.selectAll('.node')
+    .data(newNodes, function(d) {return d.id;});
+
   node.exit().remove();
+
   var nodeEnter = node.enter().append('circle')
-  .attr('r', function(d) { return degreeSize(d.degree);})
-  // Color by degree centrality calculation in NetworkX.
-  .attr("fill", function(d) { return color(d.distance); })
+
+  node = nodeEnter.merge(node)
+    .attr('r', function(d) { return degreeSize(d.degree);})
+    .attr("fill", function(d) { return color(d.distance); })
     .attr('class', 'node')
     .attr('id', function(d) { return "n" + d.id.toString(); })
     .attr("cx", function(d) { return d.x; })
@@ -233,17 +237,11 @@ function update(currentNodes, currentLinks, threshold) {
     // On click, toggle ego networks for the selected node. (See function above.)
     .on('click', function(d) { toggleClick(d); });
 
-  node = nodeEnter.merge(node);
 
-    node.append("title")
-        .text(function(d) { return d.name; });
 
-  d3.select('.nodes').insert('circle', '[is_source="true"]')
-    .attr('r', degreeSize(d3.select('[is_source="true"]').data()[0].degree) + 7)
-    .attr('fill', 'orange')//color(d3.select('[is_source="true"]').data()[0].one_degree))
-    .attr('class', 'source-node')
-    .attr("cx", d3.select('[is_source="true"]').data()[0].x)
-    .attr("cy", d3.select('[is_source="true"]').data()[0].y);
+  node.append("title")
+      .text(function(d) { return d.name; });
+
 }
 
 // A function to handle click toggling based on neighboring graph.nodes.

@@ -179,12 +179,6 @@ function update(currentNodes, currentLinks, threshold) {
   });
   newNodes = Array.from(new Set(newNodes));
 
-  newNodes.forEach( function(d) {
-    if (d.distance == 0) {
-      d.fx = width/2;
-      d.fy = height/2;
-    }
-  })
 
   var simulation = d3.forceSimulation(newNodes)
       // .velocityDecay(.5)
@@ -234,7 +228,7 @@ function update(currentNodes, currentLinks, threshold) {
 
   d3.select('.nodes').insert('circle', '[is_source="true"]')
     .attr('r', degreeSize(d3.select('[is_source="true"]').data()[0].degree) + 7)
-    .attr('fill', 'orange')//color(d3.select('[is_source="true"]').data()[0].one_degree))
+    .attr('fill', color(d3.select('[is_source="true"]').data()[0].distance))
     .attr('class', 'source-node')
     .attr("cx", d3.select('[is_source="true"]').data()[0].x)
     .attr("cy", d3.select('[is_source="true"]').data()[0].y);
