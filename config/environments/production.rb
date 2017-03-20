@@ -41,7 +41,7 @@ Sdfb::Application.configure do
   config.assets.compress = true
   config.serve_static_files = true
   config.serve_static_assets = true
-  config.assets.compile = false
+  config.assets.compile = true
   config.assets.digest = true
   # Expands the lines which load the assets
   config.assets.debug = false
@@ -68,15 +68,21 @@ Sdfb::Application.configure do
   #}
 #config.action_mailer.default_url_options = { :host =>  "sdfb2.herokuapp.com" }  
 
-  ActionMailer::Base.smtp_settings = {
-    :user_name => 'app32983575@heroku.com',
-    :password => 'ivu6mhmu4416',
-    :domain => 'sixdegfrancisbacon.herokuapp.com',
-    :address => 'smtp.sendgrid.net',
-    :port => 587,
-    :authentication => :plain,
-    :enable_starttls_auto => true
-  }
-  config.action_mailer.default_url_options = { :host =>  "sixdegfrancisbacon.herokuapp.com" }  
+#  ActionMailer::Base.smtp_settings = {
+#    :user_name => 'app32983575@heroku.com',
+#    :password => 'ivu6mhmu4416',
+#    :domain => 'sixdegfrancisbacon.herokuapp.com',
+#    :address => 'smtp.sendgrid.net',
+#    :port => 587,
+#    :authentication => :plain,
+#    :enable_starttls_auto => true
+#  }
+#  config.action_mailer.default_url_options = { :host =>  "sixdegfrancisbacon.herokuapp.com" }  
+#
+  config.action_mailer.delivery_method = :sendmail
+  config.action_mailer.perform_deliveries = true
+  config.action_mailer.raise_delivery_errors = true
+  config.action_mailer.default_options = {from: 'no-reply@sixdegressoffrancisbacon.com'}
+
 
 end

@@ -19,8 +19,8 @@ test:
 
 production:
   adapter: postgresql
-  database: sixdfbor_sdfb
+  database: sixdegs_prod 
   pool: 15
   timeout: 5000
-  username: sixdfbor_admin
-  password: NovumOrganum1620
+  username: postgres
+  password: d3f@ult$ 

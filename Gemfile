@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 
-gem 'rails', '4.1.8'
+gem 'rails' #, '4.1.8'
 
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
@@ -20,25 +20,25 @@ gem 'will_paginate'
 # simple form is used in all the new and edit forms to give special formats
 # in forms, it takes the format: <%= f.input :name %> where :name is one of the entity's attribute
 gem 'simple_form'
-gem 'railties', '4.1.8'
-gem 'activemodel', '4.1.8'
+gem 'railties' #, '4.1.8'
+gem 'activemodel' #, '4.1.8'
 
 gem 'rails3-jquery-autocomplete'
 gem 'jquery-turbolinks'
 
 # Gems used only for assets and not required
 # in production environments by default.
-gem 'pg'
+gem 'pg', '0.18.4'
 
 gem 'sass-rails'
 gem 'therubyracer', :platforms => :ruby
-gem 'uglifier', '>= 1.0.3'
+gem 'uglifier' #, '>= 1.0.3'
 
 # Twitter bootstrap is used for the css styling and is a framework that enables specific styles like <table class="table table-condensed">
 # for more info look at http://bootstrapdocs.com/v2.1.1/docs/
 gem "twitter-bootstrap-rails", '2.1.7'
 
-  #gem 'coffee-rails', '~> 3.2.1'
+  gem 'coffee-rails' #, '~> 3.2.1'
 
   # See https://github.com/sstephenson/execjs#readme for more supported runtimes
 
@@ -61,7 +61,7 @@ gem 'validates_timeliness'
 
 gem 'puma'
 
-gem "rack-timeout", '~> 0.2.4'
+gem "rack-timeout" #, '~> 0.2.4'
 
 gem 'newrelic_rpm'
 
@@ -90,4 +90,6 @@ gem "carrierwave"
 # To use debugger
 # gem 'debugger'
 
-ruby '2.2.1'
+gem 'nokogiri'
+
+ruby '2.3.0'
