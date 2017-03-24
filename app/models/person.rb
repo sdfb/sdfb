@@ -337,7 +337,7 @@ class Person < ActiveRecord::Base
       max_year = date_range.split(",")[1].to_i
     else
       min_year = SDFB::EARLIEST_BIRTH_YEAR
-      max_year = SDFB::LATEST_BIRTH_YEAR
+      max_year = SDFB::LATEST_DEATH_YEAR
     end
     @zeroDegreePerson = self.find_first_degree_for_person(person_id, min_confidence, max_confidence, min_year, max_year, true)
     #limit first degree node display to nodes of degree <100, second degree node display to nodes of degree <=50
@@ -398,7 +398,7 @@ class Person < ActiveRecord::Base
       max_year = date_range.split(",")[1].to_i
     else
       min_year = SDFB::EARLIEST_BIRTH_YEAR
-      max_year = SDFB::LATEST_BIRTH_YEAR
+      max_year = SDFB::LATEST_DEATH_YEAR
     end
     @zeroDegreePerson1 = self.find_first_degree_for_person(person_id1, min_confidence, max_confidence, min_year, max_year, true)
 		@zeroDegreePerson2 = self.find_first_degree_for_person(person_id2, min_confidence, max_confidence, min_year, max_year, true)

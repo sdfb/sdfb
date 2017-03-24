@@ -28,8 +28,8 @@ class UserRelContrib < ActiveRecord::Base
   validates_presence_of :relationship_type_id
   validates_length_of   :annotation, minimum: 10
   validates_length_of   :bibliography, minimum: 10, allow_blank: true
-  validates :start_year, numericality: { greater_than_or_equal_to: SDFB::EARLIEST_BIRTH_YEAR, less_than_or_equal_to: SDFB::LATEST_BIRTH_YEAR }, allow_nil: true
-  validates :end_year,   numericality: { greater_than_or_equal_to: SDFB::EARLIEST_BIRTH_YEAR, less_than_or_equal_to: SDFB::LATEST_BIRTH_YEAR }, allow_nil: true
+  validates :start_year, numericality: { greater_than_or_equal_to: SDFB::EARLIEST_BIRTH_YEAR, less_than_or_equal_to: SDFB::LATEST_DEATH_YEAR }, allow_nil: true
+  validates :end_year,   numericality: { greater_than_or_equal_to: SDFB::EARLIEST_BIRTH_YEAR, less_than_or_equal_to: SDFB::LATEST_DEATH_YEAR }, allow_nil: true
   validates_inclusion_of :start_date_type, in: SDFB::DATE_TYPES, if: "self.start_year.present?"
   validates_inclusion_of :end_date_type, in: SDFB::DATE_TYPES, if: "self.end_year.present?"
 
