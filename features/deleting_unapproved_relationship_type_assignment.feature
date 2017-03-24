@@ -1,4 +1,4 @@
-Feature: Deleting Unapproved Group Assignment
+Feature: Deleting Unapproved Relationship Type Assignment
   Background: Basic seed data exists
     Given required app users exist
     And a curator user exists
