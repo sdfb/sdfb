@@ -17,7 +17,7 @@ class Relationship < ActiveRecord::Base
   # -----------------------------
   belongs_to :user
   # if a relationship is deleted then all associated relationship type assignments are deleted
-  has_many :user_rel_contribs, :dependent => :destroy
+  has_many :user_rel_contribs, dependent: :destroy
   belongs_to :person
 
   # Misc Constants
@@ -30,9 +30,9 @@ class Relationship < ActiveRecord::Base
   validates_presence_of :person2_index
   validates_presence_of :original_certainty
   validates_presence_of :created_by
-  validates_length_of :justification, :minimum => 4, on: :create, allow_nil: true
-  validates_inclusion_of :start_date_type, :in => SDFB::DATE_TYPES, :if => "self.start_year.present?"
-  validates_inclusion_of :end_date_type,   :in => SDFB::DATE_TYPES, :if => "self.end_year.present?"
+  validates_length_of :justification, minimum: 4, on: :create, allow_nil: true
+  validates_inclusion_of :start_date_type, in: SDFB::DATE_TYPES, if: "self.start_year.present?"
+  validates_inclusion_of :end_date_type,   in: SDFB::DATE_TYPES, if: "self.end_year.present?"
   validates :start_year, numericality: { greater_than_or_equal_to: SDFB::EARLIEST_YEAR, less_than_or_equal_to: SDFB::LATEST_YEAR }, allow_nil: true
   validates :end_year,   numericality: { greater_than_or_equal_to: SDFB::EARLIEST_YEAR, less_than_or_equal_to: SDFB::LATEST_YEAR }, allow_nil: true
 
