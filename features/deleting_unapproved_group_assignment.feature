@@ -10,7 +10,13 @@ Feature: Deleting Unapproved Group Assignment
     And there is unapproved "has eaten" relationship
     Then the "has eaten" relationship should exist
 
+
   Scenario: Deleting an unapproved relationship as a curator
     Given a relationship exists
     And there is unapproved "has eaten" relationship
     Then the curator can delete the "has eaten" relationship
+
+  Scenario: Rujecting an unapproved relationship as a curator
+    Given a relationship exists
+    And there is unapproved "has eaten" relationship
+    Then the curator can reject the "has eaten" relationship

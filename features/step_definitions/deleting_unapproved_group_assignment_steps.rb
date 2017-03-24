@@ -23,3 +23,13 @@ Then(/^the curator can delete the "([^"]*)" relationship$/) do |rel_type_name|
   user_rel_type = @relationship.user_rel_contribs.where(relationship_type_id: relationship_type.id).first
   ability.should be_able_to(:destroy,user_rel_type)
 end
+
+Then(/^the curator can reject the "([^"]*)" relationship$/) do |rel_type_name|
+  ability = Ability.new(@curator)
+  relationship_type = RelationshipType.where(name: rel_type_name).first
+  user_rel_type = @relationship.user_rel_contribs.where(relationship_type_id: relationship_type.id).first
+  ability.should be_able_to(:update, user_rel_type)
+  user_rel_type.is_rejected = true
+  user_rel_type.save
+  user_rel_type.is_rejected.should eq(true)
+end
