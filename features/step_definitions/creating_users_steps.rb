@@ -144,7 +144,7 @@ Given(/^Anne Bacon has already been created$/) do
 end
 
 When(/^I create a relationship between Anne and Francis$/) do
-  anne_and_francis_relationship = Relationship.where(
+  @relationship = Relationship.where(
     person1_index: @anne.id,
     person2_index: @francis.id,
     original_certainty: 100,

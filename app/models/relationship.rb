@@ -76,10 +76,9 @@ class Relationship < ActiveRecord::Base
   before_update :update_peoples_rel_sum
   before_update :check_if_approved_and_update_edit
 
-  after_create :create_met_record
   after_create :create_peoples_rel_sum
-  after_update :edit_met_record
   after_destroy :delete_from_rel_sum
+  after_save    :update_met_record
 
 	# Custom Methods
   # -----------------------------
@@ -110,23 +109,31 @@ class Relationship < ActiveRecord::Base
     self.last_edit = nil
   end
 
-  def create_met_record
-    new_met_record = UserRelContrib.new do |u| 
-      u.relationship_id = self.id
-      if (Relationship.find(u.relationship_id).is_approved == true)
-        u.is_approved = true
-      else
-        u.is_approved == false
-      end
-      u.is_rejected = false
-      u.is_active = true
-      u.is_locked = true
-      u.relationship_type_id = 4
-      u.certainty = self.original_certainty
-      u.created_by = 3
-      u.annotation = "This record was automatically generated when the relationship was created."
-      u.save!
-    end
+  def update_met_record
+    met_record = UserRelContrib.where(relationship_type_id: 4,
+                                      relationship_id: self.id)
+                               .first_or_create!(
+                                   relationship_id: self.id,
+                                   is_approved: self.is_approved,
+                                   is_rejected: false,
+                                   is_active: true,
+                                   is_locked: true,
+                                   relationship_type_id: 4,
+                                   created_by: 3,
+                                   annotation: "This record was automatically generated when the relationship was created.",
+                                   certainty: self.original_certainty
+                              )
+
+    met_record.update_attributes(certainty: self.original_certainty,
+                                 start_year: self.start_year,
+                                 start_month: self.start_month,
+                                 start_day: self.start_day,
+                                 end_year: self.end_year,
+                                 end_month: self.end_month,
+                                 end_day: self.end_day
+    )
+
+    met_record.save
   end
 
   def create_max_certainty_type_list
@@ -148,16 +155,6 @@ class Relationship < ActiveRecord::Base
     new_rel_type_record.push("Met")
     averages_by_rel_type.push(new_rel_type_record)
     self.type_certainty_list = averages_by_rel_type
-  end
-
-  def edit_met_record
-    met_record = UserRelContrib.all_for_relationship(self.id).is_locked.first
-
-    if ! met_record.nil?
-      if (met_record.certainty != self.original_certainty)
-        UserRelContrib.update(met_record.id, certainty: self.original_certainty)
-      end
-    end
   end
 
   ## if a user submits a new relationship but does not include a start and end date it defaults to a start and end date based on the birth years of the people in the relationship
@@ -362,7 +359,12 @@ class Relationship < ActiveRecord::Base
       end
       # update the certainty list with the new array of all averages by relationship type
       # create the array includes the relationship type id, the average certainty for that relationship type, and the relationship type name
-      averages_by_rel_type_array = averages_by_rel_type.map { |e| [e.relationship_type_id, e.avg_certainty.to_f, RelationshipType.find(e.relationship_type_id).name] }
+      averages_by_rel_type_array = averages_by_rel_type.map do |e|
+        [
+          e.relationship_type_id, e.avg_certainty.to_f,
+          RelationshipType.find(e.relationship_type_id).name
+        ]
+      end
 
       # calculate the relationship's maximum certainty
       new_max_certainty = averages_by_rel_type.map { |e| e.avg_certainty.to_f }.max 
