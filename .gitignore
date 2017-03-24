@@ -2,7 +2,6 @@ log/development.log
 tmp/**/*
 **/.sass-cache
 **/.sass-cache/*
-app/assets/stylesheets/bootstrap_and_overrides.css.less
 public/assets/*
 tmp
 .env
