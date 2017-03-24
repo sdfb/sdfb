@@ -29,7 +29,6 @@ Then(/^the curator can reject the "([^"]*)" relationship$/) do |rel_type_name|
   relationship_type = RelationshipType.where(name: rel_type_name).first
   user_rel_type = @relationship.user_rel_contribs.where(relationship_type_id: relationship_type.id).first
   expect(ability).to be_able_to(:update, user_rel_type)
-
 end
 
 Then(/^it is possible to reject the "([^"]*)" relationship$/) do |rel_type_name|
