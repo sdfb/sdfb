@@ -28,7 +28,7 @@ gem 'simple_form'
 gem 'jquery-rails'
 gem 'therubyracer', :platforms => :ruby
 gem 'uglifier', '>= 1.0.3'
-gem 'rails3-jquery-autocomplete'
+gem 'rails-jquery-autocomplete'
 gem 'jquery-turbolinks'
 gem "twitter-bootstrap-rails", '2.1.7'
 
