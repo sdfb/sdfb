@@ -17,6 +17,30 @@ Given(/^required app users exist$/) do
   User.where(email: 'administrator@example.com', username: 'administrator').first_or_create!(required_user_atts)
 end
 
+Given(/^a curator user exists$/) do
+  required_user_atts = {
+    password: '22scaddoo',
+    password_confirmation: '22scaddoo',
+    first_name: 'Carrie',
+    last_name: 'Curator',
+    user_type: 'Curator',
+    is_active: true
+  }
+  @curator = User.where(email: 'curator@example.com', username: 'curator').first_or_create!(required_user_atts)
+end
+
+Given(/^a standard user exists$/) do
+  required_user_atts = {
+    password: '22scaddoo',
+    password_confirmation: '22scaddoo',
+    first_name: 'Sammy',
+    last_name: 'Standard',
+    user_type: 'Standard',
+    is_active: true
+  }
+  @standard_user = User.where(email: 'standard@example.com', username: 'standard').first_or_create!(required_user_atts)
+end
+
 Given(/^pre-defined data exists$/) do
   # Configure a couple defaults
   tsv_options = { :col_sep => "\t" }
