@@ -27,7 +27,7 @@ class Ability
 				x.id == user.id
 			end
 
-			can :destroy, UserRelContrib
+			can :destroy, [UserRelContrib, GroupAssignment]
 
 			# Curators can list all groups, people, and relationships
 			can :index, [Group, GroupAssignment, Person, Relationship, RelationshipType, UserGroupContrib, UserPersonContrib, UserRelContrib, GroupCatAssign, RelCatAssign]
