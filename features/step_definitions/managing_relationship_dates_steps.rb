@@ -1,6 +1,6 @@
 Given(/^the "([^"]*)" relationship type exists with id (\d+)$/) do |name, id|
   r = RelationshipType.new(name: name)
-  r.id = 4
+  r.id = id
   r.save!
 end
 
