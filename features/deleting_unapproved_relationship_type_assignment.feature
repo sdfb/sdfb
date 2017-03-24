@@ -7,16 +7,17 @@ Feature: Deleting Unapproved Relationship Type Assignment
 
   Scenario: Creating an unapproved relationship as a curator
     Given a relationship exists
-    And there is unapproved "has eaten" relationship
+    And there is unapproved relationship of type "has eaten"
     Then the "has eaten" relationship should exist
 
 
   Scenario: Deleting an unapproved relationship as a curator
     Given a relationship exists
-    And there is unapproved "has eaten" relationship
+    And there is unapproved relationship of type "has eaten"
     Then the curator can delete the "has eaten" relationship
 
   Scenario: Rujecting an unapproved relationship as a curator
     Given a relationship exists
-    And there is unapproved "has eaten" relationship
+    And there is unapproved relationship of type "has eaten"
     Then the curator can reject the "has eaten" relationship
+    And  it is possible to reject the "has eaten" relationship

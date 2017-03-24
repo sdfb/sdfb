@@ -1,6 +1,6 @@
 require "cancan/matchers"
 
-Given(/^there is unapproved "([^"]*)" relationship$/) do |rel_type_name|
+Given(/^there is unapproved relationship of type "([^"]*)"$/) do |rel_type_name|
   UserRelContrib.where(
     relationship_id:       @relationship.id,
     relationship_type_id:  RelationshipType.where(name: rel_type_name).first.id,
@@ -21,14 +21,20 @@ Then(/^the curator can delete the "([^"]*)" relationship$/) do |rel_type_name|
   ability = Ability.new(@curator)
   relationship_type = RelationshipType.where(name: rel_type_name).first
   user_rel_type = @relationship.user_rel_contribs.where(relationship_type_id: relationship_type.id).first
-  ability.should be_able_to(:destroy,user_rel_type)
+  expect(ability).to be_able_to(:destroy,user_rel_type)
 end
 
 Then(/^the curator can reject the "([^"]*)" relationship$/) do |rel_type_name|
   ability = Ability.new(@curator)
   relationship_type = RelationshipType.where(name: rel_type_name).first
   user_rel_type = @relationship.user_rel_contribs.where(relationship_type_id: relationship_type.id).first
-  ability.should be_able_to(:update, user_rel_type)
+  expect(ability).to be_able_to(:update, user_rel_type)
+
+end
+
+Then(/^it is possible to reject the "([^"]*)" relationship$/) do |rel_type_name|
+  relationship_type = RelationshipType.where(name: rel_type_name).first
+  user_rel_type = @relationship.user_rel_contribs.where(relationship_type_id: relationship_type.id).first
   user_rel_type.is_rejected = true
   user_rel_type.save
   user_rel_type.is_rejected.should eq(true)
