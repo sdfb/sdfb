@@ -6,7 +6,7 @@ class GroupsController < ApplicationController
   # before_filter :check_login, :only => [:new, :edit]
   # authorize_resource
 
-  autocomplete :group, :name, full: true, :display_value => :name
+  autocomplete :group, :name, full: true, display_value: :name, scopes: [:all_approved]
   load_and_authorize_resource
   
   def index
