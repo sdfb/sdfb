@@ -30,14 +30,11 @@ class Relationship < ActiveRecord::Base
   validates_presence_of :person2_index
   validates_presence_of :original_certainty
   validates_presence_of :created_by
-  ## justification must be at least 4 characters
-  validates_length_of :justification, :minimum => 4, on: :create, :if => :just_present?
-  ## start date type is one included in the list
-  validates_inclusion_of :start_date_type, :in => SDFB::DATE_TYPES, :if => :start_year_present?
-  ## end date type is one included in the list
-  validates_inclusion_of :end_date_type, :in => SDFB::DATE_TYPES, :if => :end_year_present?
-  # custom validation that checks that start year and end years
-  validate :create_check_start_and_end_date
+  validates_length_of :justification, :minimum => 4, on: :create, allow_nil: true
+  validates_inclusion_of :start_date_type, :in => SDFB::DATE_TYPES, :if => "self.start_year.present?"
+  validates_inclusion_of :end_date_type,   :in => SDFB::DATE_TYPES, :if => "self.end_year.present?"
+  validates :start_year, numericality: { greater_than_or_equal_to: SDFB::EARLIEST_YEAR, less_than_or_equal_to: SDFB::LATEST_YEAR }, allow_nil: true
+  validates :end_year,   numericality: { greater_than_or_equal_to: SDFB::EARLIEST_YEAR, less_than_or_equal_to: SDFB::LATEST_YEAR }, allow_nil: true
 
   # Scope
   # ----------------------------- 
@@ -68,7 +65,6 @@ class Relationship < ActiveRecord::Base
   before_create :init_array 
   before_create :create_check_start_and_end_date
   before_create :check_if_approved
-  before_create :check_if_valid
   before_create :create_max_certainty_type_list
 
   before_update :update_type_list_max_certainty_on_rel
@@ -397,13 +393,6 @@ class Relationship < ActiveRecord::Base
     end
   end
   
-  def start_year_present?
-    ! self.start_year.nil?
-  end
-
-  def end_year_present?
-    ! self.end_year.nil?
-  end
 
   def get_both_names
     return Person.find(person1_index).display_name + " & " + Person.find(person2_index).display_name 
@@ -425,9 +414,6 @@ class Relationship < ActiveRecord::Base
     end
   end
 
-  def just_present?
-    !justification.nil?
-  end
 
   def check_if_approved
     if (self.is_approved != true)
