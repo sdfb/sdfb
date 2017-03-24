@@ -52,6 +52,32 @@ When(/^I change the relationship dates$/) do
   )
 end
 
+When(/^I create a new relationship between (\d+) and (\d+)$/) do |start_year, end_year|
+    @new_relationship = Relationship.new(
+    person1_index: @anne.id,
+    person2_index: @francis.id,
+    original_certainty: 100,
+    start_year: start_year,
+    start_month: "Jan",
+    start_day: 1,
+    start_date_type: "CA",
+    end_year: end_year,
+    end_month: "Dec",
+    end_day: 31,
+    end_date_type: "CA",
+    created_by: @sdfbadmin.id
+  )
+end
+
+
+Then(/^the new relationship has an invalid "([^"]*)"$/) do |error_field|
+  expect(@new_relationship.valid?).to be false
+  expect(@new_relationship.errors.count).to eq(1)
+  expect(@new_relationship.errors.first).to include(error_field.to_sym)
+end
+
+
+
 Then(/^a relationship type is created for the relationship$/) do
   expect(UserRelContrib.last.relationship_id).to eq @relationship.id
 end
