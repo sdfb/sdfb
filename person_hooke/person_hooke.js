@@ -4,10 +4,7 @@ var svg = d3.select("svg"),
     height = +svg.attr("height");
 
 var graph,
-    currentNodes,
-    currentLinks,
-    sourceId,
-    simulation;
+    sourceId;
 
 var threshold = 60;
 var complexity = 2.5;
@@ -149,12 +146,23 @@ function parseComplexity(thresholdLinks, complexity) {
     if (l.source.id == sourceId || l.target.id == sourceId ) { oneDegreeNodes.push(l.source); oneDegreeNodes.push(l.target);};
   });
 
+  oneDegreeNodes = Array.from(new Set(oneDegreeNodes));
+
   var twoDegreeNodes = [];
   thresholdLinks.forEach(function(l) {
-    if (oneDegreeNodes.indexOf(l.source) != -1 || oneDegreeNodes.indexOf(l.target) != -1) {twoDegreeNodes.push(l.source); twoDegreeNodes.push(l.target);};
+    if (oneDegreeNodes.indexOf(l.source) != -1 && oneDegreeNodes.indexOf(l.target) == -1) { twoDegreeNodes.push(l.target); }
+    else if (oneDegreeNodes.indexOf(l.target) != -1 && oneDegreeNodes.indexOf(l.source) == -1) {twoDegreeNodes.push(l.source); };
   });
 
+  twoDegreeNodes = Array.from(new Set(twoDegreeNodes));
+
   var allNodes = oneDegreeNodes.concat(twoDegreeNodes);
+
+  allNodes.forEach(function(d) {
+    if (d.id == sourceId) { d.distance = 0; }
+    else if (oneDegreeNodes.indexOf(d) != -1) { d.distance = 1; }
+    else { d.distance = 2; }
+  });
 
     if (complexity == 1) {
       var newLinks = thresholdLinks.filter(function(l) { if (l.source.id == sourceId || l.target.id == sourceId) { return l; }})
@@ -177,6 +185,8 @@ function parseComplexity(thresholdLinks, complexity) {
         });
         if (count >= 2) { newNodes.push(d); }
       });
+
+      newNodes = Array.from(new Set(newNodes));
 
       newNodes = oneDegreeNodes.concat(newNodes);
       newLinks = thresholdLinks.filter(function(l) {if (newNodes.indexOf(l.source) != -1 && newNodes.indexOf(l.target) != -1) {return l;}});
@@ -221,10 +231,12 @@ function update(threshold, complexity) {
   .attr("cx", function(d) { return d.x; })
   .attr("cy", function(d) { return d.y; });
   node.exit().remove();
-  var nodeEnter = node.enter().append('circle')
-  .attr('r', function(d) { return degreeSize(d.degree);})
-  // Color by degree centrality calculation in NetworkX.
-  .attr("fill", function(d) { return color(d.distance); })
+  var nodeEnter = node.enter().append('circle');
+
+
+  node = nodeEnter.merge(node)
+    .attr('r', function(d) { return degreeSize(d.degree);})
+    .attr("fill", function(d) { return color(d.distance); })
     .attr('class', 'node')
     .attr('id', function(d) { return "n" + d.id.toString(); })
     .attr("cx", function(d) { return d.x; })
@@ -232,9 +244,7 @@ function update(threshold, complexity) {
     .attr("pulse", false)
     .attr("is_source", function(d) {if (d.id == sourceId) {return 'true';} })
     // On click, toggle ego networks for the selected node. (See function above.)
-    .on('click', function(d) { toggleClick(d); });
-
-  node = nodeEnter.merge(node);
+    .on('click', function(d) { toggleClick(d, newLinks); });
 
     node.append("title")
         .text(function(d) { return d.name; });
@@ -248,13 +258,13 @@ function update(threshold, complexity) {
 }
 
 // A function to handle click toggling based on neighboring graph.nodes.
-function toggleClick(d) {
+function toggleClick(d, newLinks) {
 
 
-  // Make object of all neighboring graph.nodes.
+  // Make object of all neighboring nodes.
    connectedNodes = {};
    connectedNodes[d.id] = true;
-   graph.links.forEach(function(l) {
+   newLinks.forEach(function(l) {
      if (l.source.id == d.id) { connectedNodes[l.target.id] = true; }
      else if (l.target.id == d.id) { connectedNodes[l.source.id] = true; };
    });
