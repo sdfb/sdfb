@@ -13,7 +13,7 @@ cur.execute("SELECT id, display_name, historical_significance, ext_birth_year, e
 node_tuples = cur.fetchall()
 
 # Get edges as list of tuples from database
-cur.execute("SELECT person1_index, person2_index, max_certainty, last_edit, types_list FROM relationships WHERE is_approved = true and max_certainty >=60;")
+cur.execute("SELECT person1_index, person2_index, max_certainty, last_edit, types_list FROM relationships WHERE is_approved = true;")
 edge_tuples = cur.fetchall()
 
 print('Total number of nodes:', len(node_tuples))
@@ -71,35 +71,48 @@ one_degree = G.neighbors(bacon)
 two_degree = list(set(sum([G.neighbors(n) for n in one_degree], [])))
 
 all_nodes = [bacon] + one_degree + two_degree
-distance_dict = {}
-source_dict = {}
-for a in all_nodes:
-    if a == bacon:
-        distance_dict[a] = 0
-    elif a in one_degree:
-        distance_dict[a] = 1
-    else:
-        distance_dict[a] = 2
+# distance_dict = {}
+# source_dict = {}
+# for a in all_nodes:
+#     if a == bacon:
+#         distance_dict[a] = 0
+#     elif a in one_degree:
+#         distance_dict[a] = 1
+#     else:
+#         distance_dict[a] = 2
 
 SG = G.subgraph(all_nodes)
 
-nx.set_node_attributes(SG, 'distance', distance_dict)
+# nx.set_node_attributes(SG, 'distance', distance_dict)
 
 # Create a dictionary for the JSON needed by D3.
 new_data = dict(
-        nodes=[dict(
-            id=n,
-            name=SG.node[n]['name'],
-            degree=SG.node[n]['degree'],
-            distance=SG.node[n]['distance'],
-            historical_significance=SG.node[n]['historical_significance'],
-            birth_year=SG.node[n]['birth_year'],
-            death_year=SG.node[n]['death_year']) for n in SG.nodes()],
-        links=[dict(
-            source=e[0],
-            target=e[1],
-            weight=e[2]['weight'],
-            altered=e[2]['altered']) for e in SG.edges(data=True)])
+        data=dict(
+            type='networks',
+            id='1',
+            attributes=dict(
+                nodes=[dict(
+                    id=n,
+                    name=SG.node[n]['name'],
+                    degree=SG.node[n]['degree']) for n in SG.nodes()],
+                links=[dict(
+                    source=e[0],
+                    target=e[1],
+                    weight=e[2]['weight'],
+                    altered=e[2]['altered']) for e in SG.edges(data=True)])),
+        errors=[dict(
+            status='404',
+            title='Page not found')],
+        meta=dict(
+            principal_investigators=['Daniel Shore', 'Chris Warren', 'Jessica Otis']),
+        included=dict(
+            type='people',
+            id=str(bacon),
+            name=SG.node[bacon]['name'],
+            historical_significance=SG.node[bacon]['historical_significance'],
+            birth_year=SG.node[bacon]['birth_year'],
+            death_year=SG.node[bacon]['death_year'])
+        )
 # Output json of the graph.
 with open('baconnetwork.json', 'w') as output:
         json.dump(new_data, output, sort_keys=True, indent=4, separators=(',',':'))

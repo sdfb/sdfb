@@ -5,9 +5,12 @@ var svg = d3.select("svg"),
 
 var graph,
     currentNodes,
-    currentLinks;
+    currentLinks,
+    sourceId,
+    simulation;
 
 var threshold = 60;
+var complexity = 2.5;
 
 svg.append('rect')
     .attr('width', '100%')
@@ -61,14 +64,31 @@ var link = container.append("g")
     .selectAll(".node");
 
 
+
+
 d3.json("baconnetwork.json", function(error, json) {
   if (error) throw error;
 
-  graph = json;
+  graph = json.data.attributes;
   currentNodes = graph.nodes;
   currentLinks = graph.links;
+  sourceId = json.included.id;
 
-  update(currentNodes, currentLinks, threshold);
+  simulation = d3.forceSimulation(graph.nodes)
+      // .velocityDecay(.5)
+      .force("link", d3.forceLink(graph.links).id(function(d) { return d.id; }))
+      .force("charge", d3.forceManyBody().strength([-300]))//.distanceMax([500]))
+      .force("center", d3.forceCenter(width / 2, height / 2))
+      .force("collide", d3.forceCollide().radius( function (d) { return degreeSize(d.degree); }))
+      .force("x", d3.forceX())
+      .force("y", d3.forceY())
+      .stop();
+
+  for (var i = 0, n = Math.ceil(Math.log(simulation.alphaMin()) / Math.log(1 - simulation.alphaDecay())); i < n; ++i) {
+    simulation.tick();
+  }
+
+  update(threshold, complexity);
 
 });
 
@@ -81,7 +101,7 @@ var confidenceSliderLabel = confidenceSlider.append('label')
 	.text('60');
 var confidenceSliderMain = confidenceSlider.append('input')
 	.attr('type', 'range')
-	.attr('min', 60)
+	.attr('min', 0)
 	.attr('max', 100)
 	.attr('value', 60)
 	.attr('id', 'threshold')
@@ -92,7 +112,7 @@ var confidenceSliderMain = confidenceSlider.append('input')
 
 		d3.select('#confidenceLabel').text(threshold);
 
-    update(currentNodes, currentLinks, threshold);
+    update(threshold, complexity);
 
 	});
 
@@ -114,85 +134,78 @@ var complexityButtons = complexityForm.selectAll('input')
 
 complexityButtons.on('change', function () {
 
-    var complexity = this.value;
+    complexity = this.value;
 
     d3.select("#complexityLabel").text("Network Complexity: "+complexity+" ");
 
-    if (complexity == 1) {
-      currentNodes = graph.nodes.filter(function(d) { if (d.distance == 1 || d.distance == 0) {return d;}; });
-      currentLinks = graph.links.filter(function(l) { if (l.source.distance == 0 || l.target.distance == 0) {return l;}; });
-      update(currentNodes, currentLinks, threshold);
-    }
-
-    if (complexity == 1.5) {
-      currentNodes = graph.nodes.filter(function(d) { if (d.distance == 0 || d.distance == 1) {return d;}; });
-      currentLinks = graph.links.filter(function(l) { if ((l.source.distance == 0 || l.source.distance == 1) && (l.target.distance == 0 || l.target.distance ==1)) {return l;}; });
-      update(currentNodes, currentLinks, threshold);
-    }
-
-    if (complexity == 1.75) {
-      currentNodes = [];
-      graph.nodes.forEach(function(d) {
-        if (d.distance == 1 || d.distance == 0) {currentNodes.push(d);}
-        else if (d.distance == 2) {
-          count = 0
-          graph.links.forEach(function(l){
-            if (l.source.id == d.id && (l.target.distance == 0 || l.target.distance == 1)) { count += 1; }
-            else if (l.target.id == d.id && (l.source.distance == 0 || l.source.distance ==1)) { count += 1; }
-          });
-          if (count >= 2) {currentNodes.push(d);}
-        }
-      });
-      currentLinks = graph.links.filter(function(l) { if (currentNodes.indexOf(l.source) != -1 && currentNodes.indexOf(l.target) != -1) {return l;}; });
-      update(currentNodes, currentLinks, threshold);
-    }
-
-    if (complexity == 2) {
-      currentNodes = graph.nodes;
-      currentLinks = graph.links.filter(function(l) { if ((l.source.distance == 0 || l.source.distance == 1) || (l.target.distance == 0 || l.target.distance == 1)) {return l;}; });
-      update(currentNodes, currentLinks, threshold);
-    }
-
-    if (complexity == 2.5) {
-      currentNodes = graph.nodes;
-      currentLinks = graph.links;
-      update(currentNodes, currentLinks, threshold); }
+    update(threshold, complexity);
 
 });
 
-function update(currentNodes, currentLinks, threshold) {
+function parseComplexity(thresholdLinks, complexity) {
+
+  var oneDegreeNodes = [];
+  thresholdLinks.forEach(function(l){
+    if (l.source.id == sourceId || l.target.id == sourceId ) { oneDegreeNodes.push(l.source); oneDegreeNodes.push(l.target);};
+  });
+
+  var twoDegreeNodes = [];
+  thresholdLinks.forEach(function(l) {
+    if (oneDegreeNodes.indexOf(l.source) != -1 || oneDegreeNodes.indexOf(l.target) != -1) {twoDegreeNodes.push(l.source); twoDegreeNodes.push(l.target);};
+  });
+
+  var allNodes = oneDegreeNodes.concat(twoDegreeNodes);
+
+    if (complexity == 1) {
+      var newLinks = thresholdLinks.filter(function(l) { if (l.source.id == sourceId || l.target.id == sourceId) { return l; }})
+      return [oneDegreeNodes, newLinks];
+    }
+
+    if (complexity == 1.5) {
+
+      var newLinks = thresholdLinks.filter(function(l) {if (oneDegreeNodes.indexOf(l.source) != -1 && oneDegreeNodes.indexOf(l.target) != -1) {return l;}});
+      return [oneDegreeNodes, newLinks];
+    }
+
+    if (complexity == 1.75) {
+      var newLinks = thresholdLinks.filter(function(l) {if (oneDegreeNodes.indexOf(l.source) != -1 || oneDegreeNodes.indexOf(l.target) != -1) {return l;}});
+      var newNodes = [];
+      twoDegreeNodes.forEach(function(d){
+        var count = 0;
+        newLinks.forEach(function(l){
+          if (l.source == d && oneDegreeNodes.indexOf(l.target) != -1) { count += 1; }
+        });
+        if (count >= 2) { newNodes.push(d); }
+      });
+
+      newNodes = oneDegreeNodes.concat(newNodes);
+      newLinks = thresholdLinks.filter(function(l) {if (newNodes.indexOf(l.source) != -1 && newNodes.indexOf(l.target) != -1) {return l;}});
+      return [newNodes, newLinks];
+    }
+
+    if (complexity == 2) {
+      newLinks = thresholdLinks.filter(function(l) { if (oneDegreeNodes.indexOf(l.source) != -1 || oneDegreeNodes.indexOf(l.source) != -1) {return l;} });
+      return [allNodes, newLinks];
+    }
+
+    if (complexity == 2.5) {
+
+      var newLinks = thresholdLinks.filter(function(l) {if (allNodes.indexOf(l.source) != -1 && allNodes.indexOf(l.target) != -1) {return l;}});
+
+      return [allNodes, newLinks];
+    }
+}
+
+function update(threshold, complexity) {
 
   d3.select('.source-node').remove(); //Get rid of old source node highlight.
 
   // Find the links and nodes that are at or above the threshold.
-  var newLinks = currentLinks.filter(function(d) { if (d.weight >= threshold) {return d; }; });
+  var thresholdLinks = graph.links.filter(function(d) { if (d.weight >= threshold) {return d; }; });
 
-
-  var newNodes = [];
-  currentNodes.forEach( function(d) {
-    newLinks.forEach( function(l) {
-      if (typeof(currentLinks[0].source) == 'number') { //Handle difference between data as it first comes in from JSON and afterwards.
-        if (l.source == d.id || l.target == d.id) { newNodes.push(d); };
-      }
-      else { if (l.source.id == d.id || l.target.id == d.id) { newNodes.push(d); };}
-    });
-  });
-  newNodes = Array.from(new Set(newNodes));
-
-
-  var simulation = d3.forceSimulation(newNodes)
-      // .velocityDecay(.5)
-      .force("link", d3.forceLink(newLinks).id(function(d) { return d.id; }))
-      .force("charge", d3.forceManyBody().strength([-300]))//.distanceMax([500]))
-      .force("center", d3.forceCenter(width / 2, height / 2))
-      .force("collide", d3.forceCollide().radius( function (d) { return degreeSize(d.degree); }))
-      .force("x", d3.forceX())
-      .force("y", d3.forceY())
-      .stop();
-
-  for (var i = 0, n = Math.ceil(Math.log(simulation.alphaMin()) / Math.log(1 - simulation.alphaDecay())); i < n; ++i) {
-    simulation.tick();
-  }
+  var newData = parseComplexity(thresholdLinks, complexity);
+  var newNodes = newData[0];
+  var newLinks = newData[1];
 
   // Data join with only those new links and corresponding nodes.
   link = link.data(newLinks, function(d) {return d.source.id + ', ' + d.target.id;});
@@ -217,7 +230,7 @@ function update(currentNodes, currentLinks, threshold) {
     .attr("cx", function(d) { return d.x; })
     .attr("cy", function(d) { return d.y; })
     .attr("pulse", false)
-    .attr("is_source", function(d) {if (d.distance == 0) {return 'true';} })
+    .attr("is_source", function(d) {if (d.id == sourceId) {return 'true';} })
     // On click, toggle ego networks for the selected node. (See function above.)
     .on('click', function(d) { toggleClick(d); });
 
@@ -227,7 +240,7 @@ function update(currentNodes, currentLinks, threshold) {
         .text(function(d) { return d.name; });
 
   d3.select('.nodes').insert('circle', '[is_source="true"]')
-    .attr('r', degreeSize(d3.select('[is_source="true"]').data()[0].degree) + 7)
+    .attr('r', degreeSize(d3.select('[is_source="true"]').data()[0].degree) + 10)
     .attr('fill', color(d3.select('[is_source="true"]').data()[0].distance))
     .attr('class', 'source-node')
     .attr("cx", d3.select('[is_source="true"]').data()[0].x)
