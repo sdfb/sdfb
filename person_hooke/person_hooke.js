@@ -186,7 +186,7 @@ function parseComplexity(thresholdLinks, complexity) {
         if (count >= 2) { newNodes.push(d); }
       });
 
-      newNodes = Array.from(new Set(newNodes));
+      // newNodes = Array.from(new Set(newNodes));
 
       newNodes = oneDegreeNodes.concat(newNodes);
       newLinks = thresholdLinks.filter(function(l) {if (newNodes.indexOf(l.source) != -1 && newNodes.indexOf(l.target) != -1) {return l;}});
