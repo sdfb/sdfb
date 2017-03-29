@@ -4,6 +4,7 @@ var svg = d3.select("svg"),
     height = +svg.attr("height");
 
 var graph,
+    degreeSize,
     sourceId;
 
 var threshold = 60;
@@ -36,9 +37,7 @@ var color = d3.scaleOrdinal()
     .domain([0,1,2])
     .range(['#1253a0','#1253a0','#87a9cf']);
 
-var degreeSize = d3.scaleLog()
-    .domain([1,500])
-    .range([10,35]);
+
 
 var box = search.append('input')
 	.attr('type', 'text')
@@ -60,6 +59,15 @@ var link = container.append("g")
       .attr("class", "nodes")
     .selectAll(".node");
 
+var loading = svg.append("text")
+    .attr("dy", "0.35em")
+    .attr("text-anchor", "middle")
+    .attr('x', width/2)
+    .attr('y', height/2)
+    .attr("font-family", "sans-serif")
+    .attr("font-size", 10)
+    .text("Simulating. One moment please…");
+
 
 
 
@@ -71,7 +79,11 @@ d3.json("baconnetwork.json", function(error, json) {
   currentLinks = graph.links;
   sourceId = json.included.id;
 
-  simulation = d3.forceSimulation(graph.nodes)
+  degreeSize = d3.scaleLog()
+      .domain([d3.min(graph.nodes, function(d) {return d.degree; }),d3.max(graph.nodes, function(d) {return d.degree; })])
+      .range([10,35]);
+
+  var simulation = d3.forceSimulation(graph.nodes)
       // .velocityDecay(.5)
       .force("link", d3.forceLink(graph.links).id(function(d) { return d.id; }))
       .force("charge", d3.forceManyBody().strength([-300]))//.distanceMax([500]))
@@ -81,7 +93,9 @@ d3.json("baconnetwork.json", function(error, json) {
       .force("y", d3.forceY())
       .stop();
 
-  for (var i = 0, n = Math.ceil(Math.log(simulation.alphaMin()) / Math.log(1 - simulation.alphaDecay())); i < n; ++i) {
+  loading.remove();
+
+  for (var i = 0, n = 50;/*Math.ceil(Math.log(simulation.alphaMin()) / Math.log(1 - simulation.alphaDecay()));*/ i < n; ++i) {
     simulation.tick();
   }
 
@@ -227,12 +241,13 @@ function update(threshold, complexity) {
       .attr('stroke-opacity', function(l) { if (l.altered == true) { return 1;} else {return .35;} });
 
   // When adding and removing nodes, reassert attributes and behaviors.
-  node = node.data(newNodes, function(d) {return d.id;})
-  .attr("cx", function(d) { return d.x; })
-  .attr("cy", function(d) { return d.y; });
+  node = node.data(newNodes, function(d) {return d.id;});
+  // .attr("cx", function(d) { return d.x; })
+  // .attr("cy", function(d) { return d.y; });
   node.exit().remove();
   var nodeEnter = node.enter().append('circle');
 
+  node.attr('r', function(d) { return degreeSize(d.degree);});  
 
   node = nodeEnter.merge(node)
     .attr('r', function(d) { return degreeSize(d.degree);})
