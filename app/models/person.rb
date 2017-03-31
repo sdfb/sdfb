@@ -51,7 +51,7 @@ class Person < ActiveRecord::Base
   scope :first_degree_for, -> (id_input) {
       select('people.*')
       .joins('join relationships r1 on ((r1.person1_index = people.id) or (r1.person2_index = people.id))')
-      .where("people.approved_by is not null and ((r1.person1_index = '#{id_input}') or (r1.person2_index = '#{id_input}'))")
+      .where("people.approved_by is not null and ((r1.person1_index = '?') or (r1.person2_index = '?'))", id_input, id_input)
       }
   scope :rels_for_id, -> (id, sdata, edate) {
   	select('id, rel_sum')
