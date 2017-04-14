@@ -4,10 +4,12 @@ var svg = d3.select("svg"),
     height = +svg.attr("height");
 
 var graph,
-    currentNodes,
-    currentLinks;
+    degreeSize,
+    sourceId1,
+    sourceId2;
 
 var threshold = 60;
+var complexity = 'all_links';
 
 svg.append('rect')
     .attr('width', '100%')
@@ -17,8 +19,9 @@ svg.append('rect')
       if (toggle == 1) {
         // Restore nodes and links to normal opacity. (see toggleClick() below)
         d3.selectAll('.link').style('stroke', '#000');
-        d3.select('[pulse="true"]').transition().duration(200).style('opacity', 1);
-        d3.selectAll('.node').style('fill', function(d) { return color(d.distance); }).attr('pulse', false);
+        d3.selectAll('.node')
+          .classed('faded', false)
+          .classed('focused', false);
         d3.selectAll('span').remove();
         toggle = 0;
       }
@@ -32,13 +35,6 @@ var container = svg.append('g');
 // Create form for search (see function below).
 var search = d3.select("div#tools").append('form').attr('onsubmit', 'return false;');
 
-var color = d3.scaleOrdinal()
-    .domain([0,1,2,3,4,5,6])
-    .range(['#df0a1d','#df0a1d','#ee7588','#d1cee5','#87a9cf','#1253a0','#1253a0']);
-
-var degreeSize = d3.scaleLog()
-    .domain([1,500])
-    .range([10,35]);
 
 var box = search.append('input')
 	.attr('type', 'text')
@@ -60,15 +56,46 @@ var link = container.append("g")
       .attr("class", "nodes")
     .selectAll(".node");
 
+    var loading = svg.append("text")
+        .attr("dy", "0.35em")
+        .attr("text-anchor", "middle")
+        .attr('x', width/2)
+        .attr('y', height/2)
+        .attr("font-family", "sans-serif")
+        .attr("font-size", 10)
+        .text("Simulating. One moment please…");
+
 
 d3.json("sharednetwork.json", function(error, json) {
   if (error) throw error;
 
-  graph = json;
+  graph = json.data.attributes;
   currentNodes = graph.nodes;
-  currentLinks = graph.links;
+  currentLinks = graph.links
+  console.log(json.included);
+  sourceId1 = json.included[0].id;
+  sourceId2 = json.included[1].id;
 
-  update(currentNodes, currentLinks, threshold);
+  degreeSize = d3.scaleLog()
+      .domain([d3.min(graph.nodes, function(d) {return d.degree; }),d3.max(graph.nodes, function(d) {return d.degree; })])
+      .range([10,45]);
+
+  var simulation = d3.forceSimulation(graph.nodes)
+      .force("link", d3.forceLink(graph.links).id(function(d) { return d.id; }))
+      .force("charge", d3.forceManyBody().strength([-300]))//.distanceMax([500]))
+      .force("center", d3.forceCenter(width / 2, height / 2))
+      .force("collide", d3.forceCollide().radius( function (d) { return degreeSize(d.degree) + 1; }))
+      .force("x", d3.forceX())
+      .force("y", d3.forceY())
+      .stop();
+
+  loading.remove();
+
+  for (var i = 0, n = 50;/*Math.ceil(Math.log(simulation.alphaMin()) / Math.log(1 - simulation.alphaDecay()));*/ i < n; ++i) {
+    simulation.tick();
+  }
+
+  update(threshold, complexity);
 
 });
 
@@ -81,7 +108,7 @@ var confidenceSliderLabel = confidenceSlider.append('label')
 	.text('60');
 var confidenceSliderMain = confidenceSlider.append('input')
 	.attr('type', 'range')
-	.attr('min', 60)
+	.attr('min', 0)
 	.attr('max', 100)
 	.attr('value', 60)
 	.attr('id', 'threshold')
@@ -92,7 +119,7 @@ var confidenceSliderMain = confidenceSlider.append('input')
 
 		d3.select('#confidenceLabel').text(threshold);
 
-    update(currentNodes, currentLinks, threshold);
+    update(threshold, complexity);
 
 	});
 
@@ -126,20 +153,6 @@ function update(currentNodes, currentLinks, threshold) {
       d.fy = height/2
     }
   })
-
-  var simulation = d3.forceSimulation(newNodes)
-      // .velocityDecay(.5)
-      .force("link", d3.forceLink(newLinks).id(function(d) { return d.id; }))
-      .force("charge", d3.forceManyBody().strength([-300]))//.distanceMax([500]))
-      .force("center", d3.forceCenter(width / 2, height / 2))
-      .force("collide", d3.forceCollide().radius( function (d) { return degreeSize(d.degree); }))
-      .force("x", d3.forceX())
-      .force("y", d3.forceY())
-      .stop();
-
-  for (var i = 0, n = Math.ceil(Math.log(simulation.alphaMin()) / Math.log(1 - simulation.alphaDecay())); i < n; ++i) {
-    simulation.tick();
-  }
 
   // Data join with only those new links and corresponding nodes.
   link = link.data(newLinks, function(d) {return d.source.id + ', ' + d.target.id;});
