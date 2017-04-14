@@ -13,7 +13,7 @@ cur.execute("SELECT id, display_name, historical_significance, ext_birth_year, e
 node_tuples = cur.fetchall()
 
 # Get edges as list of tuples from database
-cur.execute("SELECT person1_index, person2_index, max_certainty, last_edit, types_list FROM relationships WHERE is_approved = true;")
+cur.execute("SELECT person1_index, person2_index, max_certainty, last_edit, types_list, id FROM relationships WHERE is_approved = true;")
 edge_tuples = cur.fetchall()
 
 print('Total number of nodes:', len(node_tuples))
@@ -46,6 +46,7 @@ for e in edge_tuples:
     else:
         altered[(e[0], e[1])] = True
 
+edge_id = {(e[0], e[1]):e[-1] for e in edge_tuples}
 
 print('Number of edges:', len(edges))
 
@@ -63,6 +64,7 @@ nx.set_node_attributes(G, 'birth_year', birth_dict)
 nx.set_node_attributes(G, 'death_year', death_dict)
 
 nx.set_edge_attributes(G, 'altered', altered)
+nx.set_edge_attributes(G, 'edge_id', edge_id)
 
 # Create subgraph
 
@@ -99,7 +101,8 @@ new_data = dict(
                     source=e[0],
                     target=e[1],
                     weight=e[2]['weight'],
-                    altered=e[2]['altered']) for e in SG.edges(data=True)])),
+                    altered=e[2]['altered'],
+                    id=e[2]['edge_id']) for e in SG.edges(data=True)])),
         errors=[dict(
             status='404',
             title='Page not found')],
