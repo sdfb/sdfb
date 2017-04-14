@@ -15,7 +15,7 @@ cur.execute("SELECT id, display_name, historical_significance, ext_birth_year, e
 node_tuples = cur.fetchall()
 
 # Get edges as list of tuples from database
-cur.execute("SELECT person1_index, person2_index, max_certainty, last_edit, types_list FROM relationships WHERE max_certainty >=60 AND is_approved = true;")
+cur.execute("SELECT person1_index, person2_index, max_certainty, last_edit, types_list, id FROM relationships WHERE is_approved = true;")
 edge_tuples = cur.fetchall()
 
 print('Total number of nodes:', len(node_tuples))
@@ -39,17 +39,19 @@ edges = []
 altered = {}
 for e in edge_tuples:
     edges.append((e[0], e[1], e[2]))
-    if e[3] == None:
+    print(e[3])
+    if e[3] == None or e[3] == '--- []\n':
         altered[(e[0], e[1])] = False
-        print('none!')
+        # print('none!')
     elif e[3].split()[2] == '2':# and e[4] != '--- []\n':
         altered[(e[0], e[1])] = False
-        print('not altered!')
+        # print('not altered!')
     else:
         altered[(e[0], e[1])] = True
 
+edge_id = {(e[0], e[1]):e[-1] for e in edge_tuples}
 
-print('Number of edges with confidence 60% and above:', len(edges))
+print('Total number of edges:', len(edges))
 
 # Build full network using NetworkX
 G = nx.Graph()
@@ -69,6 +71,7 @@ nx.set_node_attributes(G, 'birth_year', birth_dict)
 nx.set_node_attributes(G, 'death_year', death_dict)
 
 nx.set_edge_attributes(G, 'altered', altered)
+nx.set_edge_attributes(G, 'edge_id', edge_id)
 # Create subgraph based on milton and shakespeare:
 
     # 1. Get ids for shakespeare and milton
@@ -89,39 +92,61 @@ print(one_degree)
 
 SG = G.subgraph(one_degree)
 
-distance_dict = {}
-for n in SG.nodes():
-    if n == shakespeare:
-        distance_dict[n] = 0
-    if n in shakespeare_neighbors and nx.shortest_path_length(SG,n,milton) > 2:
-        distance_dict[n] = 1
-    if n in shakespeare_neighbors and nx.shortest_path_length(SG,n,milton) == 2:
-        distance_dict[n] = 2
-    if n in shakespeare_neighbors and n in milton_neighbors:
-        distance_dict[n] = 3
-    if n in milton_neighbors and nx.shortest_path_length(SG,n,shakespeare) == 2:
-        distance_dict[n] = 4
-    if n in milton_neighbors and nx.shortest_path_length(SG,n,shakespeare) > 2:
-        distance_dict[n] = 5
-    if n == milton:
-        distance_dict[n] = 6
+# distance_dict = {}
+# for n in SG.nodes():
+#     if n == shakespeare:
+#         distance_dict[n] = 0
+#     if n in shakespeare_neighbors and nx.shortest_path_length(SG,n,milton) > 2:
+#         distance_dict[n] = 1
+#     if n in shakespeare_neighbors and nx.shortest_path_length(SG,n,milton) == 2:
+#         distance_dict[n] = 2
+#     if n in shakespeare_neighbors and n in milton_neighbors:
+#         distance_dict[n] = 3
+#     if n in milton_neighbors and nx.shortest_path_length(SG,n,shakespeare) == 2:
+#         distance_dict[n] = 4
+#     if n in milton_neighbors and nx.shortest_path_length(SG,n,shakespeare) > 2:
+#         distance_dict[n] = 5
+#     if n == milton:
+#         distance_dict[n] = 6
 
-nx.set_node_attributes(SG, 'distance', distance_dict)
+# nx.set_node_attributes(SG, 'distance', distance_dict)
 # Create a dictionary for the JSON needed by D3.
 new_data = dict(
-        nodes=[dict(
-            id=n,
-            name=SG.node[n]['name'],
-            degree=SG.node[n]['degree'],
-            historical_significance=SG.node[n]['historical_significance'],
-            birth_year=SG.node[n]['birth_year'],
-            death_year=SG.node[n]['death_year'],
-            distance=SG.node[n]['distance']) for n in SG.nodes()],
-        links=[dict(
-            source=e[0],
-            target=e[1],
-            weight=e[2]['weight'],
-            altered=e[2]['altered']) for e in SG.edges(data=True)])
+        data=dict(
+            type='networks',
+            id='1',
+            attributes=dict(
+                nodes=[dict(
+                    id=n,
+                    name=SG.node[n]['name'],
+                    degree=SG.node[n]['degree']) for n in SG.nodes()],
+                links=[dict(
+                    source=e[0],
+                    target=e[1],
+                    weight=e[2]['weight'],
+                    altered=e[2]['altered'],
+                    id=e[2]['edge_id']) for e in SG.edges(data=True)])),
+        errors=[dict(
+            status='404',
+            title='Page not found')],
+        meta=dict(
+            principal_investigators=['Daniel Shore', 'Chris Warren', 'Jessica Otis']),
+        included=[
+            dict(
+                type='people',
+                id=str(shakespeare),
+                name=SG.node[shakespeare]['name'],
+                historical_significance=SG.node[shakespeare]['historical_significance'],
+                birth_year=SG.node[shakespeare]['birth_year'],
+                death_year=SG.node[shakespeare]['death_year']),
+            dict(
+                type='people',
+                id=str(milton),
+                name=SG.node[milton]['name'],
+                historical_significance=SG.node[milton]['historical_significance'],
+                birth_year=SG.node[milton]['birth_year'],
+                death_year=SG.node[milton]['death_year'])]
+        )
 
 # Output json of the graph.
 with open('sharednetwork.json', 'w') as output:
