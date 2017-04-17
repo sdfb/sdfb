@@ -77,6 +77,8 @@ var loading = svg.append("text")
 d3.json("baconnetwork.json", function(error, json) {
   if (error) throw error;
 
+  var t0 = performance.now();
+
   graph = json.data.attributes;
   currentNodes = graph.nodes;
   currentLinks = graph.links;
@@ -85,6 +87,8 @@ d3.json("baconnetwork.json", function(error, json) {
   degreeSize = d3.scaleLog()
       .domain([d3.min(graph.nodes, function(d) {return d.degree; }),d3.max(graph.nodes, function(d) {return d.degree; })])
       .range([10,45]);
+
+
 
   var simulation = d3.forceSimulation(graph.nodes)
       // .velocityDecay(.5)
@@ -98,11 +102,15 @@ d3.json("baconnetwork.json", function(error, json) {
 
   loading.remove();
 
-  for (var i = 0, n = 50;/*Math.ceil(Math.log(simulation.alphaMin()) / Math.log(1 - simulation.alphaDecay()));*/ i < n; ++i) {
+  for (var i = 0, n=Math.ceil(Math.log(simulation.alphaMin()) / Math.log(1 - simulation.alphaDecay())); i < n; ++i) {
     simulation.tick();
   }
 
   update(threshold, complexity);
+
+  var t1 = performance.now();
+
+  console.log("Graph took " + (t1 - t0) + " milliseconds to load.")
 
 });
 
@@ -181,41 +189,44 @@ function parseComplexity(thresholdLinks, complexity) {
     else { d.distance = 2; }
   });
 
-    if (complexity == 1) {
+    if (complexity == '1') {
       var newLinks = thresholdLinks.filter(function(l) { if (l.source.id == sourceId || l.target.id == sourceId) { return l; }})
       return [oneDegreeNodes, newLinks];
     }
 
-    if (complexity == 1.5) {
+    if (complexity == '1.5') {
 
       var newLinks = thresholdLinks.filter(function(l) {if (oneDegreeNodes.indexOf(l.source) != -1 && oneDegreeNodes.indexOf(l.target) != -1) {return l;}});
       return [oneDegreeNodes, newLinks];
     }
 
-    if (complexity == 1.75) {
-      var newLinks = thresholdLinks.filter(function(l) {if (oneDegreeNodes.indexOf(l.source) != -1 || oneDegreeNodes.indexOf(l.target) != -1) {return l;}});
+    if (complexity == '1.75') {
+      // var newLinks = thresholdLinks.filter(function(l) {if (oneDegreeNodes.indexOf(l.source) != -1 || oneDegreeNodes.indexOf(l.target) != -1) {return l;}});
       var newNodes = [];
       twoDegreeNodes.forEach(function(d){
         var count = 0;
-        newLinks.forEach(function(l){
+        // console.log(d.id);
+        thresholdLinks.forEach(function(l){
           if (l.source == d && oneDegreeNodes.indexOf(l.target) != -1) { count += 1; }
+          else if (l.target == d && oneDegreeNodes.indexOf(l.source) != -1 ) { count += 1; }
         });
+        console.log(count);
         if (count >= 2) { newNodes.push(d); }
       });
 
       // newNodes = Array.from(new Set(newNodes));
-
+      console.log(newNodes);
       newNodes = oneDegreeNodes.concat(newNodes);
       newLinks = thresholdLinks.filter(function(l) {if (newNodes.indexOf(l.source) != -1 && newNodes.indexOf(l.target) != -1) {return l;}});
       return [newNodes, newLinks];
     }
 
-    if (complexity == 2) {
+    if (complexity == '2') {
       newLinks = thresholdLinks.filter(function(l) { if (oneDegreeNodes.indexOf(l.source) != -1 || oneDegreeNodes.indexOf(l.source) != -1) {return l;} });
       return [allNodes, newLinks];
     }
 
-    if (complexity == 2.5) {
+    if (complexity == '2.5') {
 
       var newLinks = thresholdLinks.filter(function(l) {if (allNodes.indexOf(l.source) != -1 && allNodes.indexOf(l.target) != -1) {return l;}});
 
@@ -238,13 +249,16 @@ function update(threshold, complexity) {
   link = link.data(newLinks, function(d) {return d.source.id + ', ' + d.target.id;});
   link.exit().remove();
   var linkEnter = link.enter().append('path')
-    .attr('class', 'link');
+          .attr('class', 'link');
+
       link = linkEnter.merge(link)
+      .attr('class', 'link')
       .attr("d", linkArc)
       .attr('stroke-opacity', function(l) { if (l.altered == true) { return 1;} else {return .35;} });
 
   // When adding and removing nodes, reassert attributes and behaviors.
-  node = node.data(newNodes, function(d) {return d.id;});
+  node = node.data(newNodes, function(d) {return d.id;})
+    .attr('class', function(d){ return 'node degree'+d.distance });
   // .attr("cx", function(d) { return d.x; })
   // .attr("cy", function(d) { return d.y; });
   node.exit().remove();
@@ -265,7 +279,7 @@ function update(threshold, complexity) {
     .on('click', function(d) { toggleClick(d, newLinks); });
 
     node.append("title")
-        .text(function(d) { return d.name; });
+        .text(function(d) { return d.person_info.name; });
 
   // d3.select('.nodes').insert('circle', '[is_source="true"]')
   //   .attr('r', degreeSize(d3.select('[is_source="true"]').data()[0].degree) + 10)

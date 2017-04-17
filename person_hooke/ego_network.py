@@ -13,7 +13,7 @@ cur.execute("SELECT id, display_name, historical_significance, ext_birth_year, e
 node_tuples = cur.fetchall()
 
 # Get edges as list of tuples from database
-cur.execute("SELECT person1_index, person2_index, max_certainty, last_edit, types_list, id FROM relationships WHERE is_approved = true;")
+cur.execute("SELECT person1_index, person2_index, max_certainty, last_edit, types_list, id FROM relationships WHERE is_approved = true AND max_certainty >= 60;")
 edge_tuples = cur.fetchall()
 
 print('Total number of nodes:', len(node_tuples))
@@ -95,7 +95,7 @@ new_data = dict(
             attributes=dict(
                 nodes=[dict(
                     id=n,
-                    name=SG.node[n]['name'],
+                    person_info=dict(name=SG.node[n]['name']),
                     degree=SG.node[n]['degree']) for n in SG.nodes()],
                 links=[dict(
                     source=e[0],

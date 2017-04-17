@@ -118,7 +118,7 @@ new_data = dict(
             attributes=dict(
                 nodes=[dict(
                     id=n,
-                    name=SG.node[n]['name'],
+                    person_info=dict(name=SG.node[n]['name']),
                     degree=SG.node[n]['degree']) for n in SG.nodes()],
                 links=[dict(
                     source=e[0],
