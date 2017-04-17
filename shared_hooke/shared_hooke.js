@@ -203,10 +203,11 @@ function update(threshold, complexity) {
   .attr("cx", function(d) { return d.x; })
   .attr("cy", function(d) { return d.y; });
   node.exit().remove();
-  var nodeEnter = node.enter().append('circle')
-  .attr('r', function(d) { return degreeSize(d.degree);})
-  // Color by degree centrality calculation in NetworkX.
-  // .attr("fill", function(d) { return color(d.distance); })
+  var nodeEnter = node.enter().append('circle');
+
+
+  node = nodeEnter.merge(node)
+    .attr('r', function(d) { return degreeSize(d.degree);})
     .attr('class', function(d) { return 'node distance'+d.distance; })
     .attr('id', function(d) { return "n" + d.id.toString(); })
     .attr("cx", function(d) { return d.x; })
@@ -214,9 +215,7 @@ function update(threshold, complexity) {
     .attr("pulse", false)
     .attr("is_source", function(d) {if (d.distance == 0) {return '0';} else if (d.distance == 6) { return '6';} else {return '1';} })
     // On click, toggle ego networks for the selected node. (See function above.)
-    .on('click', function(d) { toggleClick(d); });
-
-  node = nodeEnter.merge(node);
+    .on('click', function(d) { toggleClick(d, newLinks); });;
 
     node.append("title")
         .text(function(d) { return d.name; });
@@ -237,30 +236,35 @@ function update(threshold, complexity) {
 }
 
 // A function to handle click toggling based on neighboring graph.nodes.
-function toggleClick(d) {
+function toggleClick(d, newLinks) {
 
 
-  // Make object of all neighboring graph.nodes.
+  // Make object of all neighboring nodes.
    connectedNodes = {};
    connectedNodes[d.id] = true;
-   graph.links.forEach(function(l) {
+   newLinks.forEach(function(l) {
      if (l.source.id == d.id) { connectedNodes[l.target.id] = true; }
      else if (l.target.id == d.id) { connectedNodes[l.source.id] = true; };
    });
 
       if (toggle == 0) {
-        recursivePulse(d);
+        // recursivePulse(d);
         // Ternary operator restyles links and nodes if they are adjacent.
         d3.selectAll('.link').style('stroke', function (l) {
           return l.target == d || l.source == d ? 1 : '#D3D3D3';
         });
-        d3.selectAll('.node').style('fill', function (n) {
-          if (n.id in connectedNodes) { return color(n.distance); }
-          else { return '#D3D3D3'; };
-        });
+        d3.selectAll('.node')
+           .classed('faded', function(n){
+             if (n.id in connectedNodes) { return false }
+             else { return true; };
+           })
+           .classed('focussed', function(n){
+             if (n.id in connectedNodes) { return true }
+             else { return false; };
+           })
 
     // Show information when node is clicked
-    d3.select('div#tools').append('span').text("Name: " + d.name + "  |  Historical Significance: " + d.historical_significance + "  |  Lived: " + d.birth_year + "-" + d.death_year);
+    // d3.select('div#tools').append('span').text("Name: " + d.name + "  |  Historical Significance: " + d.historical_significance + "  |  Lived: " + d.birth_year + "-" + d.death_year);
         toggle = 1;
       }
 }

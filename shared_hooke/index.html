@@ -9,30 +9,43 @@
   shape-rendering: geometricPrecision;
   /*stroke-opacity: 1;*/
 }
-.nodes circle {
+.node {
   stroke: #fff;
   stroke-width: 1.5px;
+  transition: stroke-width 0.5s, stroke 0.5s, opacity 0.5s;
+  cursor: pointer;
 }
 .node text {
   pointer-events: none;
   font: 10px sans-serif;
 }
+.node:hover {
+  stroke: #4A4A4A;
+  stroke-width: 2px;
+}
 .node.distance0 {
   fill: #098CE4;
 }
-.nodes circle.distance1 {
+.node.distance1 {
     fill: #ebf6fd;
     stroke: #52A8E3;
     stroke-width: 1.5px;
 }
-.nodes circle.distance2 {
+.node.distance2 {
     fill: #fde6e5;
     stroke: #EE897E;
     stroke-width: 1.5px;
 }
-.nodes circle.distance3 {
+.node.distance3 {
   fill: #F45D4C;
   stroke-width: 1px;
+}
+
+.node.faded {
+  opacity: 0.2;
+}
+.node.focused {
+  stroke: #666666;
 }
 
 #tools div {
