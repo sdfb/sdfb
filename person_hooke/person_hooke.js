@@ -80,8 +80,6 @@ d3.json("baconnetwork.json", function(error, json) {
   var t0 = performance.now();
 
   graph = json.data.attributes;
-  currentNodes = graph.nodes;
-  currentLinks = graph.links;
   sourceId = json.included.id;
 
   degreeSize = d3.scaleLog()

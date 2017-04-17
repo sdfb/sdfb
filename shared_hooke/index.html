@@ -2,23 +2,39 @@
 <meta charset="utf-8">
 <style>
 
-.links line, .links path {
+.links {
   stroke: #000;
   fill: none;
   /*stroke: #000;*/
   shape-rendering: geometricPrecision;
   /*stroke-opacity: 1;*/
 }
-
 .nodes circle {
   stroke: #fff;
   stroke-width: 1.5px;
 }
-
 .node text {
   pointer-events: none;
   font: 10px sans-serif;
 }
+.node.distance0 {
+  fill: #098CE4;
+}
+.nodes circle.distance1 {
+    fill: #ebf6fd;
+    stroke: #52A8E3;
+    stroke-width: 1.5px;
+}
+.nodes circle.distance2 {
+    fill: #fde6e5;
+    stroke: #EE897E;
+    stroke-width: 1.5px;
+}
+.nodes circle.distance3 {
+  fill: #F45D4C;
+  stroke-width: 1px;
+}
+
 #tools div {
   display: inline;
 }
