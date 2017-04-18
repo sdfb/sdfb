@@ -23,7 +23,7 @@ svg.append('rect')
           // .attr('pulse', false)
           .classed('faded', false)
           .classed('focused', false);
-        d3.selectAll('span').remove();
+        // d3.selectAll('span').remove();
         toggle = 0;
       }
     });

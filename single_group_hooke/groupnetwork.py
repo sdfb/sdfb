@@ -15,7 +15,7 @@ cur.execute("SELECT id, display_name, historical_significance, ext_birth_year, e
 node_tuples = cur.fetchall()
 
 # Get edges as list of tuples from database
-cur.execute("SELECT person1_index, person2_index, max_certainty, last_edit, types_list FROM relationships WHERE is_approved = true and max_certainty >=60;")
+cur.execute("SELECT person1_index, person2_index, max_certainty, last_edit, types_list, id FROM relationships WHERE is_approved = true and max_certainty >=60;")
 edge_tuples = cur.fetchall()
 
 print('Total number of nodes:', len(node_tuples))
@@ -41,16 +41,16 @@ edges = []
 altered = {}
 for e in edge_tuples:
     edges.append((e[0], e[1], e[2]))
-    if e[3] == None:
+    if e[3] == None or e[3] == '--- []\n':
         altered[(e[0], e[1])] = False
-        print('none!')
     elif e[3].split()[2] == '2':# and e[4] != '--- []\n':
         altered[(e[0], e[1])] = False
-        print('not altered!')
     else:
         altered[(e[0], e[1])] = True
 
 print('Number of edges with confidence 60% and above:', len(edges))
+
+edge_id = {(e[0], e[1]):e[-1] for e in edge_tuples}
 # Build full network using NetworkX
 G = nx.Graph()
 G.add_nodes_from(node_ids)
@@ -70,6 +70,7 @@ nx.set_node_attributes(G, 'death_year', death_dict)
 nx.set_node_attributes(G, 'groups', groups_dict)
 
 nx.set_edge_attributes(G, 'altered', altered)
+nx.set_edge_attributes(G, 'edge_id', edge_id)
 
 # Create subgraph based on Virginia Company
 vc_ids = [k for k,v in groups_dict.items() if type(v) == str and "Virginia Company" in v]
@@ -77,34 +78,48 @@ vc_ids = [k for k,v in groups_dict.items() if type(v) == str and "Virginia Compa
 all_distance = list(set(sum([G.neighbors(k) for k in vc_ids], [])))
 print(all_distance+vc_ids)
 all_vc_nodes = all_distance+vc_ids
-distance_dict = {}
-for a in all_vc_nodes:
-    if a in vc_ids:
-        distance_dict[a] = 0
-    else:
-        distance_dict[a] = 1
+# distance_dict = {}
+# for a in all_vc_nodes:
+#     if a in vc_ids:
+#         distance_dict[a] = 0
+#     else:
+#         distance_dict[a] = 1
 
 
 SG = G.subgraph(all_vc_nodes)
 
-nx.set_node_attributes(SG, 'distance', distance_dict)
+# nx.set_node_attributes(SG, 'distance', distance_dict)
 
 
 # Create a dictionary for the JSON needed by D3.
 new_data = dict(
-        nodes=[dict(
+        data=dict(
+            type='networks',
+            id='1',
+            attributes=dict(
+                nodes=[dict(
+                    id=n,
+                    person_info=dict(name=SG.node[n]['name']),
+                    degree=SG.node[n]['degree']) for n in SG.nodes()],
+                links=[dict(
+                    source=e[0],
+                    target=e[1],
+                    weight=e[2]['weight'],
+                    altered=e[2]['altered'],
+                    id=e[2]['edge_id']) for e in SG.edges(data=True)])),
+        errors=[dict(
+            status='404',
+            title='Page not found')],
+        meta=dict(
+            principal_investigators=['Daniel Shore', 'Chris Warren', 'Jessica Otis']),
+        included=[dict(
+            type='people',
             id=n,
             name=SG.node[n]['name'],
-            degree=SG.node[n]['degree'],
-            distance=SG.node[n]['distance'],
             historical_significance=SG.node[n]['historical_significance'],
             birth_year=SG.node[n]['birth_year'],
-            death_year=SG.node[n]['death_year']) for n in SG.nodes()],
-        links=[dict(
-            source=e[0],
-            target=e[1],
-            weight=e[2]['weight'],
-            altered=e[2]['altered']) for e in SG.edges(data=True)])
+            death_year=SG.node[n]['death_year']) for n in SG.nodes() if n in vc_ids]
+        )
 
 # Output json of the graph.
 with open('groupnetwork.json', 'w') as output:

@@ -2,22 +2,45 @@
 <meta charset="utf-8">
 <style>
 
-.links line, .links path {
+.links {
   stroke: #000;
   fill: none;
   /*stroke: #000;*/
   shape-rendering: geometricPrecision;
 }
 
-.nodes circle {
+.node {
   stroke: #fff;
   stroke-width: 1.5px;
+  transition: stroke-width 0.5s, stroke 0.5s, opacity 0.5s;
+  cursor: pointer;
 }
 
 .node text {
   pointer-events: none;
   font: 10px sans-serif;
 }
+
+.node:hover {
+  stroke: #4A4A4A;
+  stroke-width: 2px;
+}
+.node.degree0 {
+  fill: #56D365;
+  /*fill: #F45D4C;*/
+}
+.node.degree1 {
+  fill: #B7E5BC;
+  /*fill: #DF947A;*/
+}
+
+.node.faded {
+  opacity: 0.2;
+}
+.node.focused {
+  stroke: #666666;
+}
+
 #tools div {
   display: inline;
 }
