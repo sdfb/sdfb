@@ -132,6 +132,31 @@ var confidenceSliderMain = confidenceSlider.append('input')
 
 	});
 
+  // Radio buttons for network complexity.
+
+var complexityForm = d3.select('div#tools').append('form')
+
+var complexityLabel = complexityForm.append('label')
+    .text('Network Complexity: all_links ')
+    .attr('id', 'complexityLabel');
+
+var complexityButtons = complexityForm.selectAll('input')
+    .data(['direct_paths', 'all_links'])
+    .enter().append('input')
+    .attr('type', 'radio')
+    .attr('name', 'complexity')
+    .attr('value', function(d) {return d;});
+
+complexityButtons.on('change', function () {
+
+    complexity = this.value;
+
+    d3.select("#complexityLabel").text("Network Complexity: "+complexity+" ");
+
+    update(threshold, complexity);
+
+});
+
 function parseData(thresholdLinks,complexity) {
 
   var oneDegreeNodes = [];
@@ -142,7 +167,7 @@ function parseData(thresholdLinks,complexity) {
   })
   oneDegreeNodes = Array.from(new Set(oneDegreeNodes));
 
-  newLinks = thresholdLinks.filter(function(l) { if (oneDegreeNodes.indexOf(l.target) != -1 && oneDegreeNodes.indexOf(l.source) != -1) {return l; }; });
+  var newLinks = thresholdLinks.filter(function(l) { if (oneDegreeNodes.indexOf(l.target) != -1 && oneDegreeNodes.indexOf(l.source) != -1) {return l; }; });
 
   sourceOneNeighbors = [];
   sourceTwoNeighbors = [];
@@ -177,7 +202,15 @@ function parseData(thresholdLinks,complexity) {
     if (d.distance == null) {d.distance = 1;}
   });
 
-  return [oneDegreeNodes, newLinks];
+  if (complexity == 'all_links') {
+    var newNodes = oneDegreeNodes;
+  }
+  else if (complexity == 'direct_paths') {
+    newNodes = oneDegreeNodes.filter(function(d) {if (d.distance != 1) {return d;}; });
+    newLinks = newLinks.filter(function(l) {if (newNodes.indexOf(l.source) != -1 && newNodes.indexOf(l.target) != -1) {return l;}; });
+    // return [newNodes, newLinks];
+  }
+  return [newNodes, newLinks];
 }
 
 function update(threshold, complexity) {
@@ -219,20 +252,6 @@ function update(threshold, complexity) {
 
     node.append("title")
         .text(function(d) { return d.name; });
-
-  // d3.select('.nodes').insert('circle', '[is_source="0"]')
-  //   .attr('r', degreeSize(d3.select('[is_source="0"]').data()[0].degree) + 7)
-  //   // .attr('fill', color(d3.select('[is_source="0"]').data()[0].distance))
-  //   .attr('class', 'source-node')
-  //   .attr("cx", d3.select('[is_source="0"]').data()[0].x)
-  //   .attr("cy", d3.select('[is_source="0"]').data()[0].y);
-  //
-  // d3.select('.nodes').insert('circle', '[is_source="6"]')
-  //   .attr('r', degreeSize(d3.select('[is_source="6"]').data()[0].degree) + 7)
-  //   .attr('fill', color(d3.select('[is_source="6"]').data()[0].distance))
-  //   .attr('class', 'source-node')
-  //   .attr("cx", d3.select('[is_source="6"]').data()[0].x)
-  //   .attr("cy", d3.select('[is_source="6"]').data()[0].y);
 }
 
 // A function to handle click toggling based on neighboring graph.nodes.

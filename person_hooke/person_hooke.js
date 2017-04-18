@@ -149,8 +149,7 @@ var complexityButtons = complexityForm.selectAll('input')
     .enter().append('input')
     .attr('type', 'radio')
     .attr('name', 'complexity')
-    .attr('value', function(d) {return d;})
-    .attr('id', function(d) {return 'complexity'+d;});
+    .attr('value', function(d) {return d;});
 
 complexityButtons.on('change', function () {
 
