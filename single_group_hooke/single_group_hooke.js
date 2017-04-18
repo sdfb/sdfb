@@ -111,7 +111,7 @@ var confidenceSliderLabel = confidenceSlider.append('label')
 	.text('60');
 var confidenceSliderMain = confidenceSlider.append('input')
 	.attr('type', 'range')
-	.attr('min', 0)
+	.attr('min', 60)
 	.attr('max', 100)
 	.attr('value', 60)
 	.attr('id', 'threshold')
