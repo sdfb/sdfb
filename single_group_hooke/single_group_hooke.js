@@ -186,7 +186,6 @@ function update(threshold, complexity) {
   var thresholdLinks = graph.links.filter(function(d) { if (d.weight >= threshold) {return d; }; });
 
   var newData = parseComplexity(thresholdLinks, complexity);
-  // console.log(newData);
   var newNodes = newData[0];
   var newLinks = newData[1];
 

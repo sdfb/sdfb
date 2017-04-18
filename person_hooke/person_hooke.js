@@ -202,17 +202,14 @@ function parseComplexity(thresholdLinks, complexity) {
       var newNodes = [];
       twoDegreeNodes.forEach(function(d){
         var count = 0;
-        // console.log(d.id);
         thresholdLinks.forEach(function(l){
           if (l.source == d && oneDegreeNodes.indexOf(l.target) != -1) { count += 1; }
           else if (l.target == d && oneDegreeNodes.indexOf(l.source) != -1 ) { count += 1; }
         });
-        console.log(count);
         if (count >= 2) { newNodes.push(d); }
       });
 
       // newNodes = Array.from(new Set(newNodes));
-      console.log(newNodes);
       newNodes = oneDegreeNodes.concat(newNodes);
       newLinks = thresholdLinks.filter(function(l) {if (newNodes.indexOf(l.source) != -1 && newNodes.indexOf(l.target) != -1) {return l;}});
       return [newNodes, newLinks];
