@@ -1,14 +1,18 @@
 
 var svg = d3.select("svg"),
-    width = +svg.attr("width"),
-    height = +svg.attr("height");
+    width = +svg.node().getBoundingClientRect().width,
+    height = +svg.node().getBoundingClientRect().height;
+
+console.log(height)
+console.log(d3.select("svg").node().getBoundingClientRect().height)
 
 var graph,
     degreeSize,
     sourceId;
 
 var threshold = 60;
-var complexity = 2.5;
+var complexity = '2';
+console.log(complexity);
 
 svg.append('rect')
     .attr('width', '100%')
@@ -71,9 +75,6 @@ var loading = svg.append("text")
     .attr("font-size", 10)
     .text("Simulating. One moment please…");
 
-
-
-
 d3.json("baconnetwork.json", function(error, json) {
   if (error) throw error;
 
@@ -85,8 +86,6 @@ d3.json("baconnetwork.json", function(error, json) {
   degreeSize = d3.scaleLog()
       .domain([d3.min(graph.nodes, function(d) {return d.degree; }),d3.max(graph.nodes, function(d) {return d.degree; })])
       .range([10,45]);
-
-
 
   var simulation = d3.forceSimulation(graph.nodes)
       // .velocityDecay(.5)
@@ -141,7 +140,7 @@ var confidenceSliderMain = confidenceSlider.append('input')
 var complexityForm = d3.select('div#tools').append('form')
 
 var complexityLabel = complexityForm.append('label')
-    .text('Network Complexity: 2.5 ')
+    .text('Network Complexity: '+complexity+" ")
     .attr('id', 'complexityLabel');
 
 var complexityButtons = complexityForm.selectAll('input')
@@ -149,6 +148,11 @@ var complexityButtons = complexityForm.selectAll('input')
     .enter().append('input')
     .attr('type', 'radio')
     .attr('name', 'complexity')
+    .attr('checked', function(d){ 
+      if (d==complexity){
+        return 'checked';
+      }
+    })
     .attr('value', function(d) {return d;});
 
 complexityButtons.on('change', function () {

@@ -2,6 +2,11 @@
 <meta charset="utf-8">
 <style>
 
+#visualization {
+  width: 100vw;
+  height: calc(100vh - 80px);
+}
+
 .links {
   stroke: #000;
   fill: none;
@@ -55,7 +60,7 @@ form, select {
 </style>
 <body>
 <div id='tools'></div>
-<svg width="1500" height="1150"></svg>
+<svg id='visualization'></svg>
 <script src="https://d3js.org/d3.v4.min.js"></script>
 <script src="person_hooke.js"></script>
 </body>
