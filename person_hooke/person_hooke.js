@@ -3,8 +3,8 @@ var svg = d3.select("svg"),
     width = +svg.node().getBoundingClientRect().width,
     height = +svg.node().getBoundingClientRect().height;
 
-console.log(height)
-console.log(d3.select("svg").node().getBoundingClientRect().height)
+// console.log(height)
+// console.log(d3.select("svg").node().getBoundingClientRect().height)
 
 var graph,
     degreeSize,
@@ -13,6 +13,8 @@ var graph,
 var confidenceMin = 60;
 var confidenceMax = 100;
 var complexity = '2';
+var dateMin = 1500;
+var dateMax = 1700;
 
 svg.append('rect')
     .attr('width', '100%')
@@ -94,15 +96,14 @@ d3.json("baconnetwork.json", function(error, json) {
     simulation.tick();
   }
 
-  update(confidenceMin, confidenceMax, complexity);
+  update(confidenceMin, confidenceMax, dateMin, dateMax, complexity);
 
   var t1 = performance.now();
 
   console.log("Graph took " + (t1 - t0) + " milliseconds to load.")
 
-
-
   createConfidenceGraph();
+  createDateGraph();
 
 });
 
@@ -157,15 +158,19 @@ complexityButtons.on('change', function () {
 
     d3.select("#complexityLabel").text("Network Complexity: "+complexity+" ");
 
-    update(confidenceMin, confidenceMax, complexity);
+    update(confidenceMin, confidenceMax, dateMin, dateMax, complexity);
 
 });
 
-function countConfidenceFrequency(attribute) {
+function countConfidenceFrequency() {
+  var confidence = d3.range(60,101);
+  console.log(confidence);
   frequencies = {}
+  confidence.forEach(function(c){
+    frequencies[c.toString()] = 0;
+  });
   graph.links.forEach(function(l){
-    if (!(l[attribute] in frequencies)) {frequencies[l[attribute]] = 1;}
-    else {frequencies[l[attribute]] += 1;}
+    frequencies[l.weight] += 1;
   });
   data = [];
   for (x in frequencies) {
@@ -174,10 +179,27 @@ function countConfidenceFrequency(attribute) {
   return data;
 }
 
+function countDateFrequency() {
+  var years = d3.range(1500,1701);
+  frequencies = {}
+  years.forEach(function(y) {
+    frequencies[y.toString()] = 0;
+  });
+  years.forEach(function(y) {
+    graph.links.forEach(function(l) {
+      if (y >= l.start_year && y <= l.end_year) { frequencies[y.toString()] += 1; }
+    });
+  });
+  data = [];
+  for (x in frequencies) {
+    data.push({'year': x, 'count':frequencies[x]});
+  }
+  return data;
+}
+
 function createConfidenceGraph() {
 
-  confidenceData = countConfidenceFrequency('weight');
-  console.log(confidenceData);
+  confidenceData = countConfidenceFrequency();
   var confidenceGraph = d3.select('div#tools').append('svg').attr('width', 500).attr('height', 100),
       confidenceMargin = {top: '20', right: '20', bottom: '30', left: '40'};
       confidenceWidth = +confidenceGraph.attr("width") - confidenceMargin.left - confidenceMargin.right,
@@ -226,19 +248,18 @@ function createConfidenceGraph() {
       .attr("height", function(d) { return confidenceHeight - confidenceY(d.count); });
 
   function brushed() {
-    var s = d3.event.selection || confidenceX.domain();
+    var s = d3.event.selection || confidenceX.range();
+    console.log(s);
     // var scale = d3.scaleLinear().domain(confidenceX.range()).range([59,101])
     confidenceMin = (s[0]-20)/confidenceX.bandwidth()+60;
     confidenceMax = (s[1]-60)/confidenceX.bandwidth()+60;
-    console.log([Math.round(confidenceMin), Math.round(confidenceMax)]);
-    update(confidenceMin, confidenceMax, complexity)
+    update(confidenceMin, confidenceMax, dateMin, dateMax, complexity)
   }
  }
 
-function createdateGraph() {
+function createDateGraph() {
 
-   dateData = countFrequency('weight');
-   console.log(dateData);
+   dateData = countDateFrequency();
    var dateGraph = d3.select('div#tools').append('svg').attr('width', 500).attr('height', 100),
        dateMargin = {top: '20', right: '20', bottom: '30', left: '40'};
        dateWidth = +dateGraph.attr("width") - dateMargin.left - dateMargin.right,
@@ -250,7 +271,7 @@ function createdateGraph() {
    var dateG = dateGraph.append("g")
        .attr("transform", "translate(" + dateMargin.left + "," + dateMargin.top + ")");
 
-   dateX.domain(dateData.map(function(d) { return d.weight; }));
+   dateX.domain(dateData.map(function(d) { return d.year; }));
    dateY.domain([0, d3.max(dateData, function(d) { return d.count; })]);
 
    var brush = d3.brushX()
@@ -281,7 +302,7 @@ function createdateGraph() {
      .data(dateData)
      .enter().append("rect")
        .attr("class", "bar")
-       .attr("x", function(d) { return dateX(d.weight); })
+       .attr("x", function(d) { return dateX(d.year); })
        .attr("y", function(d) { return dateY(d.count); })
        .attr("width", dateX.bandwidth())
        .attr("height", function(d) { return dateHeight - dateY(d.count); });
@@ -289,10 +310,10 @@ function createdateGraph() {
    function brushed() {
      var s = d3.event.selection || dateX.domain();
      // var scale = d3.scaleLinear().domain(dateX.range()).range([59,101])
-     dateMin = (s[0]-20)/dateX.bandwidth()+60;
-     dateMax = (s[1]-60)/dateX.bandwidth()+60;
+     dateMin = (s[0])/dateX.bandwidth()+1500;
+     dateMax = (s[1])/dateX.bandwidth()+1500;
      console.log([Math.round(dateMin), Math.round(dateMax)]);
-     update(dateMin, dateMax, complexity)
+     update(confidenceMin, confidenceMax, dateMin, dateMax, complexity)
    }
   }
 
@@ -363,12 +384,16 @@ function parseComplexity(thresholdLinks, complexity) {
     }
 }
 
-function update(confidenceMin, confidenceMax, complexity) {
+function update(confidenceMin, confidenceMax, dateMin, dateMax, complexity) {
 
   d3.select('.source-node').remove(); //Get rid of old source node highlight.
 
   // Find the links and nodes that are at or above the threshold.
-  var thresholdLinks = graph.links.filter(function(d) { if (d.weight >= confidenceMin && d.weight <= confidenceMax) {return d; }; });
+  var thresholdLinks = graph.links.filter(function(d) {
+    if (d.weight >= confidenceMin && d.weight <= confidenceMax && parseInt(d.start_year) <= dateMax && parseInt(d.end_year) >= dateMin) {
+      return d;
+    };
+  });
 
   var newData = parseComplexity(thresholdLinks, complexity);
   var newNodes = newData[0];
