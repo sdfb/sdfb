@@ -19,7 +19,10 @@ angular.module('redesign2017App')
 					graph,
 					degreeSize,
 					sourceId,
-					threshold = scope.config.confidenceMin,
+					confidenceMin = scope.config.confidenceMin,
+					confidenceMax = scope.config.confidenceMax,
+					dateMin = scope.config.dateMin,
+					dateMax = scope.config.dateMax,
 					complexity = scope.config.networkComplexity;
 
 				// HIDDEN SEARCH BAR SINCE NOT WORKING.
@@ -51,11 +54,11 @@ angular.module('redesign2017App')
 				// 	});
 
 				// Confidence
-				// A slider that removes nodes and edges below the input threshold.
+				// A slider that removes nodes and edges below the input confidenceMin.
 				// var confidenceSlider = d3.select('div#tools').append('div').text('Confidence Estimate (1- and 2-degree only): ');
 
 				// var confidenceSliderLabel = confidenceSlider.append('label')
-				// 	.attr('for', 'threshold')
+				// 	.attr('for', 'confidenceMin')
 				// 	.attr('id', 'confidenceLabel')
 				// 	.text('60');
 				// var confidenceSliderMain = confidenceSlider.append('input')
@@ -63,15 +66,15 @@ angular.module('redesign2017App')
 				// 	.attr('min', 60)
 				// 	.attr('max', 100)
 				// 	.attr('value', 60)
-				// 	.attr('id', 'threshold')
+				// 	.attr('id', 'confidenceMin')
 				// 	.style('width', '50%')
 				// 	.style('display', 'block')
 				// 	.on('input', function() {
-				// 		threshold = this.value;
+				// 		confidenceMin = this.value;
 
-				// 		d3.select('#confidenceLabel').text(threshold);
+				// 		d3.select('#confidenceLabel').text(confidenceMin);
 
-				// 		update(threshold, complexity);
+				// 		update(confidenceMin, complexity);
 
 				// 	});
 
@@ -183,7 +186,7 @@ angular.module('redesign2017App')
 				// complexityButtons.on('change', function() {
 				// 	complexity = this.value;
 				// 	d3.select("#complexityLabel").text("Network Complexity: " + complexity + " ");
-				// 	update(threshold, complexity);
+				// 	update(confidenceMin, complexity);
 				// });
 
 
@@ -322,13 +325,13 @@ angular.module('redesign2017App')
 
 				console.log("Graph took " + (t1 - t0) + " milliseconds to load.")
 
-				function update(threshold, complexity) {
+				function update(confidenceMin, confidenceMax, dateMin, dateMax, complexity) {
 					console.log('updating the force layout');
 					d3.select('.source-node').remove(); //Get rid of old source node highlight.
 
-					// Find the links and nodes that are at or above the threshold.
+					// Find the links and nodes that are at or above the confidenceMin.
 					var thresholdLinks = graph.links.filter(function(d) {
-						if (d.weight >= threshold) {
+						if (d.weight >= confidenceMin && d.weight <= confidenceMax && parseInt(d.start_year) <= dateMax && parseInt(d.end_year) >= dateMin) {
 							return d;
 						};
 					});
@@ -410,12 +413,12 @@ angular.module('redesign2017App')
 					scope.sizeMax = degreeSize.domain()[1]
 				}
 
-				update(threshold, complexity);
+				update(confidenceMin, confidenceMax, dateMin, dateMax, complexity);
 
 				//update triggered from the controller
 				scope.$on('force layout update', function(event, args) {
 					console.log(event, args);
-					update(threshold, complexity);
+					update(confidenceMin, confidenceMax, dateMin, dateMax, complexity);
 				});
 			}
 		};
