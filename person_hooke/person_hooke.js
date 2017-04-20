@@ -8,7 +8,7 @@ var svg = d3.select("svg"),
 
 var graph,
     degreeSize,
-    sourceId;
+    sourceNode;
 
 var confidenceMin = 60;
 var confidenceMax = 100;
@@ -74,7 +74,7 @@ d3.json("baconnetwork.json", function(error, json) {
   var t0 = performance.now();
 
   graph = json.data.attributes;
-  sourceId = json.included.id;
+  sourceNode = json.included;
 
   degreeSize = d3.scaleLog()
       .domain([d3.min(graph.nodes, function(d) {return d.degree; }),d3.max(graph.nodes, function(d) {return d.degree; })])
@@ -164,7 +164,6 @@ complexityButtons.on('change', function () {
 
 function countConfidenceFrequency() {
   var confidence = d3.range(60,101);
-  console.log(confidence);
   frequencies = {}
   confidence.forEach(function(c){
     frequencies[c.toString()] = 0;
@@ -180,7 +179,7 @@ function countConfidenceFrequency() {
 }
 
 function countDateFrequency() {
-  var years = d3.range(1500,1701);
+  var years = d3.range(parseInt(sourceNode.birth_year),parseInt(sourceNode.death_year)+1);
   frequencies = {}
   years.forEach(function(y) {
     frequencies[y.toString()] = 0;
@@ -201,7 +200,7 @@ function createConfidenceGraph() {
 
   confidenceData = countConfidenceFrequency();
   var confidenceGraph = d3.select('div#tools').append('svg').attr('width', 500).attr('height', 100),
-      confidenceMargin = {top: '20', right: '20', bottom: '30', left: '40'};
+      confidenceMargin = {top: 20, right: 20, bottom: 30, left: 40};
       confidenceWidth = +confidenceGraph.attr("width") - confidenceMargin.left - confidenceMargin.right,
       confidenceHeight = +confidenceGraph.attr("height") - confidenceMargin.top - confidenceMargin.bottom;
 
@@ -218,25 +217,10 @@ function createConfidenceGraph() {
     .extent([[0, 0], [confidenceWidth, confidenceHeight]])
     .on("end", brushed);
 
-  // confidenceG.append("g")
-  //     .attr("class", "axis axis--x")
-  //     .attr("transform", "translate(0," + confidenceHeight + ")")
-  //     .call(d3.axisBottom(confidenceX));
-  //
-  // confidenceG.append("g")
-  //     .attr("class", "axis axis--y")
-  //     .call(d3.axisLeft(confidenceY))
-  //   .append("text")
-  //     .attr("transform", "rotate(-90)")
-  //     .attr("y", 6)
-  //     .attr("dy", "0.71em")
-  //     .attr("text-anchor", "end")
-  //     .text("Frequency");
-
   confidenceG.append("g")
-      .attr("class", "brush")
-      .call(brush)
-      .call(brush.move, confidenceX.range());
+      .attr("class", "axis axis--x")
+      .attr("transform", "translate(0," + confidenceHeight + ")")
+      .call(d3.axisBottom(confidenceX).tickValues(["60", "100"]).tickFormat(function(d){return d + "%"}));
 
   confidenceG.selectAll(".bar")
     .data(confidenceData)
@@ -247,12 +231,19 @@ function createConfidenceGraph() {
       .attr("width", confidenceX.bandwidth())
       .attr("height", function(d) { return confidenceHeight - confidenceY(d.count); });
 
+  confidenceG.append("g")
+      .attr("class", "brush")
+      .call(brush)
+      .call(brush.move, confidenceX.range());
+
   function brushed() {
     var s = d3.event.selection || confidenceX.range();
-    console.log(s);
-    // var scale = d3.scaleLinear().domain(confidenceX.range()).range([59,101])
-    confidenceMin = (s[0]-20)/confidenceX.bandwidth()+60;
-    confidenceMax = (s[1]-60)/confidenceX.bandwidth()+60;
+    var eachBand = confidenceX.step();
+    var marginInterval = confidenceMargin.right/eachBand
+    var minIndex = Math.round((s[0] / eachBand) - marginInterval);
+    var maxIndex = Math.round((s[1] / eachBand) - marginInterval);
+    var confidenceMin = confidenceX.domain()[minIndex] || "60";
+    var confidenceMax = confidenceX.domain()[maxIndex] || "100";
     update(confidenceMin, confidenceMax, dateMin, dateMax, complexity)
   }
  }
@@ -278,25 +269,10 @@ function createDateGraph() {
      .extent([[0, 0], [dateWidth, dateHeight]])
      .on("end", brushed);
 
-   // dateG.append("g")
-   //     .attr("class", "axis axis--x")
-   //     .attr("transform", "translate(0," + dateHeight + ")")
-   //     .call(d3.axisBottom(dateX));
-   //
-   // dateG.append("g")
-   //     .attr("class", "axis axis--y")
-   //     .call(d3.axisLeft(dateY))
-   //   .append("text")
-   //     .attr("transform", "rotate(-90)")
-   //     .attr("y", 6)
-   //     .attr("dy", "0.71em")
-   //     .attr("text-anchor", "end")
-   //     .text("Frequency");
-
    dateG.append("g")
-       .attr("class", "brush")
-       .call(brush)
-       .call(brush.move, dateX.range());
+       .attr("class", "axis axis--x")
+       .attr("transform", "translate(0," + dateHeight + ")")
+       .call(d3.axisBottom(dateX).tickValues([sourceNode.birth_year, sourceNode.death_year]));
 
    dateG.selectAll(".bar")
      .data(dateData)
@@ -307,12 +283,19 @@ function createDateGraph() {
        .attr("width", dateX.bandwidth())
        .attr("height", function(d) { return dateHeight - dateY(d.count); });
 
+   dateG.append("g")
+       .attr("class", "brush")
+       .call(brush)
+       .call(brush.move, dateX.range());
+
    function brushed() {
-     var s = d3.event.selection || dateX.domain();
-     // var scale = d3.scaleLinear().domain(dateX.range()).range([59,101])
-     dateMin = (s[0])/dateX.bandwidth()+1500;
-     dateMax = (s[1])/dateX.bandwidth()+1500;
-     console.log([Math.round(dateMin), Math.round(dateMax)]);
+     var s = d3.event.selection || dateX.range();
+     var eachBand = dateX.step();
+     var marginInterval = dateMargin.right/eachBand
+     var minIndex = Math.round((s[0] / eachBand) - marginInterval);
+     var maxIndex = Math.round((s[1] / eachBand) - marginInterval);
+     var dateMin = dateX.domain()[minIndex] || sourceNode.birth_year;
+     var dateMax = dateX.domain()[maxIndex] || sourceNode.death_year;
      update(confidenceMin, confidenceMax, dateMin, dateMax, complexity)
    }
   }
@@ -321,7 +304,7 @@ function parseComplexity(thresholdLinks, complexity) {
 
   var oneDegreeNodes = [];
   thresholdLinks.forEach(function(l){
-    if (l.source.id == sourceId || l.target.id == sourceId ) { oneDegreeNodes.push(l.source); oneDegreeNodes.push(l.target);};
+    if (l.source.id == sourceNode.id || l.target.id == sourceNode.id ) { oneDegreeNodes.push(l.source); oneDegreeNodes.push(l.target);};
   });
 
   oneDegreeNodes = Array.from(new Set(oneDegreeNodes));
@@ -337,13 +320,13 @@ function parseComplexity(thresholdLinks, complexity) {
   var allNodes = oneDegreeNodes.concat(twoDegreeNodes);
 
   allNodes.forEach(function(d) {
-    if (d.id == sourceId) { d.distance = 0; }
+    if (d.id == sourceNode.id) { d.distance = 0; }
     else if (oneDegreeNodes.indexOf(d) != -1) { d.distance = 1; }
     else { d.distance = 2; }
   });
 
     if (complexity == '1') {
-      var newLinks = thresholdLinks.filter(function(l) { if (l.source.id == sourceId || l.target.id == sourceId) { return l; }})
+      var newLinks = thresholdLinks.filter(function(l) { if (l.source.id == sourceNode.id || l.target.id == sourceNode.id) { return l; }})
       return [oneDegreeNodes, newLinks];
     }
 
@@ -428,7 +411,7 @@ function update(confidenceMin, confidenceMax, dateMin, dateMax, complexity) {
     .attr("cx", function(d) { return d.x; })
     .attr("cy", function(d) { return d.y; })
     // .attr("pulse", false)
-    .attr("is_source", function(d) {if (d.id == sourceId) {return 'true';} })
+    .attr("is_source", function(d) {if (d.id == sourceNode.id) {return 'true';} })
     // On click, toggle ego networks for the selected node. (See function above.)
     .on('click', function(d) { toggleClick(d, newLinks); });
 
