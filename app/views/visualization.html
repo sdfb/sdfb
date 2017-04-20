@@ -1,0 +1,17 @@
+<div class="panels-container">
+	<section class="on-the-left">
+		<search-panel class="panel left" style="background-color: white;"></search-panel>
+  	<contextual-info-panel class="panel"></contextual-info-panel>
+	</section>
+	<section class="on-the-right">
+		<legend-panel class="panel"></legend-panel>
+		<div class="panel smallest"><i class="fa fa-plus" aria-hidden="true"></i></div>
+		<div class="panel smallest"><i class="fa fa-minus" aria-hidden="true"></i></div>
+	</section>
+</div>
+
+<div class="visualization-container">
+	<force-layout ng-if="config.viewMode == 'force'"></force-layout>
+	<concentric-layout ng-if="config.viewMode == 'concentric'"></concentric-layout>
+	<groups-bar></groups-bar>
+</div>

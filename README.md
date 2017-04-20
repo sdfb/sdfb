@@ -1,12 +1,12 @@
 # redesign2017
-New designs for front-end of SDFB website
 
-Using agreed-upon language "Hooke graph" for force-directed network graphs (After 17th-century scientist Robert Hooke)
+This project is generated with [yo angular generator](https://github.com/yeoman/generator-angular)
+version 0.15.1.
 
-Beginning with code from these Gists used during the design sprint:
+## Build & development
 
-[Single person Hooke graph](https://gist.github.com/jrladd/40c052830a563687e4f48e33f76df81a)
+Run `grunt` for building and `grunt serve` for preview.
 
-[Shared network Hooke graph](https://gist.github.com/jrladd/bcafd82607e788202d39a613f91b9929)
+## Testing
 
-[Single group Hooke graph](https://gist.github.com/jrladd/5a42736c92c7edbffdf800d3276ea0fa)
+Running `grunt test` will run the unit tests with karma.
