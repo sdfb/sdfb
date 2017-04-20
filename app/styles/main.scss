@@ -1,11 +1,21 @@
 $icon-font-path: "../bower_components/bootstrap-sass-official/assets/fonts/bootstrap/";
 // bower:scss
 @import "bootstrap-sass-official/assets/stylesheets/_bootstrap.scss";
+@import url('https://fonts.googleapis.com/css?family=Open+Sans:400,400i,700,700i');
 // endbower
 
 body {
 	background-image: linear-gradient(120deg, #fdfbfb 0%, #ebedee 100%);
   padding-top: 50px;
+  letter-spacing: 0.5px;
+  font-weight: 400;
+  font-family: 'Open Sans', sans-serif;
+}
+
+h3 {
+	text-transform: uppercase;
+	font-size: 12px;
+	margin: 0px;
 }
 
 .panels-container {
@@ -13,7 +23,12 @@ body {
     height: calc(100vh - 50px);
     padding: 10px;
     position: relative;
+    pointer-events: none;
     z-index: 100;
+}
+
+.panels-container * {
+    pointer-events: auto;
 }
 
 .on-the-left {
@@ -22,16 +37,33 @@ body {
 .on-the-right {
 	float: right;
 }
+.on-the-right > * {
+	float: right;
+}
 .on-the-left, .on-the-right{
 	width: 25%;
 }
 
 .panel {
-	display: flex;
+	display: block;
 	width: 100%;
 }
 .panel.smallest {
-	width: inherit;
+	width: 45px;
+	box-sizing: border-box;
+}
+
+.controls {
+	font-size: 16px;
+	display: flex;
+	flex-direction: column;
+}
+
+.controls > span {
+	padding: 15px 15px 0 15px;
+}
+.controls > span:last-child {
+	padding: 15px 15px 15px 15px;
 }
 
 .visualization-container {
@@ -55,6 +87,81 @@ body {
 	width: 100%;
 	bottom: 0;
 	background-color: #ddd;
+}
+
+// LEGEND
+legend-panel {
+	position: relative;
+}
+legend-panel > .close {
+	display: block;
+	position: absolute;
+	right: 15px;
+	top: 15px;
+}
+
+.legend {
+	display: flex;
+	flex-direction: column;
+  align-items: center;
+  padding: 20px 0;
+}
+
+.legend-text {
+	font-size: 10px;
+	color: #9B9B9B;
+	letter-spacing: 0.49px;
+}
+
+// FORCE LAYOUT
+.links {
+  stroke: #000;
+  fill: none;
+  /*stroke: #000;*/
+  shape-rendering: geometricPrecision;
+}
+
+.node {
+  stroke: #fff;
+  stroke-width: 1.5px;
+  transition: stroke-width 0.5s, stroke 0.5s, opacity 0.5s;
+  cursor: pointer;
+}
+
+.node text {
+  pointer-events: none;
+  font: 10px sans-serif;
+}
+
+.node:hover {
+  stroke: #4A4A4A;
+  stroke-width: 2px;
+}
+.node.degree0 {
+  fill: #0A8CE4;
+  /*fill: #F45D4C;*/
+}
+.node.degree1 {
+  fill: #93B9D2;
+  /*fill: #DF947A;*/
+}
+.node.degree2 {
+  fill: #D4D5D6;
+}
+.node.faded {
+  opacity: 0.2;
+}
+.node.focused {
+  stroke: #666666;
+}
+
+#tools div {
+  display: inline;
+}
+
+form, select {
+  float: right;
+  display: inline;
 }
 
 

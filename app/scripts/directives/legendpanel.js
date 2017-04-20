@@ -9,10 +9,10 @@
 angular.module('redesign2017App')
   .directive('legendPanel', function () {
     return {
-      template: '<div></div>',
+      templateUrl: './views/legend.html',
       restrict: 'E',
       link: function postLink(scope, element, attrs) {
-        element.text('this is the legendPanel directive');
+        // element.text('this is the legendPanel directive');
       }
     };
   });

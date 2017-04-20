@@ -34,7 +34,7 @@ angular
             return {
               viewObject:0, //0 = people, 1 = groups
               viewMode:'force',
-              networkComplexity: 2,
+              networkComplexity: '2',
               dateMin:1500,
               dateMax:1700,
               confidenceMin:60,
@@ -44,7 +44,7 @@ angular
             }
           },
           initialData: function(apiService) {
-            return apiService.getFile('./data/baconnetwork.json')
+            return apiService.getFile('./data/baconnetwork.json');
           }
         }
       })

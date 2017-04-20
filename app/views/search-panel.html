@@ -5,7 +5,7 @@
     <input placeholder="Search for a person" type="text" ng-model="personSelected" uib-typeahead="person for person in people | filter:$viewValue | limitTo:8" class="form-control">
     <h4>Shared Network</h4>
     <!-- <pre>Model: {{selected2 | json}}</pre> -->
-    <input placeholder="Search for another person" type="text" ng-model="selected2" uib-typeahead="person for person in people | filter:$viewValue | limitTo:8" class="form-control">
+    <input ng-disabled="true" placeholder="Search for another person" type="text" ng-model="selected2" uib-typeahead="person for person in people | filter:$viewValue | limitTo:8" class="form-control">
     <h5>Add a person to visualize a shared network</h5>
     <hr/>
     <h4>Choose a layout</h4>
@@ -15,7 +15,7 @@
         <label class="btn btn-primary" ng-model="config.viewMode" uib-btn-radio="'concentric'">Concentric</label>
     </div>
     <h4>Network Simplicity</h4>
-    SLIDER HERE
+    [ A slider will be put here ]
   </uib-tab>
   <uib-tab index="1" heading="Groups">Groups options</uib-tab>
 </uib-tabset>
