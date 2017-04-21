@@ -233,7 +233,12 @@ angular.module('redesign2017App')
 							})
 
 						// Log information when node is clicked
-						console.log(d)
+						// console.log(d.person_info.name)
+
+						scope.currentSelection.person1 = scope.getElementData(d.id, d.person_info.name);
+						scope.$apply();
+						console.log('currentSelection',scope.currentSelection);
+
 							// d3.select('div#tools').append('span').text("Name: " + d.name + "  |  Historical Significance: " + d.historical_significance + "  |  Lived: " + d.birth_year + "-" + d.death_year);
 						toggle = 1;
 					}
@@ -253,6 +258,9 @@ angular.module('redesign2017App')
 								.classed('faded', false)
 								.classed('focused', false);
 							// d3.selectAll('span').remove();
+							scope.currentSelection = {};
+							scope.$apply();
+							console.log('currentSelection',scope.currentSelection);
 							toggle = 0;
 						}
 					});

@@ -9,10 +9,12 @@
 angular.module('redesign2017App')
   .directive('contextualInfoPanel', function () {
     return {
-      template: '<div></div>',
+      templateUrl: './views/contextual-info-panel.html',
       restrict: 'E',
       link: function postLink(scope, element, attrs) {
-        element.text('this is the contextualInfoPanel directive');
+        // element.text('this is the contextualInfoPanel directive');
+        // console.log(scope.currentSelection)
+
       }
     };
   });

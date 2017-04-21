@@ -3,13 +3,25 @@ $icon-font-path: "../bower_components/bootstrap-sass-official/assets/fonts/boots
 @import "bootstrap-sass-official/assets/stylesheets/_bootstrap.scss";
 // endbower
 
+
+$timelineColor: blue;
+$strokeDanger: red;
+$mainTextColor: #4A4A4A;
 body {
 	background-image: linear-gradient(120deg, #fdfbfb 0%, #ebedee 100%);
   padding-top: 50px;
   letter-spacing: 0.5px;
   font-weight: 400;
   font-family: 'Open Sans', sans-serif;
-  color: #4A4A4A;
+  color: $mainTextColor;
+}
+
+h2 {
+	font-size: 14px;
+	color: $mainTextColor;
+	font-weight: 700;
+	letter-spacing: 0.58px;
+	margin-top: 10px;
 }
 
 h3 {
@@ -17,6 +29,14 @@ h3 {
 	font-size: 12px;
 	font-weight: 700;
 	margin: 0px;
+}
+
+p {
+	font-size: 10px;
+}
+
+path.danger {
+	stroke: $strokeDanger;
 }
 
 .panels-container {
@@ -44,6 +64,10 @@ h3 {
 }
 .on-the-left, .on-the-right{
 	width: 25%;
+	pointer-events: none;
+}
+.on-the-left *, .on-the-right *{
+	pointer-events: auto;
 }
 
 .panel {
@@ -135,6 +159,67 @@ legend-panel > .close {
 	font-size: 10px;
 	color: #9B9B9B;
 	letter-spacing: 0.49px;
+}
+
+// Contextual Info Panel
+
+contextual-info-panel > section {
+	padding: 5px 15px;
+	text-align: center;
+}
+
+#more-info {
+	background-color: #ddd;
+    display: flex;
+    justify-content: center;
+    padding: 10px 0px;
+    align-items: center;
+}
+#more-info a {
+	margin-right:10px;
+}
+#more-info span:last-child {
+	margin-right:0px;
+}
+#more-info img {
+	width: auto;
+	height: 25px;
+}
+#more-info i {
+	font-size: 27px;
+}
+
+// Small time-line
+
+small-timeline svg {
+	width: 100%;
+	height: 30px;
+	// background-color: #fafafa;
+}
+
+small-timeline .background-line {
+	stroke: #9B9B9B;
+	stroke-width: 1px;
+}
+
+small-timeline path.life {
+	stroke-width:2px;
+	stroke: $timelineColor;
+}
+
+small-timeline path.terminator {
+	stroke-width:2px;
+	stroke: $timelineColor;
+}
+
+small-timeline .label {
+	font-size: 8px;
+	color: #9B9B9B;
+}
+
+small-timeline .label.life {
+	text-anchor: middle;
+	color: $mainTextColor;
 }
 
 // FORCE LAYOUT
