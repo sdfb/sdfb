@@ -13,20 +13,17 @@
 		      <th>Person 1</th>
 		      <th>Person 2</th>
 		      <th>Maximum Confidence</th>
-		      <th><%=t '.actions', :default => t("helpers.actions") %></th>
+		      <th></th>
 		    </tr>
 		  </thead>
 		  <tbody>
 		    <% @all_results.each do |relationship| %>
 		      <tr>
-		        <td><%= relationship.id %></td>
+		        <td><%= link_to relationship.id, relationship %></td>
 		        <td><%= link_to relationship.get_person1_name, person_path(relationship.person1_index) %></td>
 		        <td><%= link_to relationship.get_person2_name, person_path(relationship.person2_index) %></td>
 		        <td><%= relationship.max_certainty %>%</td>
 		        <td>
-		          <% if can? :show, relationship %>
-		            <%= link_to 'Show', relationship, :class => 'btn btn-mini'  %>
-		          <% end %>
 		          <% if can? :update, relationship %>
 		            <%= link_to t('.edit', :default => t("helpers.links.edit")),
 		                        edit_relationship_path(relationship), :class => 'btn btn-mini' %>

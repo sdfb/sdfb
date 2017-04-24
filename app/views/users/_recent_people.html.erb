@@ -17,13 +17,13 @@
           <th>Death Year Type</th>
           <th>Extant Death Year</th>
           <th>Historical significance</th>
-          <th><%=t '.actions', :default => t("helpers.actions") %></th>
+          <th></th>
         </tr>
       </thead>
       <tbody>
         <% @recent_people.each do |person| %>
           <tr>
-            <td><%= person.id %></td>
+            <td><%= link_to person.id, person %></td>
             <% if ! (person.odnb_id == 0) %>  
               <td><%= person.odnb_id %></td>
             <% else %>
@@ -40,9 +40,6 @@
             <td><%= person.ext_death_year %></td>
             <td><%= person.historical_significance %></td>
             <td>
-              <% if can? :show, person %>
-                  <%= link_to 'Show', person, :class => 'btn btn-mini' %>
-              <% end %>
               <% if can? :update, person %>      
                   <%= link_to t('.edit', :default => t("helpers.links.edit")),
                               edit_person_path(person), :class => 'btn btn-mini' %>

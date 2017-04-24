@@ -18,9 +18,6 @@
           <%= link_to t('.edit', :default => t("helpers.links.edit")),
                   edit_person_path(@person), :class => 'btn btn-mini' %>
         <% end %>
-        <% if can? :delete, @person %>
-          <%= link_to 'Delete', @person, :class => 'btn btn-mini btn-danger',method: :delete, data: { confirm: 'Are you sure that you want to permanently delete this record and all associated records?' } %>
-        <% end %>
       </h2>
       <br>
       <% person_data = @person %>

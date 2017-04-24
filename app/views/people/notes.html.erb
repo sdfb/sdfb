@@ -24,19 +24,16 @@
               <th>SDFB Note ID</th>
               <th>Note</th>
               <th>Citation</th>
-              <th><%=t '.actions', :default => t("helpers.actions") %></th>
+              <th></th>
             </tr>
           </thead>
           <tbody>
             <% @user_person_contribs.each do |user_person_contrib| %>
               <tr>
-                <td><%= user_person_contrib.id %></td>
+                <td><%= link_to user_person_contrib.id, user_person_contrib %></td>
                 <td><%= user_person_contrib.annotation %></td>
                 <td><%= user_person_contrib.bibliography %></td>
                 <td>
-                  <% if can? :show, user_person_contrib %>
-                    <%= link_to 'Show', user_person_contrib, :class => 'btn btn-mini' %>
-                  <% end %>
                   <% if can? :update, user_person_contrib %>
                     <%= link_to t('.edit', :default => t("helpers.links.edit")),
                               edit_user_person_contrib_path(user_person_contrib), :class => 'btn btn-mini' %>

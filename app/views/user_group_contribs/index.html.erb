@@ -12,27 +12,21 @@
         <th>Group</th>
         <th>Note</th>
         <th>Citation</th>
-        <th><%=t '.actions', :default => t("helpers.actions") %></th>
+        <th></th>
       </tr>
     </thead>
     <tbody>
       <% @user_group_contribs.each do |user_group_contrib| %>
         <tr>
-          <td><%= user_group_contrib.id %></td>
+          <td><%= link_to user_group_contrib.id, user_group_contrib %></td>
           <td><%= link_to Group.find(user_group_contrib.group_id).name, group_path(user_group_contrib.group_id) %></td>
           <td><%= user_group_contrib.annotation %></td>
           <td><%= user_group_contrib.bibliography %></td>
           <td>
-            <% if can? :show, user_group_contrib %>
-                <%= link_to 'Show', user_group_contrib, :class => 'btn btn-mini' %>
-            <% end %>
             <% if can? :update, user_group_contrib %>
                 <%= link_to t('.edit', :default => t("helpers.links.edit")),
                           edit_user_group_contrib_path(user_group_contrib), :class => 'btn btn-mini' %>
             <% end %>
-              <% if can? :delete, user_group_contrib %>
-                <%= link_to 'Delete', user_group_contrib, :class => 'btn btn-mini btn-danger',method: :delete, data: { confirm: 'Are you sure that you want to permanently delete this record and all associated records?' } %>
-              <% end %>
           </td>
         </tr>
       <% end %>

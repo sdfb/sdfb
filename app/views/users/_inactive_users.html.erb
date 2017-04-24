@@ -10,22 +10,19 @@
                 <th>First Name</th>
                 <th>Last Name</th>
                 <th>User Type</th>
-                <th><%=t '.actions', :default => t("helpers.actions") %></th>
+                <th></th>
               </tr>
             </thead>
           <tbody>
                 <% @inactive_users.each do |user| %>
                   <tr>
-                    <td><%= user.id %></td>
+                    <td><%= link_to user.id, user %></td>
                     <td><%= user.orcid %></td>
                     <td><%= user.username %></td>
                     <td><%= user.first_name %></td>
                     <td><%= user.last_name %></td>
                     <td><%= user.user_type %></td>
                     <td>
-                        <% if can? :show, user %>
-                            <%= link_to 'Show', user, :class => 'btn btn-mini' %>
-                        <% end %>
                         <% if can? :update, user %>
                             <%= link_to 'Edit', edit_user_path(user), :class => 'btn btn-mini' %>
                         <% end %>

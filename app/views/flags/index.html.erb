@@ -20,7 +20,7 @@
 
 <% @flags.each do |flag| %>
   <tr>
-    <td><%= flag.id %></td>
+    <td><%= link_to flag.id, flag %></td>
     <td><%= flag.assoc_object_type %></td>
     <td><%= flag.assoc_object_id %></td>
     <td><%= flag.flag_description %></td>
@@ -28,9 +28,7 @@
     <td><%= flag.resolved_by %></td>
     <td><%= flag.resolved_at %></td>
     <td><%= flag.created_at %></td>
-    <td><%= link_to 'Show', flag %></td>
     <td><%= link_to 'Edit', edit_flag_path(flag) %></td>
-    <td><%= link_to 'Delete', flag, method: :delete, data: { confirm: 'Are you sure?' } %></td>
   </tr>
 <% end %>
 </table>

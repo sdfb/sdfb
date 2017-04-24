@@ -31,13 +31,13 @@
         <th>Death Year Type</th>
         <th>Death Year</th>
         <th>Historical Significance</th>
-        <th><%=t '.actions', :default => t("helpers.actions") %></th>
+        <th></th>
       </tr>
     </thead>
     <tbody>
       <% @added_model_objects.values.each do |person| %>
         <tr>
-          <td><%= person.id %></td>
+          <td><%= link_to person.id, person %></td>
           <% if ! (person.odnb_id == 0) %>  
             <td><%= person.odnb_id %></td>
           <% else %>
@@ -82,15 +82,9 @@
           <td><%= person.ext_death_year %></td>
           <td><%= person.historical_significance %></td>
           <td>
-            <% if can? :show, person %>
-                <%= link_to 'Show', person, :class => 'btn btn-mini' %>
-            <% end %>
             <% if can? :update, person %>      
                 <%= link_to t('.edit', :default => t("helpers.links.edit")),
                             edit_person_path(person), :class => 'btn btn-mini' %>
-            <% end %>
-            <% if can? :delete, person %>
-              <%= link_to 'Delete', person, :class => 'btn btn-mini btn-danger',method: :delete, data: { confirm: 'Are you sure that you want to permanently delete this record and all associated records?' } %>
             <% end %>
           </td>
         </tr>
@@ -110,13 +104,13 @@
 	      <th>Start Date</th>
 	      <th>End Date Type</th>
 	      <th>End Date</th>
-	      <th><%=t '.actions', :default => t("helpers.actions") %></th>
+	      <th></th>
 	    </tr>
 	  </thead>
 	  <tbody>
 	    <% @added_model_objects.values.each do |relationship| %>
 	      <tr>
-	        <td><%= relationship.id %></td>
+	        <td><%= link_to relationship.id, relationship %></td>
 	        <td><%= link_to relationship.get_person1_name, person_path(relationship.person1_index) %></td>
 	        <td><%= link_to relationship.get_person2_name, person_path(relationship.person2_index) %></td>
 	        <td><%= relationship.max_certainty %>%</td>
@@ -190,15 +184,9 @@
 	          <% end %>
 	        </td>
 	        <td>
-	          <% if can? :show, relationship %>
-	            <%= link_to 'Show', relationship, :class => 'btn btn-mini'  %>
-	          <% end %>
 	          <% if can? :update, relationship %>
 	            <%= link_to t('.edit', :default => t("helpers.links.edit")),
 	                        edit_relationship_path(relationship), :class => 'btn btn-mini' %>
-	          <% end %>
-	          <% if can? :delete, relationship %>
-	            <%= link_to 'Delete', relationship, :class => 'btn btn-mini btn-danger',method: :delete, data: { confirm: 'Are you sure that you want to permanently delete this record and all associated records?' } %>
 	          <% end %>
 	        </td>
 	      </tr>
@@ -216,13 +204,13 @@
         <th>Start Year</th>
         <th>End Year Type</th>
         <th>End Year</th>
-        <th><%=t '.actions', :default => t("helpers.actions") %></th>
+        <th></th>
       </tr>
     </thead>
     <tbody>
       <% @added_model_objects.values.each do |group| %>
         <tr>
-          <td><%= group.id %></td>
+          <td><%= link_to group.id, group %></td>
           <td><%= group.name %></td>
           <td><%= group.description %></td>
           <td>
@@ -258,15 +246,9 @@
           </td>
           <td><%= group.end_year %></td>
           <td>
-            <% if can? :show, group %>
-              <%= link_to 'Show', group, :class => 'btn btn-mini' %>
-            <% end %>
             <% if can? :update, group %>
               <%= link_to t('.edit', :default => t("helpers.links.edit")),
                               edit_group_path(group), :class => 'btn btn-mini' %>
-            <% end %>
-            <% if can? :delete, group %>
-              <%= link_to 'Delete', group, :class => 'btn btn-mini btn-danger',method: :delete, data: { confirm: 'Are you sure that you want to permanently delete this record and all associated records?' } %>
             <% end %>
           </td>
         </tr>

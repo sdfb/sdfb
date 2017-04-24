@@ -60,18 +60,20 @@ p, ol, ul, td {
 }
 
 a:visited {
-  /*color: #005f8e;*/
-  color: #000000;
+  color: #005f8e;
+  /*color: #000000;*/
 }
 
 a:visited:hover {
-  /*color: #003651;*/
-  color: #000000;
+  color: #003651;
+  text-decoration: underline !important;
+  /*color: #000000;*/
 }
 
 a:hover {
-  /*color: #003651;*/
-  color: #000000;
+  color: #003651;
+  text-decoration: underline !important;
+  /*color: #000000;*/
 }
 
 #leaderboard tr:link {

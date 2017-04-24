@@ -11,10 +11,10 @@
 
                 <% @inactive_rel_cats.each do |relationship_category| %>
                   <tr>
-                    <td><%= relationship_category.id %></td>
+                    <td><%= link_to relationship_category.id, relationship_category %></td>
                     <td><%= relationship_category.name %></td>
                     <td><%= relationship_category.description %></td>
-                    <td><%= link_to 'Show', relationship_category, :class => 'btn btn-mini' %>
+                    <td>
                     <%= link_to 'Edit', edit_relationship_category_path(relationship_category), :class => 'btn btn-mini' %></td>
                   </tr>
                 <% end %>

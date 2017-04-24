@@ -13,12 +13,6 @@
         <%= link_to t('.edit', :default => t("helpers.links.edit")),
                   edit_relationship_type_path(@relationship_type), :class => 'btn btn-mini' %>
         <% end %>
-        <!-- Do not delete the relationship type if it is the met record -->
-        <% if @relationship_type.id == 4 %>
-          <% if can? :delete, @relationship_type %>
-              <%= link_to 'Delete', @relationship_type, :class => 'btn btn-mini btn-danger',method: :delete, data: { confirm: 'Are you sure that you want to permanently delete this record and all associated records?' } %>
-          <% end %>
-        <% end %>
       </h2>
       <br>
       <dl class="dl-horizontal">
@@ -75,18 +69,15 @@
               <tr>
                 <th>Assignment ID</th>
                 <th>Category</th>
-                <th><%=t '.actions', :default => t("helpers.actions") %></th>
+                <th></th>
               </tr>
             </thead>
             <tbody>
               <% @rel_cat_assigns_approved.each do |rel_cat_assign| %>
                 <tr>
-                  <td><%= rel_cat_assign.id %></td>
+                  <td><%= link_to rel_cat_assign.id, rel_cat_assign %></td>
                   <td><%= link_to RelationshipCategory.find(rel_cat_assign.relationship_category_id).name, relationship_category_path(rel_cat_assign.relationship_category_id) %></td>
                   <td>
-                    <% if can? :show, rel_cat_assign %>
-                      <%= link_to 'Show', rel_cat_assign, :class => 'btn btn-mini' %>
-                    <% end %>
                     <% if can? :update, rel_cat_assign %>
                       <%= link_to t('.edit', :default => t("helpers.links.edit")),
                                       edit_rel_cat_assign_path(rel_cat_assign), :class => 'btn btn-mini' %>
