@@ -11,11 +11,11 @@ conn = psycopg2.connect('dbname=mysdfb')
 cur = conn.cursor()
 
 # Get nodes as list of tuples from database
-cur.execute("SELECT id, display_name, historical_significance, ext_birth_year, ext_death_year FROM people WHERE is_approved = true;")
+cur.execute("SELECT id, display_name, historical_significance, ext_birth_year, ext_death_year, group_list FROM people WHERE is_approved = true;")
 node_tuples = cur.fetchall()
 
 # Get edges as list of tuples from database
-cur.execute("SELECT person1_index, person2_index, max_certainty, last_edit, types_list, id FROM relationships WHERE is_approved = true;")
+cur.execute("SELECT person1_index, person2_index, max_certainty, last_edit, types_list, start_year, end_year, id FROM relationships WHERE is_approved = true;")
 edge_tuples = cur.fetchall()
 
 print('Total number of nodes:', len(node_tuples))
@@ -26,11 +26,13 @@ name_dict = {}
 sig_dict = {}
 birth_dict = {}
 death_dict = {}
+group_dict = {}
 for n in node_tuples:
     name_dict[n[0]] = n[1]
     sig_dict[n[0]] = n[2]
     birth_dict[n[0]] = n[3]
     death_dict[n[0]] = n[4]
+    group_dict[n[0]] = n[5]
 
 # Get a list of only the node ids
 node_ids = list(name_dict.keys())
@@ -42,14 +44,16 @@ for e in edge_tuples:
     print(e[3])
     if e[3] == None or e[3] == '--- []\n':
         altered[(e[0], e[1])] = False
-        # print('none!')
+        print('none!')
     elif e[3].split()[2] == '2':# and e[4] != '--- []\n':
         altered[(e[0], e[1])] = False
-        # print('not altered!')
+        print('not altered!')
     else:
         altered[(e[0], e[1])] = True
 
-edge_id = {(e[0], e[1]):e[-1] for e in edge_tuples}
+edge_start = {(e[0], e[1]):e[5] for e in edge_tuples}
+edge_end = {(e[0], e[1]):e[6] for e in edge_tuples}
+edge_id = {(e[0], e[1]):e[7] for e in edge_tuples}
 
 print('Total number of edges:', len(edges))
 
@@ -65,13 +69,17 @@ degree = cn.degree_centrality(G)
 
 # Add display_name and centrality as node attributes
 nx.set_node_attributes(G, 'name', name_dict)
-nx.set_node_attributes(G, 'degree', G.degree(G.nodes()))#degree)
+nx.set_node_attributes(G, 'degree',  G.degree(G.nodes()))
 nx.set_node_attributes(G, 'historical_significance', sig_dict)
 nx.set_node_attributes(G, 'birth_year', birth_dict)
 nx.set_node_attributes(G, 'death_year', death_dict)
+nx.set_node_attributes(G, 'groups', group_dict)
 
 nx.set_edge_attributes(G, 'altered', altered)
 nx.set_edge_attributes(G, 'edge_id', edge_id)
+nx.set_edge_attributes(G, 'start_year', edge_start)
+nx.set_edge_attributes(G, 'end_year', edge_end)
+
 # Create subgraph based on milton and shakespeare:
 
     # 1. Get ids for shakespeare and milton
@@ -118,21 +126,22 @@ new_data = dict(
             attributes=dict(
                 nodes=[dict(
                     id=n,
-                    person_info=dict(name=SG.node[n]['name']),
+                    person_info=dict(name=SG.node[n]['name'], groups=SG.node[n]['groups']),
                     degree=SG.node[n]['degree']) for n in SG.nodes()],
                 links=[dict(
                     source=e[0],
                     target=e[1],
                     weight=e[2]['weight'],
                     altered=e[2]['altered'],
+                    start_year=e[2]['start_year'],
+                    end_year=e[2]['end_year'],
                     id=e[2]['edge_id']) for e in SG.edges(data=True)])),
         errors=[dict(
             status='404',
             title='Page not found')],
         meta=dict(
             principal_investigators=['Daniel Shore', 'Chris Warren', 'Jessica Otis']),
-        included=[
-            dict(
+        included=[dict(
                 type='people',
                 id=str(shakespeare),
                 name=SG.node[shakespeare]['name'],

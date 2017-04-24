@@ -4,3718 +4,4780 @@
             "links":[
                 {
                     "altered":false,
+                    "end_year":1579,
                     "id":100010368,
                     "source":10013195,
+                    "start_year":1510,
                     "target":10000483,
                     "weight":65
                 },
                 {
                     "altered":false,
+                    "end_year":1592,
                     "id":100137766,
                     "source":10013195,
+                    "start_year":1570,
                     "target":10007944,
                     "weight":69
                 },
                 {
                     "altered":false,
+                    "end_year":1640,
                     "id":100085233,
                     "source":10009100,
+                    "start_year":1612,
                     "target":10004101,
                     "weight":80
                 },
                 {
                     "altered":false,
+                    "end_year":1609,
                     "id":100148068,
                     "source":10009100,
+                    "start_year":1569,
                     "target":10012307,
                     "weight":95
                 },
                 {
                     "altered":false,
+                    "end_year":1635,
                     "id":100148069,
                     "source":10009100,
+                    "start_year":1569,
                     "target":10012309,
                     "weight":100
                 },
                 {
                     "altered":false,
+                    "end_year":1638,
                     "id":100047873,
                     "source":10009100,
+                    "start_year":1572,
                     "target":10002243,
                     "weight":94
                 },
                 {
                     "altered":false,
+                    "end_year":1687,
                     "id":100029168,
                     "source":10001419,
+                    "start_year":1627,
                     "target":10009626,
                     "weight":75
                 },
                 {
                     "altered":false,
+                    "end_year":1676,
                     "id":100029219,
                     "source":10001419,
+                    "start_year":1632,
                     "target":10011691,
                     "weight":93
                 },
                 {
                     "altered":false,
+                    "end_year":1663,
                     "id":100009953,
                     "source":10001419,
+                    "start_year":1627,
                     "target":10000475,
                     "weight":86
                 },
                 {
                     "altered":false,
+                    "end_year":1662,
                     "id":100029087,
                     "source":10001419,
+                    "start_year":1627,
                     "target":10005616,
                     "weight":92
                 },
                 {
                     "altered":false,
+                    "end_year":1679,
                     "id":100029094,
                     "source":10001419,
+                    "start_year":1627,
                     "target":10006012,
                     "weight":89
                 },
                 {
                     "altered":false,
+                    "end_year":1647,
                     "id":100137741,
                     "source":10009621,
+                    "start_year":1570,
                     "target":10007944,
                     "weight":78
                 },
                 {
                     "altered":true,
+                    "end_year":1649,
                     "id":100165267,
                     "source":10011670,
+                    "start_year":1600,
                     "target":10011673,
                     "weight":100
                 },
                 {
                     "altered":true,
+                    "end_year":1625,
                     "id":100165272,
                     "source":10011670,
+                    "start_year":1600,
                     "target":10011681,
                     "weight":100
                 },
                 {
                     "altered":false,
+                    "end_year":1649,
                     "id":100074083,
                     "source":10011670,
+                    "start_year":1603,
                     "target":10003500,
                     "weight":73
                 },
                 {
                     "altered":false,
+                    "end_year":1635,
                     "id":100092224,
                     "source":10011670,
+                    "start_year":1600,
                     "target":10004528,
                     "weight":70
                 },
                 {
                     "altered":false,
+                    "end_year":1644,
                     "id":100159430,
                     "source":10011670,
+                    "start_year":1600,
                     "target":10010686,
                     "weight":63
                 },
                 {
                     "altered":false,
+                    "end_year":1649,
                     "id":100148545,
                     "source":10011670,
+                    "start_year":1600,
                     "target":10009162,
                     "weight":66
                 },
                 {
                     "altered":false,
+                    "end_year":1649,
                     "id":100165345,
                     "source":10011670,
+                    "start_year":1600,
                     "target":10012250,
                     "weight":98
                 },
                 {
                     "altered":false,
+                    "end_year":1649,
                     "id":100085306,
                     "source":10011670,
+                    "start_year":1612,
                     "target":10004101,
                     "weight":95
                 },
                 {
                     "altered":false,
+                    "end_year":1633,
                     "id":100000221,
                     "source":10011670,
+                    "start_year":1600,
                     "target":10000010,
                     "weight":83
                 },
                 {
                     "altered":false,
+                    "end_year":1631,
                     "id":100085787,
                     "source":10011670,
+                    "start_year":1600,
                     "target":10004129,
                     "weight":72
                 },
                 {
                     "altered":false,
+                    "end_year":1634,
                     "id":100056713,
                     "source":10011670,
+                    "start_year":1600,
                     "target":10002626,
                     "weight":87
                 },
                 {
                     "altered":false,
+                    "end_year":1644,
                     "id":100056877,
                     "source":10011670,
+                    "start_year":1600,
                     "target":10002628,
                     "weight":83
                 },
                 {
                     "altered":false,
+                    "end_year":1649,
                     "id":100160441,
                     "source":10011670,
+                    "start_year":1600,
                     "target":10010872,
                     "weight":82
                 },
                 {
                     "altered":false,
+                    "end_year":1637,
                     "id":100087229,
                     "source":10011670,
+                    "start_year":1600,
                     "target":10004223,
                     "weight":70
                 },
                 {
                     "altered":false,
+                    "end_year":1649,
                     "id":100165390,
                     "source":10011670,
+                    "start_year":1606,
                     "target":10012460,
                     "weight":84
                 },
                 {
                     "altered":false,
+                    "end_year":1649,
                     "id":100112151,
                     "source":10011670,
+                    "start_year":1600,
                     "target":10005826,
                     "weight":71
                 },
                 {
                     "altered":false,
+                    "end_year":1633,
                     "id":100112232,
                     "source":10011670,
+                    "start_year":1600,
                     "target":10005828,
                     "weight":62
                 },
                 {
                     "altered":false,
+                    "end_year":1631,
                     "id":100059202,
                     "source":10011670,
+                    "start_year":1600,
                     "target":10002756,
                     "weight":69
                 },
                 {
                     "altered":false,
+                    "end_year":1649,
                     "id":100132649,
                     "source":10011670,
+                    "start_year":1618,
                     "target":10007388,
                     "weight":69
                 },
                 {
                     "altered":true,
+                    "end_year":1649,
                     "id":100200220,
                     "source":10011670,
+                    "start_year":1622,
                     "target":10010461,
                     "weight":60
                 },
                 {
                     "altered":false,
+                    "end_year":1649,
                     "id":100150885,
                     "source":10011670,
+                    "start_year":1600,
                     "target":10009450,
                     "weight":88
                 },
                 {
                     "altered":false,
+                    "end_year":1649,
                     "id":100061092,
                     "source":10011670,
+                    "start_year":1600,
                     "target":10002859,
                     "weight":83
                 },
                 {
                     "altered":false,
+                    "end_year":1649,
                     "id":100121248,
                     "source":10011670,
+                    "start_year":1609,
                     "target":10006445,
                     "weight":87
                 },
                 {
                     "altered":false,
+                    "end_year":1649,
                     "id":100061442,
                     "source":10011670,
+                    "start_year":1600,
                     "target":10002882,
                     "weight":72
                 },
                 {
                     "altered":false,
+                    "end_year":1632,
                     "id":100082004,
                     "source":10011670,
+                    "start_year":1600,
                     "target":10003926,
                     "weight":97
                 },
                 {
                     "altered":false,
+                    "end_year":1642,
                     "id":100155582,
                     "source":10011670,
+                    "start_year":1600,
                     "target":10010069,
                     "weight":77
                 },
                 {
                     "altered":false,
+                    "end_year":1625,
                     "id":100114919,
                     "source":10011670,
+                    "start_year":1600,
                     "target":10006006,
                     "weight":66
                 },
                 {
                     "altered":false,
+                    "end_year":1631,
                     "id":100156009,
                     "source":10010134,
+                    "start_year":1610,
                     "target":10011212,
                     "weight":63
                 },
                 {
                     "altered":false,
+                    "end_year":1687,
                     "id":100008067,
                     "source":10000407,
+                    "start_year":1626,
                     "target":10009626,
                     "weight":74
                 },
                 {
                     "altered":false,
+                    "end_year":1663,
                     "id":100008001,
                     "source":10000407,
+                    "start_year":1626,
                     "target":10006581,
                     "weight":71
                 },
                 {
                     "altered":false,
+                    "end_year":1677,
                     "id":100007965,
                     "source":10000407,
+                    "start_year":1626,
                     "target":10005566,
                     "weight":92
                 },
                 {
                     "altered":false,
+                    "end_year":1697,
                     "id":100007855,
                     "source":10000407,
+                    "start_year":1651,
                     "target":10001118,
                     "weight":79
                 },
                 {
                     "altered":false,
+                    "end_year":1654,
                     "id":100008095,
                     "source":10000407,
+                    "start_year":1626,
                     "target":10010872,
                     "weight":68
                 },
                 {
                     "altered":false,
+                    "end_year":1689,
                     "id":100008137,
                     "source":10000407,
+                    "start_year":1626,
                     "target":10012531,
                     "weight":66
                 },
                 {
                     "altered":false,
+                    "end_year":1679,
                     "id":100007982,
                     "source":10000407,
+                    "start_year":1626,
                     "target":10006012,
                     "weight":100
                 },
                 {
                     "altered":false,
+                    "end_year":1625,
                     "id":100139393,
                     "source":10008089,
+                    "start_year":1566,
                     "target":10011681,
                     "weight":61
                 },
                 {
                     "altered":false,
+                    "end_year":1610,
                     "id":100012925,
                     "source":10008089,
+                    "start_year":1544,
                     "target":10000596,
                     "weight":60
                 },
                 {
                     "altered":false,
+                    "end_year":1588,
                     "id":100079159,
                     "source":10008089,
+                    "start_year":1544,
                     "target":10003747,
                     "weight":62
                 },
                 {
                     "altered":false,
+                    "end_year":1606,
                     "id":100120797,
                     "source":10008089,
+                    "start_year":1544,
                     "target":10006431,
                     "weight":91
                 },
                 {
                     "altered":false,
+                    "end_year":1603,
                     "id":100139396,
                     "source":10008089,
+                    "start_year":1544,
                     "target":10012117,
                     "weight":85
                 },
                 {
                     "altered":false,
+                    "end_year":1588,
                     "id":100139387,
                     "source":10008089,
+                    "start_year":1544,
                     "target":10010684,
                     "weight":72
                 },
                 {
                     "altered":false,
+                    "end_year":1625,
                     "id":100139438,
                     "source":10008090,
+                    "start_year":1577,
                     "target":10011681,
                     "weight":81
                 },
                 {
                     "altered":true,
+                    "end_year":1632,
                     "id":100200248,
                     "source":10008090,
+                    "start_year":1577,
                     "target":10002086,
                     "weight":80
                 },
                 {
                     "altered":false,
+                    "end_year":1628,
                     "id":100050078,
                     "source":10008090,
+                    "start_year":1577,
                     "target":10002279,
                     "weight":79
                 },
                 {
                     "altered":false,
+                    "end_year":1606,
                     "id":100120798,
                     "source":10008090,
+                    "start_year":1577,
                     "target":10006431,
                     "weight":66
                 },
                 {
                     "altered":true,
+                    "end_year":1626,
                     "id":100009645,
                     "source":10008090,
+                    "start_year":1577,
                     "target":10000473,
                     "weight":96
                 },
                 {
                     "altered":false,
+                    "end_year":1588,
                     "id":100139424,
                     "source":10008090,
+                    "start_year":1577,
                     "target":10010684,
                     "weight":70
                 },
                 {
                     "altered":true,
+                    "end_year":1625,
                     "id":100200373,
                     "source":10011673,
+                    "start_year":1596,
                     "target":10011681,
                     "weight":100
                 },
                 {
                     "altered":true,
+                    "end_year":1632,
                     "id":100165846,
                     "source":10011673,
+                    "start_year":1612,
                     "target":10013279,
                     "weight":100
                 },
                 {
                     "altered":false,
+                    "end_year":1662,
                     "id":100132651,
                     "source":10011673,
+                    "start_year":1618,
                     "target":10007388,
                     "weight":100
                 },
                 {
                     "altered":true,
+                    "end_year":1644,
                     "id":100200001,
                     "source":10011673,
+                    "start_year":1596,
                     "target":10010388,
                     "weight":100
                 },
                 {
                     "altered":false,
+                    "end_year":1644,
                     "id":100152513,
                     "source":10009626,
+                    "start_year":1623,
                     "target":10010388,
                     "weight":65
                 },
                 {
                     "altered":false,
+                    "end_year":1625,
                     "id":100063437,
                     "source":10002972,
+                    "start_year":1575,
                     "target":10011681,
                     "weight":90
                 },
                 {
                     "altered":false,
+                    "end_year":1629,
                     "id":100063420,
                     "source":10002972,
+                    "start_year":1575,
                     "target":10010685,
                     "weight":99
                 },
                 {
                     "altered":false,
+                    "end_year":1628,
                     "id":100063444,
                     "source":10002972,
+                    "start_year":1592,
                     "target":10012357,
                     "weight":75
                 },
                 {
                     "altered":false,
+                    "end_year":1645,
                     "id":100044926,
                     "source":10002972,
+                    "start_year":1585,
                     "target":10002120,
                     "weight":84
                 },
                 {
                     "altered":false,
+                    "end_year":1641,
                     "id":100063365,
                     "source":10002972,
+                    "start_year":1580,
                     "target":10005899,
                     "weight":69
                 },
                 {
                     "altered":false,
+                    "end_year":1660,
                     "id":100085288,
                     "source":10011163,
+                    "start_year":1612,
                     "target":10004101,
                     "weight":68
                 },
                 {
                     "altered":false,
+                    "end_year":1635,
                     "id":100162435,
                     "source":10011163,
+                    "start_year":1565,
                     "target":10012309,
                     "weight":73
                 },
                 {
                     "altered":false,
+                    "end_year":1600,
                     "id":100063507,
                     "source":10002975,
+                    "start_year":1564,
                     "target":10010685,
                     "weight":63
                 },
                 {
                     "altered":false,
+                    "end_year":1600,
                     "id":100063499,
                     "source":10002975,
+                    "start_year":1564,
                     "target":10006144,
                     "weight":99
                 },
                 {
                     "altered":false,
+                    "end_year":1625,
                     "id":100040819,
                     "source":10011681,
+                    "start_year":1579,
                     "target":10001956,
                     "weight":66
                 },
                 {
                     "altered":false,
+                    "end_year":1623,
                     "id":100152580,
                     "source":10011681,
+                    "start_year":1566,
                     "target":10009638,
                     "weight":60
                 },
                 {
                     "altered":false,
+                    "end_year":1623,
                     "id":100041182,
                     "source":10011681,
+                    "start_year":1566,
                     "target":10001962,
                     "weight":93
                 },
                 {
                     "altered":false,
+                    "end_year":1625,
                     "id":100166103,
                     "source":10011681,
+                    "start_year":1566,
                     "target":10013232,
                     "weight":100
                 },
                 {
                     "altered":false,
+                    "end_year":1625,
                     "id":100159397,
                     "source":10011681,
+                    "start_year":1566,
                     "target":10010685,
                     "weight":93
                 },
                 {
                     "altered":false,
+                    "end_year":1601,
                     "id":100009446,
                     "source":10011681,
+                    "start_year":1566,
                     "target":10000471,
                     "weight":75
                 },
                 {
                     "altered":false,
+                    "end_year":1613,
                     "id":100148718,
                     "source":10011681,
+                    "start_year":1581,
                     "target":10009179,
                     "weight":94
                 },
                 {
                     "altered":false,
+                    "end_year":1625,
                     "id":100010096,
                     "source":10011681,
+                    "start_year":1600,
                     "target":10000475,
                     "weight":63
                 },
                 {
                     "altered":false,
+                    "end_year":1625,
                     "id":100166111,
                     "source":10011681,
+                    "start_year":1596,
                     "target":10013279,
                     "weight":100
                 },
                 {
                     "altered":false,
+                    "end_year":1625,
                     "id":100000223,
                     "source":10011681,
+                    "start_year":1566,
                     "target":10000010,
                     "weight":100
                 },
                 {
                     "altered":false,
+                    "end_year":1618,
                     "id":100000385,
                     "source":10011681,
+                    "start_year":1566,
                     "target":10000013,
                     "weight":61
                 },
                 {
                     "altered":false,
+                    "end_year":1625,
                     "id":100162993,
                     "source":10011681,
+                    "start_year":1566,
                     "target":10011273,
                     "weight":88
                 },
                 {
                     "altered":false,
+                    "end_year":1609,
                     "id":100165975,
                     "source":10011681,
+                    "start_year":1566,
                     "target":10012307,
                     "weight":60
                 },
                 {
                     "altered":false,
+                    "end_year":1625,
                     "id":100165977,
                     "source":10011681,
+                    "start_year":1566,
                     "target":10012309,
                     "weight":71
                 },
                 {
                     "altered":false,
+                    "end_year":1625,
                     "id":100044384,
                     "source":10011681,
+                    "start_year":1574,
                     "target":10002086,
                     "weight":92
                 },
                 {
                     "altered":false,
+                    "end_year":1625,
                     "id":100056714,
                     "source":10011681,
+                    "start_year":1566,
                     "target":10002626,
                     "weight":99
                 },
                 {
                     "altered":false,
+                    "end_year":1625,
                     "id":100056880,
                     "source":10011681,
+                    "start_year":1566,
                     "target":10002628,
                     "weight":64
                 },
                 {
                     "altered":false,
+                    "end_year":1625,
                     "id":100165983,
                     "source":10011681,
+                    "start_year":1592,
                     "target":10012357,
                     "weight":83
                 },
                 {
                     "altered":false,
+                    "end_year":1625,
                     "id":100045049,
                     "source":10011681,
+                    "start_year":1585,
                     "target":10002120,
                     "weight":87
                 },
                 {
                     "altered":false,
+                    "end_year":1625,
                     "id":100101664,
                     "source":10011681,
+                    "start_year":1566,
                     "target":10005201,
                     "weight":68
                 },
                 {
                     "altered":false,
+                    "end_year":1606,
                     "id":100094808,
                     "source":10011681,
+                    "start_year":1566,
                     "target":10004692,
                     "weight":65
                 },
                 {
                     "altered":false,
+                    "end_year":1610,
                     "id":100012976,
                     "source":10011681,
+                    "start_year":1566,
                     "target":10000596,
                     "weight":100
                 },
                 {
                     "altered":false,
+                    "end_year":1625,
                     "id":100077577,
                     "source":10011681,
+                    "start_year":1566,
                     "target":10003677,
                     "weight":77
                 },
                 {
                     "altered":false,
+                    "end_year":1625,
                     "id":100118167,
                     "source":10011681,
+                    "start_year":1590,
                     "target":10006249,
                     "weight":76
                 },
                 {
                     "altered":false,
+                    "end_year":1622,
                     "id":100095237,
                     "source":10011681,
+                    "start_year":1566,
                     "target":10004724,
                     "weight":80
                 },
                 {
                     "altered":false,
+                    "end_year":1625,
                     "id":100141628,
                     "source":10011681,
+                    "start_year":1583,
                     "target":10008359,
                     "weight":93
                 },
                 {
                     "altered":false,
+                    "end_year":1616,
                     "id":100161061,
                     "source":10011681,
+                    "start_year":1566,
                     "target":10010937,
                     "weight":90
                 },
                 {
                     "altered":false,
+                    "end_year":1601,
                     "id":100069333,
                     "source":10011681,
+                    "start_year":1568,
                     "target":10003264,
                     "weight":66
                 },
                 {
                     "altered":false,
+                    "end_year":1625,
                     "id":100047881,
                     "source":10011681,
+                    "start_year":1572,
                     "target":10002243,
                     "weight":95
                 },
                 {
                     "altered":false,
+                    "end_year":1625,
                     "id":100059203,
                     "source":10011681,
+                    "start_year":1566,
                     "target":10002756,
                     "weight":65
                 },
                 {
                     "altered":false,
+                    "end_year":1612,
                     "id":100048456,
                     "source":10011681,
+                    "start_year":1566,
                     "target":10002249,
                     "weight":100
                 },
                 {
                     "altered":false,
+                    "end_year":1625,
                     "id":100050165,
                     "source":10011681,
+                    "start_year":1566,
                     "target":10002279,
                     "weight":100
                 },
                 {
                     "altered":false,
+                    "end_year":1625,
                     "id":100036677,
                     "source":10011681,
+                    "start_year":1566,
                     "target":10001782,
                     "weight":76
                 },
                 {
                     "altered":false,
+                    "end_year":1614,
                     "id":100060342,
                     "source":10011681,
+                    "start_year":1566,
                     "target":10002810,
                     "weight":94
                 },
                 {
                     "altered":false,
+                    "end_year":1625,
                     "id":100166087,
                     "source":10011681,
+                    "start_year":1568,
                     "target":10013132,
                     "weight":98
                 },
                 {
                     "altered":false,
+                    "end_year":1603,
                     "id":100165954,
                     "source":10011681,
+                    "start_year":1566,
                     "target":10012117,
                     "weight":100
                 },
                 {
                     "altered":false,
+                    "end_year":1625,
                     "id":100155686,
                     "source":10011681,
+                    "start_year":1586,
                     "target":10010078,
                     "weight":96
                 },
                 {
                     "altered":false,
+                    "end_year":1625,
                     "id":100166094,
                     "source":10011681,
+                    "start_year":1587,
                     "target":10013172,
                     "weight":100
                 },
                 {
                     "altered":false,
+                    "end_year":1625,
                     "id":100114920,
                     "source":10011681,
+                    "start_year":1566,
                     "target":10006006,
                     "weight":77
                 },
                 {
                     "altered":false,
+                    "end_year":1625,
                     "id":100139093,
                     "source":10011681,
+                    "start_year":1586,
                     "target":10008059,
                     "weight":62
                 },
                 {
                     "altered":false,
+                    "end_year":1625,
                     "id":100069478,
                     "source":10011681,
+                    "start_year":1584,
                     "target":10003267,
                     "weight":66
                 },
                 {
                     "altered":false,
+                    "end_year":1625,
                     "id":100014865,
                     "source":10011681,
+                    "start_year":1576,
                     "target":10000693,
                     "weight":71
                 },
                 {
                     "altered":true,
+                    "end_year":1625,
                     "id":100009716,
                     "source":10011681,
+                    "start_year":1566,
                     "target":10000473,
                     "weight":100
                 },
                 {
                     "altered":false,
+                    "end_year":1625,
                     "id":100137755,
                     "source":10011681,
+                    "start_year":1570,
                     "target":10007944,
                     "weight":82
                 },
                 {
                     "altered":false,
+                    "end_year":1625,
                     "id":100000319,
                     "source":10011681,
+                    "start_year":1566,
                     "target":10000012,
                     "weight":85
                 },
                 {
                     "altered":false,
+                    "end_year":1555,
                     "id":100029715,
                     "source":10001442,
+                    "start_year":1516,
                     "target":10005259,
                     "weight":67
                 },
                 {
                     "altered":false,
+                    "end_year":1555,
                     "id":100029743,
                     "source":10001442,
+                    "start_year":1519,
                     "target":10010684,
                     "weight":69
                 },
                 {
                     "altered":true,
+                    "end_year":1628,
                     "id":100200106,
                     "source":10050082,
+                    "start_year":1621,
                     "target":10003555,
                     "weight":85
                 },
                 {
                     "altered":false,
+                    "end_year":1632,
                     "id":100040779,
                     "source":10001956,
+                    "start_year":1579,
                     "target":10002086,
                     "weight":64
                 },
                 {
                     "altered":false,
+                    "end_year":1628,
                     "id":100040782,
                     "source":10001956,
+                    "start_year":1579,
                     "target":10002279,
                     "weight":67
                 },
                 {
                     "altered":false,
+                    "end_year":1632,
                     "id":100040815,
                     "source":10001956,
+                    "start_year":1581,
                     "target":10010388,
                     "weight":66
                 },
                 {
                     "altered":false,
+                    "end_year":1623,
                     "id":100152582,
                     "source":10009638,
+                    "start_year":1565,
                     "target":10012309,
                     "weight":61
                 },
                 {
                     "altered":false,
+                    "end_year":1637,
                     "id":100087223,
                     "source":10009127,
+                    "start_year":1602,
                     "target":10004223,
                     "weight":68
                 },
                 {
                     "altered":false,
+                    "end_year":1633,
                     "id":100112218,
                     "source":10009127,
+                    "start_year":1602,
                     "target":10005828,
                     "weight":91
                 },
                 {
                     "altered":false,
+                    "end_year":1623,
                     "id":100041207,
                     "source":10001962,
+                    "start_year":1581,
                     "target":10012226,
                     "weight":96
                 },
                 {
                     "altered":false,
+                    "end_year":1623,
                     "id":100040994,
                     "source":10001962,
+                    "start_year":1554,
                     "target":10005201,
                     "weight":96
                 },
                 {
                     "altered":false,
+                    "end_year":1623,
                     "id":100041151,
                     "source":10001962,
+                    "start_year":1584,
                     "target":10010872,
                     "weight":94
                 },
                 {
                     "altered":false,
+                    "end_year":1623,
                     "id":100041122,
                     "source":10001962,
+                    "start_year":1572,
                     "target":10009855,
                     "weight":67
                 },
                 {
                     "altered":false,
+                    "end_year":1588,
                     "id":100040967,
                     "source":10001962,
+                    "start_year":1551,
                     "target":10003747,
                     "weight":63
                 },
                 {
                     "altered":false,
+                    "end_year":1598,
                     "id":100040925,
                     "source":10001962,
+                    "start_year":1551,
                     "target":10002251,
                     "weight":78
                 },
                 {
                     "altered":false,
+                    "end_year":1603,
                     "id":100041203,
                     "source":10001962,
+                    "start_year":1551,
                     "target":10012117,
                     "weight":87
                 },
                 {
                     "altered":true,
+                    "end_year":1612,
                     "id":100200329,
                     "source":10050091,
+                    "start_year":1592,
                     "target":10002249,
                     "weight":100
                 },
                 {
                     "altered":true,
+                    "end_year":1626,
                     "id":100200195,
                     "source":10050091,
+                    "start_year":1615,
                     "target":10000473,
                     "weight":100
                 },
                 {
                     "altered":false,
+                    "end_year":1644,
                     "id":100056801,
                     "source":10003500,
+                    "start_year":1603,
                     "target":10002628,
                     "weight":66
                 },
                 {
                     "altered":false,
+                    "end_year":1654,
                     "id":100074070,
                     "source":10003500,
+                    "start_year":1603,
                     "target":10010872,
                     "weight":72
                 },
                 {
                     "altered":false,
+                    "end_year":1665,
                     "id":100074003,
                     "source":10003500,
+                    "start_year":1603,
                     "target":10006012,
                     "weight":95
                 },
                 {
                     "altered":false,
+                    "end_year":1655,
                     "id":100059238,
                     "source":10005549,
+                    "start_year":1594,
                     "target":10002757,
                     "weight":65
                 },
                 {
                     "altered":false,
+                    "end_year":1627,
                     "id":100159426,
                     "source":10013229,
+                    "start_year":1588,
                     "target":10010685,
                     "weight":64
                 },
                 {
                     "altered":false,
+                    "end_year":1627,
                     "id":100154187,
                     "source":10013229,
+                    "start_year":1588,
                     "target":10009855,
                     "weight":79
                 },
                 {
                     "altered":false,
+                    "end_year":1607,
                     "id":100030795,
                     "source":10005039,
+                    "start_year":1571,
                     "target":10001511,
                     "weight":86
                 },
                 {
                     "altered":false,
+                    "end_year":1607,
                     "id":100099736,
                     "source":10005039,
+                    "start_year":1550,
                     "target":10012994,
                     "weight":65
                 },
                 {
                     "altered":false,
+                    "end_year":1634,
                     "id":100039352,
                     "source":10004528,
+                    "start_year":1586,
                     "target":10001889,
                     "weight":61
                 },
                 {
                     "altered":false,
+                    "end_year":1631,
                     "id":100031735,
                     "source":10004528,
+                    "start_year":1586,
                     "target":10001553,
                     "weight":75
                 },
                 {
                     "altered":false,
+                    "end_year":1630,
                     "id":100056761,
                     "source":10013232,
+                    "start_year":1566,
                     "target":10002626,
                     "weight":77
                 },
                 {
                     "altered":false,
+                    "end_year":1630,
                     "id":100045069,
                     "source":10013232,
+                    "start_year":1585,
                     "target":10002120,
                     "weight":76
                 },
                 {
                     "altered":false,
+                    "end_year":1630,
                     "id":100141635,
                     "source":10013232,
+                    "start_year":1583,
                     "target":10008359,
                     "weight":61
                 },
                 {
                     "altered":false,
+                    "end_year":1630,
                     "id":100062216,
                     "source":10013232,
+                    "start_year":1578,
                     "target":10002912,
                     "weight":82
                 },
                 {
                     "altered":true,
+                    "end_year":1626,
                     "id":100009758,
                     "source":10013232,
+                    "start_year":1566,
                     "target":10000473,
                     "weight":75
                 },
                 {
                     "altered":false,
+                    "end_year":1629,
                     "id":100074196,
                     "source":10003504,
+                    "start_year":1582,
                     "target":10010685,
                     "weight":67
                 },
                 {
                     "altered":false,
+                    "end_year":1633,
                     "id":100000081,
                     "source":10003504,
+                    "start_year":1582,
                     "target":10000010,
                     "weight":86
                 },
                 {
                     "altered":false,
+                    "end_year":1639,
                     "id":100000291,
                     "source":10003504,
+                    "start_year":1582,
                     "target":10000012,
                     "weight":100
                 },
                 {
                     "altered":false,
+                    "end_year":1676,
                     "id":100166410,
                     "source":10011691,
+                    "start_year":1632,
                     "target":10012466,
                     "weight":87
                 },
                 {
                     "altered":false,
+                    "end_year":1676,
                     "id":100142870,
                     "source":10011691,
+                    "start_year":1632,
                     "target":10008468,
                     "weight":69
                 },
                 {
                     "altered":false,
+                    "end_year":1676,
                     "id":100115054,
                     "source":10011691,
+                    "start_year":1632,
                     "target":10006012,
                     "weight":78
                 },
                 {
                     "altered":true,
+                    "end_year":1663,
                     "id":100200724,
                     "source":10006581,
+                    "start_year":1660,
                     "target":10006012,
                     "weight":77
                 },
                 {
                     "altered":false,
+                    "end_year":1594,
                     "id":100008812,
                     "source":10000444,
+                    "start_year":1554,
                     "target":10006144,
                     "weight":75
                 },
                 {
                     "altered":false,
+                    "end_year":1594,
                     "id":100008847,
                     "source":10000444,
+                    "start_year":1610,
                     "target":10010257,
                     "weight":65
                 },
                 {
                     "altered":false,
+                    "end_year":1594,
                     "id":100008725,
                     "source":10000444,
+                    "start_year":1544,
                     "target":10000596,
                     "weight":87
                 },
                 {
                     "altered":false,
+                    "end_year":1583,
                     "id":100008803,
                     "source":10000444,
+                    "start_year":1520,
                     "target":10005259,
                     "weight":74
                 },
                 {
                     "altered":false,
+                    "end_year":1594,
                     "id":100008754,
                     "source":10000444,
+                    "start_year":1520,
                     "target":10002251,
                     "weight":72
                 },
                 {
                     "altered":false,
+                    "end_year":1594,
                     "id":100008848,
                     "source":10000444,
+                    "start_year":1559,
                     "target":10010258,
                     "weight":61
                 },
                 {
                     "altered":false,
+                    "end_year":1588,
                     "id":100008855,
                     "source":10000444,
+                    "start_year":1520,
                     "target":10010684,
                     "weight":83
                 },
                 {
                     "altered":false,
+                    "end_year":1629,
                     "id":100159385,
                     "source":10010685,
+                    "start_year":1578,
                     "target":10010686,
                     "weight":66
                 },
                 {
                     "altered":false,
+                    "end_year":1629,
                     "id":100031277,
                     "source":10010685,
+                    "start_year":1566,
                     "target":10001533,
                     "weight":60
                 },
                 {
                     "altered":false,
+                    "end_year":1600,
                     "id":100116717,
                     "source":10010685,
+                    "start_year":1561,
                     "target":10006144,
                     "weight":85
                 },
                 {
                     "altered":false,
+                    "end_year":1625,
                     "id":100159389,
                     "source":10010685,
+                    "start_year":1561,
                     "target":10011273,
                     "weight":85
                 },
                 {
                     "altered":false,
+                    "end_year":1629,
                     "id":100056695,
                     "source":10010685,
+                    "start_year":1561,
                     "target":10002626,
                     "weight":90
                 },
                 {
                     "altered":false,
+                    "end_year":1622,
                     "id":100095231,
                     "source":10010685,
+                    "start_year":1561,
                     "target":10004724,
                     "weight":74
                 },
                 {
                     "altered":false,
+                    "end_year":1629,
                     "id":100087200,
                     "source":10010685,
+                    "start_year":1588,
                     "target":10004222,
                     "weight":84
                 },
                 {
                     "altered":false,
+                    "end_year":1583,
                     "id":100102774,
                     "source":10010685,
+                    "start_year":1561,
                     "target":10005259,
                     "weight":84
                 },
                 {
                     "altered":false,
+                    "end_year":1629,
                     "id":100113590,
                     "source":10010685,
+                    "start_year":1580,
                     "target":10005899,
                     "weight":74
                 },
                 {
                     "altered":false,
+                    "end_year":1606,
                     "id":100120813,
                     "source":10010685,
+                    "start_year":1561,
                     "target":10006431,
                     "weight":63
                 },
                 {
                     "altered":false,
+                    "end_year":1629,
                     "id":100038936,
                     "source":10010685,
+                    "start_year":1577,
                     "target":10001873,
                     "weight":69
                 },
                 {
                     "altered":false,
+                    "end_year":1635,
                     "id":100139722,
                     "source":10008126,
+                    "start_year":1596,
                     "target":10012309,
                     "weight":64
                 },
                 {
                     "altered":false,
+                    "end_year":1677,
                     "id":100108008,
                     "source":10005566,
+                    "start_year":1611,
                     "target":10006012,
                     "weight":89
                 },
                 {
                     "altered":false,
+                    "end_year":1656,
                     "id":100030307,
                     "source":10012226,
+                    "start_year":1594,
                     "target":10001478,
                     "weight":93
                 },
                 {
                     "altered":false,
+                    "end_year":1643,
                     "id":100011315,
                     "source":10012226,
+                    "start_year":1582,
                     "target":10000524,
                     "weight":80
                 },
                 {
                     "altered":false,
+                    "end_year":1654,
                     "id":100160455,
                     "source":10012226,
+                    "start_year":1584,
                     "target":10010872,
                     "weight":96
                 },
                 {
                     "altered":false,
+                    "end_year":1631,
                     "id":100031756,
                     "source":10012226,
+                    "start_year":1581,
                     "target":10001553,
                     "weight":88
                 },
                 {
                     "altered":false,
+                    "end_year":1634,
                     "id":100064104,
                     "source":10003010,
+                    "start_year":1597,
                     "target":10003014,
                     "weight":73
                 },
                 {
                     "altered":false,
+                    "end_year":1655,
                     "id":100069466,
                     "source":10009157,
+                    "start_year":1627,
                     "target":10003267,
                     "weight":62
                 },
                 {
                     "altered":false,
+                    "end_year":1663,
                     "id":100030304,
                     "source":10001478,
+                    "start_year":1613,
                     "target":10011813,
                     "weight":81
                 },
                 {
                     "altered":false,
+                    "end_year":1663,
                     "id":100030259,
                     "source":10001478,
+                    "start_year":1594,
                     "target":10006012,
                     "weight":94
                 },
                 {
                     "altered":false,
+                    "end_year":1653,
                     "id":100069468,
                     "source":10009162,
+                    "start_year":1584,
                     "target":10003267,
                     "weight":79
                 },
                 {
                     "altered":false,
+                    "end_year":1601,
                     "id":100009298,
                     "source":10000470,
+                    "start_year":1558,
                     "target":10000471,
                     "weight":100
                 },
                 {
                     "altered":false,
+                    "end_year":1575,
                     "id":100009336,
                     "source":10000470,
+                    "start_year":1528,
                     "target":10009320,
                     "weight":67
                 },
                 {
                     "altered":false,
+                    "end_year":1598,
                     "id":100009310,
                     "source":10000470,
+                    "start_year":1528,
                     "target":10002251,
                     "weight":100
                 },
                 {
                     "altered":true,
+                    "end_year":1610,
                     "id":100009300,
                     "source":10000470,
+                    "start_year":1561,
                     "target":10000473,
                     "weight":100
                 },
                 {
                     "altered":false,
+                    "end_year":1579,
                     "id":100009365,
                     "source":10000471,
+                    "start_year":1558,
                     "target":10000483,
                     "weight":83
                 },
                 {
                     "altered":false,
+                    "end_year":1601,
                     "id":100009441,
                     "source":10000471,
+                    "start_year":1585,
                     "target":10011322,
                     "weight":68
                 },
                 {
                     "altered":false,
+                    "end_year":1601,
                     "id":100009377,
                     "source":10000471,
+                    "start_year":1563,
                     "target":10002249,
                     "weight":77
                 },
                 {
                     "altered":false,
+                    "end_year":1601,
                     "id":100009382,
                     "source":10000471,
+                    "start_year":1558,
                     "target":10002279,
                     "weight":69
                 },
                 {
                     "altered":true,
+                    "end_year":1601,
                     "id":100009449,
                     "source":10000471,
+                    "start_year":1558,
                     "target":10012117,
                     "weight":100
                 },
                 {
                     "altered":true,
+                    "end_year":1601,
                     "id":100009361,
                     "source":10000471,
+                    "start_year":1561,
                     "target":10000473,
                     "weight":100
                 },
                 {
                     "altered":false,
+                    "end_year":1632,
                     "id":100168687,
                     "source":10012250,
+                    "start_year":1596,
                     "target":10013279,
                     "weight":87
                 },
                 {
                     "altered":false,
+                    "end_year":1632,
                     "id":100044392,
                     "source":10012250,
+                    "start_year":1589,
                     "target":10002086,
                     "weight":62
                 },
                 {
                     "altered":false,
+                    "end_year":1646,
                     "id":100168682,
                     "source":10012250,
+                    "start_year":1589,
                     "target":10012984,
                     "weight":72
                 },
                 {
                     "altered":false,
+                    "end_year":1644,
                     "id":100157414,
                     "source":10012250,
+                    "start_year":1589,
                     "target":10010388,
                     "weight":78
                 },
                 {
                     "altered":false,
+                    "end_year":1613,
                     "id":100056670,
                     "source":10009179,
+                    "start_year":1581,
                     "target":10002626,
                     "weight":64
                 },
                 {
                     "altered":false,
+                    "end_year":1613,
                     "id":100148729,
                     "source":10009179,
+                    "start_year":1592,
                     "target":10012357,
                     "weight":87
                 },
                 {
                     "altered":false,
+                    "end_year":1613,
                     "id":100045013,
                     "source":10009179,
+                    "start_year":1585,
                     "target":10002120,
                     "weight":99
                 },
                 {
                     "altered":false,
+                    "end_year":1613,
                     "id":100118152,
                     "source":10009179,
+                    "start_year":1590,
                     "target":10006249,
                     "weight":98
                 },
                 {
                     "altered":false,
+                    "end_year":1613,
                     "id":100148704,
                     "source":10009179,
+                    "start_year":1586,
                     "target":10010078,
                     "weight":88
                 },
                 {
                     "altered":true,
+                    "end_year":1613,
                     "id":100009664,
                     "source":10009179,
+                    "start_year":1581,
                     "target":10000473,
                     "weight":76
                 },
                 {
                     "altered":true,
+                    "end_year":1621,
                     "id":100200274,
                     "source":10000475,
+                    "start_year":1600,
                     "target":10050173,
                     "weight":100
                 },
                 {
                     "altered":false,
+                    "end_year":1634,
                     "id":100009973,
                     "source":10000475,
+                    "start_year":1600,
                     "target":10002626,
                     "weight":66
                 },
                 {
                     "altered":false,
+                    "end_year":1663,
                     "id":100010021,
                     "source":10000475,
+                    "start_year":1600,
                     "target":10006012,
                     "weight":90
                 },
                 {
                     "altered":false,
+                    "end_year":1571,
                     "id":100010300,
                     "source":10006621,
+                    "start_year":1522,
                     "target":10000483,
                     "weight":70
                 },
                 {
                     "altered":false,
+                    "end_year":1571,
                     "id":100123731,
                     "source":10006621,
+                    "start_year":1522,
                     "target":10009320,
                     "weight":96
                 },
                 {
                     "altered":false,
+                    "end_year":1571,
                     "id":100102709,
                     "source":10006621,
+                    "start_year":1522,
                     "target":10005259,
                     "weight":92
                 },
                 {
                     "altered":false,
+                    "end_year":1571,
                     "id":100123747,
                     "source":10006621,
+                    "start_year":1522,
                     "target":10010684,
                     "weight":74
                 },
                 {
                     "altered":false,
+                    "end_year":1632,
                     "id":100168859,
                     "source":10013279,
+                    "start_year":1596,
                     "target":10012309,
                     "weight":81
                 },
                 {
                     "altered":false,
+                    "end_year":1632,
                     "id":100132664,
                     "source":10013279,
+                    "start_year":1618,
                     "target":10007388,
                     "weight":81
                 },
                 {
                     "altered":false,
+                    "end_year":1632,
                     "id":100157434,
                     "source":10013279,
+                    "start_year":1596,
                     "target":10010388,
                     "weight":60
                 },
                 {
                     "altered":false,
+                    "end_year":1575,
                     "id":100010321,
                     "source":10000483,
+                    "start_year":1510,
                     "target":10009320,
                     "weight":99
                 },
                 {
                     "altered":false,
+                    "end_year":1579,
                     "id":100010258,
                     "source":10000483,
+                    "start_year":1520,
                     "target":10002251,
                     "weight":94
                 },
                 {
                     "altered":true,
+                    "end_year":1579,
                     "id":100009489,
                     "source":10000483,
+                    "start_year":1561,
                     "target":10000473,
                     "weight":93
                 },
                 {
                     "altered":true,
+                    "end_year":1626,
                     "id":100009647,
                     "source":10008167,
+                    "start_year":1590,
                     "target":10000473,
                     "weight":68
                 },
                 {
                     "altered":false,
+                    "end_year":1619,
                     "id":100030800,
                     "source":10001511,
+                    "start_year":1586,
                     "target":10010078,
                     "weight":68
                 },
                 {
                     "altered":true,
+                    "end_year":1634,
                     "id":100200164,
                     "source":10050154,
+                    "start_year":1601,
                     "target":10050155,
                     "weight":100
                 },
                 {
                     "altered":true,
+                    "end_year":1634,
                     "id":100200171,
                     "source":10050154,
+                    "start_year":1572,
                     "target":10050156,
                     "weight":100
                 },
                 {
                     "altered":true,
+                    "end_year":1634,
                     "id":100200178,
                     "source":10050154,
+                    "start_year":1603,
                     "target":10050157,
                     "weight":100
                 },
                 {
                     "altered":true,
+                    "end_year":1634,
                     "id":100200163,
                     "source":10050154,
+                    "start_year":1588,
                     "target":10004222,
                     "weight":100
                 },
                 {
                     "altered":true,
+                    "end_year":1634,
                     "id":100200158,
                     "source":10050154,
+                    "start_year":1593,
                     "target":10004223,
                     "weight":100
                 },
                 {
                     "altered":true,
+                    "end_year":1634,
                     "id":100200165,
                     "source":10050154,
+                    "start_year":1594,
                     "target":10013056,
                     "weight":93
                 },
                 {
                     "altered":true,
+                    "end_year":1650,
                     "id":100200169,
                     "source":10050155,
+                    "start_year":1601,
                     "target":10050156,
                     "weight":100
                 },
                 {
                     "altered":true,
+                    "end_year":1638,
                     "id":100200173,
                     "source":10050155,
+                    "start_year":1603,
                     "target":10050157,
                     "weight":100
                 },
                 {
                     "altered":true,
+                    "end_year":1657,
                     "id":100200167,
                     "source":10050155,
+                    "start_year":1601,
                     "target":10004222,
                     "weight":100
                 },
                 {
                     "altered":true,
+                    "end_year":1637,
                     "id":100200166,
                     "source":10050155,
+                    "start_year":1601,
                     "target":10004223,
                     "weight":100
                 },
                 {
                     "altered":true,
+                    "end_year":1680,
                     "id":100200168,
                     "source":10050155,
+                    "start_year":1627,
                     "target":10004225,
                     "weight":100
                 },
                 {
                     "altered":true,
+                    "end_year":1638,
                     "id":100200174,
                     "source":10050156,
+                    "start_year":1603,
                     "target":10050157,
                     "weight":100
                 },
                 {
                     "altered":true,
+                    "end_year":1650,
                     "id":100200170,
                     "source":10050156,
+                    "start_year":1588,
                     "target":10004222,
                     "weight":100
                 },
                 {
                     "altered":true,
+                    "end_year":1637,
                     "id":100200160,
                     "source":10050156,
+                    "start_year":1593,
                     "target":10004223,
                     "weight":100
                 },
                 {
                     "altered":true,
+                    "end_year":1650,
                     "id":100200172,
                     "source":10050156,
+                    "start_year":1627,
                     "target":10004225,
                     "weight":100
                 },
                 {
                     "altered":true,
+                    "end_year":1638,
                     "id":100200177,
                     "source":10050157,
+                    "start_year":1603,
                     "target":10004222,
                     "weight":100
                 },
                 {
                     "altered":true,
+                    "end_year":1637,
                     "id":100200176,
                     "source":10050157,
+                    "start_year":1603,
                     "target":10004223,
                     "weight":100
                 },
                 {
                     "altered":true,
+                    "end_year":1638,
                     "id":100200175,
                     "source":10050157,
+                    "start_year":1627,
                     "target":10004225,
                     "weight":100
                 },
                 {
                     "altered":true,
+                    "end_year":1627,
                     "id":100200179,
                     "source":10050158,
+                    "start_year":1593,
                     "target":10005828,
                     "weight":100
                 },
                 {
                     "altered":true,
+                    "end_year":1627,
                     "id":100200181,
                     "source":10050158,
+                    "start_year":1584,
                     "target":10003267,
                     "weight":87
                 },
                 {
                     "altered":false,
+                    "end_year":1617,
                     "id":100068705,
                     "source":10013296,
+                    "start_year":1596,
                     "target":10003216,
                     "weight":76
                 },
                 {
                     "altered":false,
+                    "end_year":1617,
                     "id":100157714,
                     "source":10013296,
+                    "start_year":1596,
                     "target":10010426,
                     "weight":94
                 },
                 {
                     "altered":false,
+                    "end_year":1617,
                     "id":100162683,
                     "source":10013296,
+                    "start_year":1596,
                     "target":10011212,
                     "weight":61
                 },
                 {
                     "altered":false,
+                    "end_year":1662,
                     "id":100108896,
                     "source":10005616,
+                    "start_year":1611,
                     "target":10009503,
                     "weight":64
                 },
                 {
                     "altered":true,
+                    "end_year":1662,
                     "id":100200301,
                     "source":10005616,
+                    "start_year":1648,
                     "target":10006012,
                     "weight":100
                 },
                 {
                     "altered":false,
+                    "end_year":1665,
                     "id":100084845,
                     "source":10004088,
+                    "start_year":1617,
                     "target":10004101,
                     "weight":80
                 },
                 {
                     "altered":false,
+                    "end_year":1635,
                     "id":100084860,
                     "source":10004088,
+                    "start_year":1617,
                     "target":10012309,
                     "weight":80
                 },
                 {
                     "altered":true,
+                    "end_year":1602,
                     "id":100009582,
                     "source":10004601,
+                    "start_year":1561,
                     "target":10000473,
                     "weight":95
                 },
                 {
                     "altered":false,
+                    "end_year":1617,
                     "id":100031749,
                     "source":10008697,
+                    "start_year":1561,
                     "target":10001553,
                     "weight":76
                 },
                 {
                     "altered":true,
+                    "end_year":1593,
                     "id":100200291,
                     "source":10012793,
+                    "start_year":1588,
                     "target":10001697,
                     "weight":100
                 },
                 {
                     "altered":false,
+                    "end_year":1593,
                     "id":100104038,
                     "source":10012793,
+                    "start_year":1577,
                     "target":10005363,
                     "weight":60
                 },
                 {
                     "altered":false,
+                    "end_year":1593,
                     "id":100155716,
                     "source":10012793,
+                    "start_year":1586,
                     "target":10010078,
                     "weight":67
                 },
                 {
                     "altered":false,
+                    "end_year":1674,
                     "id":100066764,
                     "source":10003064,
+                    "start_year":1639,
                     "target":10003070,
                     "weight":77
                 },
                 {
                     "altered":false,
+                    "end_year":1674,
                     "id":100066770,
                     "source":10003064,
+                    "start_year":1605,
                     "target":10006012,
                     "weight":79
                 },
                 {
                     "altered":true,
+                    "end_year":1604,
                     "id":100200234,
                     "source":10050173,
+                    "start_year":1593,
                     "target":10009594,
                     "weight":100
                 },
                 {
                     "altered":true,
+                    "end_year":1621,
                     "id":100200231,
                     "source":10050173,
+                    "start_year":1561,
                     "target":10000473,
                     "weight":100
                 },
                 {
                     "altered":false,
+                    "end_year":1679,
                     "id":100066853,
                     "source":10003070,
+                    "start_year":1639,
                     "target":10006012,
                     "weight":63
                 },
                 {
                     "altered":false,
+                    "end_year":1588,
                     "id":100116716,
                     "source":10006144,
+                    "start_year":1554,
                     "target":10010684,
                     "weight":61
                 },
                 {
                     "altered":false,
+                    "end_year":1634,
                     "id":100055724,
                     "source":10002562,
+                    "start_year":1600,
                     "target":10006012,
                     "weight":86
                 },
                 {
                     "altered":false,
+                    "end_year":1632,
                     "id":100109281,
                     "source":10005636,
+                    "start_year":1586,
                     "target":10012309,
                     "weight":65
                 },
                 {
                     "altered":false,
+                    "end_year":1632,
                     "id":100047853,
                     "source":10005636,
+                    "start_year":1586,
                     "target":10002243,
                     "weight":86
                 },
                 {
                     "altered":false,
+                    "end_year":1635,
                     "id":100085323,
                     "source":10004101,
+                    "start_year":1612,
                     "target":10012309,
                     "weight":61
                 },
                 {
                     "altered":false,
+                    "end_year":1671,
                     "id":100047375,
                     "source":10004101,
+                    "start_year":1612,
                     "target":10002230,
                     "weight":62
                 },
                 {
                     "altered":false,
+                    "end_year":1638,
                     "id":100047847,
                     "source":10004101,
+                    "start_year":1612,
                     "target":10002243,
                     "weight":75
                 },
                 {
                     "altered":false,
+                    "end_year":1676,
                     "id":100115070,
                     "source":10012806,
+                    "start_year":1592,
                     "target":10006012,
                     "weight":74
                 },
                 {
                     "altered":false,
+                    "end_year":1614,
                     "id":100060340,
                     "source":10010249,
+                    "start_year":1590,
                     "target":10002810,
                     "weight":78
                 },
                 {
                     "altered":false,
+                    "end_year":1619,
                     "id":100156571,
                     "source":10010249,
+                    "start_year":1590,
                     "target":10010258,
                     "weight":61
                 },
                 {
                     "altered":false,
+                    "end_year":1618,
                     "id":100000018,
                     "source":10000010,
+                    "start_year":1562,
                     "target":10000013,
                     "weight":96
                 },
                 {
                     "altered":false,
+                    "end_year":1632,
                     "id":100000058,
                     "source":10000010,
+                    "start_year":1574,
                     "target":10002086,
                     "weight":85
                 },
                 {
                     "altered":false,
+                    "end_year":1628,
                     "id":100000236,
                     "source":10000010,
+                    "start_year":1592,
                     "target":10012357,
                     "weight":67
                 },
                 {
                     "altered":false,
+                    "end_year":1633,
                     "id":100000060,
                     "source":10000010,
+                    "start_year":1585,
                     "target":10002120,
                     "weight":73
                 },
                 {
                     "altered":false,
+                    "end_year":1610,
                     "id":100000033,
                     "source":10000010,
+                    "start_year":1562,
                     "target":10000596,
                     "weight":96
                 },
                 {
                     "altered":false,
+                    "end_year":1628,
                     "id":100000065,
                     "source":10000010,
+                    "start_year":1562,
                     "target":10002279,
                     "weight":94
                 },
                 {
                     "altered":false,
+                    "end_year":1633,
                     "id":100000017,
                     "source":10000010,
+                    "start_year":1565,
                     "target":10000012,
                     "weight":100
                 },
                 {
                     "altered":false,
+                    "end_year":1586,
                     "id":100055891,
                     "source":10002571,
+                    "start_year":1552,
                     "target":10010684,
                     "weight":60
                 },
                 {
                     "altered":false,
+                    "end_year":1643,
                     "id":100011320,
                     "source":10000524,
+                    "start_year":1617,
                     "target":10012531,
                     "weight":79
                 },
                 {
                     "altered":false,
+                    "end_year":1631,
                     "id":100011299,
                     "source":10000524,
+                    "start_year":1582,
                     "target":10001553,
                     "weight":89
                 },
                 {
                     "altered":false,
+                    "end_year":1618,
                     "id":100000274,
                     "source":10000013,
+                    "start_year":1565,
                     "target":10000012,
                     "weight":100
                 },
                 {
                     "altered":false,
+                    "end_year":1625,
                     "id":100085786,
                     "source":10011273,
+                    "start_year":1580,
                     "target":10004129,
                     "weight":61
                 },
                 {
                     "altered":false,
+                    "end_year":1610,
                     "id":100156731,
                     "source":10010257,
+                    "start_year":1610,
                     "target":10010258,
                     "weight":79
                 },
                 {
                     "altered":false,
+                    "end_year":1609,
                     "id":100168837,
                     "source":10012307,
+                    "start_year":1565,
                     "target":10012309,
                     "weight":96
                 },
                 {
                     "altered":false,
+                    "end_year":1609,
                     "id":100047885,
                     "source":10012307,
+                    "start_year":1572,
                     "target":10002243,
                     "weight":88
                 },
                 {
                     "altered":false,
+                    "end_year":1609,
                     "id":100048497,
                     "source":10012307,
+                    "start_year":1563,
                     "target":10002249,
                     "weight":87
                 },
                 {
                     "altered":false,
+                    "end_year":1609,
                     "id":100167639,
                     "source":10012307,
+                    "start_year":1560,
                     "target":10012021,
                     "weight":95
                 },
                 {
                     "altered":false,
+                    "end_year":1632,
                     "id":100056747,
                     "source":10012819,
+                    "start_year":1570,
                     "target":10002626,
                     "weight":62
                 },
                 {
                     "altered":true,
+                    "end_year":1626,
                     "id":100009743,
                     "source":10012819,
+                    "start_year":1570,
                     "target":10000473,
                     "weight":100
                 },
                 {
                     "altered":false,
+                    "end_year":1632,
                     "id":100137765,
                     "source":10012819,
+                    "start_year":1570,
                     "target":10007944,
                     "weight":66
                 },
                 {
                     "altered":false,
+                    "end_year":1635,
                     "id":100034450,
                     "source":10012309,
+                    "start_year":1590,
                     "target":10001671,
                     "weight":77
                 },
                 {
                     "altered":false,
+                    "end_year":1588,
                     "id":100079320,
                     "source":10012309,
+                    "start_year":1565,
                     "target":10003747,
                     "weight":79
                 },
                 {
                     "altered":false,
+                    "end_year":1635,
                     "id":100047886,
                     "source":10012309,
+                    "start_year":1572,
                     "target":10002243,
                     "weight":98
                 },
                 {
                     "altered":false,
+                    "end_year":1631,
                     "id":100059207,
                     "source":10012309,
+                    "start_year":1565,
                     "target":10002756,
                     "weight":60
                 },
                 {
                     "altered":false,
+                    "end_year":1635,
                     "id":100036680,
                     "source":10012309,
+                    "start_year":1565,
                     "target":10001782,
                     "weight":79
                 },
                 {
                     "altered":false,
+                    "end_year":1635,
                     "id":100113415,
                     "source":10012309,
+                    "start_year":1601,
                     "target":10005891,
                     "weight":87
                 },
                 {
                     "altered":false,
+                    "end_year":1619,
                     "id":100151816,
                     "source":10012994,
+                    "start_year":1580,
                     "target":10009556,
                     "weight":73
                 },
                 {
                     "altered":false,
+                    "end_year":1610,
                     "id":100125427,
                     "source":10011293,
+                    "start_year":1565,
                     "target":10006734,
                     "weight":66
                 },
                 {
                     "altered":false,
+                    "end_year":1610,
                     "id":100095235,
                     "source":10011293,
+                    "start_year":1554,
                     "target":10004724,
                     "weight":79
                 },
                 {
                     "altered":false,
+                    "end_year":1609,
                     "id":100154559,
                     "source":10011293,
+                    "start_year":1554,
                     "target":10009915,
                     "weight":62
                 },
                 {
                     "altered":false,
+                    "end_year":1610,
                     "id":100163066,
                     "source":10011293,
+                    "start_year":1572,
                     "target":10011623,
                     "weight":65
                 },
                 {
                     "altered":false,
+                    "end_year":1609,
                     "id":100050116,
                     "source":10009763,
+                    "start_year":1562,
                     "target":10002279,
                     "weight":62
                 },
                 {
                     "altered":true,
+                    "end_year":1609,
                     "id":100009678,
                     "source":10009763,
+                    "start_year":1562,
                     "target":10000473,
                     "weight":63
                 },
                 {
                     "altered":false,
+                    "end_year":1634,
                     "id":100056612,
                     "source":10005668,
+                    "start_year":1578,
                     "target":10002626,
                     "weight":93
                 },
                 {
                     "altered":false,
+                    "end_year":1623,
                     "id":100048576,
                     "source":10005668,
+                    "start_year":1578,
                     "target":10002250,
                     "weight":87
                 },
                 {
                     "altered":true,
+                    "end_year":1626,
                     "id":100009603,
                     "source":10005668,
+                    "start_year":1578,
                     "target":10000473,
                     "weight":84
                 },
                 {
                     "altered":false,
+                    "end_year":1667,
                     "id":100142872,
                     "source":10011813,
+                    "start_year":1614,
                     "target":10008468,
                     "weight":67
                 },
                 {
                     "altered":false,
+                    "end_year":1667,
                     "id":100115056,
                     "source":10011813,
+                    "start_year":1613,
                     "target":10006012,
                     "weight":76
                 },
                 {
                     "altered":false,
+                    "end_year":1632,
                     "id":100044260,
                     "source":10002086,
+                    "start_year":1574,
                     "target":10002628,
                     "weight":76
                 },
                 {
                     "altered":false,
+                    "end_year":1632,
                     "id":100044290,
                     "source":10002086,
+                    "start_year":1593,
                     "target":10004223,
                     "weight":71
                 },
                 {
                     "altered":false,
+                    "end_year":1632,
                     "id":100044358,
                     "source":10002086,
+                    "start_year":1574,
                     "target":10009855,
                     "weight":73
                 },
                 {
                     "altered":false,
+                    "end_year":1632,
                     "id":100044307,
                     "source":10002086,
+                    "start_year":1591,
                     "target":10005826,
                     "weight":73
                 },
                 {
                     "altered":false,
+                    "end_year":1628,
                     "id":100044252,
                     "source":10002086,
+                    "start_year":1574,
                     "target":10002279,
                     "weight":99
                 },
                 {
                     "altered":false,
+                    "end_year":1632,
                     "id":100044409,
                     "source":10002086,
+                    "start_year":1574,
                     "target":10013132,
                     "weight":85
                 },
                 {
                     "altered":false,
+                    "end_year":1632,
                     "id":100044412,
                     "source":10002086,
+                    "start_year":1587,
                     "target":10013172,
                     "weight":100
                 },
                 {
                     "altered":false,
+                    "end_year":1575,
                     "id":100149885,
                     "source":10012841,
+                    "start_year":1504,
                     "target":10009320,
                     "weight":69
                 },
                 {
                     "altered":false,
+                    "end_year":1579,
                     "id":100049166,
                     "source":10012841,
+                    "start_year":1520,
                     "target":10002251,
                     "weight":76
                 },
                 {
                     "altered":false,
+                    "end_year":1579,
                     "id":100120822,
                     "source":10012841,
+                    "start_year":1529,
                     "target":10006431,
                     "weight":76
                 },
                 {
                     "altered":false,
+                    "end_year":1579,
                     "id":100159374,
                     "source":10012841,
+                    "start_year":1519,
                     "target":10010684,
                     "weight":75
                 },
                 {
                     "altered":false,
+                    "end_year":1607,
                     "id":100112772,
                     "source":10012848,
+                    "start_year":1580,
                     "target":10005843,
                     "weight":64
                 },
                 {
                     "altered":false,
+                    "end_year":1612,
                     "id":100048430,
                     "source":10011322,
+                    "start_year":1585,
                     "target":10002249,
                     "weight":83
                 },
                 {
                     "altered":true,
+                    "end_year":1599,
                     "id":100200599,
                     "source":10011322,
+                    "start_year":1599,
                     "target":10012117,
                     "weight":100
                 },
                 {
                     "altered":false,
+                    "end_year":1631,
                     "id":100155666,
                     "source":10011322,
+                    "start_year":1586,
                     "target":10010078,
                     "weight":87
                 },
                 {
                     "altered":true,
+                    "end_year":1626,
                     "id":100009709,
                     "source":10011322,
+                    "start_year":1585,
                     "target":10000473,
                     "weight":73
                 },
                 {
                     "altered":false,
+                    "end_year":1634,
                     "id":100056699,
                     "source":10002626,
+                    "start_year":1584,
                     "target":10010872,
                     "weight":83
                 },
                 {
                     "altered":false,
+                    "end_year":1634,
                     "id":100056655,
                     "source":10002626,
+                    "start_year":1583,
                     "target":10008359,
                     "weight":90
                 },
                 {
                     "altered":false,
+                    "end_year":1623,
                     "id":100048561,
                     "source":10002626,
+                    "start_year":1552,
                     "target":10002250,
                     "weight":63
                 },
                 {
                     "altered":false,
+                    "end_year":1634,
                     "id":100056561,
                     "source":10002626,
+                    "start_year":1578,
                     "target":10002912,
                     "weight":90
                 },
                 {
                     "altered":false,
+                    "end_year":1607,
                     "id":100056682,
                     "source":10002626,
+                    "start_year":1552,
                     "target":10009835,
                     "weight":61
                 },
                 {
                     "altered":true,
+                    "end_year":1626,
                     "id":100009535,
                     "source":10002626,
+                    "start_year":1561,
                     "target":10000473,
                     "weight":100
                 },
                 {
                     "altered":false,
+                    "end_year":1628,
                     "id":100056821,
                     "source":10002628,
+                    "start_year":1563,
                     "target":10005201,
                     "weight":98
                 },
                 {
                     "altered":false,
+                    "end_year":1644,
                     "id":100056899,
                     "source":10002628,
+                    "start_year":1582,
                     "target":10012984,
                     "weight":87
                 },
                 {
                     "altered":false,
+                    "end_year":1631,
                     "id":100056787,
                     "source":10002628,
+                    "start_year":1564,
                     "target":10002756,
                     "weight":62
                 },
                 {
                     "altered":false,
+                    "end_year":1644,
                     "id":100056792,
                     "source":10002628,
+                    "start_year":1579,
                     "target":10002882,
                     "weight":81
                 },
                 {
                     "altered":false,
+                    "end_year":1632,
                     "id":100056806,
                     "source":10002628,
+                    "start_year":1592,
                     "target":10003926,
                     "weight":86
                 },
                 {
                     "altered":false,
+                    "end_year":1638,
                     "id":100010608,
                     "source":10002628,
+                    "start_year":1592,
                     "target":10000495,
                     "weight":66
                 },
                 {
                     "altered":false,
+                    "end_year":1644,
                     "id":100056847,
                     "source":10002628,
+                    "start_year":1570,
                     "target":10007944,
                     "weight":95
                 },
                 {
                     "altered":false,
+                    "end_year":1644,
                     "id":100056870,
                     "source":10002628,
+                    "start_year":1581,
                     "target":10010388,
                     "weight":81
                 },
                 {
                     "altered":false,
+                    "end_year":1628,
                     "id":100045056,
                     "source":10012357,
+                    "start_year":1592,
                     "target":10002120,
                     "weight":97
                 },
                 {
                     "altered":false,
+                    "end_year":1628,
                     "id":100050182,
                     "source":10012357,
+                    "start_year":1592,
                     "target":10002279,
                     "weight":91
                 },
                 {
                     "altered":false,
+                    "end_year":1628,
                     "id":100062200,
                     "source":10012357,
+                    "start_year":1592,
                     "target":10002912,
                     "weight":67
                 },
                 {
                     "altered":true,
+                    "end_year":1626,
                     "id":100009734,
                     "source":10012357,
+                    "start_year":1592,
                     "target":10000473,
                     "weight":75
                 },
                 {
                     "altered":false,
+                    "end_year":1585,
                     "id":100088578,
                     "source":10008774,
+                    "start_year":1550,
                     "target":10004295,
                     "weight":72
                 },
                 {
                     "altered":false,
+                    "end_year":1585,
                     "id":100104003,
                     "source":10008774,
+                    "start_year":1552,
                     "target":10005363,
                     "weight":70
                 },
                 {
                     "altered":false,
+                    "end_year":1585,
                     "id":100081881,
                     "source":10008774,
+                    "start_year":1552,
                     "target":10003919,
                     "weight":61
                 },
                 {
                     "altered":true,
+                    "end_year":1632,
                     "id":100044969,
                     "source":10002120,
+                    "start_year":1590,
                     "target":10006249,
                     "weight":93
                 },
                 {
                     "altered":true,
+                    "end_year":1626,
                     "id":100009524,
                     "source":10002120,
+                    "start_year":1585,
                     "target":10000473,
                     "weight":88
                 },
                 {
                     "altered":false,
+                    "end_year":1644,
                     "id":100157412,
                     "source":10011852,
+                    "start_year":1589,
                     "target":10010388,
                     "weight":89
                 },
                 {
                     "altered":false,
+                    "end_year":1622,
                     "id":100095223,
                     "source":10006734,
+                    "start_year":1565,
                     "target":10004724,
                     "weight":72
                 },
                 {
                     "altered":false,
+                    "end_year":1588,
                     "id":100159377,
                     "source":10012880,
+                    "start_year":1530,
                     "target":10010684,
                     "weight":90
                 },
                 {
                     "altered":false,
+                    "end_year":1628,
                     "id":100059171,
                     "source":10005201,
+                    "start_year":1564,
                     "target":10002756,
                     "weight":63
                 },
                 {
                     "altered":false,
+                    "end_year":1612,
                     "id":100048146,
                     "source":10005201,
+                    "start_year":1563,
                     "target":10002249,
                     "weight":88
                 },
                 {
                     "altered":true,
+                    "end_year":1628,
                     "id":100200407,
                     "source":10005201,
+                    "start_year":1587,
                     "target":10013172,
                     "weight":60
                 },
                 {
                     "altered":false,
+                    "end_year":1628,
                     "id":100101622,
                     "source":10005201,
+                    "start_year":1570,
                     "target":10007944,
                     "weight":78
                 },
                 {
                     "altered":false,
+                    "end_year":1596,
                     "id":100077308,
                     "source":10003665,
+                    "start_year":1552,
                     "target":10005363,
                     "weight":90
                 },
                 {
                     "altered":false,
+                    "end_year":1596,
                     "id":100077380,
                     "source":10003665,
+                    "start_year":1540,
                     "target":10012117,
                     "weight":90
                 },
                 {
                     "altered":false,
+                    "end_year":1596,
                     "id":100077362,
                     "source":10003665,
+                    "start_year":1586,
                     "target":10010078,
                     "weight":86
                 },
                 {
                     "altered":false,
+                    "end_year":1606,
                     "id":100094803,
                     "source":10004692,
+                    "start_year":1555,
                     "target":10009835,
                     "weight":66
                 },
                 {
                     "altered":false,
+                    "end_year":1610,
                     "id":100012796,
                     "source":10000596,
+                    "start_year":1563,
                     "target":10002249,
                     "weight":87
                 },
                 {
                     "altered":false,
+                    "end_year":1606,
                     "id":100012889,
                     "source":10000596,
+                    "start_year":1544,
                     "target":10006431,
                     "weight":69
                 },
                 {
                     "altered":false,
+                    "end_year":1610,
                     "id":100012977,
                     "source":10000596,
+                    "start_year":1549,
                     "target":10011712,
                     "weight":78
                 },
                 {
                     "altered":false,
+                    "end_year":1631,
                     "id":100077565,
                     "source":10003677,
+                    "start_year":1584,
                     "target":10010872,
                     "weight":100
                 },
                 {
                     "altered":false,
+                    "end_year":1631,
                     "id":100034405,
                     "source":10003677,
+                    "start_year":1590,
                     "target":10001671,
                     "weight":93
                 },
                 {
                     "altered":false,
+                    "end_year":1616,
                     "id":100077566,
                     "source":10003677,
+                    "start_year":1564,
                     "target":10010937,
                     "weight":85
                 },
                 {
                     "altered":false,
+                    "end_year":1603,
                     "id":100077584,
                     "source":10003677,
+                    "start_year":1563,
                     "target":10012117,
                     "weight":63
                 },
                 {
                     "altered":false,
+                    "end_year":1631,
                     "id":100059223,
                     "source":10003677,
+                    "start_year":1594,
                     "target":10002757,
                     "weight":60
                 },
                 {
                     "altered":false,
+                    "end_year":1679,
                     "id":100023617,
                     "source":10001118,
+                    "start_year":1651,
                     "target":10006012,
                     "weight":70
                 },
                 {
                     "altered":false,
+                    "end_year":1556,
                     "id":100149704,
                     "source":10009312,
+                    "start_year":1508,
                     "target":10009330,
                     "weight":86
                 },
                 {
                     "altered":false,
+                    "end_year":1617,
                     "id":100068689,
                     "source":10008801,
+                    "start_year":1561,
                     "target":10003216,
                     "weight":62
                 },
                 {
                     "altered":false,
+                    "end_year":1617,
                     "id":100145986,
                     "source":10008801,
+                    "start_year":1572,
                     "target":10011623,
                     "weight":66
                 },
                 {
                     "altered":false,
+                    "end_year":1617,
                     "id":100145980,
                     "source":10008801,
+                    "start_year":1580,
                     "target":10011212,
                     "weight":61
                 },
                 {
                     "altered":false,
+                    "end_year":1617,
                     "id":100145974,
                     "source":10008801,
+                    "start_year":1581,
                     "target":10010388,
                     "weight":68
                 },
                 {
                     "altered":false,
+                    "end_year":1613,
                     "id":100103983,
                     "source":10005735,
+                    "start_year":1552,
                     "target":10005363,
                     "weight":60
                 },
                 {
                     "altered":true,
+                    "end_year":1607,
                     "id":100200459,
                     "source":10051816,
+                    "start_year":1550,
                     "target":10009835,
                     "weight":100
                 },
                 {
                     "altered":false,
+                    "end_year":1644,
                     "id":100154023,
                     "source":10009833,
+                    "start_year":1610,
                     "target":10009834,
                     "weight":89
                 },
                 {
                     "altered":true,
+                    "end_year":1626,
                     "id":100009618,
                     "source":10006249,
+                    "start_year":1590,
                     "target":10000473,
                     "weight":69
                 },
                 {
                     "altered":false,
+                    "end_year":1575,
                     "id":100102742,
                     "source":10009320,
+                    "start_year":1516,
                     "target":10005259,
                     "weight":100
                 },
                 {
                     "altered":false,
+                    "end_year":1575,
                     "id":100048970,
                     "source":10009320,
+                    "start_year":1520,
                     "target":10002251,
                     "weight":100
                 },
                 {
                     "altered":false,
+                    "end_year":1575,
                     "id":100120804,
                     "source":10009320,
+                    "start_year":1529,
                     "target":10006431,
                     "weight":66
                 },
                 {
                     "altered":false,
+                    "end_year":1575,
                     "id":100149834,
                     "source":10009320,
+                    "start_year":1519,
                     "target":10010684,
                     "weight":89
                 },
                 {
                     "altered":false,
+                    "end_year":1579,
                     "id":100104041,
                     "source":10012904,
+                    "start_year":1552,
                     "target":10005363,
                     "weight":78
                 },
                 {
                     "altered":false,
+                    "end_year":1619,
                     "id":100068686,
                     "source":10004724,
+                    "start_year":1512,
                     "target":10003216,
                     "weight":68
                 },
                 {
                     "altered":false,
+                    "end_year":1616,
                     "id":100095232,
                     "source":10004724,
+                    "start_year":1564,
                     "target":10010937,
                     "weight":69
                 },
                 {
                     "altered":false,
+                    "end_year":1622,
                     "id":100095230,
                     "source":10004724,
+                    "start_year":1585,
                     "target":10010426,
                     "weight":62
                 },
                 {
                     "altered":false,
+                    "end_year":1645,
                     "id":100034440,
                     "source":10010872,
+                    "start_year":1590,
                     "target":10001671,
                     "weight":75
                 },
                 {
                     "altered":false,
+                    "end_year":1654,
                     "id":100112142,
                     "source":10010872,
+                    "start_year":1591,
                     "target":10005826,
                     "weight":94
                 },
                 {
                     "altered":false,
+                    "end_year":1654,
                     "id":100115046,
                     "source":10010872,
+                    "start_year":1588,
                     "target":10006012,
                     "weight":80
                 },
                 {
                     "altered":false,
+                    "end_year":1637,
                     "id":100087193,
                     "source":10004222,
+                    "start_year":1593,
                     "target":10004223,
                     "weight":100
                 },
                 {
                     "altered":true,
+                    "end_year":1657,
                     "id":100200162,
                     "source":10004222,
+                    "start_year":1627,
                     "target":10004225,
                     "weight":100
                 },
                 {
                     "altered":true,
+                    "end_year":1637,
                     "id":100200161,
                     "source":10004223,
+                    "start_year":1627,
                     "target":10004225,
                     "weight":100
                 },
                 {
                     "altered":false,
+                    "end_year":1637,
                     "id":100079687,
                     "source":10004223,
+                    "start_year":1600,
                     "target":10003773,
                     "weight":88
                 },
                 {
                     "altered":false,
+                    "end_year":1633,
                     "id":100087215,
                     "source":10004223,
+                    "start_year":1593,
                     "target":10005828,
                     "weight":93
                 },
                 {
                     "altered":false,
+                    "end_year":1637,
                     "id":100087232,
                     "source":10004223,
+                    "start_year":1594,
                     "target":10013056,
                     "weight":100
                 },
                 {
                     "altered":true,
+                    "end_year":1637,
                     "id":100087222,
                     "source":10004223,
+                    "start_year":1609,
                     "target":10007955,
                     "weight":100
                 },
                 {
                     "altered":false,
+                    "end_year":1634,
                     "id":100087219,
                     "source":10004223,
+                    "start_year":1593,
                     "target":10007457,
                     "weight":85
                 },
                 {
                     "altered":false,
+                    "end_year":1618,
                     "id":100039291,
                     "source":10004223,
+                    "start_year":1593,
                     "target":10001884,
                     "weight":78
                 },
                 {
                     "altered":false,
+                    "end_year":1612,
                     "id":100048371,
                     "source":10009855,
+                    "start_year":1572,
                     "target":10002249,
                     "weight":68
                 },
                 {
                     "altered":false,
+                    "end_year":1628,
                     "id":100050118,
                     "source":10009855,
+                    "start_year":1572,
                     "target":10002279,
                     "weight":69
                 },
                 {
                     "altered":false,
+                    "end_year":1616,
                     "id":100104013,
                     "source":10009855,
+                    "start_year":1572,
                     "target":10005363,
                     "weight":69
                 },
                 {
                     "altered":false,
+                    "end_year":1614,
                     "id":100060336,
                     "source":10009855,
+                    "start_year":1572,
                     "target":10002810,
                     "weight":76
                 },
                 {
                     "altered":false,
+                    "end_year":1626,
                     "id":100154177,
                     "source":10009855,
+                    "start_year":1577,
                     "target":10010012,
                     "weight":66
                 },
                 {
                     "altered":false,
+                    "end_year":1555,
                     "id":100024205,
                     "source":10001158,
+                    "start_year":1519,
                     "target":10010684,
                     "weight":95
                 },
                 {
                     "altered":false,
+                    "end_year":1583,
                     "id":100048782,
                     "source":10005259,
+                    "start_year":1520,
                     "target":10002251,
                     "weight":99
                 },
                 {
                     "altered":false,
+                    "end_year":1583,
                     "id":100102707,
                     "source":10005259,
+                    "start_year":1529,
                     "target":10006431,
                     "weight":94
                 },
                 {
                     "altered":false,
+                    "end_year":1583,
                     "id":100102773,
                     "source":10005259,
+                    "start_year":1519,
                     "target":10010684,
                     "weight":100
                 },
                 {
                     "altered":false,
+                    "end_year":1638,
                     "id":100010629,
                     "source":10008337,
+                    "start_year":1592,
                     "target":10000495,
                     "weight":71
                 },
                 {
                     "altered":false,
+                    "end_year":1679,
                     "id":100047531,
                     "source":10002232,
+                    "start_year":1641,
                     "target":10006012,
                     "weight":60
                 },
                 {
                     "altered":false,
+                    "end_year":1631,
                     "id":100031736,
                     "source":10004766,
+                    "start_year":1597,
                     "target":10001553,
                     "weight":80
                 },
                 {
                     "altered":false,
+                    "end_year":1588,
                     "id":100024586,
                     "source":10001183,
+                    "start_year":1555,
                     "target":10003747,
                     "weight":72
                 },
                 {
                     "altered":false,
+                    "end_year":1601,
                     "id":100024588,
                     "source":10001183,
+                    "start_year":1568,
                     "target":10005028,
                     "weight":70
                 },
                 {
                     "altered":false,
+                    "end_year":1679,
                     "id":100024563,
                     "source":10001182,
+                    "start_year":1654,
                     "target":10006012,
                     "weight":74
                 },
                 {
                     "altered":true,
+                    "end_year":1591,
                     "id":100200289,
                     "source":10001697,
+                    "start_year":1586,
                     "target":10005363,
                     "weight":100
                 },
                 {
                     "altered":false,
+                    "end_year":1588,
                     "id":100079275,
                     "source":10003747,
+                    "start_year":1552,
                     "target":10011430,
                     "weight":83
                 },
                 {
                     "altered":false,
+                    "end_year":1588,
                     "id":100079101,
                     "source":10003747,
+                    "start_year":1538,
                     "target":10005829,
                     "weight":65
                 },
                 {
                     "altered":false,
+                    "end_year":1588,
                     "id":100059354,
                     "source":10003747,
+                    "start_year":1532,
                     "target":10002759,
                     "weight":70
                 },
                 {
                     "altered":false,
+                    "end_year":1588,
                     "id":100048709,
                     "source":10003747,
+                    "start_year":1532,
                     "target":10002251,
                     "weight":100
                 },
                 {
                     "altered":false,
+                    "end_year":1588,
                     "id":100079313,
                     "source":10003747,
+                    "start_year":1533,
                     "target":10012117,
                     "weight":100
                 },
                 {
                     "altered":false,
+                    "end_year":1588,
                     "id":100079348,
                     "source":10003747,
+                    "start_year":1587,
                     "target":10013172,
                     "weight":66
                 },
                 {
                     "altered":false,
+                    "end_year":1605,
                     "id":100048443,
                     "source":10011430,
+                    "start_year":1563,
                     "target":10002249,
                     "weight":86
                 },
                 {
                     "altered":false,
+                    "end_year":1605,
                     "id":100104023,
                     "source":10011430,
+                    "start_year":1552,
                     "target":10005363,
                     "weight":71
                 },
                 {
                     "altered":true,
+                    "end_year":1626,
                     "id":100009651,
                     "source":10008359,
+                    "start_year":1583,
                     "target":10000473,
                     "weight":88
                 },
                 {
                     "altered":false,
+                    "end_year":1642,
                     "id":100000314,
                     "source":10010919,
+                    "start_year":1633,
                     "target":10000012,
                     "weight":62
                 },
                 {
                     "altered":false,
+                    "end_year":1651,
                     "id":100046971,
                     "source":10002217,
+                    "start_year":1596,
                     "target":10009450,
                     "weight":77
                 },
                 {
                     "altered":false,
+                    "end_year":1654,
                     "id":100046972,
                     "source":10002217,
+                    "start_year":1611,
                     "target":10009503,
                     "weight":72
                 },
                 {
                     "altered":false,
+                    "end_year":1654,
                     "id":100046954,
                     "source":10002217,
+                    "start_year":1595,
                     "target":10006012,
                     "weight":92
                 },
                 {
                     "altered":false,
+                    "end_year":1643,
                     "id":100047003,
                     "source":10002218,
+                    "start_year":1620,
                     "target":10006012,
                     "weight":63
                 },
                 {
                     "altered":false,
+                    "end_year":1675,
                     "id":100047034,
                     "source":10002219,
+                    "start_year":1595,
                     "target":10006012,
                     "weight":71
                 },
                 {
                     "altered":false,
+                    "end_year":1643,
                     "id":100097811,
                     "source":10012460,
+                    "start_year":1610,
                     "target":10004913,
                     "weight":71
                 },
                 {
                     "altered":false,
+                    "end_year":1679,
                     "id":100115062,
                     "source":10012460,
+                    "start_year":1606,
                     "target":10006012,
                     "weight":76
                 },
                 {
                     "altered":false,
+                    "end_year":1592,
                     "id":100047277,
                     "source":10002226,
+                    "start_year":1560,
                     "target":10006329,
                     "weight":75
                 },
                 {
                     "altered":false,
+                    "end_year":1592,
                     "id":100047272,
                     "source":10002226,
+                    "start_year":1560,
                     "target":10005363,
                     "weight":98
                 },
                 {
                     "altered":false,
+                    "end_year":1592,
                     "id":100047265,
                     "source":10002226,
+                    "start_year":1561,
                     "target":10003920,
                     "weight":64
                 },
                 {
                     "altered":true,
+                    "end_year":1598,
                     "id":100009491,
                     "source":10000691,
+                    "start_year":1561,
                     "target":10000473,
                     "weight":72
                 },
                 {
                     "altered":false,
+                    "end_year":1628,
                     "id":100049997,
                     "source":10004275,
+                    "start_year":1570,
                     "target":10002279,
                     "weight":82
                 },
                 {
                     "altered":false,
+                    "end_year":1641,
                     "id":100088183,
                     "source":10004275,
+                    "start_year":1581,
                     "target":10010388,
                     "weight":65
                 },
                 {
                     "altered":false,
+                    "end_year":1689,
                     "id":100169247,
                     "source":10012466,
+                    "start_year":1617,
                     "target":10012531,
                     "weight":90
                 },
                 {
                     "altered":false,
+                    "end_year":1679,
                     "id":100115063,
                     "source":10012466,
+                    "start_year":1616,
                     "target":10006012,
                     "weight":75
                 },
                 {
                     "altered":false,
+                    "end_year":1639,
                     "id":100047439,
                     "source":10002230,
+                    "start_year":1593,
                     "target":10013132,
                     "weight":64
                 },
                 {
                     "altered":false,
+                    "end_year":1676,
                     "id":100047389,
                     "source":10002230,
+                    "start_year":1593,
                     "target":10006012,
                     "weight":65
                 },
                 {
                     "altered":true,
+                    "end_year":1626,
                     "id":100009620,
                     "source":10006328,
+                    "start_year":1577,
                     "target":10000473,
                     "weight":68
                 },
                 {
                     "altered":false,
+                    "end_year":1616,
                     "id":100050146,
                     "source":10010937,
+                    "start_year":1564,
                     "target":10002279,
                     "weight":73
                 },
                 {
                     "altered":false,
+                    "end_year":1616,
                     "id":100103988,
                     "source":10006329,
+                    "start_year":1553,
                     "target":10005363,
                     "weight":70
                 },
                 {
                     "altered":false,
+                    "end_year":1594,
                     "id":100003697,
                     "source":10000188,
+                    "start_year":1530,
                     "target":10004371,
                     "weight":66
                 },
                 {
                     "altered":false,
+                    "end_year":1603,
                     "id":100003730,
                     "source":10000188,
+                    "start_year":1533,
                     "target":10012117,
                     "weight":85
                 },
                 {
                     "altered":false,
+                    "end_year":1605,
                     "id":100003724,
                     "source":10000188,
+                    "start_year":1531,
                     "target":10009835,
                     "weight":67
                 },
                 {
                     "altered":false,
+                    "end_year":1633,
                     "id":100079689,
                     "source":10003773,
+                    "start_year":1600,
                     "target":10005828,
                     "weight":61
                 },
                 {
                     "altered":false,
+                    "end_year":1646,
                     "id":100061459,
                     "source":10012984,
+                    "start_year":1582,
                     "target":10002882,
                     "weight":95
                 },
                 {
                     "altered":false,
+                    "end_year":1644,
                     "id":100157427,
                     "source":10012984,
+                    "start_year":1582,
                     "target":10010388,
                     "weight":83
                 },
                 {
                     "altered":false,
+                    "end_year":1609,
                     "id":100154557,
                     "source":10009915,
+                    "start_year":1586,
                     "target":10010078,
                     "weight":76
                 },
                 {
                     "altered":false,
+                    "end_year":1601,
                     "id":100069312,
                     "source":10003264,
+                    "start_year":1573,
                     "target":10003265,
                     "weight":71
                 },
                 {
                     "altered":false,
+                    "end_year":1601,
                     "id":100069327,
                     "source":10003264,
+                    "start_year":1586,
                     "target":10010078,
                     "weight":65
                 },
                 {
                     "altered":false,
+                    "end_year":1601,
                     "id":100069314,
                     "source":10003264,
+                    "start_year":1584,
                     "target":10003267,
                     "weight":78
                 },
                 {
                     "altered":false,
+                    "end_year":1644,
                     "id":100069336,
                     "source":10003265,
+                    "start_year":1584,
                     "target":10003267,
                     "weight":65
                 },
                 {
                     "altered":false,
+                    "end_year":1633,
                     "id":100112102,
                     "source":10005826,
+                    "start_year":1593,
                     "target":10005828,
                     "weight":72
                 },
                 {
                     "altered":false,
+                    "end_year":1603,
                     "id":100112155,
                     "source":10005826,
+                    "start_year":1591,
                     "target":10012117,
                     "weight":60
                 },
                 {
                     "altered":false,
+                    "end_year":1655,
                     "id":100069440,
                     "source":10005826,
+                    "start_year":1591,
                     "target":10003267,
                     "weight":79
                 },
                 {
                     "altered":false,
+                    "end_year":1612,
                     "id":100047833,
                     "source":10002243,
+                    "start_year":1572,
                     "target":10002249,
                     "weight":91
                 },
                 {
                     "altered":false,
+                    "end_year":1623,
                     "id":100047834,
                     "source":10002243,
+                    "start_year":1572,
                     "target":10002250,
                     "weight":91
                 },
                 {
                     "altered":false,
+                    "end_year":1638,
                     "id":100047870,
                     "source":10002243,
+                    "start_year":1572,
                     "target":10008399,
                     "weight":60
                 },
                 {
                     "altered":false,
+                    "end_year":1626,
                     "id":100047883,
                     "source":10002243,
+                    "start_year":1572,
                     "target":10012021,
                     "weight":74
                 },
                 {
                     "altered":false,
+                    "end_year":1638,
                     "id":100047890,
                     "source":10002243,
+                    "start_year":1572,
                     "target":10013132,
                     "weight":86
                 },
                 {
                     "altered":true,
+                    "end_year":1633,
                     "id":100112250,
                     "source":10005828,
+                    "start_year":1594,
                     "target":10013056,
                     "weight":100
                 },
                 {
                     "altered":false,
+                    "end_year":1633,
                     "id":100069442,
                     "source":10005828,
+                    "start_year":1593,
                     "target":10003267,
                     "weight":88
                 },
                 {
                     "altered":false,
+                    "end_year":1601,
                     "id":100112256,
                     "source":10005829,
+                    "start_year":1580,
                     "target":10005843,
                     "weight":65
                 },
                 {
                     "altered":false,
+                    "end_year":1603,
                     "id":100059157,
                     "source":10002756,
+                    "start_year":1564,
                     "target":10002759,
                     "weight":64
                 },
                 {
                     "altered":false,
+                    "end_year":1611,
                     "id":100088576,
                     "source":10004295,
+                    "start_year":1552,
                     "target":10005363,
                     "weight":84
                 },
                 {
                     "altered":false,
+                    "end_year":1611,
                     "id":100081879,
                     "source":10004295,
+                    "start_year":1552,
                     "target":10003919,
                     "weight":90
                 },
                 {
                     "altered":false,
+                    "end_year":1612,
                     "id":100047995,
                     "source":10002249,
+                    "start_year":1563,
                     "target":10002250,
                     "weight":96
                 },
                 {
                     "altered":false,
+                    "end_year":1598,
                     "id":100047996,
                     "source":10002249,
+                    "start_year":1563,
                     "target":10002251,
                     "weight":81
                 },
                 {
                     "altered":false,
+                    "end_year":1612,
                     "id":100048000,
                     "source":10002249,
+                    "start_year":1563,
                     "target":10002279,
                     "weight":95
                 },
                 {
                     "altered":false,
+                    "end_year":1612,
                     "id":100048472,
                     "source":10002249,
+                    "start_year":1563,
                     "target":10012021,
                     "weight":62
                 },
                 {
                     "altered":false,
+                    "end_year":1612,
                     "id":100048023,
                     "source":10002249,
+                    "start_year":1563,
                     "target":10002810,
                     "weight":63
                 },
                 {
                     "altered":false,
+                    "end_year":1606,
                     "id":100048220,
                     "source":10002249,
+                    "start_year":1563,
                     "target":10006431,
                     "weight":88
                 },
                 {
                     "altered":false,
+                    "end_year":1603,
                     "id":100048481,
                     "source":10002249,
+                    "start_year":1563,
                     "target":10012117,
                     "weight":98
                 },
                 {
                     "altered":false,
+                    "end_year":1612,
                     "id":100048376,
                     "source":10002249,
+                    "start_year":1586,
                     "target":10010078,
                     "weight":99
                 },
                 {
                     "altered":false,
+                    "end_year":1612,
                     "id":100048342,
                     "source":10002249,
+                    "start_year":1563,
                     "target":10009330,
                     "weight":67
                 },
                 {
                     "altered":false,
+                    "end_year":1612,
                     "id":100048459,
                     "source":10002249,
+                    "start_year":1563,
                     "target":10011712,
                     "weight":67
                 },
                 {
                     "altered":true,
+                    "end_year":1612,
                     "id":100009527,
                     "source":10002249,
+                    "start_year":1563,
                     "target":10000473,
                     "weight":93
                 },
                 {
                     "altered":false,
+                    "end_year":1612,
                     "id":100048189,
                     "source":10002249,
+                    "start_year":1580,
                     "target":10005843,
                     "weight":64
                 },
                 {
                     "altered":false,
+                    "end_year":1598,
                     "id":100048555,
                     "source":10002250,
+                    "start_year":1542,
                     "target":10002251,
                     "weight":95
                 },
                 {
                     "altered":false,
+                    "end_year":1598,
                     "id":100048857,
                     "source":10002251,
+                    "start_year":1529,
                     "target":10006431,
                     "weight":82
                 },
                 {
                     "altered":false,
+                    "end_year":1598,
                     "id":100049130,
                     "source":10002251,
+                    "start_year":1533,
                     "target":10012117,
                     "weight":100
                 },
                 {
                     "altered":false,
+                    "end_year":1588,
                     "id":100049048,
                     "source":10002251,
+                    "start_year":1520,
                     "target":10010684,
                     "weight":72
                 },
                 {
                     "altered":false,
+                    "end_year":1643,
                     "id":100069445,
                     "source":10005839,
+                    "start_year":1597,
                     "target":10003267,
                     "weight":65
                 },
                 {
                     "altered":false,
+                    "end_year":1644,
                     "id":100132638,
                     "source":10007388,
+                    "start_year":1618,
                     "target":10010388,
                     "weight":91
                 },
                 {
                     "altered":false,
+                    "end_year":1654,
                     "id":100115039,
                     "source":10010461,
+                    "start_year":1591,
                     "target":10006012,
                     "weight":75
                 },
                 {
                     "altered":false,
+                    "end_year":1628,
                     "id":100050201,
                     "source":10002279,
+                    "start_year":1568,
                     "target":10013132,
                     "weight":74
                 },
                 {
                     "altered":true,
+                    "end_year":1626,
                     "id":100009531,
                     "source":10002279,
+                    "start_year":1561,
                     "target":10000473,
                     "weight":65
                 },
                 {
                     "altered":false,
+                    "end_year":1651,
                     "id":100150881,
                     "source":10009450,
+                    "start_year":1611,
                     "target":10009503,
                     "weight":80
                 },
                 {
                     "altered":false,
+                    "end_year":1651,
                     "id":100115031,
                     "source":10009450,
+                    "start_year":1596,
                     "target":10006012,
                     "weight":79
                 },
                 {
                     "altered":false,
+                    "end_year":1590,
                     "id":100104037,
                     "source":10005363,
+                    "start_year":1576,
                     "target":10012534,
                     "weight":67
                 },
                 {
                     "altered":false,
+                    "end_year":1616,
                     "id":100104016,
                     "source":10005363,
+                    "start_year":1577,
                     "target":10010012,
                     "weight":93
                 },
                 {
                     "altered":false,
+                    "end_year":1584,
                     "id":100027174,
                     "source":10005363,
+                    "start_year":1552,
                     "target":10001311,
                     "weight":80
                 },
                 {
                     "altered":false,
+                    "end_year":1568,
                     "id":100103994,
                     "source":10005363,
+                    "start_year":1552,
                     "target":10007534,
                     "weight":84
                 },
                 {
                     "altered":false,
+                    "end_year":1679,
                     "id":100115065,
                     "source":10012531,
+                    "start_year":1617,
                     "target":10006012,
                     "weight":88
                 },
                 {
                     "altered":false,
+                    "end_year":1626,
                     "id":100113411,
                     "source":10012021,
+                    "start_year":1601,
                     "target":10005891,
                     "weight":67
                 },
                 {
                     "altered":true,
+                    "end_year":1622,
                     "id":100009722,
                     "source":10012038,
+                    "start_year":1573,
                     "target":10000473,
                     "weight":60
                 },
                 {
                     "altered":false,
+                    "end_year":1656,
                     "id":100104522,
                     "source":10005394,
+                    "start_year":1627,
                     "target":10006012,
                     "weight":72
                 },
                 {
                     "altered":true,
+                    "end_year":1594,
                     "id":100009573,
                     "source":10004371,
+                    "start_year":1561,
                     "target":10000473,
                     "weight":70
                 },
                 {
                     "altered":false,
+                    "end_year":1679,
                     "id":100115020,
                     "source":10008468,
+                    "start_year":1614,
                     "target":10006012,
                     "weight":88
                 },
                 {
                     "altered":false,
+                    "end_year":1630,
                     "id":100005336,
                     "source":10000279,
+                    "start_year":1594,
                     "target":10005843,
                     "weight":71
                 },
                 {
                     "altered":false,
+                    "end_year":1621,
                     "id":100155191,
                     "source":10010012,
+                    "start_year":1577,
                     "target":10011623,
                     "weight":62
                 },
                 {
                     "altered":false,
+                    "end_year":1598,
                     "id":100120791,
                     "source":10006430,
+                    "start_year":1529,
                     "target":10006431,
                     "weight":60
                 },
                 {
                     "altered":false,
+                    "end_year":1598,
                     "id":100120792,
                     "source":10006430,
+                    "start_year":1531,
                     "target":10009835,
                     "weight":60
                 },
                 {
                     "altered":false,
+                    "end_year":1679,
                     "id":100115032,
                     "source":10009503,
+                    "start_year":1611,
                     "target":10006012,
                     "weight":68
                 },
                 {
                     "altered":false,
+                    "end_year":1632,
                     "id":100061077,
                     "source":10002859,
+                    "start_year":1592,
                     "target":10003926,
                     "weight":74
                 },
                 {
                     "altered":false,
+                    "end_year":1638,
                     "id":100010613,
                     "source":10002859,
+                    "start_year":1592,
                     "target":10000495,
                     "weight":81
                 },
                 {
                     "altered":false,
+                    "end_year":1652,
                     "id":100061420,
                     "source":10006445,
+                    "start_year":1609,
                     "target":10002882,
                     "weight":63
                 },
                 {
                     "altered":false,
+                    "end_year":1674,
                     "id":100115002,
                     "source":10006445,
+                    "start_year":1609,
                     "target":10006012,
                     "weight":95
                 },
                 {
                     "altered":false,
+                    "end_year":1643,
                     "id":100097799,
                     "source":10004913,
+                    "start_year":1610,
                     "target":10006012,
                     "weight":79
                 },
                 {
                     "altered":false,
+                    "end_year":1635,
                     "id":100137759,
                     "source":10012088,
+                    "start_year":1570,
                     "target":10007944,
                     "weight":72
                 },
                 {
                     "altered":false,
+                    "end_year":1638,
                     "id":100010614,
                     "source":10002882,
+                    "start_year":1592,
                     "target":10000495,
                     "weight":83
                 },
                 {
                     "altered":false,
+                    "end_year":1624,
                     "id":100081878,
                     "source":10003920,
+                    "start_year":1561,
                     "target":10003919,
                     "weight":62
                 },
                 {
                     "altered":false,
+                    "end_year":1603,
                     "id":100155695,
                     "source":10012117,
+                    "start_year":1586,
                     "target":10010078,
                     "weight":94
                 },
                 {
                     "altered":true,
+                    "end_year":1603,
                     "id":100200602,
                     "source":10012117,
+                    "start_year":1602,
                     "target":10013172,
                     "weight":60
                 },
                 {
                     "altered":true,
+                    "end_year":1603,
                     "id":100009724,
                     "source":10012117,
+                    "start_year":1561,
                     "target":10000473,
                     "weight":74
                 },
                 {
                     "altered":false,
+                    "end_year":1603,
                     "id":100000323,
                     "source":10012117,
+                    "start_year":1565,
                     "target":10000012,
                     "weight":70
                 },
                 {
                     "altered":false,
+                    "end_year":1632,
                     "id":100081984,
                     "source":10003926,
+                    "start_year":1592,
                     "target":10010078,
                     "weight":79
                 },
                 {
                     "altered":false,
+                    "end_year":1632,
                     "id":100010616,
                     "source":10003926,
+                    "start_year":1592,
                     "target":10000495,
                     "weight":89
                 },
                 {
                     "altered":false,
+                    "end_year":1642,
                     "id":100155581,
                     "source":10010069,
+                    "start_year":1587,
                     "target":10010388,
                     "weight":71
                 },
                 {
                     "altered":false,
+                    "end_year":1615,
                     "id":100031759,
                     "source":10013145,
+                    "start_year":1561,
                     "target":10001553,
                     "weight":86
                 },
                 {
                     "altered":true,
+                    "end_year":1626,
                     "id":100009683,
                     "source":10010078,
+                    "start_year":1586,
                     "target":10000473,
                     "weight":97
                 },
                 {
                     "altered":true,
+                    "end_year":1626,
                     "id":100009542,
                     "source":10002912,
+                    "start_year":1578,
                     "target":10000473,
                     "weight":65
                 },
                 {
                     "altered":false,
+                    "end_year":1634,
                     "id":100039359,
                     "source":10001889,
+                    "start_year":1575,
                     "target":10007944,
                     "weight":72
                 },
                 {
                     "altered":true,
+                    "end_year":1597,
                     "id":100200032,
                     "source":10050023,
+                    "start_year":1597,
                     "target":10000012,
                     "weight":100
                 },
                 {
                     "altered":true,
+                    "end_year":1630,
                     "id":100200033,
                     "source":10050024,
+                    "start_year":1598,
                     "target":10000012,
                     "weight":79
                 },
                 {
                     "altered":true,
+                    "end_year":1598,
                     "id":100200034,
                     "source":10050025,
+                    "start_year":1598,
                     "target":10000012,
                     "weight":82
                 },
                 {
                     "altered":false,
+                    "end_year":1630,
                     "id":100112776,
                     "source":10013172,
+                    "start_year":1587,
                     "target":10005843,
                     "weight":100
                 },
                 {
                     "altered":true,
+                    "end_year":1625,
                     "id":100009613,
                     "source":10006006,
+                    "start_year":1561,
                     "target":10000473,
                     "weight":77
                 },
                 {
                     "altered":false,
+                    "end_year":1595,
                     "id":100018924,
                     "source":10000889,
+                    "start_year":1561,
                     "target":10001553,
                     "weight":71
                 },
                 {
                     "altered":true,
+                    "end_year":1604,
                     "id":100200212,
                     "source":10009594,
+                    "start_year":1593,
                     "target":10000473,
                     "weight":100
                 },
                 {
                     "altered":false,
+                    "end_year":1635,
                     "id":100099544,
                     "source":10008059,
+                    "start_year":1586,
                     "target":10005028,
                     "weight":82
                 }
@@ -5421,315 +6483,459 @@
     ],
     "included":[
         {
-            "birth_year":"1497",
-            "death_year":"1607",
-            "historical_significance":"sea captain and explorer",
-            "id":10005039,
-            "name":"Bartholomew Gosnold",
-            "type":"people"
-        },
-        {
-            "birth_year":"1561",
-            "death_year":"1629",
-            "historical_significance":"politician and colonial entrepreneur",
-            "id":10010685,
-            "name":"Sir Edwin Sandys",
-            "type":"people"
-        },
-        {
-            "birth_year":"1558",
-            "death_year":"1625",
-            "historical_significance":"merchant",
-            "id":10011273,
-            "name":"Sir Thomas Smythe",
-            "type":"people"
-        },
-        {
-            "birth_year":"1565",
-            "death_year":"1635",
-            "historical_significance":"army officer",
-            "id":10012309,
-            "name":"Horace Vere",
-            "type":"people"
-        },
-        {
-            "birth_year":"1550",
-            "death_year":"1619",
-            "historical_significance":"soldier and colonist in America",
-            "id":10012994,
-            "name":"Edward Maria Wingfield",
-            "type":"people"
-        },
-        {
-            "birth_year":"1554",
-            "death_year":"1610",
-            "historical_significance":"privateer and colonial adventurer",
-            "id":10011293,
-            "name":"Sir George Somers",
-            "type":"people"
-        },
-        {
-            "birth_year":"1512",
-            "death_year":"1622",
-            "historical_significance":"colonial governor",
-            "id":10004724,
-            "name":"Sir Thomas Gates",
-            "type":"people"
-        },
-        {
-            "birth_year":"1588",
-            "death_year":"1657",
-            "historical_significance":"merchant and politician",
-            "id":10004222,
-            "name":"John Ferrar",
-            "type":"people"
-        },
-        {
-            "birth_year":"1593",
-            "death_year":"1637",
-            "historical_significance":"religious writer and administrator",
-            "id":10004223,
-            "name":"Nicholas Ferrar",
-            "type":"people"
-        },
-        {
-            "birth_year":"1572",
-            "death_year":"1633",
-            "historical_significance":"writer and colonial administrator",
-            "id":10009855,
-            "name":"John Pory",
-            "type":"people"
-        },
-        {
-            "birth_year":"1572",
-            "death_year":"1638",
-            "historical_significance":"soldier and politician",
-            "id":10002243,
-            "name":"Edward Cecil",
-            "type":"people"
-        },
-        {
-            "birth_year":"1564",
-            "death_year":"1631",
-            "historical_significance":"politician",
-            "id":10002756,
-            "name":"Edward Conway",
-            "type":"people"
-        },
-        {
-            "birth_year":"1552",
-            "death_year":"1616",
-            "historical_significance":"geographer",
-            "id":10005363,
-            "name":"Richard Hakluyt",
-            "type":"people"
-        },
-        {
-            "birth_year":"1594",
-            "death_year":"1645",
-            "historical_significance":"goldsmith",
-            "id":10013056,
-            "name":"Arthur Wodenoth",
-            "type":"people"
-        },
-        {
-            "birth_year":"1508",
+            "birth_year":"1577",
+            "birth_year_type":"IN",
             "death_year":"1618",
-            "historical_significance":"privateer and merchant",
-            "id":10009330,
-            "name":"William Parker",
-            "type":"people"
-        },
-        {
-            "birth_year":"1501",
-            "death_year":"1611",
-            "historical_significance":"merchant and philanthropist",
-            "id":10010439,
-            "name":"Sir William Romney",
-            "type":"people"
-        },
-        {
-            "birth_year":"1531",
-            "death_year":"1607",
-            "historical_significance":"judge and speaker of the House of Commons",
-            "id":10009835,
-            "name":"Sir John Popham",
-            "type":"people"
-        },
-        {
-            "birth_year":"1584",
-            "death_year":"1655",
-            "historical_significance":"politician and regicide",
-            "id":10003267,
-            "name":"Sir John Danvers",
-            "type":"people"
-        },
-        {
-            "birth_year":"1561",
-            "death_year":"1631",
-            "historical_significance":"mathematician",
-            "id":10001553,
-            "name":"Henry Briggs",
-            "type":"people"
-        },
-        {
-            "birth_year":"1572",
-            "death_year":"1644",
-            "historical_significance":"politician",
-            "id":10009834,
-            "name":"Sir Francis Popham",
-            "type":"people"
-        },
-        {
-            "birth_year":"1594",
-            "death_year":"1655",
-            "historical_significance":"politician and book collector",
-            "id":10002757,
-            "name":"Edward Conway",
-            "type":"people"
-        },
-        {
-            "birth_year":"1549",
-            "death_year":"1629",
-            "historical_significance":"dean of Exeter",
-            "id":10011712,
-            "name":"Matthew Sutcliffe",
-            "type":"people"
-        },
-        {
-            "birth_year":"1576",
-            "death_year":"1646",
-            "historical_significance":"local politician and landowner",
-            "id":10000693,
-            "name":"Sir Francis Barnham",
-            "type":"people"
-        },
-        {
-            "birth_year":"1580",
-            "death_year":"1631",
-            "historical_significance":"soldier and colonial governor",
-            "id":10011212,
-            "name":"John Smith",
-            "type":"people"
-        },
-        {
-            "birth_year":"1552",
-            "death_year":"1632",
-            "historical_significance":"merchant",
-            "id":10003919,
-            "name":"John Eldred",
-            "type":"people"
-        },
-        {
-            "birth_year":"1566",
-            "death_year":"1634",
-            "historical_significance":"lawyer and speaker of the House of Commons",
-            "id":10003014,
-            "name":"Sir Thomas Crewe",
-            "type":"people"
-        },
-        {
-            "birth_year":"1561",
-            "death_year":"1626",
-            "historical_significance":"lord chancellor, politician, and philosopher",
-            "id":10000473,
-            "name":"Francis Bacon",
-            "type":"people"
-        },
-        {
-            "birth_year":"1580",
-            "death_year":"1630",
-            "historical_significance":"courtier and patron of the arts",
-            "id":10005843,
-            "name":"William Herbert",
-            "type":"people"
-        },
-        {
-            "birth_year":"1592",
-            "death_year":"1638",
-            "historical_significance":"naval administrator",
-            "id":10000495,
-            "name":"Sir James Bagg",
-            "type":"people"
-        },
-        {
-            "birth_year":"1559",
-            "death_year":"1619",
-            "historical_significance":"nobleman and politician",
-            "id":10010258,
-            "name":"Robert Rich",
-            "type":"people"
-        },
-        {
-            "birth_year":"1519",
-            "death_year":"1588",
-            "historical_significance":"archbishop of York",
-            "id":10010684,
-            "name":"Edwin Sandys",
+            "death_year_type":"IN",
+            "end_year":1618,
+            "historical_significance":"colonial governor",
+            "id":10012709,
+            "name":"Thomas West",
+            "start_year":1606,
             "type":"people"
         },
         {
             "birth_year":"1570",
+            "birth_year_type":"IN",
             "death_year":"1652",
+            "death_year_type":"IN",
+            "end_year":1624,
             "historical_significance":"naval officer and administrator",
             "id":10007944,
             "name":"Sir Robert Mansell",
+            "start_year":1606,
             "type":"people"
         },
         {
-            "birth_year":"1565",
-            "death_year":"1642",
-            "historical_significance":"merchant and politician",
-            "id":10000012,
-            "name":"Sir Maurice Abbot",
+            "birth_year":"1593",
+            "birth_year_type":"IN",
+            "death_year":"1637",
+            "death_year_type":"IN",
+            "end_year":1624,
+            "historical_significance":"religious writer and administrator",
+            "id":10004223,
+            "name":"Nicholas Ferrar",
+            "start_year":1606,
             "type":"people"
         },
         {
-            "birth_year":"1581",
+            "birth_year":"1566",
+            "birth_year_type":"IN",
+            "death_year":"1634",
+            "death_year_type":"IN",
+            "end_year":1624,
+            "historical_significance":"lawyer and speaker of the House of Commons",
+            "id":10003014,
+            "name":"Sir Thomas Crewe",
+            "start_year":1606,
+            "type":"people"
+        },
+        {
+            "birth_year":"1584",
+            "birth_year_type":"IN",
+            "death_year":"1655",
+            "death_year_type":"IN",
+            "end_year":1624,
+            "historical_significance":"politician and regicide",
+            "id":10003267,
+            "name":"Sir John Danvers",
+            "start_year":1606,
+            "type":"people"
+        },
+        {
+            "birth_year":"1572",
+            "birth_year_type":"IN",
             "death_year":"1644",
-            "historical_significance":"diplomat",
-            "id":10010388,
-            "name":"Sir Thomas Roe",
-            "type":"people"
-        },
-        {
-            "birth_year":"1590",
-            "death_year":"1628",
-            "historical_significance":"nobleman",
-            "id":10002229,
-            "name":"William Cavendish",
+            "death_year_type":"IN",
+            "end_year":1624,
+            "historical_significance":"politician",
+            "id":10009834,
+            "name":"Sir Francis Popham",
+            "start_year":1606,
             "type":"people"
         },
         {
             "birth_year":"1555",
+            "birth_year_type":"IN",
             "death_year":"1628",
+            "death_year_type":"IN",
+            "end_year":1624,
             "historical_significance":"judge",
             "id":10003555,
             "name":"Sir John Dodderidge",
+            "start_year":1606,
             "type":"people"
         },
         {
-            "birth_year":"1568",
-            "death_year":"1647",
-            "historical_significance":"army officer and promoter of colonization in America",
-            "id":10005028,
-            "name":"Sir Ferdinando Gorges",
+            "birth_year":"1581",
+            "birth_year_type":"IN",
+            "death_year":"1644",
+            "death_year_type":"IN",
+            "end_year":1624,
+            "historical_significance":"diplomat",
+            "id":10010388,
+            "name":"Sir Thomas Roe",
+            "start_year":1606,
             "type":"people"
         },
         {
-            "birth_year":"1577",
+            "birth_year":"1564",
+            "birth_year_type":"IN",
+            "death_year":"1631",
+            "death_year_type":"IN",
+            "end_year":1624,
+            "historical_significance":"politician",
+            "id":10002756,
+            "name":"Edward Conway",
+            "start_year":1606,
+            "type":"people"
+        },
+        {
+            "birth_year":"1550",
+            "birth_year_type":"IN",
+            "death_year":"1619",
+            "death_year_type":"AF/IN",
+            "end_year":1624,
+            "historical_significance":"soldier and colonist in America",
+            "id":10012994,
+            "name":"Edward Maria Wingfield",
+            "start_year":1606,
+            "type":"people"
+        },
+        {
+            "birth_year":"1554",
+            "birth_year_type":"IN",
+            "death_year":"1610",
+            "death_year_type":"IN",
+            "end_year":1624,
+            "historical_significance":"privateer and colonial adventurer",
+            "id":10011293,
+            "name":"Sir George Somers",
+            "start_year":1606,
+            "type":"people"
+        },
+        {
+            "birth_year":"1508",
+            "birth_year_type":"AF",
             "death_year":"1618",
-            "historical_significance":"colonial governor",
-            "id":10012709,
-            "name":"Thomas West",
+            "death_year_type":"IN",
+            "end_year":1624,
+            "historical_significance":"privateer and merchant",
+            "id":10009330,
+            "name":"William Parker",
+            "start_year":1606,
+            "type":"people"
+        },
+        {
+            "birth_year":"1580",
+            "birth_year_type":"IN",
+            "death_year":"1630",
+            "death_year_type":"IN",
+            "end_year":1624,
+            "historical_significance":"courtier and patron of the arts",
+            "id":10005843,
+            "name":"William Herbert",
+            "start_year":1606,
+            "type":"people"
+        },
+        {
+            "birth_year":"1497",
+            "birth_year_type":"AF",
+            "death_year":"1607",
+            "death_year_type":"IN",
+            "end_year":1607,
+            "historical_significance":"sea captain and explorer",
+            "id":10005039,
+            "name":"Bartholomew Gosnold",
+            "start_year":1606,
+            "type":"people"
+        },
+        {
+            "birth_year":"1552",
+            "birth_year_type":"CA",
+            "death_year":"1616",
+            "death_year_type":"IN",
+            "end_year":1616,
+            "historical_significance":"geographer",
+            "id":10005363,
+            "name":"Richard Hakluyt",
+            "start_year":1606,
+            "type":"people"
+        },
+        {
+            "birth_year":"1592",
+            "birth_year_type":"IN",
+            "death_year":"1638",
+            "death_year_type":"IN",
+            "end_year":1624,
+            "historical_significance":"naval administrator",
+            "id":10000495,
+            "name":"Sir James Bagg",
+            "start_year":1606,
+            "type":"people"
+        },
+        {
+            "birth_year":"1572",
+            "birth_year_type":"IN",
+            "death_year":"1638",
+            "death_year_type":"IN",
+            "end_year":1624,
+            "historical_significance":"soldier and politician",
+            "id":10002243,
+            "name":"Edward Cecil",
+            "start_year":1606,
+            "type":"people"
+        },
+        {
+            "birth_year":"1559",
+            "birth_year_type":"CA",
+            "death_year":"1619",
+            "death_year_type":"IN",
+            "end_year":1619,
+            "historical_significance":"nobleman and politician",
+            "id":10010258,
+            "name":"Robert Rich",
+            "start_year":1606,
             "type":"people"
         },
         {
             "birth_year":"1588",
+            "birth_year_type":"IN",
+            "death_year":"1657",
+            "death_year_type":"IN",
+            "end_year":1624,
+            "historical_significance":"merchant and politician",
+            "id":10004222,
+            "name":"John Ferrar",
+            "start_year":1606,
+            "type":"people"
+        },
+        {
+            "birth_year":"1594",
+            "birth_year_type":"IN",
+            "death_year":"1655",
+            "death_year_type":"IN",
+            "end_year":1624,
+            "historical_significance":"politician and book collector",
+            "id":10002757,
+            "name":"Edward Conway",
+            "start_year":1606,
+            "type":"people"
+        },
+        {
+            "birth_year":"1531",
+            "birth_year_type":"IN",
+            "death_year":"1607",
+            "death_year_type":"IN",
+            "end_year":1607,
+            "historical_significance":"judge and speaker of the House of Commons",
+            "id":10009835,
+            "name":"Sir John Popham",
+            "start_year":1606,
+            "type":"people"
+        },
+        {
+            "birth_year":"1512",
+            "birth_year_type":"AF",
+            "death_year":"1622",
+            "death_year_type":"IN",
+            "end_year":1622,
+            "historical_significance":"colonial governor",
+            "id":10004724,
+            "name":"Sir Thomas Gates",
+            "start_year":1606,
+            "type":"people"
+        },
+        {
+            "birth_year":"1588",
+            "birth_year_type":"IN",
             "death_year":"1679",
+            "death_year_type":"IN",
+            "end_year":1624,
             "historical_significance":"philosopher",
             "id":10006012,
             "name":"Thomas Hobbes",
+            "start_year":1606,
+            "type":"people"
+        },
+        {
+            "birth_year":"1561",
+            "birth_year_type":"IN",
+            "death_year":"1626",
+            "death_year_type":"IN",
+            "end_year":1624,
+            "historical_significance":"lord chancellor, politician, and philosopher",
+            "id":10000473,
+            "name":"Francis Bacon",
+            "start_year":1606,
+            "type":"people"
+        },
+        {
+            "birth_year":"1561",
+            "birth_year_type":"IN",
+            "death_year":"1629",
+            "death_year_type":"IN",
+            "end_year":1624,
+            "historical_significance":"politician and colonial entrepreneur",
+            "id":10010685,
+            "name":"Sir Edwin Sandys",
+            "start_year":1606,
+            "type":"people"
+        },
+        {
+            "birth_year":"1501",
+            "birth_year_type":"AF",
+            "death_year":"1611",
+            "death_year_type":"IN",
+            "end_year":1611,
+            "historical_significance":"merchant and philanthropist",
+            "id":10010439,
+            "name":"Sir William Romney",
+            "start_year":1606,
+            "type":"people"
+        },
+        {
+            "birth_year":"1552",
+            "birth_year_type":"IN",
+            "death_year":"1632",
+            "death_year_type":"IN",
+            "end_year":1624,
+            "historical_significance":"merchant",
+            "id":10003919,
+            "name":"John Eldred",
+            "start_year":1606,
+            "type":"people"
+        },
+        {
+            "birth_year":"1568",
+            "birth_year_type":"IN",
+            "death_year":"1647",
+            "death_year_type":"IN",
+            "end_year":1624,
+            "historical_significance":"army officer and promoter of colonization in America",
+            "id":10005028,
+            "name":"Sir Ferdinando Gorges",
+            "start_year":1606,
+            "type":"people"
+        },
+        {
+            "birth_year":"1549",
+            "birth_year_type":"IN",
+            "death_year":"1629",
+            "death_year_type":"IN",
+            "end_year":1624,
+            "historical_significance":"dean of Exeter",
+            "id":10011712,
+            "name":"Matthew Sutcliffe",
+            "start_year":1606,
+            "type":"people"
+        },
+        {
+            "birth_year":"1580",
+            "birth_year_type":"IN",
+            "death_year":"1631",
+            "death_year_type":"IN",
+            "end_year":1624,
+            "historical_significance":"soldier and colonial governor",
+            "id":10011212,
+            "name":"John Smith",
+            "start_year":1606,
+            "type":"people"
+        },
+        {
+            "birth_year":"1565",
+            "birth_year_type":"IN",
+            "death_year":"1635",
+            "death_year_type":"IN",
+            "end_year":1624,
+            "historical_significance":"army officer",
+            "id":10012309,
+            "name":"Horace Vere",
+            "start_year":1606,
+            "type":"people"
+        },
+        {
+            "birth_year":"1590",
+            "birth_year_type":"IN",
+            "death_year":"1628",
+            "death_year_type":"IN",
+            "end_year":1624,
+            "historical_significance":"nobleman",
+            "id":10002229,
+            "name":"William Cavendish",
+            "start_year":1606,
+            "type":"people"
+        },
+        {
+            "birth_year":"1558",
+            "birth_year_type":"IN",
+            "death_year":"1625",
+            "death_year_type":"IN",
+            "end_year":1624,
+            "historical_significance":"merchant",
+            "id":10011273,
+            "name":"Sir Thomas Smythe",
+            "start_year":1606,
+            "type":"people"
+        },
+        {
+            "birth_year":"1594",
+            "birth_year_type":"IN",
+            "death_year":"1645",
+            "death_year_type":"IN",
+            "end_year":1624,
+            "historical_significance":"goldsmith",
+            "id":10013056,
+            "name":"Arthur Wodenoth",
+            "start_year":1606,
+            "type":"people"
+        },
+        {
+            "birth_year":"1565",
+            "birth_year_type":"IN",
+            "death_year":"1642",
+            "death_year_type":"IN",
+            "end_year":1624,
+            "historical_significance":"merchant and politician",
+            "id":10000012,
+            "name":"Sir Maurice Abbot",
+            "start_year":1610,
+            "type":"people"
+        },
+        {
+            "birth_year":"1576",
+            "birth_year_type":"IN",
+            "death_year":"1646",
+            "death_year_type":"CA",
+            "end_year":1624,
+            "historical_significance":"local politician and landowner",
+            "id":10000693,
+            "name":"Sir Francis Barnham",
+            "start_year":1612,
+            "type":"people"
+        },
+        {
+            "birth_year":"1561",
+            "birth_year_type":"IN",
+            "death_year":"1631",
+            "death_year_type":"IN",
+            "end_year":1624,
+            "historical_significance":"mathematician",
+            "id":10001553,
+            "name":"Henry Briggs",
+            "start_year":1619,
+            "type":"people"
+        },
+        {
+            "birth_year":"1572",
+            "birth_year_type":"IN",
+            "death_year":"1633",
+            "death_year_type":"IN",
+            "end_year":1622,
+            "historical_significance":"writer and colonial administrator",
+            "id":10009855,
+            "name":"John Pory",
+            "start_year":1618,
             "type":"people"
         }
     ],
