@@ -1,6 +1,10 @@
 source 'https://rubygems.org'
 
+<<<<<<< HEAD
 gem 'rails' #, '5.0.0'
+=======
+gem 'rails' #, '4.1.8'
+>>>>>>> prod-v2.0
 
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
@@ -20,15 +24,20 @@ gem 'will_paginate'
 # simple form is used in all the new and edit forms to give special formats
 # in forms, it takes the format: <%= f.input :name %> where :name is one of the entity's attribute
 gem 'simple_form'
+<<<<<<< HEAD
 gem 'railties' #, '5.0.0'
 gem 'activemodel' #, '5.0.0'
+=======
+gem 'railties' #, '4.1.8'
+gem 'activemodel' #, '4.1.8'
+>>>>>>> prod-v2.0
 
 gem 'rails3-jquery-autocomplete'
 gem 'jquery-turbolinks'
 
 # Gems used only for assets and not required
 # in production environments by default.
-gem 'pg'
+gem 'pg', '0.18.4'
 
 gem 'sass-rails'
 gem 'therubyracer', :platforms => :ruby
@@ -89,5 +98,7 @@ gem "carrierwave"
 
 # To use debugger
 # gem 'debugger'
+
+gem 'nokogiri'
 
 ruby '2.3.0'

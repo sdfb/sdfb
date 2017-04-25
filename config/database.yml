@@ -29,10 +29,8 @@ test:
 #
 production:
   adapter: postgresql
-  database: my_database_development
-  host: localhost
-  port: 5432
+  database: sixdegs_prod 
   pool: 15
   timeout: 5000
-  username: postgres 
-  password: d3f@ult$
+  username: postgres
+  password: d3f@ult$ 
