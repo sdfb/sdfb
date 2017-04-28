@@ -11,16 +11,25 @@ conn = psycopg2.connect('dbname=mysdfb')
 cur = conn.cursor()
 
 # Get nodes as list of tuples from database
-cur.execute("SELECT id, display_name, historical_significance, ext_birth_year, ext_death_year, group_list FROM people WHERE is_approved = true;")
+cur.execute("SELECT id, display_name, historical_significance, ext_birth_year, ext_death_year FROM people WHERE is_approved = true;")
 node_tuples = cur.fetchall()
 
 # Get edges as list of tuples from database
 cur.execute("SELECT person1_index, person2_index, max_certainty, last_edit, types_list, start_year, end_year, id FROM relationships WHERE is_approved = true and max_certainty >=60;")
 edge_tuples = cur.fetchall()
 
-cur.execute("SELECT people.id, group_assignments.start_year, group_assignments.end_year, people.birth_year_type, people.death_year_type FROM people INNER JOIN group_assignments ON people.id = group_assignments.person_id WHERE people.is_approved = true AND group_list LIKE '%Virginia%' AND group_id = 81 AND group_assignments.is_approved = true;")
+cur.execute("SELECT people.id, group_assignments.start_year, group_assignments.end_year, people.birth_year_type, people.death_year_type FROM people INNER JOIN group_assignments ON people.id = group_assignments.person_id WHERE people.is_approved = true AND group_id = 81 AND group_assignments.is_approved = true;")
 group_tuples = cur.fetchall()
 print(group_tuples)
+
+cur.execute("SELECT person_id, group_id FROM group_assignments WHERE is_approved=true;")
+all_group_tuples = cur.fetchall()
+groups_by_person = {}
+for g in all_group_tuples:
+    if g[0] not in groups_by_person:
+        groups_by_person[g[0]] = [g[1]]
+    else:
+        groups_by_person[g[0]].append(g[1])
 
 #print('Total number of nodes:', len(node_tuples))
 
@@ -36,7 +45,10 @@ for n in node_tuples:
     sig_dict[n[0]] = n[2]
     birth_dict[n[0]] = n[3]
     death_dict[n[0]] = n[4]
-    group_dict[n[0]] = n[5]
+    try:
+        group_dict[n[0]] = groups_by_person[n[0]]
+    except KeyError:
+        group_dict[n[0]] = None
 
 start_year_dict = {}
 end_year_dict = {}
@@ -92,7 +104,7 @@ nx.set_edge_attributes(G, 'start_year', edge_start)
 nx.set_edge_attributes(G, 'end_year', edge_end)
 
 # Create subgraph based on Virginia Company
-vc_ids = [k for k,v in group_dict.items() if type(v) == str and "Virginia Company" in v]
+vc_ids = [k for k,v in group_dict.items() if type(v) == int and 81 in v]
 
 all_distance = list(set(sum([G.neighbors(k) for k in vc_ids], [])))
 #print(all_distance+vc_ids)
@@ -143,7 +155,7 @@ new_data = dict(
             death_year=SG.node[n]['death_year'],
             death_year_type=dyear_type_dict[n],
             start_year=start_year_dict[n],
-            end_year=end_year_dict[n]) for n in [g[0] for g in group_tuples]]
+            end_year=end_year_dict[n]) for n in vc_ids]
         )
 
 # Output json of the graph.
