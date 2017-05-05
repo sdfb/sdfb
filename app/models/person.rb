@@ -112,6 +112,12 @@ class Person < ActiveRecord::Base
     end
   end
 
+  def relationships(certainty=SDFB::DEFAULT_CONFIDENCE)
+    left_side = Relationship.where(person1_index: self.id, max_certainty: (certainty..100))
+    right_side = Relationship.where(person2_index: self.id, max_certainty: (certainty..100))
+    left_side + right_side
+  end
+
   # if you delete a person, delete any relationships associated with him/her
   #-----------------------------------------------------------------------------
   def delete_associated_relationships
