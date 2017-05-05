@@ -9,17 +9,23 @@ end
 Then(/^I am given json that looks a person$/) do
   @json = MultiJson.load(last_response.body)
   preferred_keys = [
-    "id","birth_year","death_year","historical_significance","name","type"
+    "id","attributes","type"
   ]
   expect(@json.keys).to eq(preferred_keys)
+
+  attribute_keys = [
+    "birth_year","death_year","historical_significance","name"
+  ]
+  expect(@json["attributes"].keys).to eq(attribute_keys)
+
 end
 
 Then(/^the json has correct information for the person$/) do
-  expect(@json["birth_year"]).to eq(@person.ext_birth_year)
-  expect(@json["death_year"]).to eq(@person.ext_death_year)
-  expect(@json["historical_significance"]).to eq(@person.historical_significance)
+  expect(@json["attributes"]["birth_year"]).to eq(@person.ext_birth_year)
+  expect(@json["attributes"]["death_year"]).to eq(@person.ext_death_year)
+  expect(@json["attributes"]["historical_significance"]).to eq(@person.historical_significance)
   expect(@json["id"]).to eq(@person.id)
-  expect(@json["name"]).to eq(@person.display_name)
+  expect(@json["attributes"]["name"]).to eq(@person.display_name)
   expect(@json["type"]).to eq("people")
 end
 
