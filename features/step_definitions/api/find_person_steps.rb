@@ -53,20 +53,20 @@ end
 
 Then(/^I am given json that includes a list of relationships$/) do
   @json = MultiJson.load(last_response.body)["data"]
-  expect(@json["attributes"]).keys to_include("links")
+  expect(@json["attributes"].keys).to include("links")
 end
 
 Then(/^the json contains the relationship$/) do
   expected_data = {
-    "altered": true,
-    "end_year": @relationship.end_year,
-    "id": @relationship.id,
-    "target": @relationship.person1_index,
-    "start_year": @relationship.start_year,
-    "source": @relationship.person2_index,
-    "weight": @relationship.weight
+    "altered" => true,
+    "end_year" => @relationship.end_year,
+    "target" => @relationship.person1_index,
+    "start_year" => @relationship.start_year,
+    "source" => @relationship.person2_index,
+    "weight" => @relationship.max_certainty
   }
-  expect(@json["attributes"]["links"].first).to eq(expected_data)
+  expect(@json["attributes"]["links"].first["id"]).to eq(@relationship.id)
+  expect(@json["attributes"]["links"].first["attributes"]).to eq(expected_data)
 end
 
 Then(/^I am given a json error telling me "([^"]*)"$/) do |error_message|

@@ -20,7 +20,9 @@ class ApiController < ApplicationController
     begin
       id = params[:id]
       @person = Person.find(id)
-      @relationships = Person.find_first_degree_for_person(id)
+      left_side = Relationship.where(person1_index: id, max_certainty: (SDFB::DEFAULT_CONFIDENCE..100))
+      right_side = Relationship.where(person2_index: id, max_certainty: (SDFB::DEFAULT_CONFIDENCE..100))
+      @relationships = left_side + right_side
     rescue ActiveRecord::RecordNotFound => e
       @errors << {title: "invalid ID"}
     end

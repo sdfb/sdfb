@@ -285,7 +285,7 @@ class Person < ActiveRecord::Base
                                         max_confidence=SDFB::DEFAULT_MAX_CONFIDENCE,
                                         min_year=SDFB::EARLIEST_YEAR, 
                                         max_year=SDFB::LATEST_YEAR,
-                                        load_rels=false)
+                                        load_rels=true)
   	peopleRecordsForReturn = {}
 	  @PersonRecord = Person.select("id, rel_sum, display_name").where("id = ?", person_id)
     @adjustedrel = []
