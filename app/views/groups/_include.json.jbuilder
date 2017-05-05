@@ -5,4 +5,4 @@ json.attributes do
   json.start_year group.start_year
   json.end_year group.end_year
 end
-json.type "groups"
+json.type "group"

@@ -28,7 +28,7 @@ Then(/^the json has correct information for the group$/) do
   expect(@json["attributes"]["start_year"]).to eq(@group.start_year)
   expect(@json["attributes"]["end_year"]).to eq(@group.end_year)
   expect(@json["id"]).to eq(@group.id.to_s)
-  expect(@json["type"]).to eq("groups")
+  expect(@json["type"]).to eq("group")
 end
 
 Then(/^I am given json that looks a list containing (\d+) groups$/) do |n|
