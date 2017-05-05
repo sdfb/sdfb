@@ -1,4 +1,8 @@
 Sdfb::Application.routes.draw do
+
+  get 'api/people', defaults: {format: :json}
+  get 'api/groups', defaults: {format: :json}
+
   get 'password_resets/new'
 
   get "about" => "static_pages#about", :as => "about"

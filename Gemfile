@@ -34,6 +34,7 @@ gem "twitter-bootstrap-rails", '2.1.7'
 
 # API helpers
 gem "jbuilder"
+gem "yajl-ruby"
 
 # Backend Helpers
 gem 'cancan'
