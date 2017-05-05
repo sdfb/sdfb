@@ -48,11 +48,6 @@ class Person < ActiveRecord::Base
       select('people.*')
       .joins('join group_assignments ga on (people.id = ga.person_id)')
       .where('(ga.group_id = ? and ga.approved_by is not null)', groupID)}
-  scope :first_degree_for, -> (id_input) {
-      select('people.*')
-      .joins('join relationships r1 on ((r1.person1_index = people.id) or (r1.person2_index = people.id))')
-      .where("people.approved_by is not null and ((r1.person1_index = '#{id_input}') or (r1.person2_index = '#{id_input}'))")
-      }
   scope :rels_for_id, -> (id, sdata, edate) {
   	select('id, rel_sum')
   	.where("id = ? and (ext_birth_year < ? or ext_death_year > ?)", '%#{id}', '%#{edate}', '%#{sdate}')}
@@ -285,7 +280,12 @@ class Person < ActiveRecord::Base
   # use a array to track what people were added
   # have an array for the people records
   #-----------------------------------------------------------------------------
-  def self.find_first_degree_for_person(person_id, min_confidence, max_confidence, min_year, max_year, load_rels)
+  def self.find_first_degree_for_person(person_id, 
+                                        min_confidence=SDFB::DEFAULT_CONFIDENCE,
+                                        max_confidence=SDFB::DEFAULT_MAX_CONFIDENCE,
+                                        min_year=SDFB::EARLIEST_YEAR, 
+                                        max_year=SDFB::LATEST_YEAR,
+                                        load_rels=false)
   	peopleRecordsForReturn = {}
 	  @PersonRecord = Person.select("id, rel_sum, display_name").where("id = ?", person_id)
     @adjustedrel = []
