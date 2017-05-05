@@ -39,13 +39,10 @@ class ApiController < ApplicationController
 
       left_side = Relationship.where(person1_index: @people.first.id, max_certainty: (SDFB::DEFAULT_CONFIDENCE..100))
       right_side = Relationship.where(person2_index: @people.first.id, max_certainty: (SDFB::DEFAULT_CONFIDENCE..100))
-      first_person_rels = left_side + right_side
+      left_side2 = Relationship.where(person1_index: @people.second.id, max_certainty: (SDFB::DEFAULT_CONFIDENCE..100))
+      right_side2 = Relationship.where(person2_index: @people.second.id, max_certainty: (SDFB::DEFAULT_CONFIDENCE..100))
 
-      left_side = Relationship.where(person1_index: @people.second.id, max_certainty: (SDFB::DEFAULT_CONFIDENCE..100))
-      right_side = Relationship.where(person2_index: @people.second.id, max_certainty: (SDFB::DEFAULT_CONFIDENCE..100))
-      second_person_rels = left_side + right_side
-
-      @relationships = first_person_rels & second_person_rels
+      @relationships = left_side | right_side | left_side2 | right_side2
     rescue ActiveRecord::RecordNotFound => e
       @errors = []
       @errors << {title: "invalid ID"}

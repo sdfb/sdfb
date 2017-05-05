@@ -81,7 +81,9 @@ When(/^I access the shared network api endpoint for those people$/) do
   get("/api/shared_network?ids=#{@people.collect(&:id).join(',')}", format: :json)
 end
 
-Then(/^the json contains relationships to the specified user for each person$/) do
-  expect(@json["attributes"]["connections"].first["id"]).to eq(@shared_relationship.id)
-  expect(@json["attributes"]["connections"].second["id"]).to eq(@shared_relationship2.id)
+Then(/^the json contains the relationships of each person$/) do
+  received_relationship_ids = @json["attributes"]["connections"].map{|i| i["id"].to_i}
+  expected_relationship_ids = [@relationship.id, @relationship2.id, @shared_relationship.id, @shared_relationship2.id]
+
+  expect(received_relationship_ids.sort).to eq(expected_relationship_ids.sort)
 end
