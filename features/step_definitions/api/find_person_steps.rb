@@ -61,9 +61,9 @@ Then(/^the json contains the relationship$/) do
     "altered": true,
     "end_year": @relationship.end_year,
     "id": @relationship.id,
-    "source": @relationship.person1_index,
+    "target": @relationship.person1_index,
     "start_year": @relationship.start_year,
-    "target": @relationship.person2_index,
+    "source": @relationship.person2_index,
     "weight": @relationship.weight
   }
   expect(@json["attributes"]["links"].first).to eq(expected_data)
