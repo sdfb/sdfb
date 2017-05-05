@@ -32,6 +32,7 @@ class ApiController < ApplicationController
 
   def shared_network
     begin
+      @display_id = params[:ids]
       ids = params[:ids].split(",")
       @people = Person.find(ids)
 
