@@ -5,7 +5,7 @@ else
     json.id @people.first.id
     json.type "network"
     json.attributes do
-      json.links do
+      json.connections do
         json.array! @relationships do |relationship|
           json.id relationship.id
           json.type "relationship"
