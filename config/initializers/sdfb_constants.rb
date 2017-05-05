@@ -6,4 +6,6 @@ module SDFB
   LATEST_YEAR         = 1700
   EARLIEST_BIRTH_YEAR = EARLIEST_YEAR - 100
   LATEST_DEATH_YEAR   = LATEST_YEAR + 100
+
+  PRIMARY_INVESTIGATORS = [ "Daniel Shore", "Chris Warren", "Jessica Otis"]
 end
