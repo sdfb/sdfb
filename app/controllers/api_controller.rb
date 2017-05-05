@@ -25,4 +25,7 @@ class ApiController < ApplicationController
       @errors << {title: "invalid ID"}
     end
   end
+
+  def shared_network
+  end
 end
