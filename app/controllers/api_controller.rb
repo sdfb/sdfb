@@ -24,10 +24,22 @@ class ApiController < ApplicationController
       right_side = Relationship.where(person2_index: id, max_certainty: (SDFB::DEFAULT_CONFIDENCE..100))
       @relationships = left_side + right_side
     rescue ActiveRecord::RecordNotFound => e
+      @errors = []
       @errors << {title: "invalid ID"}
     end
   end
 
   def shared_network
+    begin
+      ids = params[:ids].split(",")
+      @people = Person.find(ids)
+
+      left_side = Relationship.where(person1_index: @people.first.id, max_certainty: (SDFB::DEFAULT_CONFIDENCE..100))
+      right_side = Relationship.where(person2_index: @people.second.id, max_certainty: (SDFB::DEFAULT_CONFIDENCE..100))
+      @relationships = left_side & right_side
+    rescue ActiveRecord::RecordNotFound => e
+      @errors = []
+      @errors << {title: "invalid ID"}
+    end
   end
 end
