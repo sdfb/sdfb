@@ -7,7 +7,7 @@ When(/^I access the api endpoint for those people$/) do
 end
 
 Then(/^I am given json that looks a person$/) do
-  @json = MultiJson.load(last_response.body)
+  @json = MultiJson.load(last_response.body)["data"]
   preferred_keys = [
     "id","attributes","type"
   ]
