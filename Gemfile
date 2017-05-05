@@ -32,6 +32,9 @@ gem 'rails3-jquery-autocomplete'
 gem 'jquery-turbolinks'
 gem "twitter-bootstrap-rails", '2.1.7'
 
+# API helpers
+gem "jbuilder"
+
 # Backend Helpers
 gem 'cancan'
 gem "carrierwave"
