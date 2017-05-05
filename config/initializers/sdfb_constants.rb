@@ -9,6 +9,5 @@ module SDFB
 
   PRIMARY_INVESTIGATORS = [ "Daniel Shore", "Chris Warren", "Jessica Otis"]
 
-  DEFAULT_MAX_CONFIDENCE = 100
   DEFAULT_CONFIDENCE = 60
 end
