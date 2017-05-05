@@ -5,7 +5,7 @@ class ApiController < ApplicationController
     begin
       @people = Person.find(ids)
     rescue ActiveRecord::RecordNotFound => e
-      @errors << {title: "invalid ID"}
+      @errors << {title: "Invalid person ID(s)"}
     end
     respond_to do |format|
       format.json
