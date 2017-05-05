@@ -14,6 +14,17 @@ class ApiController < ApplicationController
   end
 
   def groups
+    ids = params[:ids].split(",")
+    begin
+      @groups = Group.find(ids)
+    rescue ActiveRecord::RecordNotFound => e
+      @errors = []
+      @errors << {title: "Invalid group ID(s)"}
+    end
+    respond_to do |format|
+      format.json
+      format.html { render :json}
+    end
   end
 
   def person_network
