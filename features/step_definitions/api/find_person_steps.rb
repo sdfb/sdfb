@@ -6,6 +6,10 @@ When(/^I access the api endpoint for those people$/) do
   get("/api/people?ids=#{@people.collect(&:id).join(',')}", format: :json)
 end
 
+When(/^I access the relationship api endpoint for one of the people in that relationship$/) do
+  get("/api/relationship/people/#{@relationship.person1_index}", format: :json)
+end
+
 Then(/^I am given json that looks a person$/) do
   @json = MultiJson.load(last_response.body)
   preferred_keys = [
@@ -41,4 +45,22 @@ Then(/^the json has correct ids for those people$/) do
 
   expect(given_ids.count).to eq(@people.size)
   expect(given_ids.sort).to eq(expected_ids.sort)
+end
+
+Then(/^I am given json that includes a list of relationships$/) do
+  @json = MultiJson.load(last_response.body)["data"]
+  expect(@json["attributes"]).keys to_include("links")
+end
+
+Then(/^the json contains the relationship$/) do
+  expected_data = {
+    "altered": true,
+    "end_year": @relationship.end_year,
+    "id": @relationship.id,
+    "source": @relationship.person1_index,
+    "start_year": @relationship.start_year,
+    "target": @relationship.person2_index,
+    "weight": @relationship.weight
+  }
+  expect(@json["attributes"]["links"].first).to eq(expected_data)
 end
