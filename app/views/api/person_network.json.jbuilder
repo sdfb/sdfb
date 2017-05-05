@@ -2,19 +2,19 @@ if @errors
   json.errors { json.array! @errors }
 else
   json.data do
-    json.id @person.id
+    json.id @person.id.to_s
     json.type "network"
     json.attributes do
-      json.links do
+      json.connections do
         json.array! @relationships do |relationship|
-          json.id relationship.id
+          json.id relationship.id.to_s
           json.type "relationship"
           json.attributes do
             json.altered true
             json.end_year relationship.end_year
-            json.source relationship.person2_index
+            json.source relationship.person2_index.to_s
             json.start_year relationship.start_year
-            json.target relationship.person1_index
+            json.target relationship.person1_index.to_s
             json.weight relationship.max_certainty
           end
         end
@@ -24,8 +24,9 @@ else
       end
     end
   end
-  json.includes do
-    json.partial! 'people/include', person: @person
+  json.included do
+    people = [@person]
+    json.partial! 'people/include', collection: people, as: :person
   end
   json.meta do
     json.partial! "investigators"

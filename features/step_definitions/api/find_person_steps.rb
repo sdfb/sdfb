@@ -32,7 +32,7 @@ Then(/^the json has correct information for the person$/) do
   expect(@json["attributes"]["birth_year"]).to eq(@person.ext_birth_year)
   expect(@json["attributes"]["death_year"]).to eq(@person.ext_death_year)
   expect(@json["attributes"]["historical_significance"]).to eq(@person.historical_significance)
-  expect(@json["id"]).to eq(@person.id)
+  expect(@json["id"]).to eq(@person.id.to_s)
   expect(@json["attributes"]["name"]).to eq(@person.display_name)
   expect(@json["type"]).to eq("people")
 end
@@ -45,7 +45,7 @@ end
 
 Then(/^the json has correct ids for those people$/) do
   given_ids = @json["data"].collect{|i| i["id"]}
-  expected_ids = @people.collect(&:id)
+  expected_ids = @people.map{|p| p["id"].to_s}
 
   expect(given_ids.count).to eq(@people.size)
   expect(given_ids.sort).to eq(expected_ids.sort)
@@ -53,20 +53,20 @@ end
 
 Then(/^I am given json that includes a list of relationships$/) do
   @json = MultiJson.load(last_response.body)["data"]
-  expect(@json["attributes"].keys).to include("links")
+  expect(@json["attributes"].keys).to include("connections")
 end
 
 Then(/^the json contains the relationship$/) do
   expected_data = {
     "altered" => true,
     "end_year" => @relationship.end_year,
-    "target" => @relationship.person1_index,
+    "target" => @relationship.person1_index.to_s,
     "start_year" => @relationship.start_year,
-    "source" => @relationship.person2_index,
+    "source" => @relationship.person2_index.to_s,
     "weight" => @relationship.max_certainty
   }
-  expect(@json["attributes"]["links"].first["id"]).to eq(@relationship.id)
-  expect(@json["attributes"]["links"].first["attributes"]).to eq(expected_data)
+  expect(@json["attributes"]["connections"].first["id"]).to eq(@relationship.id.to_s)
+  expect(@json["attributes"]["connections"].first["attributes"]).to eq(expected_data)
 end
 
 Then(/^I am given a json error telling me "([^"]*)"$/) do |error_message|
