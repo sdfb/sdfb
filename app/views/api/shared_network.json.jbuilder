@@ -25,8 +25,7 @@ else
     end
   end
   json.includes do
-    json.partial! 'people/include', person: @people.first
-    json.partial! 'people/include', person: @people.second
+    json.partial! 'people/include', collection: @people, as: :person
   end
   json.meta do
     json.partial! "investigators"
