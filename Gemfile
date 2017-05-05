@@ -54,6 +54,7 @@ group :test do
   gem 'rspec'
   gem 'database_cleaner'
   gem 'cucumber-api', require: false
+  gem "json-schema"
 end
 
 group :development, :test do
