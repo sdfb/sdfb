@@ -20,6 +20,7 @@ class ApiController < ApplicationController
     begin
       id = params[:id]
       @person = Person.find(id)
+      @people = [@person]
       left_side = Relationship.where(person1_index: id, max_certainty: (SDFB::DEFAULT_CONFIDENCE..100))
       right_side = Relationship.where(person2_index: id, max_certainty: (SDFB::DEFAULT_CONFIDENCE..100))
       @relationships = left_side + right_side

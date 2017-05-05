@@ -5,6 +5,7 @@ else
     json.id @person.id.to_s
     json.type "network"
     json.attributes do
+      json.primary_people @people.map{|p| p["id"].to_s}
       json.connections do
         json.array! @relationships do |relationship|
           json.id relationship.id.to_s
@@ -25,8 +26,7 @@ else
     end
   end
   json.included do
-    people = [@person]
-    json.partial! 'people/include', collection: people, as: :person
+    json.partial! 'people/include', collection: @people, as: :person
   end
   json.meta do
     json.partial! "investigators"
