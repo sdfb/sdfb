@@ -2,7 +2,7 @@ if @errors
   json.errors { json.array! @errors }
 else
   json.data do
-    json.id @person.id.to_s
+    json.id @display_id
     json.type "network"
     json.attributes do
       json.primary_people @people.map{|p| p["id"].to_s}
