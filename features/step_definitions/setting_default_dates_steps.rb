@@ -16,6 +16,30 @@ Given(/^a person exists$/) do
   )
 end
 
+Given(/^a second person exists$/) do
+  @person2_birth_year = SDFB::EARLIEST_YEAR + 5
+  @person2_death_year = SDFB::LATEST_YEAR - 5
+
+  @person2 = Person.create(
+    first_name: 'GrouperTwo',
+    last_name: 'McMemberTwo',
+    created_by: @sdfbadmin.id,
+    gender: 'male',
+    birth_year_type: 'IN',
+    ext_birth_year: @person2_birth_year.to_s,
+    death_year_type: 'IN',
+    ext_death_year: @person2_death_year.to_s,
+    approved_by: @sdfbadmin.id,
+    is_approved: true
+  )
+end
+
+Given(/^multiple people exist$/) do
+  step 'a person exists'
+  step 'a second person exists'
+  @people = [@person, @person2]
+end
+
 Given(/^a group exists$/) do
   @group_start_year = SDFB::EARLIEST_YEAR + 1
   @group_end_year = SDFB::LATEST_YEAR - 1

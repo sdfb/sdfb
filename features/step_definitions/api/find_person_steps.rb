@@ -2,6 +2,10 @@ When(/^I access the api endpoint for the person$/) do
   get("/people/#{@person.id}", format: :json)
 end
 
+When(/^I access the api endpoint for those people$/) do
+  get("/api/people/#{@people.collect(&:id).join(',')}", format: :json)
+end
+
 Then(/^I am given json that looks a person$/) do
   @json = MultiJson.load(last_response.body)
   preferred_keys = [
@@ -17,4 +21,18 @@ Then(/^the json has correct information for the person$/) do
   expect(@json["id"]).to eq(@person.id)
   expect(@json["name"]).to eq(@person.display_name)
   expect(@json["type"]).to eq("people")
+end
+
+Then(/^I am given json that looks a list containing (\d+) people$/) do |n|
+  @json = MultiJson.load(last_response.body)
+  expect(@json["data"]).to be_an Array
+  expect(@json["data"]).to have_exactly(n).items
+end
+
+Then(/^the json has correct ids for those people$/) do
+  given_ids = @json["data"].collect{|i| i["id"]}
+  expected_ids = @people.collect(&:id)
+
+  expect(given_ids).to have_exactly(@people.size).items
+  expect(given_ids.sort).to eq(expected_ids.sort)
 end

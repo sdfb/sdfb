@@ -8,3 +8,9 @@ Feature: Find person
     When I access the api endpoint for the person
     Then I am given json that looks a person
     And the json has correct information for the person
+
+  Scenario: Finding multiple people with the API
+    Given multiple people exist
+    When I access the api endpoint for those people
+    Then I am given json that looks a list containing 2 people
+    And the json has correct ids for those people
