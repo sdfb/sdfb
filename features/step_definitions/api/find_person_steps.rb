@@ -1,5 +1,5 @@
 When(/^I access the api endpoint for the person$/) do
-  get("/people/#{@person.id}", format: :json)
+  get("/api/people?ids=#{@person.id}", format: :json)
 end
 
 When(/^I access the api endpoint for those people$/) do
@@ -10,8 +10,12 @@ When(/^I access the relationship api endpoint for one of the people in that rela
   get("/api/relationship/people/#{@relationship.person1_index}", format: :json)
 end
 
+When(/^I access the api endpoint for a person with an invalid ID$/) do
+  get("/api/people?ids=banana", format: :json)
+end
+
 Then(/^I am given json that looks a person$/) do
-  @json = MultiJson.load(last_response.body)["data"]
+  @json = MultiJson.load(last_response.body)["data"].first
   preferred_keys = [
     "id","attributes","type"
   ]
@@ -63,4 +67,10 @@ Then(/^the json contains the relationship$/) do
     "weight": @relationship.weight
   }
   expect(@json["attributes"]["links"].first).to eq(expected_data)
+end
+
+Then(/^I am given a json error telling me "([^"]*)"$/) do |error_message|
+  @json = MultiJson.load(last_response.body)["errors"]
+  expect(@json.size).to eq 1
+  expect(@json.first["title"]).to eq error_message
 end

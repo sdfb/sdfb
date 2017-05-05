@@ -20,3 +20,7 @@ Feature: Find person
     When I access the relationship api endpoint for one of the people in that relationship
     Then I am given json that includes a list of relationships
     And the json contains the relationship
+
+  Scenario: Finding a person with an invalid ID
+    When I access the api endpoint for a person with an invalid ID
+    Then I am given a json error telling me "Invalid person ID(s)"
