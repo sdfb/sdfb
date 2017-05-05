@@ -34,7 +34,7 @@ Then(/^the json has correct information for the person$/) do
   expect(@json["attributes"]["historical_significance"]).to eq(@person.historical_significance)
   expect(@json["id"]).to eq(@person.id.to_s)
   expect(@json["attributes"]["name"]).to eq(@person.display_name)
-  expect(@json["type"]).to eq("people")
+  expect(@json["type"]).to eq("person")
 end
 
 Then(/^I am given json that looks a list containing (\d+) people$/) do |n|
