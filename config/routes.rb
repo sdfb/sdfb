@@ -2,8 +2,7 @@ Sdfb::Application.routes.draw do
 
   get 'api/people', defaults: {format: :json}
   get 'api/groups', defaults: {format: :json}
-  get 'api/person_network/:id', defaults: {format: :json}, to: 'api#person_network'
-  get 'api/network', defaults: {format: :json}, to: 'api#shared_network'
+  get 'api/network', defaults: {format: :json}
 
 
   get 'password_resets/new'

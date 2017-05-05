@@ -78,7 +78,7 @@ Given(/^each person has met a specified given person$/) do
 end
 
 When(/^I access the shared network api endpoint for those people$/) do
-  get("/api/shared_network?ids=#{@people.collect(&:id).join(',')}", format: :json)
+  get("/api/network?ids=#{@people.collect(&:id).join(',')}", format: :json)
 end
 
 Then(/^the json contains the relationships of each person$/) do

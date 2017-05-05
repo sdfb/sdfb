@@ -7,7 +7,7 @@ When(/^I access the api endpoint for those people$/) do
 end
 
 When(/^I access the relationship api endpoint for one of the people in that relationship$/) do
-  get("/api/person_network/#{@relationship.person1_index}", format: :json)
+  get("/api/network?ids=#{@relationship.person1_index}", format: :json)
 end
 
 When(/^I access the api endpoint for a person with an invalid ID$/) do

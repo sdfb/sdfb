@@ -27,19 +27,6 @@ class ApiController < ApplicationController
     end
   end
 
-  def person_network
-    begin
-      id = params[:id]
-      @display_id = id
-      @person = Person.find(id)
-      @people = [@person]
-      @relationships = @person.relationships
-    rescue ActiveRecord::RecordNotFound => e
-      @errors = []
-      @errors << {title: "invalid ID"}
-    end
-  end
-
   def network
     begin
       @display_id = params[:ids]
