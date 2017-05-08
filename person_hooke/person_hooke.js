@@ -3,16 +3,18 @@ var svg = d3.select("svg"),
     width = +svg.node().getBoundingClientRect().width,
     height = +svg.node().getBoundingClientRect().height;
 
-console.log(height)
-console.log(d3.select("svg").node().getBoundingClientRect().height)
+// console.log(height)
+// console.log(d3.select("svg").node().getBoundingClientRect().height)
 
 var graph,
     degreeSize,
-    sourceId;
+    sourceNode;
 
-var threshold = 60;
+var confidenceMin = 60;
+var confidenceMax = 100;
 var complexity = '2';
-console.log(complexity);
+var dateMin = 1500;
+var dateMax = 1700;
 
 svg.append('rect')
     .attr('width', '100%')
@@ -22,12 +24,9 @@ svg.append('rect')
       if (toggle == 1) {
         // Restore nodes and links to normal opacity. (see toggleClick() below)
         d3.selectAll('.link').style('stroke', '#000');
-        // d3.select('[pulse="true"]').transition().duration(200).style('opacity', 1);
         d3.selectAll('.node')
-          // .attr('pulse', false)
           .classed('faded', false)
           .classed('focused', false);
-        // d3.selectAll('span').remove();
         toggle = 0;
       }
     });
@@ -39,12 +38,6 @@ var container = svg.append('g');
 
 // Create form for search (see function below).
 var search = d3.select("div#tools").append('form').attr('onsubmit', 'return false;');
-
-// var color = d3.scaleOrdinal()
-//     .domain([0,1,2])
-//     .range(['#F45D4C','#DF947A','#D4D5D6']);
-
-
 
 var box = search.append('input')
 	.attr('type', 'text')
@@ -81,7 +74,7 @@ d3.json("baconnetwork.json", function(error, json) {
   var t0 = performance.now();
 
   graph = json.data.attributes;
-  sourceId = json.included.id;
+  sourceNode = json.included;
 
   degreeSize = d3.scaleLog()
       .domain([d3.min(graph.nodes, function(d) {return d.degree; }),d3.max(graph.nodes, function(d) {return d.degree; })])
@@ -103,37 +96,41 @@ d3.json("baconnetwork.json", function(error, json) {
     simulation.tick();
   }
 
-  update(threshold, complexity);
+  update(confidenceMin, confidenceMax, dateMin, dateMax, complexity);
 
   var t1 = performance.now();
 
   console.log("Graph took " + (t1 - t0) + " milliseconds to load.")
 
+  createConfidenceGraph();
+  createDateGraph();
+
 });
 
 	// A slider that removes nodes and edges below the input threshold.
-var confidenceSlider = d3.select('div#tools').append('div').text('Confidence Estimate (1- and 2-degree only): ');
+// var confidenceSlider = d3.select('div#tools').append('div').text('Confidence Estimate (1- and 2-degree only): ');
+//
+// var confidenceSliderLabel = confidenceSlider.append('label')
+// 	.attr('for', 'threshold')
+//   .attr('id', 'confidenceLabel')
+// 	.text('60');
+// var confidenceSliderMain = confidenceSlider.append('input')
+// 	.attr('type', 'range')
+// 	.attr('min', 60)
+// 	.attr('max', 100)
+// 	.attr('value', 60)
+// 	.attr('id', 'threshold')
+// 	.style('width', '50%')
+// 	.style('display', 'block')
+// 	.on('input', function () {
+// 		threshold = this.value;
+//
+// 		d3.select('#confidenceLabel').text(threshold);
+//
+//     update(threshold, complexity);
+//
+// 	});
 
-var confidenceSliderLabel = confidenceSlider.append('label')
-	.attr('for', 'threshold')
-  .attr('id', 'confidenceLabel')
-	.text('60');
-var confidenceSliderMain = confidenceSlider.append('input')
-	.attr('type', 'range')
-	.attr('min', 60)
-	.attr('max', 100)
-	.attr('value', 60)
-	.attr('id', 'threshold')
-	.style('width', '50%')
-	.style('display', 'block')
-	.on('input', function () {
-		threshold = this.value;
-
-		d3.select('#confidenceLabel').text(threshold);
-
-    update(threshold, complexity);
-
-	});
 
   // Radio buttons for network complexity.
 
@@ -148,7 +145,7 @@ var complexityButtons = complexityForm.selectAll('input')
     .enter().append('input')
     .attr('type', 'radio')
     .attr('name', 'complexity')
-    .attr('checked', function(d){ 
+    .attr('checked', function(d){
       if (d==complexity){
         return 'checked';
       }
@@ -161,15 +158,153 @@ complexityButtons.on('change', function () {
 
     d3.select("#complexityLabel").text("Network Complexity: "+complexity+" ");
 
-    update(threshold, complexity);
+    update(confidenceMin, confidenceMax, dateMin, dateMax, complexity);
 
 });
+
+function countConfidenceFrequency() {
+  var confidence = d3.range(60,101);
+  frequencies = {}
+  confidence.forEach(function(c){
+    frequencies[c.toString()] = 0;
+  });
+  graph.links.forEach(function(l){
+    frequencies[l.weight] += 1;
+  });
+  data = [];
+  for (x in frequencies) {
+    data.push({'weight': x, 'count':frequencies[x]});
+  }
+  return data;
+}
+
+function countDateFrequency() {
+  var years = d3.range(parseInt(sourceNode.birth_year),parseInt(sourceNode.death_year)+1);
+  frequencies = {}
+  years.forEach(function(y) {
+    frequencies[y.toString()] = 0;
+  });
+  years.forEach(function(y) {
+    graph.links.forEach(function(l) {
+      if (y >= l.start_year && y <= l.end_year) { frequencies[y.toString()] += 1; }
+    });
+  });
+  data = [];
+  for (x in frequencies) {
+    data.push({'year': x, 'count':frequencies[x]});
+  }
+  return data;
+}
+
+function createConfidenceGraph() {
+
+  confidenceData = countConfidenceFrequency();
+  var confidenceGraph = d3.select('div#tools').append('svg').attr('width', 500).attr('height', 100),
+      confidenceMargin = {top: 20, right: 20, bottom: 30, left: 40};
+      confidenceWidth = +confidenceGraph.attr("width") - confidenceMargin.left - confidenceMargin.right,
+      confidenceHeight = +confidenceGraph.attr("height") - confidenceMargin.top - confidenceMargin.bottom;
+
+  var confidenceX = d3.scaleBand().rangeRound([0, confidenceWidth]).padding(0.1),
+      confidenceY = d3.scaleLinear().rangeRound([confidenceHeight, 0]);
+
+  var confidenceG = confidenceGraph.append("g")
+      .attr("transform", "translate(" + confidenceMargin.left + "," + confidenceMargin.top + ")");
+
+  confidenceX.domain(confidenceData.map(function(d) { return d.weight; }));
+  confidenceY.domain([0, d3.max(confidenceData, function(d) { return d.count; })]);
+
+  var brush = d3.brushX()
+    .extent([[0, 0], [confidenceWidth, confidenceHeight]])
+    .on("end", brushed);
+
+  confidenceG.append("g")
+      .attr("class", "axis axis--x")
+      .attr("transform", "translate(0," + confidenceHeight + ")")
+      .call(d3.axisBottom(confidenceX).tickValues(["60", "100"]).tickFormat(function(d){return d + "%"}));
+
+  confidenceG.selectAll(".bar")
+    .data(confidenceData)
+    .enter().append("rect")
+      .attr("class", "bar")
+      .attr("x", function(d) { return confidenceX(d.weight); })
+      .attr("y", function(d) { return confidenceY(d.count); })
+      .attr("width", confidenceX.bandwidth())
+      .attr("height", function(d) { return confidenceHeight - confidenceY(d.count); });
+
+  confidenceG.append("g")
+      .attr("class", "brush")
+      .call(brush)
+      .call(brush.move, confidenceX.range());
+
+  function brushed() {
+    var s = d3.event.selection || confidenceX.range();
+    var eachBand = confidenceX.step();
+    var marginInterval = confidenceMargin.right/eachBand
+    var minIndex = Math.round((s[0] / eachBand) - marginInterval);
+    var maxIndex = Math.round((s[1] / eachBand) - marginInterval);
+    var confidenceMin = confidenceX.domain()[minIndex] || "60";
+    var confidenceMax = confidenceX.domain()[maxIndex] || "100";
+    update(confidenceMin, confidenceMax, dateMin, dateMax, complexity)
+  }
+ }
+
+function createDateGraph() {
+
+   dateData = countDateFrequency();
+   var dateGraph = d3.select('div#tools').append('svg').attr('width', 500).attr('height', 100),
+       dateMargin = {top: '20', right: '20', bottom: '30', left: '40'};
+       dateWidth = +dateGraph.attr("width") - dateMargin.left - dateMargin.right,
+       dateHeight = +dateGraph.attr("height") - dateMargin.top - dateMargin.bottom;
+
+   var dateX = d3.scaleBand().rangeRound([0, dateWidth]).padding(0.1),
+       dateY = d3.scaleLinear().rangeRound([dateHeight, 0]);
+
+   var dateG = dateGraph.append("g")
+       .attr("transform", "translate(" + dateMargin.left + "," + dateMargin.top + ")");
+
+   dateX.domain(dateData.map(function(d) { return d.year; }));
+   dateY.domain([0, d3.max(dateData, function(d) { return d.count; })]);
+
+   var brush = d3.brushX()
+     .extent([[0, 0], [dateWidth, dateHeight]])
+     .on("end", brushed);
+
+   dateG.append("g")
+       .attr("class", "axis axis--x")
+       .attr("transform", "translate(0," + dateHeight + ")")
+       .call(d3.axisBottom(dateX).tickValues([sourceNode.birth_year, sourceNode.death_year]));
+
+   dateG.selectAll(".bar")
+     .data(dateData)
+     .enter().append("rect")
+       .attr("class", "bar")
+       .attr("x", function(d) { return dateX(d.year); })
+       .attr("y", function(d) { return dateY(d.count); })
+       .attr("width", dateX.bandwidth())
+       .attr("height", function(d) { return dateHeight - dateY(d.count); });
+
+   dateG.append("g")
+       .attr("class", "brush")
+       .call(brush)
+       .call(brush.move, dateX.range());
+
+   function brushed() {
+     var s = d3.event.selection || dateX.range();
+     var eachBand = dateX.step();
+     var marginInterval = dateMargin.right/eachBand
+     var minIndex = Math.round((s[0] / eachBand) - marginInterval);
+     var maxIndex = Math.round((s[1] / eachBand) - marginInterval);
+     var dateMin = dateX.domain()[minIndex] || sourceNode.birth_year;
+     var dateMax = dateX.domain()[maxIndex] || sourceNode.death_year;
+     update(confidenceMin, confidenceMax, dateMin, dateMax, complexity)
+   }
+  }
 
 function parseComplexity(thresholdLinks, complexity) {
 
   var oneDegreeNodes = [];
   thresholdLinks.forEach(function(l){
-    if (l.source.id == sourceId || l.target.id == sourceId ) { oneDegreeNodes.push(l.source); oneDegreeNodes.push(l.target);};
+    if (l.source.id == sourceNode.id || l.target.id == sourceNode.id ) { oneDegreeNodes.push(l.source); oneDegreeNodes.push(l.target);};
   });
 
   oneDegreeNodes = Array.from(new Set(oneDegreeNodes));
@@ -185,13 +320,13 @@ function parseComplexity(thresholdLinks, complexity) {
   var allNodes = oneDegreeNodes.concat(twoDegreeNodes);
 
   allNodes.forEach(function(d) {
-    if (d.id == sourceId) { d.distance = 0; }
+    if (d.id == sourceNode.id) { d.distance = 0; }
     else if (oneDegreeNodes.indexOf(d) != -1) { d.distance = 1; }
     else { d.distance = 2; }
   });
 
     if (complexity == '1') {
-      var newLinks = thresholdLinks.filter(function(l) { if (l.source.id == sourceId || l.target.id == sourceId) { return l; }})
+      var newLinks = thresholdLinks.filter(function(l) { if (l.source.id == sourceNode.id || l.target.id == sourceNode.id) { return l; }})
       return [oneDegreeNodes, newLinks];
     }
 
@@ -232,12 +367,16 @@ function parseComplexity(thresholdLinks, complexity) {
     }
 }
 
-function update(threshold, complexity) {
+function update(confidenceMin, confidenceMax, dateMin, dateMax, complexity) {
 
   d3.select('.source-node').remove(); //Get rid of old source node highlight.
 
   // Find the links and nodes that are at or above the threshold.
-  var thresholdLinks = graph.links.filter(function(d) { if (d.weight >= threshold) {return d; }; });
+  var thresholdLinks = graph.links.filter(function(d) {
+    if (d.weight >= confidenceMin && d.weight <= confidenceMax && parseInt(d.start_year) <= dateMax && parseInt(d.end_year) >= dateMin) {
+      return d;
+    };
+  });
 
   var newData = parseComplexity(thresholdLinks, complexity);
   var newNodes = newData[0];
@@ -272,7 +411,7 @@ function update(threshold, complexity) {
     .attr("cx", function(d) { return d.x; })
     .attr("cy", function(d) { return d.y; })
     // .attr("pulse", false)
-    .attr("is_source", function(d) {if (d.id == sourceId) {return 'true';} })
+    .attr("is_source", function(d) {if (d.id == sourceNode.id) {return 'true';} })
     // On click, toggle ego networks for the selected node. (See function above.)
     .on('click', function(d) { toggleClick(d, newLinks); });
 
@@ -330,15 +469,14 @@ function zoomed() {
 function searchNodes() {
 	var term = document.getElementById('searchTerm').value;
 	var selected = container.selectAll('.node').filter(function (d, i) {
-		return d.name.toLowerCase().search(term.toLowerCase()) == -1;
+		return d.person_info.name.toLowerCase().search(term.toLowerCase()) == -1;
 	});
-	selected.style('opacity', '0');
-	var link = container.selectAll('.link');
-	link.style('stroke-opacity', '0');
-	d3.selectAll('.node').transition()
-		.duration(5000)
-		.style('opacity', '1');
-	d3.selectAll('.link').transition().duration(5000).style('stroke-opacity', '0.6');
+	selected.classed('faded', true);
+	// var link = container.selectAll('.link');
+	// link.style('stroke-opacity', '0');
+  // console.log(d3.selectAll('.node'));
+	// d3.selectAll('.node').classed('faded', false);
+	// d3.selectAll('.link').transition().duration(5000).style('stroke-opacity', '0.6');
 }
 
 function linkArc(d) {
@@ -347,6 +485,7 @@ function linkArc(d) {
       dr = Math.sqrt(dx * dx + dy * dy);
   return "M" + d.source.x + "," + d.source.y + "A" + dr + "," + dr + " 0 0,1 " + d.target.x + "," + d.target.y;
 }
+
 
 // function recursivePulse(d) {
 //   pulse();
