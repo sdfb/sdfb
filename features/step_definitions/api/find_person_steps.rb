@@ -71,15 +71,34 @@ Then(/^the data contains the relationship$/) do
 end
 
 Then(/^the data contains references to the people in the relationship$/) do
+  @person1 = Person.find(@relationship.person1_index)
+  @person2 = Person.find(@relationship.person2_index)
+
   data_from_first_person = {
-    "id" => @relationship.person1_index.to_s,
-    "type" => "person"
-  }
-  data_from_second_person = {
-    "id" => @relationship.person2_index.to_s,
+    "id" => @person1.id.to_s,
+    "attributes" => {
+      "birth_year" => @person1.ext_birth_year,
+      "death_year" => @person1.ext_death_year,
+      "historical_significance" => @person1.historical_significance,
+      "name" => @person1.display_name,
+      "degree" => 1,
+      "groups" => @person1.groups.collect(&:id)
+    },
     "type" => "person"
   }
 
+  data_from_second_person = {
+    "id" => @person2.id.to_s,
+    "attributes" => {
+      "birth_year" => @person2.ext_birth_year,
+      "death_year" => @person2.ext_death_year,
+      "historical_significance" => @person2.historical_significance,
+      "name" => @person2.display_name,
+      "degree" => 1,
+      "groups" => @person2.groups.collect(&:id)
+    },
+    "type" => "person"
+  }
   expect(@included_data).to include(data_from_first_person)
   expect(@included_data).to include(data_from_second_person)
 end
