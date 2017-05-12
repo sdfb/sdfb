@@ -1,14 +1,18 @@
 Sdfb::Application.routes.draw do
 
-  get 'api/people', defaults: {format: :json}
-  get 'api/groups', defaults: {format: :json}
-  get 'api/groups/network', defaults: {format: :json}, action: :group_network, controller: :api
-  get 'api/network', defaults: {format: :json}
-  get 'api/typeahead', defaults: {format: :json}
+  # set the root
+  root :to => "home#index"
 
+  # API Routes
+  defaults format: :json, via: [:get] do
+    get 'api/people'
+    get 'api/groups'
+    get 'api/network'
+    get 'api/groups/network', action: :group_network, controller: :api
+    get 'api/typeahead'
+  end
 
-  get 'password_resets/new'
-
+  # Static Pages
   get "about" => "static_pages#about", :as => "about"
   get "team" => "static_pages#team", :as => "team"
   get "help" => "static_pages#help", :as => "help"
@@ -16,7 +20,6 @@ Sdfb::Application.routes.draw do
   get "guide" => "static_pages#guide", :as => "guide"
   get "tutorial" => "static_pages#tutorial", :as => "tutorial"
   get "new_form_menu" => "static_pages#new_form_menu", :as => "new_form_menu"
-  get "top_contributors" => "home#top_contributors", :as => "top_contributors"
 
   resources :comments
   resources :relationship_types
@@ -27,19 +30,10 @@ Sdfb::Application.routes.draw do
   resources :flags
   resources :password_resets  
 
-
+  # Session management
+  resources :sessions
   get "sign_in" => "sessions#new", :as => "sign_in"
   get "sign_out" => "sessions#destroy", :as => "sign_out"
-
-  get "sign_up" => "users#new", :as => "sign_up"
-  get "test" => "home#test", :as => "test"
-  get "home/index"
-
-  get "my_contributions" => "users#my_contributions", :as => "my_contributions"
-  get "all_inactive" => "users#all_inactive", :as => "all_inactive"
-  get "all_unapproved" => "users#all_unapproved", :as => "all_unapproved"
-  get "all_rejected" => "users#all_rejected", :as => "all_rejected"
-  get "all_recent" => "users#all_recent", :as => "all_recent"
 
   get "new_person_form" => "people#new_2", :as => "new_person_form"
   post "create_new_person_form" => "people#create_2", :as => "create_new_person_form"
@@ -57,14 +51,39 @@ Sdfb::Application.routes.draw do
   post "relationship_create_2" => "relationships#create_2", :as => "relationship_create_2"
   post "user_rel_contribs_create_2" => "user_rel_contribs#create_2"
 
-  # set the root
-  root :to => "home#index"
 
+
+  resources :home do
+    get :autocomplete_person_search_names_all, on: :collection
+    get :autocomplete_group_name, on: :collection
+  end
   match '/people_search', :to => 'people#search', :via => [:get]
-
   match '/group_search', :to => 'groups#search', :via => [:get]
-
   match '/relationship_search', :to => 'relationships#search', :via => [:get]
+
+  resources :relationships do
+    get :autocomplete_person_search_names_all, on: :collection
+  end
+
+  resources :groups do
+    get :autocomplete_group_name, on: :collection
+  end
+  resources :group_assignments do
+    get :autocomplete_person_search_names_all, on: :collection
+  end
+  resources :people do
+    get :autocomplete_person_search_names_all, on: :collection
+  end
+
+  resources :user_person_contribs do
+    get :autocomplete_person_search_names_all, on: :collection
+  end
+
+  resources :user_rel_contribs do
+    get :autocomplete_person_search_names_all, on: :collection
+  end
+
+
 
   match '/people_membership', :to => 'people#membership', :via => [:get]
   match '/people_relationships', :to => 'people#relationships', :via => [:get]
@@ -74,50 +93,26 @@ Sdfb::Application.routes.draw do
   match '/network_info', :to => 'home#update_network_info', :via => [:get]
 
   resources :users
-  
-  resources :home do
-    get :autocomplete_person_search_names_all, on: :collection
-    get :autocomplete_group_name, on: :collection
-  end
+  get 'password_resets/new'
+  get "sign_up" => "users#new", :as => "sign_up"
+  get "my_contributions" => "users#my_contributions", :as => "my_contributions"
+  get "all_inactive" => "users#all_inactive", :as => "all_inactive"
+  get "all_unapproved" => "users#all_unapproved", :as => "all_unapproved"
+  get "all_rejected" => "users#all_rejected", :as => "all_rejected"
+  get "all_recent" => "users#all_recent", :as => "all_recent"
 
   
-  resources :sessions
-
-
-  resources :relationships do
-    get :autocomplete_person_search_names_all, on: :collection
-  end
-
-
-  resources :groups do
-    get :autocomplete_group_name, on: :collection
-  end
-
-
   resources :user_group_contribs
 
 
-  resources :group_assignments do
-    get :autocomplete_person_search_names_all, on: :collection
-  end
+
 
   # how to use autocomplete
   # this is an example of how autocomplete is setup
   # autocomplete also must be setup in the ability.rb file so people have access to it
   # set up is required in the forms as the option "<%= f.input :person_autocomplete, as: :autocomplete, url: autocomplete_person_search_names_all_group_assignments_path, input_html: { 'data-id-element' => '#group_assignment_person_id' }, label: "Person", placeholder: "name" %>"
   # must also be setup in the controller: autocomplete :person, :search_names_all, full: true, :extra_data => [:display_name, :ext_birth_year], :display_value => :autocomplete_name
-  resources :people do
-    get :autocomplete_person_search_names_all, on: :collection
-  end
 
-  resources :user_person_contribs do
-    get :autocomplete_person_search_names_all, on: :collection
-  end
-
-
-  resources :user_rel_contribs do
-    get :autocomplete_person_search_names_all, on: :collection
-  end
 
   # how to export
   # update the controller with a method such as "def export_group_categories..." in the group_categories_controller
@@ -203,4 +198,8 @@ Sdfb::Application.routes.draw do
   match '/large_data/show' => 'large_data#show', :via => [:get]
 
   get 'large_data/download_csv'
+
+
+    # get "top_contributors" => "home#top_contributors", :as => "top_contributors"
+
 end

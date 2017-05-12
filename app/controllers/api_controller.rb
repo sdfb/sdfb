@@ -13,6 +13,37 @@ class ApiController < ApplicationController
     end
   end
 
+  def typeahead
+    type   = params[:type]
+    query = params[:q]
+
+    raise Error if type.blank? || query.blank?
+
+    case type
+    when "person"
+
+      lookup = {}
+      people = Person.pluck(:search_names_all, :display_name, :id)
+      people.each do |data|
+        keys, name, id = data
+        keys.split(/\W+/).uniq!.each do |word|
+          lookup[word.downcase] ||= []
+          lookup[word.downcase] << {name: name, id: id}
+        end
+      end
+
+      results = lookup.find_all{|key,val| key.start_with?(query.downcase)}
+      if results
+        results = results.reduce([]){|memo,a| memo << a[1]}.flatten.uniq
+      end
+      @results =  results || {}
+
+    when "group"
+    else  
+      # error goes here
+    end
+
+  end
 
   def groups
     ids = params[:ids].split(",")
@@ -84,24 +115,24 @@ class ApiController < ApplicationController
     end
   end
 
-  def typeahead
-    query = params[:q]
-    begin
-      @people = Person.all
-      @people.to_a.select!{|p| p.display_name.starts_with? query}
-      if @people.empty?
-        @people = nil
-        @errors = []
-        @errors << {title: "No matches found"}
-      end
-    rescue ActiveRecord::RecordNotFound => e
-      @errors = []
-      @errors << {title: "Invalid person ID(s)"}
-    end
-    respond_to do |format|
-      format.json { render :people }
-      format.html { render :json}
-    end
-  end
+  # def typeahead
+  #   query = params[:q]
+  #   begin
+  #     @people = Person.all
+  #     @people.to_a.select!{|p| p.display_name.starts_with? query}
+  #     if @people.empty?
+  #       @people = nil
+  #       @errors = []
+  #       @errors << {title: "No matches found"}
+  #     end
+  #   rescue ActiveRecord::RecordNotFound => e
+  #     @errors = []
+  #     @errors << {title: "Invalid person ID(s)"}
+  #   end
+  #   respond_to do |format|
+  #     format.json { render :people }
+  #     format.html { render :json}
+  #   end
+  # end
 
 end
