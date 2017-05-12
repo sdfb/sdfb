@@ -34,6 +34,9 @@ class ApiController < ApplicationController
       @people = Person.find(ids)
 
       @relationships = @people.map(&:relationships).reduce(:+)
+      first_degree_ids = @relationships.collect{|r| [r.person1_index, r.person2_index]}.flatten.uniq - @people.collect(&:id)
+      @sources = Person.find(first_degree_ids)
+
     rescue ActiveRecord::RecordNotFound => e
       @errors = []
       @errors << {title: "invalid person ID(s)"}

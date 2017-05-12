@@ -79,6 +79,6 @@ Then(/^the json contains references to the people in the relationship$/) do
     "type" => "person"
   }
 
-  expect(@json["includes"]).to include(data_from_first_person)
-  expect(@json["includes"]).to include(data_from_second_person)
+  expect(@json["included"]).to include(data_from_first_person)
+  expect(@json["included"]).to include(data_from_second_person)
 end
