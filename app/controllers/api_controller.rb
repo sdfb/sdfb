@@ -36,7 +36,7 @@ class ApiController < ApplicationController
       @relationships = @people.map(&:relationships).reduce(:+)
     rescue ActiveRecord::RecordNotFound => e
       @errors = []
-      @errors << {title: "invalid ID"}
+      @errors << {title: "invalid person ID(s)"}
     end
   end
 end

@@ -22,7 +22,7 @@ Then(/^I am given json that looks a person$/) do
   expect(@json.keys).to eq(preferred_keys)
 
   attribute_keys = [
-    "birth_year","death_year","historical_significance","name", "degree"
+    "birth_year","death_year","historical_significance","name", "degree", "groups"
   ]
   expect(@json["attributes"].keys).to eq(attribute_keys)
 

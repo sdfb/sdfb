@@ -30,6 +30,7 @@ class Person < ActiveRecord::Base
   # Relationships
   # -----------------------------
   has_many :group_assignments,    dependent: :destroy
+  has_many :groups, through: :group_assignments
   has_many :user_person_contribs, dependent: :destroy
   belongs_to :user
 
