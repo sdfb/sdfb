@@ -70,9 +70,55 @@ Then(/^the data contains the relationship$/) do
   expect(@data["attributes"]["connections"].first["attributes"]).to eq(expected_data)
 end
 
+Then(/^the data contains the second degree relationship$/) do
+  expected_data = {
+    "altered" => true,
+    "end_year" => @relationship_once_removed.end_year,
+    "target" => @relationship_once_removed.person1_index.to_s,
+    "start_year" => @relationship_once_removed.start_year,
+    "source" => @relationship_once_removed.person2_index.to_s,
+    "weight" => @relationship_once_removed.max_certainty
+  }
+  expect(@data["attributes"]["connections"].second["id"]).to eq(@relationship_once_removed.id.to_s)
+  expect(@data["attributes"]["connections"].second["attributes"]).to eq(expected_data)
+end
+
 Then(/^the data contains references to the people in the relationship$/) do
   @person1 = Person.find(@relationship.person1_index)
   @person2 = Person.find(@relationship.person2_index)
+
+  data_from_first_person = {
+    "id" => @person1.id.to_s,
+    "attributes" => {
+      "birth_year" => @person1.ext_birth_year,
+      "death_year" => @person1.ext_death_year,
+      "historical_significance" => @person1.historical_significance,
+      "name" => @person1.display_name,
+      "degree" => 1,
+      "groups" => @person1.groups.collect(&:id)
+    },
+    "type" => "person"
+  }
+
+  data_from_second_person = {
+    "id" => @person2.id.to_s,
+    "attributes" => {
+      "birth_year" => @person2.ext_birth_year,
+      "death_year" => @person2.ext_death_year,
+      "historical_significance" => @person2.historical_significance,
+      "name" => @person2.display_name,
+      "degree" => 1,
+      "groups" => @person2.groups.collect(&:id)
+    },
+    "type" => "person"
+  }
+  expect(@included_data).to include(data_from_first_person)
+  expect(@included_data).to include(data_from_second_person)
+end
+
+Then(/^the data contains references to the people in the second degree relationship$/) do
+  @person1 = Person.find(@relationship_once_removed.person1_index)
+  @person2 = Person.find(@relationship_once_removed.person2_index)
 
   data_from_first_person = {
     "id" => @person1.id.to_s,

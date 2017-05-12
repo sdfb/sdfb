@@ -21,12 +21,15 @@ Feature: Find person
 
   Scenario: Finding the relationships of a person
     Given a relationship exists
+    And a second degree relationship exists
     When I access the relationship api endpoint for one of the people in that relationship
     And I am given json
     Then the data includes a list of relationships
     And the json is valid JSON-API
     And the data contains the relationship
+    And the data contains the second degree relationship
     And the data contains references to the people in the relationship
+    And the data contains references to the people in the second degree relationship
 
   Scenario: Finding a person with an invalid ID
     When I access the api endpoint for a person with an invalid ID

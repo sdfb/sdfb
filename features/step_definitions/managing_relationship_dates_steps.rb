@@ -18,7 +18,7 @@ Given(/^a relationship exists$/) do
     is_approved: true
   ).first_or_create!
 
-  anne = Person.where(
+  @anne = Person.where(
     first_name: 'Anne',
     last_name: 'Bacon',
     created_by: @sdfbadmin.id,
@@ -32,8 +32,32 @@ Given(/^a relationship exists$/) do
   ).first_or_create!
 
   @relationship = Relationship.where(
-    person1_index: anne.id,
+    person1_index: @anne.id,
     person2_index: francis.id,
+    original_certainty: 100,
+    created_by: User.first,
+    approved_by: @sdfbadmin.id,
+    is_approved: true
+  ).first_or_create!
+end
+
+Given(/^a second degree relationship exists$/) do
+  third_wheel = Person.where(
+    first_name: 'Friend of',
+    last_name: 'An Baco',
+    created_by: @sdfbadmin.id,
+    gender: 'female',
+    birth_year_type: 'IN',
+    ext_birth_year: '1528',
+    death_year_type: 'IN',
+    ext_death_year: '1610',
+    approved_by: @sdfbadmin.id,
+    is_approved: true
+  ).first_or_create!
+
+  @relationship_once_removed = Relationship.where(
+    person1_index: @anne.id,
+    person2_index: third_wheel.id,
     original_certainty: 100,
     created_by: User.first,
     approved_by: @sdfbadmin.id,
