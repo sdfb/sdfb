@@ -36,14 +36,13 @@ personnetwork.json
 
 person.json (n number of IDs)
 group.json  (n number of IDs)
--->
-
-search_lookup.json (one for groups, one for people)
-  - names (all, permutations)
 
 All of the groups
 
-
 60% confidence and above.  Put a constant in the code 
+
+search_lookup.json (one for groups, one for people)
+  - names (all, permutations)
+-->
 
 RefineViz branch
