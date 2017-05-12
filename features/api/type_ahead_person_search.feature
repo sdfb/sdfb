@@ -8,7 +8,7 @@ Feature: Type ahead person search
     Given I have a search string matching the name of an existing person
     When I access the type ahead endpoint with the search string
     And I am given json
-    Then the data looks like a list of one person
+    Then the data looks like a list of one search result
     And the json is valid JSON-API
     Then the data includes only people with names containing the search string
 
@@ -16,5 +16,4 @@ Feature: Type ahead person search
     Given I have an unlikely to match search string
     When I access the type ahead endpoint with the search string
     And I am given json
-    Then the errors include "No matches found"
-    And the json is valid JSON-API
+    Then the data looks like an empty list

@@ -25,17 +25,18 @@ JSON-API
 API Design
 -------------------
 
-groupnetwork.json
+<!-- groupnetwork.json
   - people, plus 1-degree links, plus connections details for group members, group details
 
-<!-- sharednetwork.json
+sharednetwork.json
   - people, 1-degree, plue 2 people details, plus relationship between two source nodes
 
 personnetwork.json
-  - one and two degree connections and details of the person, all relationships between any nodes. -->
+  - one and two degree connections and details of the person, all relationships between any nodes.
 
 person.json (n number of IDs)
 group.json  (n number of IDs)
+-->
 
 search_lookup.json (one for groups, one for people)
   - names (all, permutations)
