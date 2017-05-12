@@ -109,3 +109,25 @@ anne_and_francis_relationship = Relationship.where(
   approved_by: sdfb_admin_id,
   is_approved: true
 ).first_or_create!
+
+third_wheel = Person.where(
+  first_name: 'Friend of',
+  last_name: 'An Baco',
+  created_by: sdfb_admin_id,
+  gender: 'female',
+  birth_year_type: 'IN',
+  ext_birth_year: '1528',
+  death_year_type: 'IN',
+  ext_death_year: '1610',
+  approved_by: sdfb_admin_id,
+  is_approved: true
+).first_or_create!
+
+@relationship_once_removed = Relationship.where(
+  person1_index: anne.id,
+  person2_index: third_wheel.id,
+  original_certainty: 100,
+  created_by: User.first,
+  approved_by: sdfb_admin_id,
+  is_approved: true
+).first_or_create!
