@@ -37,3 +37,23 @@ Given(/^multiple groups exist$/) do
   step 'a second group exists'
   @groups = [@group, @group2]
 end
+
+Given(/^a person is in the group$/) do
+  @in_group_person = Person.where(
+      first_name: 'In',
+      last_name: 'Group',
+      created_by: @sdfbadmin.id,
+      gender: 'female',
+      birth_year_type: 'IN',
+      ext_birth_year: '1528',
+      death_year_type: 'IN',
+      ext_death_year: '1610',
+      approved_by: @sdfbadmin.id,
+      is_approved: true
+  ).first_or_create!
+
+  assign = GroupAssignment.new(created_by: @sdfbadmin.id)
+  assign.group = @group
+  assign.person = @in_group_person
+  assign.save!
+end

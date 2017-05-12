@@ -60,4 +60,27 @@ class ApiController < ApplicationController
       @errors << {title: "invalid person ID(s)"}
     end
   end
+
+  def group_network
+    begin
+      ids = params[:ids].split(",").map(&:to_i).uniq.sort
+      @display_id = ids.join(",")
+
+      @groups = Group.find(ids)
+
+      @people = @groups.map(&:people).reduce(:+).uniq
+      
+      member_ids = @people.map(&:id).flatten.uniq - ids
+
+      member_relationships = @people.map(&:relationships).flatten
+      first_degree_ids = member_relationships.collect do |r|
+        [r.person1_index, r.person2_index]
+      end.flatten.uniq - ids
+
+      @people += Person.find(first_degree_ids)
+    rescue ActiveRecord::RecordNotFound => e
+      @errors = []
+      @errors << {title: "invalid person ID(s)"}
+    end
+  end
 end

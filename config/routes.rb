@@ -2,6 +2,7 @@ Sdfb::Application.routes.draw do
 
   get 'api/people', defaults: {format: :json}
   get 'api/groups', defaults: {format: :json}
+  get 'api/groups/network', defaults: {format: :json}, action: :group_network, controller: :api
   get 'api/network', defaults: {format: :json}
 
 

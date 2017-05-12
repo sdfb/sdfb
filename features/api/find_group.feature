@@ -21,3 +21,12 @@ Feature: Find group
     When I access the api endpoint for a group with an invalid ID
     And I am given json
     Then the errors include "Invalid group ID(s)"
+
+  Scenario: Finding a given group network with the API
+    Given a group exists
+    And a person is in the group
+    And a relationship exists for a group member
+    When I access the api endpoint for the group network
+    And I am given json
+    Then the data looks like a list of one group
+    And the included data has information for the relationship members
