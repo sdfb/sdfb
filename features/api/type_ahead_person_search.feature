@@ -9,7 +9,7 @@ Feature: Type ahead person search
     When I access the type ahead endpoint with the search string, looking for a "person"
     And I am given json
     Then the data looks like a list of one search result
-    Then the data includes only people with names containing the search string
+    Then the data includes only results with names containing the search string
 
   Scenario: Searching for a person that does not exist
     Given I have an unlikely to match search string

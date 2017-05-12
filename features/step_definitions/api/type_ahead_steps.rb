@@ -10,3 +10,9 @@ Then(/^the data looks like an empty list$/) do
   expect(@data).to be_an Array
   expect(@data).to be_empty
 end
+
+Then(/^the data includes only results with names containing the search string$/) do
+  @data.each do |d|
+    expect d["name"].starts_with?(@search_string)
+  end
+end

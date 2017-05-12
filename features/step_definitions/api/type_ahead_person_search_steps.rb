@@ -3,12 +3,6 @@ Given(/^I have a search string matching the name of an existing person$/) do
   @search_string = @search_person.display_name[0,2]
 end
 
-Then(/^the data includes only people with names containing the search string$/) do
-  @data.each do |d|
-    expect d["name"].starts_with?(@search_string)
-  end
-end
-
 Then(/^the data looks like a list of one search result$/) do
   person_as_search_result = {
     "name" => @search_person.display_name,
