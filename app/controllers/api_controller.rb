@@ -35,14 +35,13 @@ class ApiController < ApplicationController
     when "group"
       groups = Group.pluck(:name, :id)
       groups.each do |data|
-        name, id = data
-        name.split(/\W+/).uniq!.each do |word|
+        group_name, id = data
+        group_name.split(/\W+/).uniq.each do |word|
           lookup[word.downcase] ||= []
-          lookup[word.downcase] << {name: name, id: id.to_s}
+          lookup[word.downcase] << {name: group_name, id: id.to_s}
         end
       end
     end
-
     results = lookup.find_all{|key,val| key.start_with?(query.downcase)}
     if results
       results = results.reduce([]){|memo,a| memo << a[1]}.flatten.uniq
