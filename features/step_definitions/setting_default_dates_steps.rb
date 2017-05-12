@@ -21,7 +21,7 @@ Given(/^a second person exists$/) do
   @person2_death_year = SDFB::LATEST_YEAR - 5
 
   @person2 = Person.create(
-    first_name: 'GrouperTwo',
+    first_name: 'TwoGrouperTwo',
     last_name: 'McMemberTwo',
     created_by: @sdfbadmin.id,
     gender: 'male',

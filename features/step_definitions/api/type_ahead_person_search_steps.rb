@@ -29,5 +29,5 @@ end
 
 Then(/^the data looks like an empty list$/) do
   expect(@data).to be_an Array
-  expect(@data.size).to be_empty
+  expect(@data).to be_empty
 end
