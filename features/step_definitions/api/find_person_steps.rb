@@ -105,6 +105,7 @@ Then(/^the data contains references to the people in the relationship$/) do
     "attributes" => {
       "name" => @person2.display_name,
       "degree" => @person2.relationships.count,
+      "groups" => @person1.groups.collect(&:id)
     },
     "type" => "person"
   }
@@ -121,6 +122,8 @@ Then(/^the data contains references to the people in the second degree relations
     "attributes" => {
       "name" => @person1.display_name,
       "degree" => @person1.relationships.count,
+      "groups" => @person1.groups.collect(&:id)
+
     },
     "type" => "person"
   }
@@ -130,6 +133,9 @@ Then(/^the data contains references to the people in the second degree relations
     "attributes" => {
       "name" => @person2.display_name,
       "degree" => @person2.relationships.count,
+      "groups" => @person2.groups.collect(&:id)
+
+
     },
     "type" => "person"
   }

@@ -12,10 +12,10 @@ TODOs
 JSON-API
 
 
-* [ ] Add second degree repationships
 * [ ] Add the altered based on something
-* [ ] Add more test data
-* [ ] Add all the people as connections
+* [X] Add second degree repationships
+* [X] Add more test data
+* [X] Add all the people as connections
 * [ ] Document
 
 
@@ -35,7 +35,6 @@ personnetwork.json
   - one and two degree connections and details of the person, all relationships between any nodes. -->
 
 person.json (n number of IDs)
-
 group.json  (n number of IDs)
 
 search_lookup.json (one for groups, one for people)
