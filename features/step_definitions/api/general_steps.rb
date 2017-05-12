@@ -1,7 +1,8 @@
 When(/^I am given json$/) do
-  @data = MultiJson.load(last_response.body)["data"]
-  @included_data = MultiJson.load(last_response.body)["included"]
-  @errors = MultiJson.load(last_response.body)["errors"]
+  @full_json = MultiJson.load(last_response.body)
+  @data = @full_json["data"]
+  @included_data = @full_json["included"]
+  @errors = @full_json["errors"]
 end
 
 Then(/^the json is valid JSON\-API$/) do
