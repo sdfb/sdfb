@@ -68,3 +68,17 @@ Then(/^the json contains the relationship$/) do
   expect(@json["attributes"]["connections"].first["id"]).to eq(@relationship.id.to_s)
   expect(@json["attributes"]["connections"].first["attributes"]).to eq(expected_data)
 end
+
+Then(/^the json contains references to the people in the relationship$/) do
+  data_from_first_person = {
+    "id" => @relationship.person1_index.to_s,
+    "type" => "person"
+  }
+  data_from_second_person = {
+    "id" => @relationship.person2_index.to_s,
+    "type" => "person"
+  }
+
+  expect(@json["includes"]).to include(data_from_first_person)
+  expect(@json["includes"]).to include(data_from_second_person)
+end

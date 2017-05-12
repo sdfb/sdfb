@@ -23,6 +23,7 @@ Feature: Find person
     Then I am given json that includes a list of relationships
     And the json is valid JSON-API
     And the json contains the relationship
+    And the json contains references to the people in the relationship
 
   Scenario: Finding a person with an invalid ID
     When I access the api endpoint for a person with an invalid ID
