@@ -3,7 +3,7 @@ Given(/^I have a search string matching the name of an existing person$/) do
   @search_string = @search_person.display_name[0,2]
 end
 
-Then(/^the data looks like a list of one search result$/) do
+Then(/^the data looks like a list of one person search result$/) do
   person_as_search_result = {
     "name" => @search_person.display_name,
     "id" => @search_person.id.to_s

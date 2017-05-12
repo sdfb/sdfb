@@ -3,7 +3,7 @@ Given(/^a group exists$/) do
   @group_end_year = SDFB::LATEST_YEAR - 1
 
   @group = Group.create(
-    name:            'Everyone is Cool Club',
+    name:            'First Everyone is Cool Club',
     is_approved:     true,
     description:     "-",
     start_year:      @group_start_year,
@@ -20,7 +20,7 @@ Given(/^a second group exists$/) do
   @group2_end_year = SDFB::LATEST_YEAR - 1
 
   @group2 = Group.create(
-    name:            'Everyone is Cool Club Two',
+    name:            'More than Everyone is Cool Club Two',
     is_approved:     true,
     description:     "-",
     start_year:      @group2_start_year,

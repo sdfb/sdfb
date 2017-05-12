@@ -8,7 +8,7 @@ Feature: Type ahead group search
     Given I have a search string matching the name of an existing group
     When I access the type ahead endpoint with the search string, looking for a "group"
     And I am given json
-    Then the data looks like a list of one search result
+    Then the data looks like a list of one group search result
     Then the data includes only results with names containing the search string
 
   Scenario: Searching for a group that does not exist
