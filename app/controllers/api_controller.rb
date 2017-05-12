@@ -36,7 +36,7 @@ class ApiController < ApplicationController
 
       @people = Person.find(ids)
 
-      @relationships = @people.map(&:relationships).reduce(:+)
+      @relationships = @people.map(&:relationships).reduce(:+).uniq
       
       first_degree_ids = @relationships.collect do |r| 
         [r.person1_index, r.person2_index]
@@ -45,7 +45,7 @@ class ApiController < ApplicationController
       @sources = Person.find(first_degree_ids)
 
       if ids.count == 1
-        second_degree_relationships = @sources.map(&:relationships).reduce(:+)
+        second_degree_relationships = @sources.map(&:relationships).reduce(:+).uniq
         second_degree_ids = second_degree_relationships.collect do |r| 
           [r.person1_index, r.person2_index]
         end.flatten.uniq - (ids + first_degree_ids)
