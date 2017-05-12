@@ -17,3 +17,33 @@ JSON-API
 * [ ] Add more test data
 * [ ] Add all the people as connections
 * [ ] Document
+
+
+----
+
+
+API Design
+-------------------
+
+groupnetwork.json
+  - people, plus 1-degree links, plus connections details for group members, group details
+
+<!-- sharednetwork.json
+  - people, 1-degree, plue 2 people details, plus relationship between two source nodes
+
+personnetwork.json
+  - one and two degree connections and details of the person, all relationships between any nodes. -->
+
+person.json (n number of IDs)
+
+group.json  (n number of IDs)
+
+search_lookup.json (one for groups, one for people)
+  - names (all, permutations)
+
+All of the groups
+
+
+60% confidence and above.  Put a constant in the code 
+
+RefineViz branch
