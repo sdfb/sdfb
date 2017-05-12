@@ -8,6 +8,7 @@ Feature: Find network
     And each person has a unique relationship
     And each person has met a specified given person
     When I access the shared network api endpoint for those people
-    Then I am given json that includes a list of relationships
+    And I am given json
+    Then the data includes a list of relationships
     And the json is valid JSON-API
-    And the json contains the relationships of each person
+    And the data contains the relationships of each person
