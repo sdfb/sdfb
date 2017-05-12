@@ -17,31 +17,37 @@ class ApiController < ApplicationController
     type   = params[:type]
     query = params[:q]
 
-    raise Error if type.blank? || query.blank?
-
+    if type.blank? || query.blank?
+      raise ActionController::RoutingError.new('Not Found')
+    end
+    
+    lookup = {}
     case type
     when "person"
-
-      lookup = {}
       people = Person.pluck(:search_names_all, :display_name, :id)
       people.each do |data|
         keys, name, id = data
         keys.split(/\W+/).uniq!.each do |word|
           lookup[word.downcase] ||= []
-          lookup[word.downcase] << {name: name, id: id}
+          lookup[word.downcase] << {name: name, id: id.to_s}
         end
       end
-
-      results = lookup.find_all{|key,val| key.start_with?(query.downcase)}
-      if results
-        results = results.reduce([]){|memo,a| memo << a[1]}.flatten.uniq
-      end
-      @results =  results || {}
-
     when "group"
-    else  
-      # error goes here
+      groups = Group.pluck(:name, :id)
+      groups.each do |data|
+        name, id = data
+        name.split(/\W+/).uniq!.each do |word|
+          lookup[word.downcase] ||= []
+          lookup[word.downcase] << {name: name, id: id.to_s}
+        end
+      end
     end
+
+    results = lookup.find_all{|key,val| key.start_with?(query.downcase)}
+    if results
+      results = results.reduce([]){|memo,a| memo << a[1]}.flatten.uniq
+    end
+    @results =  results || []
 
   end
 
@@ -114,25 +120,5 @@ class ApiController < ApplicationController
       @errors << {title: "invalid person ID(s)"}
     end
   end
-
-  # def typeahead
-  #   query = params[:q]
-  #   begin
-  #     @people = Person.all
-  #     @people.to_a.select!{|p| p.display_name.starts_with? query}
-  #     if @people.empty?
-  #       @people = nil
-  #       @errors = []
-  #       @errors << {title: "No matches found"}
-  #     end
-  #   rescue ActiveRecord::RecordNotFound => e
-  #     @errors = []
-  #     @errors << {title: "Invalid person ID(s)"}
-  #   end
-  #   respond_to do |format|
-  #     format.json { render :people }
-  #     format.html { render :json}
-  #   end
-  # end
 
 end
