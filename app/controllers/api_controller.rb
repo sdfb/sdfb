@@ -83,4 +83,25 @@ class ApiController < ApplicationController
       @errors << {title: "invalid person ID(s)"}
     end
   end
+
+  def typeahead
+    query = params[:q]
+    begin
+      @people = Person.all
+      @people.to_a.select!{|p| p.display_name.starts_with? query}
+      if @people.empty?
+        @people = nil
+        @errors = []
+        @errors << {title: "No matches found"}
+      end
+    rescue ActiveRecord::RecordNotFound => e
+      @errors = []
+      @errors << {title: "Invalid person ID(s)"}
+    end
+    respond_to do |format|
+      format.json { render :people }
+      format.html { render :json}
+    end
+  end
+
 end
