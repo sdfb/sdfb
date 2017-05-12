@@ -13,6 +13,7 @@ class ApiController < ApplicationController
     end
   end
 
+
   def groups
     ids = params[:ids].split(",")
     begin
@@ -27,15 +28,32 @@ class ApiController < ApplicationController
     end
   end
 
+
   def network
     begin
-      @display_id = params[:ids]
-      ids = params[:ids].split(",")
+      ids = params[:ids].split(",").map(&:to_i).uniq.sort
+      @display_id = ids.join(",")
+
       @people = Person.find(ids)
 
       @relationships = @people.map(&:relationships).reduce(:+)
-      first_degree_ids = @relationships.collect{|r| [r.person1_index, r.person2_index]}.flatten.uniq - @people.collect(&:id)
+      
+      first_degree_ids = @relationships.collect do |r| 
+        [r.person1_index, r.person2_index]
+      end.flatten.uniq - ids
+
       @sources = Person.find(first_degree_ids)
+
+      if ids.count == 1
+        second_degree_relationships = @sources.map(&:relationships).reduce(:+)
+        second_degree_ids = second_degree_relationships.collect do |r| 
+          [r.person1_index, r.person2_index]
+        end.flatten.uniq - (ids + first_degree_ids)
+        second_degree_people = Person.find(second_degree_ids)
+
+        @relationships = @relationships | second_degree_relationships
+        @sources = @sources | second_degree_people
+      end
 
     rescue ActiveRecord::RecordNotFound => e
       @errors = []
