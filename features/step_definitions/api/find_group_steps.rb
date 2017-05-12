@@ -30,6 +30,10 @@ When(/^I access the api endpoint for the group$/) do
   get("/api/groups?ids=#{@group.id}", format: :json)
 end
 
+When(/^I access the api endpoint for all groups$/) do
+  get("/api/groups", format: :json)
+end
+
 When(/^I access the api endpoint for those groups$/) do
   get("/api/groups?ids=#{@groups.collect(&:id).join(',')}", format: :json)
 end

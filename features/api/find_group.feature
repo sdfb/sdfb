@@ -17,6 +17,13 @@ Feature: Find group
     Then the data looks a list containing 2 groups
     And the data has correct ids for those groups
 
+  Scenario: Finding all of the groups with the API
+    Given 3 groups exist
+    When I access the api endpoint for all groups
+    And I am given json
+    Then the data looks a list containing 3 groups
+    And the data has correct ids for those groups
+
   Scenario: Finding a group with an invalid ID
     When I access the api endpoint for a group with an invalid ID
     And I am given json
