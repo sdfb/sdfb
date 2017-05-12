@@ -79,8 +79,8 @@ Then(/^the data contains the second degree relationship$/) do
     "source" => @relationship_once_removed.person2_index.to_s,
     "weight" => @relationship_once_removed.max_certainty
   }
-  expect(@data["attributes"]["connections"].first["id"]).to eq(@relationship_once_removed.id.to_s)
-  expect(@data["attributes"]["connections"].first["attributes"]).to eq(expected_data)
+  expect(@data["attributes"]["connections"].second["id"]).to eq(@relationship_once_removed.id.to_s)
+  expect(@data["attributes"]["connections"].second["attributes"]).to eq(expected_data)
 end
 
 Then(/^the data contains references to the people in the relationship$/) do
