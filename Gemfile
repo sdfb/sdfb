@@ -15,7 +15,6 @@ gem 'pg'
 
 # Webserver Gems
 gem 'puma'
-gem 'rack-timeout'
 gem 'newrelic_rpm'
 gem 'rails_12factor'
 
@@ -41,6 +40,9 @@ gem 'cancan'
 gem "carrierwave"
 gem 'bcrypt', :require => "bcrypt"
 
+group :production do
+  gem 'rack-timeout'
+end
 
 group :development do
   gem 'binding_of_caller'
