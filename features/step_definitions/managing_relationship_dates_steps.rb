@@ -32,8 +32,8 @@ Given(/^a relationship exists$/) do
   ).first_or_create!
 
   @relationship = Relationship.where(
-    person1_index: @anne.id,
-    person2_index: francis.id,
+    person1_index: francis.id,
+    person2_index: @anne.id,
     original_certainty: 100,
     created_by: User.first,
     approved_by: @sdfbadmin.id,
