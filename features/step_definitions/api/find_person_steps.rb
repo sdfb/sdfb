@@ -94,7 +94,7 @@ Then(/^the data contains references to the people in the relationship$/) do
       "death_year" => @person1.ext_death_year,
       "historical_significance" => @person1.historical_significance,
       "name" => @person1.display_name,
-      "degree" => 1,
+      "degree" => @person1.relationships.count,
       "groups" => @person1.groups.collect(&:id)
     },
     "type" => "person"
@@ -103,12 +103,8 @@ Then(/^the data contains references to the people in the relationship$/) do
   data_from_second_person = {
     "id" => @person2.id.to_s,
     "attributes" => {
-      "birth_year" => @person2.ext_birth_year,
-      "death_year" => @person2.ext_death_year,
-      "historical_significance" => @person2.historical_significance,
       "name" => @person2.display_name,
-      "degree" => 1,
-      "groups" => @person2.groups.collect(&:id)
+      "degree" => @person2.relationships.count,
     },
     "type" => "person"
   }
@@ -123,12 +119,8 @@ Then(/^the data contains references to the people in the second degree relations
   data_from_first_person = {
     "id" => @person1.id.to_s,
     "attributes" => {
-      "birth_year" => @person1.ext_birth_year,
-      "death_year" => @person1.ext_death_year,
-      "historical_significance" => @person1.historical_significance,
       "name" => @person1.display_name,
-      "degree" => 1,
-      "groups" => @person1.groups.collect(&:id)
+      "degree" => @person1.relationships.count,
     },
     "type" => "person"
   }
@@ -136,12 +128,8 @@ Then(/^the data contains references to the people in the second degree relations
   data_from_second_person = {
     "id" => @person2.id.to_s,
     "attributes" => {
-      "birth_year" => @person2.ext_birth_year,
-      "death_year" => @person2.ext_death_year,
-      "historical_significance" => @person2.historical_significance,
       "name" => @person2.display_name,
-      "degree" => 1,
-      "groups" => @person2.groups.collect(&:id)
+      "degree" => @person2.relationships.count,
     },
     "type" => "person"
   }
