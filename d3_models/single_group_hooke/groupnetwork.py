@@ -104,7 +104,7 @@ nx.set_edge_attributes(G, 'start_year', edge_start)
 nx.set_edge_attributes(G, 'end_year', edge_end)
 
 # Create subgraph based on Virginia Company
-vc_ids = [k for k,v in group_dict.items() if type(v) == int and 81 in v]
+vc_ids = [g[0] for g in group_tuples]
 
 all_distance = list(set(sum([G.neighbors(k) for k in vc_ids], [])))
 #print(all_distance+vc_ids)
