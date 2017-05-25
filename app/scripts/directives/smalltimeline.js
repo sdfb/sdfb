@@ -15,7 +15,6 @@ angular.module('redesign2017App')
         details: '=',
     	},
       link: function postLink(scope, element, attrs) {
-        
         // adjust temporal variables
         if (scope.details.birth_year) {
         	scope.details.start_year = scope.details.birth_year;
@@ -109,7 +108,7 @@ angular.module('redesign2017App')
 
 	        } else if (type == 'CA' || type == 'ca'){
 	            return 'M'+refX+','+(refY-width/2)+' C'+(refX-width/4)+','+(refY-width/2)+','+(refX-width/2)+','+(refY-width/4)+','+(refX-width/2)+','+refY+' S'+(refX-width/4)+','+(refY+width/2)+','+refX+','+(refY+width/2)+' S'+(refX+width/2)+','+(refY+width/4)+','+(refX+width/2)+','+(refY)+', S'+(refX+width/4)+','+(refY-width/2)+','+(refX)+','+(refY-width/2)+' z'
-	        }  
+	        }
 	    }
 
         // console.log('details', scope.details);

@@ -236,7 +236,7 @@ angular.module('redesign2017App')
 						// Log information when node is clicked
 						// console.log(d.person_info.name)
 
-						scope.currentSelection.person1 = scope.getElementData(d.id, d.attributes.name);
+						scope.currentSelection.person1 = {id:d.id, name:d.attributes.name, historical_significance:d.attributes.historical_significance, birth_year:d.attributes.birth_year, death_year:d.attributes.death_year};
 						scope.$apply();
 						console.log('currentSelection',scope.currentSelection);
 
