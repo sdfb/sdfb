@@ -16,7 +16,8 @@ angular.module('redesign2017App')
 				var svg = d3.select(element[0]).select('svg'),
 					width = +svg.node().getBoundingClientRect().width,
 					height = +svg.node().getBoundingClientRect().height,
-					graph,
+					nodes,
+					links,
 					degreeSize,
 					sourceId,
 					confidenceMin = scope.config.confidenceMin,
@@ -26,7 +27,7 @@ angular.module('redesign2017App')
 					complexity = scope.config.networkComplexity;
 
 				// HIDDEN SEARCH BAR SINCE NOT WORKING.
-				// Search for graph.nodes by making all unmatched graph.nodes temporarily transparent.
+				// Search for nodes by making all unmatched nodes temporarily transparent.
 				// function searchNodes() {
 				// 	var term = document.getElementById('searchTerm').value;
 				// 	var selected = container.selectAll('.node').filter(function(d, i) {
@@ -197,7 +198,7 @@ angular.module('redesign2017App')
 						dr = Math.sqrt(dx * dx + dy * dy);
 					return "M" + d.source.x + "," + d.source.y + "A" + dr + "," + dr + " 0 0,1 " + d.target.x + "," + d.target.y;
 				}
-				// A function to handle click toggling based on neighboring graph.nodes.
+				// A function to handle click toggling based on neighboring nodes.
 				function toggleClick(d, newLinks) {
 					// Make object of all neighboring nodes.
 					var connectedNodes = {};
@@ -235,7 +236,7 @@ angular.module('redesign2017App')
 						// Log information when node is clicked
 						// console.log(d.person_info.name)
 
-						scope.currentSelection.person1 = scope.getElementData(d.id, d.person_info.name);
+						scope.currentSelection.person1 = scope.getElementData(d.id, d.attributes.name);
 						scope.$apply();
 						console.log('currentSelection',scope.currentSelection);
 
@@ -296,29 +297,32 @@ angular.module('redesign2017App')
 
 				var json = scope.data;
 
-				graph = json.data.attributes;
-				sourceId = json.included.id;
+				// graph = json.data.attributes;
+				nodes = json.included;
+				links = [];
+				json.data.attributes.connections.forEach(function(c){ links.push(c.attributes)});
+				sourceId = json.data.attributes.primary_people;
 
 				degreeSize = d3.scaleLog()
-					.domain([d3.min(graph.nodes, function(d) {
-						return d.degree;
-					}), d3.max(graph.nodes, function(d) {
-						return d.degree;
+					.domain([d3.min(nodes, function(d) {
+						return d.attributes.degree;
+					}), d3.max(nodes, function(d) {
+						return d.attributes.degree;
 					})])
 					.range([10, 45]);
 
 				// d3.select('.legend .size.min').text('j')
 
-				var simulation = d3.forceSimulation(graph.nodes)
+				var simulation = d3.forceSimulation(nodes)
 					// .velocityDecay(.5)
-					.force("link", d3.forceLink(graph.links).id(function(d) {
+					.force("link", d3.forceLink(links).id(function(d) {
 						return d.id;
 					}))
-					.force("charge", d3.forceManyBody().strength([-300])) //.distanceMax([500]))
+					.force("charge", d3.forceManyBody().strength([-500])) //.distanceMax([500]))
 					.force("center", d3.forceCenter(width / 2, height / 2))
-					.force("collide", d3.forceCollide().radius(function(d) {
-						return degreeSize(d.degree) + 1;
-					}))
+					.force("collide", d3.forceCollide().radius(21))//function(d) {
+						// return degreeSize(d.attributes.degree) + 1;
+					// }))
 					.force("x", d3.forceX())
 					.force("y", d3.forceY())
 					.stop();
@@ -338,7 +342,7 @@ angular.module('redesign2017App')
 					d3.select('.source-node').remove(); //Get rid of old source node highlight.
 
 					// Find the links and nodes that are at or above the confidenceMin.
-					var thresholdLinks = graph.links.filter(function(d) {
+					var thresholdLinks = links.filter(function(d) {
 						if (d.weight >= confidenceMin && d.weight <= confidenceMax && parseInt(d.start_year) <= dateMax && parseInt(d.end_year) >= dateMin) {
 							return d;
 						};
@@ -357,13 +361,13 @@ angular.module('redesign2017App')
 						.attr('class', 'link');
 
 					link = linkEnter.merge(link)
-						.attr('class', 'link')
+						// .attr('class', 'link')
 						.attr("d", linkArc)
-						.attr('stroke-opacity', function(l) {
+						.attr('class', function(l) {
 							if (l.altered == true) {
-								return 1;
+								return 'link altered';
 							} else {
-								return .35;
+								return 'link';
 							}
 						});
 
@@ -379,14 +383,14 @@ angular.module('redesign2017App')
 					node.exit().remove();
 					var nodeEnter = node.enter().append('circle');
 
-					node.attr('r', function(d) {
-						return degreeSize(d.degree);
-					});
+					node.attr('r', 20);//function(d) {
+					// 	return degreeSize(d.attributes.degree);
+					// });
 
 					node = nodeEnter.merge(node)
-						.attr('r', function(d) {
-							return degreeSize(d.degree);
-						})
+						.attr('r', 20)//function(d) {
+						// 	return degreeSize(d.attributes.degree);
+						// })
 						// .attr("fill", function(d) { return color(d.distance); })
 						.attr('class', function(d) {
 							return 'node degree' + d.distance
@@ -413,7 +417,7 @@ angular.module('redesign2017App')
 
 					node.append("title")
 						.text(function(d) {
-							return d.person_info.name;
+							return d.attributes.name;
 						});
 
 					//Update legend too
