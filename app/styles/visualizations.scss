@@ -1,0 +1,63 @@
+// visualizations.scss
+// Write here all the SCSS code for the visualizations, so to keep it separated from the panels and more general UI one
+
+// List of visualizations:
+// • Single Force Layout (Hooke)
+
+// Variables
+
+$degree0: #F45D4C;
+$degree1: #EE9F99;
+$degree3: #f2f2f3;
+
+// Single Force Layout (Hooke)
+.links {
+  stroke: #000;
+  fill: none;
+  /*stroke: #000;*/
+  shape-rendering: geometricPrecision;
+}
+
+.node {
+  stroke: #fff;
+  stroke-width: 1.5px;
+  transition: stroke-width 0.5s, stroke 0.5s, opacity 0.5s;
+  cursor: pointer;
+}
+
+.node text {
+  pointer-events: none;
+  font: 10px sans-serif;
+}
+
+.node:hover {
+  stroke: #4A4A4A;
+  stroke-width: 2px;
+}
+.node.degree0 {
+  fill: $degree0;
+  /*fill: #F45D4C;*/
+}
+.node.degree1 {
+  fill: $degree1;
+  /*fill: #DF947A;*/
+}
+.node.degree2 {
+  fill: $degree3;
+  stroke: $degree0;
+}
+.node.faded {
+  opacity: 0.2;
+}
+.node.focused {
+  stroke: #666666;
+}
+
+#tools div {
+  display: inline;
+}
+
+form, select {
+  float: right;
+  display: inline;
+}
