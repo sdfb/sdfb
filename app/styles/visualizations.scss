@@ -18,6 +18,12 @@ $degree3: #f2f2f3;
   shape-rendering: geometricPrecision;
 }
 
+.link { opacity: .35; }
+
+.link.altered {
+  opacity: 1;
+}
+
 .node {
   stroke: #fff;
   stroke-width: 1.5px;
