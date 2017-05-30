@@ -6,7 +6,12 @@ $icon-font-path: "../bower_components/bootstrap-sass-official/assets/fonts/boots
 
 $timelineColor: blue;
 $strokeDanger: red;
-$mainTextColor: #4A4A4A;
+$mainTextColor: #434055;
+$panels-bg: #E6EAF0;
+$panels-stroke: #AEB1B5;
+
+
+
 body {
   background-color: #EFF1F4;
   padding-top: 50px;
@@ -63,7 +68,9 @@ path.danger {
 	clear: both;
 }
 .on-the-left, .on-the-right{
+	min-width: 270px;
 	width: 25%;
+	max-width: 320px;
 	pointer-events: none;
 }
 .on-the-left *, .on-the-right *{
@@ -73,10 +80,67 @@ path.danger {
 .panel {
 	display: block;
 	width: 100%;
+	margin-bottom: 10px;
+	background-color: $panels-bg;
+	border-color: $panels-stroke;
 }
 .panel.smallest {
-	width: 45px;
+	width: 30px;
 	box-sizing: border-box;
+}
+
+// collapsable panels
+.panel.collapsable {
+	position: relative;
+	padding: 15px 0;
+	transition: all 0.5s;
+	transition-timing-function: ease-in-out;
+	width: 100%;
+	height: 360px;
+}
+.panel.collapsable.collapsed {
+	position: relative;
+	width: 30px;
+	height: 30px;
+	overflow: hidden;
+	box-sizing: border-box;
+}
+
+.panel.collapsable > section {
+}
+
+.panel.collapsable.collapsed > section {
+	display: none;
+}
+
+.panel.collapsable > .close {
+	display: block;
+  position: absolute;
+  right: 10px;
+  top: 12px;
+  font-size: 14px;
+  width: 15px;
+  text-align: center;
+  opacity: 1;
+}
+
+.panel.collapsable.collapsed > .close {
+  right: 6px;
+  top: 7px;
+}
+
+// Buttons
+.btn {
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-weight: bold;
+    padding: 2px 2px;
+}
+
+.btn-group-justified {
+    width: calc(100% - 30px);
+    margin: auto;
 }
 
 .controls {
@@ -91,6 +155,8 @@ path.danger {
 .controls > span:last-child {
 	padding: 15px 15px 15px 15px;
 }
+
+
 
 .visualization-container {
 	width:100%;
@@ -115,51 +181,7 @@ path.danger {
 	background-color: #ddd;
 }
 
-// LEGEND
-legend-panel {
-	position: relative;
-	padding: 15px 0;
-	transition: width 0.25s, height 0.25s;
-	transition-timing-function: ease;
-	width: 100%;
-	height: 360px;
-}
-legend-panel.collapsed {
-	position: relative;
-	// padding: 15px 0;
-	width: 45px;
-	height: 45px;
-	overflow: hidden;
-	box-sizing: border-box;
-}
 
-legend-panel > .legend {
-	opacity: 1;
-}
-
-legend-panel.collapsed > .legend {
-	opacity: 0;
-}
-
-legend-panel > .close {
-    display: block;
-    position: absolute;
-    right: 17px;
-    top: 13px;
-    font-size: 15px;
-}
-
-.legend {
-	display: flex;
-	flex-direction: column;
-	align-items: center;
-}
-
-.legend-text {
-	font-size: 10px;
-	color: #9B9B9B;
-	letter-spacing: 0.49px;
-}
 
 // Contextual Info Panel
 
