@@ -67,3 +67,36 @@ form, select {
   float: right;
   display: inline;
 }
+
+// groups bar
+groups-bar {
+  position: absolute;
+  height: 45px;
+  width: 100%;
+  bottom: 0;
+  background-color: #EFF1F4;
+  padding: 0 10px;
+  display: flex !important;
+  justify-content: space-between;
+  align-items: center;
+
+  .group {
+    background-color: #C6CACF;
+    border-radius: 2px;
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 30px;
+    white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  }
+
+  .group.active {
+    background-color: $degree0;
+    color: white;
+  }
+}
+
+

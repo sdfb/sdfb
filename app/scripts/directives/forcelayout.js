@@ -427,11 +427,65 @@ angular.module('redesign2017App')
 
 				update(confidenceMin, confidenceMax, dateMin, dateMax, complexity);
 
-				//update triggered from the controller
+				// update triggered from the controller
 				scope.$on('force layout update', function(event, args) {
 					console.log(event, args);
 					update(confidenceMin, confidenceMax, dateMin, dateMax, complexity);
 				});
+
+				var data4groups = scope.data.included
+				var listGroups = [];
+				data4groups.forEach(function(d){
+					if (d.attributes.groups) {
+						d.attributes.groups.forEach(function(e){
+							listGroups.push(e);
+						})	
+					}
+				});
+				
+				// GET DATA FOR GROUPS
+				// use lodash to create a dictionary with groupId as key and group occurrencies as value (eg '81': 17)
+				listGroups = _.countBy(listGroups);
+
+				//Transform that dictionary into an array of objects (eg {'groupId': '81', 'value': 17})
+				var arr = [];
+				for (var group in listGroups) {
+				    if (listGroups.hasOwnProperty(group)) {
+				        var obj = {
+				        	'groupId': group,
+				        	'value': listGroups[group]
+				        }
+				        arr.push(obj);
+				    }
+				}
+
+				//Sort the array in descending order
+				arr.sort(function(a, b){
+				   return d3.descending(a.value, b.value);
+				})
+
+				// log the outcome in the scope
+				console.log(arr);
+
+				// using p-quantile for understanding how to cluster smaller goups
+				// arr = _.map(arr, function(d){return d.value})
+				// console.log(arr)
+				// console.log(d3.quantile(arr, 0.25))
+
+				var cutAt = 20;
+				var groupsBar = _.slice(arr, 0, cutAt);
+				var otherGroups = _.slice(arr, cutAt);
+				var othersValue = 0;
+				otherGroups.forEach(function(d){
+					othersValue += d.value;
+				});
+				groupsBar.push({'groupId': 'others', 'value': othersValue});
+				console.log(groupsBar);
+				
+				scope.groups.groupsBar = groupsBar;
+				scope.groups.otherGroups = otherGroups;
+				// scope.$apply();
+
 			}
 		};
 	});
