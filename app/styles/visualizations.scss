@@ -86,17 +86,29 @@ groups-bar {
     box-sizing: border-box;
     display: flex;
     align-items: center;
-    justify-content: center;
+    justify-content: flex-start;
     height: 30px;
-    white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
+    overflow: hidden;
+    padding: 0 0 0 5px;
   }
 
   .group.active {
     background-color: $degree0;
     color: white;
   }
+}
+
+groups-bar::after {
+  content: 'This bar shows the people of the graph within the groups they are part of, click on a node to see if it has any group memberships.';
+  display: block;
+  position: absolute;
+  bottom: 40px;
+  opacity: 0;
+  transition: opacity 0.5s;
+}
+
+groups-bar:hover::after {
+  opacity: 1;
 }
 
 
