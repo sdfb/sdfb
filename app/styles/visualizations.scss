@@ -1,16 +1,12 @@
-// visualizations.scss
-// Write here all the SCSS code for the visualizations, so to keep it separated from the panels and more general UI one
-
-// List of visualizations:
-// • Single Force Layout (Hooke)
-
-// Variables
-
+/* visualizations.scss*/
+/* Write here all the SCSS code for the visualizations, so to keep it separated from the panels and more general UI one*/
+/* List of visualizations:*/
+/* • Single Force Layout (Hooke)*/
+/* Variables*/
 $degree0: #F45D4C;
 $degree1: #EE9F99;
 $degree3: #f2f2f3;
-
-// Single Force Layout (Hooke)
+/* Single Force Layout (Hooke)*/
 .links {
   stroke: #000;
   fill: none;
@@ -18,7 +14,9 @@ $degree3: #f2f2f3;
   shape-rendering: geometricPrecision;
 }
 
-.link { opacity: .35; }
+.link {
+  opacity: 0.35;
+}
 
 .link.altered {
   opacity: 1;
@@ -27,6 +25,7 @@ $degree3: #f2f2f3;
 .node {
   stroke: #fff;
   stroke-width: 1.5px;
+  -webkit-transition: stroke-width 0.5s, stroke 0.5s, opacity 0.5s;
   transition: stroke-width 0.5s, stroke 0.5s, opacity 0.5s;
   cursor: pointer;
 }
@@ -40,21 +39,26 @@ $degree3: #f2f2f3;
   stroke: #4A4A4A;
   stroke-width: 2px;
 }
+
 .node.degree0 {
   fill: $degree0;
   /*fill: #F45D4C;*/
 }
+
 .node.degree1 {
   fill: $degree1;
   /*fill: #DF947A;*/
 }
+
 .node.degree2 {
   fill: $degree3;
   stroke: $degree0;
 }
+
 .node.faded {
   opacity: 0.2;
 }
+
 .node.focused {
   stroke: #666666;
 }
@@ -63,12 +67,12 @@ $degree3: #f2f2f3;
   display: inline;
 }
 
-form, select {
+form,
+select {
   float: right;
   display: inline;
 }
-
-// groups bar
+/* groups bar*/
 groups-bar {
   position: absolute;
   height: 45px;
@@ -76,17 +80,30 @@ groups-bar {
   bottom: 0;
   background-color: #EFF1F4;
   padding: 0 10px;
+  display: -webkit-box !important;
+  display: -ms-flexbox !important;
   display: flex !important;
+  -webkit-box-pack: justify;
+  -ms-flex-pack: justify;
   justify-content: space-between;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
   align-items: center;
 
   .group {
     background-color: #C6CACF;
     border-radius: 2px;
+    -webkit-box-sizing: border-box;
     box-sizing: border-box;
+    display: -webkit-box;
+    display: -ms-flexbox;
     display: flex;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
     align-items: center;
-    justify-content: flex-start;
+    -webkit-box-pack: center;
+    -ms-flex-pack: center;
+    justify-content: center;
     height: 30px;
     overflow: hidden;
     padding: 0 0 0 5px;
@@ -104,11 +121,10 @@ groups-bar::after {
   position: absolute;
   bottom: 40px;
   opacity: 0;
+  -webkit-transition: opacity 0.5s;
   transition: opacity 0.5s;
 }
 
 groups-bar:hover::after {
   opacity: 1;
 }
-
-
