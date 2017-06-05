@@ -2,9 +2,7 @@ $icon-font-path: "../bower_components/bootstrap-sass-official/assets/fonts/boots
 /* bower:scss*/
 @import "bootstrap-sass-official/assets/stylesheets/_bootstrap.scss";
 /* endbower*/
-
-
-
+@import url( 'https://fonts.googleapis.com/css?family=Open+Sans:400,700');
 $timelineColor: blue;
 $strokeDanger: red;
 $mainTextColor: #434055;
@@ -13,6 +11,10 @@ $panels-stroke: #AEB1B5;
 $highlight-color: #F7F35D;
 $panels-bg-secondary: #C6CACF;
 $light-color: white;
+$node-origin: #F45D4C;
+$node-firstDegree: #EE9F99;
+$node-secondDegree: #BBBBBB;
+$edge-color: #4A4A4A;
 
 /* general styles*/
 body {
@@ -205,6 +207,66 @@ search-panel .nav-tabs.nav-justified > .active > a:hover {
   border-bottom-right-radius: 4px;
   padding: 15px;
 }
+/* legend-panel styles*/
+section .legend-box {
+    margin-top: 34px;
+}
+
+.legend-panel h5 {
+    text-align: center;
+}
+
+section .legend-text {
+    font-size: 12px;
+    font-weight: 700;
+    padding-top: 5px;
+    &.centered {
+        text-align: center;
+    }
+}
+
+section .legend-line {
+    border-top: 1px solid $mainTextColor;
+    position: relative;
+    top: 7px;
+    width: 100%;
+}
+
+section .flex-container {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
+
+  .legend-circle {
+      border: 1px solid $light-color;
+      border-radius: 7px;
+      height: 14px;
+      width: 14px;
+      z-index: 99;
+      &.origin {
+          background-color: $node-origin;
+      }
+      &.first-degree {
+          background-color: $node-firstDegree;
+          margin-left: 14px;
+      }
+      &.second-degree {
+          background-color: $node-secondDegree;
+      }
+  }
+
+  .legend-edge {
+      width: 130px;
+      border-bottom: 1px solid $edge-color;
+      &:first-of-type {
+          border-bottom-color: rgba(74,74,74,0.35);
+      }
+  }
+}
+
 /* Buttons*/
 .btn {
   font-size: 10px;
@@ -272,7 +334,7 @@ search-panel .nav-tabs.nav-justified > .active > a:hover {
 }
 
 .controls > span {
-    color: $mainTextColor;
+  color: $mainTextColor;
   padding: 9px 9px 0;
 }
 
@@ -368,7 +430,6 @@ small-timeline .label.life {
   text-anchor: middle;
   color: $mainTextColor;
 }
-
 /*MEDIA QUERIES*/
 $screen-xs-max: 767;
 $screen-sm-min: 768;
