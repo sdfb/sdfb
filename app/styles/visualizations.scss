@@ -101,17 +101,12 @@ groups-bar {
     -webkit-box-align: center;
     -ms-flex-align: center;
     align-items: center;
-<<<<<<< HEAD
     -webkit-box-pack: start;
     -ms-flex-pack: start;
     justify-content: flex-start;
-=======
-    justify-content: center;
->>>>>>> parent of 824396d... groups bar 2nd stage
     height: 30px;
-    white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
+    overflow: hidden;
+    padding: 0 0 0 5px;
   }
 
   .group.active {
@@ -120,7 +115,6 @@ groups-bar {
   }
 }
 
-<<<<<<< HEAD
 groups-bar::after {
   content: 'This bar shows the people of the graph within the groups they are part of, click on a node to see if it has any group memberships.';
   display: block;
@@ -134,6 +128,3 @@ groups-bar::after {
 groups-bar:hover::after {
   opacity: 1;
 }
-=======
-
->>>>>>> parent of 824396d... groups bar 2nd stage

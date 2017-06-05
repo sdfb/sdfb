@@ -2,26 +2,18 @@ $icon-font-path: "../bower_components/bootstrap-sass-official/assets/fonts/boots
 /* bower:scss*/
 @import "bootstrap-sass-official/assets/stylesheets/_bootstrap.scss";
 /* endbower*/
-<<<<<<< HEAD
-@import url( 'https://fonts.googleapis.com/css?family=Open+Sans:400,700');
-=======
-@import url('https://fonts.googleapis.com/css?family=Open+Sans:400,700');
 
 
->>>>>>> parent of 824396d... groups bar 2nd stage
+
 $timelineColor: blue;
 $strokeDanger: red;
 $mainTextColor: #434055;
-$light-color: #FFFFFF;
 $panels-bg: #E6EAF0;
-$panels-bg-secondary: #C6CACF;
 $panels-stroke: #AEB1B5;
 $highlight-color: #F7F35D;
-<<<<<<< HEAD
-=======
+$panels-bg-secondary: #C6CACF;
+$light-color: white;
 
-
->>>>>>> parent of 824396d... groups bar 2nd stage
 /* general styles*/
 body {
   background-color: #EFF1F4;
@@ -54,10 +46,6 @@ p {
 path.danger {
   stroke: $strokeDanger;
 }
-<<<<<<< HEAD
-=======
-
->>>>>>> parent of 824396d... groups bar 2nd stage
 /* panels general styles*/
 .panels-container {
   width: 100vw;
@@ -107,7 +95,6 @@ path.danger {
 }
 
 .panel.smallest {
-<<<<<<< HEAD
   width: 30px;
   -webkit-box-sizing: border-box;
   box-sizing: border-box;
@@ -139,57 +126,15 @@ path.danger {
   transition-timing-function: ease-in-out;
   width: 100%;
   height: 360px;
-=======
-	width: 30px;
-	-webkit-box-sizing: border-box;
-	        box-sizing: border-box;
-}
-
-.panel h4 {
-    font-size: 14px;
-    font-weight: 700;
-    margin: 0;
-    padding: 10px 0 10px 6px;
-    &:first-of-type {
-        padding-top: 0;
-    }
-}
-
-.panel h5 {
-    font-size: 14px;
-    line-height: 1.4;
-    padding-left: 6px;
-}
-
-/* collapsable panels*/
-.panel.collapsable {
-	position: relative;
-	padding: 15px 0;
-	-webkit-transition: all 0.5s;
-	transition: all 0.5s;
-	-webkit-transition-timing-function: ease-in-out;
-	        transition-timing-function: ease-in-out;
-	width: 100%;
-	height: 360px;
->>>>>>> parent of 824396d... groups bar 2nd stage
 }
 
 .panel.collapsable.collapsed {
-<<<<<<< HEAD
   position: relative;
   width: 30px;
   height: 30px;
   overflow: hidden;
   -webkit-box-sizing: border-box;
   box-sizing: border-box;
-=======
-	position: relative;
-	width: 30px;
-	height: 30px;
-	overflow: hidden;
-	-webkit-box-sizing: border-box;
-	        box-sizing: border-box;
->>>>>>> parent of 824396d... groups bar 2nd stage
 }
 
 .panel.collapsable > section {
@@ -226,7 +171,6 @@ search-panel.panel {
   border: none;
 }
 
-<<<<<<< HEAD
 search-panel .nav-tabs.nav-justified > li > a {
   background-color: $panels-bg-secondary;
   border: 1px solid $panels-stroke;
@@ -324,102 +268,6 @@ search-panel .nav-tabs.nav-justified > .active > a:hover {
   -webkit-box-direction: normal;
   -ms-flex-direction: column;
   flex-direction: column;
-=======
-/* search panel styles*/
-search-panel.panel {
-    border: none;
-}
-
-search-panel .nav-tabs.nav-justified > li > a {
-    background-color: $panels-bg-secondary;
-    border: 1px solid $panels-stroke;
-    color: $light-color;
-    font-size: 14px;
-    font-weight: 700;
-    text-transform: uppercase;
-    -webkit-transition: all 0.25s ease;
-    transition: all 0.25s ease;
-    &:hover, &:focus {
-        background-color: $light-color;
-        color: $mainTextColor;
-    }
-}
-
-search-panel .nav-tabs.nav-justified > .active > a,
-search-panel .nav-tabs.nav-justified > .active > a:hover,
-search-panel .nav-tabs.nav-justified > .active > a:focus {
-    background-color: transparent;
-    border: 1px solid $panels-stroke;
-    border-bottom-color: $panels-bg;
-    color: $mainTextColor;
-}
-
-.tab-content {
-    border: 1px solid $panels-stroke;
-    border-top: none;
-    border-bottom-left-radius: 4px;
-    border-bottom-right-radius: 4px;
-    padding: 20px;
-}
-
-/* Buttons*/
-.btn {
-    font-size: 10px;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    font-weight: bold;
-    padding: 2px 2px;
-}
-
-.btn-group-justified {
-    width: 100%;
-    margin: auto;
-    label.btn {
-        background-color: $light-color;
-        border-bottom-left-radius: 20px;
-        border-bottom-right-radius: 20px;
-        border-color: $panels-stroke;
-        border-top-left-radius: 20px;
-        border-top-right-radius: 20px;
-        color: $mainTextColor;
-        font-size: 12px;
-        font-weight: 700;
-        &:first-of-type {
-            border-right: none;
-        }
-        &:hover, &:focus {
-            background-color: $light-color;
-            border-color: $panels-stroke;
-            color: $mainTextColor;
-        }
-    }
-    label.btn.active {
-        background-color: $highlight-color;
-        -webkit-box-shadow: none;
-                box-shadow: none;
-        &:hover, &:focus {
-            background-color: $highlight-color;
-            border-color: $panels-stroke;
-        }
-    }
-}
-
-/* form styles*/
-.form-control {
-    font-size: 13px;
-}
-
-/* */
-.controls {
-	font-size: 16px;
-	display: -webkit-box;
-	display: -ms-flexbox;
-	display: flex;
-	-webkit-box-orient: vertical;
-	-webkit-box-direction: normal;
-	    -ms-flex-direction: column;
-	        flex-direction: column;
->>>>>>> parent of 824396d... groups bar 2nd stage
 }
 
 .controls > span {
@@ -429,11 +277,6 @@ search-panel .nav-tabs.nav-justified > .active > a:focus {
 .controls > span:last-child {
   padding: 15px;
 }
-<<<<<<< HEAD
-=======
-
-
->>>>>>> parent of 824396d... groups bar 2nd stage
 /* visualization styles*/
 .visualization-container {
   width: 100%;
@@ -456,22 +299,13 @@ search-panel .nav-tabs.nav-justified > .active > a:focus {
   width: 100%;
   bottom: 0;
 }
-<<<<<<< HEAD
 /* Contextual Info Panel*/
-=======
-
-
-
-/* Contextual Info Panel*/
-
->>>>>>> parent of 824396d... groups bar 2nd stage
 contextual-info-panel > section {
   padding: 5px 15px;
   text-align: center;
 }
 
 #more-info {
-<<<<<<< HEAD
   background-color: #ddd;
   display: -webkit-box;
   display: -ms-flexbox;
@@ -483,19 +317,6 @@ contextual-info-panel > section {
   -webkit-box-align: center;
   -ms-flex-align: center;
   align-items: center;
-=======
-	background-color: #ddd;
-    display: -webkit-box;
-    display: -ms-flexbox;
-    display: flex;
-    -webkit-box-pack: center;
-        -ms-flex-pack: center;
-            justify-content: center;
-    padding: 10px 0px;
-    -webkit-box-align: center;
-        -ms-flex-align: center;
-            align-items: center;
->>>>>>> parent of 824396d... groups bar 2nd stage
 }
 
 #more-info a {
@@ -514,21 +335,11 @@ contextual-info-panel > section {
 #more-info i {
   font-size: 27px;
 }
-<<<<<<< HEAD
 /* Small time-line*/
 small-timeline svg {
   width: 100%;
   height: 30px;
   /* background-color: #fafafa;*/
-=======
-
-/* Small time-line*/
-
-small-timeline svg {
-	width: 100%;
-	height: 30px;
-	/* background-color: #fafafa;*/
->>>>>>> parent of 824396d... groups bar 2nd stage
 }
 
 small-timeline .background-line {
@@ -555,11 +366,6 @@ small-timeline .label.life {
   text-anchor: middle;
   color: $mainTextColor;
 }
-<<<<<<< HEAD
-=======
-
-
->>>>>>> parent of 824396d... groups bar 2nd stage
 /*MEDIA QUERIES*/
 $screen-xs-max: 767;
 $screen-sm-min: 768;
