@@ -13,7 +13,6 @@ angular.module('redesign2017App')
 			restrict: 'E',
 			link: function postLink(scope, element, attrs) {
 				console.log('drawing network the first time');
-				console.log(scope.data);
 				var svg = d3.select(element[0]).select('svg'),
 					width = +svg.node().getBoundingClientRect().width,
 					height = +svg.node().getBoundingClientRect().height,
@@ -235,13 +234,11 @@ angular.module('redesign2017App')
 							})
 
 						// Log information when node is clicked
-						console.log(d, d.attributes.groups)
+						// console.log(d.person_info.name)
 
 						scope.currentSelection.person1 = {id:d.id, name:d.attributes.name, historical_significance:d.attributes.historical_significance, birth_year:d.attributes.birth_year, death_year:d.attributes.death_year};
-						scope.currentSelection.person1 = d;
-						scope.$broadcast('selectionUpdated', scope.currentSelection);
-						// scope.$apply();
-						// console.log('currentSelection',scope.currentSelection);
+						scope.$apply();
+						console.log('currentSelection',scope.currentSelection);
 
 							// d3.select('div#tools').append('span').text("Name: " + d.name + "  |  Historical Significance: " + d.historical_significance + "  |  Lived: " + d.birth_year + "-" + d.death_year);
 						toggle = 1;
@@ -261,13 +258,10 @@ angular.module('redesign2017App')
 								// .attr('pulse', false)
 								.classed('faded', false)
 								.classed('focused', false);
-
-							// reset group bar
-							d3.selectAll('div.group').classed('active', false);
 							// d3.selectAll('span').remove();
 							scope.currentSelection = {};
 							scope.$apply();
-							// console.log('currentSelection',scope.currentSelection);
+							console.log('currentSelection',scope.currentSelection);
 							toggle = 0;
 						}
 					});
@@ -471,7 +465,7 @@ angular.module('redesign2017App')
 				})
 
 				// log the outcome in the scope
-				// console.log(arr);
+				console.log(arr);
 
 				// using p-quantile for understanding how to cluster smaller goups
 				// arr = _.map(arr, function(d){return d.value})
@@ -486,7 +480,7 @@ angular.module('redesign2017App')
 					othersValue += d.value;
 				});
 				groupsBar.push({'groupId': 'others', 'value': othersValue});
-				// console.log(groupsBar);
+				console.log(groupsBar);
 				
 				scope.groups.groupsBar = groupsBar;
 				scope.groups.otherGroups = otherGroups;
