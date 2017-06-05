@@ -13,7 +13,11 @@ angular.module('redesign2017App')
       restrict: 'E',
       link: function postLink(scope, element, attrs) {
         // element.text('this is the contextualInfoPanel directive');
-        // console.log(scope.currentSelection)
+        console.log('Current selection', scope.currentSelection)
+
+        scope.$on('selectionUpdated', function(event, args){
+          console.log('Current selection', scope.currentSelection)
+        })
 
       }
     };

@@ -1,17 +1,17 @@
 <section ng-if="!currentSelection.person1">
-	<p>Select a person or a relation to display contextual information.</p>
+    <p>Select a person or a relation to display contextual information.</p>
 </section>
 <section ng-if="currentSelection.person1" id="current-selection-person1">
-	<h2>{{currentSelection.person1.name}}</h2>
-	<p>{{currentSelection.person1.historical_significance}}</p>
-	<small-timeline details="currentSelection.person1"></small-timeline>
+    <h2>{{currentSelection.person1.attributes.name}}</h2>
+    <p>{{currentSelection.person1.attributes.historical_significance}}</p>
+    <!-- <small-timeline details="currentSelection.person1"></small-timeline> -->
 </section>
 <section id="current-selection-relationships" ng-if="currentSelection.relationships">Rels</section>
 <section id="current-selection-person2" ng-if="currentSelection.person2">second person</section>
 <section id="more-info">
-	<a href="http://www.oxforddnb.com/view/article/990" target="_blanc"><img src="./images/odnb.gif"/></a>
-	<a href="http://www.jstor.org/action/doBasicSearch?Query={{currentSelection.person1.name}}" target="_blanc"><img src="./images/jstor.png"/></a>
-	<a href="http://www.google.com/search?q={{currentSelection.person1.name.replace(' ','+')}}" target="_blanc"><i class="fa fa-google" aria-hidden="true"></i>
+    <a href="http://www.oxforddnb.com/view/article/990" target="_blanc"><img src="./images/odnb.gif" /></a>
+    <a href="http://www.jstor.org/action/doBasicSearch?Query={{currentSelection.person1.attributes.name}}" target="_blanc"><img src="./images/jstor.png" /></a>
+    <a href="http://www.google.com/search?q={{currentSelection.person1.attributes.name.replace(' ','+')}}" target="_blanc"><i class="fa fa-google" aria-hidden="true"></i>
 </a>
-	<a href="http://www.sixdegreesoffrancisbacon.com/people/{{currentSelection.person1.id}}" target="_blanc">Further information&hellip;</a>
+    <a href="http://www.sixdegreesoffrancisbacon.com/people/{{currentSelection.person1.id}}" target="_blanc">Further information&hellip;</a>
 </section>

@@ -12,6 +12,8 @@ angular.module('redesign2017App')
     // console.log(initialConfig,initialData);
     $scope.config = initialConfig;
     $scope.data = initialData;
+    $scope.legendClosed = false;
+    $scope.filtersClosed = true;
 
     // Container for data realted to groups
     $scope.groups = {};
@@ -19,16 +21,11 @@ angular.module('redesign2017App')
     // declare a $scope property where to store the future selections
     $scope.currentSelection = {}
 
-    $scope.getElementData = function(id, name) {
-      return apiService.getElementData(id, name);
-    }
-
-    // $scope.$on('selectionUpdated', function(event, args){
-    //   $scope.$broadcast('selectionUpdated', args);
-    // })
+    // $scope.getElementData = function(id, name) {
+    //   return apiService.getElementData(id, name);
+    // }
 
     // Other groups modal window
-    // var items = ['item1', 'item2', 'item3'];
     $scope.modalAnimationsEnabled = true;
     $scope.open = function(size, parentSelector) {
       var parentElem = parentSelector ?
@@ -48,7 +45,6 @@ angular.module('redesign2017App')
           }
         }
       });
-
       modalInstance.result.then(function(selectedItem) {
         $scope.selected = selectedItem;
       }, function() {
@@ -62,8 +58,12 @@ angular.module('redesign2017App')
         var config = newValue;
         $scope.legendClosed = false;
         $scope.filtersClosed = true;
-        if (config.viewObject == 0 && config.viewMode == 'force') {
-          $scope.$broadcast('force layout update', { data: 'some data' });
+        if (config.viewObject == 0 && config.viewMode == 'individual-force') {
+          // $scope.$broadcast('force layout update', { data: 'some data' });
+        } else if (config.viewObject == 0 && config.viewMode == 'individual-concentric') {
+          // $scope.$broadcast('force layout update', { data: 'some data' });
+        } else if (config.viewObject == 1 && config.viewMode == 'all') {
+          console.log('All the groups')
         }
       }
     }, true);

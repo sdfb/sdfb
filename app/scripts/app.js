@@ -33,7 +33,7 @@ angular
           initialConfig: function(){
             return {
               viewObject:0, //0 = people, 1 = groups
-              viewMode:'force',
+              viewMode:'individual-force',
               networkComplexity: '2',
               dateMin:1500,
               dateMax:1700,

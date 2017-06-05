@@ -15,7 +15,7 @@ angular.module('redesign2017App')
         // element.text('this is the searchPanel directive');
         scope.people = ['Francis Bacon (1600)', 'Francis Bacon (1587)', 'Francis Bacon (1561)','William Shakespeare', 'John Milton', 'Alice Spencer'];
       	scope.personSelected = scope.people[1];
-      	scope.radioModel = 'force';
+      	scope.radioModel = 'individual-force';
       }
     };
   });

@@ -1,5 +1,17 @@
-<section class="force-layout">
-	<h3 class="">Legend</h3>
+<section class="">
+    <h3 class="">Legend</h3>
+    <div ng-if=" config.viewMode == 'individual-force' || config.viewMode == 'individual-concentric' ">
+        Legend for Individual Network (force or concentric)
+    </div>
+    <div ng-if=" config.viewMode == 'shared' ">
+        Legend for Shared Network
+    </div>
+    <div ng-if=" config.viewMode == 'all' ">
+        Legend for ALL the groups
+    </div>
+    <div ng-if=" config.viewMode == 'single-group' ">
+        Legend for single group
+    </div>
 </section>
 <span class="close" ng-click="legendClosed = !legendClosed">
 	<i ng-if="!legendClosed" class="fa fa-times" aria-hidden="true"></i>
