@@ -95,7 +95,7 @@ path.danger {
 }
 
 .panel.smallest {
-  width: 30px;
+  width: 32px;
   -webkit-box-sizing: border-box;
   box-sizing: border-box;
 }
@@ -163,6 +163,7 @@ path.danger {
 }
 
 .panel.collapsable.collapsed > .close {
+  color: $mainTextColor;
   right: 6px;
   top: 7px;
 }
@@ -260,7 +261,7 @@ search-panel .nav-tabs.nav-justified > .active > a:hover {
 }
 /* */
 .controls {
-  font-size: 16px;
+  font-size: 14px;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -271,11 +272,12 @@ search-panel .nav-tabs.nav-justified > .active > a:hover {
 }
 
 .controls > span {
-  padding: 15px 15px 0;
+    color: $mainTextColor;
+  padding: 9px 9px 0;
 }
 
 .controls > span:last-child {
-  padding: 15px;
+  padding-bottom: 9px;
 }
 /* visualization styles*/
 .visualization-container {
@@ -366,6 +368,7 @@ small-timeline .label.life {
   text-anchor: middle;
   color: $mainTextColor;
 }
+
 /*MEDIA QUERIES*/
 $screen-xs-max: 767;
 $screen-sm-min: 768;
