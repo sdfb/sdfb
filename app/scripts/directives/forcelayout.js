@@ -235,7 +235,7 @@ angular.module('redesign2017App')
 							})
 
 						// Log information when node is clicked
-						console.log(d, d.attributes.groups)
+						console.log('Node selected',d, d.attributes.groups)
 
 						scope.currentSelection.person1 = {id:d.id, name:d.attributes.name, historical_significance:d.attributes.historical_significance, birth_year:d.attributes.birth_year, death_year:d.attributes.death_year};
 						scope.currentSelection.person1 = d;
@@ -487,12 +487,11 @@ angular.module('redesign2017App')
 					othersValue += d.value;
 				});
 				groupsBar.push({'groupId': 'others', 'value': othersValue});
-				// console.log(groupsBar);
+				
+				console.log('Data for groups bar ($scope.groups):', scope.groups);
 				
 				scope.groups.groupsBar = groupsBar;
 				scope.groups.otherGroups = otherGroups;
-				// scope.$apply();
-
 			}
 		};
 	});

@@ -53,6 +53,11 @@ angular
         controller: 'TableCtrl',
         controllerAs: 'Table'
       })
+      .when('/modal', {
+        templateUrl: 'views/modal.html',
+        controller: 'ModalCtrl',
+        controllerAs: 'Modal'
+      })
       .otherwise({
         redirectTo: '/'
       });

@@ -109,6 +109,9 @@ groups-bar {
     padding: 0 0 0 5px;
     -webkit-transition: all 0.5s;
     transition: all 0.5s;
+    &:last-of-type {
+      cursor: pointer;
+    }
   }
 
   .group.active {

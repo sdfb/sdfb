@@ -65,6 +65,13 @@ angular.module('redesign2017App')
                     } else {
                         return 'g'+d.groupId;
                     }
+                })
+                .on('click', function(d,i){
+                    if(i==20) {
+                        scope.open();
+                    } else {
+                        return ;
+                    }
                 });
 
             // remove stuff
