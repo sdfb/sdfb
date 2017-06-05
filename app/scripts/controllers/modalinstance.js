@@ -8,7 +8,7 @@
  * Controller of the redesign2017App
  */
 angular.module('redesign2017App')
-  .controller('ModalinstanceCtrl', function($uibModalInstance, groups) {
+  .controller('ModalinstanceCtrl', function($scope, $uibModalInstance, groups) {
     var $ctrl = this;
     $ctrl.groups = groups;
     $ctrl.selected = {
@@ -23,4 +23,5 @@ angular.module('redesign2017App')
     	console.log('dismiss')
       $uibModalInstance.dismiss('cancel');
     };
+
   });

@@ -4,7 +4,7 @@
 <div class="modal-body" id="modal-body">
     <ul>
         <li ng-repeat="group in $ctrl.groups">
-            <a href="#" ng-click="$event.preventDefault(); $ctrl.selected.group = group">Group ID: {{ group.groupId }} - Number of people: {{ group.value }}</a>
+            <a href="#" ng-class="{{'g'+group.groupId}}" ng-click="$event.preventDefault(); $ctrl.selected.group = group">Group ID: {{ group.groupId }} - Number of people: {{ group.value }}</a>
         </li>
     </ul>
     Selected: <b>{{ $ctrl.selected.group }}</b>
