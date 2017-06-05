@@ -107,11 +107,17 @@ groups-bar {
     height: 30px;
     overflow: hidden;
     padding: 0 0 0 5px;
+    -webkit-transition: all 0.5s;
+    transition: all 0.5s;
   }
 
   .group.active {
     background-color: $degree0;
     color: white;
+  }
+
+  .group.unactive {
+    opacity: 0.5;
   }
 }
 

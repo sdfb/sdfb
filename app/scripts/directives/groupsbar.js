@@ -12,59 +12,82 @@ angular.module('redesign2017App')
       template: '',
       restrict: 'E',
       link: function postLink(scope, element, attrs) {
-        // element.text('this is the groupsBar directive');
         
-		var x = d3.scaleLinear()
+        var x = d3.scaleLinear()
         updateGroupBar(scope.groups);
 
-
         function updateGroupBar(data) {
-        	console.log(data.groupsBar);
+            // console.log(data);
+            // size of the group bar
+            var oldWidth = d3.select(element[0]).node().getBoundingClientRect().width;          
+            var padding = 5;
+            var width = d3.select(element[0]).node().getBoundingClientRect().width - 20 - padding*20;
+            
+            // calculate total number of people
+            var total=0;
+            data.groupsBar.forEach(function(d){
+                total += d.value;
+            })
+            
+            // set dimentions for scales
+            x.domain([0,total]);
+            x.range([0,width]);
+            
+            // declare chart
+            var chart = d3.select(element[0]).selectAll('group')
+                    .data(data.groupsBar);
 
-        	var width = d3.select(element[0]).node().getBoundingClientRect().width;  	
-        	var padding = 5;
-        	width -= 20;
-        	width -= padding*20;
-        	console.log(width)
+            // append stuff
+            chart.enter()
+                .append('div')
+                .attr('class', function(d,i){
+                    if(i==20) {
+                        var className = 'group';
+                        data.otherGroups.forEach(function(e){
+                            className +=' g';
+                            className +=e.groupId;
+                        })
+                        return className;
+                    } else {
+                        return 'group g'+d.groupId;
+                    }
+                })
+                .style('width', function(d){
+                    var myWidth = x(d.value)/(width)*100;
+                    var newTot = width/oldWidth*100;
+                    var value = (myWidth*newTot)/100;
+                    return value+'%';
+                })
+                .merge(chart)
+                .text(function(d,i){
+                    if(i==20) {
+                        return d.value+' minor groups (click to show)'
+                    } else {
+                        return 'g'+d.groupId;
+                    }
+                });
 
-        	var oldWidth = d3.select(element[0]).node().getBoundingClientRect().width;
-        	
-
-        	var total=0;
-        	data.groupsBar.forEach(function(d){
-        		total += d.value;
-        	})
-        	console.log(total)
-
-
-        	x.domain([0,total]);
-        	x.range([0,width]);
-
-        	
-
-        	var chart = d3.select(element[0]).selectAll('group')
-        			.data(data.groupsBar)
-
-        	chart.enter()
-        		.append('div')
-        		.attr('class', 'group')
-        		.style('width', function(d){
-        			var myWidth = x(d.value)/(width)*100;
-        			var newTot = width/oldWidth*100;
-        			var value = (myWidth*newTot)/100;
-        			return value+'%';
-        		})
-        		.merge(chart)
-        		.text(function(d,i){
-        			if(i==20) {
-        				return 'other '+d.value+' groups (click to show)'
-        			} else {
-        				return 'g'+d.groupId;
-        			}
-        		})
-
-        	chart.exit().remove();
+            // remove stuff
+            chart.exit().remove();
         }
+
+        // HIGHLIGHT GROUPS WHEN SELECTION HAPPENS
+        // This works for individual force layout only, at the moment
+
+        scope.$on('selectionUpdated', function(event, args){
+            // console.log(args);
+            if (args.person1) {
+                d3.selectAll('.group').classed('unactive', true);
+                if (args.person1.attributes.groups) {
+                    args.person1.attributes.groups.forEach(function(d){
+                        var selectClass = '.g'+d;
+                        // console.log(selectClass, d3.selectAll(selectClass));
+                        d3.selectAll(selectClass).classed('active', true);
+                        d3.selectAll(selectClass).classed('unactive', false);
+                    });
+                }
+            }
+        })
 
       }
     };
