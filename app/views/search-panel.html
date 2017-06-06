@@ -16,9 +16,18 @@
         </div>
     </uib-tab>
     <uib-tab index="1" heading="Groups">
-        <h4>All groups</h4>
+        <h4>Search a group</h4>
+        <input placeholder="Type here groups names" type="text" ng-model="" uib-typeahead="person for person in people | filter:$viewValue | limitTo:8" class="form-control">
+        <h5>Search here or double click on a node</h5>
+        <h4>All Groups</h4>
         <div class="btn-group btn-group-justified">
             <label class="btn btn-primary" ng-model="config.viewMode" uib-btn-radio="'all'">Show All</label>
+        </div>
+        <h5>Show a network of all the groups</h5>
+        <h4>Visualization layout</h4>
+        <div class="btn-group btn-group-justified">
+            <label class="btn btn-primary" ng-model="config.viewMode" uib-btn-radio="'group-force'">Hooke</label>
+            <label class="btn btn-primary" ng-model="config.viewMode" uib-btn-radio="'group-timeline'" ng-disabled="true">Timeline</label>
         </div>
     </uib-tab>
 </uib-tabset>

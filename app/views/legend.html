@@ -1,9 +1,10 @@
 <section class="legend-panel">
   <h3 class="">Legend</h3>
-  <div ng-if=" config.viewMode == 'individual-force' || config.viewMode == 'individual-concentric' ">
+
+  <div ng-if=" config.viewMode == 'individual-force' || config.viewMode == 'individual-concentric'">
     <div class="legend-box">
       <div class="legend-line"></div>
-      <div class="flex-container">
+      <div class="flex-container individual-network">
         <div class="flex-item legend-circle origin"></div>
         <div class="flex-item legend-circle first-degree"></div>
         <div class="flex-item legend-circle second-degree"></div>
@@ -16,7 +17,7 @@
     </div>
     <h5>Color of nodes is degree of separation</h5>
     <div class="legend-box legend-size">
-
+      <div class="white-circle"></div>
     </div>
     <h5>Size of nodes indicates number of connections</h5>
     <div class="legend-box">
@@ -27,15 +28,105 @@
     </div>
     <h5>Color of edges is relationship certainty</h5>
   </div>
+
   <div ng-if=" config.viewMode == 'shared' ">
-    Legend for Shared Network
+    <div class="legend-box">
+      <div class="flex-container upper-text-legend">
+        <div class="flex-item legend-text">Left origin</div>
+        <div class="flex-item legend-text">Right origin</div>
+      </div>
+      <div class="flex-container">
+        <div class="legend-line small-segment"></div>
+        <div class="legend-line small-segment"></div>
+      </div>
+      <div class="flex-container shared-network">
+        <div class="flex-item legend-circle context"></div>
+        <div class="flex-item legend-circle origin"></div>
+        <div class="flex-item legend-circle ghost"></div>
+        <div class="flex-item legend-circle ghost"></div>
+        <div class="flex-item legend-circle origin"></div>
+        <div class="flex-item legend-circle context"></div>
+      </div>
+      <div class="flex-container text-spaced">
+        <div class="flex-item legend-text">Context</div>
+        <div class="flex-item legend-text">Context</div>
+      </div>
+      <div class="legend-line center-segment"></div>
+      <div class="flex-container shared-network">
+        <div class="flex-item legend-circle ghost"></div>
+        <div class="flex-item legend-circle origin"></div>
+        <div class="flex-item legend-circle direct"></div>
+        <div class="flex-item legend-circle ghost"></div>
+        <div class="flex-item legend-circle origin"></div>
+        <div class="flex-item legend-circle ghost"></div>
+      </div>
+      <div class="center text-spaced">
+        <div class="legend-text">Direct Acquaintance</div>
+      </div>
+      <div class="legend-line center-segment"></div>
+      <div class="flex-container shared-network">
+        <div class="flex-item legend-circle ghost"></div>
+        <div class="flex-item legend-circle origin"></div>
+        <div class="flex-item legend-circle indirect"></div>
+        <div class="flex-item legend-circle indirect"></div>
+        <div class="flex-item legend-circle origin"></div>
+        <div class="flex-item legend-circle ghost"></div>
+      </div>
+      <div class="center">
+        <div class="legend-text">Indirect Acquaintances</div>
+      </div>
+    </div>
+    <h5>Color of nodes is degree of separation</h5>
+    <div class="legend-box legend-size">
+      <div class="white-circle"></div>
+    </div>
+    <h5>Size of nodes indicates number of connections</h5>
+    <div class="legend-box">
+      <div class="flex-container">
+        <div class="flex-item legend-edge legend-text centered">Inferred<br/>Computationally</div>
+        <div class="flex-item legend-edge legend-text centered">Human<br/>Curated</div>
+      </div>
+    </div>
+    <h5>Color of edges is relationship certainty</h5>
   </div>
+
   <div ng-if=" config.viewMode == 'all' ">
-    Legend for ALL the groups
+    <div class="legend-box legend-size-squares">
+      <div class="white-square"></div>
+    </div>
+    <h5>Size is amount of group members</h5>
+    <div class="legend-box legend-size-edges">
+      <div class="edge-line"></div>
+    </div>
+    <h5>Thickness represents the amount of shared people</h5>
   </div>
+
   <div ng-if=" config.viewMode == 'single-group' ">
-    Legend for single group
+    <div class="legend-box">
+      <div class="legend-line"></div>
+      <div class="flex-container group-network">
+        <div class="flex-item legend-circle origin"></div>
+        <div class="flex-item legend-circle first-degree"></div>
+      </div>
+      <div class="flex-container">
+        <div class="flex-item legend-text">Members</div>
+        <div class="flex-item legend-text">1st degree</div>
+      </div>
+    </div>
+    <h5>Color of nodes is degree of separation</h5>
+    <div class="legend-box legend-size">
+      <div class="white-circle"></div>
+    </div>
+    <h5>Size of nodes indicates number of connections</h5>
+    <div class="legend-box">
+      <div class="flex-container">
+        <div class="flex-item legend-edge legend-text centered">Inferred<br/>Computationally</div>
+        <div class="flex-item legend-edge legend-text centered">Human<br/>Curated</div>
+      </div>
+    </div>
+    <h5>Color of edges is relationship certainty</h5>
   </div>
+
 </section>
 <span class="close" ng-click="legendClosed = !legendClosed">
 	<i ng-if="!legendClosed" class="fa fa-times" aria-hidden="true"></i>

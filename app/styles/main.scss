@@ -11,11 +11,15 @@ $panels-stroke: #AEB1B5;
 $highlight-color: #F7F35D;
 $panels-bg-secondary: #C6CACF;
 $light-color: white;
-$node-origin: #F45D4C;
-$node-firstDegree: #EE9F99;
-$node-secondDegree: #BBBBBB;
+$node-individual-origin: #F45D4C;
+$node-individual-firstDegree: #EE9F99;
+$node-individual-secondDegree: #BBBBBB;
+$node-share-origin: #5385A6;
+$node-share-direct: #F45D4C;
+$node-share-indirect: #FDE6E5;
+$node-group-origin: #78729F;
+$node-group-firstDegree: #EFF1F4;
 $edge-color: #4A4A4A;
-
 /* general styles*/
 body {
   background-color: #EFF1F4;
@@ -48,6 +52,11 @@ p {
 path.danger {
   stroke: $strokeDanger;
 }
+
+.center {
+    text-align: center;
+}
+
 /* panels general styles*/
 .panels-container {
   width: 100vw;
@@ -127,7 +136,18 @@ path.danger {
   -webkit-transition-timing-function: ease-in-out;
   transition-timing-function: ease-in-out;
   width: 100%;
-  height: 360px;
+
+  &.individual {
+      height: 360px;
+  }
+
+  &.shared {
+      height: 460px;
+  }
+
+  &.group {
+      height: 260px;
+  }
 }
 
 .panel.collapsable.collapsed {
@@ -155,13 +175,20 @@ path.danger {
 
 .panel.collapsable > .close {
   display: block;
+  font-size: 14px;
+  opacity: 1;
+  padding-right: 3px;
   position: absolute;
   right: 10px;
-  top: 12px;
-  font-size: 14px;
-  width: 15px;
   text-align: center;
-  opacity: 1;
+  top: 12px;
+  width: 15px;
+}
+
+.panel.collapsable .fa-times {
+    bottom: 4px;
+    left: 4px;
+    position: relative;
 }
 
 .panel.collapsable.collapsed > .close {
@@ -209,27 +236,41 @@ search-panel .nav-tabs.nav-justified > .active > a:hover {
 }
 /* legend-panel styles*/
 section .legend-box {
-    margin-top: 34px;
+  margin-top: 32px;
 }
 
 .legend-panel h5 {
-    text-align: center;
+  text-align: center;
 }
 
 section .legend-text {
-    font-size: 12px;
-    font-weight: 700;
-    padding-top: 5px;
-    &.centered {
-        text-align: center;
-    }
+  font-size: 12px;
+  font-weight: 700;
+  padding-top: 5px;
+
+  &.centered {
+    text-align: center;
+  }
 }
 
 section .legend-line {
-    border-top: 1px solid $mainTextColor;
-    position: relative;
-    top: 7px;
-    width: 100%;
+  border-top: 1px solid $mainTextColor;
+  position: relative;
+  top: 7px;
+  width: 100%;
+
+  &.small-segment {
+    width: 60px;
+  }
+
+  &.center-segment {
+      margin: 0 auto;
+      width: 172px;
+  }
+}
+
+.text-spaced {
+    padding-bottom: 5px;
 }
 
 section .flex-container {
@@ -241,32 +282,120 @@ section .flex-container {
   justify-content: space-between;
 
   .legend-circle {
-      border: 1px solid $light-color;
-      border-radius: 7px;
-      height: 14px;
-      width: 14px;
-      z-index: 99;
+    border: 1px solid $light-color;
+    border-radius: 7px;
+    height: 14px;
+    width: 14px;
+    z-index: 99;
+  }
+
+  &.individual-network {
+    .legend-circle {
       &.origin {
-          background-color: $node-origin;
+        background-color: $node-individual-origin;
       }
+
       &.first-degree {
-          background-color: $node-firstDegree;
-          margin-left: 14px;
+        background-color: $node-individual-firstDegree;
+        margin-left: 14px;
       }
+
       &.second-degree {
-          background-color: $node-secondDegree;
+        background-color: $node-individual-secondDegree;
       }
+    }
+  }
+
+  &.upper-text-legend {
+    -webkit-box-pack: start;
+        -ms-flex-pack: start;
+            justify-content: flex-start;
+
+    .legend-text {
+        padding-top: 0;
+        padding-left: 47px;
+    }
+  }
+
+  &.shared-network {
+    .legend-circle {
+      &.origin {
+        background-color: $node-share-origin;
+      }
+
+      &.context {
+        background-color: $panels-bg;
+        border-color: $node-share-origin;
+      }
+
+      &.ghost {
+        background-color: transparent;
+        border-color: transparent;
+      }
+
+      &.direct {
+        background-color: $node-share-direct;
+        left: 24px;
+        position: relative;
+      }
+
+      &.indirect {
+        background-color: $node-share-indirect;
+        border-color: $node-share-direct;
+      }
+    }
+  }
+
+  &.group-network {
+    .legend-circle {
+      &.origin {
+        background-color: $node-group-origin;
+      }
+
+      &.first-degree {
+        background-color: $node-group-firstDegree;
+        border-color: $node-group-origin;
+      }
+    }
   }
 
   .legend-edge {
-      width: 130px;
-      border-bottom: 1px solid $edge-color;
-      &:first-of-type {
-          border-bottom-color: rgba(74,74,74,0.35);
-      }
+    width: 130px;
+    border-bottom: 2px solid $edge-color;
+    padding-bottom: 4px;
+
+    &:first-of-type {
+      border-bottom-color: rgba(74,74,74,0.35);
+    }
   }
 }
+/*temporary styles, they will be changed when legend will be made dynamic*/
+section .white-circle {
+  background-color: $light-color;
+  border: 1px solid $mainTextColor;
+  border-radius: 15px;
+  height: 30px;
+  margin: 0 auto;
+  width: 30px;
+}
 
+section .white-square {
+  background-color: $light-color;
+  border: 1px solid $mainTextColor;
+  border-radius: 6px;
+  height: 40px;
+  margin: 0 auto;
+  -webkit-transform: rotate(45deg);
+  transform: rotate(45deg);
+  width: 40px;
+}
+
+section .edge-line {
+  border: 6px solid $mainTextColor;
+  height: 30px;
+  margin: 0 auto;
+  width: 0;
+}
 /* Buttons*/
 .btn {
   font-size: 10px;
