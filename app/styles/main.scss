@@ -2,7 +2,8 @@ $icon-font-path: "../bower_components/bootstrap-sass-official/assets/fonts/boots
 /* bower:scss*/
 @import "bootstrap-sass-official/assets/stylesheets/_bootstrap.scss";
 /* endbower*/
-@import url( 'https://fonts.googleapis.com/css?family=Open+Sans:400,700');
+@import url( 'https://fonts.googleapis.com/css?family=Open+Sans:400,600,700');
+@import url('https://fonts.googleapis.com/css?family=Vesper+Libre:400');
 $timelineColor: blue;
 $strokeDanger: red;
 $mainTextColor: #434055;
@@ -33,7 +34,7 @@ body {
 h2 {
   font-size: 14px;
   color: $mainTextColor;
-  font-weight: 700;
+  font-weight: 600;
   letter-spacing: 0.58px;
   margin-top: 10px;
 }
@@ -41,7 +42,7 @@ h2 {
 h3 {
   text-transform: uppercase;
   font-size: 12px;
-  font-weight: 700;
+  font-weight: 600;
   margin: 0;
 }
 
@@ -56,6 +57,38 @@ path.danger {
 .center {
     text-align: center;
 }
+
+/*header styles*/
+.header .navbar {
+    background-color: $edge-color;
+    font-family: 'Open Sans', sans-serif;
+    font-weight: 600;
+
+    .navbar-nav > li > a {
+        color: $light-color;
+    }
+
+    .navbar-left > li > a,
+    .navbar-left > li > a:hover {
+        background-color: transparent;
+        font-family: 'Vesper Libre', serif;
+        font-size: 18px;
+        font-weight: 400;
+        letter-spacing: 0.75px;
+    }
+
+    .navbar-right {
+        text-transform: uppercase;
+    }
+}
+.navbar-brand {
+    padding: 0;
+
+    .project-img {
+        height: 100%;
+    }
+}
+
 
 /* panels general styles*/
 .panels-container {
@@ -207,7 +240,7 @@ search-panel .nav-tabs.nav-justified > li > a {
   border: 1px solid $panels-stroke;
   color: $light-color;
   font-size: 14px;
-  font-weight: 700;
+  font-weight: 600;
   text-transform: uppercase;
   -webkit-transition: all 0.25s ease;
   transition: all 0.25s ease;
@@ -419,7 +452,7 @@ section .edge-line {
     border-top-right-radius: 20px;
     color: $mainTextColor;
     font-size: 12px;
-    font-weight: 700;
+    font-weight: 600;
 
     &:first-of-type {
       border-right: none;
