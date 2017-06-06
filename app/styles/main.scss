@@ -268,6 +268,28 @@ search-panel .nav-tabs.nav-justified > .active > a:hover {
   border-bottom-right-radius: 4px;
   padding: 15px;
 }
+
+/*search bar*/
+.dropdown-menu {
+    background-color: $light-color;
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+    min-width: 283px;
+}
+
+.dropdown-menu > .active > a,
+.dropdown-menu > li > a {
+    background-color: $light-color;
+    color: $mainTextColor;
+    padding-top: 4px;
+    padding-bottom: 4px;
+
+    &:hover {
+        background-color: $highlight-color;
+        color: $mainTextColor;
+    }
+}
+
 /* legend-panel styles*/
 section .legend-box {
   margin-top: 32px;
