@@ -17,7 +17,7 @@
     </uib-tab>
     <uib-tab index="1" heading="Groups">
         <h4>Search a group</h4>
-        <input placeholder="Type here groups names" type="text" ng-model="groupSelected" uib-typeahead="group for group in groups | filter:$viewValue | limitTo:8" class="form-control">
+        <input placeholder="Type here groups names" type="text" ng-model="groupTypeaheadSelected" uib-typeahead="group for group in groupsTypeahead | filter:$viewValue | limitTo:8" class="form-control">
         <h5>Search here or double click on a node</h5>
         <h4>All Groups</h4>
         <div class="btn-group btn-group-justified">

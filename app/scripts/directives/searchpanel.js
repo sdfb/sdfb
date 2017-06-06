@@ -17,8 +17,8 @@ angular.module('redesign2017App')
       	scope.personSelected = scope.people[1];
       	scope.radioModel = 'individual-force';
 
-        scope.groups = ['Virginia Company (1606)', 'Marian martyrs 1555', 'Cavalier poets  1640','Puritans 1532', 'Castalian band  1584', 'Participants in the vestiarian controversy  1563'];
-        scope.groupSelected = scope.groups[0];
+        scope.groupsTypeahead = ['Virginia Company (1606)', 'Marian martyrs 1555', 'Cavalier poets  1640','Puritans 1532', 'Castalian band  1584', 'Participants in the vestiarian controversy  1563'];
+        scope.groupTypeaheadSelected = scope.groupsTypeahead[0];
       }
     };
   });
