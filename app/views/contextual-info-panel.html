@@ -1,18 +1,20 @@
-<section ng-if="!currentSelection.person1">
+<section ng-if="!currentSelection.type">
     <p>Select a person or a relation to display contextual information.</p>
 </section>
-<section ng-if="currentSelection.person1" id="current-selection-person1">
-    <h2>{{currentSelection.person1.attributes.name}}</h2>
-    <p>{{currentSelection.person1.attributes.historical_significance}}</p>
-    <small-timeline details="currentSelection.person1"></small-timeline>
+<section ng-if="currentSelection.type" id="current-selection-person1">
+    <h2>{{currentSelection.attributes.name}}</h2>
+    <p>{{currentSelection.attributes.historical_significance}}</p>
+    <small-timeline details="currentSelection"></small-timeline>
 </section>
+
 <section id="current-selection-relationships" ng-if="currentSelection.relationships">Rels</section>
 <section id="current-selection-person2" ng-if="currentSelection.person2">second person</section>
-<section id="more-info" ng-if="currentSelection.person1">
+
+<section id="more-info" ng-if="currentSelection.type">
     <p>
         <button type="button" class="btn btn-primary" ng-click="searchODNB('990')">ODNB</button>
-        <button type="button" class="btn btn-primary" ng-click="searchJstor(currentSelection.person1.attributes.name.replace(' ','+'))">J Stor</button>
-        <button type="button" class="btn btn-primary" ng-click="searchGoogle(currentSelection.person1.attributes.name.replace(' ','+'))">Google</button>
+        <button type="button" class="btn btn-primary" ng-click="searchJstor(currentSelection.attributes.name.replace(' ','+'))">J Stor</button>
+        <button type="button" class="btn btn-primary" ng-click="searchGoogle(currentSelection.attributes.name.replace(' ','+'))">Google</button>
     </p>
-    <p><a href="http://www.sixdegreesoffrancisbacon.com/people/{{currentSelection.person1.id}}" target="_blanc">Further information&hellip;</a></p>
+    <p><a href="http://www.sixdegreesoffrancisbacon.com/people/{{currentSelection.id}}" target="_blanc">Further information&hellip;</a></p>
 </section>

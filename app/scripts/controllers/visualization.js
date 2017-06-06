@@ -42,6 +42,9 @@ angular.module('redesign2017App')
         resolve: {
           groups: function() {
             return $scope.groups.otherGroups;
+          },
+          currentSelection: function() {
+            return $scope.currentSelection;
           }
         }
       });

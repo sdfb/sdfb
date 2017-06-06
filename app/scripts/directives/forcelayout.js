@@ -240,6 +240,7 @@ angular.module('redesign2017App')
 
             // scope.currentSelection.person1 = {id:d.id, name:d.attributes.name, historical_significance:d.attributes.historical_significance, birth_year:d.attributes.birth_year, death_year:d.attributes.death_year};
             scope.currentSelection.person1 = d;
+            scope.currentSelection = d;
 
             // This triggers events in groupsbar.js and contextualinfopanel.js when a selection happens
             scope.$broadcast('selectionUpdated', scope.currentSelection);
