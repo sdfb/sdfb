@@ -1,15 +1,44 @@
-<div class="modal-header">
+<!-- <div class="modal-header">
     <h3 class="modal-title" id="modal-title">List of Minor Groups</h3>
-</div>
-<div class="modal-body" id="modal-body">
-    <ul>
-        <li ng-repeat="group in $ctrl.groups">
-            <a href="#" ng-class="{{'g'+group.groupId}}" ng-click="$event.preventDefault(); $ctrl.selected.group = group">Group ID: {{ group.groupId }} - Number of people: {{ group.value }}</a>
+</div> -->
+<div class="modal-body other-groups-list" id="modal-body">
+    <h3 class="modal-title" id="modal-title">List of Minor Groups</h3>
+    <table class="table table-hover">
+        <thead>
+            <tr>
+                <td>ID</td>
+                <td>Group name</td>
+                <td>Members (tot)</td>
+                <td>Action</td>
+            </tr>
+        </thead>
+        <tbody>
+            <tr class="group {{'g'+group.groupId}}" ng-class="{ 'active': group.active }" ng-repeat="group in $ctrl.groups">
+                <td>{{ group.groupId }}</td>
+                <td>Group name</td>
+                <td>{{ group.value }} (NNN)</td>
+                <td>
+                    <button type="button" class="btn btn-primary">
+                        Visualize
+                    </button>
+                    <button type="button" class="btn btn-primary">
+                        Table view
+                    </button>
+                    <button type="button" class="btn btn-primary">
+                        Edit
+                    </button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <!-- <ul>
+        <li class="group {{'g'+group.groupId}}" ng-class="{ 'active': group.active }" ng-repeat="group in $ctrl.groups">
+            <a href="#" ng-click="$event.preventDefault(); $ctrl.selected.group = group">Group ID: {{ group.groupId }} - Number of people: {{ group.value }}</a>
         </li>
     </ul>
-    Selected: <b>{{ $ctrl.selected.group }}</b>
+    Selected: <b>{{ $ctrl.selected.group }}</b> -->
 </div>
-<div class="modal-footer">
+<!-- <div class="modal-footer">
     <button class="btn btn-primary" type="button" ng-click="$ctrl.ok()">OK</button>
     <button class="btn btn-warning" type="button" ng-click="$ctrl.cancel()">Cancel</button>
-</div>
+</div> -->

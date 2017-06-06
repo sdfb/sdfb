@@ -140,3 +140,7 @@ groups-bar::after {
 groups-bar:hover::after {
   opacity: 1;
 }
+
+.other-groups-list li.active {
+  color: red;
+}

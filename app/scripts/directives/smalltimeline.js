@@ -7,24 +7,23 @@
  * # smallTimeline
  */
 angular.module('redesign2017App')
-  .directive('smallTimeline', function () {
+  .directive('smallTimeline', function() {
     return {
       template: '<svg></svg>',
       restrict: 'E',
       scope: {
         details: '=',
-    	},
+      },
       link: function postLink(scope, element, attrs) {
-      	console.log(scope.details)
-        // adjust temporal variables
+        // console.log(scope.details)
 
         var svg = d3.select(element[0]).select('svg'),
-			width = +svg.node().getBoundingClientRect().width,
-			height = +svg.node().getBoundingClientRect().height;
+          width = +svg.node().getBoundingClientRect().width,
+          height = +svg.node().getBoundingClientRect().height;
 
-		var x = d3.scaleLinear()
-                .rangeRound([0, width])
-                .domain([1450, 1750]);
+        var x = d3.scaleLinear()
+          .rangeRound([0, width])
+          .domain([1450, 1750]);
 
         svg.append('path')
 	        .attr('class','background-line')
@@ -108,8 +107,9 @@ angular.module('redesign2017App')
 	        }
 	    }
 
+
         // console.log('details', scope.details);
-        console.log( 'timeline drawn' );
+        console.log('timeline drawn');
       }
     };
   });
