@@ -12,9 +12,12 @@ $panels-stroke: #AEB1B5;
 $highlight-color: #F7F35D;
 $panels-bg-secondary: #C6CACF;
 $light-color: white;
-$node-individual-origin: #F45D4C;
-$node-individual-firstDegree: #EE9F99;
-$node-individual-secondDegree: #BBBBBB;
+/* $node-individual-origin: #F45D4C;*/
+/* $node-individual-firstDegree: #EE9F99;*/
+/* $node-individual-secondDegree: #f2f2f3;*/
+$node-individual-origin: #1239B4;
+$node-individual-firstDegree: #5385A6;
+$node-individual-secondDegree: #f2f2f3;
 $node-share-origin: #5385A6;
 $node-share-direct: #F45D4C;
 $node-share-indirect: #FDE6E5;
@@ -358,6 +361,7 @@ section .flex-container {
 
       &.second-degree {
         background-color: $node-individual-secondDegree;
+        border-color: $node-individual-firstDegree;
       }
     }
   }
