@@ -139,6 +139,8 @@ path.danger {
   margin-bottom: 10px;
   background-color: $panels-bg;
   border-color: $panels-stroke;
+  -webkit-transition: all 0.5s ease;
+  transition: all 0.5s ease;
 }
 
 .panel.smallest {
@@ -558,6 +560,10 @@ contextual-info-panel > section {
   text-align: center;
 }
 
+contextual-info-panel h2 {
+    margin-bottom: 4px;
+}
+
 #more-info {
   background-color: #ddd;
   display: -webkit-box;
@@ -611,13 +617,14 @@ small-timeline path.terminator {
 }
 
 small-timeline .label {
-  font-size: 8px;
-  color: #9B9B9B;
+  font-size: 9px;
+  font-weight: 600;
+  fill: #9B9B9B;
 }
 
-small-timeline .label.life {
+small-timeline .life {
   text-anchor: middle;
-  color: $mainTextColor;
+  fill: $mainTextColor;
 }
 /*MEDIA QUERIES*/
 $screen-xs-max: 767;

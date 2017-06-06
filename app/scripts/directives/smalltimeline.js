@@ -35,14 +35,14 @@ angular.module('redesign2017App')
 	    svg.append('text')
 	    	.attr('class','label')
 	        .attr("x", function(d) { return x(x.domain()[0]); })
-	        .attr("y", function(d) { return height/2; })
+	        .attr("y", function(d) { return height/2-6; })
 	        .text(function(d){return x.domain()[0] });
 
 	    svg.append('text')
 	    	.attr('class','label')
 	    	.attr('text-anchor', 'end')
 	        .attr("x", function(d) { return x(x.domain()[1]); })
-	        .attr("y", function(d) { return height/2; })
+	        .attr("y", function(d) { return height/2-6; })
 	        .text(function(d){return x.domain()[1] });
 
 	    svg.append('path')
@@ -72,13 +72,13 @@ angular.module('redesign2017App')
 	    svg.append('text')
 	    	.attr('class','label life')
 	        .attr("x", function(d) { return x(scope.details.attributes.birth_year); })
-	        .attr("y", function(d) { return height/2-5; })
+	        .attr("y", function(d) { return height/2-8; })
 	        .text(scope.details.attributes.birth_year);
 
 	    svg.append('text')
 	    	.attr('class','label life')
 	        .attr("x", function(d) { return x(scope.details.attributes.death_year); })
-	        .attr("y", function(d) { return height/2-5; })
+	        .attr("y", function(d) { return height/2-8; })
 	        .text(scope.details.attributes.death_year);
 
 
