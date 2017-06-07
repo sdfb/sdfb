@@ -175,53 +175,81 @@ angular.module('redesign2017App')
             dr = Math.sqrt(dx * dx + dy * dy);
           return "M" + d.source.x + "," + d.source.y + "A" + dr + "," + dr + " 0 0,1 " + d.target.x + "," + d.target.y;
         }
-        
+
 
         // A function to handle click toggling based on neighboring nodes.
         function toggleClick(d, newLinks) {
+
           // Reset group bar
           d3.selectAll('.group').classed('active', false);
           d3.selectAll('.group').classed('unactive', false);
 
-          // Make object of all neighboring nodes.
-          var connectedNodes = {};
-          connectedNodes[d.id] = true;
-          newLinks.forEach(function(l) {
-            if (l.source.id == d.id) {
-              connectedNodes[l.target.id] = true;
-            } else if (l.target.id == d.id) {
-              connectedNodes[l.source.id] = true;
-            };
-          });
+          if (d.type == "person") {
 
-          // Ternary operator restyles links and nodes if they are adjacent.
-          d3.selectAll('.link')
-            .classed('faded', function(l) {
-              if (l.target.id != d.id && l.source.id != d.id) {
-                return true;
+            // Make object of all neighboring nodes.
+            var connectedNodes = {};
+            connectedNodes[d.id] = true;
+            newLinks.forEach(function(l) {
+              if (l.source.id == d.id) {
+                connectedNodes[l.target.id] = true;
+              } else if (l.target.id == d.id) {
+                connectedNodes[l.source.id] = true;
               };
-            })
+            });
 
-          d3.selectAll('.node')
-            .classed('faded', function(n) {
-              if (n.id in connectedNodes) {
-                return false
-              } else {
-                return true;
-              };
-            })  
+            // Restyle links, nodes and labels
+            d3.selectAll('.link')
+              .classed('faded', function(l) {
+                if (l.target.id != d.id && l.source.id != d.id) {
+                  return true;
+                };
+              })
 
-          d3.selectAll('g.label')
-            .classed('hidden', function(m){
-              return !(m.id in connectedNodes);
-            }) 
+            d3.selectAll('.node')
+              .classed('faded', function(n) {
+                if (n.id in connectedNodes) {
+                  return false
+                } else {
+                  return true;
+                };
+              })
 
-          // scope.currentSelection.person1 = {id:d.id, name:d.attributes.name, historical_significance:d.attributes.historical_significance, birth_year:d.attributes.birth_year, death_year:d.attributes.death_year};
-          scope.currentSelection.person1 = d;
-          scope.currentSelection = d;
+            d3.selectAll('g.label')
+              .classed('hidden', function(m) {
+                return !(m.id in connectedNodes);
+              })
 
-          // This triggers events in groupsbar.js and contextualinfopanel.js when a selection happens
-          scope.$broadcast('selectionUpdated', scope.currentSelection);
+            // scope.currentSelection.person1 = {id:d.id, name:d.attributes.name, historical_significance:d.attributes.historical_significance, birth_year:d.attributes.birth_year, death_year:d.attributes.death_year};
+            scope.currentSelection = d;
+
+            // This triggers events in groupsbar.js and contextualinfopanel.js when a selection happens
+            scope.$broadcast('selectionUpdated', scope.currentSelection);
+
+          } else if( d.type == "relationship") {
+            console.log(d.type, d);
+
+            d3.selectAll('.link')
+              .classed('faded', function(l){
+                return (l == d)?false:true;
+              })
+
+            d3.selectAll('.node')
+              .classed('faded', function(n){
+                return (n == d.source || n == d.target)?false:true;
+              })
+
+            d3.selectAll('g.label')
+              .classed('hidden', function(m) {
+                return (m == d.source || m == d.target)?false:true;
+              })
+
+            // scope.currentSelection.person1 = {id:d.id, name:d.attributes.name, historical_significance:d.attributes.historical_significance, birth_year:d.attributes.birth_year, death_year:d.attributes.death_year};
+            // scope.currentSelection = d;
+
+            // This triggers events in groupsbar.js and contextualinfopanel.js when a selection happens
+            // scope.$broadcast('selectionUpdated', scope.currentSelection);
+            console.log('selection to be implemented');
+          }
 
         }
 
@@ -230,7 +258,7 @@ angular.module('redesign2017App')
           .attr('height', '100%')
           .attr('fill', 'transparent')
           .on('click', function() {
-            
+
             // Restore nodes and links to normal opacity. (see toggleClick() below)
             d3.selectAll('.link')
               .classed('faded', false)
@@ -242,7 +270,8 @@ angular.module('redesign2017App')
 
             // Must select g.labels since it selects elements in other part of the interface
             d3.selectAll('g.label')
-              .classed('hidden', function(d) { return (d.distance<2)?false:true; })
+              .classed('hidden', function(d) {
+                return (d.distance < 2) ? false : true; })
 
             // reset group bar
             d3.selectAll('.group').classed('active', false);
@@ -250,7 +279,7 @@ angular.module('redesign2017App')
 
             // update selction and trigger event for other directives
             scope.currentSelection = {};
-            scope.$apply();   // no need to trigger events, just apply
+            scope.$apply(); // no need to trigger events, just apply
           }); //on()
 
         // Zooming function translates the size of the svg container.
@@ -367,7 +396,7 @@ angular.module('redesign2017App')
           node = nodeEnter.merge(node)
             // .attr('r', 20)
             // .attr('r', function(d) { return degreeSize(d.attributes.degree); })
-            .attr('r', radius-1)
+            .attr('r', radius - 1)
             // .attr('r', function(d) { return degreeSize(d.attributes.degree); })
             // .attr("fill", function(d) { return color(d.distance); })
             .attr('class', function(d) {
@@ -408,14 +437,15 @@ angular.module('redesign2017App')
           // Create group for the label but define the position later
           var labelEnter = label.enter().append('g')
             .attr("class", "label")
-            .classed('hidden', function(d) { return (d.distance<2)?false:true; })
+            .classed('hidden', function(d) {
+              return (d.distance < 2) ? false : true; })
             .on('click', function(d) {
               toggleClick(d, newLinks);
             })
             .on("mouseenter", function(d) {
               // reorder elements so to bring the hovered one on top and make it readable.
-              svg.selectAll("g.label").each(function(e,i){
-                if(d == e) {
+              svg.selectAll("g.label").each(function(e, i) {
+                if (d == e) {
                   var myElement = this;
                   d3.select(myElement).remove();
                   d3.select('.labels').node().appendChild(myElement);
@@ -428,34 +458,51 @@ angular.module('redesign2017App')
           label.append('rect') // a placeholder to be reworked later
 
           label.append('text')
-            .text(function(d) { return d.attributes.name; })
+            .text(function(d) {
+              return d.attributes.name; })
 
           // Get the Bounding Box of the text created
-          d3.selectAll('.label text').each(function(d,i){
+          d3.selectAll('.label text').each(function(d, i) {
             // Originally used getBBox, but not compatible with firefox
             // newNodes[i].labelBBox = this.getBBox();
             newNodes[i].labelBBox = this.getBoundingClientRect();
           });
 
           // adjust the padding values depending on font and font size
-          var paddingLeftRight = 3; 
+          var paddingLeftRight = 4;
           var paddingTopBottom = 0;
 
           // set dimentions and positions of rectangles depending on the BBox exctracted before
           d3.selectAll(".label rect")
-            .attr("x", function(d) { return 0 - d.labelBBox.width/2 - paddingLeftRight/2; })
-            .attr("y", function(d) { return 0 + 3 - d.labelBBox.height + paddingTopBottom/2;  })
-            .attr("width", function(d) { return d.labelBBox.width + paddingLeftRight; })
-            .attr("height", function(d) { return d.labelBBox.height + paddingTopBottom; });
+            .attr("x", function(d) {
+              return 0 - d.labelBBox.width / 2 - paddingLeftRight / 2; })
+            .attr("y", function(d) {
+              return 0 + 3 - d.labelBBox.height + paddingTopBottom / 2; })
+            .attr("width", function(d) {
+              return d.labelBBox.width + paddingLeftRight; })
+            .attr("height", function(d) {
+              return d.labelBBox.height + paddingTopBottom; });
 
           // center the label in the middle of the node circle
           d3.selectAll('.label')
             .attr("transform", function(d) {
-              return "translate(" + (d.x) + "," + (d.y + 2.5) + ")" })
+              return "translate(" + (d.x) + "," + (d.y + 2.5) + ")"
+            })
+
+          // Add property "type" : "relationship" to every link
+          newLinks.forEach(function(link) {
+            // console.log(link);
+            if (!link.type) {
+              link.type = 'relationship';
+            } else {
+              console.log(link.type);
+            }
+          })
 
           // Sort "newlinks" array so to have the "altered" links at the end and display them on "foreground"
-          newLinks.sort(function(a,b){
-            if (a.altered){ return 1 }
+          newLinks.sort(function(a, b) {
+            if (a.altered) {
+              return 1 }
           });
           // Data join with only those new links and corresponding nodes.
           link = link.data(newLinks, function(d) {
@@ -467,15 +514,19 @@ angular.module('redesign2017App')
 
           link = linkEnter.merge(link)
             .attr('class', 'link')
-            .classed('altered', function(d){ return d.altered?true:false; })
+            .classed('altered', function(d) {
+              return d.altered ? true : false; })
             .attr("d", linkArc)
-            .on('click', function(d){
-              console.log(d);
+            .on('click', function(d) {
+              toggleClick(d, newLinks);
             })
 
           //Update legend too
           // scope.sizeMin = degreeSize.domain()[0];
           // scope.sizeMax = degreeSize.domain()[1]
+
+          //Change name of the viz
+          scope.config.title = "Hooke network of Francis Bacon"
         }
 
         update(confidenceMin, confidenceMax, dateMin, dateMax, complexity);
@@ -528,7 +579,7 @@ angular.module('redesign2017App')
         scope.groups.groupsBar = groupsBar;
         scope.groups.otherGroups = otherGroups;
         console.log('Data for groups bar ($scope.groups):', scope.groups);
-        
+
       }
     };
   });

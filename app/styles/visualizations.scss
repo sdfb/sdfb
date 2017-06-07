@@ -14,9 +14,9 @@ $degree1: #EE9F99;
 $degree3: #f2f2f3;
 
 // BLUE version
-$degree0: #1239B4;
-$degree1: #5385A6;
-$degree3: #f2f2f3;
+// $degree0: #1239B4;
+// $degree1: #5385A6;
+// $degree3: #f2f2f3;
 
 /* Single Force Layout (Hooke)*/
 
@@ -99,6 +99,8 @@ $degree3: #f2f2f3;
 .label rect {
   fill: white;
   opacity: 1;
+  stroke: #b9babc;
+  stroke-width: 0.5px;
 }
 
 
