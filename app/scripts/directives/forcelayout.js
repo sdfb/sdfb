@@ -55,7 +55,7 @@ angular.module('redesign2017App')
         //    searchNodes();
         //  });
 
-        // COMPLEXITY SLIDER AND PARSER
+        // COMPLEXITY PARSER
         function parseComplexity(thresholdLinks, complexity) {
           var oneDegreeNodes = [];
           thresholdLinks.forEach(function(l) {
@@ -192,8 +192,14 @@ angular.module('redesign2017App')
 
             d3.selectAll('g.label')
               .classed('hidden', function(m) {
-                return !(m.id in connectedNodes);
-              })
+                if (m.id in connectedNodes && m.id !== d.id) {
+                  var linkFound = newLinks.filter(function(l){ return ((l.source.id == m.id && l.target.id == d.id) || (l.source.id == d.id && l.target.id == m.id)); });
+                  return (linkFound[0].weight > 80) ? false : true;
+                }
+                else if (m.id == d.id) { return false; }
+                else { return true; }
+                // return !(m.id in connectedNodes);
+              });
 
             // scope.currentSelection.person1 = {id:d.id, name:d.attributes.name, historical_significance:d.attributes.historical_significance, birth_year:d.attributes.birth_year, death_year:d.attributes.death_year};
             scope.currentSelection = d;
@@ -247,7 +253,16 @@ angular.module('redesign2017App')
             // Must select g.labels since it selects elements in other part of the interface
             d3.selectAll('g.label')
               .classed('hidden', function(d) {
-                return (d.distance < 2) ? false : true; })
+                // newLinks.forEach(function(l){
+                //
+                // })
+                // return (d.distance < 2) ? false : true; })
+                if (d.distance == 1) {
+                  var linkFound = links.filter(function(l){ return ((l.source.id == sourceId && l.target.id == d.id) || (l.source.id == d.id && l.target.id == sourceId)); });
+                  return (linkFound[0].weight > 80) ? false : true;
+                }
+                else if (d.distance == 0) { return false; }
+                else { return true; } });
 
             // reset group bar
             d3.selectAll('.group').classed('active', false);
@@ -303,13 +318,13 @@ angular.module('redesign2017App')
         json.data.attributes.connections.forEach(function(c) { links.push(c.attributes) });
         sourceId = json.data.attributes.primary_people;
 
-        degreeSize = d3.scaleLog()
-          .domain([d3.min(nodes, function(d) {
-            return d.attributes.degree;
-          }), d3.max(nodes, function(d) {
-            return d.attributes.degree;
-          })])
-          .range([10, 45]);
+        // degreeSize = d3.scaleLog()
+        //   .domain([d3.min(nodes, function(d) {
+        //     return d.attributes.degree;
+        //   }), d3.max(nodes, function(d) {
+        //     return d.attributes.degree;
+        //   })])
+        //   .range([10, 45]);
 
         // d3.select('.legend .size.min').text('j')
 
@@ -446,7 +461,25 @@ angular.module('redesign2017App')
           var labelEnter = label.enter().append('g')
             .attr("class", "label")
             .classed('hidden', function(d) {
-              return (d.distance < 2) ? false : true; })
+              if (d.distance == 1) {
+                var linkFound = newLinks.filter(function(l){ return ((l.source.id == sourceId && l.target.id == d.id) || (l.source.id == d.id && l.target.id == sourceId)); });
+                return (linkFound[0].weight > 80) ? false : true;
+              }
+              else if (d.distance == 0) { return false; }
+              else { return true; } })
+
+              // console.log(linkFound[0]);
+              // return (d.distance < 2 && linkFound[0].weight > 80) ? false : true; })
+              // var result;
+              // newLinks.forEach(function(l){
+              //
+              //   if (l.source.id == sourceId && l.target.id == d.id && l.weight > 60) { result = false; }
+              //   else if (l.source.id == d.id && l.target.id == sourceId && l.weight > 60) { result = false; }
+              //   else { result = true; }
+              // return result;
+              // })
+            // })
+              // return (d.distance < 2) ? false : true; })
             .on('click', function(d) {
               toggleClick(d, newLinks);
             })
