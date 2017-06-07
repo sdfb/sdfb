@@ -25,8 +25,7 @@ angular.module('redesign2017App')
           confidenceMax = scope.config.confidenceMax,
           dateMin = scope.config.dateMin,
           dateMax = scope.config.dateMax,
-          complexity = scope.config.networkComplexity,
-          radius = 10;
+          complexity = scope.config.networkComplexity;
 
         // HIDDEN SEARCH BAR SINCE NOT WORKING.
         // Search for nodes by making all unmatched nodes temporarily transparent.
@@ -342,11 +341,13 @@ angular.module('redesign2017App')
           .force("link", d3.forceLink(links).id(function(d) {
             return d.id;
           }))
-          .force("charge", d3.forceManyBody().strength(-100)) //.distanceMax([500]))
+          .force("charge", d3.forceManyBody().strength(-125)) //.distanceMax([500]))
           .force("center", d3.forceCenter(width / 2, height / 2))
-          .force("collide", d3.forceCollide().radius(radius + 1)) //function(d) {
+          .force("collide", d3.forceCollide().radius(function(d) {
+            if (d.id == sourceId) { return 26; }
+            else { return 13; }
           // return degreeSize(d.attributes.degree) + 1;
-          // }))
+          }))
           .force("x", d3.forceX())
           .force("y", d3.forceY())
           .stop();
@@ -396,7 +397,7 @@ angular.module('redesign2017App')
           node = nodeEnter.merge(node)
             // .attr('r', 20)
             // .attr('r', function(d) { return degreeSize(d.attributes.degree); })
-            .attr('r', radius - 1)
+            // .attr('r', radius - 1)
             // .attr('r', function(d) { return degreeSize(d.attributes.degree); })
             // .attr("fill", function(d) { return color(d.distance); })
             .attr('class', function(d) {

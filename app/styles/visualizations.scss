@@ -58,15 +58,18 @@ $degree3: #f2f2f3;
 
 .node.degree0 {
   fill: $degree0;
+  r: 25;
 }
 
 .node.degree1 {
   fill: $degree1;
+  r: 12.5;
 }
 
 .node.degree2 {
   fill: $degree3;
   stroke: $degree0;
+  r:6.25;
 }
 
 .node.faded {
