@@ -244,7 +244,8 @@ path.danger {
   font-size: 18px;
   color: #434055;
   letter-spacing: 0.75px;
-  width: 200%;
+  max-width: 200%;
+  white-space: nowrap;
 }
 /* search panel styles*/
 search-panel.panel {
