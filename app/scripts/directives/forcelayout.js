@@ -432,7 +432,9 @@ angular.module('redesign2017App')
 
           // Get the Bounding Box of the text created
           d3.selectAll('.label text').each(function(d,i){
-            newNodes[i].labelBBox = this.getBBox();
+            // Originally used getBBox, but not compatible with firefox
+            // newNodes[i].labelBBox = this.getBBox();
+            newNodes[i].labelBBox = this.getBoundingClientRect();
           });
 
           // adjust the padding values depending on font and font size
