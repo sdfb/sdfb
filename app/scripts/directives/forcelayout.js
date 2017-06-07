@@ -101,7 +101,6 @@ angular.module('redesign2017App')
             return [oneDegreeNodes, newLinks];
           }
           if (complexity == '1.75') {
-            // var newLinks = thresholdLinks.filter(function(l) {if (oneDegreeNodes.indexOf(l.source) != -1 || oneDegreeNodes.indexOf(l.target) != -1) {return l;}});
             var newNodes = [];
             twoDegreeNodes.forEach(function(d) {
               var count = 0;
@@ -253,10 +252,6 @@ angular.module('redesign2017App')
             // Must select g.labels since it selects elements in other part of the interface
             d3.selectAll('g.label')
               .classed('hidden', function(d) {
-                // newLinks.forEach(function(l){
-                //
-                // })
-                // return (d.distance < 2) ? false : true; })
                 if (d.distance == 1) {
                   var linkFound = links.filter(function(l){ return ((l.source.id == sourceId && l.target.id == d.id) || (l.source.id == d.id && l.target.id == sourceId)); });
                   return (linkFound[0].weight > 80) ? false : true;
@@ -318,14 +313,6 @@ angular.module('redesign2017App')
         json.data.attributes.connections.forEach(function(c) { links.push(c.attributes) });
         sourceId = json.data.attributes.primary_people;
 
-        // degreeSize = d3.scaleLog()
-        //   .domain([d3.min(nodes, function(d) {
-        //     return d.attributes.degree;
-        //   }), d3.max(nodes, function(d) {
-        //     return d.attributes.degree;
-        //   })])
-        //   .range([10, 45]);
-
         // d3.select('.legend .size.min').text('j')
 
         var simulation = d3.forceSimulation(nodes)
@@ -338,7 +325,6 @@ angular.module('redesign2017App')
           .force("collide", d3.forceCollide().radius(function(d) {
             if (d.id == sourceId) { return 26; }
             else { return 13; }
-          // return degreeSize(d.attributes.degree) + 1;
           }))
           .force("x", d3.forceX())
           .force("y", d3.forceY())
@@ -408,20 +394,13 @@ angular.module('redesign2017App')
             .attr('class', function(d) {
               return 'node degree' + d.distance
             });
-          // .attr("cx", function(d) { return d.x; })
-          // .attr("cy", function(d) { return d.y; });
+
           node.exit().remove();
           var nodeEnter = node.enter().append('circle');
 
-          // node.attr('r', 20);
-          // node.attr('r', function(d) { return degreeSize(d.attributes.degree); });
 
           node = nodeEnter.merge(node)
-            // .attr('r', 20)
-            // .attr('r', function(d) { return degreeSize(d.attributes.degree); })
-            // .attr('r', radius - 1)
-            // .attr('r', function(d) { return degreeSize(d.attributes.degree); })
-            // .attr("fill", function(d) { return color(d.distance); })
+
             .attr('class', function(d) {
               return 'node degree' + d.distance
             })
@@ -429,10 +408,10 @@ angular.module('redesign2017App')
               return "n" + d.id.toString();
             })
             .attr("cx", function(d) {
-              return d.x; // = Math.max(radius, Math.min(width - radius, d.x));
+              return d.x;
             })
             .attr("cy", function(d) {
-              return d.y; // = Math.max(radius, Math.min(height - radius, d.y));
+              return d.y;
             })
             // .attr("pulse", false)
             .attr("is_source", function(d) {
@@ -468,18 +447,6 @@ angular.module('redesign2017App')
               else if (d.distance == 0) { return false; }
               else { return true; } })
 
-              // console.log(linkFound[0]);
-              // return (d.distance < 2 && linkFound[0].weight > 80) ? false : true; })
-              // var result;
-              // newLinks.forEach(function(l){
-              //
-              //   if (l.source.id == sourceId && l.target.id == d.id && l.weight > 60) { result = false; }
-              //   else if (l.source.id == d.id && l.target.id == sourceId && l.weight > 60) { result = false; }
-              //   else { result = true; }
-              // return result;
-              // })
-            // })
-              // return (d.distance < 2) ? false : true; })
             .on('click', function(d) {
               toggleClick(d, newLinks);
             })
