@@ -654,6 +654,13 @@ small-timeline .life {
 .modal-dialog {
   width: 775px;
 
+  .close-btn {
+      cursor: pointer;
+      position: absolute;
+      right: 18px;
+      top: 16px;
+  }
+
   h3 {
     font-size: 14px;
     font-weight: 700;
