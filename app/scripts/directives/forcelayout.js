@@ -31,30 +31,30 @@ angular.module('redesign2017App')
         // HIDDEN SEARCH BAR SINCE NOT WORKING.
         // Search for nodes by making all unmatched nodes temporarily transparent.
         // function searchNodes() {
-        // 	var term = document.getElementById('searchTerm').value;
-        // 	var selected = container.selectAll('.node').filter(function(d, i) {
-        // 		return d.name.toLowerCase().search(term.toLowerCase()) == -1;
-        // 	});
-        // 	selected.style('opacity', '0');
-        // 	var link = container.selectAll('.link');
-        // 	link.style('stroke-opacity', '0');
-        // 	d3.selectAll('.node').transition()
-        // 		.duration(5000)
-        // 		.style('opacity', '1');
-        // 	d3.selectAll('.link').transition().duration(5000).style('stroke-opacity', '0.6');
+        //  var term = document.getElementById('searchTerm').value;
+        //  var selected = container.selectAll('.node').filter(function(d, i) {
+        //    return d.name.toLowerCase().search(term.toLowerCase()) == -1;
+        //  });
+        //  selected.style('opacity', '0');
+        //  var link = container.selectAll('.link');
+        //  link.style('stroke-opacity', '0');
+        //  d3.selectAll('.node').transition()
+        //    .duration(5000)
+        //    .style('opacity', '1');
+        //  d3.selectAll('.link').transition().duration(5000).style('stroke-opacity', '0.6');
         // }
         // Create form for search (see function below).
         // var search = d3.select("div#tools").append('form').attr('onsubmit', 'return false;');
         // var box = search.append('input')
-        // 	.attr('type', 'text')
-        // 	.attr('id', 'searchTerm')
-        // 	.attr('placeholder', 'Type to search...');
+        //  .attr('type', 'text')
+        //  .attr('id', 'searchTerm')
+        //  .attr('placeholder', 'Type to search...');
         // var button = search.append('input')
-        // 	.attr('type', 'button')
-        // 	.attr('value', 'Search')
-        // 	.on('click', function() {
-        // 		searchNodes();
-        // 	});
+        //  .attr('type', 'button')
+        //  .attr('value', 'Search')
+        //  .on('click', function() {
+        //    searchNodes();
+        //  });
 
         // COMPLEXITY SLIDER AND PARSER
         function parseComplexity(thresholdLinks, complexity) {
@@ -146,25 +146,25 @@ angular.module('redesign2017App')
         // Radio buttons for network complexity.
         // var complexityForm = d3.select('div#tools').append('form')
         // var complexityLabel = complexityForm.append('label')
-        // 	.text('Network Complexity: ' + complexity + " ")
-        // 	.attr('id', 'complexityLabel');
+        //  .text('Network Complexity: ' + complexity + " ")
+        //  .attr('id', 'complexityLabel');
         // var complexityButtons = complexityForm.selectAll('input')
-        // 	.data(['1', '1.5', '1.75', '2', '2.5'])
-        // 	.enter().append('input')
-        // 	.attr('type', 'radio')
-        // 	.attr('name', 'complexity')
-        // 	.attr('checked', function(d) {
-        // 		if (d == complexity) {
-        // 			return 'checked';
-        // 		}
-        // 	})
-        // 	.attr('value', function(d) {
-        // 		return d;
-        // 	});
+        //  .data(['1', '1.5', '1.75', '2', '2.5'])
+        //  .enter().append('input')
+        //  .attr('type', 'radio')
+        //  .attr('name', 'complexity')
+        //  .attr('checked', function(d) {
+        //    if (d == complexity) {
+        //      return 'checked';
+        //    }
+        //  })
+        //  .attr('value', function(d) {
+        //    return d;
+        //  });
         // complexityButtons.on('change', function() {
-        // 	complexity = this.value;
-        // 	d3.select("#complexityLabel").text("Network Complexity: " + complexity + " ");
-        // 	update(confidenceMin, complexity);
+        //  complexity = this.value;
+        //  d3.select("#complexityLabel").text("Network Complexity: " + complexity + " ");
+        //  update(confidenceMin, complexity);
         // });
 
 
@@ -175,8 +175,14 @@ angular.module('redesign2017App')
             dr = Math.sqrt(dx * dx + dy * dy);
           return "M" + d.source.x + "," + d.source.y + "A" + dr + "," + dr + " 0 0,1 " + d.target.x + "," + d.target.y;
         }
+        
+
         // A function to handle click toggling based on neighboring nodes.
         function toggleClick(d, newLinks) {
+          // Reset group bar
+          d3.selectAll('.group').classed('active', false);
+          d3.selectAll('.group').classed('unactive', false);
+
           // Make object of all neighboring nodes.
           var connectedNodes = {};
           connectedNodes[d.id] = true;
@@ -188,42 +194,35 @@ angular.module('redesign2017App')
             };
           });
 
-          // if (toggle == 0) {
-            // recursivePulse(d);
-            // Ternary operator restyles links and nodes if they are adjacent.
-            d3.selectAll('.link').style('stroke', function(l) {
-              if (l.target.id != d.id && l.source.id != d.id) { return '#D3D3D3'; };
-            });
-            d3.selectAll('.node')
-              .classed('faded', function(n) {
-                if (n.id in connectedNodes) {
-                  return false
-                } else {
-                  return true;
-                };
-              })
-              .classed('focussed', function(n) {
-                if (n.id in connectedNodes) {
-                  return true
-                } else {
-                  return false;
-                };
-              })
+          // Ternary operator restyles links and nodes if they are adjacent.
+          d3.selectAll('.link')
+            .classed('faded', function(l) {
+              if (l.target.id != d.id && l.source.id != d.id) {
+                return true;
+              };
+            })
 
-            // Log information when node is clicked
-            // console.log('Node selected',d);
-            // console.log('Node attributes', d.attributes.groups);
+          d3.selectAll('.node')
+            .classed('faded', function(n) {
+              if (n.id in connectedNodes) {
+                return false
+              } else {
+                return true;
+              };
+            })  
 
-            // scope.currentSelection.person1 = {id:d.id, name:d.attributes.name, historical_significance:d.attributes.historical_significance, birth_year:d.attributes.birth_year, death_year:d.attributes.death_year};
-            scope.currentSelection.person1 = d;
-            scope.currentSelection = d;
+          d3.selectAll('g.label')
+            .classed('hidden', function(m){
+              return !(m.id in connectedNodes);
+            }) 
 
-            // This triggers events in groupsbar.js and contextualinfopanel.js when a selection happens
-            scope.$broadcast('selectionUpdated', scope.currentSelection);
+          // scope.currentSelection.person1 = {id:d.id, name:d.attributes.name, historical_significance:d.attributes.historical_significance, birth_year:d.attributes.birth_year, death_year:d.attributes.death_year};
+          scope.currentSelection.person1 = d;
+          scope.currentSelection = d;
 
-            // d3.select('div#tools').append('span').text("Name: " + d.name + "  |  Historical Significance: " + d.historical_significance + "  |  Lived: " + d.birth_year + "-" + d.death_year);
-            // toggle = 1;
-          // }
+          // This triggers events in groupsbar.js and contextualinfopanel.js when a selection happens
+          scope.$broadcast('selectionUpdated', scope.currentSelection);
+
         }
 
         svg.append('rect')
@@ -231,25 +230,29 @@ angular.module('redesign2017App')
           .attr('height', '100%')
           .attr('fill', 'transparent')
           .on('click', function() {
-            // if (toggle == 1) {
-              // Restore nodes and links to normal opacity. (see toggleClick() below)
-              d3.selectAll('.link').style('stroke', '#000');
-              // d3.select('[pulse="true"]').transition().duration(200).style('opacity', 1);
-              d3.selectAll('.node')
-                // .attr('pulse', false)
-                .classed('faded', false)
-                .classed('focused', false);
+            
+            // Restore nodes and links to normal opacity. (see toggleClick() below)
+            d3.selectAll('.link')
+              .classed('faded', false)
+              // .classed('focused', false);
 
-              // reset group bar
-              d3.selectAll('.group').classed('active', false);
-              d3.selectAll('.group').classed('unactive', false);
-              // d3.selectAll('span').remove();
-              scope.currentSelection = {};
-              scope.$apply();
-              // console.log('currentSelection',scope.currentSelection);
-            //   toggle = 0;
-            // }
-          });
+            d3.selectAll('.node')
+              .classed('faded', false)
+              // .classed('focused', false);
+
+            // Must select g.labels since it selects elements in other part of the interface
+            d3.selectAll('g.label')
+              .classed('hidden', function(d) { return (d.distance<2)?false:true; })
+
+            // reset group bar
+            d3.selectAll('.group').classed('active', false);
+            d3.selectAll('.group').classed('unactive', false);
+
+            // update selction and trigger event for other directives
+            scope.currentSelection = {};
+            scope.$apply();   // no need to trigger events, just apply
+          }); //on()
+
         // Zooming function translates the size of the svg container.
         function zoomed() {
           container.attr("transform", "translate(" + d3.event.transform.x + ", " + d3.event.transform.y + ") scale(" + d3.event.transform.k + ")");
@@ -266,11 +269,13 @@ angular.module('redesign2017App')
 
         var link = container.append("g")
           .attr("class", "links")
-          .selectAll(".link"),
-          node = container.append("g")
+          .selectAll(".link");
+
+        var node = container.append("g")
           .attr("class", "nodes")
-          .selectAll(".node"),
-          label = container.append("g")
+          .selectAll(".node");
+
+        var label = container.append("g")
           .attr("class", "labels")
           .selectAll(".label");
 
@@ -308,9 +313,9 @@ angular.module('redesign2017App')
           .force("link", d3.forceLink(links).id(function(d) {
             return d.id;
           }))
-          .force("charge", d3.forceManyBody().strength(-70)) //.distanceMax([500]))
+          .force("charge", d3.forceManyBody().strength(-100)) //.distanceMax([500]))
           .force("center", d3.forceCenter(width / 2, height / 2))
-          .force("collide", d3.forceCollide().radius(radius+1)) //function(d) {
+          .force("collide", d3.forceCollide().radius(radius + 1)) //function(d) {
           // return degreeSize(d.attributes.degree) + 1;
           // }))
           .force("x", d3.forceX())
@@ -362,9 +367,8 @@ angular.module('redesign2017App')
           node = nodeEnter.merge(node)
             // .attr('r', 20)
             // .attr('r', function(d) { return degreeSize(d.attributes.degree); })
-            .attr('r', radius-.75) //function(d) {
-            // 	return degreeSize(d.attributes.degree);
-            // })
+            .attr('r', radius-1)
+            // .attr('r', function(d) { return degreeSize(d.attributes.degree); })
             // .attr("fill", function(d) { return color(d.distance); })
             .attr('class', function(d) {
               return 'node degree' + d.distance
@@ -373,10 +377,10 @@ angular.module('redesign2017App')
               return "n" + d.id.toString();
             })
             .attr("cx", function(d) {
-              return d.x;// = Math.max(radius, Math.min(width - radius, d.x));
+              return d.x; // = Math.max(radius, Math.min(width - radius, d.x));
             })
             .attr("cy", function(d) {
-              return d.y;// = Math.max(radius, Math.min(height - radius, d.y));
+              return d.y; // = Math.max(radius, Math.min(height - radius, d.y));
             })
             // .attr("pulse", false)
             .attr("is_source", function(d) {
@@ -394,40 +398,82 @@ angular.module('redesign2017App')
               return d.attributes.name;
             });
 
-          label = label.data(newNodes, function(d){ return d.id; });
+          // LABELS
+          label = label.data(newNodes, function(d) {
+            return d.id;
+          });
 
           label.exit().remove();
-          var labelEnter = label.enter().append('text');
+
+          // Create group for the label but define the position later
+          var labelEnter = label.enter().append('g')
+            .attr("class", "label")
+            .classed('hidden', function(d) { return (d.distance<2)?false:true; })
+            .on('click', function(d) {
+              toggleClick(d, newLinks);
+            })
+            .on("mouseenter", function(d) {
+              // reorder elements so to bring the hovered one on top and make it readable.
+              svg.selectAll("g.label").each(function(e,i){
+                if(d == e) {
+                  var myElement = this;
+                  d3.select(myElement).remove();
+                  d3.select('.labels').node().appendChild(myElement);
+                }
+              })
+            })
 
           label = labelEnter.merge(label)
-              .attr("dx", function(d) {return d.x-radius*5;})
-              .attr("dy", function(d) {return d.y+radius/2;})
-              .text(function(d) { if (d.distance < 2) {return d.attributes.name;} })
-              .style("font-size", 8)
-              .style('font-weight', 'bold');
 
-            // Data join with only those new links and corresponding nodes.
-            link = link.data(newLinks, function(d) {
-              return d.source.id + ', ' + d.target.id;
-            });
-            link.exit().remove();
-            var linkEnter = link.enter().append('path')
-              .attr('class', 'link');
+          label.append('rect') // a placeholder to be reworked later
 
-            link = linkEnter.merge(link)
-              // .attr('class', 'link')
-              .attr("d", linkArc)
-              .attr('class', function(l) {
-                if (l.altered == true) {
-                  return 'link altered';
-                } else {
-                  return 'link';
-                }
-              });
+          label.append('text')
+            .text(function(d) { return d.attributes.name; })
+
+          // Get the Bounding Box of the text created
+          d3.selectAll('.label text').each(function(d,i){
+            newNodes[i].labelBBox = this.getBBox();
+          });
+
+          // adjust the padding values depending on font and font size
+          var paddingLeftRight = 3; 
+          var paddingTopBottom = 0;
+
+          // set dimentions and positions of rectangles depending on the BBox exctracted before
+          d3.selectAll(".label rect")
+            .attr("x", function(d) { return 0 - d.labelBBox.width/2 - paddingLeftRight/2; })
+            .attr("y", function(d) { return 0 + 3 - d.labelBBox.height + paddingTopBottom/2;  })
+            .attr("width", function(d) { return d.labelBBox.width + paddingLeftRight; })
+            .attr("height", function(d) { return d.labelBBox.height + paddingTopBottom; });
+
+          // center the label in the middle of the node circle
+          d3.selectAll('.label')
+            .attr("transform", function(d) {
+              return "translate(" + (d.x) + "," + (d.y + 2.5) + ")" })
+
+          // Sort "newlinks" array so to have the "altered" links at the end and display them on "foreground"
+          newLinks.sort(function(a,b){
+            if (a.altered){ return 1 }
+          });
+          // Data join with only those new links and corresponding nodes.
+          link = link.data(newLinks, function(d) {
+            return d.source.id + ', ' + d.target.id;
+          });
+          link.exit().remove();
+          var linkEnter = link.enter().append('path')
+            .attr('class', 'link');
+
+          link = linkEnter.merge(link)
+            .attr('class', 'link')
+            .classed('altered', function(d){ return d.altered?true:false; })
+            .attr("d", linkArc)
+            .on('click', function(d){
+              console.log(d);
+            })
 
           //Update legend too
-          scope.sizeMin = degreeSize.domain()[0];
-          scope.sizeMax = degreeSize.domain()[1]
+          // scope.sizeMin = degreeSize.domain()[0];
+          // scope.sizeMax = degreeSize.domain()[1]
         }
 
         update(confidenceMin, confidenceMax, dateMin, dateMax, complexity);
@@ -469,14 +515,6 @@ angular.module('redesign2017App')
           return d3.descending(a.value, b.value);
         })
 
-        // log the outcome in the scope
-        // console.log(arr);
-
-        // using p-quantile for understanding how to cluster smaller goups
-        // arr = _.map(arr, function(d){return d.value})
-        // console.log(arr)
-        // console.log(d3.quantile(arr, 0.25))
-
         var cutAt = 20;
         var groupsBar = _.slice(arr, 0, cutAt);
         var otherGroups = _.slice(arr, cutAt);
@@ -485,11 +523,10 @@ angular.module('redesign2017App')
           othersValue += d.value;
         });
         groupsBar.push({ 'groupId': 'others', 'value': othersValue });
-
-        console.log('Data for groups bar ($scope.groups):', scope.groups);
-
         scope.groups.groupsBar = groupsBar;
         scope.groups.otherGroups = otherGroups;
+        console.log('Data for groups bar ($scope.groups):', scope.groups);
+        
       }
     };
   });

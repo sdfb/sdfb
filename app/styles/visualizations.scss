@@ -1,35 +1,48 @@
 /* visualizations.scss*/
 /* Write here all the SCSS code for the visualizations, so to keep it separated from the panels and more general UI one*/
+
 /* List of visualizations:*/
 /* • Single Force Layout (Hooke)*/
 /* Variables*/
-/* $degree0: #F45D4C;*/
-/* $degree1: #EE9F99;*/
-/* $degree3: #f2f2f3;*/
+// General
+$text: #434055;
+$opacityDuration: 0.5s;
+
+// RED version
+$degree0: #F45D4C;
+$degree1: #EE9F99;
+$degree3: #f2f2f3;
+
+// BLUE version
 $degree0: #1239B4;
 $degree1: #5385A6;
 $degree3: #f2f2f3;
+
 /* Single Force Layout (Hooke)*/
-.links {
-  stroke: #000;
-  fill: none;
-  /*stroke: #000;*/
-  shape-rendering: geometricPrecision;
-}
 
 .link {
-  opacity: 0.35;
+  stroke: #b9babc;
+  fill: none;
+  shape-rendering: geometricPrecision;
+  -webkit-transition: all $opacityDuration;
+  transition: all $opacityDuration;
+  cursor: pointer;
 }
 
 .link.altered {
-  opacity: 1;
+  stroke: #000;
+}
+
+.link.faded {
+  opacity: 0;
+  pointer-events: none;
 }
 
 .node {
   stroke: #fff;
   stroke-width: 1.5px;
-  -webkit-transition: stroke-width 0.5s, stroke 0.5s, opacity 0.5s;
-  transition: stroke-width 0.5s, stroke 0.5s, opacity 0.5s;
+  -webkit-transition: all $opacityDuration;
+  transition: all $opacityDuration;
   cursor: pointer;
 }
 
@@ -45,12 +58,10 @@ $degree3: #f2f2f3;
 
 .node.degree0 {
   fill: $degree0;
-  /*fill: #F45D4C;*/
 }
 
 .node.degree1 {
   fill: $degree1;
-  /*fill: #DF947A;*/
 }
 
 .node.degree2 {
@@ -59,12 +70,38 @@ $degree3: #f2f2f3;
 }
 
 .node.faded {
-  opacity: 0.2;
+  opacity: .1;
 }
 
 .node.focused {
   stroke: #666666;
 }
+
+.label {
+  opacity: 1;
+  cursor: pointer;
+  -webkit-transition: opacity $opacityDuration;
+  transition: opacity $opacityDuration;
+}
+
+.label.hidden {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.label text {
+  fill: $text;
+  text-anchor: middle;
+  font-size: 8px;
+  font-weight: bold;
+}
+
+.label rect {
+  fill: white;
+  opacity: 1;
+}
+
+
 
 #tools div {
   display: inline;

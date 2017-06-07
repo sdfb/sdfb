@@ -3,7 +3,8 @@
 </section>
 <section ng-if="currentSelection.type" id="current-selection-person1">
     <h2>{{currentSelection.attributes.name}}</h2>
-    <p>{{currentSelection.attributes.historical_significance}}</p>
+    <p ng-if="currentSelection.attributes.historical_significance != ''">{{currentSelection.attributes.historical_significance}}</p>
+    <p ng-if="currentSelection.attributes.historical_significance == ''"> &empty; </p>
     <small-timeline details="currentSelection"></small-timeline>
 </section>
 
