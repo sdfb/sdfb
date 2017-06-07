@@ -60,9 +60,9 @@ angular.module('redesign2017App')
       if (newValue !== oldValue) {
         var config = newValue;
         $scope.legendClosed = false;
-        $scope.filtersClosed = true;
+        $scope.filtersClosed = false;
         if (config.viewObject == 0 && config.viewMode == 'individual-force') {
-          // $scope.$broadcast('force layout update', { data: 'some data' });
+          $scope.$broadcast('force layout update');
         } else if (config.viewObject == 0 && config.viewMode == 'individual-concentric') {
           // $scope.$broadcast('force layout update', { data: 'some data' });
         } else if (config.viewObject == 1 && config.viewMode == 'all') {

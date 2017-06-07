@@ -26,8 +26,36 @@ angular.module('redesign2017App')
 
 
         sourceNode = sourceNode.attributes;
+
+        createDensityButtons();
         createConfidenceGraph();
         createDateGraph();
+
+        function createDensityButtons() {
+          // Radio buttons for network complexity.
+          var complexityForm = d3.select(element[0]).append('form')
+          var complexityLabel = complexityForm.append('label')
+           .text('Visual Density: ');
+          var complexityButtons = complexityForm.selectAll('input')
+           .data(['1', '1.5', '1.75', '2', '2.5'])
+           .enter().append('input')
+           .attr('type', 'radio')
+           .attr('name', 'complexity')
+           .attr('checked', function(d) {
+             if (d == complexity) {
+               return 'checked';
+             }
+           })
+           .attr('value', function(d) {
+             return d;
+           });
+          complexityButtons.on('change', function() {
+           complexity = this.value;
+           scope.config.networkComplexity = complexity;
+           scope.$apply();
+          //  console.log(scope.config.networkComplexity);
+          });
+        }
 
         function countConfidenceFrequency() {
           var confidence = d3.range(60,101);

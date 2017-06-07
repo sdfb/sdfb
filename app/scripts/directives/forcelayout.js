@@ -142,29 +142,6 @@ angular.module('redesign2017App')
             return [allNodes, newLinks];
           }
         }
-        // Radio buttons for network complexity.
-        // var complexityForm = d3.select('div#tools').append('form')
-        // var complexityLabel = complexityForm.append('label')
-        //  .text('Network Complexity: ' + complexity + " ")
-        //  .attr('id', 'complexityLabel');
-        // var complexityButtons = complexityForm.selectAll('input')
-        //  .data(['1', '1.5', '1.75', '2', '2.5'])
-        //  .enter().append('input')
-        //  .attr('type', 'radio')
-        //  .attr('name', 'complexity')
-        //  .attr('checked', function(d) {
-        //    if (d == complexity) {
-        //      return 'checked';
-        //    }
-        //  })
-        //  .attr('value', function(d) {
-        //    return d;
-        //  });
-        // complexityButtons.on('change', function() {
-        //  complexity = this.value;
-        //  d3.select("#complexityLabel").text("Network Complexity: " + complexity + " ");
-        //  update(confidenceMin, complexity);
-        // });
 
 
         // Draw curved edges
@@ -377,7 +354,37 @@ angular.module('redesign2017App')
           var newNodes = newData[0];
           var newLinks = newData[1];
 
+          // Add property "type" : "relationship" to every link
+          newLinks.forEach(function(link) {
+            // console.log(link);
+            if (!link.type) {
+              link.type = 'relationship';
+            } else {
+              console.log(link.type);
+            }
+          })
 
+          // Sort "newlinks" array so to have the "altered" links at the end and display them on "foreground"
+          newLinks.sort(function(a, b) {
+            if (a.altered) {
+              return 1 }
+          });
+          // Data join with only those new links and corresponding nodes.
+          link = link.data(newLinks, function(d) {
+            return d.source.id + ', ' + d.target.id;
+          });
+          link.exit().remove();
+          var linkEnter = link.enter().append('path')
+            .attr('class', 'link');
+
+          link = linkEnter.merge(link)
+            .attr('class', 'link')
+            .classed('altered', function(d) {
+              return d.altered ? true : false; })
+            .attr("d", linkArc)
+            .on('click', function(d) {
+              toggleClick(d, newLinks);
+            });
 
           // When adding and removing nodes, reassert attributes and behaviors.
           node = node.data(newNodes, function(d) {
@@ -391,7 +398,7 @@ angular.module('redesign2017App')
           node.exit().remove();
           var nodeEnter = node.enter().append('circle');
 
-          node.attr('r', 20);
+          // node.attr('r', 20);
           // node.attr('r', function(d) { return degreeSize(d.attributes.degree); });
 
           node = nodeEnter.merge(node)
@@ -466,7 +473,8 @@ angular.module('redesign2017App')
           d3.selectAll('.label text').each(function(d, i) {
             // Originally used getBBox, but not compatible with firefox
             // newNodes[i].labelBBox = this.getBBox();
-            newNodes[i].labelBBox = this.getBoundingClientRect();
+            // newNodes[i].labelBBox = this.getBoundingClientRect();
+            d.labelBBox = this.getBoundingClientRect(); // Throwing error with newNodes[i]
           });
 
           // adjust the padding values depending on font and font size
@@ -490,37 +498,7 @@ angular.module('redesign2017App')
               return "translate(" + (d.x) + "," + (d.y + 2.5) + ")"
             })
 
-          // Add property "type" : "relationship" to every link
-          newLinks.forEach(function(link) {
-            // console.log(link);
-            if (!link.type) {
-              link.type = 'relationship';
-            } else {
-              console.log(link.type);
-            }
-          })
 
-          // Sort "newlinks" array so to have the "altered" links at the end and display them on "foreground"
-          newLinks.sort(function(a, b) {
-            if (a.altered) {
-              return 1 }
-          });
-          // Data join with only those new links and corresponding nodes.
-          link = link.data(newLinks, function(d) {
-            return d.source.id + ', ' + d.target.id;
-          });
-          link.exit().remove();
-          var linkEnter = link.enter().append('path')
-            .attr('class', 'link');
-
-          link = linkEnter.merge(link)
-            .attr('class', 'link')
-            .classed('altered', function(d) {
-              return d.altered ? true : false; })
-            .attr("d", linkArc)
-            .on('click', function(d) {
-              toggleClick(d, newLinks);
-            })
 
           //Update legend too
           // scope.sizeMin = degreeSize.domain()[0];
@@ -535,6 +513,11 @@ angular.module('redesign2017App')
         // update triggered from the controller
         scope.$on('force layout update', function(event, args) {
           console.log(event, args);
+          confidenceMin = scope.config.confidenceMin;
+          confidenceMax = scope.config.confidenceMax;
+          dateMin = scope.config.dateMin;
+          dateMax = scope.config.dateMax;
+          complexity = scope.config.networkComplexity;
           update(confidenceMin, confidenceMax, dateMin, dateMax, complexity);
         });
 
