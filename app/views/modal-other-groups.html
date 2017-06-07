@@ -6,17 +6,17 @@
     <table class="table table-hover">
         <thead>
             <tr>
-                <td>ID</td>
-                <td>Group name</td>
-                <td>Members (tot)</td>
-                <td>Action</td>
+                <td class="id-column">ID</td>
+                <td class="name-column">Group name</td>
+                <td class="members-column">Members</td>
+                <td class="action-column">Action</td>
             </tr>
         </thead>
         <tbody>
             <tr class="group {{'g'+group.groupId}}" ng-class="{ 'active': group.active }" ng-repeat="group in $ctrl.groups">
                 <td>{{ group.groupId }}</td>
                 <td>Group name</td>
-                <td>{{ group.value }} (NNN)</td>
+                <td class="text-right">{{ group.value }} (NNN)</td>
                 <td>
                     <button type="button" class="btn btn-primary">
                         Visualize

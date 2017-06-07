@@ -246,7 +246,6 @@ path.danger {
   letter-spacing: 0.75px;
   width: 200%;
 }
-
 /* search panel styles*/
 search-panel.panel {
   border: none;
@@ -584,6 +583,10 @@ contextual-info-panel h2 {
   margin-bottom: 4px;
 }
 
+#current-selection-person1 p {
+  font-size: 12px;
+}
+
 #more-info {
   background-color: #ddd;
   display: -webkit-box;
@@ -645,6 +648,62 @@ small-timeline .label {
 small-timeline .life {
   text-anchor: middle;
   fill: $mainTextColor;
+}
+/* modal styles*/
+.modal-dialog {
+  width: 775px;
+
+  h3 {
+    font-size: 14px;
+    font-weight: 700;
+    margin-bottom: 10px;
+    text-transform: uppercase;
+  }
+
+  table {
+    table-layout: fixed;
+    white-space: nowrap;
+
+    td {
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .id-column {
+        width: 6%;
+    }
+    .name-column {
+        width: 48%;
+    }
+    .members-column {
+        width: 16%;
+    }
+    .action-column {
+        width: 35%;
+    }
+  }
+
+  thead {
+    td {
+      font-weight: 700;
+    }
+  }
+
+  .btn-primary {
+    padding: 2px 8px;
+    width: auto;
+  }
+}
+
+.table > tbody > tr > td:first-of-type,
+.table > thead > tr > td:first-of-type {
+  padding-left: 0;
+}
+
+.table > tbody > tr > td:last-of-type,
+.table > thead > tr > td:last-of-type {
+  padding-right: 0;
 }
 /*MEDIA QUERIES*/
 $screen-xs-max: 767;
