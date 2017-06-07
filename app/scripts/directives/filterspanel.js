@@ -66,8 +66,8 @@ angular.module('redesign2017App')
         function createConfidenceGraph() {
 
           var confidenceData = countConfidenceFrequency();
-          var confidenceGraph = d3.select(element[0]).append('svg').attr('width', 500).attr('height', 100),
-              confidenceMargin = {top: 20, right: 20, bottom: 30, left: 40},
+          var confidenceGraph = d3.select(element[0]).append('svg').attr('width', 300).attr('height', 100),
+              confidenceMargin = {top: 10, right: 10, bottom: 30, left: 10},
               confidenceWidth = +confidenceGraph.attr("width") - confidenceMargin.left - confidenceMargin.right,
               confidenceHeight = +confidenceGraph.attr("height") - confidenceMargin.top - confidenceMargin.bottom;
 
@@ -80,7 +80,7 @@ angular.module('redesign2017App')
           confidenceX.domain(confidenceData.map(function(d) { return d.weight; }));
           confidenceY.domain([0, d3.max(confidenceData, function(d) { return d.count; })]);
 
-          var brush = d3.brushX()
+          var cBrush = d3.brushX()
             .extent([[0, 0], [confidenceWidth, confidenceHeight]])
             .on("end", brushed);
 
@@ -100,8 +100,8 @@ angular.module('redesign2017App')
 
           confidenceG.append("g")
               .attr("class", "brush")
-              .call(brush)
-              .call(brush.move, confidenceX.range());
+              .call(cBrush)
+              .call(cBrush.move, confidenceX.range());
 
           function brushed() {
             var s = d3.event.selection || confidenceX.range();
@@ -120,8 +120,8 @@ angular.module('redesign2017App')
         function createDateGraph() {
 
            var dateData = countDateFrequency();
-           var dateGraph = d3.select(element[0]).append('svg').attr('width', 500).attr('height', 100),
-               dateMargin = {top: '20', right: '20', bottom: '30', left: '40'},
+           var dateGraph = d3.select(element[0]).append('svg').attr('width', 300).attr('height', 100),
+               dateMargin = {top: '10', right: '10', bottom: '30', left: '10'},
                dateWidth = +dateGraph.attr("width") - dateMargin.left - dateMargin.right,
                dateHeight = +dateGraph.attr("height") - dateMargin.top - dateMargin.bottom;
 
@@ -134,7 +134,7 @@ angular.module('redesign2017App')
            dateX.domain(dateData.map(function(d) { return d.year; }));
            dateY.domain([0, d3.max(dateData, function(d) { return d.count; })]);
 
-           var brush = d3.brushX()
+           var dBrush = d3.brushX()
              .extent([[0, 0], [dateWidth, dateHeight]])
              .on("end", brushed);
 
@@ -154,8 +154,8 @@ angular.module('redesign2017App')
 
            dateG.append("g")
                .attr("class", "brush")
-               .call(brush)
-               .call(brush.move, dateX.range());
+               .call(dBrush)
+               .call(dBrush.move, dateX.range());
 
            function brushed() {
              var s = d3.event.selection || dateX.range();

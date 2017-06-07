@@ -25,7 +25,8 @@ angular.module('redesign2017App')
           confidenceMax = scope.config.confidenceMax,
           dateMin = scope.config.dateMin,
           dateMax = scope.config.dateMax,
-          complexity = scope.config.networkComplexity;
+          complexity = scope.config.networkComplexity,
+          radius = 10;
 
         // HIDDEN SEARCH BAR SINCE NOT WORKING.
         // Search for nodes by making all unmatched nodes temporarily transparent.
@@ -53,31 +54,6 @@ angular.module('redesign2017App')
         // 	.attr('value', 'Search')
         // 	.on('click', function() {
         // 		searchNodes();
-        // 	});
-
-        // Confidence
-        // A slider that removes nodes and edges below the input confidenceMin.
-        // var confidenceSlider = d3.select('div#tools').append('div').text('Confidence Estimate (1- and 2-degree only): ');
-
-        // var confidenceSliderLabel = confidenceSlider.append('label')
-        // 	.attr('for', 'confidenceMin')
-        // 	.attr('id', 'confidenceLabel')
-        // 	.text('60');
-        // var confidenceSliderMain = confidenceSlider.append('input')
-        // 	.attr('type', 'range')
-        // 	.attr('min', 60)
-        // 	.attr('max', 100)
-        // 	.attr('value', 60)
-        // 	.attr('id', 'confidenceMin')
-        // 	.style('width', '50%')
-        // 	.style('display', 'block')
-        // 	.on('input', function() {
-        // 		confidenceMin = this.value;
-
-        // 		d3.select('#confidenceLabel').text(confidenceMin);
-
-        // 		update(confidenceMin, complexity);
-
         // 	});
 
         // COMPLEXITY SLIDER AND PARSER
@@ -212,11 +188,11 @@ angular.module('redesign2017App')
             };
           });
 
-          if (toggle == 0) {
+          // if (toggle == 0) {
             // recursivePulse(d);
             // Ternary operator restyles links and nodes if they are adjacent.
             d3.selectAll('.link').style('stroke', function(l) {
-              return l.target == d || l.source == d ? 1 : '#D3D3D3';
+              if (l.target.id != d.id && l.source.id != d.id) { return '#D3D3D3'; };
             });
             d3.selectAll('.node')
               .classed('faded', function(n) {
@@ -246,8 +222,8 @@ angular.module('redesign2017App')
             scope.$broadcast('selectionUpdated', scope.currentSelection);
 
             // d3.select('div#tools').append('span').text("Name: " + d.name + "  |  Historical Significance: " + d.historical_significance + "  |  Lived: " + d.birth_year + "-" + d.death_year);
-            toggle = 1;
-          }
+            // toggle = 1;
+          // }
         }
 
         svg.append('rect')
@@ -255,7 +231,7 @@ angular.module('redesign2017App')
           .attr('height', '100%')
           .attr('fill', 'transparent')
           .on('click', function() {
-            if (toggle == 1) {
+            // if (toggle == 1) {
               // Restore nodes and links to normal opacity. (see toggleClick() below)
               d3.selectAll('.link').style('stroke', '#000');
               // d3.select('[pulse="true"]').transition().duration(200).style('opacity', 1);
@@ -271,14 +247,16 @@ angular.module('redesign2017App')
               scope.currentSelection = {};
               scope.$apply();
               // console.log('currentSelection',scope.currentSelection);
-              toggle = 0;
-            }
+            //   toggle = 0;
+            // }
           });
         // Zooming function translates the size of the svg container.
         function zoomed() {
           container.attr("transform", "translate(" + d3.event.transform.x + ", " + d3.event.transform.y + ") scale(" + d3.event.transform.k + ")");
         }
         // Call zoom for svg container.
+        // svg.call(d3.zoom().transform, d3.zoomTransform().translate(0,0).scale(1));
+        // svg.call(d3.zoom().extent([[0,0], [svg.attr("width"),svg.attr("height")]]))
         svg.call(d3.zoom().on('zoom', zoomed)); //.on("dblclick.zoom", null);
 
         var container = svg.append('g');
@@ -291,7 +269,10 @@ angular.module('redesign2017App')
           .selectAll(".link"),
           node = container.append("g")
           .attr("class", "nodes")
-          .selectAll(".node");
+          .selectAll(".node"),
+          label = container.append("g")
+          .attr("class", "labels")
+          .selectAll(".label");
 
         var loading = svg.append("text")
           .attr("dy", "0.35em")
@@ -327,9 +308,9 @@ angular.module('redesign2017App')
           .force("link", d3.forceLink(links).id(function(d) {
             return d.id;
           }))
-          .force("charge", d3.forceManyBody().strength([-500])) //.distanceMax([500]))
+          .force("charge", d3.forceManyBody().strength(-70)) //.distanceMax([500]))
           .force("center", d3.forceCenter(width / 2, height / 2))
-          .force("collide", d3.forceCollide().radius(21)) //function(d) {
+          .force("collide", d3.forceCollide().radius(radius+1)) //function(d) {
           // return degreeSize(d.attributes.degree) + 1;
           // }))
           .force("x", d3.forceX())
@@ -361,24 +342,7 @@ angular.module('redesign2017App')
           var newNodes = newData[0];
           var newLinks = newData[1];
 
-          // Data join with only those new links and corresponding nodes.
-          link = link.data(newLinks, function(d) {
-            return d.source.id + ', ' + d.target.id;
-          });
-          link.exit().remove();
-          var linkEnter = link.enter().append('path')
-            .attr('class', 'link');
 
-          link = linkEnter.merge(link)
-            // .attr('class', 'link')
-            .attr("d", linkArc)
-            .attr('class', function(l) {
-              if (l.altered == true) {
-                return 'link altered';
-              } else {
-                return 'link';
-              }
-            });
 
           // When adding and removing nodes, reassert attributes and behaviors.
           node = node.data(newNodes, function(d) {
@@ -396,8 +360,11 @@ angular.module('redesign2017App')
           // node.attr('r', function(d) { return degreeSize(d.attributes.degree); });
 
           node = nodeEnter.merge(node)
-            .attr('r', 20)
+            // .attr('r', 20)
             // .attr('r', function(d) { return degreeSize(d.attributes.degree); })
+            .attr('r', radius-.75) //function(d) {
+            // 	return degreeSize(d.attributes.degree);
+            // })
             // .attr("fill", function(d) { return color(d.distance); })
             .attr('class', function(d) {
               return 'node degree' + d.distance
@@ -406,10 +373,10 @@ angular.module('redesign2017App')
               return "n" + d.id.toString();
             })
             .attr("cx", function(d) {
-              return d.x;
+              return d.x;// = Math.max(radius, Math.min(width - radius, d.x));
             })
             .attr("cy", function(d) {
-              return d.y;
+              return d.y;// = Math.max(radius, Math.min(height - radius, d.y));
             })
             // .attr("pulse", false)
             .attr("is_source", function(d) {
@@ -426,6 +393,37 @@ angular.module('redesign2017App')
             .text(function(d) {
               return d.attributes.name;
             });
+
+          label = label.data(newNodes, function(d){ return d.id; });
+
+          label.exit().remove();
+          var labelEnter = label.enter().append('text');
+
+          label = labelEnter.merge(label)
+              .attr("dx", function(d) {return d.x-radius*5;})
+              .attr("dy", function(d) {return d.y+radius/2;})
+              .text(function(d) { if (d.distance < 2) {return d.attributes.name;} })
+              .style("font-size", 8)
+              .style('font-weight', 'bold');
+
+            // Data join with only those new links and corresponding nodes.
+            link = link.data(newLinks, function(d) {
+              return d.source.id + ', ' + d.target.id;
+            });
+            link.exit().remove();
+            var linkEnter = link.enter().append('path')
+              .attr('class', 'link');
+
+            link = linkEnter.merge(link)
+              // .attr('class', 'link')
+              .attr("d", linkArc)
+              .attr('class', function(l) {
+                if (l.altered == true) {
+                  return 'link altered';
+                } else {
+                  return 'link';
+                }
+              });
 
           //Update legend too
           scope.sizeMin = degreeSize.domain()[0];
