@@ -126,6 +126,7 @@ path.danger {
   width: 25%;
   max-width: 320px;
   pointer-events: none;
+  position: relative;
 }
 
 .on-the-left *,
@@ -235,6 +236,18 @@ path.danger {
   right: 6px;
   top: 7px;
 }
+
+#viz-title {
+  position: absolute;
+  top: 10px;
+  left: calc(100% + 10px);
+  font-family: OpenSans-Bold;
+  font-size: 18px;
+  color: #434055;
+  letter-spacing: 0.75px;
+  width: 200%;
+}
+
 /* search panel styles*/
 search-panel.panel {
   border: none;

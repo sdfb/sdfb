@@ -34,13 +34,14 @@ angular
             return {
               viewObject:0, //0 = people, 1 = groups
               viewMode:'individual-force',
+              title: 'undefined title',
               networkComplexity: '2',
               dateMin:1500,
               dateMax:1700,
               confidenceMin:60,
               confidenceMax:100,
-              selectionType: undefined,
-              selectionId: undefined
+              // selectionType: undefined,
+              // selectionId: undefined
             }
           },
           initialData: function(apiService) {

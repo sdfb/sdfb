@@ -392,14 +392,12 @@ angular.module('redesign2017App')
           node.exit().remove();
           var nodeEnter = node.enter().append('circle');
 
-          node.attr('r', 20); //function(d) {
-          // 	return degreeSize(d.attributes.degree);
-          // });
+          node.attr('r', 20);
+          // node.attr('r', function(d) { return degreeSize(d.attributes.degree); });
 
           node = nodeEnter.merge(node)
-            .attr('r', 20) //function(d) {
-            // 	return degreeSize(d.attributes.degree);
-            // })
+            .attr('r', 20)
+            // .attr('r', function(d) { return degreeSize(d.attributes.degree); })
             // .attr("fill", function(d) { return color(d.distance); })
             .attr('class', function(d) {
               return 'node degree' + d.distance
