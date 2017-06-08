@@ -3,7 +3,7 @@
 	<div>
 		<h4>Relationships confidence level</h4>
 		<div class="confidence-container"></div>
-		<h5>The likelihood that a particular relationship existed</h5>
+		<h5>Likelihood that a particular relationship existed</h5>
 	</div>
 	<div>
 		<h4>Relationships date range</h4>
@@ -12,8 +12,16 @@
 	</div>
 	<div>
 		<h4>Visual density</h4>
+		<div class="legend-line"></div>
 		<div class="density-container"></div>
-		<h5>Hover on a value to learn more</h5>
+		<div class="flex-container">
+			<div class="flex-item legend-text">1st</div>
+			<div class="flex-item legend-text">1.5</div>
+			<div class="flex-item legend-text">1.75</div>
+			<div class="flex-item legend-text">2nd</div>
+			<div class="flex-item legend-text">2+</div>
+		</div>
+		<h5 class="interaction-info">Hover on a value to learn more</h5>
 	</div>
 </section>
 <span class="close" ng-click="filtersClosed = !filtersClosed">

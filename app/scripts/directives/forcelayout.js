@@ -189,37 +189,63 @@ angular.module('redesign2017App')
                 };
               })
 
-            d3.selectAll('g.label')
-              .classed('hidden', function(m) {
-                if (m.id in connectedNodes && m.id !== d.id) {
-                  var linkFound = newLinks.filter(function(l){ return ((l.source.id == m.id && l.target.id == d.id) || (l.source.id == d.id && l.target.id == m.id)); });
-                  return (linkFound[0].weight > 80) ? false : true;
-                }
-                else if (m.id == d.id) { return false; }
-                else { return true; }
-                // return !(m.id in connectedNodes);
+            var numberOfConnections = Object.keys(connectedNodes).length;
+
+            if (numberOfConnections <= 20) {
+              d3.selectAll('g.label')
+                .classed('hidden', function(m) {
+                  return !(m.id in connectedNodes);
+                });
+            } else {
+              var neighborsByConfidence = [];
+              for (var m in connectedNodes) {
+                newLinks.forEach(function(l) {
+                  if ((l.source.id == m && l.target.id == d.id) || (l.source.id == d.id && l.target.id == m)) {
+                    neighborsByConfidence.push([m, l.weight]);
+                  }
+                });
+              }
+
+              neighborsByConfidence.sort(function(first, second) {
+                return second[1] - first[1];
               });
-            
+
+              var top20 = neighborsByConfidence.slice(0, 20);
+
+              var top20object = {};
+              top20.forEach(function(t) { top20object[t[0]] = t[1]; });
+              console.log(top20object);
+
+              d3.selectAll('g.label')
+                .classed('hidden', function(m) {
+                  if (m.id != d.id) {
+                    // var linkFound = newLinks.filter(function(l){ return ((l.source.id == m.id && l.target.id == d.id) || (l.source.id == d.id && l.target.id == m.id)); });
+                    return (m.id in top20object) ? false : true;
+                  } else {
+                    return false; }
+                });
+            }
+
             // This triggers events in groupsbar.js and contextualinfopanel.js when a selection happens
             scope.currentSelection = d;
             scope.$broadcast('selectionUpdated', scope.currentSelection);
 
-          } else if( d.type == "relationship") {
+          } else if (d.type == "relationship") {
             console.log(d.type, d);
 
             d3.selectAll('.link')
-              .classed('faded', function(l){
-                return (l == d)?false:true;
+              .classed('faded', function(l) {
+                return (l == d) ? false : true;
               })
 
             d3.selectAll('.node')
-              .classed('faded', function(n){
-                return (n == d.source || n == d.target)?false:true;
+              .classed('faded', function(n) {
+                return (n == d.source || n == d.target) ? false : true;
               })
 
             d3.selectAll('g.label')
               .classed('hidden', function(m) {
-                return (m == d.source || m == d.target)?false:true;
+                return (m == d.source || m == d.target) ? false : true;
               })
 
             console.log('selection to be implemented');
@@ -248,12 +274,14 @@ angular.module('redesign2017App')
             // Must select g.labels since it selects elements in other part of the interface
             d3.selectAll('g.label')
               .classed('hidden', function(d) {
-                if (d.distance == 1) {
-                  var linkFound = links.filter(function(l){ return ((l.source.id == sourceId && l.target.id == d.id) || (l.source.id == d.id && l.target.id == sourceId)); });
-                  return (linkFound[0].weight > 80) ? false : true;
-                }
-                else if (d.distance == 0) { return false; }
-                else { return true; } });
+                return (d.distance < 2) ? false : true;
+              });
+            // if (d.distance == 1) {
+            //   var linkFound = links.filter(function(l){ return ((l.source.id == sourceId && l.target.id == d.id) || (l.source.id == d.id && l.target.id == sourceId)); });
+            //   return (linkFound[0].weight > 80) ? false : true;
+            // }
+            // else if (d.distance == 0) { return false; }
+            // else { return true; } });
 
             // reset group bar
             d3.selectAll('.group').classed('active', false);
@@ -268,10 +296,28 @@ angular.module('redesign2017App')
         function zoomed() {
           container.attr("transform", "translate(" + d3.event.transform.x + ", " + d3.event.transform.y + ") scale(" + d3.event.transform.k + ")");
         }
+
+        var zoom = d3.zoom();
         // Call zoom for svg container.
-        // svg.call(d3.zoom().transform, d3.zoomTransform().translate(0,0).scale(1));
-        // svg.call(d3.zoom().extent([[0,0], [svg.attr("width"),svg.attr("height")]]))
-        svg.call(d3.zoom().on('zoom', zoomed)); //.on("dblclick.zoom", null);
+        svg.call(zoom.on('zoom', zoomed)); //.on("dblclick.zoom", null);
+
+        //Functions for zoom and recenter buttons
+        scope.centerNetwork = function() {
+          console.log("Recenter");
+          svg.transition().duration(750).call(zoom.transform, d3.zoomIdentity);
+        }
+
+        var zoomfactor = 1;
+
+        scope.zoomIn = function() {
+          console.log("Zoom In")
+          svg.transition().duration(500).call(zoom.scaleBy, zoomfactor + .5);
+        }
+
+        scope.zoomOut = function() {
+          console.log("Zoom Out")
+          svg.transition().duration(500).call(zoom.scaleBy, zoomfactor - .25);
+        }
 
         var container = svg.append('g');
 
@@ -319,8 +365,9 @@ angular.module('redesign2017App')
           .force("charge", d3.forceManyBody().strength(-125)) //.distanceMax([500]))
           .force("center", d3.forceCenter(width / 2, height / 2))
           .force("collide", d3.forceCollide().radius(function(d) {
-            if (d.id == sourceId) { return 26; }
-            else { return 13; }
+            if (d.id == sourceId) {
+              return 26; } else {
+              return 13; }
           }))
           .force("x", d3.forceX())
           .force("y", d3.forceY())
@@ -364,7 +411,8 @@ angular.module('redesign2017App')
           // Sort "newlinks" array so to have the "altered" links at the end and display them on "foreground"
           newLinks.sort(function(a, b) {
             if (a.altered) {
-              return 1 }
+              return 1
+            }
           });
           // Data join with only those new links and corresponding nodes.
           link = link.data(newLinks, function(d) {
@@ -377,7 +425,8 @@ angular.module('redesign2017App')
           link = linkEnter.merge(link)
             .attr('class', 'link')
             .classed('altered', function(d) {
-              return d.altered ? true : false; })
+              return d.altered ? true : false;
+            })
             .attr("d", linkArc)
             .on('click', function(d) {
               toggleClick(d, newLinks);
@@ -389,6 +438,15 @@ angular.module('redesign2017App')
             })
             .attr('class', function(d) {
               return 'node degree' + d.distance
+            })
+            .attr("r", function(d) {
+              if (d.distance == 0) {
+                return 25;
+              } else if (d.distance == 1) {
+                return 12.5;
+              } else {
+                return 6.25;
+              }
             });
 
           node.exit().remove();
@@ -397,7 +455,7 @@ angular.module('redesign2017App')
 
           node = nodeEnter.merge(node)
 
-            .attr('class', function(d) {
+          .attr('class', function(d) {
               return 'node degree' + d.distance
             })
             .attr('id', function(d) {
@@ -415,13 +473,22 @@ angular.module('redesign2017App')
                 return 'true';
               }
             })
+            .attr("r", function(d) {
+              if (d.distance == 0) {
+                return 25;
+              } else if (d.distance == 1) {
+                return 12.5;
+              } else {
+                return 6.25;
+              }
+            })
             // On click, toggle ego networks for the selected node. (See function above.)
             .on('click', function(d) {
               toggleClick(d, newLinks);
             })
             // On hover, display label
-            .on('mouseenter', function(d){
-              d3.selectAll('g.label').each(function(e){
+            .on('mouseenter', function(d) {
+              d3.selectAll('g.label').each(function(e) {
                 if (e.id == d.id) {
                   // console.log(e.id == d.id);
                   d3.select(this)
@@ -429,8 +496,8 @@ angular.module('redesign2017App')
                 }
               })
             })
-            .on('mouseleave', function(d){
-              d3.selectAll('g.label').each(function(e){
+            .on('mouseleave', function(d) {
+              d3.selectAll('g.label').each(function(e) {
                 if (e.id == d.id) {
                   // console.log(e.id == d.id);
                   d3.select(this)
@@ -455,22 +522,24 @@ angular.module('redesign2017App')
           var labelEnter = label.enter().append('g')
             .attr("class", "label")
             .classed('hidden', function(d) {
-              if (d.distance == 1) {
-                var linkFound = newLinks.filter(function(l){ return ((l.source.id == sourceId && l.target.id == d.id) || (l.source.id == d.id && l.target.id == sourceId)); });
-                return (linkFound[0].weight > 80) ? false : true;
-              }
-              else if (d.distance == 0) { return false; }
-              else { return true; } })
-            .on("mouseenter", function(d) {
-              // reorder elements so to bring the hovered one on top and make it readable.
-              svg.selectAll("g.label").each(function(e, i) {
-                if (d == e) {
-                  var myElement = this;
-                  d3.select(myElement).remove();
-                  d3.select('.labels').node().appendChild(myElement);
-                }
-              })
+              return (d.distance < 2) ? false : true;
             })
+            // if (d.distance == 1) {
+            //   var linkFound = newLinks.filter(function(l){ return ((l.source.id == sourceId && l.target.id == d.id) || (l.source.id == d.id && l.target.id == sourceId)); });
+            //   return (linkFound[0].weight > 80) ? false : true;
+            // }
+            // else if (d.distance == 0) { return false; }
+            // else { return true; } })
+          .on("mouseenter", function(d) {
+            // reorder elements so to bring the hovered one on top and make it readable.
+            svg.selectAll("g.label").each(function(e, i) {
+              if (d == e) {
+                var myElement = this;
+                d3.select(myElement).remove();
+                d3.select('.labels').node().appendChild(myElement);
+              }
+            })
+          })
 
           label = labelEnter.merge(label)
 
@@ -478,7 +547,8 @@ angular.module('redesign2017App')
 
           label.append('text')
             .text(function(d) {
-              return d.attributes.name; })
+              return d.attributes.name;
+            })
 
           // Get the Bounding Box of the text created
           d3.selectAll('.label text').each(function(d, i) {
@@ -493,13 +563,17 @@ angular.module('redesign2017App')
           // set dimentions and positions of rectangles depending on the BBox exctracted before
           d3.selectAll(".label rect")
             .attr("x", function(d) {
-              return 0 - d.labelBBox.width / 2 - paddingLeftRight / 2; })
+              return 0 - d.labelBBox.width / 2 - paddingLeftRight / 2;
+            })
             .attr("y", function(d) {
-              return 0 + 3 - d.labelBBox.height + paddingTopBottom / 2; })
+              return 0 + 3 - d.labelBBox.height + paddingTopBottom / 2;
+            })
             .attr("width", function(d) {
-              return d.labelBBox.width + paddingLeftRight; })
+              return d.labelBBox.width + paddingLeftRight;
+            })
             .attr("height", function(d) {
-              return d.labelBBox.height + paddingTopBottom; });
+              return d.labelBBox.height + paddingTopBottom;
+            });
 
           // center the label in the middle of the node circle
           d3.selectAll('.label')
