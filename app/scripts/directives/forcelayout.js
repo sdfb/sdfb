@@ -222,7 +222,8 @@ angular.module('redesign2017App')
                     // var linkFound = newLinks.filter(function(l){ return ((l.source.id == m.id && l.target.id == d.id) || (l.source.id == d.id && l.target.id == m.id)); });
                     return (m.id in top20object) ? false : true;
                   } else {
-                    return false; }
+                    return false;
+                  }
                 });
             }
 
@@ -366,8 +367,10 @@ angular.module('redesign2017App')
           .force("center", d3.forceCenter(width / 2, height / 2))
           .force("collide", d3.forceCollide().radius(function(d) {
             if (d.id == sourceId) {
-              return 26; } else {
-              return 13; }
+              return 26;
+            } else {
+              return 13;
+            }
           }))
           .force("x", d3.forceX())
           .force("y", d3.forceY())
@@ -495,6 +498,16 @@ angular.module('redesign2017App')
                     .classed('temporary-unhidden', true);
                 }
               })
+
+              // sort elements so to bring the hovered one on top and make it readable.
+              svg.selectAll("g.label").each(function(e, i) {
+                if (d == e) {
+                  var myElement = this;
+                  d3.select(myElement).remove();
+                  d3.select('.labels').node().appendChild(myElement);
+                }
+              })
+
             })
             .on('mouseleave', function(d) {
               d3.selectAll('g.label').each(function(e) {
@@ -505,6 +518,7 @@ angular.module('redesign2017App')
                 }
               })
             })
+
 
           node.append("title")
             .text(function(d) {
@@ -530,16 +544,7 @@ angular.module('redesign2017App')
             // }
             // else if (d.distance == 0) { return false; }
             // else { return true; } })
-          .on("mouseenter", function(d) {
-            // reorder elements so to bring the hovered one on top and make it readable.
-            svg.selectAll("g.label").each(function(e, i) {
-              if (d == e) {
-                var myElement = this;
-                d3.select(myElement).remove();
-                d3.select('.labels').node().appendChild(myElement);
-              }
-            })
-          })
+
 
           label = labelEnter.merge(label)
 
