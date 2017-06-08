@@ -516,7 +516,7 @@ filters-panel.panel h4 {
 }
 
 input[name="complexity"] {
-    margin: 0 26px;
+    margin: 0 25px;
     &:first-of-type {
         margin-left: 6px;
     }
@@ -715,6 +715,10 @@ small-timeline .life {
 /* modal styles*/
 .modal-dialog {
   width: 775px;
+
+  .modal-content {
+      background-color: $panels-bg;
+  }
 
   .close-btn {
     cursor: pointer;

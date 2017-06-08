@@ -393,6 +393,15 @@ angular.module('redesign2017App')
             })
             .attr('class', function(d) {
               return 'node degree' + d.distance
+            })
+            .attr("r", function(d) {
+              if (d.distance == 0) {
+                  return 25;
+              } else if (d.distance == 1) {
+                  return 12.5;
+              } else {
+                  return 6.25;
+              }
             });
 
           node.exit().remove();
@@ -417,6 +426,15 @@ angular.module('redesign2017App')
             .attr("is_source", function(d) {
               if (d.id == sourceId) {
                 return 'true';
+              }
+            })
+            .attr("r", function(d) {
+              if (d.distance == 0) {
+                  return 25;
+              } else if (d.distance == 1) {
+                  return 12.5;
+              } else {
+                  return 6.25;
               }
             })
             // On click, toggle ego networks for the selected node. (See function above.)
