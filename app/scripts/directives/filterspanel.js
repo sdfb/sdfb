@@ -34,19 +34,44 @@ angular.module('redesign2017App')
         function createDensityButtons() {
           // Radio buttons for network complexity.
           var complexityForm = d3.select('.density-container').append('form');
-          var complexityButtons = complexityForm.selectAll('input')
-           .data(['1', '1.5', '1.75', '2', '2.5'])
-           .enter().append('input')
-           .attr('type', 'radio')
-           .attr('name', 'complexity')
-           .attr('checked', function(d) {
-             if (d == complexity) {
-               return 'checked';
-             }
-           })
-           .attr('value', function(d) {
-             return d;
-           });
+        //   var complexityButtons = complexityForm.selectAll('input')
+        //    .data(['1', '1.5', '1.75', '2', '2.5'])
+        //    .enter().append('input')
+        //    .attr('type', 'radio')
+        //    .attr('name', 'complexity')
+        //    .attr('checked', function(d) {
+        //      if (d == complexity) {
+        //        return 'checked';
+        //      }
+        //    })
+        //    .attr('value', function(d) {
+        //      return d;
+        //    });
+
+           var complexityBox = complexityForm.selectAll('input')
+            .data(['1', '1.5', '1.75', '2', '2.5'])
+            .enter().append('div');
+
+            var complexityButtons = complexityBox.append('input')
+            .attr('type', 'radio')
+            .attr('name', 'complexity')
+            .attr('id', function(d) {
+              return 'radio-' + d;
+            })
+            .attr('checked', function(d) {
+              if (d == complexity) {
+                return 'checked';
+              }
+            })
+            .attr('value', function(d) {
+              return d;
+            });
+            complexityBox.append('label')
+            .attr('for', function(d) {
+              return 'radio-' + d;
+            })
+            .append('span');
+
           complexityButtons.on('change', function() {
            complexity = this.value;
            scope.config.networkComplexity = complexity;
@@ -92,16 +117,15 @@ angular.module('redesign2017App')
         function createConfidenceGraph() {
 
           var confidenceData = countConfidenceFrequency();
-          var confidenceGraph = d3.select('.confidence-container').append('svg').attr('width', 300).attr('height', 100),
-              confidenceMargin = {top: 10, right: 10, bottom: 30, left: 10},
+          var confidenceGraph = d3.select('.confidence-container').append('svg').attr('width', 315).attr('height', 70),
+              confidenceMargin = {top: 0, right: 15, bottom: 20, left: 15},
               confidenceWidth = +confidenceGraph.attr("width") - confidenceMargin.left - confidenceMargin.right,
               confidenceHeight = +confidenceGraph.attr("height") - confidenceMargin.top - confidenceMargin.bottom;
 
           var confidenceX = d3.scaleBand().rangeRound([0, confidenceWidth]).padding(0.1),
               confidenceY = d3.scaleLinear().rangeRound([confidenceHeight, 0]);
 
-          var confidenceG = confidenceGraph.append("g")
-              .attr("transform", "translate(" + confidenceMargin.left + "," + confidenceMargin.top + ")");
+          var confidenceG = confidenceGraph.append("g");
 
           confidenceX.domain(confidenceData.map(function(d) { return d.weight; }));
           confidenceY.domain([0, d3.max(confidenceData, function(d) { return d.count; })]);
@@ -146,16 +170,15 @@ angular.module('redesign2017App')
         function createDateGraph() {
 
            var dateData = countDateFrequency();
-           var dateGraph = d3.select('.date-container').append('svg').attr('width', 300).attr('height', 100),
-               dateMargin = {top: '10', right: '10', bottom: '30', left: '10'},
+           var dateGraph = d3.select('.date-container').append('svg').attr('width', 315).attr('height', 70),
+               dateMargin = {top: 0, right: 15, bottom: 20, left: 15},
                dateWidth = +dateGraph.attr("width") - dateMargin.left - dateMargin.right,
                dateHeight = +dateGraph.attr("height") - dateMargin.top - dateMargin.bottom;
 
            var dateX = d3.scaleBand().rangeRound([0, dateWidth]).padding(0.1),
                dateY = d3.scaleLinear().rangeRound([dateHeight, 0]);
 
-           var dateG = dateGraph.append("g")
-               .attr("transform", "translate(" + dateMargin.left + "," + dateMargin.top + ")");
+           var dateG = dateGraph.append("g");
 
            dateX.domain(dateData.map(function(d) { return d.year; }));
            dateY.domain([0, d3.max(dateData, function(d) { return d.count; })]);
@@ -186,7 +209,7 @@ angular.module('redesign2017App')
            function brushed() {
              var s = d3.event.selection || dateX.range();
              var eachBand = dateX.step();
-             var marginInterval = dateMargin.right/eachBand
+             var marginInterval = dateMargin.right/eachBand;
              var minIndex = Math.round((s[0] / eachBand) - marginInterval);
              var maxIndex = Math.round((s[1] / eachBand) - marginInterval);
              var dateMin = dateX.domain()[minIndex] || sourceNode.birth_year;
