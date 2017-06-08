@@ -4,19 +4,19 @@
 /* List of visualizations:*/
 /* • Single Force Layout (Hooke)*/
 /* Variables*/
-// General
+/* General*/
 $text: #434055;
 $opacityDuration: 0.5s;
 
-// RED version
+/* RED version*/
 $degree0: #F45D4C;
 $degree1: #EE9F99;
 $degree3: #f2f2f3;
 
-// BLUE version
-// $degree0: #1239B4;
-// $degree1: #5385A6;
-// $degree3: #f2f2f3;
+/* BLUE version*/
+/* $degree0: #1239B4;*/
+/* $degree1: #5385A6;*/
+/* $degree3: #f2f2f3;*/
 
 /* Single Force Layout (Hooke)*/
 
@@ -58,18 +58,18 @@ $degree3: #f2f2f3;
 
 .node.degree0 {
   fill: $degree0;
-  r: 25;
+  r: 25px;
 }
 
 .node.degree1 {
   fill: $degree1;
-  r: 12.5;
+  r: 12.5px;
 }
 
 .node.degree2 {
   fill: $degree3;
   stroke: $degree0;
-  r:6.25;
+  r: 6.25px;
 }
 
 .node.faded {

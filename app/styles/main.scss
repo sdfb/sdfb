@@ -14,12 +14,12 @@ $active-color: #DDD95F;
 $highlight-stroke: #C2BF5B;
 $panels-bg-secondary: #C6CACF;
 $light-color: white;
-/* $node-individual-origin: #F45D4C;*/
-/* $node-individual-firstDegree: #EE9F99;*/
-/* $node-individual-secondDegree: #f2f2f3;*/
-$node-individual-origin: #1239B4;
-$node-individual-firstDegree: #5385A6;
+$node-individual-origin: #F45D4C;
+$node-individual-firstDegree: #EE9F99;
 $node-individual-secondDegree: #f2f2f3;
+/* $node-individual-origin: #1239B4;*/
+/* $node-individual-firstDegree: #5385A6;*/
+/* $node-individual-secondDegree: #f2f2f3;*/
 $node-share-origin: #5385A6;
 $node-share-direct: #F45D4C;
 $node-share-indirect: #FDE6E5;
@@ -177,7 +177,7 @@ path.danger {
   width: 100%;
 
   &.individual {
-    height: 360px;
+    height: 380px;
   }
 
   &.shared {
@@ -352,12 +352,50 @@ section .flex-container {
   -ms-flex-pack: justify;
   justify-content: space-between;
 
+  &.center-align {
+    -ms-flex-line-pack: center;
+    align-content: center;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+  }
+
   .legend-circle {
     border: 1px solid $light-color;
     border-radius: 7px;
     height: 14px;
     width: 14px;
     z-index: 99;
+
+    &.ghost {
+      background-color: transparent;
+      border-color: transparent;
+      margin: 0 auto;
+    }
+
+    &.white-circle {
+      background-color: $light-color;
+      border: 1px solid $mainTextColor;
+      margin: 0 auto;
+
+      &.circle-big {
+        border-radius: 25px;
+        height: 50px;
+        width: 50px;
+      }
+
+      &.circle-medium {
+        border-radius: 13px;
+        height: 25px;
+        width: 25px;
+      }
+
+      &.circle-small {
+        border-radius: 7px;
+        height: 12.5px;
+        width: 12.5px;
+      }
+    }
   }
 
   &.individual-network {
@@ -442,15 +480,6 @@ section .flex-container {
   }
 }
 /*temporary styles, they will be changed when legend will be made dynamic*/
-section .white-circle {
-  background-color: $light-color;
-  border: 1px solid $mainTextColor;
-  border-radius: 15px;
-  height: 30px;
-  margin: 0 auto;
-  width: 30px;
-}
-
 section .white-square {
   background-color: $light-color;
   border: 1px solid $mainTextColor;
@@ -596,14 +625,19 @@ contextual-info-panel h2 {
   -webkit-box-pack: center;
   -ms-flex-pack: center;
   justify-content: center;
-  padding: 10px 0;
+  padding: 10px 15px;
   -webkit-box-align: center;
   -ms-flex-align: center;
   align-items: center;
+
+  button {
+    padding: 2px 8px;
+    width: auto;
+  }
 }
 
 #more-info a {
-  margin-right: 10px;
+  margin-left: 10px;
 }
 
 #more-info span:last-child {
@@ -655,10 +689,10 @@ small-timeline .life {
   width: 775px;
 
   .close-btn {
-      cursor: pointer;
-      position: absolute;
-      right: 18px;
-      top: 16px;
+    cursor: pointer;
+    position: absolute;
+    right: 18px;
+    top: 16px;
   }
 
   h3 {
@@ -679,16 +713,19 @@ small-timeline .life {
     }
 
     .id-column {
-        width: 6%;
+      width: 6%;
     }
+
     .name-column {
-        width: 48%;
+      width: 48%;
     }
+
     .members-column {
-        width: 16%;
+      width: 16%;
     }
+
     .action-column {
-        width: 35%;
+      width: 35%;
     }
   }
 
