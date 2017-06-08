@@ -33,9 +33,7 @@ angular.module('redesign2017App')
 
         function createDensityButtons() {
           // Radio buttons for network complexity.
-          var complexityForm = d3.select(element[0]).append('form')
-          var complexityLabel = complexityForm.append('label')
-           .text('Visual Density: ');
+          var complexityForm = d3.select('.density-container').append('form');
           var complexityButtons = complexityForm.selectAll('input')
            .data(['1', '1.5', '1.75', '2', '2.5'])
            .enter().append('input')
@@ -94,7 +92,7 @@ angular.module('redesign2017App')
         function createConfidenceGraph() {
 
           var confidenceData = countConfidenceFrequency();
-          var confidenceGraph = d3.select(element[0]).append('svg').attr('width', 300).attr('height', 100),
+          var confidenceGraph = d3.select('.confidence-container').append('svg').attr('width', 300).attr('height', 100),
               confidenceMargin = {top: 10, right: 10, bottom: 30, left: 10},
               confidenceWidth = +confidenceGraph.attr("width") - confidenceMargin.left - confidenceMargin.right,
               confidenceHeight = +confidenceGraph.attr("height") - confidenceMargin.top - confidenceMargin.bottom;
@@ -148,7 +146,7 @@ angular.module('redesign2017App')
         function createDateGraph() {
 
            var dateData = countDateFrequency();
-           var dateGraph = d3.select(element[0]).append('svg').attr('width', 300).attr('height', 100),
+           var dateGraph = d3.select('.date-container').append('svg').attr('width', 300).attr('height', 100),
                dateMargin = {top: '10', right: '10', bottom: '30', left: '10'},
                dateWidth = +dateGraph.attr("width") - dateMargin.left - dateMargin.right,
                dateHeight = +dateGraph.attr("height") - dateMargin.top - dateMargin.bottom;

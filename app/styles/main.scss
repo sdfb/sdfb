@@ -26,6 +26,7 @@ $node-share-indirect: #FDE6E5;
 $node-group-origin: #78729F;
 $node-group-firstDegree: #EFF1F4;
 $edge-color: #4A4A4A;
+$filter-color: #EF887F;
 /* general styles*/
 body {
   background-color: #EFF1F4;
@@ -497,6 +498,33 @@ section .edge-line {
   margin: 0 auto;
   width: 0;
 }
+/* filters styles */
+filters-panel {
+    height: 510px;
+
+    svg .bar {
+        fill: $filter-color;
+    }
+}
+
+filters-panel.panel h3 {
+    margin-bottom: 16px;
+}
+
+filters-panel.panel h4 {
+    padding-left: 0;
+}
+
+input[name="complexity"] {
+    margin: 0 26px;
+    &:first-of-type {
+        margin-left: 6px;
+    }
+    &:last-of-type {
+        margin-right: 0;
+    }
+}
+
 /* Buttons*/
 .btn {
   font-size: 10px;
