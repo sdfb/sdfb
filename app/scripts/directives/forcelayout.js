@@ -189,16 +189,43 @@ angular.module('redesign2017App')
                 };
               })
 
-            d3.selectAll('g.label')
-              .classed('hidden', function(m) {
-                if (m.id in connectedNodes && m.id !== d.id) {
-                  var linkFound = newLinks.filter(function(l){ return ((l.source.id == m.id && l.target.id == d.id) || (l.source.id == d.id && l.target.id == m.id)); });
-                  return (linkFound[0].weight > 80) ? false : true;
-                }
-                else if (m.id == d.id) { return false; }
-                else { return true; }
-                // return !(m.id in connectedNodes);
+            var numberOfConnections = Object.keys(connectedNodes).length;
+
+            if (numberOfConnections <= 20) {
+              d3.selectAll('g.label')
+                .classed('hidden', function(m) {
+                  return !(m.id in connectedNodes);
+                });
+            }
+            else {
+              var neighborsByConfidence = [];
+              for (var m in connectedNodes) {
+                newLinks.forEach(function(l) {
+                  if ((l.source.id == m && l.target.id == d.id) || (l.source.id == d.id && l.target.id == m)) {
+                    neighborsByConfidence.push([m, l.weight]);
+                  }
+                });
+              }
+
+              neighborsByConfidence.sort(function(first, second) {
+                return second[1] - first[1];
               });
+
+              var top20 = neighborsByConfidence.slice(0,20);
+
+              var top20object = {};
+              top20.forEach(function(t) { top20object[t[0]] = t[1]; });
+              console.log(top20object);
+
+              d3.selectAll('g.label')
+                .classed('hidden', function(m) {
+                  if (m.id != d.id) {
+                    // var linkFound = newLinks.filter(function(l){ return ((l.source.id == m.id && l.target.id == d.id) || (l.source.id == d.id && l.target.id == m.id)); });
+                    return (m.id in top20object) ? false : true;
+                  }
+                  else { return false; }
+                });
+              }
 
             // scope.currentSelection.person1 = {id:d.id, name:d.attributes.name, historical_significance:d.attributes.historical_significance, birth_year:d.attributes.birth_year, death_year:d.attributes.death_year};
             scope.currentSelection = d;
@@ -252,12 +279,13 @@ angular.module('redesign2017App')
             // Must select g.labels since it selects elements in other part of the interface
             d3.selectAll('g.label')
               .classed('hidden', function(d) {
-                if (d.distance == 1) {
-                  var linkFound = links.filter(function(l){ return ((l.source.id == sourceId && l.target.id == d.id) || (l.source.id == d.id && l.target.id == sourceId)); });
-                  return (linkFound[0].weight > 80) ? false : true;
-                }
-                else if (d.distance == 0) { return false; }
-                else { return true; } });
+                return (d.distance < 2) ? false : true; });
+                // if (d.distance == 1) {
+                //   var linkFound = links.filter(function(l){ return ((l.source.id == sourceId && l.target.id == d.id) || (l.source.id == d.id && l.target.id == sourceId)); });
+                //   return (linkFound[0].weight > 80) ? false : true;
+                // }
+                // else if (d.distance == 0) { return false; }
+                // else { return true; } });
 
             // reset group bar
             d3.selectAll('.group').classed('active', false);
@@ -458,12 +486,13 @@ angular.module('redesign2017App')
           var labelEnter = label.enter().append('g')
             .attr("class", "label")
             .classed('hidden', function(d) {
-              if (d.distance == 1) {
-                var linkFound = newLinks.filter(function(l){ return ((l.source.id == sourceId && l.target.id == d.id) || (l.source.id == d.id && l.target.id == sourceId)); });
-                return (linkFound[0].weight > 80) ? false : true;
-              }
-              else if (d.distance == 0) { return false; }
-              else { return true; } })
+              return (d.distance < 2) ? false : true; })
+              // if (d.distance == 1) {
+              //   var linkFound = newLinks.filter(function(l){ return ((l.source.id == sourceId && l.target.id == d.id) || (l.source.id == d.id && l.target.id == sourceId)); });
+              //   return (linkFound[0].weight > 80) ? false : true;
+              // }
+              // else if (d.distance == 0) { return false; }
+              // else { return true; } })
 
             .on('click', function(d) {
               toggleClick(d, newLinks);
