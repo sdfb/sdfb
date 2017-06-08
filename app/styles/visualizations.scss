@@ -24,23 +24,27 @@ $degree3: #f2f2f3;
   stroke: #b9babc;
   fill: none;
   shape-rendering: geometricPrecision;
-  -webkit-transition: all $opacityDuration;
-  transition: all $opacityDuration;
+  -webkit-transition: all $opacityDuration, stroke-width 0s;
+  transition: all $opacityDuration, stroke-width 0s;
   cursor: pointer;
+}
+
+.link:hover {
+  stroke-width:3px;
 }
 
 .link.altered {
   stroke: #000;
 }
 
-.link.faded {
+.link.faded, .link.not-in-group {
   opacity: 0;
   pointer-events: none;
 }
 
 .node {
   stroke: #fff;
-  stroke-width: 1.5px;
+  stroke-width: 1px;
   -webkit-transition: all $opacityDuration;
   transition: all $opacityDuration;
   cursor: pointer;
@@ -72,7 +76,7 @@ $degree3: #f2f2f3;
   r: 6.25px;
 }
 
-.node.faded {
+.node.faded, .node.not-in-group {
   opacity: .1;
 }
 
@@ -82,14 +86,20 @@ $degree3: #f2f2f3;
 
 .label {
   opacity: 1;
-  cursor: pointer;
+  display: block;
+  pointer-events: none;
   -webkit-transition: opacity $opacityDuration;
   transition: opacity $opacityDuration;
 }
 
-.label.hidden {
+.label.hidden, .label.not-in-group {
   opacity: 0;
-  pointer-events: none;
+  display: block;
+}
+
+.label.temporary-unhidden {
+  opacity: 1 !important;
+  display: block !important;
 }
 
 .label text {
@@ -162,10 +172,12 @@ groups-bar {
   .group.active {
     background-color: $degree0;
     color: white;
+    pointer-events: auto;
   }
 
   .group.unactive {
     opacity: 0.5;
+    pointer-events: none;
   }
 }
 

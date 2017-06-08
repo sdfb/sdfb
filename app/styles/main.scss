@@ -27,6 +27,19 @@ $node-group-origin: #78729F;
 $node-group-firstDegree: #EFF1F4;
 $edge-color: #4A4A4A;
 $filter-color: #EF887F;
+
+// from visualization.scss
+/* RED version*/
+$degree0: #F45D4C;
+$degree1: #EE9F99;
+$degree3: #f2f2f3;
+
+/* BLUE version*/
+/* $degree0: #1239B4;*/
+/* $degree1: #5385A6;*/
+/* $degree3: #f2f2f3;*/
+
+
 /* general styles*/
 body {
   background-color: #EFF1F4;
@@ -547,11 +560,11 @@ input[name="complexity"] {
   width: 100%;
   margin: auto;
   background-color: $highlight-color;
-  border-bottom-left-radius: 10px;
-  border-bottom-right-radius: 10px;
+  border-bottom-left-radius: 12px;
+  border-bottom-right-radius: 12px;
   border-color: $panels-stroke;
-  border-top-left-radius: 10px;
-  border-top-right-radius: 10px;
+  border-top-left-radius: 12px;
+  border-top-right-radius: 12px;
   color: $mainTextColor;
   font-size: 12px;
   font-weight: 600;
@@ -631,14 +644,82 @@ label.btn-primary:first-of-type {
   width: 100%;
   bottom: 0;
 }
+
+
+
 /* Contextual Info Panel*/
+
+contextual-info-panel.panel {
+  background-color: $light-color
+}
+
 contextual-info-panel > section {
   padding: 5px 15px;
   text-align: center;
+
+  small-timeline .label.domain {
+    display: none;
+  }
+}
+
+contextual-info-panel > section:first-child {
+  small-timeline .label.domain {
+    display: block;
+  }
+}
+
+contextual-info-panel > section:nth-child(2) {
+  background-color: $panels-bg;
+  border-top: 1px solid $panels-stroke;
+  border-bottom: 1px solid $panels-stroke;
+  padding-top: 12px;
+  padding-bottom: 12px;
 }
 
 contextual-info-panel h2 {
   margin-bottom: 4px;
+}
+
+small-timeline svg {
+  width: 100%;
+  height: 30px;
+  /* background-color: #fafafa;*/
+}
+
+small-timeline .background-line {
+  stroke: #9B9B9B;
+  stroke-width: 1px;
+}
+
+small-timeline.person path.life {
+  stroke-width: 2.5px;
+  stroke: $degree0;
+}
+
+small-timeline.relationship path.life {
+  stroke-width: 2.5px;
+  stroke: $mainTextColor;
+}
+
+small-timeline path.terminator {
+  stroke-width: 2px;
+  stroke: $timelineColor;
+}
+
+small-timeline .label {
+  font-size: 9px;
+  font-weight: 600;
+  fill: #9B9B9B;
+}
+
+small-timeline .label.life {
+  text-anchor: middle;
+  fill: $mainTextColor;
+}
+
+small-timeline .label.relationship {
+  text-anchor: middle;
+  fill: $mainTextColor;
 }
 
 #current-selection-person1 p {
@@ -679,38 +760,6 @@ contextual-info-panel h2 {
 
 #more-info i {
   font-size: 27px;
-}
-/* Small time-line*/
-small-timeline svg {
-  width: 100%;
-  height: 30px;
-  /* background-color: #fafafa;*/
-}
-
-small-timeline .background-line {
-  stroke: #9B9B9B;
-  stroke-width: 1px;
-}
-
-small-timeline path.life {
-  stroke-width: 2px;
-  stroke: $timelineColor;
-}
-
-small-timeline path.terminator {
-  stroke-width: 2px;
-  stroke: $timelineColor;
-}
-
-small-timeline .label {
-  font-size: 9px;
-  font-weight: 600;
-  fill: #9B9B9B;
-}
-
-small-timeline .life {
-  text-anchor: middle;
-  fill: $mainTextColor;
 }
 /* modal styles*/
 .modal-dialog {

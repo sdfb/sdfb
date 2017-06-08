@@ -1,15 +1,29 @@
 <section ng-if="!currentSelection.type">
     <p>Select a person or a relation to display contextual information.</p>
 </section>
-<section ng-if="currentSelection.type" id="current-selection-person1">
+
+<section ng-if="currentSelection.type == 'person'" id="XXXcurrent-selection-person1">
     <h2>{{currentSelection.attributes.name}}</h2>
     <p ng-if="currentSelection.attributes.historical_significance != ''">{{currentSelection.attributes.historical_significance}}</p>
     <p ng-if="currentSelection.attributes.historical_significance == ''"> &empty; </p>
-    <small-timeline details="currentSelection"></small-timeline>
+    <small-timeline class="person" details="currentSelection"></small-timeline>
 </section>
 
-<section id="current-selection-relationships" ng-if="currentSelection.relationships">Rels</section>
-<section id="current-selection-person2" ng-if="currentSelection.person2">second person</section>
+<section ng-if="currentSelection.type == 'relationship' ">
+    <h2>{{ currentSelection.source.attributes.name }}</h2>
+    <p ng-if="currentSelection.source.attributes.historical_significance != ''">{{ currentSelection.source.attributes.historical_significance }}</p>
+    <p ng-if="currentSelection.source.attributes.historical_significance == ''"> &empty; </p>
+    <small-timeline class="person" details="currentSelection.source"></small-timeline>
+</section>
+<section ng-if="currentSelection.type == 'relationship' ">
+    <small-timeline class="relationship" details="currentSelection"></small-timeline>
+</section>
+<section ng-if="currentSelection.type == 'relationship' ">
+    <h2>{{ currentSelection.target.attributes.name }}</h2>
+    <p ng-if="currentSelection.target.attributes.historical_significance != ''">{{ currentSelection.target.attributes.historical_significance }}</p>
+    <p ng-if="currentSelection.target.attributes.historical_significance == ''"> &empty; </p>
+    <small-timeline class="person" details="currentSelection.target"></small-timeline>
+</section>
 
 <section id="more-info" ng-if="currentSelection.type">
     <p>

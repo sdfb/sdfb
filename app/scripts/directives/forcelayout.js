@@ -199,11 +199,9 @@ angular.module('redesign2017App')
                 else { return true; }
                 // return !(m.id in connectedNodes);
               });
-
-            // scope.currentSelection.person1 = {id:d.id, name:d.attributes.name, historical_significance:d.attributes.historical_significance, birth_year:d.attributes.birth_year, death_year:d.attributes.death_year};
-            scope.currentSelection = d;
-
+            
             // This triggers events in groupsbar.js and contextualinfopanel.js when a selection happens
+            scope.currentSelection = d;
             scope.$broadcast('selectionUpdated', scope.currentSelection);
 
           } else if( d.type == "relationship") {
@@ -224,12 +222,10 @@ angular.module('redesign2017App')
                 return (m == d.source || m == d.target)?false:true;
               })
 
-            // scope.currentSelection.person1 = {id:d.id, name:d.attributes.name, historical_significance:d.attributes.historical_significance, birth_year:d.attributes.birth_year, death_year:d.attributes.death_year};
-            // scope.currentSelection = d;
-
-            // This triggers events in groupsbar.js and contextualinfopanel.js when a selection happens
-            // scope.$broadcast('selectionUpdated', scope.currentSelection);
             console.log('selection to be implemented');
+            // This triggers events in groupsbar.js and contextualinfopanel.js when a selection happens
+            scope.currentSelection = d;
+            scope.$broadcast('selectionUpdated', scope.currentSelection);
           }
 
         }
@@ -361,7 +357,7 @@ angular.module('redesign2017App')
             if (!link.type) {
               link.type = 'relationship';
             } else {
-              console.log(link.type);
+              // console.log(link.type);
             }
           })
 
@@ -422,7 +418,26 @@ angular.module('redesign2017App')
             // On click, toggle ego networks for the selected node. (See function above.)
             .on('click', function(d) {
               toggleClick(d, newLinks);
-            });
+            })
+            // On hover, display label
+            .on('mouseenter', function(d){
+              d3.selectAll('g.label').each(function(e){
+                if (e.id == d.id) {
+                  // console.log(e.id == d.id);
+                  d3.select(this)
+                    .classed('temporary-unhidden', true);
+                }
+              })
+            })
+            .on('mouseleave', function(d){
+              d3.selectAll('g.label').each(function(e){
+                if (e.id == d.id) {
+                  // console.log(e.id == d.id);
+                  d3.select(this)
+                    .classed('temporary-unhidden', false);
+                }
+              })
+            })
 
           node.append("title")
             .text(function(d) {
@@ -446,10 +461,6 @@ angular.module('redesign2017App')
               }
               else if (d.distance == 0) { return false; }
               else { return true; } })
-
-            .on('click', function(d) {
-              toggleClick(d, newLinks);
-            })
             .on("mouseenter", function(d) {
               // reorder elements so to bring the hovered one on top and make it readable.
               svg.selectAll("g.label").each(function(e, i) {
@@ -471,8 +482,6 @@ angular.module('redesign2017App')
 
           // Get the Bounding Box of the text created
           d3.selectAll('.label text').each(function(d, i) {
-            // Originally used getBBox, but not compatible with firefox
-            // newNodes[i].labelBBox = this.getBBox();
             // newNodes[i].labelBBox = this.getBoundingClientRect();
             d.labelBBox = this.getBoundingClientRect(); // Throwing error with newNodes[i]
           });
@@ -512,7 +521,7 @@ angular.module('redesign2017App')
 
         // update triggered from the controller
         scope.$on('force layout update', function(event, args) {
-          console.log(event, args);
+          // console.log(event, args);
           confidenceMin = scope.config.confidenceMin;
           confidenceMax = scope.config.confidenceMax;
           dateMin = scope.config.dateMin;

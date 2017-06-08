@@ -17,6 +17,8 @@ angular.module('redesign2017App')
       link: function postLink(scope, element, attrs) {
         // console.log(scope.details)
 
+
+
         var svg = d3.select(element[0]).select('svg'),
           width = +svg.node().getBoundingClientRect().width,
           height = +svg.node().getBoundingClientRect().height;
@@ -28,6 +30,29 @@ angular.module('redesign2017App')
         function update() {
           // console.log('details', scope.details);
 
+          // if the data type = relationship, we have start_date instead of birth_date and end_date instead of death_date
+          // The way in which the data is computated is the same
+          // All we need to do is just to change the structure of the data so that it respect the one of type = person
+          
+          if (scope.details.type == 'relationship') {
+          	if (!scope.details.attributes) {
+          		scope.details.attributes = {}
+          	}
+	          scope.details.attributes.birth_year = scope.details.start_year;
+	          scope.details.attributes.death_year = scope.details.end_year;
+
+	          if(scope.details.start_year_type) {
+	          	scope.details.attributes.birth_year_type = scope.details.start_year_type
+	          }
+	          if(scope.details.end_year_type) {
+	          	scope.details.attributes.death_year_type = scope.details.end_year_type
+	          }
+	          if(!scope.details.attributes.relationshipKind) {
+	          	scope.details.attributes.relationshipKind = 'Kind undefined'
+	          }
+          }
+
+
           svg.selectAll('*').remove();
 
           svg.append('path')
@@ -37,7 +62,7 @@ angular.module('redesign2017App')
             });
 
           svg.append('text')
-            .attr('class', 'label')
+            .attr('class', 'label domain')
             .attr("x", function(d) {
               return x(x.domain()[0]);
             })
@@ -49,7 +74,7 @@ angular.module('redesign2017App')
             });
 
           svg.append('text')
-            .attr('class', 'label')
+            .attr('class', 'label domain')
             .attr('text-anchor', 'end')
             .attr("x", function(d) {
               return x(x.domain()[1]);
@@ -105,7 +130,16 @@ angular.module('redesign2017App')
             })
             .text(scope.details.attributes.death_year);
 
+						if (scope.details.type == 'relationship') {
+							svg.append('text')
+		            .attr('class', 'label relationship')
+		            .attr("x", width/2)
+		            .attr("y", function(d) {
+		              return height;
+		            })
+		            .text(scope.details.attributes.relationshipKind+' ('+scope.details.weight+'% confidence)');
 
+						}
 
           console.log('timeline drawn');
         }
@@ -136,7 +170,10 @@ angular.module('redesign2017App')
           }
         }
 
-        scope.$on('selectionUpdated', update());
+        scope.$on('selectionUpdated', function(event, arg) {
+          // console.log('update the timeline');
+          update();
+        });
 
       }
     };

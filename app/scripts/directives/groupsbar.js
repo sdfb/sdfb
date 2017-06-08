@@ -17,7 +17,7 @@ angular.module('redesign2017App')
         updateGroupBar(scope.groups);
 
         function updateGroupBar(data) {
-          
+
           // size of the group bar
           var oldWidth = d3.select(element[0]).node().getBoundingClientRect().width;
           var padding = 5;
@@ -72,6 +72,54 @@ angular.module('redesign2017App')
               } else {
                 return;
               }
+            })
+            .on('mouseenter', function(d, i) {
+              if (i < 20) {
+                console.log(i, d);
+                d3.selectAll('.link').classed('not-in-group', true);
+                d3.selectAll('.node').each(function(n) {
+                  d3.select(this).classed('not-in-group', function() {
+                    if (n.attributes.groups) {
+                      // console.log(n.attributes.groups);
+                      var inGroup = n.attributes.groups.filter(function(e) {
+                          // (console.log(e == d.groupId));
+                          return e == d.groupId;
+                        })
+                        // console.log(inGroup)
+                      return inGroup.length ? false : true;
+                    } else if (!n.attributes.groups) {
+                      return true;
+                    } else {
+                      return true
+                    }
+                  });
+
+                })
+                d3.selectAll('g.label').each(function(n) {
+                  d3.select(this).classed('not-in-group', function() {
+                    if (n.attributes.groups) {
+                      // console.log(n.attributes.groups);
+                      var inGroup = n.attributes.groups.filter(function(e) {
+                          // (console.log(e == d.groupId));
+                          return e == d.groupId;
+                        })
+                        // console.log(inGroup)
+                      return inGroup.length ? false : true;
+                    } else if (!n.attributes.groups) {
+                      return true;
+                    } else {
+                      return true
+                    }
+                  });
+                })
+              } else {
+                console.log('other groups to be implmented');
+              }
+            })
+            .on('mouseleave', function(d) {
+              d3.selectAll('.node').classed('not-in-group', false);
+              d3.selectAll('.label').classed('not-in-group', false);
+              d3.selectAll('.link').classed('not-in-group', false);
             });
 
           // remove stuff
@@ -81,17 +129,36 @@ angular.module('redesign2017App')
         // HIGHLIGHT GROUPS WHEN SELECTION HAPPENS
         // This works for individual force layout only, at the moment
         scope.$on('selectionUpdated', function(event, args) {
-          // console.log(args);
-          if (args) {
+          console.log(args);
+          if (args.type == 'person') {
             d3.selectAll('.group').classed('unactive', true);
             if (args.attributes.groups) {
               args.attributes.groups.forEach(function(d) {
                 var selectClass = '.g' + d;
-                // console.log(selectClass, d3.selectAll(selectClass));
                 d3.selectAll(selectClass).classed('active', true);
                 d3.selectAll(selectClass).classed('unactive', false);
               });
             }
+          } else if (args.type == 'relationship') {
+
+            d3.selectAll('.group').classed('unactive', true);
+
+            if (args.source.attributes.groups) {
+              args.source.attributes.groups.forEach(function(d) {
+                var selectClass = '.g' + d;
+                d3.selectAll(selectClass).classed('active', true);
+                d3.selectAll(selectClass).classed('unactive', false);
+              });
+            }
+
+            if (args.target.attributes.groups) {
+              args.target.attributes.groups.forEach(function(d) {
+                var selectClass = '.g' + d;
+                d3.selectAll(selectClass).classed('active', true);
+                d3.selectAll(selectClass).classed('unactive', false);
+              });
+            }
+
           }
         })
 
