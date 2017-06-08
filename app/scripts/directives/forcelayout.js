@@ -300,10 +300,28 @@ angular.module('redesign2017App')
         function zoomed() {
           container.attr("transform", "translate(" + d3.event.transform.x + ", " + d3.event.transform.y + ") scale(" + d3.event.transform.k + ")");
         }
+
+        var zoom = d3.zoom();
         // Call zoom for svg container.
-        // svg.call(d3.zoom().transform, d3.zoomTransform().translate(0,0).scale(1));
-        // svg.call(d3.zoom().extent([[0,0], [svg.attr("width"),svg.attr("height")]]))
-        svg.call(d3.zoom().on('zoom', zoomed)); //.on("dblclick.zoom", null);
+        svg.call(zoom.on('zoom', zoomed)); //.on("dblclick.zoom", null);
+
+        //Functions for zoom and recenter buttons
+        scope.centerNetwork = function() {
+          console.log("Recenter");
+          svg.transition().duration(750).call(zoom.transform, d3.zoomIdentity);
+        }
+
+        var zoomfactor = 1;
+
+        scope.zoomIn = function() {
+          console.log("Zoom In")
+          svg.transition().duration(500).call(zoom.scaleBy, zoomfactor+.5);
+        }
+
+        scope.zoomOut = function() {
+          console.log("Zoom Out")
+          svg.transition().duration(500).call(zoom.scaleBy, zoomfactor-.25);
+        }
 
         var container = svg.append('g');
 
