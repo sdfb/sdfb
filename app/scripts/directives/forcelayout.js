@@ -153,13 +153,18 @@ angular.module('redesign2017App')
 
 
         // A function to handle click toggling based on neighboring nodes.
-        function toggleClick(d, newLinks) {
+        function toggleClick(d, newLinks, selectedElement) {
 
           // Reset group bar
           d3.selectAll('.group').classed('active', false);
           d3.selectAll('.group').classed('unactive', false);
 
           if (d.type == "person") {
+
+            // Handle signifier for selected node
+            d3.selectAll('.node, g.label').classed('selected', false);
+            d3.select(selectedElement).classed('selected', true);
+            d3.selectAll('g.label').filter(function(e) { return e.id == d.id; }).classed('selected', true);
 
             // Make object of all neighboring nodes.
             var connectedNodes = {};
@@ -214,7 +219,7 @@ angular.module('redesign2017App')
 
               var top20object = {};
               top20.forEach(function(t) { top20object[t[0]] = t[1]; });
-              console.log(top20object);
+              // console.log(top20object);
 
               d3.selectAll('g.label')
                 .classed('hidden', function(m) {
@@ -232,8 +237,9 @@ angular.module('redesign2017App')
             scope.$broadcast('selectionUpdated', scope.currentSelection);
 
           } else if (d.type == "relationship") {
-            console.log(d.type, d);
-
+            // Remove selction from nodes and labels
+            d3.selectAll('.node, g.label').classed('selected', false);
+            
             d3.selectAll('.link')
               .classed('faded', function(l) {
                 return (l == d) ? false : true;
@@ -337,6 +343,7 @@ angular.module('redesign2017App')
           .attr("class", "labels")
           .selectAll(".label");
 
+
         var loading = svg.append("text")
           .attr("dy", "0.35em")
           .attr("text-anchor", "middle")
@@ -387,7 +394,8 @@ angular.module('redesign2017App')
         console.log("Graph took " + (t1 - t0) + " milliseconds to load.")
 
         function update(confidenceMin, confidenceMax, dateMin, dateMax, complexity) {
-          console.log('updating the force layout');
+          // console.log('updating the force layout');
+          data4groups();
           d3.select('.source-node').remove(); //Get rid of old source node highlight.
 
           // Find the links and nodes that are at or above the confidenceMin.
@@ -457,8 +465,7 @@ angular.module('redesign2017App')
 
 
           node = nodeEnter.merge(node)
-
-          .attr('class', function(d) {
+            .attr('class', function(d) {
               return 'node degree' + d.distance
             })
             .attr('id', function(d) {
@@ -487,13 +494,14 @@ angular.module('redesign2017App')
             })
             // On click, toggle ego networks for the selected node. (See function above.)
             .on('click', function(d) {
-              toggleClick(d, newLinks);
+
+              // Handle the rest of selection signifiers
+              toggleClick(d, newLinks, this);
             })
             // On hover, display label
             .on('mouseenter', function(d) {
               d3.selectAll('g.label').each(function(e) {
                 if (e.id == d.id) {
-                  // console.log(e.id == d.id);
                   d3.select(this)
                     .classed('temporary-unhidden', true);
                 }
@@ -519,11 +527,11 @@ angular.module('redesign2017App')
               })
             })
 
-
-          node.append("title")
-            .text(function(d) {
-              return d.attributes.name;
-            });
+          // It defines the native tooltipe when hovering on the element for a while
+          // node.append("title")
+          //   .text(function(d) {
+          //     return d.attributes.name;
+          //   });
 
           // LABELS
           label = label.data(newNodes, function(d) {
@@ -543,6 +551,7 @@ angular.module('redesign2017App')
             // else if (d.distance == 0) { return false; }
             // else { return true; } })
 
+          labelEnter.selectAll('*').remove();
 
           label = labelEnter.merge(label)
 
@@ -550,6 +559,7 @@ angular.module('redesign2017App')
 
           label.append('text')
             .text(function(d) {
+              // console.warn(d.attributes.name);
               return d.attributes.name;
             })
 
@@ -598,62 +608,60 @@ angular.module('redesign2017App')
           scope.config.title = "Hooke network of Francis Bacon"
         }
 
-        update(confidenceMin, confidenceMax, dateMin, dateMax, complexity);
-
-        // update triggered from the controller
-        scope.$on('force layout update', function(event, args) {
-          // console.log(event, args);
-          confidenceMin = scope.config.confidenceMin;
-          confidenceMax = scope.config.confidenceMax;
-          dateMin = scope.config.dateMin;
-          dateMax = scope.config.dateMax;
-          complexity = scope.config.networkComplexity;
-          update(confidenceMin, confidenceMax, dateMin, dateMax, complexity);
-        });
-
-        var data4groups = scope.data.included
-        var listGroups = [];
-        data4groups.forEach(function(d) {
-          if (d.attributes.groups) {
-            d.attributes.groups.forEach(function(e) {
-              listGroups.push(e);
-            })
-          }
-        });
-
-        // GET DATA FOR GROUPS
-        // use lodash to create a dictionary with groupId as key and group occurrencies as value (eg '81': 17)
-        listGroups = _.countBy(listGroups);
-
-        //Transform that dictionary into an array of objects (eg {'groupId': '81', 'value': 17})
-        var arr = [];
-        for (var group in listGroups) {
-          if (listGroups.hasOwnProperty(group)) {
-            var obj = {
-              'groupId': group,
-              'value': listGroups[group]
+        function data4groups() {
+          // GET DATA FOR GROUPS
+          // use lodash to create a dictionary with groupId as key and group occurrencies as value (eg '81': 17)
+          var data4groups = scope.data.included
+          var listGroups = [];
+          data4groups.forEach(function(d) {
+            if (d.attributes.groups) {
+              d.attributes.groups.forEach(function(e) {
+                listGroups.push(e);
+              })
             }
-            arr.push(obj);
+          });
+          listGroups = _.countBy(listGroups);
+
+          //Transform that dictionary into an array of objects (eg {'groupId': '81', 'value': 17})
+          var arr = [];
+          for (var group in listGroups) {
+            if (listGroups.hasOwnProperty(group)) {
+              var obj = {
+                'groupId': group,
+                'value': listGroups[group]
+              }
+              arr.push(obj);
+            }
           }
+
+          //Sort the array in descending order
+          arr.sort(function(a, b) {
+            return d3.descending(a.value, b.value);
+          })
+          var cutAt = 20;
+          var groupsBar = _.slice(arr, 0, cutAt);
+          var otherGroups = _.slice(arr, cutAt);
+          var othersValue = 0;
+          otherGroups.forEach(function(d) {
+            othersValue += d.value;
+          });
+          groupsBar.push({ 'groupId': 'others', 'value': othersValue, 'amount': otherGroups.length });
+          scope.groups.groupsBar = groupsBar;
+          scope.groups.otherGroups = otherGroups;
+          // console.log('Data for groups bar ($scope.groups):', scope.groups); 
         }
 
-        //Sort the array in descending order
-        arr.sort(function(a, b) {
-          return d3.descending(a.value, b.value);
-        })
-
-        var cutAt = 20;
-        var groupsBar = _.slice(arr, 0, cutAt);
-        var otherGroups = _.slice(arr, cutAt);
-        var othersValue = 0;
-        otherGroups.forEach(function(d) {
-          othersValue += d.value;
-        });
-        groupsBar.push({ 'groupId': 'others', 'value': othersValue });
-        scope.groups.groupsBar = groupsBar;
-        scope.groups.otherGroups = otherGroups;
-        console.log('Data for groups bar ($scope.groups):', scope.groups);
-
+        update(confidenceMin, confidenceMax, dateMin, dateMax, complexity);
+        // update triggered from the controller
+        // scope.$on('force layout update', function(event, args) {
+        //   // console.log(event, args);
+        //   confidenceMin = scope.config.confidenceMin;
+        //   confidenceMax = scope.config.confidenceMax;
+        //   dateMin = scope.config.dateMin;
+        //   dateMax = scope.config.dateMax;
+        //   complexity = scope.config.networkComplexity;
+        //   update(confidenceMin, confidenceMax, dateMin, dateMax, complexity);
+        // });
       }
     };
   });

@@ -147,10 +147,8 @@ angular.module('redesign2017App')
 		              return height;
 		            })
 		            .text(scope.details.attributes.relationshipKind+' ('+scope.details.weight+'% confidence)');
-
 						}
-
-          console.log('timeline drawn');
+          // console.log('timeline drawn');
         }
 
         function terminators(position, type, refX, refY, width) {
@@ -175,7 +173,7 @@ angular.module('redesign2017App')
           } else if (type == 'CA' || type == 'ca') {
             return 'M' + refX + ',' + (refY - width / 2) + ' C' + (refX - width / 4) + ',' + (refY - width / 2) + ',' + (refX - width / 2) + ',' + (refY - width / 4) + ',' + (refX - width / 2) + ',' + refY + ' S' + (refX - width / 4) + ',' + (refY + width / 2) + ',' + refX + ',' + (refY + width / 2) + ' S' + (refX + width / 2) + ',' + (refY + width / 4) + ',' + (refX + width / 2) + ',' + (refY) + ', S' + (refX + width / 4) + ',' + (refY - width / 2) + ',' + (refX) + ',' + (refY - width / 2) + ' z';
           } else {
-            console.warn('Property "birth_year_type" for', position, 'Accepted values (lowercase or uppercase): AF, AF/IN, BF, BF/IN, IN, CA.');
+            console.warn('Missing property "'+position+'_year_type". Accepted values (lowercase or uppercase): AF, AF/IN, BF, BF/IN, IN, CA.');
           }
         }
 

@@ -61,7 +61,7 @@ angular.module('redesign2017App')
             .merge(chart)
             .text(function(d, i) {
               if (i == 20) {
-                return d.value + ' minor groups (click to show)'
+                return d.amount + ' minor groups (click to show)'
               } else {
                 return 'g' + d.groupId;
               }
@@ -75,51 +75,35 @@ angular.module('redesign2017App')
             })
             .on('mouseenter', function(d, i) {
               if (i < 20) {
-                console.log(i, d);
                 d3.selectAll('.link').classed('not-in-group', true);
-                d3.selectAll('.node').each(function(n) {
-                  d3.select(this).classed('not-in-group', function() {
-                    if (n.attributes.groups) {
-                      // console.log(n.attributes.groups);
-                      var inGroup = n.attributes.groups.filter(function(e) {
-                          // (console.log(e == d.groupId));
-                          return e == d.groupId;
-                        })
-                        // console.log(inGroup)
-                      return inGroup.length ? false : true;
-                    } else if (!n.attributes.groups) {
-                      return true;
-                    } else {
-                      return true
-                    }
-                  });
-
-                })
-                d3.selectAll('g.label').each(function(n) {
-                  d3.select(this).classed('not-in-group', function() {
-                    if (n.attributes.groups) {
-                      // console.log(n.attributes.groups);
-                      var inGroup = n.attributes.groups.filter(function(e) {
-                          // (console.log(e == d.groupId));
-                          return e == d.groupId;
-                        })
-                        // console.log(inGroup)
-                      return inGroup.length ? false : true;
-                    } else if (!n.attributes.groups) {
-                      return true;
-                    } else {
-                      return true
-                    }
-                  });
+                // assign class in-group or not-in-group to labels and to nodes
+                d3.selectAll('g.label, .node').each(function(n) {
+                  var className = 'not-in-group';
+                  if (n.attributes.groups) {
+                    var inGroup = n.attributes.groups.filter(function(e) {
+                      return e == d.groupId;
+                    })
+                    if (inGroup.length) { className = 'in-group' }
+                  }
+                  d3.select(this).classed(className, true);
                 })
               } else {
-                console.log('other groups to be implmented');
+                d3.selectAll('.link').classed('not-in-group', true);
+                d3.selectAll('g.label, .node').each(function(n) {
+                  var className = 'not-in-group';
+                  if (n.attributes.groups) {
+                    var inGroup = _.intersectionWith(scope.groups.otherGroups, n.attributes.groups, function(a, b) {
+                      return a.groupId == b;
+                    });
+                    if (inGroup.length) { className = 'in-group' }
+                  }
+                  d3.select(this).classed(className, true);
+                })
               }
             })
             .on('mouseleave', function(d) {
-              d3.selectAll('.node').classed('not-in-group', false);
-              d3.selectAll('.label').classed('not-in-group', false);
-              d3.selectAll('.link').classed('not-in-group', false);
+              d3.selectAll('.node, .label, .link').classed('not-in-group', false);
+              d3.selectAll('.node, .label, .link').classed('in-group', false);
             });
 
           // remove stuff
@@ -129,7 +113,7 @@ angular.module('redesign2017App')
         // HIGHLIGHT GROUPS WHEN SELECTION HAPPENS
         // This works for individual force layout only, at the moment
         scope.$on('selectionUpdated', function(event, args) {
-          console.log(args);
+          // console.log(args);
           if (args.type == 'person') {
             d3.selectAll('.group').classed('unactive', true);
             if (args.attributes.groups) {
