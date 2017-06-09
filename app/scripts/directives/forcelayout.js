@@ -543,6 +543,9 @@ angular.module('redesign2017App')
           // Create group for the label but define the position later
           var labelEnter = label.enter().append('g')
             .attr("class", "label")
+            .classed('hidden', function(d) {
+              return (d.distance < 2) ? false : true;
+            })
 
             // if (d.distance == 1) {
             //   var linkFound = newLinks.filter(function(l){ return ((l.source.id == sourceId && l.target.id == d.id) || (l.source.id == d.id && l.target.id == sourceId)); });
@@ -593,10 +596,7 @@ angular.module('redesign2017App')
             .attr("transform", function(d) {
               return "translate(" + (d.x) + "," + (d.y + 2.5) + ")"
             })
-            .classed('hidden', function(d) {
-                // return false;
-              return (d.distance < 2) ? false : true;
-            })
+            
 
 
 

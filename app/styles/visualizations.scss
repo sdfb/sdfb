@@ -42,6 +42,16 @@ $degree3: #f2f2f3;
   pointer-events: none;
 }
 
+.link.in-group {
+  stroke: #b9babc;
+  fill: none;
+  shape-rendering: geometricPrecision;
+  -webkit-transition: all $opacityDuration, stroke-width 0s;
+  transition: all $opacityDuration, stroke-width 0s;
+  cursor: pointer;
+  opacity: 1;
+}
+
 .node {
   stroke: #fff;
   stroke-width: 1px;
@@ -198,15 +208,15 @@ groups-bar {
   }
 }
 
-groups-bar::after {
-  content: 'This bar shows the people of the graph within the groups they are part of, click on a node to see if it has any group memberships.';
-  display: block;
-  position: absolute;
-  bottom: 40px;
-  opacity: 0;
-  -webkit-transition: opacity 0.5s;
-  transition: opacity 0.5s;
-}
+// groups-bar::after {
+//   content: 'This bar shows the people of the graph within the groups they are part of, click on a node to see if it has any group memberships.';
+//   display: block;
+//   position: absolute;
+//   bottom: 40px;
+//   opacity: 0;
+//   -webkit-transition: opacity 0.5s;
+//   transition: opacity 0.5s;
+// }
 
 groups-bar:hover::after {
   opacity: 1;

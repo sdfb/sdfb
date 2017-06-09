@@ -83,22 +83,53 @@ angular.module('redesign2017App')
                     var inGroup = n.attributes.groups.filter(function(e) {
                       return e == d.groupId;
                     })
-                    if (inGroup.length) { className = 'in-group' }
+                    if (inGroup.length) {
+                      className = 'in-group';
+                      // hide or display groups depending on group membership of source and target
+                      d3.selectAll('.link').filter(function(f){
+                        var linkClassName = 'not-in-group';
+                        if (f.source.attributes.groups && f.target.attributes.groups) {
+                          // console.log(f.source.attributes.groups, f.target.attributes.groups);
+                          var sourceInGroup = inGroup.some((e) => {return f.source.attributes.groups.indexOf(e) != -1});
+                          var targetInGroup = inGroup.some((e) => {return f.target.attributes.groups.indexOf(e) != -1});
+                          if (sourceInGroup && targetInGroup) {
+                            linkClassName = 'in-group';
+                          }
+                          d3.select(this).classed(linkClassName, true);
+                        }
+                      })
+                    }
                   }
                   d3.select(this).classed(className, true);
                 })
-              } else {
                 d3.selectAll('.link').classed('not-in-group', true);
+              } else {
                 d3.selectAll('g.label, .node').each(function(n) {
                   var className = 'not-in-group';
                   if (n.attributes.groups) {
                     var inGroup = _.intersectionWith(scope.groups.otherGroups, n.attributes.groups, function(a, b) {
                       return a.groupId == b;
                     });
-                    if (inGroup.length) { className = 'in-group' }
+                    if (inGroup.length) {
+                      className = 'in-group'
+                      // hide or display groups depending on group membership of source and target
+                      d3.selectAll('.link').filter(function(f){
+                        var linkClassName = 'not-in-group';
+                        if (f.source.attributes.groups && f.target.attributes.groups) {
+                          // console.log(f.source.attributes.groups, f.target.attributes.groups);
+                          var sourceInGroup = inGroup.some((e) => {return f.source.attributes.groups.indexOf(e) != -1});
+                          var targetInGroup = inGroup.some((e) => {return f.target.attributes.groups.indexOf(e) != -1});
+                          if (sourceInGroup && targetInGroup) {
+                            linkClassName = 'in-group';
+                          }
+                          d3.select(this).classed(linkClassName, true);
+                        }
+                      })
+                    }
                   }
                   d3.select(this).classed(className, true);
                 })
+                d3.selectAll('.link').classed('not-in-group', true);
               }
             })
             .on('mouseleave', function(d) {
