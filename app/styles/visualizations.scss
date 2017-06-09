@@ -94,7 +94,7 @@ $degree3: #f2f2f3;
 
 .label.hidden, .label.not-in-group {
   opacity: 0;
-  display: block;
+  display: block !important;
 }
 
 .label.temporary-unhidden {
