@@ -4,19 +4,19 @@
   <div ng-if=" config.viewMode == 'individual-force' || config.viewMode == 'individual-concentric'">
     <div class="legend-box">
       <div class="legend-line"></div>
-      <div class="flex-container individual-network">
+      <div class="flex-container individual-network center-align">
         <div class="flex-item legend-circle origin"></div>
         <div class="flex-item legend-circle first-degree"></div>
         <div class="flex-item legend-circle second-degree"></div>
       </div>
       <div class="flex-container">
-        <div class="flex-item legend-text">Origin</div>
-        <div class="flex-item legend-text">1st degree</div>
-        <div class="flex-item legend-text">2nd</div>
+        <div class="flex-item legend-text text-origin">Origin</div>
+        <div class="flex-item legend-text text-first-degree">1st degree</div>
+        <div class="flex-item legend-text text-second-degree">2nd</div>
       </div>
     </div>
-    <h5>Color of nodes is degree of separation</h5>
-    <div class="legend-box legend-size">
+    <h5>Color and size of nodes is degree of separation</h5>
+    <!-- <div class="legend-box legend-size">
       <div class="flex-container center-align">
         <div class="flex-item legend-circle ghost"></div>
         <div class="flex-item legend-circle white-circle circle-big"></div>
@@ -25,7 +25,7 @@
         <div class="flex-item legend-circle ghost"></div>
       </div>
     </div>
-    <h5>Size of nodes indicates distance from origin</h5>
+    <h5>Size of nodes indicates distance from origin</h5> -->
     <div class="legend-box">
       <div class="flex-container">
         <div class="flex-item legend-edge legend-text centered">Inferred<br/>Computationally</div>

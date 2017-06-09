@@ -27,19 +27,15 @@ $node-group-origin: #78729F;
 $node-group-firstDegree: #EFF1F4;
 $edge-color: #4A4A4A;
 $filter-color: #EF887F;
-
-// from visualization.scss
+/* from visualization.scss*/
 /* RED version*/
 $degree0: #F45D4C;
 $degree1: #EE9F99;
 $degree3: #f2f2f3;
-
 /* BLUE version*/
 /* $degree0: #1239B4;*/
 /* $degree1: #5385A6;*/
 /* $degree3: #f2f2f3;*/
-
-
 /* general styles*/
 body {
   background-color: #EFF1F4;
@@ -191,7 +187,7 @@ path.danger {
   width: 100%;
 
   &.individual {
-    height: 380px;
+    height: 310px;
   }
 
   &.shared {
@@ -342,7 +338,7 @@ section .legend-text {
 section .legend-line {
   border-top: 1px solid $mainTextColor;
   position: relative;
-  top: 7px;
+  top: 25px;
   width: 100%;
 
   &.small-segment {
@@ -377,7 +373,7 @@ section .flex-container {
 
   .legend-circle {
     border: 1px solid $light-color;
-    border-radius: 7px;
+    border-radius: 50%;
     height: 14px;
     width: 14px;
     z-index: 99;
@@ -394,19 +390,16 @@ section .flex-container {
       margin: 0 auto;
 
       &.circle-big {
-        border-radius: 25px;
         height: 50px;
         width: 50px;
       }
 
       &.circle-medium {
-        border-radius: 13px;
         height: 25px;
         width: 25px;
       }
 
       &.circle-small {
-        border-radius: 7px;
         height: 12.5px;
         width: 12.5px;
       }
@@ -414,19 +407,41 @@ section .flex-container {
   }
 
   &.individual-network {
+    & + .flex-container .legend-text {
+      position: relative;
+
+      &.text-origin {
+        left: 6px;
+      }
+
+      &.text-first-degree {
+        bottom: 14px;
+      }
+
+      &.text-second-degree {
+        bottom: 20px;
+      }
+    }
+
     .legend-circle {
       &.origin {
         background-color: $node-individual-origin;
+        height: 50px;
+        width: 50px;
       }
 
       &.first-degree {
         background-color: $node-individual-firstDegree;
-        margin-left: 14px;
+        margin-right: 16px;
+        height: 25px;
+        width: 25px;
       }
 
       &.second-degree {
         background-color: $node-individual-secondDegree;
         border-color: $node-individual-firstDegree;
+        height: 12.5px;
+        width: 12.5px;
       }
     }
   }
@@ -521,14 +536,15 @@ filters-panel {
   }
 
   .legend-line {
-      top: 10px;
+    top: 10px;
   }
 
   .flex-container {
-      width: 100%;
-      .legend-text {
-          padding-top: 0;
-      }
+    width: 100%;
+
+    .legend-text {
+      padding-top: 0;
+    }
   }
 }
 
@@ -546,8 +562,8 @@ filters-panel.panel h5 {
 }
 
 .panel h5.interaction-info {
-    margin-top: 10px;
-    font-style: italic;
+  margin-top: 10px;
+  font-style: italic;
 }
 
 .density-container form {
@@ -563,8 +579,9 @@ filters-panel.panel h5 {
   -ms-flex-pack: justify;
   justify-content: space-between;
   width: 100%;
+
   div {
-      z-index: 99;
+    z-index: 99;
   }
 }
 
@@ -597,7 +614,6 @@ input[type="radio"]:checked + label span {
   transition: all 0.3s ease;
   width: 10px;
 }
-
 /* Buttons*/
 .btn {
   font-size: 10px;
@@ -664,6 +680,7 @@ label.btn-primary:first-of-type {
 }
 /* */
 .controls {
+  background-color: $light-color;
   font-size: 14px;
   display: -webkit-box;
   display: -ms-flexbox;
@@ -704,18 +721,18 @@ label.btn-primary:first-of-type {
   width: 100%;
   bottom: 0;
 }
-
-
-
 /* Contextual Info Panel*/
-
 contextual-info-panel.panel {
-  background-color: $light-color
+  background-color: $light-color;
 }
 
 contextual-info-panel > section {
   padding: 5px 15px;
   text-align: center;
+
+  .help-info {
+      margin-top: 10px;
+  }
 
   small-timeline .label.domain {
     display: none;
@@ -775,6 +792,14 @@ small-timeline .label {
 small-timeline .label.life {
   text-anchor: middle;
   fill: $mainTextColor;
+
+  &.text-left {
+    text-anchor: end;
+  }
+
+  &.text-right {
+    text-anchor: start;
+  }
 }
 
 small-timeline .label.relationship {

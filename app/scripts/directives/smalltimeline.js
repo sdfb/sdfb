@@ -33,7 +33,7 @@ angular.module('redesign2017App')
           // if the data type = relationship, we have start_date instead of birth_date and end_date instead of death_date
           // The way in which the data is computated is the same
           // All we need to do is just to change the structure of the data so that it respect the one of type = person
-          
+
           if (scope.details.type == 'relationship') {
           	if (!scope.details.attributes) {
           		scope.details.attributes = {}
@@ -52,6 +52,9 @@ angular.module('redesign2017App')
 	          }
           }
 
+          // calculate if birth and death years are too close together
+          var delta = scope.details.attributes.death_year - scope.details.attributes.birth_year;
+          console.log(delta);
 
           svg.selectAll('*').remove();
 
@@ -118,6 +121,9 @@ angular.module('redesign2017App')
             .attr("y", function(d) {
               return height / 2 - 8;
             })
+            .classed("text-left", function(d) {
+              return delta <= 25;
+            })
             .text(scope.details.attributes.birth_year);
 
           svg.append('text')
@@ -127,6 +133,9 @@ angular.module('redesign2017App')
             })
             .attr("y", function(d) {
               return height / 2 - 8;
+            })
+            .classed("text-right", function(d) {
+              return delta <= 25;
             })
             .text(scope.details.attributes.death_year);
 
