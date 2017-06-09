@@ -694,7 +694,13 @@ label.btn-primary:first-of-type {
 .controls > span {
   color: $mainTextColor;
   padding: 9px 9px 0;
+  cursor: pointer;
 }
+
+.controls > span:active {
+  opacity:.7;
+}
+
 
 .controls > span:last-child {
   padding-bottom: 9px;

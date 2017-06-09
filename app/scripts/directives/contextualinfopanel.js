@@ -14,7 +14,7 @@ angular.module('redesign2017App')
       link: function postLink(scope, element, attrs) {
 
         scope.$on('selectionUpdated', function(event, args) {
-          console.log('selectionUpdated', scope.currentSelection);
+          // console.log('selectionUpdated', scope.currentSelection);
           scope.$apply();
         })
 

@@ -97,6 +97,14 @@ $degree3: #f2f2f3;
   display: block !important;
 }
 
+.label.in-group {
+  opacity: 1;
+  display: block !important;
+  pointer-events: none;
+  -webkit-transition: opacity $opacityDuration;
+  transition: opacity $opacityDuration;
+}
+
 .label.temporary-unhidden {
   opacity: 1 !important;
   display: block !important;
@@ -114,6 +122,15 @@ $degree3: #f2f2f3;
   opacity: 1;
   stroke: #b9babc;
   stroke-width: 0.5px;
+}
+
+.label.selected rect {
+  fill: #4A4A4A;
+  stroke: $degree0;
+}
+
+.label.selected text {
+  fill: #ffffff;
 }
 
 
