@@ -30,6 +30,8 @@ angular.module('redesign2017App')
         createDensityButtons();
         createConfidenceGraph();
         createDateGraph();
+        // scope.config.networkComplexity = complexity;
+        // scope.$apply();
 
         function createDensityButtons() {
           // Radio buttons for network complexity.
@@ -74,9 +76,11 @@ angular.module('redesign2017App')
 
           complexityButtons.on('change', function() {
            complexity = this.value;
-           scope.config.networkComplexity = complexity;
-           scope.$apply();
-          //  console.log(scope.config.networkComplexity);
+           scope.$evalAsync(function(){
+             scope.config.networkComplexity = complexity;
+           });
+
+          //  scope.$apply();
           });
         }
 
@@ -161,9 +165,10 @@ angular.module('redesign2017App')
             var maxIndex = Math.round((s[1] / eachBand) - marginInterval);
             var confidenceMin = confidenceX.domain()[minIndex] || "60";
             var confidenceMax = confidenceX.domain()[maxIndex] || "100";
-            scope.config.confidenceMin = confidenceMin;
-            scope.config.confidenceMax = confidenceMax;
-            // update(confidenceMin, confidenceMax, dateMin, dateMax, complexity)
+            scope.$evalAsync(function(){
+              scope.config.confidenceMin = confidenceMin;
+              scope.config.confidenceMax = confidenceMax;
+            });
           }
          }
 
@@ -214,9 +219,10 @@ angular.module('redesign2017App')
              var maxIndex = Math.round((s[1] / eachBand) - marginInterval);
              var dateMin = dateX.domain()[minIndex] || sourceNode.birth_year;
              var dateMax = dateX.domain()[maxIndex] || sourceNode.death_year;
-             scope.config.dateMin = dateMin;
-             scope.config.dateMax = dateMax;
-            //  update(confidenceMin, confidenceMax, dateMin, dateMax, complexity)
+             scope.$evalAsync(function(){
+               scope.config.dateMin = dateMin;
+               scope.config.dateMax = dateMax;
+             });
            }
           }
       }

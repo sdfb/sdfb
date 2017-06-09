@@ -239,7 +239,7 @@ angular.module('redesign2017App')
           } else if (d.type == "relationship") {
             // Remove selction from nodes and labels
             d3.selectAll('.node, g.label').classed('selected', false);
-            
+
             d3.selectAll('.link')
               .classed('faded', function(l) {
                 return (l == d) ? false : true;
@@ -596,7 +596,7 @@ angular.module('redesign2017App')
             .attr("transform", function(d) {
               return "translate(" + (d.x) + "," + (d.y + 2.5) + ")"
             })
-            
+
 
 
 
@@ -648,20 +648,20 @@ angular.module('redesign2017App')
           groupsBar.push({ 'groupId': 'others', 'value': othersValue, 'amount': otherGroups.length });
           scope.groups.groupsBar = groupsBar;
           scope.groups.otherGroups = otherGroups;
-          // console.log('Data for groups bar ($scope.groups):', scope.groups); 
+          // console.log('Data for groups bar ($scope.groups):', scope.groups);
         }
 
         update(confidenceMin, confidenceMax, dateMin, dateMax, complexity);
         // update triggered from the controller
-        // scope.$on('force layout update', function(event, args) {
-        //   // console.log(event, args);
-        //   confidenceMin = scope.config.confidenceMin;
-        //   confidenceMax = scope.config.confidenceMax;
-        //   dateMin = scope.config.dateMin;
-        //   dateMax = scope.config.dateMax;
-        //   complexity = scope.config.networkComplexity;
-        //   update(confidenceMin, confidenceMax, dateMin, dateMax, complexity);
-        // });
+        scope.$on('force layout update', function(event, args) {
+          // console.log(event, args);
+          confidenceMin = scope.config.confidenceMin;
+          confidenceMax = scope.config.confidenceMax;
+          dateMin = scope.config.dateMin;
+          dateMax = scope.config.dateMax;
+          complexity = scope.config.networkComplexity;
+          update(confidenceMin, confidenceMax, dateMin, dateMax, complexity);
+        });
       }
     };
   });

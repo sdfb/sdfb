@@ -59,8 +59,8 @@ angular.module('redesign2017App')
     $scope.$watch('config', function(newValue, oldValue) {
       if (newValue !== oldValue) {
         var config = newValue;
-        $scope.legendClosed = false;
-        // $scope.filtersClosed = true; //Stopped filters from automatically closing 
+        // $scope.legendClosed = false;
+        // $scope.filtersClosed = true; //Stopped filters from automatically closing
         if (config.viewObject == 0 && config.viewMode == 'individual-force') {
           $scope.$broadcast('force layout update');
         } else if (config.viewObject == 0 && config.viewMode == 'individual-concentric') {
