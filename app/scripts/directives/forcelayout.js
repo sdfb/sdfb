@@ -27,33 +27,6 @@ angular.module('redesign2017App')
           dateMax = scope.config.dateMax,
           complexity = scope.config.networkComplexity;
 
-        // HIDDEN SEARCH BAR SINCE NOT WORKING.
-        // Search for nodes by making all unmatched nodes temporarily transparent.
-        // function searchNodes() {
-        //  var term = document.getElementById('searchTerm').value;
-        //  var selected = container.selectAll('.node').filter(function(d, i) {
-        //    return d.name.toLowerCase().search(term.toLowerCase()) == -1;
-        //  });
-        //  selected.style('opacity', '0');
-        //  var link = container.selectAll('.link');
-        //  link.style('stroke-opacity', '0');
-        //  d3.selectAll('.node').transition()
-        //    .duration(5000)
-        //    .style('opacity', '1');
-        //  d3.selectAll('.link').transition().duration(5000).style('stroke-opacity', '0.6');
-        // }
-        // Create form for search (see function below).
-        // var search = d3.select("div#tools").append('form').attr('onsubmit', 'return false;');
-        // var box = search.append('input')
-        //  .attr('type', 'text')
-        //  .attr('id', 'searchTerm')
-        //  .attr('placeholder', 'Type to search...');
-        // var button = search.append('input')
-        //  .attr('type', 'button')
-        //  .attr('value', 'Search')
-        //  .on('click', function() {
-        //    searchNodes();
-        //  });
 
         // COMPLEXITY PARSER
         function parseComplexity(thresholdLinks, complexity) {
