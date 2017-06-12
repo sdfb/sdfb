@@ -25,7 +25,8 @@ angular.module('redesign2017App')
           confidenceMax = scope.config.confidenceMax,
           dateMin = scope.config.dateMin,
           dateMax = scope.config.dateMax,
-          complexity = scope.config.networkComplexity;
+          complexity = scope.config.networkComplexity,
+          zoomThreshold = 1;
 
 
         // COMPLEXITY PARSER
@@ -274,7 +275,8 @@ angular.module('redesign2017App')
           if (d3.event.transform.k <2) {
             console.log(1)
           } else if (d3.event.transform.k <3) {
-            console.log(3-1)
+            console.log(3-1);
+            console.log(d3.selectAll('g.label'));
           } else if (d3.event.transform.k <4) {
             console.log(4-1)
           } else {
@@ -663,15 +665,15 @@ angular.module('redesign2017App')
 
         update(confidenceMin, confidenceMax, dateMin, dateMax, complexity);
         // update triggered from the controller
-        // scope.$on('force layout update', function(event, args) {
-        //   // console.log(event, args);
-        //   confidenceMin = scope.config.confidenceMin;
-        //   confidenceMax = scope.config.confidenceMax;
-        //   dateMin = scope.config.dateMin;
-        //   dateMax = scope.config.dateMax;
-        //   complexity = scope.config.networkComplexity;
-        //   update(confidenceMin, confidenceMax, dateMin, dateMax, complexity);
-        // });
+        scope.$on('force layout update', function(event, args) {
+          // console.log(event, args);
+          confidenceMin = scope.config.confidenceMin;
+          confidenceMax = scope.config.confidenceMax;
+          dateMin = scope.config.dateMin;
+          dateMax = scope.config.dateMax;
+          complexity = scope.config.networkComplexity;
+          update(confidenceMin, confidenceMax, dateMin, dateMax, complexity);
+        });
       }
     };
   });
