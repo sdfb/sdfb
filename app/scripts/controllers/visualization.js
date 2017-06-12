@@ -22,10 +22,6 @@ angular.module('redesign2017App')
     // declare a $scope property where to store the future selections
     $scope.currentSelection = {}
 
-    // $scope.getElementData = function(id, name) {
-    //   return apiService.getElementData(id, name);
-    // }
-
     // Other groups modal window
     $scope.modalAnimationsEnabled = true;
     $scope.open = function(size, parentSelector) {
@@ -56,6 +52,8 @@ angular.module('redesign2017App')
       });
     };
 
+    $scope.$broadcast('force layout update');
+
     // write above
     $scope.$watch('config', function(newValue, oldValue) {
       if (newValue !== oldValue) {
@@ -63,9 +61,8 @@ angular.module('redesign2017App')
         // $scope.legendClosed = false;
         // $scope.filtersClosed = true; //Stopped filters from automatically closing
         if (config.viewObject == 0 && config.viewMode == 'individual-force') {
-          $scope.$broadcast('force layout update');
         } else if (config.viewObject == 0 && config.viewMode == 'individual-concentric') {
-          // $scope.$broadcast('force layout update', { data: 'some data' });
+          $scope.$broadcast('force layout update', { data: 'some data' });
         } else if (config.viewObject == 1 && config.viewMode == 'all') {
           console.log('All the groups')
         }

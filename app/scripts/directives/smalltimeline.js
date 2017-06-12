@@ -54,7 +54,6 @@ angular.module('redesign2017App')
 
           // calculate if birth and death years are too close together
           var delta = scope.details.attributes.death_year - scope.details.attributes.birth_year;
-          console.log(delta);
 
           svg.selectAll('*').remove();
 

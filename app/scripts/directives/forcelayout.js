@@ -30,6 +30,8 @@ angular.module('redesign2017App')
 
         // COMPLEXITY PARSER
         function parseComplexity(thresholdLinks, complexity) {
+          console.log('parseComplexity');
+
           var oneDegreeNodes = [];
           thresholdLinks.forEach(function(l) {
             if (l.source.id == sourceId || l.target.id == sourceId) {
@@ -271,12 +273,12 @@ angular.module('redesign2017App')
         // Zooming function translates the size of the svg container.
         function zoomed() {
           container.attr("transform", "translate(" + d3.event.transform.x + ", " + d3.event.transform.y + ") scale(" + d3.event.transform.k + ")");
-          if (d3.event.transform.k <2) {
+          if (d3.event.transform.k < 2) {
             console.log(1)
-          } else if (d3.event.transform.k <3) {
-            console.log(3-1)
-          } else if (d3.event.transform.k <4) {
-            console.log(4-1)
+          } else if (d3.event.transform.k < 3) {
+            console.log(3 - 1)
+          } else if (d3.event.transform.k < 4) {
+            console.log(4 - 1)
           } else {
             console.log(4)
           }
@@ -373,7 +375,7 @@ angular.module('redesign2017App')
         console.log("Graph took " + (t1 - t0) + " milliseconds to load.")
 
         function update(confidenceMin, confidenceMax, dateMin, dateMax, complexity) {
-          // console.log('updating the force layout');
+          console.log('updating the force layout');
           data4groups();
           d3.select('.source-node').remove(); //Get rid of old source node highlight.
 
@@ -390,11 +392,8 @@ angular.module('redesign2017App')
 
           // Add property "type" : "relationship" to every link
           newLinks.forEach(function(link) {
-            // console.log(link);
             if (!link.type) {
               link.type = 'relationship';
-            } else {
-              // console.log(link.type);
             }
           })
 
@@ -442,13 +441,13 @@ angular.module('redesign2017App')
               return "n" + d.id.toString();
             })
             .attr("cx", function(d) {
-              return width/2 + Math.random()*width/10;
-              return Math.random()*width;
+              return width / 2 + Math.random() * width / 10;
+              return Math.random() * width;
               return d.x;
             })
             .attr("cy", function(d) {
-              return height/2 + Math.random()*height/10;
-              return Math.random()*height;
+              return height / 2 + Math.random() * height / 10;
+              return Math.random() * height;
               return d.y;
             })
             .attr("is_source", function(d) {
@@ -457,7 +456,7 @@ angular.module('redesign2017App')
               }
             })
             .attr('r', 0) // By default, adjusted by transition later
-            .attr('opacity',0) // By default, adjusted by transition later
+            .attr('opacity', 0) // By default, adjusted by transition later
             // On click, toggle ego networks for the selected node. (See function above.)
             .on('click', function(d) {
 
@@ -571,9 +570,9 @@ angular.module('redesign2017App')
               if (d.distance == 0) {
                 return 0;
               } else if (d.distance == 1) {
-                return i*2.5;
+                return i * 2;
               } else {
-                return i*2.5;
+                return i * 2;
               }
             })
             .attr("cx", function(d) {
@@ -591,21 +590,21 @@ angular.module('redesign2017App')
                 return 6.25;
               }
             })
-            .attr('opacity',1);
+            .attr('opacity', 1);
 
           link.transition()
-            .delay(function(){
-              return durationBase + 500 + node._groups[0].length*2.5;
+            .delay(function() {
+              return durationBase + 500 + node._groups[0].length * 2;
             })
-            .attr('class', function(d){
+            .attr('class', function(d) {
               return d.altered ? 'link altered' : 'link';
             });
 
           label.transition()
-            .delay(function(){
-              return durationBase + 1000 + node._groups[0].length*2.5;
+            .delay(function() {
+              return durationBase + 1000 + node._groups[0].length * 2;
             })
-            .attr("class", function(d){
+            .attr("class", function(d) {
               return (d.distance < 2) ? 'label' : 'label hidden';
             });
 
@@ -619,6 +618,7 @@ angular.module('redesign2017App')
         }
 
         function data4groups() {
+          console.log('data4groups');
           // GET DATA FOR GROUPS
           // use lodash to create a dictionary with groupId as key and group occurrencies as value (eg '81': 17)
           var data4groups = scope.data.included
@@ -663,15 +663,15 @@ angular.module('redesign2017App')
 
         update(confidenceMin, confidenceMax, dateMin, dateMax, complexity);
         // update triggered from the controller
-        // scope.$on('force layout update', function(event, args) {
-        //   // console.log(event, args);
-        //   confidenceMin = scope.config.confidenceMin;
-        //   confidenceMax = scope.config.confidenceMax;
-        //   dateMin = scope.config.dateMin;
-        //   dateMax = scope.config.dateMax;
-        //   complexity = scope.config.networkComplexity;
-        //   update(confidenceMin, confidenceMax, dateMin, dateMax, complexity);
-        // });
+        scope.$on('force layout update', function(event, args) {
+          // console.log(event, args);
+          confidenceMin = scope.config.confidenceMin;
+          confidenceMax = scope.config.confidenceMax;
+          dateMin = scope.config.dateMin;
+          dateMax = scope.config.dateMax;
+          complexity = scope.config.networkComplexity;
+          update(confidenceMin, confidenceMax, dateMin, dateMax, complexity);
+        });
       }
     };
   });
