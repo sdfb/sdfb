@@ -271,9 +271,19 @@ angular.module('redesign2017App')
         // Zooming function translates the size of the svg container.
         function zoomed() {
           container.attr("transform", "translate(" + d3.event.transform.x + ", " + d3.event.transform.y + ") scale(" + d3.event.transform.k + ")");
+          if (d3.event.transform.k <2) {
+            console.log(1)
+          } else if (d3.event.transform.k <3) {
+            console.log(3-1)
+          } else if (d3.event.transform.k <4) {
+            console.log(4-1)
+          } else {
+            console.log(4)
+          }
         }
 
         var zoom = d3.zoom();
+
         // Call zoom for svg container.
         svg.call(zoom.on('zoom', zoomed)); //.on("dblclick.zoom", null);
 
@@ -561,9 +571,9 @@ angular.module('redesign2017App')
               if (d.distance == 0) {
                 return 0;
               } else if (d.distance == 1) {
-                return i*3;
+                return i*2.5;
               } else {
-                return i*3;
+                return i*2.5;
               }
             })
             .attr("cx", function(d) {
@@ -585,7 +595,7 @@ angular.module('redesign2017App')
 
           link.transition()
             .delay(function(){
-              return durationBase + 500 + node._groups[0].length*3;
+              return durationBase + 500 + node._groups[0].length*2.5;
             })
             .attr('class', function(d){
               return d.altered ? 'link altered' : 'link';
@@ -593,7 +603,7 @@ angular.module('redesign2017App')
 
           label.transition()
             .delay(function(){
-              return durationBase + 500 + node._groups[0].length*3;
+              return durationBase + 1000 + node._groups[0].length*2.5;
             })
             .attr("class", function(d){
               return (d.distance < 2) ? 'label' : 'label hidden';

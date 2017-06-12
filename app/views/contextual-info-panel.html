@@ -27,7 +27,7 @@
 
 <section id="more-info" ng-if="currentSelection.type">
     <p>
-        <button type="button" class="btn btn-primary" ng-click="searchODNB('990')">ODNB</button>
+        <button type="button" class="btn btn-primary" ng-click="searchODNB(currentSelection.attributes.odnb_id,currentSelection.attributes.name)">ODNB</button>
         <button type="button" class="btn btn-primary" ng-click="searchJstor(currentSelection.attributes.name.replace(' ','+'))">J Stor</button>
         <button type="button" class="btn btn-primary" ng-click="searchGoogle(currentSelection.attributes.name.replace(' ','+'))">Google</button>
     </p>

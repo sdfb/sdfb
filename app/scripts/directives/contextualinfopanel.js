@@ -18,9 +18,13 @@ angular.module('redesign2017App')
           scope.$apply();
         })
 
-        scope.searchODNB = function(id) {
-          var url = 'http://www.oxforddnb.com/view/article/{{id}}';
-          window.open(url.replace('{{id}}', id), '_blank');
+        scope.searchODNB = function(id, name) {
+          if (id) {
+            var url = 'http://www.oxforddnb.com/view/article/{{id}}';
+            window.open(url.replace('{{id}}', id), '_blank');
+          } else {
+            window.alert(name + ' does not have any ODNB ID and it is not possible to query "http://www.oxforddnb.com/" for related information. If you know the ID, please turn on the contribution mode and fill the corresponding record.')
+          }
         }
 
         scope.searchJstor = function(name) {
