@@ -14,6 +14,7 @@ angular.module('redesign2017App')
     $scope.data = initialData;
     $scope.legendClosed = false;
     $scope.filtersClosed = true;
+    $scope.peopleFinderClosed = true;
 
     // Container for data realted to groups
     $scope.groups = {};

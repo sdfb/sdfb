@@ -527,7 +527,7 @@ angular.module('redesign2017App')
             // else if (d.distance == 0) { return false; }
             // else { return true; } })
 
-          labelEnter.selectAll('*').remove();
+          label.selectAll('*').remove();
 
           label = labelEnter.merge(label)
 

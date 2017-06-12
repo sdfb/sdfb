@@ -529,7 +529,7 @@ section .edge-line {
 }
 /* filters styles */
 filters-panel {
-  height: 540px;
+  height: 475px;
 
   svg .bar {
     fill: $filter-color;
@@ -852,6 +852,26 @@ small-timeline .label.relationship {
 
 #more-info i {
   font-size: 27px;
+}
+/* people finder */
+people-finder {
+    height: 100px;
+
+    form {
+        margin-top: 10px;
+    }
+
+    .form-control {
+        display: inline;
+        width: 70%;
+    }
+    .btn-primary {
+        bottom: 2px;
+        margin-left: 5px;
+        padding: 2px 12px;
+        position: relative;
+        width: auto;
+    }
 }
 /* modal styles*/
 .modal-dialog {
