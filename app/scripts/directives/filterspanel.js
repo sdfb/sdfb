@@ -35,13 +35,13 @@ angular.module('redesign2017App')
 
         function showTooltip(d) {
             $('.interaction-info').text(function(){
-                if (d === 1) {
+                if (d == 1) {
                     return 'Few nodes';
-                } else if (d === 1.5) {
+                } else if (d == 1.5) {
                     return 'A little more nodes';
-                } else if (d === 1.75) {
+                } else if (d == 1.75) {
                     return 'More nodes but not too much';
-                } else if (d === 2) {
+                } else if (d == 2) {
                     return 'Good enough nodes';
                 } else {
                     return 'A lot of nodes';
