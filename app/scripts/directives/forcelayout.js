@@ -137,7 +137,9 @@ angular.module('redesign2017App')
             // Handle signifier for selected node
             d3.selectAll('.node, g.label').classed('selected', false);
             d3.select(selectedElement).classed('selected', true);
-            d3.selectAll('g.label').filter(function(e) { return e.id == d.id; }).classed('selected', true);
+            d3.selectAll('g.label').filter(function(e) {
+              return e.id == d.id;
+            }).classed('selected', true);
 
             // Make object of all neighboring nodes.
             var connectedNodes = {};
@@ -241,27 +243,21 @@ angular.module('redesign2017App')
           .attr('height', '100%')
           .attr('fill', 'transparent')
           .on('click', function() {
+            // Clear selections on nodes and labels
+            d3.selectAll('.node, g.label').classed('selected', false);
 
             // Restore nodes and links to normal opacity. (see toggleClick() below)
             d3.selectAll('.link')
               .classed('faded', false)
-              // .classed('focused', false);
 
             d3.selectAll('.node')
               .classed('faded', false)
-              // .classed('focused', false);
 
             // Must select g.labels since it selects elements in other part of the interface
             d3.selectAll('g.label')
               .classed('hidden', function(d) {
                 return (d.distance < 2) ? false : true;
               });
-            // if (d.distance == 1) {
-            //   var linkFound = links.filter(function(l){ return ((l.source.id == sourceId && l.target.id == d.id) || (l.source.id == d.id && l.target.id == sourceId)); });
-            //   return (linkFound[0].weight > 80) ? false : true;
-            // }
-            // else if (d.distance == 0) { return false; }
-            // else { return true; } });
 
             // reset group bar
             d3.selectAll('.group').classed('active', false);
@@ -270,7 +266,7 @@ angular.module('redesign2017App')
             // update selction and trigger event for other directives
             scope.currentSelection = {};
             scope.$apply(); // no need to trigger events, just apply
-          }); //on()
+          });
 
         // Zooming function translates the size of the svg container.
         function zoomed() {
@@ -404,13 +400,13 @@ angular.module('redesign2017App')
           });
           link.exit().remove();
           var linkEnter = link.enter().append('path')
-            .attr('class', 'link');
+            .attr('class', 'link faded');
 
           link = linkEnter.merge(link)
-            .attr('class', 'link')
-            .classed('altered', function(d) {
-              return d.altered ? true : false;
-            })
+            .attr('class', 'link altered faded')
+            // .classed('altered', function(d) {
+            //   return d.altered ? true : false;
+            // })
             .attr("d", linkArc)
             .on('click', function(d) {
               toggleClick(d, newLinks);
@@ -423,19 +419,10 @@ angular.module('redesign2017App')
             .attr('class', function(d) {
               return 'node degree' + d.distance
             })
-            .attr("r", function(d) {
-              if (d.distance == 0) {
-                return 25;
-              } else if (d.distance == 1) {
-                return 12.5;
-              } else {
-                return 6.25;
-              }
-            });
+            .attr('r', 0)
 
           node.exit().remove();
           var nodeEnter = node.enter().append('circle');
-
 
           node = nodeEnter.merge(node)
             .attr('class', function(d) {
@@ -445,26 +432,22 @@ angular.module('redesign2017App')
               return "n" + d.id.toString();
             })
             .attr("cx", function(d) {
+              return width/2 + Math.random()*width/10;
+              return Math.random()*width;
               return d.x;
             })
             .attr("cy", function(d) {
+              return height/2 + Math.random()*height/10;
+              return Math.random()*height;
               return d.y;
             })
-            // .attr("pulse", false)
             .attr("is_source", function(d) {
               if (d.id == sourceId) {
                 return 'true';
               }
             })
-            .attr("r", function(d) {
-              if (d.distance == 0) {
-                return 25;
-              } else if (d.distance == 1) {
-                return 12.5;
-              } else {
-                return 6.25;
-              }
-            })
+            .attr('r', 0) // By default, adjusted by transition later
+            .attr('opacity',0) // By default, adjusted by transition later
             // On click, toggle ego networks for the selected node. (See function above.)
             .on('click', function(d) {
 
@@ -515,17 +498,14 @@ angular.module('redesign2017App')
 
           // Create group for the label but define the position later
           var labelEnter = label.enter().append('g')
-            .attr("class", "label")
-            .classed('hidden', function(d) {
-              return (d.distance < 2) ? false : true;
-            })
+            .attr("class", "label hidden") // By default are all hidden, transition will display some of them later
 
-            // if (d.distance == 1) {
-            //   var linkFound = newLinks.filter(function(l){ return ((l.source.id == sourceId && l.target.id == d.id) || (l.source.id == d.id && l.target.id == sourceId)); });
-            //   return (linkFound[0].weight > 80) ? false : true;
-            // }
-            // else if (d.distance == 0) { return false; }
-            // else { return true; } })
+          // if (d.distance == 1) {
+          //   var linkFound = newLinks.filter(function(l){ return ((l.source.id == sourceId && l.target.id == d.id) || (l.source.id == d.id && l.target.id == sourceId)); });
+          //   return (linkFound[0].weight > 80) ? false : true;
+          // }
+          // else if (d.distance == 0) { return false; }
+          // else { return true; } })
 
           label.selectAll('*').remove();
 
@@ -570,7 +550,54 @@ angular.module('redesign2017App')
               return "translate(" + (d.x) + "," + (d.y + 2.5) + ")"
             })
 
+          // handle entrance transitions
 
+          var durationBase = 500;
+
+          node.transition()
+            .duration(durationBase)
+            .ease(d3.easeSinOut)
+            .delay(function(d, i) {
+              if (d.distance == 0) {
+                return 0;
+              } else if (d.distance == 1) {
+                return i*3;
+              } else {
+                return i*3;
+              }
+            })
+            .attr("cx", function(d) {
+              return d.x;
+            })
+            .attr("cy", function(d) {
+              return d.y;
+            })
+            .attr('r', function(d) {
+              if (d.distance == 0) {
+                return 25;
+              } else if (d.distance == 1) {
+                return 12.5;
+              } else {
+                return 6.25;
+              }
+            })
+            .attr('opacity',1);
+
+          link.transition()
+            .delay(function(){
+              return durationBase + 500 + node._groups[0].length*3;
+            })
+            .attr('class', function(d){
+              return d.altered ? 'link altered' : 'link';
+            });
+
+          label.transition()
+            .delay(function(){
+              return durationBase + 500 + node._groups[0].length*3;
+            })
+            .attr("class", function(d){
+              return (d.distance < 2) ? 'label' : 'label hidden';
+            });
 
 
           //Update legend too
@@ -626,15 +653,15 @@ angular.module('redesign2017App')
 
         update(confidenceMin, confidenceMax, dateMin, dateMax, complexity);
         // update triggered from the controller
-        scope.$on('force layout update', function(event, args) {
-          // console.log(event, args);
-          confidenceMin = scope.config.confidenceMin;
-          confidenceMax = scope.config.confidenceMax;
-          dateMin = scope.config.dateMin;
-          dateMax = scope.config.dateMax;
-          complexity = scope.config.networkComplexity;
-          update(confidenceMin, confidenceMax, dateMin, dateMax, complexity);
-        });
+        // scope.$on('force layout update', function(event, args) {
+        //   // console.log(event, args);
+        //   confidenceMin = scope.config.confidenceMin;
+        //   confidenceMax = scope.config.confidenceMax;
+        //   dateMin = scope.config.dateMin;
+        //   dateMax = scope.config.dateMax;
+        //   complexity = scope.config.networkComplexity;
+        //   update(confidenceMin, confidenceMax, dateMin, dateMax, complexity);
+        // });
       }
     };
   });

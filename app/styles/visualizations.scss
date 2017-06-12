@@ -55,9 +55,10 @@ $degree3: #f2f2f3;
 .node {
   stroke: #fff;
   stroke-width: 1px;
-  -webkit-transition: all $opacityDuration;
-  transition: all $opacityDuration;
+  -webkit-transition: all $opacityDuration, r 0s ease-out;
+  transition: all $opacityDuration, r 0s ease-out;
   cursor: pointer;
+  // r: 0px;
 }
 
 .node text {
@@ -72,18 +73,18 @@ $degree3: #f2f2f3;
 
 .node.degree0 {
   fill: $degree0;
-  r: 25px;
+  // r: 25px;
 }
 
 .node.degree1 {
   fill: $degree1;
-  r: 12.5px;
+  // r: 12.5px;
 }
 
 .node.degree2 {
   fill: $degree3;
   stroke: $degree0;
-  r: 6.25px;
+  // r: 6.25px;
 }
 
 .node.faded, .node.not-in-group {
