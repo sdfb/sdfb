@@ -33,7 +33,7 @@ angular.module('redesign2017App')
 
         // COMPLEXITY PARSER
         function parseComplexity(thresholdLinks, complexity) {
-          console.log('parseComplexity');
+          // console.log('parseComplexity');
 
           var oneDegreeNodes = [];
           thresholdLinks.forEach(function(l) {
