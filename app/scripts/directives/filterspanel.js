@@ -67,7 +67,7 @@ angular.module('redesign2017App')
             console.log(complexity);
             scope.$evalAsync(function() {
               scope.config.networkComplexity = complexity;
-              scope.$broadcast('Update the force layout');
+              scope.$broadcast('Update the force layout', {layout: ''});
             });
           });
         }

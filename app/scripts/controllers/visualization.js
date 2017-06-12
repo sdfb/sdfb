@@ -53,7 +53,7 @@ angular.module('redesign2017App')
     };
 
     $scope.data4groups = function() {
-      console.log('data4groups');
+      console.log('Creating data4groups');
       // GET DATA FOR GROUPS
       // use lodash to create a dictionary with groupId as key and group occurrencies as value (eg '81': 17)
       var data4groups = $scope.data.included
@@ -93,18 +93,21 @@ angular.module('redesign2017App')
       groupsBar.push({ 'groupId': 'others', 'value': othersValue, 'amount': otherGroups.length });
       $scope.groups.groupsBar = groupsBar;
       $scope.groups.otherGroups = otherGroups;
-      // console.log('Data for groups bar ($scope.groups):', scope.groups);
-
       // $scope.$emit('Update the groups bar', $scope.groups)
-
     }
-
     $scope.data4groups();
 
-    // console.log('broadcast update the force layout')
-    // $scope.$broadcast('Update the force layout', { mode: 'force' });
-    // console.log('broadcast update the groups bar')
-    // $scope.$broadcast('Update the groups bar', 'ciao');
+    $scope.$watch('config.viewMode', function(newValue, oldValue){
+      if (newValue != oldValue){
+        // console.log('changed layout');
+        if (newValue == 'individual-force') {
+          $scope.$broadcast('Update the force layout', { layout: 'individual-force' });
+        } else if (newValue == 'individual-concentric') {
+          $scope.$broadcast('Update the force layout', { layout: 'individual-concentric' });
+        }
+
+      }
+    });
 
     // write above
     // $scope.$watch('config', function(newValue, oldValue) {

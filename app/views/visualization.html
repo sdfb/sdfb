@@ -1,6 +1,7 @@
 <div class="panels-container">
     <section class="on-the-left">
         <search-panel class="panel left"></search-panel>
+        <!-- {{config.viewMode}} -->
         <contextual-info-panel class="panel"></contextual-info-panel>
         <span id="viz-title">{{ config.title }}</span>
     </section>
@@ -20,7 +21,6 @@
 
 </div>
 <div class="visualization-container">
-    <force-layout ng-show="config.viewMode == 'individual-force'"></force-layout>
-    <concentric-layout ng-show="config.viewMode == 'individual-concentric'"></concentric-layout>
+    <force-layout></force-layout>
     <groups-bar ng-if=" config.viewMode == 'individual-force' || config.viewMode == 'individual-concentric' "></groups-bar>
 </div>
