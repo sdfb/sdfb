@@ -25,8 +25,7 @@ angular.module('redesign2017App')
           confidenceMax = scope.config.confidenceMax,
           dateMin = scope.config.dateMin,
           dateMax = scope.config.dateMax,
-          complexity = scope.config.networkComplexity,
-          zoomThreshold = 1;
+          complexity = scope.config.networkComplexity;
 
         var durationTransition = 500;
 
@@ -296,7 +295,9 @@ angular.module('redesign2017App')
         //Functions for zoom and recenter buttons
         scope.centerNetwork = function() {
           console.log("Recenter");
-          svg.transition().duration(750).call(zoom.transform, d3.zoomIdentity);
+          var sourceNode = nodes.filter(function(d) { return (d.id == sourceId)})[0];
+          svg.transition().duration(750).call(zoom.transform, d3.zoomIdentity.translate(width/2-sourceNode.x, height/2-sourceNode.y));
+          // svg.transition().duration(750).call(zoom.transform, d3.zoomIdentity);
         }
 
         var zoomfactor = 1;
@@ -355,7 +356,7 @@ angular.module('redesign2017App')
           .force("link", d3.forceLink(links).id(function(d) {
             return d.id;
           }))
-          .force("charge", d3.forceManyBody().strength(-125)) //.distanceMax([500]))
+          .force("charge", d3.forceManyBody().strength(-75)) //.distanceMax([500]))
           .force("center", d3.forceCenter(width / 2, height / 2))
           .force("collide", d3.forceCollide().radius(function(d) {
             if (d.id == sourceId) {
@@ -364,8 +365,8 @@ angular.module('redesign2017App')
               return 13;
             }
           }))
-          .force("x", d3.forceX())
-          .force("y", d3.forceY())
+          // .force("x", d3.forceX())
+          // .force("y", d3.forceY())
           .stop();
 
         loading.remove();
@@ -389,7 +390,7 @@ angular.module('redesign2017App')
             console.log('ERROR: No compatible layout selected:', layout);
           }
 
-          
+
           // d3.select('.source-node').remove(); //Get rid of old source node highlight.
 
           // Find the links and nodes that are at or above the confidenceMin.
@@ -421,7 +422,7 @@ angular.module('redesign2017App')
           link = link.data(newLinks, function(d) {
             return d.source.id + ', ' + d.target.id;
           });
-          
+
           var linkEnter = link.enter().append('path')
             // .attr('class', 'link faded');
 
@@ -454,7 +455,7 @@ angular.module('redesign2017App')
           // When adding and removing nodes, reassert attributes and behaviors.
           node = node.data(newNodes, function(d) {
               return d.id;
-            })        
+            })
 
           var nodeEnter = node.enter().append('circle');
 
@@ -486,7 +487,7 @@ angular.module('redesign2017App')
               } else {
                 return 6.25;
               }
-            })            
+            })
             .on('click', function(d) {
               // On click, toggle ego networks for the selected node. (See function above.)
               // Handle the rest of selection signifiers
@@ -519,7 +520,7 @@ angular.module('redesign2017App')
 
 
 
-          
+
 
 
 
@@ -549,7 +550,7 @@ angular.module('redesign2017App')
 
           label = labelEnter.merge(label);
 
-          
+
 
           label.append('rect') // a placeholder to be reworked later
 
@@ -560,7 +561,7 @@ angular.module('redesign2017App')
             })
 
           // Get the Bounding Box of the text created
-          d3.selectAll('.label text').each(function(d, i) {            
+          d3.selectAll('.label text').each(function(d, i) {
             d.labelBBox = this.getBBox();
           });
 
