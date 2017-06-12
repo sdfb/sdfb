@@ -32,25 +32,10 @@ angular.module('redesign2017App')
         createDensityButtons();
         createConfidenceGraph();
         createDateGraph();
-        // scope.config.networkComplexity = complexity;
-        // scope.$apply();
 
         function createDensityButtons() {
           // Radio buttons for network complexity.
           var complexityForm = d3.select('.density-container').append('form');
-          //   var complexityButtons = complexityForm.selectAll('input')
-          //    .data(['1', '1.5', '1.75', '2', '2.5'])
-          //    .enter().append('input')
-          //    .attr('type', 'radio')
-          //    .attr('name', 'complexity')
-          //    .attr('checked', function(d) {
-          //      if (d == complexity) {
-          //        return 'checked';
-          //      }
-          //    })
-          //    .attr('value', function(d) {
-          //      return d;
-          //    });
 
           var complexityBox = complexityForm.selectAll('input')
             .data(['1', '1.5', '1.75', '2', '2.5'])
@@ -77,12 +62,13 @@ angular.module('redesign2017App')
             .append('span');
 
           complexityButtons.on('change', function() {
+            console.log('change');
             complexity = this.value;
+            console.log(complexity);
             scope.$evalAsync(function() {
               scope.config.networkComplexity = complexity;
+              scope.$broadcast('Update the force layout');
             });
-
-            //  scope.$apply();
           });
         }
 
@@ -179,6 +165,12 @@ angular.module('redesign2017App')
             scope.$evalAsync(function() {
               scope.config.confidenceMin = confidenceMin;
               scope.config.confidenceMax = confidenceMax;
+              scope.$watchCollection('[config.confidenceMin, config.confidenceMax]', function(newValues, oldValues) {
+                if(newValues != oldValues) {
+                  console.log('brushed with new values');
+                  scope.$broadcast('Update the force layout');
+                }
+              })
             });
           }
         }
@@ -231,7 +223,6 @@ angular.module('redesign2017App')
             .call(dBrush.move, dateX.range());
 
           function brushed() {
-            console.log('brushed');
             var s = d3.event.selection || dateX.range();
             var eachBand = dateX.step();
             var marginInterval = dateMargin.right / eachBand;
@@ -242,6 +233,12 @@ angular.module('redesign2017App')
             scope.$evalAsync(function() {
               scope.config.dateMin = dateMin;
               scope.config.dateMax = dateMax;
+              scope.$watchCollection('[config.dateMin, config.dateMax]', function(newValues, oldValues) {
+                if(newValues != oldValues) {
+                  console.log('brushed with new values');
+                  scope.$broadcast('Update the force layout');
+                }
+              })
             });
           }
         }

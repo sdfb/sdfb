@@ -25,7 +25,10 @@ angular.module('redesign2017App')
           confidenceMax = scope.config.confidenceMax,
           dateMin = scope.config.dateMin,
           dateMax = scope.config.dateMax,
-          complexity = scope.config.networkComplexity;
+          complexity = scope.config.networkComplexity,
+          zoomThreshold = 1;
+
+        var durationTransition = 500;
 
 
         // COMPLEXITY PARSER
@@ -273,15 +276,16 @@ angular.module('redesign2017App')
         // Zooming function translates the size of the svg container.
         function zoomed() {
           container.attr("transform", "translate(" + d3.event.transform.x + ", " + d3.event.transform.y + ") scale(" + d3.event.transform.k + ")");
-          if (d3.event.transform.k < 2) {
-            console.log(1)
-          } else if (d3.event.transform.k < 3) {
-            console.log(3 - 1)
-          } else if (d3.event.transform.k < 4) {
-            console.log(4 - 1)
-          } else {
-            console.log(4)
-          }
+          // if (d3.event.transform.k < 2) {
+          //   console.log(1)
+          // } else if (d3.event.transform.k < 3) {
+          //   console.log(3 - 1);
+          //   // console.log(d3.selectAll('g.label'));
+          // } else if (d3.event.transform.k < 4) {
+          //   console.log(4 - 1)
+          // } else {
+          //   console.log(4)
+          // }
         }
 
         var zoom = d3.zoom();
@@ -376,7 +380,6 @@ angular.module('redesign2017App')
 
         function update(confidenceMin, confidenceMax, dateMin, dateMax, complexity) {
           console.log('updating the force layout');
-          data4groups();
           d3.select('.source-node').remove(); //Get rid of old source node highlight.
 
           // Find the links and nodes that are at or above the confidenceMin.
@@ -387,6 +390,7 @@ angular.module('redesign2017App')
           });
 
           var newData = parseComplexity(thresholdLinks, complexity);
+          // console.log(newData);
           var newNodes = newData[0];
           var newLinks = newData[1];
 
@@ -407,31 +411,44 @@ angular.module('redesign2017App')
           link = link.data(newLinks, function(d) {
             return d.source.id + ', ' + d.target.id;
           });
-          link.exit().remove();
+          
           var linkEnter = link.enter().append('path')
-            .attr('class', 'link faded');
+            // .attr('class', 'link faded');
+
+          link.exit().remove();
 
           link = linkEnter.merge(link)
-            .attr('class', 'link altered faded')
-            // .classed('altered', function(d) {
-            //   return d.altered ? true : false;
-            // })
+            .attr('class', 'link')
+            .classed('altered', function(d) {
+              return d.altered ? true : false;
+            })
             .attr("d", linkArc)
             .on('click', function(d) {
               toggleClick(d, newLinks);
             });
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
           // When adding and removing nodes, reassert attributes and behaviors.
           node = node.data(newNodes, function(d) {
               return d.id;
-            })
-            .attr('class', function(d) {
-              return 'node degree' + d.distance
-            })
-            .attr('r', 0)
+            })        
+
+          var nodeEnter = node.enter().append('circle');
 
           node.exit().remove();
-          var nodeEnter = node.enter().append('circle');
 
           node = nodeEnter.merge(node)
             .attr('class', function(d) {
@@ -441,13 +458,9 @@ angular.module('redesign2017App')
               return "n" + d.id.toString();
             })
             .attr("cx", function(d) {
-              return width / 2 + Math.random() * width / 10;
-              return Math.random() * width;
               return d.x;
             })
             .attr("cy", function(d) {
-              return height / 2 + Math.random() * height / 10;
-              return Math.random() * height;
               return d.y;
             })
             .attr("is_source", function(d) {
@@ -455,11 +468,17 @@ angular.module('redesign2017App')
                 return 'true';
               }
             })
-            .attr('r', 0) // By default, adjusted by transition later
-            .attr('opacity', 0) // By default, adjusted by transition later
-            // On click, toggle ego networks for the selected node. (See function above.)
+            .attr('r', function(d) {
+              if (d.distance == 0) {
+                return 25;
+              } else if (d.distance == 1) {
+                return 12.5;
+              } else {
+                return 6.25;
+              }
+            })            
             .on('click', function(d) {
-
+              // On click, toggle ego networks for the selected node. (See function above.)
               // Handle the rest of selection signifiers
               toggleClick(d, newLinks, this);
             })
@@ -471,7 +490,6 @@ angular.module('redesign2017App')
                     .classed('temporary-unhidden', true);
                 }
               })
-
               // sort elements so to bring the hovered one on top and make it readable.
               svg.selectAll("g.label").each(function(e, i) {
                 if (d == e) {
@@ -480,23 +498,29 @@ angular.module('redesign2017App')
                   d3.select('.labels').node().appendChild(myElement);
                 }
               })
-
             })
             .on('mouseleave', function(d) {
               d3.selectAll('g.label').each(function(e) {
                 if (e.id == d.id) {
-                  // console.log(e.id == d.id);
-                  d3.select(this)
-                    .classed('temporary-unhidden', false);
+                  d3.select(this).classed('temporary-unhidden', false);
                 }
               })
             })
 
-          // It defines the native tooltipe when hovering on the element for a while
-          // node.append("title")
-          //   .text(function(d) {
-          //     return d.attributes.name;
-          //   });
+
+
+          
+
+
+
+
+
+
+
+
+
+
+
 
           // LABELS
           label = label.data(newNodes, function(d) {
@@ -507,18 +531,15 @@ angular.module('redesign2017App')
 
           // Create group for the label but define the position later
           var labelEnter = label.enter().append('g')
-            .attr("class", "label hidden") // By default are all hidden, transition will display some of them later
-
-          // if (d.distance == 1) {
-          //   var linkFound = newLinks.filter(function(l){ return ((l.source.id == sourceId && l.target.id == d.id) || (l.source.id == d.id && l.target.id == sourceId)); });
-          //   return (linkFound[0].weight > 80) ? false : true;
-          // }
-          // else if (d.distance == 0) { return false; }
-          // else { return true; } })
+            .attr("class", function(d) {
+              return (d.distance < 2) ? 'label' : 'label hidden';
+            });
 
           label.selectAll('*').remove();
 
-          label = labelEnter.merge(label)
+          label = labelEnter.merge(label);
+
+          
 
           label.append('rect') // a placeholder to be reworked later
 
@@ -531,7 +552,12 @@ angular.module('redesign2017App')
           // Get the Bounding Box of the text created
           d3.selectAll('.label text').each(function(d, i) {
             // newNodes[i].labelBBox = this.getBoundingClientRect();
-            d.labelBBox = this.getBoundingClientRect(); // Throwing error with newNodes[i]
+            
+            d.labelBBox = this.getBBox();
+
+            if (i % 50 ==0 ) {
+              console.log(d.labelBBox.height,d.labelBBox.width)
+            }
           });
 
           // adjust the padding values depending on font and font size
@@ -561,52 +587,50 @@ angular.module('redesign2017App')
 
           // handle entrance transitions
 
-          var durationBase = 500;
+          // node.transition()
+          //   .duration(durationTransition)
+          //   .ease(d3.easeSinOut)
+          //   .delay(function(d, i) {
+          //     if (d.distance == 0) {
+          //       return 0;
+          //     } else if (d.distance == 1) {
+          //       return i * 2;
+          //     } else {
+          //       return i * 2;
+          //     }
+          //   })
+          //   .attr("cx", function(d) {
+          //     return d.x;
+          //   })
+          //   .attr("cy", function(d) {
+          //     return d.y;
+          //   })
+          //   .attr('r', function(d) {
+          //     if (d.distance == 0) {
+          //       return 25;
+          //     } else if (d.distance == 1) {
+          //       return 12.5;
+          //     } else {
+          //       return 6.25;
+          //     }
+          //   })
+          //   .attr('opacity', 1);
 
-          node.transition()
-            .duration(durationBase)
-            .ease(d3.easeSinOut)
-            .delay(function(d, i) {
-              if (d.distance == 0) {
-                return 0;
-              } else if (d.distance == 1) {
-                return i * 2;
-              } else {
-                return i * 2;
-              }
-            })
-            .attr("cx", function(d) {
-              return d.x;
-            })
-            .attr("cy", function(d) {
-              return d.y;
-            })
-            .attr('r', function(d) {
-              if (d.distance == 0) {
-                return 25;
-              } else if (d.distance == 1) {
-                return 12.5;
-              } else {
-                return 6.25;
-              }
-            })
-            .attr('opacity', 1);
+          // link.transition()
+          //   .delay(function() {
+          //     return durationTransition + 500 + node._groups[0].length * 2;
+          //   })
+          //   .attr('class', function(d) {
+          //     return d.altered ? 'link altered' : 'link';
+          //   });
 
-          link.transition()
-            .delay(function() {
-              return durationBase + 500 + node._groups[0].length * 2;
-            })
-            .attr('class', function(d) {
-              return d.altered ? 'link altered' : 'link';
-            });
-
-          label.transition()
-            .delay(function() {
-              return durationBase + 1000 + node._groups[0].length * 2;
-            })
-            .attr("class", function(d) {
-              return (d.distance < 2) ? 'label' : 'label hidden';
-            });
+          // label.transition()
+          //   .delay(function() {
+          //     return durationTransition + 1000 + node._groups[0].length * 2;
+          //   })
+          //   .attr("class", function(d) {
+          //     return (d.distance < 2) ? 'label' : 'label hidden';
+          //   });
 
 
           //Update legend too
@@ -617,54 +641,10 @@ angular.module('redesign2017App')
           scope.config.title = "Hooke network of Francis Bacon"
         }
 
-        function data4groups() {
-          console.log('data4groups');
-          // GET DATA FOR GROUPS
-          // use lodash to create a dictionary with groupId as key and group occurrencies as value (eg '81': 17)
-          var data4groups = scope.data.included
-          var listGroups = [];
-          data4groups.forEach(function(d) {
-            if (d.attributes.groups) {
-              d.attributes.groups.forEach(function(e) {
-                listGroups.push(e);
-              })
-            }
-          });
-          listGroups = _.countBy(listGroups);
-
-          //Transform that dictionary into an array of objects (eg {'groupId': '81', 'value': 17})
-          var arr = [];
-          for (var group in listGroups) {
-            if (listGroups.hasOwnProperty(group)) {
-              var obj = {
-                'groupId': group,
-                'value': listGroups[group]
-              }
-              arr.push(obj);
-            }
-          }
-
-          //Sort the array in descending order
-          arr.sort(function(a, b) {
-            return d3.descending(a.value, b.value);
-          })
-          var cutAt = 20;
-          var groupsBar = _.slice(arr, 0, cutAt);
-          var otherGroups = _.slice(arr, cutAt);
-          var othersValue = 0;
-          otherGroups.forEach(function(d) {
-            othersValue += d.value;
-          });
-          groupsBar.push({ 'groupId': 'others', 'value': othersValue, 'amount': otherGroups.length });
-          scope.groups.groupsBar = groupsBar;
-          scope.groups.otherGroups = otherGroups;
-          // console.log('Data for groups bar ($scope.groups):', scope.groups);
-        }
 
         update(confidenceMin, confidenceMax, dateMin, dateMax, complexity);
         // update triggered from the controller
-        scope.$on('force layout update', function(event, args) {
-          // console.log(event, args);
+        scope.$on('Update the force layout', function(event, args) {
           confidenceMin = scope.config.confidenceMin;
           confidenceMax = scope.config.confidenceMax;
           dateMin = scope.config.dateMin;

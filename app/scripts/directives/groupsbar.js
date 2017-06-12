@@ -16,6 +16,11 @@ angular.module('redesign2017App')
         var x = d3.scaleLinear()
         updateGroupBar(scope.groups);
 
+        // console.log('on')
+        // scope.$on('Update the groups bar', function(event, args){
+        //   console.log(event, args)
+        // })
+
         function updateGroupBar(data) {
 
           // size of the group bar
