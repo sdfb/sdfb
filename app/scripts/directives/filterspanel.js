@@ -89,7 +89,7 @@ angular.module('redesign2017App')
             console.log(complexity);
             scope.$evalAsync(function() {
               scope.config.networkComplexity = complexity;
-              scope.$broadcast('Update the force layout');
+              scope.$broadcast('Update the force layout', {layout: scope.config.viewMode});
             });
           });
         }
@@ -190,7 +190,7 @@ angular.module('redesign2017App')
               scope.$watchCollection('[config.confidenceMin, config.confidenceMax]', function(newValues, oldValues) {
                 if(newValues != oldValues) {
                   console.log('brushed with new values');
-                  scope.$broadcast('Update the force layout');
+                  scope.$broadcast('Update the force layout', {layout: scope.config.viewMode});
                 }
               })
             });
@@ -258,7 +258,7 @@ angular.module('redesign2017App')
               scope.$watchCollection('[config.dateMin, config.dateMax]', function(newValues, oldValues) {
                 if(newValues != oldValues) {
                   console.log('brushed with new values');
-                  scope.$broadcast('Update the force layout');
+                  scope.$broadcast('Update the force layout', {layout: scope.config.viewMode});
                 }
               })
             });

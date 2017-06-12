@@ -33,7 +33,7 @@ angular.module('redesign2017App')
 
         // COMPLEXITY PARSER
         function parseComplexity(thresholdLinks, complexity) {
-          console.log('parseComplexity');
+          // console.log('parseComplexity');
 
           var oneDegreeNodes = [];
           thresholdLinks.forEach(function(l) {
@@ -378,9 +378,19 @@ angular.module('redesign2017App')
 
         console.log("Graph took " + (t1 - t0) + " milliseconds to load.")
 
-        function update(confidenceMin, confidenceMax, dateMin, dateMax, complexity) {
-          console.log('updating the force layout');
-          d3.select('.source-node').remove(); //Get rid of old source node highlight.
+        function update(confidenceMin, confidenceMax, dateMin, dateMax, complexity, layout) {
+          console.log('force layout update function');
+          // Example of how to execute different code depending on the yellow-layout-switch (it is in the search panel)
+          if (layout == 'individual-force') {
+            console.log('Layout: individual-force');
+          } else if (layout == 'individual-concentric') {
+            console.log('Layout: individual-concentric');
+          } else {
+            console.log('ERROR: No compatible layout selected:', layout);
+          }
+
+          
+          // d3.select('.source-node').remove(); //Get rid of old source node highlight.
 
           // Find the links and nodes that are at or above the confidenceMin.
           var thresholdLinks = links.filter(function(d) {
@@ -550,14 +560,8 @@ angular.module('redesign2017App')
             })
 
           // Get the Bounding Box of the text created
-          d3.selectAll('.label text').each(function(d, i) {
-            // newNodes[i].labelBBox = this.getBoundingClientRect();
-            
+          d3.selectAll('.label text').each(function(d, i) {            
             d.labelBBox = this.getBBox();
-
-            if (i % 50 ==0 ) {
-              console.log(d.labelBBox.height,d.labelBBox.width)
-            }
           });
 
           // adjust the padding values depending on font and font size
@@ -585,72 +589,21 @@ angular.module('redesign2017App')
               return "translate(" + (d.x) + "," + (d.y + 2.5) + ")"
             })
 
-          // handle entrance transitions
-
-          // node.transition()
-          //   .duration(durationTransition)
-          //   .ease(d3.easeSinOut)
-          //   .delay(function(d, i) {
-          //     if (d.distance == 0) {
-          //       return 0;
-          //     } else if (d.distance == 1) {
-          //       return i * 2;
-          //     } else {
-          //       return i * 2;
-          //     }
-          //   })
-          //   .attr("cx", function(d) {
-          //     return d.x;
-          //   })
-          //   .attr("cy", function(d) {
-          //     return d.y;
-          //   })
-          //   .attr('r', function(d) {
-          //     if (d.distance == 0) {
-          //       return 25;
-          //     } else if (d.distance == 1) {
-          //       return 12.5;
-          //     } else {
-          //       return 6.25;
-          //     }
-          //   })
-          //   .attr('opacity', 1);
-
-          // link.transition()
-          //   .delay(function() {
-          //     return durationTransition + 500 + node._groups[0].length * 2;
-          //   })
-          //   .attr('class', function(d) {
-          //     return d.altered ? 'link altered' : 'link';
-          //   });
-
-          // label.transition()
-          //   .delay(function() {
-          //     return durationTransition + 1000 + node._groups[0].length * 2;
-          //   })
-          //   .attr("class", function(d) {
-          //     return (d.distance < 2) ? 'label' : 'label hidden';
-          //   });
-
-
-          //Update legend too
-          // scope.sizeMin = degreeSize.domain()[0];
-          // scope.sizeMax = degreeSize.domain()[1]
-
           //Change name of the viz
           scope.config.title = "Hooke network of Francis Bacon"
         }
 
 
-        update(confidenceMin, confidenceMax, dateMin, dateMax, complexity);
+        update(confidenceMin, confidenceMax, dateMin, dateMax, complexity, 'individual-force');
         // update triggered from the controller
         scope.$on('Update the force layout', function(event, args) {
+          console.log('ON: Update the force layout')
           confidenceMin = scope.config.confidenceMin;
           confidenceMax = scope.config.confidenceMax;
           dateMin = scope.config.dateMin;
           dateMax = scope.config.dateMax;
           complexity = scope.config.networkComplexity;
-          update(confidenceMin, confidenceMax, dateMin, dateMax, complexity);
+          update(confidenceMin, confidenceMax, dateMin, dateMax, complexity, args.layout);
         });
       }
     };

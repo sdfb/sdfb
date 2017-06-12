@@ -21,9 +21,7 @@ angular
   .config(function ($routeProvider) {
     $routeProvider
       .when('/', {
-        templateUrl: 'views/main.html',
-        controller: 'MainCtrl',
-        controllerAs: 'main'
+        redirectTo: '/visualization'
       })
       .when('/visualization', {
         templateUrl: 'views/visualization.html',
@@ -39,9 +37,7 @@ angular
               dateMin:1500,
               dateMax:1700,
               confidenceMin:60,
-              confidenceMax:100,
-              // selectionType: undefined,
-              // selectionId: undefined
+              confidenceMax:100
             }
           },
           initialData: function(apiService) {
@@ -60,6 +56,6 @@ angular
         controllerAs: 'Modal'
       })
       .otherwise({
-        redirectTo: '/'
+        redirectTo: '/visualization'
       });
   });
