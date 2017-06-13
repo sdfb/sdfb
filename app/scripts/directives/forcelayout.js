@@ -11,7 +11,6 @@ angular.module('redesign2017App')
     return {
       template: '<svg width="100%" height="100%"></svg>',
       restrict: 'E',
-      replace: false,
       link: function postLink(scope, element, attrs) {
         console.log('drawing network the first time');
         // console.log(scope.data);
@@ -644,6 +643,8 @@ angular.module('redesign2017App')
               return "translate(" + (d.x) + "," + (d.y + 2.5) + ")"
             })
 
+          scope.centerNetwork();
+          
           // Change name of the viz
           scope.config.title = "Hooke network of Francis Bacon"
         }
