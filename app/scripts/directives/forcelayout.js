@@ -638,7 +638,7 @@ angular.module('redesign2017App')
             });
 
           // Center the label in the middle of the node circle
-          d3.selectAll('.label')
+          d3.selectAll('g.label')
             .attr("transform", function(d) {
               return "translate(" + (d.x) + "," + (d.y + 2.5) + ")"
             })
