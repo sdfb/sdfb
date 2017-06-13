@@ -22,14 +22,17 @@ angular.module('redesign2017App')
             .classed('form-control', true)
              .attr('type', 'text')
              .attr('id', 'searchTerm')
-             .attr('placeholder', 'Type to search...');
-            var button = search.append('input')
-            .classed('btn btn-primary', true)
-             .attr('type', 'button')
-             .attr('value', 'Search')
-             .on('click', function() {
+             .attr('placeholder', 'Type to search...')
+             .on('input', function() {
                searchNodes();
              });
+            // var button = search.append('input')
+            // .classed('btn btn-primary', true)
+            //  .attr('type', 'button')
+            //  .attr('value', 'Search')
+            //  .on('click', function() {
+            //    searchNodes();
+            //  });
           }
 
           // Search for nodes by making all unmatched nodes temporarily transparent.
