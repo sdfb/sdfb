@@ -11,6 +11,7 @@ angular.module('redesign2017App')
     return {
       template: '<svg width="100%" height="100%"></svg>',
       restrict: 'E',
+      replace: false,
       link: function postLink(scope, element, attrs) {
         console.log('drawing network the first time');
         // console.log(scope.data);
@@ -272,6 +273,29 @@ angular.module('redesign2017App')
             scope.$apply(); // no need to trigger events, just apply
           });
 
+
+        var zoom = d3.zoom();
+        // Call zoom for svg container.
+        svg.call(zoom.on('zoom', zoomed)); //.on("dblclick.zoom", null);
+        
+
+        //Functions for zoom and recenter buttons
+        scope.centerNetwork = function() {
+          console.log("Recenter");
+          var sourceNode = nodes.filter(function(d) { return (d.id == sourceId)})[0];
+          svg.transition().duration(750).call(zoom.transform, d3.zoomIdentity.translate(width/2-sourceNode.x, height/2-sourceNode.y));
+          // svg.transition().duration(750).call(zoom.transform, d3.zoomIdentity);
+        }
+        var zoomfactor = 1;
+        scope.zoomIn = function() {
+          console.log("Zoom In")
+          svg.transition().duration(500).call(zoom.scaleBy, zoomfactor + .5);
+        }
+        scope.zoomOut = function() {
+          console.log("Zoom Out")
+          svg.transition().duration(500).call(zoom.scaleBy, zoomfactor - .25);
+        }
+
         // Zooming function translates the size of the svg container.
         function zoomed() {
           container.attr("transform", "translate(" + d3.event.transform.x + ", " + d3.event.transform.y + ") scale(" + d3.event.transform.k + ")");
@@ -287,30 +311,7 @@ angular.module('redesign2017App')
           // }
         }
 
-        var zoom = d3.zoom();
 
-        // Call zoom for svg container.
-        svg.call(zoom.on('zoom', zoomed)); //.on("dblclick.zoom", null);
-
-        //Functions for zoom and recenter buttons
-        scope.centerNetwork = function() {
-          console.log("Recenter");
-          var sourceNode = nodes.filter(function(d) { return (d.id == sourceId)})[0];
-          svg.transition().duration(750).call(zoom.transform, d3.zoomIdentity.translate(width/2-sourceNode.x, height/2-sourceNode.y));
-          // svg.transition().duration(750).call(zoom.transform, d3.zoomIdentity);
-        }
-
-        var zoomfactor = 1;
-
-        scope.zoomIn = function() {
-          console.log("Zoom In")
-          svg.transition().duration(500).call(zoom.scaleBy, zoomfactor + .5);
-        }
-
-        scope.zoomOut = function() {
-          console.log("Zoom Out")
-          svg.transition().duration(500).call(zoom.scaleBy, zoomfactor - .25);
-        }
 
         var container = svg.append('g');
 
@@ -455,6 +456,10 @@ angular.module('redesign2017App')
 
 
 
+          //          //
+          //  LINKS   //
+          //          //
+
           // Add property "type" : "relationship" to every link
           newLinks.forEach(function(link) {
             if (!link.type) {
@@ -497,10 +502,9 @@ angular.module('redesign2017App')
 
 
 
-
-
-
-
+          //          //
+          //  NODES   //
+          //          //
 
           // When adding and removing nodes, reassert attributes and behaviors.
           node = node.data(newNodes, function(d) {
@@ -582,8 +586,10 @@ angular.module('redesign2017App')
 
 
 
+          //          //
+          //  LABELS  //
+          //          //
 
-          // LABELS
           label = label.data(newNodes, function(d) {
             return d.id;
           });
@@ -599,8 +605,6 @@ angular.module('redesign2017App')
           label.selectAll('*').remove();
 
           label = labelEnter.merge(label);
-
-
 
           label.append('rect') // a placeholder to be reworked later
 
@@ -634,18 +638,19 @@ angular.module('redesign2017App')
               return d.labelBBox.height + paddingTopBottom;
             });
 
-          // center the label in the middle of the node circle
+          // Center the label in the middle of the node circle
           d3.selectAll('.label')
             .attr("transform", function(d) {
               return "translate(" + (d.x) + "," + (d.y + 2.5) + ")"
             })
 
-          //Change name of the viz
+          // Change name of the viz
           scope.config.title = "Hooke network of Francis Bacon"
         }
 
-
+        // Trigger update automatically when the directive code is executed entirely (e.g. at loading)
         update(confidenceMin, confidenceMax, dateMin, dateMax, complexity, 'individual-force');
+
         // update triggered from the controller
         scope.$on('Update the force layout', function(event, args) {
           console.log('ON: Update the force layout')
@@ -656,6 +661,7 @@ angular.module('redesign2017App')
           complexity = scope.config.networkComplexity;
           update(confidenceMin, confidenceMax, dateMin, dateMax, complexity, args.layout);
         });
+
       }
     };
   });

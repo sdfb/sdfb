@@ -108,23 +108,4 @@ angular.module('redesign2017App')
 
       }
     });
-
-    // write above
-    // $scope.$watch('config', function(newValue, oldValue) {
-    //   if (newValue !== oldValue) {
-    //     console.log('config')
-    //     var config = newValue;
-    //     // $scope.legendClosed = false;
-    //     // $scope.filtersClosed = true; //Stopped filters from automatically closing
-    //     if (config.viewObject == 0 && config.viewMode == 'individual-force') {
-    //       // console.log('Show individual hooke network')
-    //       // $scope.$broadcast('Update the force layout', { mode: 'force' });
-    //     } else if (config.viewObject == 0 && config.viewMode == 'individual-concentric') {
-    //       // console.log('Show individual concentric network')
-    //       // $scope.$broadcast('Update the force layout', { mode: 'concentric' });
-    //     } else if (config.viewObject == 1 && config.viewMode == 'all') {
-    //       // console.log('All the groups')
-    //     }
-    //   }
-    // }, true);
   });
