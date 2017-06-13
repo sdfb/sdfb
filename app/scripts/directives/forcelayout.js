@@ -369,30 +369,30 @@ angular.module('redesign2017App')
           // .force("y", d3.forceY())
           .stop();
 
+        loading.remove();
+
         for (var i = 0, n = Math.ceil(Math.log(simulation.alphaMin()) / Math.log(1 - simulation.alphaDecay())); i < n; ++i) {
           simulation.tick();
         }
-
-
-
-        loading.remove();
-
-
 
         var t1 = performance.now();
 
         console.log("Graph took " + (t1 - t0) + " milliseconds to load.")
 
-        function positionCircle(nodelist, r) {
-          var angle = 360/nodelist.length;
-          nodelist.forEach( function(n, i) {
-            n.fx = (Math.cos(angle*(i+1))*r)+(width/2);
-            n.fy = (Math.sin(angle*(i+1))*r)+(height/2);
-          });
-        }
-
         function update(confidenceMin, confidenceMax, dateMin, dateMax, complexity, layout) {
           console.log('force layout update function');
+          // Example of how to execute different code depending on the yellow-layout-switch (it is in the search panel)
+          if (layout == 'individual-force') {
+            console.log('Layout: individual-force');
+          } else if (layout == 'individual-concentric') {
+            console.log('Layout: individual-concentric');
+          } else {
+            console.log('ERROR: No compatible layout selected:', layout);
+          }
+
+
+          // d3.select('.source-node').remove(); //Get rid of old source node highlight.
+
           // Find the links and nodes that are at or above the confidenceMin.
           var thresholdLinks = links.filter(function(d) {
             if (d.weight >= confidenceMin && d.weight <= confidenceMax && parseInt(d.start_year) <= dateMax && parseInt(d.end_year) >= dateMin) {
@@ -404,56 +404,6 @@ angular.module('redesign2017App')
           // console.log(newData);
           var newNodes = newData[0];
           var newLinks = newData[1];
-
-          // Example of how to execute different code depending on the yellow-layout-switch (it is in the search panel)
-          if (layout == 'individual-force') {
-            console.log('Layout: individual-force');
-            newNodes.forEach(function(d){
-              d.fx = null;
-              d.fy = null;
-            });
-          } else if (layout == 'individual-concentric') {
-            console.log('Layout: individual-concentric');
-            newNodes.forEach( function(d) {
-              if (d.distance == 0) {
-                d.fx = width/2;
-                d.fy = height/2;
-              }
-            })
-
-            var oneDegreeNodes = newNodes.filter(function(d) {if (d.distance == 1) {return d;} });
-            positionCircle(oneDegreeNodes, 200);
-
-            var twoDegreeNodes = newNodes.filter(function(d) {if (d.distance == 2) {return d;} });
-            positionCircle(twoDegreeNodes, 1000);
-          } else {
-            console.log('ERROR: No compatible layout selected:', layout);
-          }
-
-          var simulation = d3.forceSimulation(nodes)
-            // .velocityDecay(.5)
-            .force("link", d3.forceLink(links).id(function(d) {
-              return d.id;
-            }))
-            .force("charge", d3.forceManyBody().strength(-75)) //.distanceMax([500]))
-            .force("center", d3.forceCenter(width / 2, height / 2))
-            .force("collide", d3.forceCollide().radius(function(d) {
-              if (d.id == sourceId) {
-                return 26;
-              } else {
-                return 13;
-              }
-            }))
-            // .force("x", d3.forceX())
-            // .force("y", d3.forceY())
-            .stop();
-
-          for (var i = 0, n = Math.ceil(Math.log(simulation.alphaMin()) / Math.log(1 - simulation.alphaDecay())); i < n; ++i) {
-            simulation.tick();
-          }
-          // d3.select('.source-node').remove(); //Get rid of old source node highlight.
-
-
 
           // Add property "type" : "relationship" to every link
           newLinks.forEach(function(link) {
