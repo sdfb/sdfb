@@ -21,6 +21,6 @@
 
 </div>
 <div class="visualization-container">
-    <force-layout ng-if=" config.viewMode == 'individual-force' || config.viewMode == 'individual-concentric' "></force-layout>
-    <groups-bar ng-if=" config.viewMode == 'individual-force' || config.viewMode == 'individual-concentric' "></groups-bar>
+    <force-layout ng-show=" config.viewMode == 'individual-force' || config.viewMode == 'individual-concentric' "></force-layout>
+    <groups-bar ng-show=" config.viewMode == 'individual-force' || config.viewMode == 'individual-concentric' "></groups-bar>
 </div>
