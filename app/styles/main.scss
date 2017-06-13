@@ -187,7 +187,7 @@ path.danger {
   width: 100%;
 
   &.individual {
-    height: 310px;
+    height: 356px;
   }
 
   &.shared {
@@ -318,6 +318,7 @@ search-panel .nav-tabs.nav-justified > .active > a:hover {
 /* legend-panel styles*/
 section .legend-box {
   margin-top: 32px;
+  position: relative;
 }
 
 .legend-panel h5,
@@ -333,6 +334,53 @@ section .legend-text {
   &.centered {
     text-align: center;
   }
+  &.force-legend {
+      position: absolute;
+  }
+}
+
+section .force-legend {
+    &.text-origin {
+        top: 15px;
+        left: 160px;
+    }
+    &.text-first-degree {
+        bottom: 24px;
+        right: 11px;
+    }
+    &.text-second-degree {
+        bottom: 4px;
+        left: 8px;
+    }
+}
+
+section svg{
+    margin: 0 15%;
+    width: 70%;
+
+    .svg-edge {
+        fill: none;
+        stroke: $mainTextColor;
+        stroke-miterlimit: 10px;
+    }
+    .svg-circle-0 {
+        fill: $node-individual-origin;
+    }
+    .svg-circle-1 {
+        fill: $node-individual-firstDegree;
+    }
+    .svg-circle-2 {
+        fill: $node-individual-secondDegree;
+    }
+    .svg-circle-white {
+        fill: $light-color;
+    }
+    .svg-text {
+        fill: $mainTextColor;
+        font-family: 'Open Sans', sans-serif;
+        font-size: 14px;
+        font-weight: 700;
+    }
 }
 
 section .legend-line {
