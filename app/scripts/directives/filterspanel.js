@@ -136,8 +136,8 @@ angular.module('redesign2017App')
             confidenceWidth = +confidenceGraph.attr("width") - confidenceMargin.left - confidenceMargin.right,
             confidenceHeight = +confidenceGraph.attr("height") - confidenceMargin.top - confidenceMargin.bottom;
 
-          var confidenceX = d3.scaleBand().rangeRound([0, confidenceWidth]).padding(0.1),
-            confidenceY = d3.scaleLinear().rangeRound([confidenceHeight, 0]);
+          var confidenceX = d3.scaleBand().range([0, confidenceWidth]).padding(0.1),
+            confidenceY = d3.scaleLinear().range([confidenceHeight, 0]);
 
           var confidenceG = confidenceGraph.append("g");
 
@@ -178,12 +178,9 @@ angular.module('redesign2017App')
 
           function brushed() {
             var s = d3.event.selection || confidenceX.range();
-            var eachBand = confidenceX.step();
-            var marginInterval = confidenceMargin.right / eachBand
-            var minIndex = Math.round((s[0] / eachBand) - marginInterval);
-            var maxIndex = Math.round((s[1] / eachBand) - marginInterval);
-            var confidenceMin = confidenceX.domain()[minIndex] || "60";
-            var confidenceMax = confidenceX.domain()[maxIndex] || "100";
+            var convertConfidence = d3.scaleLinear().domain([0, confidenceWidth]).range([60,100]);
+            var confidenceMin = Math.round(convertConfidence(s[0]));
+            var confidenceMax = Math.round(convertConfidence(s[1]));
             scope.$evalAsync(function() {
               scope.config.confidenceMin = confidenceMin;
               scope.config.confidenceMax = confidenceMax;
@@ -205,8 +202,8 @@ angular.module('redesign2017App')
             dateWidth = +dateGraph.attr("width") - dateMargin.left - dateMargin.right,
             dateHeight = +dateGraph.attr("height") - dateMargin.top - dateMargin.bottom;
 
-          var dateX = d3.scaleBand().rangeRound([0, dateWidth]).padding(0.1),
-            dateY = d3.scaleLinear().rangeRound([dateHeight, 0]);
+          var dateX = d3.scaleBand().range([0, dateWidth]).padding(0.1),
+            dateY = d3.scaleLinear().range([dateHeight, 0]);
 
           var dateG = dateGraph.append("g");
 
@@ -246,12 +243,10 @@ angular.module('redesign2017App')
 
           function brushed() {
             var s = d3.event.selection || dateX.range();
-            var eachBand = dateX.step();
-            var marginInterval = dateMargin.right / eachBand;
-            var minIndex = Math.round((s[0] / eachBand) - marginInterval);
-            var maxIndex = Math.round((s[1] / eachBand) - marginInterval);
-            var dateMin = dateX.domain()[minIndex] || sourceNode.birth_year;
-            var dateMax = dateX.domain()[maxIndex] || sourceNode.death_year;
+            var convertDate = d3.scaleLinear().domain([0, dateWidth]).range([sourceNode.birth_year, sourceNode.death_year]);
+            dateMin = Math.round(convertDate(s[0]));
+            dateMax = Math.round(convertDate(s[1]));
+
             scope.$evalAsync(function() {
               scope.config.dateMin = dateMin;
               scope.config.dateMax = dateMax;
