@@ -26,31 +26,46 @@ angular.module('redesign2017App')
              .on('input', function() {
                searchNodes();
              });
-            // var button = search.append('input')
-            // .classed('btn btn-primary', true)
-            //  .attr('type', 'button')
-            //  .attr('value', 'Search')
-            //  .on('click', function() {
-            //    searchNodes();
-            //  });
           }
 
-          // Search for nodes by making all unmatched nodes temporarily transparent.
+          // Search for nodes by displaying labels for matches.
           function searchNodes() {
+
+            /*
+            Remove any selected nodes or edges
+            */
+
+            d3.selectAll('.node, g.label').classed('selected', false);
+
+            // Restore nodes and links to normal opacity. (see toggleClick() below)
+            d3.selectAll('.link')
+              .classed('faded', false)
+
+            d3.selectAll('.node')
+              .classed('faded', false)
+
+            // Must select g.labels since it selects elements in other part of the interface
+            d3.selectAll('g.label')
+              .classed('hidden', function(d) {
+                return (d.distance < 2) ? false : true;
+              });
+
+            // reset group bar
+            d3.selectAll('.group').classed('active', false);
+            d3.selectAll('.group').classed('unactive', false);
+
+            // update selction and trigger event for other directives
+            scope.currentSelection = {};
+            scope.$apply(); // no need to trigger events, just apply
+
+           /*
+           Simple search to display labels
+           */
            var term = document.getElementById('searchTerm').value;
-          //  var selectedNodes = d3.selectAll('.node').filter(function(d, i) {
-          //    return d.attributes.name.toLowerCase().search(term.toLowerCase()) == -1;
-          //  });
+
            d3.selectAll('.label').classed('hidden', function(l) {
              return (l.attributes.name.toLowerCase().search(term.toLowerCase()) != -1) ? false : true;
            });
-          //  selectedNodes.style('opacity', '0');
-          //  selectedLabels.style('opacity', '0');
-          //  var link = d3.selectAll('.link');
-          //  link.style('stroke-opacity', '0');
-          //  d3.selectAll('.node').transition().duration(5000).style('opacity', '1');
-          //  link.transition().duration(5000).style('stroke-opacity', '0.6');
-          //  d3.selectAll('.label').transition().duration(5000).style('opacity', '1');
           }
       }
     };
