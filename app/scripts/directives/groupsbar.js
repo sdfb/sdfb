@@ -57,6 +57,12 @@ angular.module('redesign2017App')
                 return 'group g' + d.groupId;
               }
             })
+            // tooltip-placement="{{placement.selected}}" uib-tooltip="On the {{placement.selected}}"
+            .attr("data-toggle", function(d,i){
+              return (i<20)?'group-tooltip':'other-groups-tooltip'
+            })
+            .attr("data-placement", "top")
+            .attr("title", "Group info is missing")
             .style('width', function(d) {
               var myWidth = x(d.value) / (width) * 100;
               var newTot = width / oldWidth * 100;
@@ -91,12 +97,14 @@ angular.module('redesign2017App')
                     if (inGroup.length) {
                       className = 'in-group';
                       // hide or display groups depending on group membership of source and target
-                      d3.selectAll('.link').filter(function(f){
+                      d3.selectAll('.link').filter(function(f) {
                         var linkClassName = 'not-in-group';
                         if (f.source.attributes.groups && f.target.attributes.groups) {
                           // console.log(f.source.attributes.groups, f.target.attributes.groups);
-                          var sourceInGroup = inGroup.some((e) => {return f.source.attributes.groups.indexOf(e) != -1});
-                          var targetInGroup = inGroup.some((e) => {return f.target.attributes.groups.indexOf(e) != -1});
+                          var sourceInGroup = inGroup.some((e) => {
+                            return f.source.attributes.groups.indexOf(e) != -1 });
+                          var targetInGroup = inGroup.some((e) => {
+                            return f.target.attributes.groups.indexOf(e) != -1 });
                           if (sourceInGroup && targetInGroup) {
                             linkClassName = 'in-group';
                           }
@@ -117,13 +125,15 @@ angular.module('redesign2017App')
                     });
                     if (inGroup.length) {
                       className = 'in-group'
-                      // hide or display groups depending on group membership of source and target
-                      d3.selectAll('.link').filter(function(f){
+                        // hide or display groups depending on group membership of source and target
+                      d3.selectAll('.link').filter(function(f) {
                         var linkClassName = 'not-in-group';
                         if (f.source.attributes.groups && f.target.attributes.groups) {
                           // console.log(f.source.attributes.groups, f.target.attributes.groups);
-                          var sourceInGroup = inGroup.some((e) => {return f.source.attributes.groups.indexOf(e) != -1});
-                          var targetInGroup = inGroup.some((e) => {return f.target.attributes.groups.indexOf(e) != -1});
+                          var sourceInGroup = inGroup.some((e) => {
+                            return f.source.attributes.groups.indexOf(e) != -1 });
+                          var targetInGroup = inGroup.some((e) => {
+                            return f.target.attributes.groups.indexOf(e) != -1 });
                           if (sourceInGroup && targetInGroup) {
                             linkClassName = 'in-group';
                           }
@@ -144,6 +154,10 @@ angular.module('redesign2017App')
 
           // remove stuff
           chart.exit().remove();
+
+          $(function() {
+            $('[data-toggle="group-tooltip"]').tooltip({'animation':true})
+          })
         }
 
         // HIGHLIGHT GROUPS WHEN SELECTION HAPPENS
