@@ -345,23 +345,23 @@ section .force-legend {
         left: 160px;
     }
     &.text-first-degree {
-        bottom: 24px;
+        bottom: 26px;
         right: 11px;
     }
     &.text-second-degree {
-        bottom: 4px;
+        bottom: 7px;
         left: 8px;
     }
 }
 
-section svg{
+section .legend-panel svg{
     margin: 0 15%;
     width: 70%;
 
     .svg-edge {
         fill: none;
         stroke: $mainTextColor;
-        stroke-miterlimit: 10px;
+        stroke-width: 2px;
     }
     .svg-circle-0 {
         fill: $node-individual-origin;
@@ -910,8 +910,7 @@ people-finder {
     }
 
     .form-control {
-        display: inline;
-        width: 70%;
+        width: 100%;
     }
     .btn-primary {
         bottom: 2px;
