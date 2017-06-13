@@ -542,7 +542,6 @@ angular.module('redesign2017App')
               }
             })
             .on('click', function(d) {
-              // On click, toggle ego networks for the selected node. (See function above.)
               // Handle the rest of selection signifiers
               toggleClick(d, newLinks, this);
             })
@@ -615,7 +614,9 @@ angular.module('redesign2017App')
 
           // Get the Bounding Box of the text created
           d3.selectAll('.label text').each(function(d, i) {
-            d.labelBBox = this.getBBox();
+            if (!d.labelBBox) {
+              d.labelBBox = this.getBBox();
+            }
           });
 
           // adjust the padding values depending on font and font size
