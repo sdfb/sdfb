@@ -36,15 +36,15 @@ angular.module('redesign2017App')
         function showTooltip(d) {
             $('.interaction-info').text(function(){
                 if (d == 1) {
-                    return 'Few nodes';
+                    return 'Source person and 1-degree relationships';
                 } else if (d == 1.5) {
-                    return 'A little more nodes';
+                    return 'Relationships among all 1-degree people';
                 } else if (d == 1.75) {
-                    return 'More nodes but not too much';
+                    return 'All 1-degree people and 2-degree people with more than one 1-degree relationship';
                 } else if (d == 2) {
-                    return 'Good enough nodes';
+                    return 'All people; relationships between 1-degree and 2-degree people only';
                 } else {
-                    return 'A lot of nodes';
+                    return 'All 1- and 2-degree people and relationships';
                 }
             });
         }
