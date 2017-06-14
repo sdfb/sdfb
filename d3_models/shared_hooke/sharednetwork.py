@@ -133,40 +133,35 @@ SG = G.subgraph(one_degree)
 # Create a dictionary for the JSON needed by D3.
 new_data = dict(
         data=dict(
-            type='networks',
-            id='1',
+            type='network',
+            id=str(shakespeare)+","+str(milton),
             attributes=dict(
-                nodes=[dict(
-                    id=n,
-                    person_info=dict(name=SG.node[n]['name'], groups=SG.node[n]['groups']),
-                    degree=SG.node[n]['degree']) for n in SG.nodes()],
-                links=[dict(
-                    source=e[0],
-                    target=e[1],
-                    weight=e[2]['weight'],
-                    altered=e[2]['altered'],
-                    start_year=e[2]['start_year'],
-                    end_year=e[2]['end_year'],
-                    id=e[2]['edge_id']) for e in SG.edges(data=True)])),
-        errors=[dict(
-            status='404',
-            title='Page not found')],
+                primary_people = [str(shakespeare), str(milton)],
+                connections=[dict(
+                    id = e[2]['edge_id'],
+                    type="relationship",
+                    attributes=dict(
+                        source=e[0],
+                        target=e[1],
+                        weight=e[2]['weight'],
+                        altered=e[2]['altered'],
+                        start_year=e[2]['start_year'],
+                        end_year=e[2]['end_year']
+                    )
+                ) for e in SG.edges(data=True)])),
         meta=dict(
             principal_investigators=['Daniel Shore', 'Chris Warren', 'Jessica Otis']),
         included=[dict(
-                type='people',
-                id=str(shakespeare),
-                name=SG.node[shakespeare]['name'],
-                historical_significance=SG.node[shakespeare]['historical_significance'],
-                birth_year=SG.node[shakespeare]['birth_year'],
-                death_year=SG.node[shakespeare]['death_year']),
-            dict(
-                type='people',
-                id=str(milton),
-                name=SG.node[milton]['name'],
-                historical_significance=SG.node[milton]['historical_significance'],
-                birth_year=SG.node[milton]['birth_year'],
-                death_year=SG.node[milton]['death_year'])]
+            id=n,
+            type="person",
+            attributes = dict(
+                name=SG.node[n]['name'],
+                degree=SG.node[n]['degree'],
+                historical_significance=SG.node[n]['historical_significance'],
+                birth_year=SG.node[n]['birth_year'],
+                death_year=SG.node[n]['death_year'],
+                groups=SG.node[n]['groups']
+            )) for n in SG.nodes()]
         )
 
 # Output json of the graph.

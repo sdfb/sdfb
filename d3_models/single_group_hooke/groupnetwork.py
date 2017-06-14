@@ -125,37 +125,35 @@ SG = G.subgraph(all_vc_nodes)
 # Create a dictionary for the JSON needed by D3.
 new_data = dict(
         data=dict(
-            type='networks',
-            id='1',
+            type='network',
+            id="g81",
             attributes=dict(
-                nodes=[dict(
-                    id=n,
-                    person_info=dict(name=SG.node[n]['name']),
-                    degree=SG.node[n]['degree']) for n in SG.nodes()],
-                links=[dict(
-                    source=e[0],
-                    target=e[1],
-                    weight=e[2]['weight'],
-                    altered=e[2]['altered'],
-                    start_year=e[2]['start_year'],
-                    end_year=e[2]['end_year'],
-                    id=e[2]['edge_id']) for e in SG.edges(data=True)])),
-        errors=[dict(
-            status='404',
-            title='Page not found')],
+                primary_people = [str(v) for v in vc_ids],
+                connections=[dict(
+                    id = e[2]['edge_id'],
+                    type="relationship",
+                    attributes=dict(
+                        source=e[0],
+                        target=e[1],
+                        weight=e[2]['weight'],
+                        altered=e[2]['altered'],
+                        start_year=e[2]['start_year'],
+                        end_year=e[2]['end_year']
+                    )
+                ) for e in SG.edges(data=True)])),
         meta=dict(
             principal_investigators=['Daniel Shore', 'Chris Warren', 'Jessica Otis']),
         included=[dict(
-            type='people',
             id=n,
-            name=SG.node[n]['name'],
-            historical_significance=SG.node[n]['historical_significance'],
-            birth_year=SG.node[n]['birth_year'],
-            birth_year_type=byear_type_dict[n],
-            death_year=SG.node[n]['death_year'],
-            death_year_type=dyear_type_dict[n],
-            start_year=start_year_dict[n],
-            end_year=end_year_dict[n]) for n in vc_ids]
+            type="person",
+            attributes = dict(
+                name=SG.node[n]['name'],
+                degree=SG.node[n]['degree'],
+                historical_significance=SG.node[n]['historical_significance'],
+                birth_year=SG.node[n]['birth_year'],
+                death_year=SG.node[n]['death_year'],
+                groups=SG.node[n]['groups']
+            )) for n in SG.nodes()]
         )
 
 # Output json of the graph.
