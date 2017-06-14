@@ -594,6 +594,27 @@ filters-panel {
       padding-top: 0;
     }
   }
+
+  .selection {
+      fill: $edge-color;
+      fill-opacity: 0.13;
+      stroke: $mainTextColor;
+  }
+  .handle {
+      fill: $mainTextColor;
+  }
+  .handle-custom {
+      fill: $mainTextColor;
+  }
+  .brush-text {
+      fill: $mainTextColor;
+      font-family: "Open Sans", sans-serif;
+      font-size: 10px;
+      font-weight: 600;
+  }
+  .tick {
+      display: none;
+  }
 }
 
 filters-panel.panel h3 {
@@ -613,6 +634,8 @@ filters-panel.panel h5 {
   margin-top: 10px;
   font-style: italic;
 }
+
+
 
 .density-container form {
   -ms-flex-line-pack: center;
