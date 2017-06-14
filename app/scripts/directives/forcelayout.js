@@ -25,7 +25,9 @@ angular.module('redesign2017App')
           confidenceMax = scope.config.confidenceMax,
           dateMin = scope.config.dateMin,
           dateMax = scope.config.dateMax,
-          complexity = scope.config.networkComplexity;
+          complexity = scope.config.networkComplexity,
+          endTime = 3000,
+          startTime = 10000;
 
         var durationTransition = 500;
 
@@ -276,7 +278,7 @@ angular.module('redesign2017App')
         var zoom = d3.zoom();
         // Call zoom for svg container.
         svg.call(zoom.on('zoom', zoomed)); //.on("dblclick.zoom", null);
-        
+
 
         //Functions for zoom and recenter buttons
         scope.centerNetwork = function() {
@@ -329,18 +331,6 @@ angular.module('redesign2017App')
           .attr("class", "labels")
           .selectAll(".label");
 
-
-        var loading = svg.append("text")
-          .attr("dy", "0.35em")
-          .attr("text-anchor", "middle")
-          .attr('x', width / 2)
-          .attr('y', height / 2)
-          .attr("font-family", "sans-serif")
-          .attr("font-size", 10)
-          .text("Simulating. One moment please…");
-
-        var t0 = performance.now();
-
         var json = scope.data;
 
         // graph = json.data.attributes;
@@ -351,9 +341,9 @@ angular.module('redesign2017App')
 
         // d3.select('.legend .size.min').text('j')
 
-        var simulation = d3.forceSimulation(nodes)
+        var simulation = d3.forceSimulation()
           // .velocityDecay(.5)
-          .force("link", d3.forceLink(links).id(function(d) {
+          .force("link", d3.forceLink().id(function(d) {
             return d.id;
           }))
           .force("charge", d3.forceManyBody().strength(-75)) //.distanceMax([500]))
@@ -364,24 +354,34 @@ angular.module('redesign2017App')
             } else {
               return 13;
             }
-          }))
-          // .force("x", d3.forceX())
-          // .force("y", d3.forceY())
-          .stop();
+          }));
 
-        for (var i = 0, n = Math.ceil(Math.log(simulation.alphaMin()) / Math.log(1 - simulation.alphaDecay())); i < n; ++i) {
-          simulation.tick();
-        }
+          simulation.nodes(nodes)
+            .on("tick", ticked);
 
+          simulation.force("link")
+            .links(links);
 
+        function ticked() {
+            link
 
-        loading.remove();
+                .attr("d", function(d) {
+                  var dx = d.target.x - d.source.x,
+                      dy = d.target.y - d.source.y,
+                      dr = Math.sqrt(dx * dx + dy * dy);
+                  return "M" + d.source.x + "," + d.source.y + "A" + dr + "," + dr + " 0 0,1 " + d.target.x + "," + d.target.y;
+                });
 
+            node
+                .attr("cx", function(d) { return d.x; })
+                .attr("cy", function(d) { return d.y; });
 
+            label
+                .attr("transform", function(d) {
+                  return "translate(" + (d.x) + "," + (d.y + 2.5) + ")"
+                })
+          }
 
-        var t1 = performance.now();
-
-        console.log("Graph took " + (t1 - t0) + " milliseconds to load.")
 
         function positionCircle(nodelist, r) {
           var angle = 360/nodelist.length;
@@ -401,7 +401,6 @@ angular.module('redesign2017App')
           });
 
           var newData = parseComplexity(thresholdLinks, complexity);
-          // console.log(newData);
           var newNodes = newData[0];
           var newLinks = newData[1];
 
@@ -429,29 +428,6 @@ angular.module('redesign2017App')
           } else {
             console.log('ERROR: No compatible layout selected:', layout);
           }
-
-          var simulation = d3.forceSimulation(nodes)
-            // .velocityDecay(.5)
-            .force("link", d3.forceLink(links).id(function(d) {
-              return d.id;
-            }))
-            .force("charge", d3.forceManyBody().strength(-75)) //.distanceMax([500]))
-            .force("center", d3.forceCenter(width / 2, height / 2))
-            .force("collide", d3.forceCollide().radius(function(d) {
-              if (d.id == sourceId) {
-                return 26;
-              } else {
-                return 13;
-              }
-            }))
-            // .force("x", d3.forceX())
-            // .force("y", d3.forceY())
-            .stop();
-
-          for (var i = 0, n = Math.ceil(Math.log(simulation.alphaMin()) / Math.log(1 - simulation.alphaDecay())); i < n; ++i) {
-            simulation.tick();
-          }
-          // d3.select('.source-node').remove(); //Get rid of old source node highlight.
 
 
 
@@ -487,7 +463,7 @@ angular.module('redesign2017App')
             .classed('altered', function(d) {
               return d.altered ? true : false;
             })
-            .attr("d", linkArc)
+            // .attr("d", linkArc)
             .on('click', function(d) {
               toggleClick(d, newLinks);
             });
@@ -642,10 +618,21 @@ angular.module('redesign2017App')
           d3.selectAll('g.label')
             .attr("transform", function(d) {
               return "translate(" + (d.x) + "," + (d.y + 2.5) + ")"
-            })
+            });
 
-          scope.centerNetwork();
-          
+            // simulation.nodes(newNodes)
+            //   .on("tick", ticked);
+            //
+            // simulation.force("link")
+            //   .links(newLinks);
+
+
+            simulation.alphaTarget(0.3).restart();
+
+            setTimeout(() => {
+              simulation.stop();
+            }, endTime);
+
           // Change name of the viz
           scope.config.title = "Hooke network of Francis Bacon"
         }
