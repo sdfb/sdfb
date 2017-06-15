@@ -27,9 +27,8 @@ angular.module('redesign2017App')
           dateMax = scope.config.dateMax, // Maximum date range (source's death date)
           complexity = scope.config.networkComplexity, // Visual density (default 2)
           zoomfactor = 1, // Controls zoom buttons, begins at default scale
-          endTime = 3000, // Length of viz transition
-          toggle = 0, // Toggle for ego networks on click (see toggleClick())
-          startTime = 10000;
+          endTime = 500, // Length of viz transition
+          toggle = 0; // Toggle for ego networks on click (see toggleClick())
 
           // Populate links array from JSON
           json.data.attributes.connections.forEach(function(c) {
@@ -631,9 +630,16 @@ angular.module('redesign2017App')
 
             simulation.alphaTarget(0.3).restart(); // Restart simulation with low alphaTarget
 
-            setTimeout(() => { // Stop simulation after a set time
-              simulation.stop();
-            }, endTime);
+            if (layout == 'individual-force' && newNodes.length > 500) {
+              setTimeout(() => { // Stop simulation after a set time
+                simulation.stop();
+              }, 5000); // Longer time for bigger network
+            }
+            else {
+              setTimeout(() => { // Stop simulation after a set time
+                simulation.stop();
+              }, endTime);
+            }
 
           // Change name of the viz
           scope.config.title = "Hooke network of Francis Bacon"
