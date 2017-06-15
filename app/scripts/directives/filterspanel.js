@@ -189,11 +189,11 @@ angular.module('redesign2017App')
               return confidenceX(d.weight);
             })
             .attr("y", function(d) {
-              return confidenceY(d.count) + 20;
+              return confidenceY(d.count) + 0;
             })
             .attr("width", confidenceX.bandwidth())
             .attr("height", function(d) {
-              return confidenceHeight - 20 - confidenceY(d.count);
+              return confidenceHeight - 0 - confidenceY(d.count);
             });
 
           var cBrushSelection = confidenceG.append("g")
@@ -388,11 +388,11 @@ angular.module('redesign2017App')
               return dateX(d.year);
             })
             .attr("y", function(d) {
-              return dateY(d.count) + 20;
+              return dateY(d.count) + 0;
             })
             .attr("width", dateX.bandwidth())
             .attr("height", function(d) {
-              return dateHeight - 20 - dateY(d.count);
+              return dateHeight - 0 - dateY(d.count);
             });
 
           var dBrushSelection = dateG.append("g")
