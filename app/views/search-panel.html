@@ -2,11 +2,12 @@
     <uib-tab index="0" heading="People">
         <h4>Individual Network</h4>
         <!-- <pre>Model: {{personSelected | json}}</pre> -->
-        <input placeholder="Search for a person" type="text" ng-model="personSelected" uib-typeahead="person for person in people | filter:$viewValue | limitTo:8" class="form-control">
+        <input placeholder="Search for a person" type="text" ng-model="personSelected" typeahead-wait-ms="500" uib-typeahead="person for person in people | filter:$viewValue | limitTo:8" class="form-control">
         <h5>Search here<span ng-if="config.viewMode!='all'"> or double click on a node</span><span ng-if="config.viewMode=='all'"> for a person</span></h5>
         <h4>Shared Network</h4>
         <!-- <pre>Model: {{selected2 | json}}</pre> -->
-        <input ng-disabled="true" placeholder="Search for another person" type="text" ng-model="selected2" uib-typeahead="person for person in people | filter:$viewValue | limitTo:8" class="form-control">
+        <!-- william shakespeare and john milton -->
+        <input placeholder="Search for a person" type="text" ng-model="sharedSelected" typeahead-on-select="selectedShared($item, personSelected)" typeahead-wait-ms="500" uib-typeahead="person for person in shared | filter:$viewValue | limitTo:8" class="form-control">
         <h5>Add a person to visualize a shared network</h5>
         <h4>Visualization layout</h4>
         <!-- <pre>{{config.viewMode || 'null'}}</pre> -->

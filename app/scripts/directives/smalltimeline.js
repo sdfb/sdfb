@@ -17,8 +17,6 @@ angular.module('redesign2017App')
       link: function postLink(scope, element, attrs) {
         // console.log(scope.details)
 
-
-
         var svg = d3.select(element[0]).select('svg'),
           width = +svg.node().getBoundingClientRect().width,
           height = +svg.node().getBoundingClientRect().height;
@@ -28,7 +26,7 @@ angular.module('redesign2017App')
           .domain([1450, 1750]);
 
         function update() {
-          // console.log('details', scope.details);
+          console.log('details', scope.details);
 
           // if the data type = relationship, we have start_date instead of birth_date and end_date instead of death_date
           // The way in which the data is computated is the same

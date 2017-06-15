@@ -1,203 +1,221 @@
 /* visualizations.scss*/
+
+
 /* Write here all the SCSS code for the visualizations, so to keep it separated from the panels and more general UI one*/
 
+
 /* List of visualizations:*/
+
+
 /* • Single Force Layout (Hooke)*/
+
+
 /* Variables*/
+
+
 /* General*/
+
 $text: #434055;
 $opacityDuration: 0.5s;
 
 /* RED version*/
+
 $degree0: #F45D4C;
 $degree1: #EE9F99;
 $degree3: #f2f2f3;
 
 /* BLUE version*/
+
+
 /* $degree0: #1239B4;*/
+
+
 /* $degree1: #5385A6;*/
+
+
 /* $degree3: #f2f2f3;*/
+
 
 /* Single Force Layout (Hooke)*/
 
 .link {
-  stroke: #b9babc;
-  fill: none;
-  shape-rendering: geometricPrecision;
-  -webkit-transition: all $opacityDuration, stroke-width 0s;
-  transition: all $opacityDuration, stroke-width 0s;
-  cursor: pointer;
+    stroke: #b9babc;
+    fill: none;
+    shape-rendering: geometricPrecision;
+    -webkit-transition: all $opacityDuration, stroke-width 0s;
+    transition: all $opacityDuration, stroke-width 0s;
+    cursor: pointer;
 }
 
 .link:hover {
-  stroke-width:3px;
+    stroke-width: 3px;
 }
 
 .link.altered {
-  stroke: #000;
+    stroke: #000;
 }
 
-.link.faded, .link.not-in-group {
-  opacity: 0;
-  pointer-events: none;
+.link.faded,
+.link.not-in-group {
+    opacity: 0;
+    pointer-events: none;
 }
 
 .link.in-group {
-  stroke: #b9babc;
-  fill: none;
-  shape-rendering: geometricPrecision;
-  -webkit-transition: all $opacityDuration, stroke-width 0s;
-  transition: all $opacityDuration, stroke-width 0s;
-  cursor: pointer;
-  opacity: 1;
+    stroke: #b9babc;
+    fill: none;
+    shape-rendering: geometricPrecision;
+    -webkit-transition: all $opacityDuration, stroke-width 0s;
+    transition: all $opacityDuration, stroke-width 0s;
+    cursor: pointer;
+    opacity: 1;
 }
 
 .node {
-  stroke: #fff;
-  stroke-width: 1px;
-  -webkit-transition: all $opacityDuration, r 0s ease-out;
-  transition: all $opacityDuration, r 0s ease-out;
-  cursor: pointer;
+    stroke: #fff;
+    stroke-width: 1px;
+    -webkit-transition: all $opacityDuration, r 0s ease-out;
+    transition: all $opacityDuration, r 0s ease-out;
+    cursor: pointer;
 }
 
 .node text {
-  pointer-events: none;
-  font: 10px sans-serif;
+    pointer-events: none;
+    font: 10px sans-serif;
 }
 
 .node.degree0 {
-  fill: $degree0;
+    fill: $degree0;
 }
 
 .node.degree1 {
-  fill: $degree1;
+    fill: $degree1;
 }
 
 .node.degree2 {
-  fill: $degree3;
-  stroke: $degree0;
+    fill: $degree3;
+    stroke: $degree0;
 }
 
 .node:hover {
-  stroke: #4A4A4A;
-  stroke-width: 2px;
+    stroke: #4A4A4A;
+    stroke-width: 2px;
 }
 
-.node.faded, .node.not-in-group {
-  opacity: .1;
+.node.faded,
+.node.not-in-group {
+    opacity: .1;
 }
 
 .node.focused {
-  stroke: #666666;
+    stroke: #666666;
 }
 
 .label {
-  opacity: 1;
-  display: block;
-  pointer-events: none;
-  -webkit-transition: opacity $opacityDuration;
-  transition: opacity $opacityDuration;
+    opacity: 1;
+    display: block;
+    pointer-events: none;
+    -webkit-transition: opacity $opacityDuration;
+    transition: opacity $opacityDuration;
 }
 
-.label.hidden, .label.not-in-group {
-  opacity: 0;
-  display: block !important;
+.label.hidden,
+.label.not-in-group {
+    opacity: 0;
+    display: block !important;
 }
 
 .label.in-group {
-  opacity: 1;
-  display: block !important;
-  pointer-events: none;
-  -webkit-transition: opacity $opacityDuration;
-  transition: opacity $opacityDuration;
+    opacity: 1;
+    display: block !important;
+    pointer-events: none;
+    -webkit-transition: opacity $opacityDuration;
+    transition: opacity $opacityDuration;
 }
 
 .label.temporary-unhidden {
-  opacity: 1 !important;
-  display: block !important;
+    opacity: 1 !important;
+    display: block !important;
 }
 
 .label text {
-  fill: $text;
-  text-anchor: middle;
-  font-size: 8px;
-  font-weight: bold;
+    fill: $text;
+    text-anchor: middle;
+    font-size: 8px;
+    font-weight: bold;
 }
 
 .label rect {
-  fill: white;
-  opacity: 1;
-  stroke: #b9babc;
-  stroke-width: 0.5px;
+    fill: white;
+    opacity: 1;
+    stroke: #b9babc;
+    stroke-width: 0.5px;
 }
 
 .label.selected rect {
-  fill: #4A4A4A;
-  stroke: $degree0;
+    fill: #4A4A4A;
+    stroke: $degree0;
 }
 
 .label.selected text {
-  fill: #ffffff;
+    fill: #ffffff;
 }
-
-
 
 #tools div {
-  display: inline;
+    display: inline;
 }
 
-/* groups bar*/
-groups-bar {
-  position: absolute;
-  height: 45px;
-  width: 100%;
-  bottom: 0;
-  background-color: #EFF1F4;
-  padding: 0 10px;
-  display: -webkit-box !important;
-  display: -ms-flexbox !important;
-  display: flex !important;
-  -webkit-box-pack: justify;
-  -ms-flex-pack: justify;
-  justify-content: space-between;
-  -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
 
-  .group {
-    background-color: #C6CACF;
-    border-radius: 2px;
-    -webkit-box-sizing: border-box;
-    box-sizing: border-box;
-    display: -webkit-box;
-    display: -ms-flexbox;
-    display: flex;
+/* groups bar*/
+
+groups-bar {
+    position: absolute;
+    height: 45px;
+    width: 100%;
+    bottom: 0;
+    background-color: #EFF1F4;
+    padding: 0 10px;
+    display: -webkit-box !important;
+    display: -ms-flexbox !important;
+    display: flex !important;
+    -webkit-box-pack: justify;
+    -ms-flex-pack: justify;
+    justify-content: space-between;
     -webkit-box-align: center;
     -ms-flex-align: center;
     align-items: center;
-    -webkit-box-pack: start;
-    -ms-flex-pack: start;
-    justify-content: flex-start;
-    height: 30px;
-    overflow: hidden;
-    padding: 0 0 0 5px;
-    -webkit-transition: all 0.5s;
-    transition: all 0.5s;
-    &:last-of-type {
-      cursor: pointer;
+    .group {
+        background-color: #C6CACF;
+        border-radius: 2px;
+        -webkit-box-sizing: border-box;
+        box-sizing: border-box;
+        display: -webkit-box;
+        display: -ms-flexbox;
+        display: flex;
+        -webkit-box-align: center;
+        -ms-flex-align: center;
+        align-items: center;
+        -webkit-box-pack: start;
+        -ms-flex-pack: start;
+        justify-content: flex-start;
+        height: 30px;
+        overflow: hidden;
+        padding: 0 0 0 5px;
+        -webkit-transition: all 0.5s;
+        transition: all 0.5s;
+        &:last-of-type {
+            cursor: pointer;
+        }
     }
-  }
-
-  .group.active {
-    background-color: $degree0;
-    color: white;
-    pointer-events: auto;
-  }
-
-  .group.unactive {
-    opacity: 0.5;
-    pointer-events: none;
-  }
+    .group.active {
+        background-color: $degree0;
+        color: white;
+        pointer-events: auto;
+    }
+    .group.unactive {
+        opacity: 0.5;
+        pointer-events: none;
+    }
 }
 
 // groups-bar::after {
@@ -209,11 +227,22 @@ groups-bar {
 //   -webkit-transition: opacity 0.5s;
 //   transition: opacity 0.5s;
 // }
-
 groups-bar:hover::after {
-  opacity: 1;
+    opacity: 1;
 }
 
 .other-groups-list li.active {
-  color: red;
+    color: red;
+}
+
+// shared network
+shared-network {
+    .links line {
+        stroke: #aaa;
+    }
+    .nodes circle {
+        pointer-events: all;
+        stroke: none;
+        stroke-width: 40px;
+    }
 }
