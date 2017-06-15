@@ -156,7 +156,7 @@ angular.module('redesign2017App')
             confidenceHeight = +confidenceGraph.attr("height") - confidenceMargin.top - confidenceMargin.bottom;
 
           var confidenceX = d3.scaleBand().range([4, confidenceWidth - 4]).padding(0.1),
-            confidenceY = d3.scaleLinear().range([confidenceHeight, 0]);
+            confidenceY = d3.scaleLinear().range([confidenceHeight, 15]);
 
           var confidenceG = confidenceGraph.append("g");
 
@@ -188,12 +188,12 @@ angular.module('redesign2017App')
             .attr("x", function(d) {
               return confidenceX(d.weight);
             })
-            .attr("y", function(d) {
-              return confidenceY(d.count) + 20;
+            .attr("y", function(d, i) {
+              return confidenceY(d.count);
             })
             .attr("width", confidenceX.bandwidth())
-            .attr("height", function(d) {
-              return confidenceHeight - 20 - confidenceY(d.count);
+            .attr("height", function(d,i) {
+              return confidenceHeight - confidenceY(d.count);
             });
 
           var cBrushSelection = confidenceG.append("g")
@@ -355,7 +355,7 @@ angular.module('redesign2017App')
             dateHeight = +dateGraph.attr("height") - dateMargin.top - dateMargin.bottom;
 
           var dateX = d3.scaleBand().range([4, dateWidth - 4]).padding(0.1),
-            dateY = d3.scaleLinear().range([dateHeight, 0]);
+            dateY = d3.scaleLinear().range([dateHeight, 15]);
 
           var dateG = dateGraph.append("g");
 
@@ -388,11 +388,11 @@ angular.module('redesign2017App')
               return dateX(d.year);
             })
             .attr("y", function(d) {
-              return dateY(d.count) + 20;
+              return dateY(d.count);
             })
             .attr("width", dateX.bandwidth())
             .attr("height", function(d) {
-              return dateHeight - 20 - dateY(d.count);
+              return dateHeight - dateY(d.count);
             });
 
           var dBrushSelection = dateG.append("g")
