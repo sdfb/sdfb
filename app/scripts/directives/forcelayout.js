@@ -28,7 +28,8 @@ angular.module('redesign2017App')
           complexity = scope.config.networkComplexity, // Visual density (default 2)
           zoomfactor = 1, // Controls zoom buttons, begins at default scale
           endTime = 500, // Length of viz transition
-          toggle = 0; // Toggle for ego networks on click (see toggleClick())
+          toggle = 0, // Toggle for ego networks on click (see toggleClick())
+          oldLayout = 'individual-force'; // Keep track of whether the layout has changed
 
           // Populate links array from JSON
           json.data.attributes.connections.forEach(function(c) {
@@ -627,19 +628,14 @@ angular.module('redesign2017App')
               return d.labelBBox.height + paddingTopBottom;
             });
 
-
-            simulation.alphaTarget(0.3).restart(); // Restart simulation with low alphaTarget
-
-            if (layout == 'individual-force' && newNodes.length > 500) {
-              setTimeout(() => { // Stop simulation after a set time
-                simulation.stop();
-              }, 5000); // Longer time for bigger network
+            if (oldLayout == layout) { // If layout has not changed
+              simulation.alphaTarget(0).restart(); // Don't reheat viz
             }
-            else {
-              setTimeout(() => { // Stop simulation after a set time
-                simulation.stop();
-              }, endTime);
+            else { //If layout has changed from force to concentric or vice versa
+              simulation.alphaTarget(0.3).restart(); // Reheat viz
             }
+
+          oldLayout = layout;
 
           // Change name of the viz
           scope.config.title = "Hooke network of Francis Bacon"
