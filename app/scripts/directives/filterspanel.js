@@ -403,19 +403,11 @@ angular.module('redesign2017App')
               return dateX(d.year);
             })
             .attr("y", function(d) {
-<<<<<<< HEAD
               return dateY(d.count) + 0;
             })
             .attr("width", dateX.bandwidth())
             .attr("height", function(d) {
               return dateHeight - 0 - dateY(d.count);
-=======
-              return dateY(d.count);
-            })
-            .attr("width", dateX.bandwidth())
-            .attr("height", function(d) {
-              return dateHeight - dateY(d.count);
->>>>>>> angular-prototype
             });
 
           var dBrushSelection = dateG.append("g")
