@@ -250,6 +250,9 @@ angular.module('redesign2017App')
                 return d.y;
               });
           }
+
+          // Change name of the viz
+          scope.config.title = "W. Shakespeare and J. Milton - Force Layout"
         }
 
         scope.$on('shared network query', function(event, args) {
