@@ -12,26 +12,29 @@ angular.module('redesign2017App')
       templateUrl: './views/filters-panel.html',
       restrict: 'E',
       link: function postLink(scope, element, attrs) {
-        // element.text('this is the filtersPanel directive');
-        // console.log(scope.data.included);
         var confidenceMin = scope.config.confidenceMin,
           confidenceMax = scope.config.confidenceMax,
           dateMin = scope.config.dateMin,
           dateMax = scope.config.dateMax,
           complexity = scope.config.networkComplexity,
-          sourceId = scope.data.data.attributes.primary_people[0],
-          sourceNode = scope.data.included.filter(function(d) {
+          sourceId = scope.data.data.attributes.primary_people[0], // ID of node the user searched for.
+          sourceNode = scope.data.included.filter(function(d) { // Data corresponding to sourceID
             if (d.id.toString() === sourceId) {
               return d;
             };
           })[0],
           links = [];
+
+        // Populate links array from JSON
         scope.data.data.attributes.connections.forEach(function(c) {
-          links.push(c.attributes)
+          // Retain ID and type from level above in JSON
+          c.attributes.id = c.id;
+          c.attributes.type = c.type;
+          links.push(c.attributes);
         });
 
 
-        sourceNode = sourceNode.attributes;
+        sourceNode = sourceNode.attributes; // Get object of attributes for sourceNode
 
         createDensityButtons();
         createConfidenceGraph();
@@ -59,9 +62,9 @@ angular.module('redesign2017App')
 
         function createDensityButtons() {
           // Radio buttons for network complexity.
-          var complexityForm = d3.select('.density-container').append('form');
+          var complexityForm = d3.select('.density-container').append('form'); // Create form
 
-          var complexityBox = complexityForm.selectAll('input')
+          var complexityBox = complexityForm.selectAll('input') // Data join with 5-number scale
             .data(['1', '1.5', '1.75', '2', '2.5'])
             .enter().append('div');
 
@@ -88,11 +91,13 @@ angular.module('redesign2017App')
             .on("mouseout", resetTooltip);
 
           complexityButtons.on('change', function() {
-            console.log('change');
+
+            // On change update value of networkComplexity config variable
             complexity = this.value;
             console.log(complexity);
             scope.$evalAsync(function() {
               scope.config.networkComplexity = complexity;
+              // Trigger force layout update
               scope.$broadcast('Update the force layout', {
                 layout: scope.config.viewMode
               });
@@ -101,15 +106,16 @@ angular.module('redesign2017App')
         }
 
         function countConfidenceFrequency() {
+          // Create counts off all confidence values
           var confidence = d3.range(60, 101);
-          var frequencies = {};
+          var frequencies = {}; // create object of frequencies
           confidence.forEach(function(c) {
-            frequencies[c.toString()] = 0;
+            frequencies[c.toString()] = 0; // first with values of 0
           });
           links.forEach(function(l) {
-            frequencies[l.weight] += 1;
+            frequencies[l.weight] += 1; // Then count up by weight
           });
-          var data = [];
+          var data = []; // Return weights and frequencies as array
           for (var x in frequencies) {
             data.push({
               'weight': x,
@@ -120,7 +126,8 @@ angular.module('redesign2017App')
         }
 
         function countDateFrequency() {
-          var years = d3.range(parseInt(sourceNode.birth_year), parseInt(sourceNode.death_year) + 1);
+          // Same as above with dates
+          var years = d3.range(parseInt(sourceNode.birth_year), parseInt(sourceNode.death_year) + 1); // Initial range is birth and death of source node
           var frequencies = {};
           years.forEach(function(y) {
             frequencies[y.toString()] = 0;
@@ -144,7 +151,9 @@ angular.module('redesign2017App')
 
         function createConfidenceGraph() {
 
-          var confidenceData = countConfidenceFrequency();
+          var confidenceData = countConfidenceFrequency(); // Get array of counts
+
+          // Create svg for bar graph
           var confidenceGraph = d3.select('.confidence-container').append('svg').attr('width', 284).attr('height', 70),
             confidenceMargin = {
               top: 0,
@@ -155,11 +164,13 @@ angular.module('redesign2017App')
             confidenceWidth = +confidenceGraph.attr("width") - confidenceMargin.left - confidenceMargin.right,
             confidenceHeight = +confidenceGraph.attr("height") - confidenceMargin.top - confidenceMargin.bottom;
 
+          // Ranges for height and width of graph
           var confidenceX = d3.scaleBand().range([4, confidenceWidth - 4]).padding(0.1),
-            confidenceY = d3.scaleLinear().range([confidenceHeight, 0]);
+            confidenceY = d3.scaleLinear().range([confidenceHeight, 15]);
 
           var confidenceG = confidenceGraph.append("g");
 
+          // Map size of bars to data
           confidenceX.domain(confidenceData.map(function(d) {
             return d.weight;
           }));
@@ -167,7 +178,7 @@ angular.module('redesign2017App')
             return d.count;
           })]);
 
-          var cBrush = d3.brushX()
+          var cBrush = d3.brushX() // Create brush overlay
             .extent([
               [1, 10],
               [confidenceWidth, confidenceHeight]
@@ -176,11 +187,13 @@ angular.module('redesign2017App')
             .on("brush", updateBrush)
             .on("end", brushed);
 
+          // Create group for x axis
           confidenceG.append("g")
             .attr("class", "axis axis--x")
             .attr("transform", "translate(0," + confidenceHeight + ")")
             .call(d3.axisBottom(confidenceX).tickSize(0));
 
+          // Draw and style each bar according to weight and count in data
           confidenceG.selectAll(".bar")
             .data(confidenceData)
             .enter().append("rect")
@@ -188,12 +201,12 @@ angular.module('redesign2017App')
             .attr("x", function(d) {
               return confidenceX(d.weight);
             })
-            .attr("y", function(d) {
-              return confidenceY(d.count) + 0;
+            .attr("y", function(d, i) {
+              return confidenceY(d.count);
             })
             .attr("width", confidenceX.bandwidth())
-            .attr("height", function(d) {
-              return confidenceHeight - 0 - confidenceY(d.count);
+            .attr("height", function(d,i) {
+              return confidenceHeight - confidenceY(d.count);
             });
 
           var cBrushSelection = confidenceG.append("g")
@@ -322,6 +335,7 @@ angular.module('redesign2017App')
           }
 
           function brushed() {
+            // When brush event ends, get values of confidence range and broadcast force layout
             var s = d3.event.selection || confidenceX.range();
             var convertConfidence = d3.scaleLinear().domain([0, confidenceWidth-4]).range([60, 100]);
             var confidenceMin = Math.round(convertConfidence(s[0]));
@@ -342,6 +356,7 @@ angular.module('redesign2017App')
         }
 
         function createDateGraph() {
+          // Same as above, for date range
 
           var dateData = countDateFrequency();
           var dateGraph = d3.select('.date-container').append('svg').attr('width', 284).attr('height', 70),
@@ -355,7 +370,7 @@ angular.module('redesign2017App')
             dateHeight = +dateGraph.attr("height") - dateMargin.top - dateMargin.bottom;
 
           var dateX = d3.scaleBand().range([4, dateWidth - 4]).padding(0.1),
-            dateY = d3.scaleLinear().range([dateHeight, 0]);
+            dateY = d3.scaleLinear().range([dateHeight, 15]);
 
           var dateG = dateGraph.append("g");
 
@@ -388,11 +403,11 @@ angular.module('redesign2017App')
               return dateX(d.year);
             })
             .attr("y", function(d) {
-              return dateY(d.count) + 0;
+              return dateY(d.count);
             })
             .attr("width", dateX.bandwidth())
             .attr("height", function(d) {
-              return dateHeight - 0 - dateY(d.count);
+              return dateHeight - dateY(d.count);
             });
 
           var dBrushSelection = dateG.append("g")

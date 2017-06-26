@@ -188,7 +188,7 @@ path.danger {
   width: 100%;
 
   &.individual {
-    height: 356px;
+    height: 346px;
   }
 
   &.shared {
@@ -313,7 +313,6 @@ search-panel .nav-tabs.nav-justified > .active > a:hover {
   min-width: 283px;
 }
 
-.dropdown-menu > .active > a,
 .dropdown-menu > li > a {
   background-color: $light-color;
   color: $mainTextColor;
@@ -325,6 +324,15 @@ search-panel .nav-tabs.nav-justified > .active > a:hover {
     color: $mainTextColor;
   }
 }
+.dropdown-menu > .active > a {
+    background-color: $highlight-color;
+    color: $mainTextColor;
+    &:hover {
+      background-color: $highlight-color;
+      color: $mainTextColor;
+    }
+}
+
 /* legend-panel styles*/
 section .legend-box {
   margin-top: 32px;
@@ -362,6 +370,10 @@ section .force-legend {
         bottom: 7px;
         left: 8px;
     }
+}
+
+.legend-box.legend-svg {
+    margin-top: 18px;
 }
 
 section .legend-panel svg{
