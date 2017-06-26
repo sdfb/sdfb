@@ -97,8 +97,8 @@ angular.module('redesign2017App')
     }
     $scope.data4groups();
 
-    $scope.$watch('config.viewMode', function(newValue, oldValue){
-      if (newValue != oldValue){
+    $scope.$watch('config.viewMode', function(newValue, oldValue) {
+      if (newValue != oldValue) {
         // console.log('changed layout');
         if (newValue == 'individual-force') {
           $scope.$broadcast('Update the force layout', { layout: 'individual-force' });

@@ -1,15 +1,12 @@
 <uib-tabset active="config.viewObject" justified="true">
     <uib-tab index="0" heading="People">
-        <h4>Individual Network</h4>
-        <!-- <pre>Model: {{personSelected | json}}</pre> -->
-        <input placeholder="Search for a person" type="text" ng-model="personSelected" uib-typeahead="person for person in people | filter:$viewValue | limitTo:8" class="form-control">
+        <h4>Individual Network<span class="remove-btn" ng-click=" resetIndividualNetwork() ">remove</span></h4>
+        <input placeholder="Search for a person" type="text" ng-model="person.selected" uib-typeahead="person for person in peopleToSelect | filter:$viewValue | limitTo:8" class="form-control">
         <h5>Search here<span ng-if="config.viewMode!='all'"> or double click on a node</span><span ng-if="config.viewMode=='all'"> for a person</span></h5>
-        <h4>Shared Network</h4>
-        <!-- <pre>Model: {{selected2 | json}}</pre> -->
-        <input ng-disabled="true" placeholder="Search for another person" type="text" ng-model="selected2" uib-typeahead="person for person in people | filter:$viewValue | limitTo:8" class="form-control">
+        <h4>Shared Network<span class="remove-btn" ng-click=" resetSharedNetwork() ">remove</span></h4>
+        <input placeholder="Search for a person" type="text" ng-model="shared.selected" uib-typeahead="person for person in sharedToSelect | filter:$viewValue | limitTo:8" class="form-control" typeahead-on-select="selectedShared(shared.selected, person.selected)">
         <h5>Add a person to visualize a shared network</h5>
         <h4>Visualization layout</h4>
-        <!-- <pre>{{config.viewMode || 'null'}}</pre> -->
         <div class="btn-group btn-group-justified">
             <label class="btn btn-primary" ng-model="config.viewMode" uib-btn-radio="'individual-force'">Hooke</label>
             <label class="btn btn-primary" ng-model="config.viewMode" uib-btn-radio="'individual-concentric'">Concentric</label>
@@ -20,9 +17,6 @@
         <input placeholder="Type here groups names" type="text" ng-model="groupTypeaheadSelected" uib-typeahead="group for group in groupsTypeahead | filter:$viewValue | limitTo:8" class="form-control">
         <h5>Search here or double click on a node</h5>
         <h4>All Groups</h4>
-        <!-- <div class="btn-group btn-group-justified">
-            <label class="btn btn-primary" ng-model="config.viewMode" uib-btn-radio="'all'">Show All</label>
-        </div> -->
         <button type="button" class="btn btn-primary" ng-click=" config.viewMode = 'all' ">
             Show All
         </button>
