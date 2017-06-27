@@ -37,7 +37,12 @@ angular
               dateMin:1500,
               dateMax:1700,
               confidenceMin:60,
-              confidenceMax:100
+              confidenceMax:100,
+              login: {
+                status: true,
+                user: 'Elizabeth',
+              },
+              contributionMode: false
             }
           },
           initialData: function(apiService) {

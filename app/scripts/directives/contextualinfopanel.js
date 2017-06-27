@@ -18,6 +18,10 @@ angular.module('redesign2017App')
           scope.$apply();
         })
 
+        scope.editData = function(id) {
+          console.log(id);
+        }
+
         scope.searchODNB = function(id, name) {
           if (id) {
             var url = 'http://www.oxforddnb.com/view/article/{{id}}';

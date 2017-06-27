@@ -1,27 +1,31 @@
+<navigation-directive></navigation-directive>
 <div class="panels-container">
-    <section class="on-the-left">
-        <search-panel class="panel left"></search-panel>
-        <!-- {{config.viewMode}} -->
-        <contextual-info-panel class="panel"></contextual-info-panel>
-        <span id="viz-title">{{ config.title }}</span>
-    </section>
-    <section class="on-the-right">
-        <legend-panel class="panel collapsable" ng-class="{'collapsed' : legendClosed, 'group': config.viewMode == 'all', 'shared': config.viewMode == 'shared', 'individual': config.viewMode == 'individual-force' || config.viewMode == 'individual-concentric' || config.viewMode == 'single-group'}"></legend-panel>
-        <filters-panel class="panel collapsable collapsed" ng-class="{'collapsed' : filtersClosed}"></filters-panel>
+  <section class="on-the-left">
+    <search-panel class="panel left"></search-panel>
+    <!-- {{config.viewMode}} -->
+    <contextual-info-panel class="panel"></contextual-info-panel>
+    <span id="viz-title">{{ config.title }}</span>
+  </section>
+  <section class="on-the-right">
+    <legend-panel class="panel collapsable" ng-class="{'collapsed' : legendClosed, 'group': config.viewMode == 'all', 'shared': config.viewMode == 'shared', 'individual': config.viewMode == 'individual-force' || config.viewMode == 'individual-concentric' || config.viewMode == 'single-group'}"></legend-panel>
+    <filters-panel class="panel collapsable collapsed" ng-class="{'collapsed' : filtersClosed}"></filters-panel>
 
-        <people-finder class="panel collapsable collapsed" ng-class="{'collapsed' : peopleFinderClosed}"></people-finder>
+    <people-finder class="panel collapsable collapsed" ng-class="{'collapsed' : peopleFinderClosed}"></people-finder>
 
-        <div class="panel smallest controls">
-            <span ng-click="centerNetwork()"><i class="fa fa-arrows-alt" aria-hidden="true"></i></span>
-            <span ng-click="zoomIn()"><i class="fa fa-search-plus" aria-hidden="true"></i></span>
-            <span ng-click="zoomOut()"><i class="fa fa-search-minus" aria-hidden="true"></i></span>
-        </div>
+    <div class="panel smallest controls">
+      <span ng-click="centerNetwork()"><i class="fa fa-arrows-alt" aria-hidden="true"></i></span>
+      <span ng-click="zoomIn()"><i class="fa fa-search-plus" aria-hidden="true"></i></span>
+      <span ng-click="zoomOut()"><i class="fa fa-search-minus" aria-hidden="true"></i></span>
+    </div>
 
-    </section>
+    <add-node ng-if="config.contributionMode" class="panel collapsable collapsed orange-panel" ng-class="{'collapsed' : addNodeClosed}"></add-node>
+    <add-link ng-if="config.contributionMode" class="panel collapsable collapsed orange-panel" ng-class="{'collapsed' : addLinkClosed}"></add-link>
+
+  </section>
 
 </div>
 <div class="visualization-container">
-    <force-layout ng-if="false" ng-show=" config.viewMode == 'individual-force' || config.viewMode == 'individual-concentric' "></force-layout>
-    <shared-network ng-show=" true "></shared-network>
-    <groups-bar ng-show=" config.viewMode == 'individual-force' || config.viewMode == 'individual-concentric' "></groups-bar>
+  <force-layout ng-show=" config.viewMode == 'individual-force' || config.viewMode == 'individual-concentric' "></force-layout>
+  <shared-network ng-show=" config.viewMode == 'shared-network' "></shared-network>
+  <groups-bar ng-show=" config.viewMode == 'individual-force' || config.viewMode == 'individual-concentric' "></groups-bar>
 </div>

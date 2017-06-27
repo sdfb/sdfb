@@ -15,6 +15,8 @@ angular.module('redesign2017App')
     $scope.legendClosed = false;
     $scope.filtersClosed = true;
     $scope.peopleFinderClosed = true;
+    $scope.addNodeClosed = true;
+    $scope.addLinkClosed = true;
 
     // Container for data realted to groups
     $scope.groups = {};
@@ -97,8 +99,8 @@ angular.module('redesign2017App')
     }
     $scope.data4groups();
 
-    $scope.$watch('config.viewMode', function(newValue, oldValue){
-      if (newValue != oldValue){
+    $scope.$watch('config.viewMode', function(newValue, oldValue) {
+      if (newValue != oldValue) {
         // console.log('changed layout');
         if (newValue == 'individual-force') {
           $scope.$broadcast('Update the force layout', { layout: 'individual-force' });
