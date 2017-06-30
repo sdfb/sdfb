@@ -1,8 +1,10 @@
 <section>
-	<h3 class="">Add node</h3>
+	<h3 class="">Add person to this view</h3>
+	<h4>Person Name</h4>
+  <input placeholder="Search for a person" type="text" ng-model="person.selected" uib-typeahead="person for person in peopleToSelect | filter:$viewValue | limitTo:8" class="form-control">
 	
 </section>
-<span class="close" ng-click="addNodeClosed = !addNodeClosed">
+<span class="close" ng-click="addNodeClosed = !addNodeClosed; addLinkClosed = true;" style="color: white;">
 	<i ng-if="!addNodeClosed" class="fa fa-times" aria-hidden="true"></i>
 	<i ng-if="addNodeClosed" class="fa fa-plus-circle" aria-hidden="true"></i>
 </span>

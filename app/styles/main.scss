@@ -137,11 +137,26 @@ path.danger {
     padding: 4px 15px;
 }
 
+.contribution-mode-switch > span {
+    font-weight: 400;
+    color: white;
+}
+
+.contribution-mode-switch > span > span {
+    font-weight: 600;
+}
+
 .contribution-mode-switch i {
     cursor: pointer;
     font-size: 21px;
     position: relative;
+    margin-left: 5px;
     top: 2px;
+    color: $contribution-mode;
+}
+
+.contribution-mode-on .contribution-mode-switch i {
+    color: black;
 }
 
 .navbar-brand {

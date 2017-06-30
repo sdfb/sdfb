@@ -18,14 +18,14 @@
       <span ng-click="zoomOut()"><i class="fa fa-search-minus" aria-hidden="true"></i></span>
     </div>
 
-    <add-node ng-if="config.contributionMode" class="panel collapsable collapsed orange-panel" ng-class="{'collapsed' : addNodeClosed}"></add-node>
-    <add-link ng-if="config.contributionMode" class="panel collapsable collapsed orange-panel" ng-class="{'collapsed' : addLinkClosed}"></add-link>
+    <add-node ng-show="config.contributionMode" class="panel collapsable collapsed orange-panel" ng-class="{'collapsed' : addNodeClosed}"></add-node>
+    <add-link ng-show="config.contributionMode" class="panel collapsable collapsed orange-panel" ng-class="{'collapsed' : addLinkClosed}"></add-link>
 
   </section>
 
 </div>
 <div class="visualization-container">
-  <force-layout ng-show=" config.viewMode == 'individual-force' || config.viewMode == 'individual-concentric' "></force-layout>
+  <!-- <force-layout ng-show=" config.viewMode == 'individual-force' || config.viewMode == 'individual-concentric' "></force-layout> -->
   <shared-network ng-show=" config.viewMode == 'shared-network' "></shared-network>
   <groups-bar ng-show=" config.viewMode == 'individual-force' || config.viewMode == 'individual-concentric' "></groups-bar>
 </div>

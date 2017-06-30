@@ -16,7 +16,8 @@ angular
     'ngRoute',
     'ngSanitize',
     'ngTouch',
-    'ui.bootstrap'
+    'ui.bootstrap',
+    'rzModule'
   ])
   .config(function ($routeProvider) {
     $routeProvider
@@ -42,7 +43,8 @@ angular
                 status: true,
                 user: 'Elizabeth',
               },
-              contributionMode: false
+              contributionMode: false,
+              dateTypes : ['On', 'Circa', 'Before', 'Before/On','After', 'After/On']
             }
           },
           initialData: function(apiService) {
