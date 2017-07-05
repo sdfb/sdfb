@@ -101,9 +101,9 @@ angular.module('redesign2017App')
                         var linkClassName = 'not-in-group';
                         if (f.source.attributes.groups && f.target.attributes.groups) {
                           // console.log(f.source.attributes.groups, f.target.attributes.groups);
-                          var sourceInGroup = inGroup.some((e) => {
+                          var sourceInGroup = inGroup.some(function (e) {
                             return f.source.attributes.groups.indexOf(e) != -1 });
-                          var targetInGroup = inGroup.some((e) => {
+                          var targetInGroup = inGroup.some(function(e) {
                             return f.target.attributes.groups.indexOf(e) != -1 });
                           if (sourceInGroup && targetInGroup) {
                             linkClassName = 'in-group';
@@ -130,9 +130,9 @@ angular.module('redesign2017App')
                         var linkClassName = 'not-in-group';
                         if (f.source.attributes.groups && f.target.attributes.groups) {
                           // console.log(f.source.attributes.groups, f.target.attributes.groups);
-                          var sourceInGroup = inGroup.some((e) => {
+                          var sourceInGroup = inGroup.some(function(e) {
                             return f.source.attributes.groups.indexOf(e) != -1 });
-                          var targetInGroup = inGroup.some((e) => {
+                          var targetInGroup = inGroup.some(function(e) {
                             return f.target.attributes.groups.indexOf(e) != -1 });
                           if (sourceInGroup && targetInGroup) {
                             linkClassName = 'in-group';

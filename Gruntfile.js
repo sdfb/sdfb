@@ -72,7 +72,7 @@ module.exports = function (grunt) {
       options: {
         port: 9000,
         // Change this to '0.0.0.0' to access the server from outside.
-        hostname: 'localhost',
+        hostname: '0.0.0.0',
         livereload: 35729
       },
       livereload: {
@@ -307,27 +307,27 @@ module.exports = function (grunt) {
     // By default, your `index.html`'s <!-- Usemin block --> will take care of
     // minification. These next options are pre-configured if you do not wish
     // to use the Usemin blocks.
-    // cssmin: {
-    //   dist: {
-    //     files: {
-    //       '<%= yeoman.dist %>/styles/main.css': [
-    //         '.tmp/styles/{,*/}*.css'
-    //       ]
-    //     }
-    //   }
-    // },
-    // uglify: {
-    //   dist: {
-    //     files: {
-    //       '<%= yeoman.dist %>/scripts/scripts.js': [
-    //         '<%= yeoman.dist %>/scripts/scripts.js'
-    //       ]
-    //     }
-    //   }
-    // },
-    // concat: {
-    //   dist: {}
-    // },
+     cssmin: {
+       dist: {
+         files: {
+           '<%= yeoman.dist %>/styles/main.css': [
+             '.tmp/styles/{,*/}*.css'
+           ]
+         }
+       }
+     },
+     // uglify: {
+     //   dist: {
+     //     files: {
+     //       '<%= yeoman.dist %>/scripts/scripts.js': [
+     //         '<%= yeoman.dist %>/scripts/scripts.js'
+     //       ]
+     //     }
+     //   }
+     // },
+     // concat: {
+     //   dist: {}
+     // },
 
     imagemin: {
       dist: {
@@ -361,9 +361,9 @@ module.exports = function (grunt) {
         },
         files: [{
           expand: true,
-          cwd: '<%= yeoman.dist %>',
+          cwd: '<%= yeoman.app %>/views',
           src: ['*.html'],
-          dest: '<%= yeoman.dist %>'
+          dest: '<%= yeoman.dist %>/views'
         }]
       }
     },
@@ -412,7 +412,9 @@ module.exports = function (grunt) {
           src: [
             '*.{ico,png,txt}',
             '*.html',
+            '<%= yeoman.app %>/{,*/}*.html',
             'images/{,*/}*.{webp}',
+            'data/{,*/}*',
             'styles/fonts/{,*/}*.*'
           ]
         }, {
@@ -425,6 +427,11 @@ module.exports = function (grunt) {
           cwd: '.',
           src: 'bower_components/bootstrap-sass-official/assets/fonts/bootstrap/*',
           dest: '<%= yeoman.dist %>'
+        }, {
+          expand: true,
+          cwd: 'bower_components/components-font-awesome/fonts/',
+          src: '*',
+          dest: '<%= yeoman.dist %>/fonts'
         }]
       },
       styles: {
@@ -443,11 +450,13 @@ module.exports = function (grunt) {
       test: [
         'compass'
       ],
-      dist: [
-        'compass:dist',
-        'imagemin',
-        'svgmin'
-      ]
+      dist: {
+	tasks: ['compass:dist', 'imagemin', 'svgmin'],
+        options: {
+          logConcurrentOutput: true,
+	  limit: 3
+        }
+      }
     },
 
     // Test settings
