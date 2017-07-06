@@ -29,7 +29,8 @@ angular.module('redesign2017App')
           zoomfactor = 1, // Controls zoom buttons, begins at default scale
           endTime = 500, // Length of viz transition
           toggle = 0, // Toggle for ego networks on click (see toggleClick())
-          oldLayout = 'individual-force'; // Keep track of whether the layout has changed
+          oldLayout = 'individual-force',
+          addedNodes = []; // Keep track of whether the layout has changed
 
           // Populate links array from JSON
           json.data.attributes.connections.forEach(function(c) {
@@ -44,6 +45,7 @@ angular.module('redesign2017App')
             .attr('height', '100%')
             .attr('fill', 'transparent')
             .on('click', function() {
+              addNode();
               // Clear selections on nodes and labels
               d3.selectAll('.node, g.label').classed('selected', false);
 
@@ -418,7 +420,7 @@ angular.module('redesign2017App')
           });
         }
 
-        function update(confidenceMin, confidenceMax, dateMin, dateMax, complexity, layout) {
+        function update(addedNodes, confidenceMin, confidenceMax, dateMin, dateMax, complexity, layout) {
           /* The main update function draws the all of the elements of the visualization
           and keeps them up to date using the D3 general update pattern. Takes as variables ranges
           for confidence and date, as well as a complexity value and a layout type (force or concentric) */
@@ -434,6 +436,8 @@ angular.module('redesign2017App')
           var newData = parseComplexity(thresholdLinks, complexity); // Use links in complexity function, which return nodes and links.
           var newNodes = newData[0];
           var newLinks = newData[1];
+
+          addedNodes.forEach(function(a) { newNodes.push(a); });
 
           if (layout == 'individual-force') {
             console.log('Layout: individual-force');
@@ -641,8 +645,15 @@ angular.module('redesign2017App')
           scope.config.title = "Hooke network of Francis Bacon"
         }
 
+        function addNode() {
+          var point = d3.mouse(svg.node());
+          addedNodes.push({attributes: {name: "John Ladd"}, id: '0100', distance: '3', x: point[0], y: point[1]});
+          update(addedNodes, confidenceMin, confidenceMax, dateMin, dateMax, complexity, 'individual-force');
+
+        }
+
         // Trigger update automatically when the directive code is executed entirely (e.g. at loading)
-        update(confidenceMin, confidenceMax, dateMin, dateMax, complexity, 'individual-force');
+        update(addedNodes, confidenceMin, confidenceMax, dateMin, dateMax, complexity, 'individual-force');
 
         // update triggered from the controller
         scope.$on('Update the force layout', function(event, args) {
@@ -654,7 +665,7 @@ angular.module('redesign2017App')
           dateMin = scope.config.dateMin;
           dateMax = scope.config.dateMax;
           complexity = scope.config.networkComplexity;
-          update(confidenceMin, confidenceMax, dateMin, dateMax, complexity, args.layout);
+          update(addedNodes, confidenceMin, confidenceMax, dateMin, dateMax, complexity, args.layout);
         });
 
       }

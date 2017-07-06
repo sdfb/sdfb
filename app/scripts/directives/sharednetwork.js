@@ -19,50 +19,7 @@ angular.module('redesign2017App')
 
         // The function accepts a new variable (array of sources)
         function parseComplexity(thresholdLinks, complexity, sources) {
-          // console.log('parseComplexity');
-
-          // console.log(thresholdLinks)
-
-          // var newNodes = [];
-          // thresholdLinks.forEach(function(l) {
-          //   newNodes.push(l.source);
-          //   newNodes.push(l.target);
-          // });
-          //
-          // newNodes = Array.from(new Set(newNodes));
-          //
-          // var oneDegreeNodes = [];
-          // thresholdLinks.forEach(function(l) {
-          //   // See if any source or target matches with any source node
-          //   sources.forEach(function(s,i) {
-          //     if (l.source.id === parseInt(s)) {
-          //       l.target['distance' + i] = 1;
-          //       oneDegreeNodes.push(l.target);
-          //       oneDegreeNodes.push(l.source);
-          //     }
-          //     else if (l.target.id === parseInt(s)) {
-          //       l.source['distance' + i] = 1;
-          //       oneDegreeNodes.push(l.source);
-          //       oneDegreeNodes.push(l.target);
-          //     }
-          //   })
-          // });
-          // oneDegreeNodes = Array.from(new Set(oneDegreeNodes));
-          //
-          // var allNodes = oneDegreeNodes;//.concat(twoDegreeNodes);
-          // allNodes.forEach(function(d) {
-          //   sources.forEach(function(s, i) {
-          //     if (d.id == parseInt(s)) {
-          //       d['distance' + i] = 0;
-          //     } else if (d['distance' + i] !== 1) {
-          //
-          //       d['distance' + i] = 2;
-          //
-          //     }
-          //   })
-          // });
-          //
-          // var newLinks = thresholdLinks.filter(function(l) {return (allNodes.indexOf(l.source) != -1 && allNodes.indexOf(l.target) != -1); });
+          
           var sourceId1 = sources[0]
           var sourceId2 = sources[1]
           var oneDegreeNodes = [];

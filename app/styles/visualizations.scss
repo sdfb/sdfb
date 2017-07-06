@@ -97,6 +97,10 @@ $degree3blue: #f2f2f3;
     stroke: $degree0;
 }
 
+.node.degree3 {
+  fill: orange;
+  r: 25;
+}
 
 .node:hover {
     stroke: #4A4A4A;
