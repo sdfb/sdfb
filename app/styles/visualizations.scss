@@ -27,13 +27,13 @@ $degree3: #f2f2f3;
 /* BLUE version*/
 
 
-/* $degree0: #1239B4;*/
+$degree0blue: #1239B4;
 
 
-/* $degree1: #5385A6;*/
+$degree1blue: #5385A6;
 
 
-/* $degree3: #f2f2f3;*/
+$degree3blue: #f2f2f3;
 
 
 /* Single Force Layout (Hooke)*/
@@ -96,6 +96,7 @@ $degree3: #f2f2f3;
     fill: $degree3;
     stroke: $degree0;
 }
+
 
 .node:hover {
     stroke: #4A4A4A;
@@ -240,9 +241,11 @@ shared-network {
     .links line {
         stroke: #aaa;
     }
-    .nodes circle {
-        pointer-events: all;
-        stroke: none;
-        stroke-width: 40px;
+    .node.degree3 {
+      fill: $degree0blue;
+    }
+
+    .node.degree4 {
+      fill: $degree1blue;
     }
 }

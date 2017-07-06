@@ -23,54 +23,94 @@ angular.module('redesign2017App')
 
           // console.log(thresholdLinks)
 
-          var newNodes = [];
-          thresholdLinks.forEach(function(l) {
-            newNodes.push(l.source);
-            newNodes.push(l.target);
-          });
-
-          newNodes = Array.from(new Set(newNodes));
-
+          // var newNodes = [];
+          // thresholdLinks.forEach(function(l) {
+          //   newNodes.push(l.source);
+          //   newNodes.push(l.target);
+          // });
+          //
+          // newNodes = Array.from(new Set(newNodes));
+          //
+          // var oneDegreeNodes = [];
+          // thresholdLinks.forEach(function(l) {
+          //   // See if any source or target matches with any source node
+          //   sources.forEach(function(s,i) {
+          //     if (l.source.id === parseInt(s)) {
+          //       l.target['distance' + i] = 1;
+          //       oneDegreeNodes.push(l.target);
+          //       oneDegreeNodes.push(l.source);
+          //     }
+          //     else if (l.target.id === parseInt(s)) {
+          //       l.source['distance' + i] = 1;
+          //       oneDegreeNodes.push(l.source);
+          //       oneDegreeNodes.push(l.target);
+          //     }
+          //   })
+          // });
+          // oneDegreeNodes = Array.from(new Set(oneDegreeNodes));
+          //
+          // var allNodes = oneDegreeNodes;//.concat(twoDegreeNodes);
+          // allNodes.forEach(function(d) {
+          //   sources.forEach(function(s, i) {
+          //     if (d.id == parseInt(s)) {
+          //       d['distance' + i] = 0;
+          //     } else if (d['distance' + i] !== 1) {
+          //
+          //       d['distance' + i] = 2;
+          //
+          //     }
+          //   })
+          // });
+          //
+          // var newLinks = thresholdLinks.filter(function(l) {return (allNodes.indexOf(l.source) != -1 && allNodes.indexOf(l.target) != -1); });
+          var sourceId1 = sources[0]
+          var sourceId2 = sources[1]
           var oneDegreeNodes = [];
-          thresholdLinks.forEach(function(l) {
-            // See if any source or target matches with any source node
-            sources.forEach(function(s) {
-              if (l.source.id == s || l.target.id == s) {
-                oneDegreeNodes.push(l.source);
-                oneDegreeNodes.push(l.target);
-              };
-            })
-          });
+          thresholdLinks.forEach( function (l) {
+            if (l.source.id == sourceId1 || l.source.id == sourceId2 || l.target.id == sourceId1 || l.target.id == sourceId2) {
+              oneDegreeNodes.push(l.target); oneDegreeNodes.push(l.source);
+            }
+          })
           oneDegreeNodes = Array.from(new Set(oneDegreeNodes));
 
-          // var twoDegreeNodes = [];
-          // thresholdLinks.forEach(function(l) {
-          //   if (oneDegreeNodes.indexOf(l.source) != -1 && oneDegreeNodes.indexOf(l.target) == -1) {
-          //     twoDegreeNodes.push(l.target);
-          //   } else if (oneDegreeNodes.indexOf(l.target) != -1 && oneDegreeNodes.indexOf(l.source) == -1) {
-          //     twoDegreeNodes.push(l.source);
-          //   };
-          // });
-          // twoDegreeNodes = Array.from(new Set(twoDegreeNodes));
+          var newLinks = thresholdLinks.filter(function(l) { if (oneDegreeNodes.indexOf(l.target) != -1 && oneDegreeNodes.indexOf(l.source) != -1) {return l; }; });
 
-          var allNodes = oneDegreeNodes;//.concat(twoDegreeNodes);
-          allNodes.forEach(function(d) {
-            sources.forEach(function(s, i) {
-              if (d.id == s) {
-                d['distance' + i] = 0;
-              } else if (oneDegreeNodes.indexOf(d) != -1) {
-
-                d['distance' + i] = 1;
-
-              } else {
-                d['distance' + i] = 2;
-              }
-            })
+          var sourceOneNeighbors = [];
+          var sourceTwoNeighbors = [];
+          newLinks.forEach(function(l){
+            if (l.source.id == sourceId1) {sourceOneNeighbors.push(l.target);}
+            else if (l.target.id == sourceId1) {sourceOneNeighbors.push(l.source);}
+            else if (l.source.id == sourceId2) {sourceTwoNeighbors.push(l.target);}
+            else if (l.target.id == sourceId2) {sourceTwoNeighbors.push(l.source);}
+          })
+          oneDegreeNodes.forEach(function(d){
+            d.distance = null;
+            if (d.id == sourceId1 || d.id == sourceId2) { d.distance = 0; }
+            else if (sourceOneNeighbors.indexOf(d) != -1 && sourceTwoNeighbors.indexOf(d) != -1) {d.distance = 3;}
+            else if (sourceOneNeighbors.indexOf(d) != -1) {
+              newLinks.forEach(function(l) {
+                if ((l.source.id == d.id && sourceTwoNeighbors.indexOf(l.target) != -1) || (l.target.id == d.id && sourceTwoNeighbors.indexOf(l.source) != -1)) {
+                  d.distance = 2;
+                }
+              });
+            }
+            else if (sourceTwoNeighbors.indexOf(d) != -1) {
+              newLinks.forEach(function(l) {
+                if ((l.source.id == d.id && sourceOneNeighbors.indexOf(l.target) != -1) || (l.target.id == d.id && sourceOneNeighbors.indexOf(l.source) != -1)) {
+                  d.distance = 2;
+                }
+              });
+            }
+            // else if (d.distance == null) {d.distance = 1;}
           });
 
-          var newLinks = thresholdLinks.filter(function(l) {return (allNodes.indexOf(l.source) != -1 && allNodes.indexOf(l.target) != -1); });
+          oneDegreeNodes.forEach(function(d) {
+            if (d.distance == null) {d.distance = 1;}
+          });
 
-          return [allNodes, newLinks];
+          var newNodes = oneDegreeNodes;
+
+          return [newNodes, newLinks];
 
         }
 
@@ -150,7 +190,7 @@ angular.module('redesign2017App')
             // Must select g.labels since it selects elements in other part of the interface
             d3.selectAll('g.label')
               .classed('hidden', function(d) {
-                return (d.distance < 2) ? false : true;
+                return (d.distance === 0) ? false : true;
               });
 
             // reset group bar
@@ -175,12 +215,12 @@ angular.module('redesign2017App')
           graph.links = newData[1];
 
           var bridges10 = newData[1].filter(function(d) {
-            return d.distance0 == 0 && d.distance1 == 1;
+            return d.distance === 2;
           })
 
           var bridges = newData[0].filter(function(d) {
             console.log(d)
-            return d.distance0 == 1 && d.distance1 == 1;
+            return d.distance === 3;
           })
           console.log(bridges);
 
@@ -261,15 +301,26 @@ angular.module('redesign2017App')
 
           node = nodeEnter.merge(node) // Merge new nodes
             .attr('class', function(d) { // Class by degree of distance
-              return 'node degree' + d.distance
+              if (d.distance === 0) {
+                return 'node degree' + 3
+              }
+              else if (d.distance === 1) {
+                return 'node degree' + 4
+              }
+              else if (d.distance === 2) {
+                return 'node degree' + 1
+              }
+              else if (d.distance === 3) {
+                return 'node degree' + 0
+              }
             })
             .attr('id', function(d) { // Assign ID number
               return "n" + d.id.toString();
             })
             .attr('r', function(d) { // Size nodes by degree of distance
-              if (d.distance == 0) {
+              if (d.distance === 0 || d.distance === 3) {
                 return 25;
-              } else if (d.distance == 1) {
+              } else if (d.distance === 2) {
                 return 12.5;
               } else {
                 return 6.25;
@@ -281,26 +332,22 @@ angular.module('redesign2017App')
             })
             // On hover, display label
             .on('mouseenter', function(d) {
-              d3.selectAll('g.label').each(function(e) {
-                if (e.id == d.id) {
-                  d3.select(this)
-                    .classed('temporary-unhidden', true);
-                }
+              d3.selectAll('g.label').classed('temporary-unhidden', function(e) {
+                // console.log(typeof e.id);
+                return (e.id === d.id) ? true: false;
               })
               // sort elements so to bring the hovered one on top and make it readable.
-              svg.selectAll("g.label").each(function(e, i) {
-                if (d == e) {
-                  var myElement = this;
-                  d3.select(myElement).remove();
-                  d3.select('.labels').node().appendChild(myElement);
-                }
-              })
+              // svg.selectAll("g.label").each(function(e, i) {
+              //   if (d == e) {
+              //     var myElement = this;
+              //     d3.select(myElement).remove();
+              //     d3.select('.labels').node().appendChild(myElement);
+              //   }
+              // })
             })
             .on('mouseleave', function(d) {
-              d3.selectAll('g.label').each(function(e) {
-                if (e.id == d.id) {
-                  d3.select(this).classed('temporary-unhidden', false);
-                }
+              d3.selectAll('g.label').classed('temporary-unhidden', function(e) {
+                if (e.id == d.id) { return false; }
               })
             });
 
@@ -325,7 +372,7 @@ angular.module('redesign2017App')
           // Create group for the label but define the position later
           var labelEnter = label.enter().append('g')
             .attr("class", function(d) {
-              return (d.distance < 2) ? 'label' : 'label hidden';
+              return (d.distance === 0) ? 'label' : 'label hidden';
             });
 
           label.selectAll('*').remove();
