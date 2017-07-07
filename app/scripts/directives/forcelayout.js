@@ -29,8 +29,9 @@ angular.module('redesign2017App')
           zoomfactor = 1, // Controls zoom buttons, begins at default scale
           endTime = 500, // Length of viz transition
           toggle = 0, // Toggle for ego networks on click (see toggleClick())
-          oldLayout = 'individual-force',
-          addedNodes = []; // Keep track of whether the layout has changed
+          oldLayout = 'individual-force', // Keep track of whether the layout has changed
+          addedNodes = [], // Nodes user has added to the graph
+          nodeAdded = false; // Toggle for user-added actions
 
           // Populate links array from JSON
           json.data.attributes.connections.forEach(function(c) {
@@ -45,7 +46,6 @@ angular.module('redesign2017App')
             .attr('height', '100%')
             .attr('fill', 'transparent')
             .on('click', function() {
-              addNode();
               // Clear selections on nodes and labels
               d3.selectAll('.node, g.label').classed('selected', false);
 
@@ -69,7 +69,8 @@ angular.module('redesign2017App')
               // update selction and trigger event for other directives
               scope.currentSelection = {};
               scope.$apply(); // no need to trigger events, just apply
-            });
+            })
+            .on('mousemove', mousemove);
 
           var container = svg.append('g'); // Create container for nodes and edges
 
@@ -86,6 +87,14 @@ angular.module('redesign2017App')
             .attr("class", "labels")
             .selectAll(".label");
 
+          var cursor = container.append("circle")
+            .attr("r", 12.5)
+            .attr("fill", "none")
+            .attr("stroke", "orange")
+            .attr("stroke-width", 1.5)
+            .attr("opacity", 0)
+            .attr("transform", "translate(-100,-100)")
+            .attr("class", "cursor");
 
 
           //              //
@@ -643,13 +652,33 @@ angular.module('redesign2017App')
 
           // Change name of the viz
           scope.config.title = "Hooke network of Francis Bacon"
+
+          // if (!scope.config.contributionMode) {
+          //   d3.select('.degree3').remove();
+          // }
         }
 
-        function addNode() {
-          var point = d3.mouse(svg.node());
-          addedNodes.push({attributes: {name: "John Ladd"}, id: '0100', distance: '3', x: point[0], y: point[1]});
-          update(addedNodes, confidenceMin, confidenceMax, dateMin, dateMax, complexity, 'individual-force');
+        // Function triggered when user wants to add a node
+        scope.addingMode = function() {
+          nodeAdded = false;
+          cursor.attr("opacity", 1);
+          svg.on("click", addNode);
+        }
 
+        // Move the circle with the mouse, until the the user clicks
+        function mousemove() {
+          cursor.attr("transform", "translate(" + d3.mouse(container.node()) + ")");
+        }
+
+        // When canvas is clicked, add a new circle with dummy data
+        function addNode() {
+          if (!nodeAdded) {
+            var point = d3.mouse(container.node());
+            addedNodes.push({attributes: {name: "John Ladd"}, id: '0100', distance: '3', x: point[0], y: point[1]});
+            update(addedNodes, confidenceMin, confidenceMax, dateMin, dateMax, complexity, 'individual-force');
+            nodeAdded = true;
+            cursor.attr("opacity", 0);
+          }
         }
 
         // Trigger update automatically when the directive code is executed entirely (e.g. at loading)
