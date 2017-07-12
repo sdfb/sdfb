@@ -34,7 +34,7 @@ angular
               viewObject:0, //0 = people, 1 = groups
               viewMode:'individual-force',
               title: 'undefined title',
-              networkComplexity: '2',
+              networkComplexity: '1.75',
               dateMin:1500,
               dateMax:1700,
               confidenceMin:60,
