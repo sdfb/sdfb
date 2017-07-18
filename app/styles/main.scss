@@ -482,7 +482,7 @@ section .legend-panel svg {
 section .legend-line {
     border-top: 1px solid $mainTextColor;
     position: relative;
-    top: 25px;
+    top: 7px;
     width: 100%;
     &.small-segment {
         width: 60px;
@@ -520,7 +520,7 @@ section .flex-container {
         &.ghost {
             background-color: transparent;
             border-color: transparent;
-            margin: 0 auto;
+            margin: 0;
         }
         &.white-circle {
             background-color: $light-color;
