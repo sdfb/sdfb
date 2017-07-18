@@ -1,6 +1,6 @@
 <section>
 	<h3 class="">Add person to this view</h3>
-	<h4>Person Name</h4>
+	<h4 class="paragraph-title">Person Name</h4>
   <input placeholder="Search for a person" type="text" ng-model="person.selected" uib-typeahead="person for person in peopleToSelect | filter:$viewValue | limitTo:8" class="form-control">
 	<input type="button" value="Add this person" ng-click="addingMode()">
 </section>

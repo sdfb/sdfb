@@ -21,7 +21,8 @@ $light-color: white;
 $node-individual-origin: #F45D4C;
 $node-individual-firstDegree: #EE9F99;
 $node-individual-secondDegree: #f2f2f3;
-$contribution-mode: orange;
+$contribution-mode-fill: #F5A623;
+$contribution-mode-stroke: #D2870D;
 
 /* $node-individual-origin: #1239B4;*/
 
@@ -129,7 +130,7 @@ path.danger {
 }
 
 .contribution-mode-on .header .navbar .log-in {
-    background-color: orange;
+    background-color: $contribution-mode-fill;
 }
 
 .contribution-mode-switch {
@@ -152,7 +153,7 @@ path.danger {
     position: relative;
     margin-left: 5px;
     top: 2px;
-    color: $contribution-mode;
+    color: $contribution-mode-fill;
 }
 
 .contribution-mode-on .contribution-mode-switch i {
@@ -219,10 +220,6 @@ path.danger {
     transition: all 0.5s ease;
 }
 
-.orange-panel {
-    background-color: $contribution-mode;
-}
-
 .panel.smallest {
     width: 32px;
     -webkit-box-sizing: border-box;
@@ -265,6 +262,24 @@ path.danger {
     }
     &.group {
         height: 260px;
+    }
+    &.add-node {
+        height: 125px;
+        background-color: $light-color;
+        border: 1px solid $contribution-mode-fill;
+        &.collapsed {
+            background-color: $contribution-mode-fill;
+            border: 1px solid $contribution-mode-stroke;
+        }
+    }
+    &.add-link {
+        height: 580px;
+        background-color: $light-color;
+        border: 1px solid $contribution-mode-fill;
+        &.collapsed {
+            background-color: $contribution-mode-fill;
+            border: 1px solid $contribution-mode-stroke;
+        }
     }
 }
 
@@ -820,7 +835,7 @@ label.btn-primary:first-of-type {
 }
 
 
-/* */
+/* Zoom controls */
 
 .controls {
     background-color: $light-color;
@@ -849,6 +864,39 @@ label.btn-primary:first-of-type {
     padding-bottom: 9px;
 }
 
+/* Contribution panels */
+add-node section,
+add-link section {
+    h3 {
+        color: $contribution-mode-fill;
+    }
+    h4.paragraph-title {
+        margin-top: 20px;
+    }
+    .input-group {
+        width: 100%;
+        input.form-control {
+            width: 60%;
+        }
+        .input-group-addon {
+            background-color: $contribution-mode-fill;
+            border: 1px solid $contribution-mode-stroke;
+            color: $light-color;
+            font-size: 13px;
+            padding: 6px;
+            text-align: left;
+            text-transform: uppercase;
+            width: 40%;
+        }
+    }
+    p {
+        margin-top: 32px;
+    }
+    button.btn-primary {
+        background-color: $contribution-mode-fill;
+        color: $light-color;
+    }
+}
 
 /* visualization styles*/
 
@@ -882,11 +930,11 @@ contextual-info-panel.panel {
 }
 
 .contribution-mode-on contextual-info-panel.panel {
-    border-color: $contribution-mode;
+    border-color: $contribution-mode-fill;
 }
 
 contextual-info-panel .contribution {
-    color: $contribution-mode;
+    color: $contribution-mode-fill;
 }
 
 contextual-info-panel > section {
@@ -916,7 +964,7 @@ contextual-info-panel > section:nth-child(2) {
 
 .contribution-mode-on contextual-info-panel > section:nth-child(2) {
   padding-bottom: 0px;
-  border-color: $contribution-mode;
+  border-color: $contribution-mode-fill;
 }
 
 contextual-info-panel h2 {
@@ -924,8 +972,8 @@ contextual-info-panel h2 {
 }
 
 .edit-btn {
-    color: $contribution-mode;
-    border-top: 1px solid $contribution-mode;
+    color: $contribution-mode-fill;
+    border-top: 1px solid $contribution-mode-fill;
     display: block;
     width: calc(100% + 30px);
     height: 20px;
@@ -938,7 +986,7 @@ contextual-info-panel h2 {
 }
 
 .edit-btn:hover {
-    background-color: $contribution-mode;
+    background-color: $contribution-mode-fill;
     color: white;
 }
 
