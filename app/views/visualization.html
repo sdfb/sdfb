@@ -7,7 +7,7 @@
     <span id="viz-title">{{ config.title }}</span>
   </section>
   <section class="on-the-right">
-    <legend-panel class="panel collapsable" ng-class="{'collapsed' : legendClosed, 'group': config.viewMode == 'all', 'shared': config.viewMode == 'shared', 'individual': config.viewMode == 'individual-force' || config.viewMode == 'individual-concentric' || config.viewMode == 'single-group'}"></legend-panel>
+    <legend-panel class="panel collapsable" ng-class="{'collapsed' : legendClosed, 'group': config.viewMode == 'all', 'shared': config.viewMode == 'shared-network', 'individual': config.viewMode == 'individual-force' || config.viewMode == 'individual-concentric' || config.viewMode == 'single-group'}"></legend-panel>
     <filters-panel class="panel collapsable collapsed" ng-class="{'collapsed' : filtersClosed}"></filters-panel>
 
     <people-finder class="panel collapsable collapsed" ng-class="{'collapsed' : peopleFinderClosed}"></people-finder>
