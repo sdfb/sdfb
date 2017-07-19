@@ -15,15 +15,39 @@ angular.module('redesign2017App')
         scope.slider = {
           value: 4,
           options: {
-            showTicksValues: true,
-            stepsArray: [
-              { value: 0, legend: 'Impossible' },
-              { value: 2 },
-              { value: 4 },
-              { value: 6, legend: 'Possible' },
-              { value: 8, legend: 'Likely' },
-              { value: 100, legend: 'Sure' },
-            ]
+            // showTicksValues: true,
+            floor: 0,
+            ceil: 100,
+            step: 20,
+            hideLimitLabels: true,
+            // hidePointerLabels: true,
+            showTicks: true,
+            // stepsArray: [
+            //   { value: 0, legend: 'Impossible' },
+            //   { value: 20, legend: 'Highly improbable'  },
+            //   { value: 40, legend: 'Improbable'  },
+            //   { value: 60, legend: 'Possible' },
+            //   { value: 80, legend: 'Likely' },
+            //   { value: 100, legend: 'Sure' },
+            // ],
+            translate: function(v) {
+                switch (v) {
+                    case 0:
+                    return 'Impossible';
+                    case 20:
+                    return 'Highly improbable';
+                    case 40:
+                    return 'Improbable';
+                    case 60:
+                    return 'Possible';
+                    case 80:
+                    return 'Likely';
+                    case 100:
+                    return 'Sure';
+                    default:
+                    return 'mmm';
+                }
+            }
           }
         };
         scope.refreshSlider = function() {
