@@ -273,7 +273,7 @@ path.danger {
         }
     }
     &.add-link {
-        height: 588px;
+        height: 572px;
         background-color: $light-color;
         border: 1px solid $contribution-mode-fill;
         &.collapsed {
@@ -832,6 +832,7 @@ label.btn-primary:first-of-type {
 
 .form-control {
     font-size: 13px;
+    height: 30px;
 }
 
 
@@ -885,7 +886,7 @@ add-link section {
             color: $light-color;
             cursor: pointer;
             font-size: 13px;
-            height: 34px;
+            height: 30px;
             padding: 6px;
             text-align: left;
             text-transform: uppercase;
