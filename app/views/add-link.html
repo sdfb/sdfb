@@ -17,7 +17,7 @@
 
   <h4>End date</h4>
   <div class="input-group">
-    <input placeholder="Search for a person" type="text" ng-model="person.selected" uib-typeahead="person for person in peopleToSelect | filter:$viewValue | limitTo:8" class="form-control">
+    <input class="form-control" uib-datepicker-popup="{{ config.dateFormat }}" ng-model="endDate">
     <select class="input-group-addon" ng-model="selectedEndDateType" ng-options="type for type in config.dateTypes"></select><i class="fa fa-caret-down" aria-hidden="true"></i>
   </div>
 
