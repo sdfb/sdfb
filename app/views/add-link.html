@@ -12,18 +12,19 @@
   <h4>Start date</h4>
   <div class="input-group">
     <input class="form-control" uib-datepicker-popup="{{ config.dateFormat }}" ng-model="startDate">
-    <select class="input-group-addon" ng-model="selectedStartDateType" ng-options="type for type in config.dateTypes"></select>
+    <select class="input-group-addon" ng-model="selectedStartDateType" ng-options="type for type in config.dateTypes"></select><i class="fa fa-caret-down" aria-hidden="true"></i>
   </div>
 
   <h4>End date</h4>
   <div class="input-group">
-    <input placeholder="Search for a person" type="text" ng-model="person.selected" uib-typeahead="person for person in peopleToSelect | filter:$viewValue | limitTo:8" class="form-control">
-    <select class="input-group-addon" ng-model="selectedEndDateType" ng-options="type for type in config.dateTypes"></select>
+    <input class="form-control" uib-datepicker-popup="{{ config.dateFormat }}" ng-model="endDate">
+    <select class="input-group-addon" ng-model="selectedEndDateType" ng-options="type for type in config.dateTypes"></select><i class="fa fa-caret-down" aria-hidden="true"></i>
   </div>
 
-  <rzslider rz-slider-model="slider.value" rz-slider-options="slider.options"></rzslider>
+  <h4>Relationship confidence level</h4>
+  <rzslider rz-slider-model="slider.value" rz-slider-options="slider.options" class="with-legend"></rzslider>
 
-  <p>Your submission needs to be validated by SDFB staff. You will see it as unapproved contribution in the meantime.</p>
+  <h5>Your submission needs to be validated by SDFB staff. You will see it as unapproved contribution in the meantime.</h5>
   <button type="button" class="btn btn-primary" ng-click="">Submit</button>
 
 </section>

@@ -258,7 +258,7 @@ path.danger {
         height: 346px;
     }
     &.shared {
-        height: 460px;
+        height: 376px;
     }
     &.group {
         height: 260px;
@@ -273,7 +273,7 @@ path.danger {
         }
     }
     &.add-link {
-        height: 580px;
+        height: 572px;
         background-color: $light-color;
         border: 1px solid $contribution-mode-fill;
         &.collapsed {
@@ -717,6 +717,7 @@ filters-panel.panel h5 {
 
 .panel h5.interaction-info {
     margin-top: 10px;
+    font-size: 13px;
     font-style: italic;
 }
 
@@ -832,6 +833,7 @@ label.btn-primary:first-of-type {
 
 .form-control {
     font-size: 13px;
+    height: 30px;
 }
 
 
@@ -874,6 +876,7 @@ add-link section {
         margin-top: 20px;
     }
     .input-group {
+        position: relative;
         width: 100%;
         input.form-control {
             width: 60%;
@@ -882,19 +885,88 @@ add-link section {
             background-color: $contribution-mode-fill;
             border: 1px solid $contribution-mode-stroke;
             color: $light-color;
+            cursor: pointer;
             font-size: 13px;
+            height: 30px;
             padding: 6px;
             text-align: left;
             text-transform: uppercase;
             width: 40%;
+            -moz-appearance:none;
+                 appearance:none;
+            -webkit-appearance:none;
+            option {
+                background-color: $light-color;
+                color: $contribution-mode-fill;
+                &:hover, &:active, &:focus, &:active:focus, &:active:hover {
+                    -webkit-box-shadow: inset 20px 20px orange;
+                            box-shadow: inset 20px 20px orange;
+                }
+            }
         }
-    }
-    p {
-        margin-top: 32px;
+        .input-group-addon:not(:first-child):not(:last-child) {
+            border-bottom-right-radius: 4px;
+            border-top-right-radius: 4px;
+        }
+        .fa-caret-down {
+            border-left: 1px solid rgba(255,255,255,0.5);
+            bottom: 3px;
+            color: $light-color;
+            cursor: pointer;
+            height: 80%;
+            line-height: 27px;
+            padding-left: 6px;
+            pointer-events: none;
+            position: absolute;
+            right: 5px;
+        }
     }
     button.btn-primary {
         background-color: $contribution-mode-fill;
+        border-color: $contribution-mode-stroke;
         color: $light-color;
+        &:hover {
+            background-color: $contribution-mode-stroke;
+            color: $light-color;
+        }
+    }
+}
+
+add-link.panel section {
+    h5 {
+        font-size: 13px;
+    }
+    .rzslider {
+        margin: 10px 0 25px 0;
+        .rz-bar {
+            background-color: $mainTextColor;
+            height: 2px;
+            margin: 0 1%;
+            top: 15px;
+            width: 98%;
+        }
+        .rz-pointer {
+            width: 10px;
+            height: 10px;
+            top: auto;
+            bottom: 0;
+            background-color: $contribution-mode-fill;
+            &:after {
+                display: none;
+            }
+        }
+        .rz-bubble {
+            bottom: -22px;
+            font-size: 11px;
+            padding: 1px 0;
+        }
+        .rz-tick {
+            background: $mainTextColor;
+            height: 6px;
+            margin-left: 1px;
+            width: 6px;
+
+        }
     }
 }
 
