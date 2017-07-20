@@ -35,6 +35,8 @@ $degree1blue: #5385A6;
 
 $degree3blue: #f2f2f3;
 
+$indirect-acquaintance-fill: #FDE6E5;
+
 
 /* Single Force Layout (Hooke)*/
 
@@ -245,11 +247,21 @@ shared-network {
     .links line {
         stroke: #aaa;
     }
+    .node.degree1 {
+        fill: $indirect-acquaintance-fill;
+        stroke: $degree0;
+    }
+    .node.degree2 {
+        fill: $degree0;
+        stroke: $degree3blue;
+    }
     .node.degree3 {
-      fill: $degree0blue;
+      fill: $degree1blue;
+      stroke: $degree3blue;
     }
 
     .node.degree4 {
-      fill: $degree1blue;
+        fill: $degree3blue;
+        stroke: $degree1blue;
     }
 }
