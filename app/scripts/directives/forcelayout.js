@@ -101,26 +101,28 @@ angular.module('redesign2017App')
           //  SIMULATION  //
           //              //
 
-          var simulation = d3.forceSimulation()
-            .force("link", d3.forceLink().id(function(d) {
-              return d.id;
-            })) //Link force accounts for link distance
-            .force("charge", d3.forceManyBody().strength(-75)) // Charge force works as gravity
+          var simulation = d3.forceSimulation(nodes)
             .force("center", d3.forceCenter(width / 2, height / 2)) // Keep graph from floating off-screen
+            .force("charge", d3.forceManyBody().strength(-100)) // Charge force works as gravity
+            .force("link", d3.forceLink(links).id(function(d) { return d.id; }).iterations(2)) //Link force accounts for link distance
             .force("collide", d3.forceCollide().radius(function(d) { // Collision detection
               if (d.id == sourceId) { // Account for larger source node
                 return 26;
               } else {
                 return 13;
               }
-            }));
+            }).iterations(0))
+            // general force settings
+            .alpha(1)
+            .alphaDecay(0.05)
+            .on("tick", ticked)
 
-            // Add nodes and links to simulation only once at the beginning
-            simulation.nodes(nodes)
-              .on("tick", ticked); // Positioning function, see ticked() below
+            // // Add nodes and links to simulation only once at the beginning
+            // simulation.nodes(nodes)
+            //   .on("tick", ticked); // Positioning function, see ticked() below
 
-            simulation.force("link")
-              .links(links);
+            // simulation.force("link")
+            //   .links(links);
 
 
         // VISUAL DENSITY PARSER
@@ -416,6 +418,11 @@ angular.module('redesign2017App')
                 .attr("transform", function(d) {
                   return "translate(" + (d.x) + "," + (d.y + 2.5) + ")"
                 })
+
+            if (simulation.alpha() < 0.005 && simulation.force("collide").iterations() == 0) {
+              simulation.force("collide").iterations(1);
+            }
+
           }
 
 
@@ -433,6 +440,12 @@ angular.module('redesign2017App')
           /* The main update function draws the all of the elements of the visualization
           and keeps them up to date using the D3 general update pattern. Takes as variables ranges
           for confidence and date, as well as a complexity value and a layout type (force or concentric) */
+
+          var startTime = d3.now();
+          simulation.on("end", function(){
+            var endTime = d3.now();
+            console.log('Spatialization completed in', (endTime - startTime) / 1000, 'sec.');
+          })
 
           console.log('force layout update function');
           // Find the links that are within date and confidence ranges.
