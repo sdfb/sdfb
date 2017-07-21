@@ -18,14 +18,17 @@
 $text: #434055;
 $opacityDuration: 0.5s;
 
+
+
 /* RED version*/
 
 $degree0: #F45D4C;
 $degree1: #EE9F99;
 $degree3: #f2f2f3;
 
-/* BLUE version*/
 
+
+/* BLUE version*/
 
 $degree0blue: #1239B4;
 
@@ -36,32 +39,35 @@ $degree1blue: #5385A6;
 $degree3blue: #f2f2f3;
 
 
+
+
 /* Single Force Layout (Hooke)*/
 
-.link {
+force-layout {
+  .link {
     stroke: #b9babc;
     fill: none;
     shape-rendering: geometricPrecision;
     -webkit-transition: all $opacityDuration, stroke-width 0s;
     transition: all $opacityDuration, stroke-width 0s;
     cursor: pointer;
-}
+  }
 
-.link:hover {
+  .link:hover {
     stroke-width: 3px;
-}
+  }
 
-.link.altered {
+  .link.altered {
     stroke: #000;
-}
+  }
 
-.link.faded,
-.link.not-in-group {
+  .link.faded,
+  .link.not-in-group {
     opacity: 0;
     pointer-events: none;
-}
+  }
 
-.link.in-group {
+  .link.in-group {
     stroke: #b9babc;
     fill: none;
     shape-rendering: geometricPrecision;
@@ -69,158 +75,160 @@ $degree3blue: #f2f2f3;
     transition: all $opacityDuration, stroke-width 0s;
     cursor: pointer;
     opacity: 1;
-}
+  }
 
-.node {
+  .node {
     stroke: #fff;
-    stroke-width: 1px;
-    -webkit-transition: all $opacityDuration, r 0s ease-out;
-    transition: all $opacityDuration, r 0s ease-out;
+    stroke-width: 1px; // -webkit-transition: all $opacityDuration, r 0s ease-out;
+    // transition: all $opacityDuration, r 0s ease-out;
     cursor: pointer;
-}
+  }
 
-.node text {
+  .node text {
     pointer-events: none;
     font: 10px sans-serif;
-}
+  }
 
-.node.degree0 {
+  .node.degree0 {
     fill: $degree0;
-}
+  }
 
-.node.degree1 {
+  .node.degree1 {
     fill: $degree1;
-}
+  }
 
-.node.degree2 {
+  .node.degree2 {
     fill: $degree3;
     stroke: $degree0;
-}
+  }
 
-.node.degree3 {
-  fill: orange;
-  r: 12.5;
-}
+  .node.degree3 {
+    fill: orange;
+    r: 12.5;
+  }
 
-.node:hover {
+  .node:hover {
     stroke: #4A4A4A;
     stroke-width: 2px;
-}
+  }
 
-.node.faded,
-.node.not-in-group {
+  .node.faded,
+  .node.not-in-group {
     opacity: .1;
-}
+  }
 
-.node.focused {
+  .node.focused {
     stroke: #666666;
-}
+  }
 
-.label {
+  .label {
     opacity: 1;
     display: block;
     pointer-events: none;
     -webkit-transition: opacity $opacityDuration;
     transition: opacity $opacityDuration;
-}
+  }
 
-.label.hidden,
-.label.not-in-group {
+  .label.hidden,
+  .label.not-in-group {
     opacity: 0;
     display: block !important;
-}
+  }
 
-.label.in-group {
+  .label.in-group {
     opacity: 1;
     display: block !important;
     pointer-events: none;
     -webkit-transition: opacity $opacityDuration;
     transition: opacity $opacityDuration;
-}
+  }
 
-.label.temporary-unhidden {
+  .label.temporary-unhidden {
     opacity: 1 !important;
     display: block !important;
-}
+  }
 
-.label text {
+  .label text {
     fill: $text;
     text-anchor: middle;
     font-size: 8px;
     font-weight: bold;
-}
+  }
 
-.label rect {
+  .label rect {
     fill: white;
     opacity: 1;
     stroke: #b9babc;
     stroke-width: 0.5px;
-}
+  }
 
-.label.selected rect {
+  .label.selected rect {
     fill: #4A4A4A;
     stroke: $degree0;
-}
+  }
 
-.label.selected text {
+  .label.selected text {
     fill: #ffffff;
+  }
 }
 
 #tools div {
-    display: inline;
+  display: inline;
 }
+
+
 
 
 /* groups bar*/
 
 groups-bar {
-    position: absolute;
-    height: 45px;
-    width: 100%;
-    bottom: 0;
-    background-color: #EFF1F4;
-    padding: 0 10px;
-    display: -webkit-box !important;
-    display: -ms-flexbox !important;
-    display: flex !important;
-    -webkit-box-pack: justify;
-    -ms-flex-pack: justify;
-    justify-content: space-between;
+  position: absolute;
+  height: 45px;
+  width: 100%;
+  bottom: 0;
+  background-color: #EFF1F4;
+  padding: 0 10px;
+  display: -webkit-box !important;
+  display: -ms-flexbox !important;
+  display: flex !important;
+  -webkit-box-pack: justify;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  .group {
+    background-color: #C6CACF;
+    border-radius: 2px;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
     -webkit-box-align: center;
     -ms-flex-align: center;
     align-items: center;
-    .group {
-        background-color: #C6CACF;
-        border-radius: 2px;
-        -webkit-box-sizing: border-box;
-        box-sizing: border-box;
-        display: -webkit-box;
-        display: -ms-flexbox;
-        display: flex;
-        -webkit-box-align: center;
-        -ms-flex-align: center;
-        align-items: center;
-        -webkit-box-pack: start;
-        -ms-flex-pack: start;
-        justify-content: flex-start;
-        height: 30px;
-        overflow: hidden;
-        padding: 0 0 0 5px;
-        -webkit-transition: all 0.5s;
-        transition: all 0.5s;
-        &:last-of-type {
-            cursor: pointer;
-        }
+    -webkit-box-pack: start;
+    -ms-flex-pack: start;
+    justify-content: flex-start;
+    height: 30px;
+    overflow: hidden;
+    padding: 0 0 0 5px;
+    -webkit-transition: all 0.5s;
+    transition: all 0.5s;
+    &:last-of-type {
+      cursor: pointer;
     }
-    .group.active {
-        background-color: $degree0;
-        color: white;
-        pointer-events: auto;
-    }
-    .group.unactive {
-        opacity: 0.5;
-        pointer-events: none;
-    }
+  }
+  .group.active {
+    background-color: $degree0;
+    color: white;
+    pointer-events: auto;
+  }
+  .group.unactive {
+    opacity: 0.5;
+    pointer-events: none;
+  }
 }
 
 // groups-bar::after {
@@ -233,23 +241,67 @@ groups-bar {
 //   transition: opacity 0.5s;
 // }
 groups-bar:hover::after {
-    opacity: 1;
+  opacity: 1;
 }
 
 .other-groups-list li.active {
-    color: red;
+  color: red;
 }
 
 // shared network
 shared-network {
-    .links line {
-        stroke: #aaa;
-    }
-    .node.degree3 {
-      fill: $degree0blue;
-    }
+  .links line {
+    stroke: #aaa;
+  }
+  .node.degree3 {
+    fill: $degree0blue;
+  }
 
-    .node.degree4 {
-      fill: $degree1blue;
-    }
+  .node.degree4 {
+    fill: $degree1blue;
+  }
+}
+
+// ALL GROUPS GRAPH
+all-groups-graph {
+
+  .link {
+    fill: none;
+    stroke: #434055;
+    opacity: 0.75;
+  }
+
+  .node {
+    fill: #78729F;
+    transform: rotate(30deg);
+    stroke: white;
+    stroke-width: 0.75px;
+    transition: transform 0.25s ease-in-out;
+    cursor: pointer;
+  }
+
+  .node:hover {
+    transform: rotate(0deg);
+  }
+
+  .label {
+    pointer-events: none;
+  }
+
+  .label text {
+    text-anchor: middle;
+  }
+
+  .label rect {
+    fill: white;
+    stroke: #78729F;
+  }
+
+  .label.not-visible {
+    display: none;
+  }
+
+  .label.temporary-unhidden {
+    display: block;
+  }
 }

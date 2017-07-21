@@ -106,6 +106,13 @@ angular.module('redesign2017App')
           $scope.$broadcast('Update the force layout', { layout: 'individual-force' });
         } else if (newValue == 'individual-concentric') {
           $scope.$broadcast('Update the force layout', { layout: 'individual-concentric' });
+        } else if (newValue == 'all') {
+          apiService.getFile('./data/allgroups.json').then(function successCallback(response) {
+            $scope.$broadcast('Show groups graph', response );
+          }, function errorCallback(response) {
+            console.error("An error occured while fetching file", response);
+            return response;
+          });
         }
 
       }
