@@ -156,9 +156,9 @@ angular.module('redesign2017App')
               })
 
             // Get the Bounding Box of the text created
-            d3.selectAll('.label text').each(function(d, i) {
+            d3.selectAll('all-groups-graph .label text').each(function(d, i) {
               if (!d.labelBBox) {
-                d.labelBBox = this.getBBox();
+                d.labelBBox = this.getBoundingClientRect();
               }
             });
 
@@ -167,7 +167,7 @@ angular.module('redesign2017App')
             var paddingTopBottom = 0;
 
             // set dimentions and positions of rectangles depending on the BBox exctracted before
-            d3.selectAll(".label rect")
+            d3.selectAll("all-groups-graph .label rect")
               .attr("x", function(d) {
                 return 0 - d.labelBBox.width / 2 - paddingLeftRight / 2;
               })

@@ -302,15 +302,20 @@ all-groups-graph {
 
   .node {
     fill: #78729F;
-    transform: rotate(30deg);
+    -webkit-transform: rotate(30deg);
+            transform: rotate(30deg);
     stroke: white;
     stroke-width: 0.75px;
+    -webkit-transition: -webkit-transform 0.25s ease-in-out;
+    transition: -webkit-transform 0.25s ease-in-out;
     transition: transform 0.25s ease-in-out;
+    transition: transform 0.25s ease-in-out, -webkit-transform 0.25s ease-in-out;
     cursor: pointer;
   }
 
   .node:hover {
-    transform: rotate(0deg);
+    -webkit-transform: rotate(0deg);
+            transform: rotate(0deg);
   }
 
   .label {
@@ -327,11 +332,11 @@ all-groups-graph {
   }
 
   .label.not-visible {
-    display: none;
+    opacity: 0;
   }
 
   .label.temporary-unhidden {
-    display: block;
+    opacity: 1;
   }
 
   .faded {
@@ -347,8 +352,12 @@ all-groups-graph {
   font-size: 11px;
   position: relative;
   .flex-boxed {
+    display: -webkit-box;
+    display: -ms-flexbox;
     display: flex;
-    justify-content: space-between;
+    -webkit-box-pack: justify;
+        -ms-flex-pack: justify;
+            justify-content: space-between;
     margin-bottom: 6px;
   }
   .flex-boxed:last-child {

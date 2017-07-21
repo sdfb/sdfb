@@ -626,7 +626,7 @@ angular.module('redesign2017App')
           // Get the Bounding Box of the text created
           d3.selectAll('.label text').each(function(d, i) {
             if (!d.labelBBox) {
-              d.labelBBox = this.getBBox();
+              d.labelBBox = this.getBoundingClientRect();
             }
           });
 
