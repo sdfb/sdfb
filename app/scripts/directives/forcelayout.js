@@ -105,13 +105,7 @@ angular.module('redesign2017App')
             .force("center", d3.forceCenter(width / 2, height / 2)) // Keep graph from floating off-screen
             .force("charge", d3.forceManyBody().strength(-100)) // Charge force works as gravity
             .force("link", d3.forceLink(links).id(function(d) { return d.id; }).iterations(2)) //Link force accounts for link distance
-            .force("collide", d3.forceCollide().radius(function(d) { // Collision detection
-              if (d.id == sourceId) { // Account for larger source node
-                return 26;
-              } else {
-                return 13;
-              }
-            }).iterations(0))
+            .force("collide", d3.forceCollide().iterations(0))  // in the tick function will be evaluated the moment in which turn on the anticollision (iterations > 1)
             // general force settings
             .alpha(1)
             .alphaDecay(0.05)
@@ -420,7 +414,15 @@ angular.module('redesign2017App')
                 })
 
             if (simulation.alpha() < 0.005 && simulation.force("collide").iterations() == 0) {
-              simulation.force("collide").iterations(1);
+              simulation.force("collide").iterations(1).radius(function(d) { // Collision detection
+              if (d.distance == 0) { // Account for larger source node
+                return 50/2 + 5;
+              } else if (d.distance == 1){
+                return 25/2 + 5;
+              } else if (d.distance == 2){
+                return 12.5/2 + 5;
+              }
+            });
             }
 
           }
