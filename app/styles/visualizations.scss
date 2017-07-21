@@ -20,11 +20,13 @@ $opacityDuration: 0.5s;
 
 
 
+
 /* RED version*/
 
 $degree0: #F45D4C;
 $degree1: #EE9F99;
 $degree3: #f2f2f3;
+
 
 
 
@@ -38,18 +40,21 @@ $degree1blue: #5385A6;
 
 $degree3blue: #f2f2f3;
 
+$indirect-acquaintance-fill: #FDE6E5;
+
+
 
 
 
 /* Single Force Layout (Hooke)*/
 
-force-layout {
+force-layout, shared-network {
   .link {
     stroke: #b9babc;
     fill: none;
     shape-rendering: geometricPrecision;
-    -webkit-transition: all $opacityDuration, stroke-width 0s;
-    transition: all $opacityDuration, stroke-width 0s;
+    // -webkit-transition: all $opacityDuration, stroke-width 0s;
+    // transition: all $opacityDuration, stroke-width 0s;
     cursor: pointer;
   }
 
@@ -71,8 +76,8 @@ force-layout {
     stroke: #b9babc;
     fill: none;
     shape-rendering: geometricPrecision;
-    -webkit-transition: all $opacityDuration, stroke-width 0s;
-    transition: all $opacityDuration, stroke-width 0s;
+    // -webkit-transition: all $opacityDuration, stroke-width 0s;
+    // transition: all $opacityDuration, stroke-width 0s;
     cursor: pointer;
     opacity: 1;
   }
@@ -179,6 +184,7 @@ force-layout {
 
 
 
+
 /* groups bar*/
 
 groups-bar {
@@ -250,16 +256,36 @@ groups-bar:hover::after {
 
 // shared network
 shared-network {
-  .links line {
-    stroke: #aaa;
-  }
-  .node.degree3 {
-    fill: $degree0blue;
-  }
+    .links path {
+        stroke: #aaa;
+        fill: none;
+    }
+    .node.degree1 {
+        fill: $indirect-acquaintance-fill;
+        stroke: $degree0;
+    }
+    .node.degree2 {
+        fill: $degree0;
+        stroke: $degree3blue;
+    }
+    .node.degree3 {
+      fill: $degree1blue;
+      stroke: $degree3blue;
+    }
 
-  .node.degree4 {
-    fill: $degree1blue;
-  }
+    .node.degree4 {
+        fill: $degree3blue;
+        stroke: $degree1blue;
+    }
+
+    .label rect {
+        fill: white;
+        stroke: black;
+    }
+
+    .label text {
+        text-anchor: middle;
+    }
 }
 
 // ALL GROUPS GRAPH
