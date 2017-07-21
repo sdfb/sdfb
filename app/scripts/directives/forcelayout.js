@@ -111,13 +111,6 @@ angular.module('redesign2017App')
             .alphaDecay(0.05)
             .on("tick", ticked)
 
-            // // Add nodes and links to simulation only once at the beginning
-            // simulation.nodes(nodes)
-            //   .on("tick", ticked); // Positioning function, see ticked() below
-
-            // simulation.force("link")
-            //   .links(links);
-
 
         // VISUAL DENSITY PARSER
         function parseComplexity(thresholdLinks, complexity) {

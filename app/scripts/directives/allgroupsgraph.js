@@ -60,7 +60,13 @@ angular.module('redesign2017App')
           .style("pointer-events", "all")
           .call(d3.zoom()
             .scaleExtent([1 / 2, 4])
-            .on("zoom", zoomed));
+            .on("zoom", zoomed))
+          .on("click", function() {
+            d3.selectAll('all-groups-graph .node, all-groups-graph g.label, all-groups-graph .link').classed('faded', false);
+            // update selction and trigger event for other directives
+            scope.currentSelection = {};
+            scope.$apply(); // no need to trigger events, just apply
+          })
 
         function zoomed() {
           g.attr("transform", d3.event.transform);
@@ -97,9 +103,9 @@ angular.module('redesign2017App')
               .attr("rx", 2)
               .attr("ry", 2)
               .on("click", function(d) {
-                console.log(d, d.attributes.name)
+                // console.log(d, d.attributes.name)
                 // Toggle ego networks on click of node
-                // toggleClick(d, newLinks, this);
+                toggleClick(d, this);
               })
               // On hover, display label
               .on('mouseenter', function(d) {
@@ -234,91 +240,39 @@ angular.module('redesign2017App')
         }
 
         // A function to handle click toggling based on neighboring nodes.
-        function toggleClick(d, newLinks, selectedElement) {
+        function toggleClick(d, selectedElement, newLinks) {
+          // console.log(d.attributes.name, d);
 
-          // Reset group bar
-          d3.selectAll('.group').classed('active', false);
-          d3.selectAll('.group').classed('unactive', false);
+          if (d.type == "group") { //Handler for when a node is clicked
+            // console.log("group")
+            // Fade everything
+            d3.selectAll('all-groups-graph .node, all-groups-graph g.label, all-groups-graph .link').classed('faded', true);
 
-          if (d.type == "person") { //Handler for when a node is clicked
-
-            // Handle signifier for selected node
-            d3.selectAll('.node, g.label').classed('selected', false);
-            d3.select(selectedElement).classed('selected', true);
-            d3.selectAll('g.label').filter(function(e) {
+            // Unfade relevant things
+            d3.select(selectedElement).classed('faded', false);
+            d3.selectAll('all-groups-graph g.label').filter(function(e) {
               return e.id == d.id;
-            }).classed('selected', true);
+            }).classed('faded', false);
 
-            // Make object of all neighboring nodes.
-            var connectedNodes = {};
-            connectedNodes[d.id] = true;
-            newLinks.forEach(function(l) {
-              if (l.source.id == d.id) {
-                connectedNodes[l.target.id] = true;
-              } else if (l.target.id == d.id) {
-                connectedNodes[l.source.id] = true;
-              };
-            });
-
-            // Restyle links, nodes and labels
-            d3.selectAll('.link')
-              .classed('faded', function(l) {
-                if (l.target.id != d.id && l.source.id != d.id) {
-                  return true;
-                };
-              })
-
-            d3.selectAll('.node')
-              .classed('faded', function(n) {
-                if (n.id in connectedNodes) {
-                  return false
-                } else {
-                  return true;
-                };
-              })
-
-            // Get number of connections (degree) for each node
-            // Must calculate it every time, because it can change according to thresholds
-            var numberOfConnections = Object.keys(connectedNodes).length;
-
-
-            // If fewer than 20 connections, show all labels
-            if (numberOfConnections <= 20) {
-              d3.selectAll('g.label')
-                .classed('hidden', function(m) {
-                  return !(m.id in connectedNodes);
-                });
-            } else { // If more than 20 connections, show only top-20 labels by confidence (weight)
-              var neighborsByConfidence = [];
-              for (var m in connectedNodes) { // Get confidence for all connected neighbors
-                newLinks.forEach(function(l) {
-                  if ((l.source.id == m && l.target.id == d.id) || (l.source.id == d.id && l.target.id == m)) {
-                    neighborsByConfidence.push([m, l.weight]);
-                  }
-                });
+            // Find connected groups and unfade them
+            links.forEach(function(l) {
+              // console.log(l.source.id, l.target.id);
+              if (d.id == l.source.id) {
+                d3.selectAll('all-groups-graph .node, all-groups-graph .label').filter(function(e) {
+                  return e.id == l.target.id
+                }).classed('faded', false);
+              } else if (d.id == l.target.id) {
+                d3.selectAll('all-groups-graph .node, all-groups-graph .label').filter(function(e) {
+                  return e.id == l.source.id
+                }).classed('faded', false);
               }
+            })
 
-              // Sort neighbors by confidence
-              neighborsByConfidence.sort(function(first, second) {
-                return second[1] - first[1];
-              });
+            // Find Connected edges and unfade them
+            d3.selectAll('all-groups-graph .link').filter(function(e) {
+              return e.source.id == d.id || e.target.id == d.id;
+            }).classed('faded', false);
 
-              var top20 = neighborsByConfidence.slice(0, 20); // Get only the top 20
-
-              // Convert to object for easy iteration
-              var top20object = {};
-              top20.forEach(function(t) { top20object[t[0]] = t[1]; });
-
-              // Restyle top 20 labels only
-              d3.selectAll('g.label')
-                .classed('hidden', function(m) {
-                  if (m.id != d.id) {
-                    return (m.id in top20object) ? false : true;
-                  } else {
-                    return false;
-                  }
-                });
-            }
 
             // This triggers events in groupsbar.js and contextualinfopanel.js when a selection happens
             scope.currentSelection = d;
@@ -326,28 +280,30 @@ angular.module('redesign2017App')
 
           } else if (d.type == "relationship") { //Handler for when a link is clicked
 
-            // Remove selction from nodes and labels
-            d3.selectAll('.node, g.label').classed('selected', false);
+            console.log("relationship");
 
-            d3.selectAll('.link') // Show only selected link
-              .classed('faded', function(l) {
-                return (l == d) ? false : true;
-              })
+            // // Remove selction from nodes and labels
+            // d3.selectAll('.node, g.label').classed('selected', false);
 
-            d3.selectAll('.node') // Show only source and target node
-              .classed('faded', function(n) {
-                return (n == d.source || n == d.target) ? false : true;
-              })
+            // d3.selectAll('.link') // Show only selected link
+            //   .classed('faded', function(l) {
+            //     return (l == d) ? false : true;
+            //   })
 
-            d3.selectAll('g.label') // Show only source and target label
-              .classed('hidden', function(m) {
-                return (m == d.source || m == d.target) ? false : true;
-              })
+            // d3.selectAll('.node') // Show only source and target node
+            //   .classed('faded', function(n) {
+            //     return (n == d.source || n == d.target) ? false : true;
+            //   })
 
-            console.log('selection to be implemented');
-            // This triggers events in groupsbar.js and contextualinfopanel.js when a selection happens
-            scope.currentSelection = d;
-            scope.$broadcast('selectionUpdated', scope.currentSelection);
+            // d3.selectAll('g.label') // Show only source and target label
+            //   .classed('hidden', function(m) {
+            //     return (m == d.source || m == d.target) ? false : true;
+            //   })
+
+            // console.log('selection to be implemented');
+            // // This triggers events in groupsbar.js and contextualinfopanel.js when a selection happens
+            // scope.currentSelection = d;
+            // scope.$broadcast('selectionUpdated', scope.currentSelection);
           }
 
         }

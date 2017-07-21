@@ -7,14 +7,35 @@
  * # contextualInfoPanel
  */
 angular.module('redesign2017App')
-  .directive('contextualInfoPanel', function() {
+  .directive('contextualInfoPanel', function(apiService) {
     return {
       templateUrl: './views/contextual-info-panel.html',
       restrict: 'E',
       link: function postLink(scope, element, attrs) {
 
         scope.$on('selectionUpdated', function(event, args) {
-          // console.log('selectionUpdated', scope.currentSelection);
+          // console.log(event, args);
+          if (args.type) {
+            // console.log(args.id)
+            var singleGroupUrl = 'http://www.sixdegreesoffrancisbacon.com/groups/{{id}}.json'
+            apiService.getFile(singleGroupUrl.replace('{{id}}', args.id)).then(function successCallback(singleGroup) {
+              // console.log(singleGroup);
+              var allGroups = 'http://www.sixdegreesoffrancisbacon.com/groups.json'
+              apiService.getFile(allGroups).then(function successCallback(allGroups) {
+                if (allGroups) {
+                  scope.currentSelection.groupInfo = allGroups.filter(function(e) {
+                    return e.id == singleGroup.id
+                  })[0] //filter returns an array, which should have only one element. Store that element in a scope object
+                  // console.log(scope.currentSelection.groupInfo);
+                }
+              });
+
+
+            }, function errorCallback(singleGroup) {
+              console.error("An error occured while fetching file", singleGroup);
+            });
+          }
+
           scope.$apply();
         })
 
