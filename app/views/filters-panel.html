@@ -1,27 +1,42 @@
 <section class="force-layout">
 	<h3 class="">Filters</h3>
-	<div>
-		<h4>Relationships confidence level</h4>
-		<div class="confidence-container"></div>
-		<h5>Likelihood that a particular relationship existed</h5>
-	</div>
-	<div>
-		<h4>Relationships date range</h4>
-		<div class="date-container"></div>
-		<h5>Temporal window in which relationships existed</h5>
-	</div>
-	<div>
-		<h4>Visual density</h4>
-		<div class="legend-line"></div>
-		<div class="density-container"></div>
-		<div class="flex-container">
-			<div class="flex-item legend-text">1st</div>
-			<div class="flex-item legend-text">1.5</div>
-			<div class="flex-item legend-text">1.75</div>
-			<div class="flex-item legend-text">2nd</div>
-			<div class="flex-item legend-text">2+</div>
+	<div ng-show=" config.viewMode == 'individual-force' || config.viewMode == 'individual-concentric'">
+		<div>
+			<h4>Relationships confidence level</h4>
+			<div class="confidence-container"></div>
+			<h5>Likelihood that a particular relationship existed</h5>
 		</div>
-		<h5 class="interaction-info">Hover on a value to learn more</h5>
+		<div>
+			<h4>Relationships date range</h4>
+			<div class="date-container"></div>
+			<h5>Temporal window in which relationships existed</h5>
+		</div>
+		<div>
+			<h4>Visual density</h4>
+			<div class="legend-line"></div>
+			<div class="density-container"></div>
+			<div class="flex-container">
+				<div class="flex-item legend-text">1st</div>
+				<div class="flex-item legend-text">1.5</div>
+				<div class="flex-item legend-text">1.75</div>
+				<div class="flex-item legend-text">2nd</div>
+				<div class="flex-item legend-text">2+</div>
+			</div>
+			<h5 class="interaction-info">Hover on a value to learn more</h5>
+		</div>
+	</div>
+	<div ng-if=" config.viewMode == 'shared-network'">
+
+	</div>
+	<div ng-if=" config.viewMode == 'all'">
+		<div>
+			<h4>Relationships date range</h4>
+			<div class="date-container"></div>
+			<h5>Temporal window in which relationships existed</h5>
+		</div>
+	</div>
+	<div ng-if=" config.viewMode == 'single-group'">
+
 	</div>
 </section>
 <span class="close" ng-click="filtersClosed = !filtersClosed; peopleFinderClosed = true; legendClosed = true">

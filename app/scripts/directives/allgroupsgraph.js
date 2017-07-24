@@ -89,6 +89,50 @@ angular.module('redesign2017App')
           var startTime = d3.now();
 
           function drawGraph() {
+            var extentNodes = d3.extent(nodes, function(d) { return d.attributes.degree; }),
+                extentEdges = d3.extent(links, function(d) { return d.weight; });
+
+            var sizeLegend = d3.select('.legend-size-squares')
+                .selectAll('.white-square')
+                .data(extentNodes);
+
+            var sizeLegendBox = sizeLegend.enter()
+                .append('div')
+                .classed('squares-box', true)
+                .merge(sizeLegend);
+
+            sizeLegendBox.append('div')
+                .classed('white-square', true)
+                .style("width", function(d) { return Math.floor((2 * sizeScale(d)) / Math.sqrt(2)) + 'px'; })
+                .style("height", function(d) { return Math.floor((2 * sizeScale(d)) / Math.sqrt(2)) + 'px'; });
+
+            sizeLegendBox.append('div')
+                .classed('legend-text centered', true)
+                .text(function(d){ return d; })
+
+            sizeLegend.exit().remove();
+
+
+            var weightLegend = d3.select('.legend-size-edges')
+                .selectAll('.edge-line')
+                .data(extentEdges);
+
+            var weightLegendBox = weightLegend.enter()
+                .append('div')
+                .classed('line-box', true)
+                .merge(weightLegend);
+
+            weightLegendBox.append('div')
+                .classed('edge-line', true)
+                .style("width", function(d) { return Math.floor(sizeEdge(d)) + 'px'; })
+                .style("height", '30px');
+
+            weightLegendBox.append('div')
+                .classed('legend-text centered', true)
+                .text(function(d){ return d; })
+
+            weightLegend.exit().remove();
+
             // Apply the general update pattern to the nodes.
             nodes.sort(function(x, y) {
               return d3.descending(x.attributes.degree, y.attributes.degree);
@@ -156,9 +200,9 @@ angular.module('redesign2017App')
               })
 
             // Get the Bounding Box of the text created
-            d3.selectAll('.label text').each(function(d, i) {
+            d3.selectAll('all-groups-graph .label text').each(function(d, i) {
               if (!d.labelBBox) {
-                d.labelBBox = this.getBBox();
+                d.labelBBox = this.getBoundingClientRect();
               }
             });
 
@@ -167,7 +211,7 @@ angular.module('redesign2017App')
             var paddingTopBottom = 0;
 
             // set dimentions and positions of rectangles depending on the BBox exctracted before
-            d3.selectAll(".label rect")
+            d3.selectAll("all-groups-graph .label rect")
               .attr("x", function(d) {
                 return 0 - d.labelBBox.width / 2 - paddingLeftRight / 2;
               })

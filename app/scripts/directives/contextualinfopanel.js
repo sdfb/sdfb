@@ -15,7 +15,7 @@ angular.module('redesign2017App')
 
         scope.$on('selectionUpdated', function(event, args) {
           // console.log(event, args);
-          if (args.type) {
+          if (args.type == 'group') {
             // console.log(args.id)
             var singleGroupUrl = 'http://www.sixdegreesoffrancisbacon.com/groups/{{id}}.json'
             apiService.getFile(singleGroupUrl.replace('{{id}}', args.id)).then(function successCallback(singleGroup) {
