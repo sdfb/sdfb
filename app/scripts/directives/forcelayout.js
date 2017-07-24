@@ -33,83 +33,83 @@ angular.module('redesign2017App')
           addedNodes = [], // Nodes user has added to the graph
           nodeAdded = false; // Toggle for user-added actions
 
-          // Populate links array from JSON
-          json.data.attributes.connections.forEach(function(c) {
-            // Retain ID and type from level above in JSON
-            c.attributes.id = c.id;
-            c.attributes.type = c.type;
-            links.push(c.attributes);
-          });
+        // Populate links array from JSON
+        json.data.attributes.connections.forEach(function(c) {
+          // Retain ID and type from level above in JSON
+          c.attributes.id = c.id;
+          c.attributes.type = c.type;
+          links.push(c.attributes);
+        });
 
-          svg.append('rect') // Create container for visualization
-            .attr('width', '100%')
-            .attr('height', '100%')
-            .attr('fill', 'transparent')
-            .on('click', function() {
-              // Clear selections on nodes and labels
-              d3.selectAll('.node, g.label').classed('selected', false);
+        svg.append('rect') // Create container for visualization
+          .attr('width', '100%')
+          .attr('height', '100%')
+          .attr('fill', 'transparent')
+          .on('click', function() {
+            // Clear selections on nodes and labels
+            d3.selectAll('.node, g.label').classed('selected', false);
 
-              // Restore nodes and links to normal opacity. (see toggleClick() below)
-              d3.selectAll('.link')
-                .classed('faded', false)
+            // Restore nodes and links to normal opacity. (see toggleClick() below)
+            d3.selectAll('.link')
+              .classed('faded', false)
 
-              d3.selectAll('.node')
-                .classed('faded', false)
+            d3.selectAll('.node')
+              .classed('faded', false)
 
-              // Must select g.labels since it selects elements in other part of the interface
-              d3.selectAll('g.label')
-                .classed('hidden', function(d) {
-                  return (d.distance < 2) ? false : true;
-                });
+            // Must select g.labels since it selects elements in other part of the interface
+            d3.selectAll('g.label')
+              .classed('hidden', function(d) {
+                return (d.distance < 2) ? false : true;
+              });
 
-              // reset group bar
-              d3.selectAll('.group').classed('active', false);
-              d3.selectAll('.group').classed('unactive', false);
+            // reset group bar
+            d3.selectAll('.group').classed('active', false);
+            d3.selectAll('.group').classed('unactive', false);
 
-              // update selction and trigger event for other directives
-              scope.currentSelection = {};
-              scope.$apply(); // no need to trigger events, just apply
-            })
-            .on('mousemove', mousemove);
+            // update selction and trigger event for other directives
+            scope.currentSelection = {};
+            scope.$apply(); // no need to trigger events, just apply
+          })
+          .on('mousemove', mousemove);
 
-          var container = svg.append('g'); // Create container for nodes and edges
+        var container = svg.append('g'); // Create container for nodes and edges
 
-          // Separate groups for links, nodes, and edges
-          var link = container.append("g")
-            .attr("class", "links")
-            .selectAll(".link");
+        // Separate groups for links, nodes, and edges
+        var link = container.append("g")
+          .attr("class", "links")
+          .selectAll(".link");
 
-          var node = container.append("g")
-            .attr("class", "nodes")
-            .selectAll(".node");
+        var node = container.append("g")
+          .attr("class", "nodes")
+          .selectAll(".node");
 
-          var label = container.append("g")
-            .attr("class", "labels")
-            .selectAll(".label");
+        var label = container.append("g")
+          .attr("class", "labels")
+          .selectAll(".label");
 
-          var cursor = container.append("circle")
-            .attr("r", 12.5)
-            .attr("fill", "none")
-            .attr("stroke", "orange")
-            .attr("stroke-width", 1.5)
-            .attr("opacity", 0)
-            .attr("transform", "translate(-100,-100)")
-            .attr("class", "cursor");
+        var cursor = container.append("circle")
+          .attr("r", 12.5)
+          .attr("fill", "none")
+          .attr("stroke", "orange")
+          .attr("stroke-width", 1.5)
+          .attr("opacity", 0)
+          .attr("transform", "translate(-100,-100)")
+          .attr("class", "cursor");
 
 
-          //              //
-          //  SIMULATION  //
-          //              //
+        //              //
+        //  SIMULATION  //
+        //              //
 
-          var simulation = d3.forceSimulation(nodes)
-            .force("center", d3.forceCenter(width / 2, height / 2)) // Keep graph from floating off-screen
-            .force("charge", d3.forceManyBody().strength(-100)) // Charge force works as gravity
-            .force("link", d3.forceLink(links).id(function(d) { return d.id; }).iterations(2)) //Link force accounts for link distance
-            .force("collide", d3.forceCollide().iterations(0))  // in the tick function will be evaluated the moment in which turn on the anticollision (iterations > 1)
-            // general force settings
-            .alpha(1)
-            .alphaDecay(0.05)
-            .on("tick", ticked)
+        var simulation = d3.forceSimulation(nodes)
+          .force("center", d3.forceCenter(width / 2, height / 2)) // Keep graph from floating off-screen
+          .force("charge", d3.forceManyBody().strength(-100)) // Charge force works as gravity
+          .force("link", d3.forceLink(links).id(function(d) { return d.id; }).iterations(2)) //Link force accounts for link distance
+          .force("collide", d3.forceCollide().iterations(0)) // in the tick function will be evaluated the moment in which turn on the anticollision (iterations > 1)
+          // general force settings
+          .alpha(1)
+          .alphaDecay(0.05)
+          .on("tick", ticked)
 
 
         // VISUAL DENSITY PARSER
@@ -367,9 +367,9 @@ angular.module('redesign2017App')
         //Functions for zoom and recenter buttons
         scope.centerNetwork = function() {
           console.log("Recenter");
-          var sourceNode = nodes.filter(function(d) { return (d.id == sourceId)})[0]; // Get source node element by its ID
+          var sourceNode = nodes.filter(function(d) { return (d.id == sourceId) })[0]; // Get source node element by its ID
           // Transition source node to center of rect
-          svg.transition().duration(750).call(zoom.transform, d3.zoomIdentity.translate(width/2-sourceNode.x, height/2-sourceNode.y));
+          svg.transition().duration(750).call(zoom.transform, d3.zoomIdentity.translate(width / 2 - sourceNode.x, height / 2 - sourceNode.y));
         }
 
         scope.zoomIn = function() {
@@ -389,45 +389,45 @@ angular.module('redesign2017App')
         // Tick function for positioning links, node, and edges on each iteration of
         // the force simulation
         function ticked() {
-            link // Since we're using a path instead of a line, links only need "d" attr
-                .attr("d", function(d) {
-                  var dx = d.target.x - d.source.x,
-                      dy = d.target.y - d.source.y,
-                      dr = Math.sqrt(dx * dx + dy * dy);
-                  return "M" + d.source.x + "," + d.source.y + "A" + dr + "," + dr + " 0 0,1 " + d.target.x + "," + d.target.y;
-                });
+          link // Since we're using a path instead of a line, links only need "d" attr
+            .attr("d", function(d) {
+              var dx = d.target.x - d.source.x,
+                dy = d.target.y - d.source.y,
+                dr = Math.sqrt(dx * dx + dy * dy);
+              return "M" + d.source.x + "," + d.source.y + "A" + dr + "," + dr + " 0 0,1 " + d.target.x + "," + d.target.y;
+            });
 
-            node // Take x and y values from data
-                .attr("cx", function(d) { return d.x; })
-                .attr("cy", function(d) { return d.y; });
+          node // Take x and y values from data
+            .attr("cx", function(d) { return d.x; })
+            .attr("cy", function(d) { return d.y; });
 
-            label // Position labels in center of nodes
-                .attr("transform", function(d) {
-                  return "translate(" + (d.x) + "," + (d.y + 2.5) + ")"
-                })
+          label // Position labels in center of nodes
+            .attr("transform", function(d) {
+              return "translate(" + (d.x) + "," + (d.y + 2.5) + ")"
+            })
 
-            if (simulation.alpha() < 0.005 && simulation.force("collide").iterations() == 0) {
-              simulation.force("collide").iterations(1).radius(function(d) { // Collision detection
+          if (simulation.alpha() < 0.005 && simulation.force("collide").iterations() == 0) {
+            simulation.force("collide").iterations(1).radius(function(d) { // Collision detection
               if (d.distance == 0) { // Account for larger source node
-                return 50/2 + 5;
-              } else if (d.distance == 1){
-                return 25/2 + 5;
-              } else if (d.distance == 2){
-                return 12.5/2 + 5;
+                return 50 / 2 + 5;
+              } else if (d.distance == 1) {
+                return 25 / 2 + 5;
+              } else if (d.distance == 2) {
+                return 12.5 / 2 + 5;
               }
             });
-            }
-
           }
+
+        }
 
 
         function positionCircle(nodelist, r) {
           /* For concentric layout, with a given node array
           and a radius value, use trig to position the nodes in a circle */
-          var angle = 360/nodelist.length; // Get angle based on number of nodes
-          nodelist.forEach( function(n, i) {
-            n.fx = (Math.cos(angle*(i+1))*r)+(width/2); // Fix x coordinate
-            n.fy = (Math.sin(angle*(i+1))*r)+(height/2); // Fix y coordinate
+          var angle = 360 / nodelist.length; // Get angle based on number of nodes
+          nodelist.forEach(function(n, i) {
+            n.fx = (Math.cos(angle * (i + 1)) * r) + (width / 2); // Fix x coordinate
+            n.fy = (Math.sin(angle * (i + 1)) * r) + (height / 2); // Fix y coordinate
           });
         }
 
@@ -437,7 +437,7 @@ angular.module('redesign2017App')
           for confidence and date, as well as a complexity value and a layout type (force or concentric) */
 
           var startTime = d3.now();
-          simulation.on("end", function(){
+          simulation.on("end", function() {
             var endTime = d3.now();
             console.log('Spatialization completed in', (endTime - startTime) / 1000, 'sec.');
           })
@@ -459,24 +459,24 @@ angular.module('redesign2017App')
           if (layout == 'individual-force') {
             console.log('Layout: individual-force');
             // For force layout, set fixed positions to null (undoes circle positioning)
-            newNodes.forEach(function(d){
+            newNodes.forEach(function(d) {
               d.fx = null;
               d.fy = null;
             });
           } else if (layout == 'individual-concentric') {
             console.log('Layout: individual-concentric');
             // For concentric layout, set fixed positions according to degree
-            newNodes.forEach( function(d) {
+            newNodes.forEach(function(d) {
               if (d.distance == 0) { // Set source node to center of view
-                d.fx = width/2;
-                d.fy = height/2;
+                d.fx = width / 2;
+                d.fy = height / 2;
               }
             })
 
-            var oneDegreeNodes = newNodes.filter(function(d) {if (d.distance == 1) {return d;} });
+            var oneDegreeNodes = newNodes.filter(function(d) { if (d.distance == 1) { return d; } });
             positionCircle(oneDegreeNodes, 200); // Put 1-degree nodes in circle of radius 200
 
-            var twoDegreeNodes = newNodes.filter(function(d) {if (d.distance == 2) {return d;} });
+            var twoDegreeNodes = newNodes.filter(function(d) { if (d.distance == 2) { return d; } });
             positionCircle(twoDegreeNodes, 500); // Put 2-degree nodes in circle of radius 500
           } else {
             console.log('ERROR: No compatible layout selected:', layout);
@@ -528,8 +528,8 @@ angular.module('redesign2017App')
 
           // Data join with only new nodes from parseComplexity()
           node = node.data(newNodes, function(d) {
-              return d.id;
-            })
+            return d.id;
+          })
 
           var nodeEnter = node.enter().append('circle'); // Create enter variable for general update pattern
 
@@ -649,12 +649,11 @@ angular.module('redesign2017App')
               return d.labelBBox.height + paddingTopBottom;
             });
 
-            if (oldLayout == layout) { // If layout has not changed
-              simulation.alphaTarget(0).restart(); // Don't reheat viz
-            }
-            else { //If layout has changed from force to concentric or vice versa
-              simulation.alphaTarget(0.3).restart(); // Reheat viz
-            }
+          if (oldLayout == layout) { // If layout has not changed
+            simulation.alphaTarget(0).restart(); // Don't reheat viz
+          } else { //If layout has changed from force to concentric or vice versa
+            simulation.alphaTarget(0.3).restart(); // Reheat viz
+          }
 
           oldLayout = layout;
 
@@ -682,7 +681,7 @@ angular.module('redesign2017App')
         function addNode() {
           if (!nodeAdded) {
             var point = d3.mouse(container.node());
-            addedNodes.push({attributes: {name: "John Ladd"}, id: '0100', distance: '3', x: point[0], y: point[1]});
+            addedNodes.push({ attributes: { name: "John Ladd" }, id: '0100', distance: '3', x: point[0], y: point[1] });
             update(addedNodes, confidenceMin, confidenceMax, dateMin, dateMax, complexity, 'individual-force');
             nodeAdded = true;
             cursor.attr("opacity", 0);
