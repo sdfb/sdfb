@@ -34,7 +34,7 @@ angular.module('redesign2017App')
           // A force node employ among each others.
           // If the strength is negative, it results in a repulsion, if positive in an attraction
           // In this case we want node to repel themselves and then to attract depending on the connections they have in between each others
-          .force("charge", d3.forceManyBody().strength(-300))
+          .force("charge", d3.forceManyBody().strength(-400))
 
           // the force calculated depending on the nodes connections
           // it is possible to calculate the strength in this way: .strength(function(d){ return sizeEdge(d.weight)*0.35 })
@@ -150,6 +150,9 @@ angular.module('redesign2017App')
                 // console.log(d, d.attributes.name)
                 // Toggle ego networks on click of node
                 toggleClick(d, this);
+              })
+              .on('dblclick', function(d){
+                console.log('double clicked:',d)
               })
               // On hover, display label
               .on('mouseenter', function(d) {
