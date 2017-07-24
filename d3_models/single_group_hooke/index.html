@@ -67,10 +67,8 @@ svg {
 <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.4/lodash.min.js"></script>
 <script>
 var svg = d3.select("svg"),
-  // width = +svg.attr("width"),
   width = svg.node().getBoundingClientRect().width,
   chartWidth = width,
-  // height = +svg.attr("height"),.
   height = svg.node().getBoundingClientRect().height
 
 var nodes = [];
@@ -78,37 +76,15 @@ var links = [];
 var members = [];
 
 var simulation = d3.forceSimulation(nodes)
-
-  // set the center of the force layout, this schould not influence the general force field
   .force("center", d3.forceCenter(width / 2, height / 2))
-
-  // attract all the nodes to the center of the svg
-  // this result in a force that is summed up to the others
-  // helpfull when you don't want nodes to be pushed outside the svg borders, since it LIMITS this behaviour
   .force("x", d3.forceX(width / 2))
   .force("y", d3.forceY(height / 2))
-
-  // A force node employ among each others.
-  // If the strength is negative, it results in a repulsion, if positive in an attraction
-  // In this case we want node to repel themselves and then to attract depending on the connections they have in between each others
   .force("charge", d3.forceManyBody().strength(-300))
-
-  // the force calculated depending on the nodes connections
-  // it is possible to calculate the strength in this way: .strength(function(d){ return sizeEdge(d.weight)*0.35 })
   .force("link", d3.forceLink(links).id(function(d) { return d.id }).iterations(1))
-
-  // Anti collision force
-  // fed with the radious of the nodes (even if we're now using sqaures) incremented by 1, to leave a little breathe between nodes
-  // Pay attention in using this: it makes the graph less cluttered, but it affect the truthfulness of the force layout.
-  // A good strategy could be to not use this untill you're satisfacted by the concatenation of the previous forces
-  // and then apply this just to be sure node are not overlapping. Indeed, in graphs, the position of the nodes should not depend
-  // on the anticollision algorithm, but on the other forces you put on the canvas.
-  // The risk is otherwise to depict something that is not totally true.
   .force("collide", d3.forceCollide(function(d) { return sizeScale(d.attributes.degree) + 1 }).iterations(0))
-  // general force settings
   .alpha(1)
   .alphaDecay(0.05)
-  .on("tick", ticked)
+  .on("tick", ticked);
 
 svg.append("rect")
   .attr("width", width)
@@ -123,7 +99,7 @@ svg.append("rect")
     // update selction and trigger event for other directives
     // scope.currentSelection = {};
     // scope.$apply(); // no need to trigger events, just apply
-  })
+  });
 
 function zoomed() {
   g.attr("transform", d3.event.transform);
@@ -132,10 +108,7 @@ function zoomed() {
 var g = svg.append("g").attr("transform", "translate(" + (width / 2) * 0 + "," + (height / 2) * 0 + ")"),
   link = g.append("g").selectAll(".link"),
   node = g.append("g").selectAll(".node");
-
 var label = g.append("g").attr("class", "labels").selectAll(".label");
-
-
 
 var sizeScale = d3.scaleLinear()
   .range([8, 30]);
@@ -144,9 +117,7 @@ var sizeEdge = d3.scaleLinear()
   .range([1, 10]);
 
 function update(json, onlyMembers) {
-
   var startTime = d3.now();
-
   // Format data
   members = [];
   members = json.data.attributes.primary_people;
@@ -165,7 +136,6 @@ function update(json, onlyMembers) {
       return a.id == b;
     });
     // console.log('members:',nodes.length,'- noMembers:', noMemberNodes.length);
-
     json.data.attributes.connections.forEach(function(l) {
       links.push({
         'type': l.type,
@@ -187,7 +157,6 @@ function update(json, onlyMembers) {
         })
       })
     })
-
     // console.log('links between members',linksToMembers.length)
     links = linksToMembers;
   } else {
@@ -214,7 +183,6 @@ function update(json, onlyMembers) {
   var minDegree = d3.min(nodes, function(d) { return d.attributes.degree; });
   sizeScale.domain([minDegree, maxDegree]);
 
-
   var minWeight = d3.min(links, function(d) { return d.weight });
   var maxWeight = d3.max(links, function(d) { return d.weight });
 
@@ -223,15 +191,13 @@ function update(json, onlyMembers) {
   // draw things
   function drawGraph() {
     // Apply the general update pattern to the nodes.
-
+    // Nodes would need a better sorting
     nodes.sort(function(x, y) {
       return (x.membership === y.membership) ? 0 : x ? -1 : 1;
     });
-
     // nodes.sort(function(x, y) {
     //   return d3.descending(x.attributes.degree, y.attributes.degree);
     // })
-
     nodes.reverse();
     node = node.data(nodes, function(d) { return d.id; });
     node.exit().remove();
@@ -269,16 +235,12 @@ function update(json, onlyMembers) {
           }
         })
       })
-
     // Apply the general update pattern to the links.
     link = link.data(links, function(d) { return d.source.id + "-" + d.target.id; });
     link.exit().remove();
     link = link.enter().append("path")
       .merge(link)
-      .attr("class", "link")
-    // .attr("stroke-width", function(d) { return sizeEdge(d.weight) })
-
-
+      .attr("class", "link");
     label = label.data(nodes, function(d) { return d.id; });
     label.exit().remove();
     label = label.enter().append("g")
@@ -287,25 +249,20 @@ function update(json, onlyMembers) {
       .classed("not-visible", function(d, i) {
         return (i <= 10) ? false : true
       })
-
-    label.append('rect')
-
+    label.append('rect');
     label.append('text')
       .text(function(d) {
         return d.attributes.name;
       })
-
     // Get the Bounding Box of the text created
     d3.selectAll('.label text').each(function(d, i) {
       if (!d.labelBBox) {
         d.labelBBox = this.getBBox();
       }
     });
-
     // adjust the padding values depending on font and font size
     var paddingLeftRight = 4;
     var paddingTopBottom = 0;
-
     // set dimentions and positions of rectangles depending on the BBox exctracted before
     d3.selectAll(".label rect")
       .attr("x", function(d) {
@@ -321,14 +278,11 @@ function update(json, onlyMembers) {
         return d.labelBBox.height + paddingTopBottom;
       });
   }
-
   drawGraph();
-
   // Update and restart the simulation.
   simulation.nodes(nodes);
   simulation.force("link").links(links);
   simulation.alpha(1).restart();
-
   simulation.on("end", function() {
     var endTime = d3.now();
     console.log('Spatialization completed in', (endTime - startTime) / 1000, 'sec.');
@@ -360,16 +314,13 @@ function ticked() {
   link.attr("d", function(d) {
     return linkArc(d);
   })
-
   // Position labels in center of nodes
   label.attr("transform", function(d) {
     return "translate(" + (d.x) + "," + (d.y) + ")"
   })
-
   if (simulation.alpha() < 0.007 && simulation.force("collide").iterations() == 0) {
     simulation.force("collide").iterations(1).radius(function(d) { return sizeScale(d.attributes.degree) + 1 });
   }
-
 }
 
 // Draw curved edges, create d-value for link path
@@ -384,16 +335,13 @@ function toggleClick(d, selectedElement) {
   console.log(d, selectedElement);
   //Handler for when a node is clicked
   if (d.type == "person") {
-
     // Fade everything
     d3.selectAll('#single-group .node, #single-group g.label, #single-group .link').classed('faded', true);
-
     // Unfade relevant things
     d3.select(selectedElement).classed('faded', false);
     d3.selectAll('#single-group g.label').filter(function(e) {
       return e.id == d.id;
     }).classed('faded', false);
-
     // Find connected groups and unfade them
     links.forEach(function(l) {
       // console.log(l.source.id, l.target.id);
@@ -407,17 +355,13 @@ function toggleClick(d, selectedElement) {
         }).classed('faded', false);
       }
     })
-
     // Find Connected edges and unfade them
     d3.selectAll('#single-group .link').filter(function(e) {
       return e.source.id == d.id || e.target.id == d.id;
     }).classed('faded', false);
-
-
     // // This triggers events in groupsbar.js and contextualinfopanel.js when a selection happens
     // scope.currentSelection = d;
     // scope.$broadcast('selectionUpdated', scope.currentSelection);
-
   }
 }
 

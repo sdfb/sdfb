@@ -22,11 +22,13 @@ $opacityDuration: 0.5s;
 
 
 
+
 /* RED version*/
 
 $degree0: #F45D4C;
 $degree1: #EE9F99;
 $degree3: #f2f2f3;
+
 
 
 
@@ -43,6 +45,7 @@ $degree1blue: #5385A6;
 $degree3blue: #f2f2f3;
 
 $indirect-acquaintance-fill: #FDE6E5;
+
 
 
 
@@ -182,6 +185,7 @@ shared-network {
 #tools div {
   display: inline;
 }
+
 
 
 
@@ -359,8 +363,61 @@ all-groups-graph {
     font-weight: bold;
   }
 
-  & > div:nth-child(2) {
+  &>div:nth-child(2) {
     max-height: 280px;
     overflow: scroll;
+  }
+}
+
+single-group-graph {
+
+  .link {
+    fill: none;
+    stroke: #434055;
+    opacity: 0.75;
+  }
+
+  .node {
+    fill: #EFF1F4;
+    stroke: #78729F;
+    stroke-width: 0.75px;
+    transition: transform 0.25s ease-in-out;
+    cursor: pointer;
+  }
+
+  .node.member {
+    fill: #78729F;
+    stroke: white;
+  }
+
+  .node:hover {}
+
+  .label {
+    pointer-events: none;
+  }
+
+  .label text {
+    text-anchor: middle;
+  }
+
+  .label rect {
+    fill: white;
+    stroke: #78729F;
+  }
+
+  .label.not-visible {
+    display: none;
+  }
+
+  .label.temporary-unhidden {
+    display: block;
+  }
+
+  .faded {
+    opacity: 0.2;
+  }
+
+  .link.faded {
+    opacity: 0;
   }
 }

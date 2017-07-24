@@ -101,6 +101,7 @@ angular.module('redesign2017App')
 
     $scope.$watch('config.viewMode', function(newValue, oldValue) {
       if (newValue != oldValue) {
+
         // console.log('changed layout');
         if (newValue == 'individual-force') {
           $scope.$broadcast('Update the force layout', { layout: 'individual-force' });
@@ -109,6 +110,14 @@ angular.module('redesign2017App')
         } else if (newValue == 'all') {
           apiService.getFile('./data/allgroups.json').then(function successCallback(response) {
             $scope.$broadcast('Show groups graph', response );
+          }, function errorCallback(response) {
+            console.error("An error occured while fetching file", response);
+            return response;
+          });
+        } else if (newValue == 'group-force') {
+          apiService.getFile('./data/virginiacompany.json').then(function successCallback(response) {
+            // console.log(response);
+            $scope.$broadcast('single group', response);
           }, function errorCallback(response) {
             console.error("An error occured while fetching file", response);
             return response;
