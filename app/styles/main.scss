@@ -695,7 +695,9 @@ section .edge-line {
 }
 /* filters styles */
 filters-panel {
-  height: 475px;
+    &.individualFilter {
+        height: 475px;
+    }
 
   svg .bar {
     fill: $filter-color;
