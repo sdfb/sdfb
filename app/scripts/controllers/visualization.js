@@ -122,6 +122,13 @@ angular.module('redesign2017App')
             console.error("An error occured while fetching file", response);
             return response;
           });
+        } else if (newValue == 'group-timeline') {
+          apiService.getFile('./data/virginiacompany.json').then(function successCallback(response) {
+            $scope.$broadcast('group timeline', response );
+          }, function errorCallback(response) {
+            console.error("An error occured while fetching file", response);
+            return response;
+          });
         }
 
       }

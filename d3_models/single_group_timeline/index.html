@@ -165,28 +165,6 @@ var y = d3.scaleBand()
 
 var g = svg.append("g").attr('class', 'g').attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
-d3.json('virginiacompany.json', function(error, data) {
-  if (error) throw error;
-
-  groupInfo = {};
-  groupInfo["description"] = data.data["description"];
-  groupInfo["end_date_type"] = data.data["end_date_type"];
-  groupInfo["end_year"] = data.data["end_year"];
-  groupInfo["id"] = data.data["id"];
-  groupInfo["name"] = data.data["name"];
-  groupInfo["start_date_type"] = data.data["start_date_type"];
-  groupInfo["start_year"] = data.data["start_year"];
-  groupInfo["type"] = data.data["type"];
-
-  primary_people = data.data.attributes.primary_people;
-  members = [];
-  members = _.intersectionWith(data.included, primary_people, function(a, b) {
-    return a.id == b;
-  });
-
-  update(members);
-})
-
 function terminators(position, type, refX, refY, width) {
   if (!width) { width = 9 }
 
@@ -423,5 +401,27 @@ function update(data) {
     });
 
 }
+
+d3.json('virginiacompany.json', function(error, data) {
+  if (error) throw error;
+
+  groupInfo = {};
+  groupInfo["description"] = data.data["description"];
+  groupInfo["end_date_type"] = data.data["end_date_type"];
+  groupInfo["end_year"] = data.data["end_year"];
+  groupInfo["id"] = data.data["id"];
+  groupInfo["name"] = data.data["name"];
+  groupInfo["start_date_type"] = data.data["start_date_type"];
+  groupInfo["start_year"] = data.data["start_year"];
+  groupInfo["type"] = data.data["type"];
+
+  primary_people = data.data.attributes.primary_people;
+  members = [];
+  members = _.intersectionWith(data.included, primary_people, function(a, b) {
+    return a.id == b;
+  });
+
+  update(members);
+})
 
 </script>
