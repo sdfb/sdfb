@@ -1,175 +1,319 @@
 <!DOCTYPE html>
 <meta charset="utf-8">
 <style>
-    body {
-        font-family: arial, sans-serif;
-    }
-    svg {
-        /*background-color: #ccc;*/
-    }
-    .membership {
-        stroke: #008DEB;
-        stroke-width: 3px;
-    }
-    .hover-area {
-        fill: transparent;
-    }
-    .life-group path {
-        fill: transparent;
-        stroke: rgba(0,0,0,0.4);
-        stroke-width: 1px;
-    }
-    .life-group path.terminator {
-        stroke-width: 1.5px;
-    }
-    .terminator.danger {
-        stroke: orange !important;
-    }
-    .terminator.filled {
-        fill: #fff;
-    }
-    .life-group .label {
-        font-size: 10px;
-        text-transform: capitalize;
-        display: none;
-    }
-    .life-group .label.birth {
-        text-anchor: end;
-    }
-    .life-group .label.death {
-        text-anchor: start;
-    }
-    .life-group:hover path {
-        display: inherit;
-        stroke: rgba(0,0,0,0.5);
-        stroke-width:2px;
-    }
-    .life-group:hover text {
-        display: inherit;
-    }
+body {
+  font-family: arial, sans-serif;
+  width: 100vw;
+  /*height: 110vh;*/
+}
+
+svg {
+  background-color: #EFF1F4;
+  width: 100%;
+  /*height: 100%;*/
+}
+
+.guide {
+  fill: none;
+  stroke: #434055;
+  stroke-width: 1px;
+  stroke-dasharray: 1px, 3px;
+}
+
+.guide-label {
+  fill: #434055;
+  text-anchor: middle;
+  font-size: 11px;
+  font-weight: normal;
+}
+
+.group-name {
+  fill: #434055;
+  text-anchor: middle;
+  font-size: 12px;
+  font-weight: bold;
+}
+
+.guide-group {
+  fill: none;
+  stroke: #434055;
+  stroke-width: 1px;
+  stroke-dasharray: 2px, 4px;
+}
+
+.name {
+  text-anchor: end;
+  stroke: none;
+  fill: #434055;
+  font-size: 11px;
+  font-weight: bold;
+}
+
+.membership {
+  stroke: #78729F;
+  stroke-width: 2px;
+}
+
+.hover-area {
+  fill: transparent;
+}
+
+.life {
+  fill: transparent;
+  stroke: rgba(0, 0, 0, 0.4);
+  stroke-width: 1px;
+}
+
+.terminator {
+  stroke: rgba(0, 0, 0, 0.4);
+  stroke-width: 1.5px;
+  fill: none;
+}
+
+.terminator.danger {
+  stroke: orange !important;
+}
+
+.terminator.filled {
+  fill: #fff;
+}
+
 </style>
-<svg width="1090" height="100"></svg>
+<svg></svg>
 <script src="//d3js.org/d3.v4.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.4/lodash.min.js"></script>
 <script>
-
 var svg = d3.select("svg"),
-    margin = {top: 20, right: 20, bottom: 30, left: 120},
-    width = +svg.attr("width") - margin.left - margin.right,
-    height = +svg.attr("height") - margin.top - margin.bottom;
+  margin = { top: 90, right: 20, bottom: 30, left: 200 },
+  width = +svg.node().getBoundingClientRect().width - margin.left - margin.right,
+  height = +svg.node().getBoundingClientRect().width - margin.top - margin.bottom;
 
+var primary_people;
+var members;
+var groupInfo;
 
-var g = svg.append("g")
-    .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+var x = d3.scaleLinear()
+  .rangeRound([0, width]);
 
-d3.tsv('virginiacompany.tsv', function(error,data){
-    if (error) throw error;
+var y = d3.scaleBand()
+  .padding(0.1)
 
-    var numLines = data.map(function(d) { return d.assignementID; }).length;
-    svg.attr("height", numLines*20 + margin.top + margin.bottom);
-    height = +svg.attr("height") - margin.top - margin.bottom;
+var g = svg.append("g").attr('class', 'g').attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+var person = g.selectAll(".membership");
 
-    var x = d3.scaleLinear()
-                .rangeRound([0, width])
+d3.json('virginiacompany.json', function(error, data) {
+  if (error) throw error;
 
-    var y = d3.scaleBand()
-                .rangeRound([height, 0])
-                .padding(0.1);
+  groupInfo = {};
+  groupInfo["description"] = data.data["description"];
+  groupInfo["end_date_type"] = data.data["end_date_type"];
+  groupInfo["end_year"] = data.data["end_year"];
+  groupInfo["id"] = data.data["id"];
+  groupInfo["name"] = data.data["name"];
+  groupInfo["start_date_type"] = data.data["start_date_type"];
+  groupInfo["start_year"] = data.data["start_year"];
+  groupInfo["type"] = data.data["type"];
 
-    x.domain([ +d3.min(data, function(d) { return d.ext_birth_year })-10 , +d3.max(data, function(d) { return d.ext_death_year })+10 ]);
-    y.domain(data.map(function(d) { return d.id }));
+  primary_people = data.data.attributes.primary_people;
+  members = [];
+  members = _.intersectionWith(data.included, primary_people, function(a, b) {
+    return a.id == b;
+  });
 
-    g.append("g")
-      .attr("class", "axis axis--x")
-      .attr("transform", "translate(0," + height + ")")
-      .call(d3.axisBottom(x));
-
-  g.append("g")
-      .attr("class", "axis axis--y")
-      .call(d3.axisLeft(y).ticks(10, "%"))
-    .append("text")
-      .attr("transform", "rotate(-90)")
-      .attr("y", 6)
-      .attr("dy", "0.71em")
-      .attr("text-anchor", "end")
-      .text("Names");
-
-    var people = g.selectAll(".person")
-        .data(data)
-    .enter().append("g")
-      .attr("class", "person")
-
-    function terminators(position, type, refX, refY, width){
-        if(!width) { width=9 }
-
-        if (type == 'AF') {
-            refX = (position=='birth')?(refX-width/3):(refX+width/3)
-            return 'M'+(refX+width/2)+','+(refY-width/2)+' C'+(refX+width/4)+','+(refY-width/2)+' '+refX+','+(refY-width/4)+' '+refX+','+refY+' S'+(refX+width/4)+','+(refY+width/2)+' '+(refX+width/2)+','+(refY+width/2);
-
-        } else if(type == 'AF/IN'){
-            return 'M'+(refX+width/2)+','+(refY-width/2)+' C'+(refX+width/4)+','+(refY-width/2)+' '+refX+','+(refY-width/4)+' '+refX+','+refY+' S'+(refX+width/4)+','+(refY+width/2)+' '+(refX+width/2)+','+(refY+width/2);
-
-        } else if(type == 'BF'){
-            refX = (position=='birth')?(refX-width/3):(refX+width/3)
-            return 'M'+(refX-width/2)+','+(refY-width/2)+' C'+(refX-width/4)+','+(refY-width/2)+' '+refX+','+(refY-width/4)+' '+refX+','+refY+' S'+(refX-width/4)+','+(refY+width/2)+' '+(refX-width/2)+','+(refY+width/2);
-
-        } else if(type == 'BF/IN'){
-            return 'M'+(refX-width/2)+','+(refY-width/2)+' C'+(refX-width/4)+','+(refY-width/2)+' '+refX+','+(refY-width/4)+' '+refX+','+refY+' S'+(refX-width/4)+','+(refY+width/2)+' '+(refX-width/2)+','+(refY+width/2);
-
-        } else if(type == 'IN'){
-            return 'M'+(refX)+','+(refY-width/2)+' L'+(refX)+','+(refY+width/2);
-
-        } else if (type == 'CA'){
-            return 'M'+refX+','+(refY-width/2)+' C'+(refX-width/4)+','+(refY-width/2)+','+(refX-width/2)+','+(refY-width/4)+','+(refX-width/2)+','+refY+' S'+(refX-width/4)+','+(refY+width/2)+','+refX+','+(refY+width/2)+' S'+(refX+width/2)+','+(refY+width/4)+','+(refX+width/2)+','+(refY)+', S'+(refX+width/4)+','+(refY-width/2)+','+(refX)+','+(refY-width/2)+' z'
-        }  
-    }
-    var lifes = people.append('g').attr('class', 'life-group')
-
-    lifes.append('rect')
-        .attr('class','hover-area')
-        .attr('x',function(d){ return x(d.ext_birth_year) })
-        .attr('y',function(d){ return y(d.id) })
-        .attr('width', function(d){ return x(d.ext_death_year) - x(d.ext_birth_year) })
-        .attr('height', y.bandwidth())
-
-    lifes.append('path')
-        .attr('class','life')
-        .attr('d', function(d){
-            return 'M'+x(d.ext_birth_year)+','+(y(d.id)+y.bandwidth()/2+1)+' L'+(x(d.ext_death_year))+','+(y(d.id)+y.bandwidth()/2+1);
-        });
-
-    lifes.append('path')
-        .attr('class', function(d){
-            var classes = (d.birth_year_type=='CA')?'terminator birth filled':'terminator birth'
-            return classes
-        })
-        .attr('d', function(d){ return terminators('birth', d.birth_year_type, x(d.ext_birth_year), y(d.id)+y.bandwidth()/2+1 )});
-
-    lifes.append('text')
-        .attr('class','label birth')
-        .attr("x", function(d) { return x(d.ext_birth_year)-10; })
-        .attr("y", function(d) { return y(d.id)+y.bandwidth()/2+1+3; })
-        .text(function(d){return d.birth_year_type})
-
-    lifes.append('path')
-        .attr('class', function(d){
-            console.log(d.ext_birth_year<d.end_year,d.ext_birth_year,d.end_year)
-            var classes = (d.death_year_type=='CA')?(d.ext_death_year<d.end_year)?'terminator death filled danger':'terminator death filled':(d.ext_death_year<d.end_year)?'terminator death danger':'terminator death'
-            return classes
-        })
-        .attr('d', function(d){ return terminators('death', d.death_year_type, x(d.ext_death_year), y(d.id)+y.bandwidth()/2+1 )});
-    
-    lifes.append('text')
-        .attr('class','label death')
-        .attr("x", function(d) { return x(d.ext_death_year)+8; })
-        .attr("y", function(d) { return y(d.id)+y.bandwidth()/2+1+3; })
-        .text(function(d){return d.death_year_type})
-
-    people.append('path')
-        .attr('class','membership')
-        .attr('d', function(d){
-            return 'M'+x(d.start_year)+','+(y(d.id)+y.bandwidth()/2+1)+' L'+(x(d.end_year))+','+(y(d.id)+y.bandwidth()/2+1);
-        });
-
+  update(members);
 })
+
+function terminators(position, type, refX, refY, width) {
+  if (!width) { width = 9 }
+
+  if (type == 'AF') {
+    refX = (position == 'birth') ? (refX - width / 3) : (refX + width / 3)
+    return 'M' + (refX + width / 2) + ',' + (refY - width / 2) + ' C' + (refX + width / 4) + ',' + (refY - width / 2) + ' ' + refX + ',' + (refY - width / 4) + ' ' + refX + ',' + refY + ' S' + (refX + width / 4) + ',' + (refY + width / 2) + ' ' + (refX + width / 2) + ',' + (refY + width / 2);
+
+  } else if (type == 'AF/IN') {
+    return 'M' + (refX + width / 2) + ',' + (refY - width / 2) + ' C' + (refX + width / 4) + ',' + (refY - width / 2) + ' ' + refX + ',' + (refY - width / 4) + ' ' + refX + ',' + refY + ' S' + (refX + width / 4) + ',' + (refY + width / 2) + ' ' + (refX + width / 2) + ',' + (refY + width / 2);
+
+  } else if (type == 'BF') {
+    refX = (position == 'birth') ? (refX - width / 3) : (refX + width / 3)
+    return 'M' + (refX - width / 2) + ',' + (refY - width / 2) + ' C' + (refX - width / 4) + ',' + (refY - width / 2) + ' ' + refX + ',' + (refY - width / 4) + ' ' + refX + ',' + refY + ' S' + (refX - width / 4) + ',' + (refY + width / 2) + ' ' + (refX - width / 2) + ',' + (refY + width / 2);
+
+  } else if (type == 'BF/IN') {
+    return 'M' + (refX - width / 2) + ',' + (refY - width / 2) + ' C' + (refX - width / 4) + ',' + (refY - width / 2) + ' ' + refX + ',' + (refY - width / 4) + ' ' + refX + ',' + refY + ' S' + (refX - width / 4) + ',' + (refY + width / 2) + ' ' + (refX - width / 2) + ',' + (refY + width / 2);
+
+  } else if (type == 'IN') {
+    return 'M' + (refX) + ',' + (refY - width / 2) + ' L' + (refX) + ',' + (refY + width / 2);
+
+  } else if (type == 'CA') {
+    return 'M' + refX + ',' + (refY - width / 2) + ' C' + (refX - width / 4) + ',' + (refY - width / 2) + ',' + (refX - width / 2) + ',' + (refY - width / 4) + ',' + (refX - width / 2) + ',' + refY + ' S' + (refX - width / 4) + ',' + (refY + width / 2) + ',' + refX + ',' + (refY + width / 2) + ' S' + (refX + width / 2) + ',' + (refY + width / 4) + ',' + (refX + width / 2) + ',' + (refY) + ', S' + (refX + width / 4) + ',' + (refY - width / 2) + ',' + (refX) + ',' + (refY - width / 2) + ' z'
+  }
+}
+
+function update(data) {
+
+  console.log(data);
+  var numLines = data.map(function(d) { return d.assignementID; }).length;
+  svg.attr("height", numLines * 20 + margin.top + margin.bottom);
+  height = +svg.attr("height") - margin.top - margin.bottom;
+
+  var minX = Math.floor(d3.min(data, function(d) { return d.attributes.birth_year }) * 0.1) * 10;
+  var maxX = Math.ceil(+d3.max(data, function(d) { return d.attributes.death_year }) * 0.1) * 10;
+
+  console.log(minX, maxX);
+  var amountFactor = 20;
+  var amountGuides = (maxX - minX) / amountFactor
+  console.log(amountGuides);
+
+  x.domain([minX, maxX]);
+  y.rangeRound([height, 0]).domain(data.map(function(d) { return d.id }));
+
+  for (var i = 1; i <= amountGuides; i++) {
+    g.append("line")
+      .attr("class", "guide")
+      .attr("x1", x(minX + i * amountFactor))
+      .attr("x2", x(minX + i * amountFactor))
+      .attr("y1", 35 - margin.top)
+      .attr("y2", height - 10)
+    g.append("text")
+      .attr("class", "guide-label")
+      .attr('x', x(minX + i * amountFactor))
+      .attr('y', 25 - margin.top)
+      .text(minX + i * amountFactor)
+  }
+
+  g.append("line")
+    .attr("class", "guide-group start")
+    .attr("x1", x(groupInfo.start_year))
+    .attr("x2", x(groupInfo.start_year))
+    .attr("y1", 0 - margin.top)
+    .attr("y2", height + margin.bottom)
+
+  g.append("line")
+    .attr("class", "guide-group end")
+    .attr("x1", x(groupInfo.end_year))
+    .attr("x2", x(groupInfo.end_year))
+    .attr("y1", 0 - margin.top)
+    .attr("y2", height + margin.bottom)
+
+  g.append("text")
+    .attr("class", "group-name")
+    .attr('x', function() {
+      return x(groupInfo.start_year + (groupInfo.end_year - groupInfo.start_year) / 2)
+    })
+    .attr('y', -20)
+    .text(groupInfo.name)
+
+  person = person.data(data, function(d) { return d.id; });
+  person.exit().remove();
+  person = person.enter().append("g")
+    .merge(person)
+    .attr('class', 'membership')
+    .attr("transform", function(d) {
+      return "translate(0, " + (y(d.id) + y.bandwidth() / 2) + ")"
+    })
+    .on("click", function(d, i) {
+      console.log(d, i)
+      d3.selectAll("g.membership").each(function(e, j) {
+        d3.select(this).attr("transform", "translate(0, " + (y(e.id) + y.bandwidth() / 2) + ")")
+        if (j < i) {
+          console.log(d3.select(this).attr("transform"))
+          d3.select(this)
+            // .attr("transform", d3.select(this).attr("transform"))
+            .transition() // apply a transition
+            // .ease(easement) // control the speed of the transition
+            .duration(1000) // apply it over 2000 milliseconds
+            .attr("transform", "translate(0, " + ((y(e.id) + y.bandwidth() / 2) + 50) + ")")
+
+
+        }
+      })
+    })
+
+  person.append('text')
+    .attr('class', 'name')
+    .attr('x', 0)
+    .attr('y', y.bandwidth() / 4)
+    .text(function(d) { return d.attributes.name })
+
+  person.append('path')
+    .attr('class', 'life')
+    .attr('d', function(d) {
+      return 'M' + x(d.attributes.birth_year) + ',' + '0' + ' L' + (x(d.attributes.death_year)) + ',' + '0';
+    });
+
+  person.append('path')
+    .attr('class', function(d) {
+      var classes = (d.attributes.birth_year_type == 'CA') ? 'terminator birth filled' : 'terminator birth'
+      return classes
+    })
+    .attr('d', function(d) { return terminators('birth', d.attributes.birth_year_type, x(d.attributes.birth_year), 0) });
+
+  person.append('path')
+    .attr('class', function(d) {
+      var classes = (d.attributes.death_year_type == 'CA') ? 'terminator death filled' : 'terminator death'
+      return classes
+    })
+    .attr('d', function(d) { return terminators('birth', d.attributes.death_year_type, x(d.attributes.death_year), 0) });
+
+  person.append('path')
+    .attr('class', 'membership')
+    .attr('d', function(d) {
+      return 'M' + x(d.membership_attributes.start_year) + ',' + 0 + ' L' + (x(d.membership_attributes.end_year)) + ',' + 0;
+    });
+
+
+  // var people = g.selectAll(".person")
+  //   .data(data)
+  //   .enter().append("g")
+  //   .attr("class", "person");
+
+
+  // var lifes = people.append('g').attr('class', 'life-group')
+
+  // lifes.append('rect')
+  //   .attr('class', 'hover-area')
+  //   .attr('x', function(d) { return x(d.ext_birth_year) })
+  //   .attr('y', function(d) { return y(d.id) })
+  //   .attr('width', function(d) { return x(d.ext_death_year) - x(d.ext_birth_year) })
+  //   .attr('height', y.bandwidth())
+
+  // lifes.append('path')
+  //   .attr('class', 'life')
+  //   .attr('d', function(d) {
+  //     return 'M' + x(d.ext_birth_year) + ',' + (y(d.id) + y.bandwidth() / 2 + 1) + ' L' + (x(d.ext_death_year)) + ',' + (y(d.id) + y.bandwidth() / 2 + 1);
+  //   });
+
+  // lifes.append('path')
+  //   .attr('class', function(d) {
+  //     var classes = (d.birth_year_type == 'CA') ? 'terminator birth filled' : 'terminator birth'
+  //     return classes
+  //   })
+  //   .attr('d', function(d) { return terminators('birth', d.birth_year_type, x(d.ext_birth_year), y(d.id) + y.bandwidth() / 2 + 1) });
+
+  // lifes.append('text')
+  //   .attr('class', 'label birth')
+  //   .attr("x", function(d) { return x(d.ext_birth_year) - 10; })
+  //   .attr("y", function(d) { return y(d.id) + y.bandwidth() / 2 + 1 + 3; })
+  //   .text(function(d) { return d.birth_year_type })
+
+  // lifes.append('path')
+  //   .attr('class', function(d) {
+  //     // console.log(d.ext_birth_year<d.end_year,d.ext_birth_year,d.end_year)
+  //     var classes = (d.death_year_type == 'CA') ? (d.ext_death_year < d.end_year) ? 'terminator death filled danger' : 'terminator death filled' : (d.ext_death_year < d.end_year) ? 'terminator death danger' : 'terminator death'
+  //     return classes
+  //   })
+  //   .attr('d', function(d) { return terminators('death', d.death_year_type, x(d.ext_death_year), y(d.id) + y.bandwidth() / 2 + 1) });
+
+  // lifes.append('text')
+  //   .attr('class', 'label death')
+  //   .attr("x", function(d) { return x(d.ext_death_year) + 8; })
+  //   .attr("y", function(d) { return y(d.id) + y.bandwidth() / 2 + 1 + 3; })
+  //   .text(function(d) { return d.death_year_type })
+
+  // people.append('path')
+  //   .attr('class', 'membership')
+  //   .attr('d', function(d) {
+  //     return 'M' + x(d.start_year) + ',' + (y(d.id) + y.bandwidth() / 2 + 1) + ' L' + (x(d.end_year)) + ',' + (y(d.id) + y.bandwidth() / 2 + 1);
+  //   });
+}
 
 </script>

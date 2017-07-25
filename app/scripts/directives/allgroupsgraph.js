@@ -229,6 +229,9 @@ angular.module('redesign2017App')
               .attr("height", function(d) {
                 return d.labelBBox.height + paddingTopBottom;
               });
+
+            // Change name of the viz
+            scope.config.title = "A force layout of all the available groups"
           }
 
           drawGraph();

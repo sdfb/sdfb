@@ -240,6 +240,9 @@ angular.module('redesign2017App')
               .attr("height", function(d) {
                 return d.labelBBox.height + paddingTopBottom;
               });
+
+            // Change name of the viz
+            scope.config.title = "Virginia Company - Force Layout"
           }
           drawGraph();
           // Update and restart the simulation.
@@ -323,8 +326,8 @@ angular.module('redesign2017App')
               return e.source.id == d.id || e.target.id == d.id;
             }).classed('faded', false);
             // // This triggers events in groupsbar.js and contextualinfopanel.js when a selection happens
-            // scope.currentSelection = d;
-            // scope.$broadcast('selectionUpdated', scope.currentSelection);
+            scope.currentSelection = d;
+            scope.$broadcast('selectionUpdated', scope.currentSelection);
           }
         }
 
