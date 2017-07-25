@@ -374,7 +374,7 @@ all-groups-graph {
 
   &>div:nth-child(2) {
     max-height: 280px;
-    overflow: scroll;
+    overflow-y: scroll;
   }
 }
 
