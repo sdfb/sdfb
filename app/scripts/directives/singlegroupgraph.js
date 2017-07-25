@@ -107,9 +107,11 @@ angular.module('redesign2017App')
             links = linksToMembers;
           } else {
             nodes = json.included;
+            nodes.forEach(function(n) {
+              n['membership'] = false;
+            })
             members.forEach(function(m) {
               nodes.forEach(function(n) {
-                n['membership'] = false;
                 if (n.id == m) {
                   n['membership'] = true;
                 }
@@ -137,14 +139,23 @@ angular.module('redesign2017App')
           // draw things
           function drawGraph() {
             // Apply the general update pattern to the nodes.
-            // Nodes would need a better sorting
-            nodes.sort(function(x, y) {
-              return (x.membership === y.membership) ? 0 : x ? -1 : 1;
-            });
-            // nodes.sort(function(x, y) {
-            //   return d3.descending(x.attributes.degree, y.attributes.degree);
-            // })
-            nodes.reverse();
+
+            // scorporate nodes with membership and sort them
+            var arrPart1 = nodes.filter(function(e) {
+              return e.membership == true
+            }).sort(function(x, y) {
+              return d3.descending(x.attributes.degree, y.attributes.degree);
+            })
+
+            var arrPart2 = nodes.filter(function(e) {
+              return e.membership == false
+            })
+
+            // console.log(arrPart1.length, arrPart2.length)
+
+            // Put them back together
+            nodes = _.concat(arrPart1, arrPart2);
+
             node = node.data(nodes, function(d) { return d.id; });
             node.exit().remove();
             node = node.enter().append("circle")
@@ -157,13 +168,15 @@ angular.module('redesign2017App')
               .on("click", function(d) {
                 toggleClick(d, this);
               })
-              .on("dblclick", function(d){ console.log('Double click:', d) })
+              .on("dblclick", function(d) {
+                console.log('Try to go in individual-force', d);
+              })
               // On hover, display label
               .on('mouseenter', function(d) {
-              	// console.log(d, this);
+                // console.log(d, this);
                 d3.selectAll('single-group-graph g.label').each(function(e) {
                   if (e.id == d.id) {
-                  	d3.select(this).classed('temporary-unhidden', true);
+                    d3.select(this).classed('temporary-unhidden', true);
                   }
                 })
                 // sort elements so to bring the hovered one on top and make it readable.
@@ -316,9 +329,9 @@ angular.module('redesign2017App')
         }
 
         // action triggered from the controller
-        scope.$on('single group', function(event, json) {
-          console.log(event, json);
-          update(json, false);
+        scope.$on('single group', function(event, args) {
+          // console.log(event, args);
+          update(args.data, args.onlyMembers);
         });
 
       }

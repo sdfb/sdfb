@@ -45,7 +45,8 @@ angular
                 user: 'Elizabeth',
               },
               contributionMode: false,
-              dateTypes : ['On', 'Circa', 'Before', 'Before/On','After', 'After/On']
+              dateTypes : ['On', 'Circa', 'Before', 'Before/On','After', 'After/On'],
+              onlyMembers: false
             }
           },
           initialData: function(apiService) {
