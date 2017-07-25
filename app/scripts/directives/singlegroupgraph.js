@@ -153,6 +153,31 @@ angular.module('redesign2017App')
 
             // console.log(arrPart1.length, arrPart2.length)
 
+            var extent = d3.extent(nodes, function(d) {return d.attributes.degree;});
+
+            var sizeLegend = d3.select('.legend-size .flex-container')
+                .selectAll('.legend-circle')
+                .data(extent);
+
+            var sizeLegendBox = sizeLegend.enter()
+                .merge(sizeLegend);
+
+            sizeLegendBox.append('div')
+                .classed('flex-item legend-circle white-circle', true)
+                .style("width", function(d) { return (2 * sizeScale(d)) + 'px'; })
+                .style("height", function(d) { return (2* sizeScale(d)) + 'px'; })
+                // .style("margin", function(d,i) { return i == 0 ? "0 24px 0 0" : "0 0 0 24px"; })
+                .style("order", function(d,i) { return i == 0 ? 1 : 2; });
+
+            sizeLegendBox.append('div')
+                .classed('legend-text', true)
+                .text(function(d){ return d; })
+                // .style("margin", "0 12px")
+                .style("order", function(d,i){ return i == 0 ? 0 : 4; });
+
+            sizeLegend.exit().remove();
+
+
             // Put them back together
             nodes = _.concat(arrPart1, arrPart2);
 

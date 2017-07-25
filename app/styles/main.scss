@@ -509,8 +509,6 @@ section .flex-container {
   justify-content: space-between;
 
   &.center-align {
-    -ms-flex-line-pack: center;
-    align-content: center;
     -webkit-box-align: center;
     -ms-flex-align: center;
     align-items: center;
@@ -532,22 +530,7 @@ section .flex-container {
     &.white-circle {
       background-color: $light-color;
       border: 1px solid $mainTextColor;
-      margin: 0 auto;
-
-      &.circle-big {
-        height: 50px;
-        width: 50px;
-      }
-
-      &.circle-medium {
-        height: 25px;
-        width: 25px;
-      }
-
-      &.circle-small {
-        height: 12.5px;
-        width: 12.5px;
-      }
+      margin: 0 12px;
     }
   }
 
@@ -654,6 +637,19 @@ section .flex-container {
     }
   }
 }
+
+.legend-size .flex-container {
+    -webkit-box-pack: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+}
+
+.legend-size .legend-text,
+.legend-size-squares .legend-text,
+.legend-size-edges .legend-text {
+    padding-top: 0;
+}
+
 /*temporary styles, they will be changed when legend will be made dynamic*/
 section .legend-size-squares {
   -webkit-box-align: center;
