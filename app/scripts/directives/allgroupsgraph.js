@@ -97,18 +97,20 @@ angular.module('redesign2017App')
                 .data(extentNodes);
 
             var sizeLegendBox = sizeLegend.enter()
-                .append('div')
-                .classed('squares-box', true)
                 .merge(sizeLegend);
 
             sizeLegendBox.append('div')
                 .classed('white-square', true)
                 .style("width", function(d) { return Math.floor((2 * sizeScale(d)) / Math.sqrt(2)) + 'px'; })
-                .style("height", function(d) { return Math.floor((2 * sizeScale(d)) / Math.sqrt(2)) + 'px'; });
+                .style("height", function(d) { return Math.floor((2 * sizeScale(d)) / Math.sqrt(2)) + 'px'; })
+                .style("margin", function(d,i) { return i == 0 ? "0 24px 0 0" : "0 0 0 24px"; })
+                .style("order", function(d,i) { return i == 0 ? 1 : 2; });
 
             sizeLegendBox.append('div')
-                .classed('legend-text centered', true)
+                .classed('legend-text', true)
                 .text(function(d){ return d; })
+                .style("margin", "0 12px")
+                .style("order", function(d,i){ return i == 0 ? 0 : 4; });
 
             sizeLegend.exit().remove();
 
@@ -118,18 +120,18 @@ angular.module('redesign2017App')
                 .data(extentEdges);
 
             var weightLegendBox = weightLegend.enter()
-                .append('div')
-                .classed('line-box', true)
                 .merge(weightLegend);
 
             weightLegendBox.append('div')
                 .classed('edge-line', true)
                 .style("width", function(d) { return Math.floor(sizeEdge(d)) + 'px'; })
-                .style("height", '30px');
+                .style("height", '30px')
+                .style("order", function(d,i) { return i == 0 ? 1 : 2; });
 
             weightLegendBox.append('div')
                 .classed('legend-text centered', true)
                 .text(function(d){ return d; })
+                .style("order", function(d,i){ return i == 0 ? 0 : 4; });
 
             weightLegend.exit().remove();
 
