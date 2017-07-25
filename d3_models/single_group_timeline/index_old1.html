@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<style>
+body {
+  font-family: arial, sans-serif;
+  width: 90vw;
+  height: 110vh;
+}
+
+svg {
+  background-color: #EFF1F4;
+  width: 100%;
+  height: 100%;
+}
+
+.membership {
+  stroke: #008DEB;
+  stroke-width: 3px;
+}
+
+.hover-area {
+  fill: transparent;
+}
+
+.life-group path {
+  fill: transparent;
+  stroke: rgba(0, 0, 0, 0.4);
+  stroke-width: 1px;
+}
+
+.life-group path.terminator {
+  stroke-width: 1.5px;
+}
+
+.terminator.danger {
+  stroke: orange !important;
+}
+
+.terminator.filled {
+  fill: #fff;
+}
+
+.life-group .label {
+  font-size: 10px;
+  text-transform: capitalize;
+  display: none;
+}
+
+.life-group .label.birth {
+  text-anchor: end;
+}
+
+.life-group .label.death {
+  text-anchor: start;
+}
+
+.life-group:hover path {
+  display: inherit;
+  stroke: rgba(0, 0, 0, 0.5);
+  stroke-width: 2px;
+}
+
+.life-group:hover text {
+  display: inherit;
+}
+
+</style>
+<svg></svg>
+<script src="//d3js.org/d3.v4.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.4/lodash.min.js"></script>
+<script>
+var svg = d3.select("svg"),
+  margin = { top: 20, right: 20, bottom: 30, left: 120 },
+  width = +svg.node().getBoundingClientRect().width - margin.left - margin.right,
+  height = +svg.node().getBoundingClientRect().width - margin.top - margin.bottom;
+
+var primary_people;
+var members;
+
+
+var g = svg.append("g")
+  .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+d3.json('virginiacompany.json', function(error, data) {
+  if (error) throw error;
+
+  // Check if membership attributes are there, if not load an external file with those information.
+  // TO BE DONE ONLY UNTILL APIs WILL HAVE BEEN RELEASED
+  // if (!data.included[0].membership_attributes) {
+  //   console.log('missing attributes');
+  //   d3.tsv('virginiacompany.tsv', function(error, moreData) {
+  //     if (error) throw error;
+  //     // console.log('Merge scattered info and draw chart');
+  //     // console.log(data, moreData);
+  //     primary_people = [];
+  //     primary_people = data.data.attributes.primary_people;
+  //     members = [];
+  //     members = _.intersectionWith(data.included, primary_people, function(a, b) {
+  //       return a.id == b;
+  //     });
+  //     console.log(members.length, moreData.length);
+  //     // console.log(moreData)
+
+  //     members.forEach(function(member) {
+  //       var further_info = moreData.filter(function(e) {
+  //         return e.id == member.id;
+  //       })
+  //       further_info = further_info[0]
+  //       member.attributes['birth_year_type'] = further_info['birth_year_type'];
+  //       member.attributes['death_year_type'] = further_info['death_year_type'];
+  //       // member.attributes['xxx'] = further_info['xxx'];
+
+  //       member.membership_attributes = {}
+  //       member.membership_attributes['start_year'] = further_info['start_year'];
+  //       member.membership_attributes['end_year'] = further_info['end_year'];
+  //       member.membership_attributes['start_year_type'] = further_info['start_year_type'];
+  //       member.membership_attributes['end_year_type'] = further_info['end_year_type'];
+  //       // member.membership_attributes['xxx'] = further_info['xxx'];
+  //       // console.log(member);
+  //     })
+  //     // console.log(JSON.stringify(data, null, 2));
+
+  //   })
+  // } else {
+  //   console.log('Apparently all the data is there, go and draw')
+  //   console.log(data);
+  // }
+
+  // console.log(data);
+  
+  primary_people = data.data.attributes.primary_people;
+  members = [];
+  members = _.intersectionWith(data.included, primary_people, function(a, b) {
+    return a.id == b;
+  });
+  console.log(members.length);
+})
+
+d3.tsv('virginiacompany.tsv', function(error, data) {
+  if (error) throw error;
+
+  var numLines = data.map(function(d) { return d.assignementID; }).length;
+  svg.attr("height", numLines * 20 + margin.top + margin.bottom);
+  height = +svg.attr("height") - margin.top - margin.bottom;
+
+  var x = d3.scaleLinear()
+    .rangeRound([0, width]);
+
+  var y = d3.scaleBand()
+    .rangeRound([height, 0])
+    .padding(0.1);
+
+  x.domain([+d3.min(data, function(d) { return d.ext_birth_year }) - 10, +d3.max(data, function(d) { return d.ext_death_year }) + 10]);
+  y.domain(data.map(function(d) { return d.id }));
+
+  g.append("g")
+    .attr("class", "axis axis--x")
+    .attr("transform", "translate(0," + height + ")")
+    .call(d3.axisBottom(x));
+
+  g.append("g")
+    .attr("class", "axis axis--y")
+    .call(d3.axisLeft(y).ticks(10, "%"))
+    .append("text")
+    .attr("transform", "rotate(-90)")
+    .attr("y", 6)
+    .attr("dy", "0.71em")
+    .attr("text-anchor", "end")
+    .text("Names");
+
+  var people = g.selectAll(".person")
+    .data(data)
+    .enter().append("g")
+    .attr("class", "person");
+
+  function terminators(position, type, refX, refY, width) {
+    if (!width) { width = 9 }
+
+    if (type == 'AF') {
+      refX = (position == 'birth') ? (refX - width / 3) : (refX + width / 3)
+      return 'M' + (refX + width / 2) + ',' + (refY - width / 2) + ' C' + (refX + width / 4) + ',' + (refY - width / 2) + ' ' + refX + ',' + (refY - width / 4) + ' ' + refX + ',' + refY + ' S' + (refX + width / 4) + ',' + (refY + width / 2) + ' ' + (refX + width / 2) + ',' + (refY + width / 2);
+
+    } else if (type == 'AF/IN') {
+      return 'M' + (refX + width / 2) + ',' + (refY - width / 2) + ' C' + (refX + width / 4) + ',' + (refY - width / 2) + ' ' + refX + ',' + (refY - width / 4) + ' ' + refX + ',' + refY + ' S' + (refX + width / 4) + ',' + (refY + width / 2) + ' ' + (refX + width / 2) + ',' + (refY + width / 2);
+
+    } else if (type == 'BF') {
+      refX = (position == 'birth') ? (refX - width / 3) : (refX + width / 3)
+      return 'M' + (refX - width / 2) + ',' + (refY - width / 2) + ' C' + (refX - width / 4) + ',' + (refY - width / 2) + ' ' + refX + ',' + (refY - width / 4) + ' ' + refX + ',' + refY + ' S' + (refX - width / 4) + ',' + (refY + width / 2) + ' ' + (refX - width / 2) + ',' + (refY + width / 2);
+
+    } else if (type == 'BF/IN') {
+      return 'M' + (refX - width / 2) + ',' + (refY - width / 2) + ' C' + (refX - width / 4) + ',' + (refY - width / 2) + ' ' + refX + ',' + (refY - width / 4) + ' ' + refX + ',' + refY + ' S' + (refX - width / 4) + ',' + (refY + width / 2) + ' ' + (refX - width / 2) + ',' + (refY + width / 2);
+
+    } else if (type == 'IN') {
+      return 'M' + (refX) + ',' + (refY - width / 2) + ' L' + (refX) + ',' + (refY + width / 2);
+
+    } else if (type == 'CA') {
+      return 'M' + refX + ',' + (refY - width / 2) + ' C' + (refX - width / 4) + ',' + (refY - width / 2) + ',' + (refX - width / 2) + ',' + (refY - width / 4) + ',' + (refX - width / 2) + ',' + refY + ' S' + (refX - width / 4) + ',' + (refY + width / 2) + ',' + refX + ',' + (refY + width / 2) + ' S' + (refX + width / 2) + ',' + (refY + width / 4) + ',' + (refX + width / 2) + ',' + (refY) + ', S' + (refX + width / 4) + ',' + (refY - width / 2) + ',' + (refX) + ',' + (refY - width / 2) + ' z'
+    }
+  }
+  var lifes = people.append('g').attr('class', 'life-group')
+
+  lifes.append('rect')
+    .attr('class', 'hover-area')
+    .attr('x', function(d) { return x(d.ext_birth_year) })
+    .attr('y', function(d) { return y(d.id) })
+    .attr('width', function(d) { return x(d.ext_death_year) - x(d.ext_birth_year) })
+    .attr('height', y.bandwidth())
+
+  lifes.append('path')
+    .attr('class', 'life')
+    .attr('d', function(d) {
+      return 'M' + x(d.ext_birth_year) + ',' + (y(d.id) + y.bandwidth() / 2 + 1) + ' L' + (x(d.ext_death_year)) + ',' + (y(d.id) + y.bandwidth() / 2 + 1);
+    });
+
+  lifes.append('path')
+    .attr('class', function(d) {
+      var classes = (d.birth_year_type == 'CA') ? 'terminator birth filled' : 'terminator birth'
+      return classes
+    })
+    .attr('d', function(d) { return terminators('birth', d.birth_year_type, x(d.ext_birth_year), y(d.id) + y.bandwidth() / 2 + 1) });
+
+  lifes.append('text')
+    .attr('class', 'label birth')
+    .attr("x", function(d) { return x(d.ext_birth_year) - 10; })
+    .attr("y", function(d) { return y(d.id) + y.bandwidth() / 2 + 1 + 3; })
+    .text(function(d) { return d.birth_year_type })
+
+  lifes.append('path')
+    .attr('class', function(d) {
+      // console.log(d.ext_birth_year<d.end_year,d.ext_birth_year,d.end_year)
+      var classes = (d.death_year_type == 'CA') ? (d.ext_death_year < d.end_year) ? 'terminator death filled danger' : 'terminator death filled' : (d.ext_death_year < d.end_year) ? 'terminator death danger' : 'terminator death'
+      return classes
+    })
+    .attr('d', function(d) { return terminators('death', d.death_year_type, x(d.ext_death_year), y(d.id) + y.bandwidth() / 2 + 1) });
+
+  lifes.append('text')
+    .attr('class', 'label death')
+    .attr("x", function(d) { return x(d.ext_death_year) + 8; })
+    .attr("y", function(d) { return y(d.id) + y.bandwidth() / 2 + 1 + 3; })
+    .text(function(d) { return d.death_year_type })
+
+  people.append('path')
+    .attr('class', 'membership')
+    .attr('d', function(d) {
+      return 'M' + x(d.start_year) + ',' + (y(d.id) + y.bandwidth() / 2 + 1) + ' L' + (x(d.end_year)) + ',' + (y(d.id) + y.bandwidth() / 2 + 1);
+    });
+
+})
+
+</script>

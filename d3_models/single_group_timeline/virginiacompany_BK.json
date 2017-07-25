@@ -6401,13 +6401,7 @@
             ]
         },
         "id":"g81",
-        "type":"network",
-        "name": "Virginia Company",
-        "description": "a joint stock company chartered to establish colonies in North America",
-        "start_date_type": "IN",
-        "start_year": 1606,
-        "end_date_type": "IN",
-        "end_year": 1624
+        "type":"network"
     },
     "included":[
         {
