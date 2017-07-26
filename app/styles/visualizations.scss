@@ -505,6 +505,10 @@ group-timeline {
     pointer-events: none;
     -webkit-transition: opacity 0.5s ease;
     transition: opacity 0.5s ease;
+
+    tspan {
+        pointer-events: none;
+    }
   }
 
   .birth-label {
