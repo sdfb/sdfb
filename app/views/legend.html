@@ -123,7 +123,7 @@
     <h5>Color of nodes is degree of separation</h5>
     <div class="legend-box legend-size">
       <div class="flex-container center-align">
-        
+
       </div>
     </div>
     <h5>Size of nodes indicates distance from origin</h5>
@@ -136,8 +136,108 @@
     <h5>Color of edges is relationship certainty</h5>
   </div>
 
+  <div ng-if=" config.viewMode == 'group-timeline' ">
+    <div class="legend-text centered">Member<br/>lifespan</div>
+    <div class="legend-line line-life"></div>
+    <div class="legend-text centered">Human curated<br/>membership</div>
+    <div class="legend-line line-human"></div>
+    <div class="legend-text centered">Computationally inferred<br/>membership</div>
+    <div class="legend-line line-computer"></div>
+    <h5>Lines are time intervals</h5>
+
+    <div class="flex-container">
+      <div class="legend-header right-aligned">Line start</div>
+      <div class="legend-header left-aligned">Line end</div>
+      <div class="legend-text right-aligned">On</div>
+      <div class="legend-terminator">
+        <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 20.9 8.5">
+            <path fill="none" stroke="#6F6F6F" stroke-width="2" d="M20.9,4.2H2.3"/>
+	        <polyline fill="none" stroke="#6F6F6F" stroke-width="3" points="1.5,0 1.5,4.2 1.5,8.5"/>
+        </svg>
+      </div>
+      <div class="legend-terminator">
+        <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 20.9 8.5">
+            <path  d="M0,4.2h18.6"/>
+            <polyline points="19.4,0 19.4,4.2 19.4,8.5"/>
+        </svg>
+      </div>
+      <div class="legend-text left-aligned">On</div>
+      <div class="legend-text right-aligned">Circa</div>
+      <div class="legend-terminator">
+          <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 21.6 10">
+              <path d="M21.6,5H8.1"/>
+	          <path d="M1,5c0,2.2,1.8,4,4,4s4-1.8,4-4S7.2,1,5,1S1,2.8,1,5z"/>
+          </svg>
+      </div>
+      <div class="legend-terminator">
+          <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 21.6 10">
+              <path d="M0,5h13.5"/>
+	          <path d="M20.6,5c0,2.2-1.8,4-4,4s-4-1.8-4-4s1.8-4,4-4S20.6,2.8,20.6,5z"/>
+          </svg>
+      </div>
+      <div class="legend-text left-aligned">Circa</div>
+      <div class="legend-text right-aligned">Only After</div>
+      <div class="legend-terminator">
+          <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 21.5 10">
+              <path d="M21.5,5H3.7"/>
+	          <path d="M5,9C2.8,9,1,7.2,1,5s1.8-4,4-4"/>
+          </svg>
+      </div>
+      <div class="legend-terminator">
+          <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 21.5 10">
+              <path d="M0,5h17.7"/>
+	          <path d="M16.5,9c2.2,0,4-1.8,4-4s-1.8-4-4-4"/>
+          </svg>
+      </div>
+      <div class="legend-text left-aligned">Only Before</div>
+      <div class="legend-text right-aligned">After-On</div>
+      <div class="legend-terminator">
+          <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 21.5 10">
+              <path d="M21.5,5H0.7"/>
+	          <path d="M5,9C2.8,9,1,7.2,1,5s1.8-4,4-4"/>
+          </svg>
+      </div>
+      <div class="legend-terminator">
+          <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 21.5 10">
+              <path d="M0,5h20.7"/>
+	          <path d="M16.5,9c2.2,0,4-1.8,4-4s-1.8-4-4-4"/>
+          </svg>
+      </div>
+      <div class="legend-text left-aligned">Before-On</div>
+      <div class="legend-text right-aligned">Before-On</div>
+      <div class="legend-terminator">
+          <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 20.5 10">
+              <path d="M20.5,5.2H3.6"/>
+	          <path d="M0,1c2.2,0,4,1.8,4,4S2.2,9,0,9"/>
+          </svg>
+      </div>
+      <div class="legend-terminator">
+          <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 20.5 10">
+              <path d="M0,5.2h16.9"/>
+	          <path d="M20.5,1c-2.2,0-4,1.8-4,4s1.8,4,4,4"/>
+          </svg>
+      </div>
+      <div class="legend-text left-aligned">After-On</div>
+      <div class="legend-text right-aligned"> Only Before</div>
+      <div class="legend-terminator">
+          <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 20.5 10">
+              <path d="M20.5,5.2H6.6"/>
+	          <path d="M0,1c2.2,0,4,1.8,4,4S2.2,9,0,9"/>
+          </svg>
+      </div>
+      <div class="legend-terminator">
+          <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 20.5 10">
+              <path d="M0,5.2h13.9"/>
+	          <path d="M20.5,1c-2.2,0-4,1.8-4,4s1.8,4,4,4"/>
+          </svg>
+      </div>
+      <div class="legend-text left-aligned">Only After</div>
+    </div>
+    <h5>Lines ending is temporal uncertainty</h5>
+  </div>
+
 </section>
-<span class="close" ng-click="legendClosed = !legendClosed; peopleFinderClosed = true; filtersClosed = true">
+<span class="close" ng-click="legendClosed = !legendClosed; peopleFinderClosed = true; filtersClosed = true" ng-if=" config.viewMode != 'group-timeline' ">
 	<i ng-if="!legendClosed" class="fa fa-times" aria-hidden="true"></i>
 	<i ng-if="legendClosed" class="fa fa-question" aria-hidden="true"></i>
 </span>

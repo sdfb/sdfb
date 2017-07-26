@@ -38,6 +38,7 @@ $degree3: #f2f2f3;
 /* $degree0: #1239B4;*/
 /* $degree1: #5385A6;*/
 /* $degree3: #f2f2f3;*/
+$membership: #78729F;
 /* general styles*/
 body {
   background-color: #EFF1F4;
@@ -221,7 +222,8 @@ path.danger {
   padding-left: 6px;
 }
 /* collapsable panels*/
-.panel.collapsable {
+.panel.collapsable,
+.timeline-legend {
   position: relative;
   padding: 12px 15px;
   -webkit-transition: all 0.5s;
@@ -639,17 +641,16 @@ section .flex-container {
 }
 
 .legend-size .flex-container {
-    -webkit-box-pack: center;
-    -ms-flex-pack: center;
-    justify-content: center;
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
+  justify-content: center;
 }
 
 .legend-size .legend-text,
-.legend-size-squares .legend-text,
-.legend-size-edges .legend-text {
-    padding-top: 0;
+.legend-size-edges .legend-text,
+.legend-size-squares .legend-text {
+  padding-top: 0;
 }
-
 /*temporary styles, they will be changed when legend will be made dynamic*/
 section .legend-size-squares {
   -webkit-box-align: center;
@@ -689,11 +690,90 @@ section .edge-line {
   height: 30px;
   margin: 0 10px;
 }
+
+group-timeline {
+    overflow-y: scroll;
+}
+
+.timeline-legend {
+  .legend-line {
+    margin: 0 auto 8px;
+    top: 3px;
+    width: 38%;
+
+    &.line-life {
+      border-color: $mainTextColor;
+      opacity: 0.4;
+    }
+
+    &.line-human {
+      border: 2px solid $membership;
+      opacity: 0.8;
+    }
+
+    &.line-computer {
+      border: 2px solid $membership;
+      opacity: 0.4;
+    }
+  }
+
+  .flex-container {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-wrap: wrap;
+    flex-wrap: wrap;
+    -webkit-box-pack: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+
+    .left-aligned {
+        text-align: left;
+    }
+
+    .right-aligned {
+        text-align: right;
+    }
+
+    .legend-header {
+        font-size: 11px;
+        margin-top: 10px;
+        padding: 0 8px;
+        text-transform: uppercase;
+        width: 50%;
+    }
+
+    .legend-text {
+        width: 30%;
+    }
+
+    svg {
+        margin: 0;
+        padding: 8px 8px 0;
+        width: 100%;
+
+        path {
+            fill: none;
+            stroke: #6F6F6F;
+            stroke-width: 2px;
+        }
+        polyline {
+            fill: none;
+            stroke: #6F6F6F;
+            stroke-width: 3px;
+        }
+    }
+
+    .legend-terminator {
+        width: 15%;
+    }
+  }
+}
 /* filters styles */
 filters-panel {
-    &.individualFilter {
-        height: 475px;
-    }
+  &.individualFilter {
+    height: 475px;
+  }
 
   svg .bar {
     fill: $filter-color;

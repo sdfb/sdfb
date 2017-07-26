@@ -3,11 +3,12 @@
   <section class="on-the-left">
     <search-panel class="panel left"></search-panel>
     <!-- {{config.viewMode}} -->
-    <contextual-info-panel class="panel"></contextual-info-panel>
+    <contextual-info-panel class="panel" ng-show=" config.viewMode != 'group-timeline' "></contextual-info-panel>
+    <legend-panel class="panel timeline-legend" ng-if=" config.viewMode == 'group-timeline' "></legend-panel>
     <span id="viz-title">{{ config.title }}</span>
   </section>
-  <section class="on-the-right">
-    <legend-panel class="panel collapsable" ng-class="{'collapsed' : legendClosed, 'group': config.viewMode == 'all', 'shared': config.viewMode == 'shared-network', 'individual': config.viewMode == 'individual-force' || config.viewMode == 'individual-concentric' || config.viewMode == 'single-group'}"></legend-panel>
+  <section class="on-the-right" ng-show=" config.viewMode != 'group-timeline' ">
+    <legend-panel class="panel collapsable" ng-class="{'collapsed' : legendClosed, 'group': config.viewMode == 'all', 'shared': config.viewMode == 'shared-network', 'individual': config.viewMode == 'individual-force' || config.viewMode == 'individual-concentric' || config.viewMode == 'single-group', 'timeline': config.viewMode == 'group-timeline'}"></legend-panel>
     <filters-panel class="panel collapsable collapsed" ng-class="{'collapsed' : filtersClosed, 'allGroupFilter': config.viewMode == 'all', 'sharedFilter': config.viewMode == 'shared-network', 'individualFilter': config.viewMode == 'individual-force' || config.viewMode == 'individual-concentric', 'singleGroupFilter': config.viewMode == 'single-group'}"></filters-panel>
 
     <people-finder class="panel collapsable collapsed" ng-class="{'collapsed' : peopleFinderClosed}"></people-finder>

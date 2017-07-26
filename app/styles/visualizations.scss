@@ -503,6 +503,7 @@ group-timeline {
     font-weight: normal;
     opacity: 0;
     pointer-events: none;
+    -webkit-transition: opacity 0.5s ease;
     transition: opacity 0.5s ease;
   }
 

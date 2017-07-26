@@ -19,15 +19,17 @@ angular.module('redesign2017App')
           // width = +svg.node().getBoundingClientRect().width - margin.left - margin.right,
 
           width = window.innerWidth - d3.select('.on-the-left').node().getBoundingClientRect().width - 30,
-          svgMargin = window.innerWidth - width,
+          svgMargin = window.innerWidth - width - margin.right,
           height = +svg.node().getBoundingClientRect().width - margin.top - margin.bottom;
 
         var primary_people;
         var members;
         var groupInfo;
 
+        console.log(width);
+
         var x = d3.scaleLinear()
-          .rangeRound([0, width]);
+          .rangeRound([0, width - 200]); // cambiamento provvisorio, serve per non far sforare le timeline oltre lo schermo (quel 200 tiene conto del nome più lungo nel dataset)
 
         var y = d3.scaleBand()
           .padding(0.1)
@@ -39,23 +41,23 @@ angular.module('redesign2017App')
 
           if (type == 'AF') {
             refX = (position == 'birth') ? (refX - width / 3) : (refX + width / 3)
-            return 'M' + (refX + width / 2) + ',' + (refY - width / 2) + ' C' + (refX + width / 4) + ',' + (refY - width / 2) + ' ' + refX + ',' + (refY - width / 4) + ' ' + refX + ',' + refY + ' S' + (refX + width / 4) + ',' + (refY + width / 2) + ' ' + (refX + width / 2) + ',' + (refY + width / 2);
+            return 'M' + (refX + width / 2) + ' ' + (refY - width / 2) + ' C ' + (refX + width / 4) + ' ' + (refY - width / 2) + ',' + refX + ' ' + (refY - width / 4) + ',' + refX + ' ' + refY + ' S ' + (refX + width / 4) + ' ' + (refY + width / 2) + ',' + (refX + width / 2) + ' ' + (refY + width / 2);
 
           } else if (type == 'AF/IN') {
-            return 'M' + (refX + width / 2) + ',' + (refY - width / 2) + ' C' + (refX + width / 4) + ',' + (refY - width / 2) + ' ' + refX + ',' + (refY - width / 4) + ' ' + refX + ',' + refY + ' S' + (refX + width / 4) + ',' + (refY + width / 2) + ' ' + (refX + width / 2) + ',' + (refY + width / 2);
+            return 'M' + (refX + width / 2) + ' ' + (refY - width / 2) + ' C ' + (refX + width / 4) + ' ' + (refY - width / 2) + ',' + refX + ' ' + (refY - width / 4) + ',' + refX + ' ' + refY + ' S ' + (refX + width / 4) + ' ' + (refY + width / 2) + ',' + (refX + width / 2) + ' ' + (refY + width / 2);
 
           } else if (type == 'BF') {
             refX = (position == 'birth') ? (refX - width / 3) : (refX + width / 3)
-            return 'M' + (refX - width / 2) + ',' + (refY - width / 2) + ' C' + (refX - width / 4) + ',' + (refY - width / 2) + ' ' + refX + ',' + (refY - width / 4) + ' ' + refX + ',' + refY + ' S' + (refX - width / 4) + ',' + (refY + width / 2) + ' ' + (refX - width / 2) + ',' + (refY + width / 2);
+            return 'M' + (refX - width / 2) + ' ' + (refY - width / 2) + ' C ' + (refX - width / 4) + ' ' + (refY - width / 2) + ',' + refX + ' ' + (refY - width / 4) + ',' + refX + ' ' + refY + ' S ' + (refX - width / 4) + ' ' + (refY + width / 2) + ',' + (refX - width / 2) + ' ' + (refY + width / 2);
 
           } else if (type == 'BF/IN') {
-            return 'M' + (refX - width / 2) + ',' + (refY - width / 2) + ' C' + (refX - width / 4) + ',' + (refY - width / 2) + ' ' + refX + ',' + (refY - width / 4) + ' ' + refX + ',' + refY + ' S' + (refX - width / 4) + ',' + (refY + width / 2) + ' ' + (refX - width / 2) + ',' + (refY + width / 2);
+            return 'M' + (refX - width / 2) + ' ' + (refY - width / 2) + ' C ' + (refX - width / 4) + ' ' + (refY - width / 2) + ',' + refX + ' ' + (refY - width / 4) + ',' + refX + ' ' + refY + ' S ' + (refX - width / 4) + ' ' + (refY + width / 2) + ',' + (refX - width / 2) + ' ' + (refY + width / 2);
 
           } else if (type == 'IN') {
-            return 'M' + (refX) + ',' + (refY - width / 2) + ' L' + (refX) + ',' + (refY + width / 2);
+            return 'M' + (refX) + ' ' + (refY - width / 2) + ' L ' + (refX) + ' ' + (refY + width / 2);
 
           } else if (type == 'CA') {
-            return 'M' + refX + ',' + (refY - width / 2) + ' C' + (refX - width / 4) + ',' + (refY - width / 2) + ',' + (refX - width / 2) + ',' + (refY - width / 4) + ',' + (refX - width / 2) + ',' + refY + ' S' + (refX - width / 4) + ',' + (refY + width / 2) + ',' + refX + ',' + (refY + width / 2) + ' S' + (refX + width / 2) + ',' + (refY + width / 4) + ',' + (refX + width / 2) + ',' + (refY) + ', S' + (refX + width / 4) + ',' + (refY - width / 2) + ',' + (refX) + ',' + (refY - width / 2) + ' z'
+            return 'M' + refX + ' ' + (refY - width / 2) + ' C ' + (refX - width / 4) + ' ' + (refY - width / 2) + ',' + (refX - width / 2) + ' ' + (refY - width / 4) + ',' + (refX - width / 2) + ' ' + refY + ' S ' + (refX - width / 4) + ' ' + (refY + width / 2) + ',' + refX + ' ' + (refY + width / 2) + ' S ' + (refX + width / 2) + ' ' + (refY + width / 4) + ',' + (refX + width / 2) + ' ' + (refY) + ' S ' + (refX + width / 4) + ' ' + (refY - width / 2) + ',' + (refX) + ' ' + (refY - width / 2) + ' Z';
           }
         }
 
@@ -89,7 +91,7 @@ angular.module('redesign2017App')
           svg.attr("width", width);
           var numLines = data.map(function(d) { return d.assignementID; }).length;
           svg.attr("height", numLines * 20 + margin.top + margin.bottom);
-          svg.style("margin-left", svgMargin);
+          svg.style("margin-left", svgMargin + 'px');
           height = +svg.attr("height") - margin.top - margin.bottom;
 
           var minX = Math.floor(d3.min(data, function(d) { return d.attributes.birth_year }) * 0.1) * 10;
