@@ -244,6 +244,10 @@ path.danger {
     height: 256px;
   }
 
+  &.single-group {
+    height: 396px;
+  }
+
   &.add-node {
     height: 125px;
     background-color: $light-color;

@@ -29,7 +29,7 @@ angular.module('redesign2017App')
         console.log(width);
 
         var x = d3.scaleLinear()
-          .rangeRound([0, width - 200]); // cambiamento provvisorio, serve per non far sforare le timeline oltre lo schermo (quel 200 tiene conto del nome più lungo nel dataset)
+          .rangeRound([0, width - 210]); // cambiamento provvisorio, serve per non far sforare le timeline oltre lo schermo (quel 200 tiene conto del nome più lungo nel dataset)
 
         var y = d3.scaleBand()
           .padding(0.1)
