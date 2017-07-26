@@ -511,6 +511,28 @@ group-timeline {
     }
   }
 
+  .timeline-button-rect {
+      fill: #F7F35D;
+      opacity: 0;
+      pointer-events: none;
+      stroke: #AEB1B5;
+      stroke-width: 1px;
+      -webkit-transition: opacity 0.5s ease;
+      transition: opacity 0.5s ease;
+  }
+
+  .timeline-button-text {
+      fill: #434055;
+      font-size: 11px;
+      font-weight: 700;
+      opacity: 0;
+      pointer-events: none;
+      stroke: none;
+      text-transform: uppercase;
+      -webkit-transition: opacity 0.5s ease;
+      transition: opacity 0.5s ease;
+  }
+
   .birth-label {
     text-anchor: start;
   }
@@ -519,6 +541,11 @@ group-timeline {
     opacity: .8;
   }
 
+  .membership.selected .timeline-button-rect,
+  .membership.selected .timeline-button-text {
+      opacity: 1;
+      pointer-events: all;
+  }
 
   .membership:hover .name,
   .membership.selected .name {

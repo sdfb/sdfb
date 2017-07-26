@@ -217,6 +217,25 @@ angular.module('redesign2017App')
 
           d3.selectAll('#group-timeline .historical-significance').call(wrap, 160);
 
+          var timelineButton = person.append('g')
+            .attr('class', 'timeline-button');
+
+          timelineButton.append('rect')
+            .attr('class', 'timeline-button-rect')
+            .attr('x', -115)
+            .attr('y', y.bandwidth() + 38)
+            .attr('width', 115)
+            .attr('height', 24)
+            .attr('rx', 12)
+            .attr('ry', 12);
+
+          timelineButton.append('text')
+            .attr('class', 'timeline-button-text')
+            .attr('x', -15)
+            .attr('y', y.bandwidth() + 53)
+            .attr('text-anchor', 'end')
+            .text('Hooke Layout');
+
           person.append('text')
             .attr('class', 'birth-label historical-significance')
             .attr('x', function(d) { return x(d.attributes.birth_year) })
