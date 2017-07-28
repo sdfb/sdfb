@@ -298,7 +298,7 @@ angular.module('redesign2017App')
             var convertConfidence = d3.scaleLinear().domain([0, confidenceWidth-4]).range([60, 100]);
             var confidenceMin = Math.round(convertConfidence(s[0]));
             var confidenceMax = Math.round(convertConfidence(s[1]));
-            console.log(confidenceMax);
+            // console.log(confidenceMax);
 
             d3.select(".confidence-container .brush-text.text-w")
               .attr("x", function(d) {

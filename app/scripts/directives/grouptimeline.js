@@ -26,7 +26,7 @@ angular.module('redesign2017App')
         var members;
         var groupInfo;
 
-        console.log(width);
+        // console.log(width);
 
         var x = d3.scaleLinear()
           .rangeRound([0, width - 210]); // cambiamento provvisorio, serve per non far sforare le timeline oltre lo schermo (quel 200 tiene conto del nome più lungo nel dataset)

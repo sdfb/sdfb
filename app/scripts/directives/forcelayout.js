@@ -409,11 +409,11 @@ angular.module('redesign2017App')
           if (simulation.alpha() < 0.005 && simulation.force("collide").iterations() == 0) {
             simulation.force("collide").iterations(1).radius(function(d) { // Collision detection
               if (d.distance == 0) { // Account for larger source node
-                return 50 / 2 + 5;
+                return 50 / 2 + 1;
               } else if (d.distance == 1) {
-                return 25 / 2 + 5;
+                return 25 / 2 + 1;
               } else if (d.distance == 2) {
-                return 12.5 / 2 + 5;
+                return 12.5 / 2 + 1;
               }
             });
           }

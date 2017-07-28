@@ -108,7 +108,7 @@ angular.module('redesign2017App')
 
 
 
-          console.log(links);
+          // console.log(links);
 
           // links.forEach(function(l) {
           //   var thisSource = json.included.filter(function(n) {
@@ -165,7 +165,7 @@ angular.module('redesign2017App')
           // console.log(thresholdLinks)
           var newData = parseComplexity(thresholdLinks, complexity, sources);
 
-          console.log(newData);
+          // console.log(newData);
 
           var graph = {}
             // Define array of links
@@ -176,10 +176,10 @@ angular.module('redesign2017App')
           })
 
           var bridges = newData[0].filter(function(d) {
-            console.log(d)
+            // console.log(d)
             return d.distance === 3;
           })
-          console.log(bridges);
+          // console.log(bridges);
 
           // Define array of nodes
           graph.nodes = newData[0];
@@ -544,13 +544,14 @@ angular.module('redesign2017App')
         }
 
         scope.$on('shared network query', function(event, args) {
-          // console.log(event, args);
-          apiService.getFile('./data/sharednetwork.json').then(function(data) {
-            console.log('sharedData', data);
+          console.log(event, args);
+          updateSharedNetwork(args);
+          // apiService.getFile('./data/sharednetwork.json').then(function(data) {
+          //   console.log('sharedData', data);
 
-            updateSharedNetwork(data);
+          //   updateSharedNetwork(data);
 
-          });
+          // });
 
         })
 

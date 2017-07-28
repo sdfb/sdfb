@@ -7,18 +7,18 @@
  * # searchPanel
  */
 angular.module('redesign2017App')
-  .directive('searchPanel', function() {
+  .directive('searchPanel', function(apiService) {
     return {
       templateUrl: './views/search-panel.html',
       restrict: 'E',
       link: function postLink(scope, element, attrs) {
         // element.text('this is the searchPanel directive');
         scope.peopleToSelect = ['Francis Bacon (1600)', 'Francis Bacon (1587)', 'Francis Bacon (1561)', 'William Shakespeare (1564)', 'John Milton (1562)', 'Alice Spencer (1559)'];
-        scope.person = { 'selected' : scope.peopleToSelect[1] }
+        scope.person = { 'selected': scope.peopleToSelect[1] }
         scope.radioModel = 'individual-force';
 
         scope.sharedToSelect = scope.peopleToSelect;
-        scope.shared = { 'selected' : undefined }
+        scope.shared = { 'selected': undefined }
 
         scope.resetIndividualNetwork = function() {
           console.log('resetIndividualNetwork');
@@ -32,18 +32,41 @@ angular.module('redesign2017App')
         }
 
         scope.selectedShared = function($person2, $person1) {
-          console.log('Shared network between:', $person1, 'and', $person2);
-          if ($person2 && $person1) {
-            scope.config.viewMode = 'shared-network'
-            scope.$broadcast('shared network query', { 'person1': $person1, 'person2': $person2 });
-          } else {
-            console.error('You need to specify two people for getting data for a shared network.', $person1, $person2)
+          // Manually inserted IDS since people typeahead API is not ready yet.
+
+          //William Fleetwood + Sir Henry Yelverton
+          var ids = [10004371, 10013232];
+          // shakespeare + milton
+          // ids = [10010937,10008309];
+          // Sir Thomas Fanshawe + Sir Edwin Sandys
+          // ids = [10004129,10010685];
+          if (ids.length == 2) {
+            console.log('Calling shared network...')
+            apiService.getSharedNetwork(ids).then(function(result) {
+              console.log('shared network between',ids.toString(),'\n',result);
+              scope.config.viewMode = 'shared-network';
+              scope.$broadcast('shared network query', result);
+            })
           }
         };
 
+        scope.groupTypeahead = { 'selected': undefined }
 
-        scope.groupsTypeahead = ['Virginia Company (1606)', 'Marian martyrs 1555', 'Cavalier poets  1640', 'Puritans 1532', 'Castalian band  1584', 'Participants in the vestiarian controversy  1563'];
-        scope.groupTypeaheadSelected = scope.groupsTypeahead[0];
+        scope.callGroupsTypeahead = function(val) {
+          console.log(val)
+          return apiService.groupsTypeahead(val);
+        };
+
+        scope.groupSelected = function($item, $model, $label, $event) {
+          console.log($item.name, $item.id, 'getting group network...');
+          apiService.getGroupNetwork($item.id).then(function(result) {
+            console.log(result);
+          });
+        }
+
+
+        // scope.groupsTypeahead = ['Virginia Company (1606)', 'Marian martyrs 1555', 'Cavalier poets  1640', 'Puritans 1532', 'Castalian band  1584', 'Participants in the vestiarian controversy  1563'];
+        // scope.groupTypeaheadSelected = scope.groupsTypeahead[0];
       }
     };
   });

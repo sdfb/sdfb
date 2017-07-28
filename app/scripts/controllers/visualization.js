@@ -8,7 +8,7 @@
  * Controller of the redesign2017App
  */
 angular.module('redesign2017App')
-  .controller('VisualizationCtrl', function($scope, $uibModal, $log, $document, apiService, initialConfig, initialData) {
+  .controller('VisualizationCtrl', function($scope, $uibModal, $http, $log, $document, apiService, initialConfig, initialData) {
     // console.log(initialConfig,initialData);
     $scope.config = initialConfig;
     $scope.data = initialData;
@@ -115,6 +115,7 @@ angular.module('redesign2017App')
             return response;
           });
         } else if (newValue == 'group-force') {
+          
           apiService.getFile('./data/virginiacompany.json').then(function successCallback(response) {
             // console.log(response);
             $scope.$broadcast('single group', { data: response, onlyMembers: $scope.config.onlyMembers });
@@ -122,6 +123,7 @@ angular.module('redesign2017App')
             console.error("An error occured while fetching file", response);
             return response;
           });
+          
         } else if (newValue == 'group-timeline') {
           apiService.getFile('./data/virginiacompany.json').then(function successCallback(response) {
             $scope.$broadcast('group timeline', response );
@@ -133,6 +135,7 @@ angular.module('redesign2017App')
 
       }
     });
+
     $scope.$watch('config.onlyMembers', function(newValue, oldValue) {
       if (newValue !== oldValue) {
         apiService.getFile('./data/virginiacompany.json').then(function successCallback(response) {
