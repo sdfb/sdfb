@@ -149,6 +149,7 @@ GEM
     public_suffix (2.0.5)
     puma (3.0.2)
     rack (1.5.5)
+    rack-cors (1.0.1)
     rack-test (0.6.3)
       rack (>= 1.0)
     rack-timeout (0.4.2)
@@ -276,6 +277,7 @@ DEPENDENCIES
   protected_attributes
   pry
   puma
+  rack-cors
   rack-timeout
   rails (= 4.1.8)
   rails-observers

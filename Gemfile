@@ -17,6 +17,7 @@ gem 'pg'
 gem 'puma'
 gem 'newrelic_rpm'
 gem 'rails_12factor'
+gem 'rack-cors'
 
 # Presentation Helper Libraries
 gem 'will_paginate'
