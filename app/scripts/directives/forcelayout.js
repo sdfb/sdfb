@@ -649,11 +649,11 @@ angular.module('redesign2017App')
               return d.labelBBox.height + paddingTopBottom;
             });
 
-          if (oldLayout == layout) { // If layout has not changed
-            simulation.alphaTarget(0).restart(); // Don't reheat viz
-          } else { //If layout has changed from force to concentric or vice versa
-            simulation.alphaTarget(0.3).restart(); // Reheat viz
-          }
+          // if (oldLayout == layout) { // If layout has not changed
+          //   simulation.alphaTarget(0).restart(); // Don't reheat viz
+          // } else { //If layout has changed from force to concentric or vice versa
+            simulation.alpha(1).alphaDecay(0.05).restart(); // Reheat viz
+          // }
 
           oldLayout = layout;
 
