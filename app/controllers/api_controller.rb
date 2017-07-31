@@ -58,6 +58,7 @@ class ApiController < ApplicationController
         ids = params[:ids].split(",")
         @groups = Group.find(ids)
       end
+      @people = @groups.map(&:people).reduce(:+).uniq
     rescue ActiveRecord::RecordNotFound => e
       @errors = []
       @errors << {title: "Invalid group ID(s)"}
