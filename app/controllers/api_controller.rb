@@ -110,10 +110,10 @@ class ApiController < ApplicationController
 
       @people = @groups.map(&:people).reduce(:+).uniq
       
-      member_ids = @people.map(&:id).flatten.uniq - ids
+      # @member_ids = @people.map(&:id).flatten.uniq - ids
 
-      member_relationships = @people.map(&:relationships).flatten
-      first_degree_ids = member_relationships.collect do |r|
+      @relationships = @people.map(&:relationships).flatten
+      first_degree_ids = @relationships.collect do |r|
         [r.person1_index, r.person2_index]
       end.flatten.uniq - ids
 
