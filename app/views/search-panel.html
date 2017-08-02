@@ -1,7 +1,7 @@
 <uib-tabset active="config.viewObject" justified="true">
   <uib-tab index="0" heading="People">
     <h4>Individual Network<span class="remove-btn" ng-click=" resetIndividualNetwork() ">clear</span></h4>
-    <input placeholder="Search for a person" type="text" ng-model="person.selected" uib-typeahead="person for person in peopleToSelect | filter:$viewValue | limitTo:8" class="form-control">
+    <input placeholder="Search for a person" type="text" ng-model="person.selected" uib-typeahead="person for person in peopleToSelect | filter:$viewValue | limitTo:8" class="form-control" typeahead-on-select="selectedPerson(person.selected)">
     <h5>Search here<span ng-if="config.viewMode!='all'"> or double click on a node</span><span ng-if="config.viewMode=='all'"> for a person</span></h5>
     <h4>Shared Network<span class="remove-btn" ng-click=" resetSharedNetwork() ">clear</span></h4>
     <input placeholder="Search for a person" type="text" ng-model="shared.selected" uib-typeahead="person for person in sharedToSelect | filter:$viewValue | limitTo:8" class="form-control" typeahead-on-select="selectedShared(shared.selected, person.selected)">

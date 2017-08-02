@@ -80,7 +80,7 @@ angular.module('redesign2017App')
           return response;
         });
       },
-      getSharedNetwork : function(ids){
+      getNetwork : function(ids){
 
         var url = baseUrl + '/api/network';
         return $http({

@@ -31,6 +31,26 @@ angular.module('redesign2017App')
           scope.config.viewMode = 'individual-force';
         }
 
+        scope.selectedPerson = function($person1) {
+          // Manually inserted IDS since people typeahead API is not ready yet.
+
+          //William Fleetwood + Sir Henry Yelverton
+          // var ids = [10004371, 10013232];
+          // shakespeare + milton
+          var ids = [10010937];
+          // Sir Thomas Fanshawe + Sir Edwin Sandys
+          // ids = [10004129,10010685];
+          if (ids.length == 1) {
+            console.log('Calling person network...')
+            apiService.getNetwork(ids).then(function(result) {
+              console.log('person network of',ids.toString(),'\n',result);
+              result.layout = 'individual-force';
+              scope.config.viewMode = 'force-layout';
+              scope.$broadcast('Update the force layout', result);
+            })
+          }
+        };
+
         scope.selectedShared = function($person2, $person1) {
           // Manually inserted IDS since people typeahead API is not ready yet.
 
@@ -42,7 +62,7 @@ angular.module('redesign2017App')
           // ids = [10004129,10010685];
           if (ids.length == 2) {
             console.log('Calling shared network...')
-            apiService.getSharedNetwork(ids).then(function(result) {
+            apiService.getNetwork(ids).then(function(result) {
               console.log('shared network between',ids.toString(),'\n',result);
               scope.config.viewMode = 'shared-network';
               scope.$broadcast('shared network query', result);

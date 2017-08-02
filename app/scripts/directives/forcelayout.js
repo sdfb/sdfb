@@ -18,8 +18,6 @@ angular.module('redesign2017App')
           width = +svg.node().getBoundingClientRect().width, // Width of viz
           height = +svg.node().getBoundingClientRect().height, // Height of viz
           json = scope.data, // Get sample data from scope
-          nodes = json.included, // All people data
-          links = [], // All relationship data, fill array below
           sourceId = json.data.attributes.primary_people, // ID of searched node (Bacon in sample data)
           confidenceMin = scope.config.confidenceMin, // Minimum edge weight (default 60)
           confidenceMax = scope.config.confidenceMax, // Maximum edge weight (default 100)
@@ -32,6 +30,11 @@ angular.module('redesign2017App')
           oldLayout = 'individual-force', // Keep track of whether the layout has changed
           addedNodes = [], // Nodes user has added to the graph
           nodeAdded = false; // Toggle for user-added actions
+
+        function updatePersonNetwork(json) {
+
+          nodes = json.included, // All people data
+          links = [], // All relationship data, fill array below
 
         // Populate links array from JSON
         json.data.attributes.connections.forEach(function(c) {
@@ -109,7 +112,10 @@ angular.module('redesign2017App')
           // general force settings
           .alpha(1)
           .alphaDecay(0.05)
-          .on("tick", ticked)
+          .on("tick", ticked);
+
+          update(addedNodes, confidenceMin, confidenceMax, dateMin, dateMax, complexity, args.layout);
+        }
 
 
         // VISUAL DENSITY PARSER
