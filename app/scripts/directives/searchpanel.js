@@ -35,9 +35,9 @@ angular.module('redesign2017App')
           // Manually inserted IDS since people typeahead API is not ready yet.
 
           //William Fleetwood + Sir Henry Yelverton
-          var ids = [10004371, 10013232];
+          // var ids = [10004371, 10013232];
           // shakespeare + milton
-          // ids = [10010937,10008309];
+          var ids = [10010937,10008309];
           // Sir Thomas Fanshawe + Sir Edwin Sandys
           // ids = [10004129,10010685];
           if (ids.length == 2) {
@@ -61,6 +61,9 @@ angular.module('redesign2017App')
           console.log($item.name, $item.id, 'getting group network...');
           apiService.getGroupNetwork($item.id).then(function(result) {
             console.log(result);
+            scope.config.viewMode = 'group-force';
+            scope.$broadcast('single group', result);
+            scope.$broadcast('group timeline', result);
           });
         }
 

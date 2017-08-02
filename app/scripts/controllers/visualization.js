@@ -115,22 +115,23 @@ angular.module('redesign2017App')
             return response;
           });
         } else if (newValue == 'group-force') {
-          
-          apiService.getFile('./data/virginiacompany.json').then(function successCallback(response) {
-            // console.log(response);
-            $scope.$broadcast('single group', { data: response, onlyMembers: $scope.config.onlyMembers });
-          }, function errorCallback(response) {
-            console.error("An error occured while fetching file", response);
-            return response;
-          });
-          
-        } else if (newValue == 'group-timeline') {
-          apiService.getFile('./data/virginiacompany.json').then(function successCallback(response) {
-            $scope.$broadcast('group timeline', response );
-          }, function errorCallback(response) {
-            console.error("An error occured while fetching file", response);
-            return response;
-          });
+
+          console.log('force');
+        //   apiService.getFile('./data/virginiacompany.json').then(function successCallback(response) {
+        //     // console.log(response);
+        //     $scope.$broadcast('single group', { data: response, onlyMembers: $scope.config.onlyMembers });
+        //   }, function errorCallback(response) {
+        //     console.error("An error occured while fetching file", response);
+        //     return response;
+        //   });
+        //
+        // } else if (newValue == 'group-timeline') {
+        //   apiService.getFile('./data/virginiacompany.json').then(function successCallback(response) {
+        //     $scope.$broadcast('group timeline', response );
+        //   }, function errorCallback(response) {
+        //     console.error("An error occured while fetching file", response);
+        //     return response;
+        //   });
         }
 
       }

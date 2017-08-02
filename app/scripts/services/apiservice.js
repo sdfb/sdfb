@@ -9,10 +9,12 @@
  */
 angular.module('redesign2017App')
   .factory('apiService', function ($q, $http) {
-    var CORSproxy = 'https://crossorigin.me/';
+    // var CORSproxy = 'https://crossorigin.me/';
     // CORSproxy = '';
-    var apiUrl = 'http://sixdegrees-api.herokuapp.com';
-    var baseUrl = CORSproxy + apiUrl;
+    // var apiUrl = 'http://sixdegrees-api.herokuapp.com';
+    var apiUrl = "http://ec2-34-228-27-188.compute-1.amazonaws.com/tools"
+    // var baseUrl = CORSproxy + apiUrl;
+    var baseUrl = apiUrl;
     // Public API here
     return {
       getFile : function(url){
@@ -97,6 +99,3 @@ angular.module('redesign2017App')
       }
     }
   });
-
-
-

@@ -67,6 +67,7 @@ angular.module('redesign2017App')
           // Format data
           members = [];
           members = json.data.attributes.primary_people;
+          console.log(members);
           nodes = [];
           links = [];
           var excludedNodes = [];
@@ -359,7 +360,7 @@ angular.module('redesign2017App')
         // action triggered from the controller
         scope.$on('single group', function(event, args) {
           // console.log(event, args);
-          update(args.data, args.onlyMembers);
+          update(args, args.onlyMembers);
         });
 
       }

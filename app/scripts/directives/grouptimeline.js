@@ -260,7 +260,7 @@ angular.module('redesign2017App')
             .attr('y', -y.bandwidth())
             .style('text-anchor', 'middle')
             .text(function(d) {
-              var myLabel = 'Member from ' + d.membership_attributes.start_year + ' to ' + d.membership_attributes.end_year + '.';
+              var myLabel = 'Member from ' + d.attributes.start_year + ' to ' + d.attributes.end_year + '.';
               return myLabel;
             });
 
@@ -286,33 +286,39 @@ angular.module('redesign2017App')
             })
             .attr('d', function(d) { return terminators('birth', d.attributes.death_year_type, x(d.attributes.death_year), 0) });
 
-          person.append('path')
-            .attr('class', 'membership')
-            .attr('d', function(d) {
-              return 'M' + x(d.membership_attributes.start_year) + ',' + 0 + ' L' + (x(d.membership_attributes.end_year)) + ',' + 0;
-            });
+          // Will not work until API is updated.
+          // person.append('path')
+          //   .attr('class', 'membership')
+          //   .attr('d', function(d) {
+          //     return 'M' + x(d.attributes.start_year) + ',' + 0 + ' L' + (x(d.attributes.end_year)) + ',' + 0;
+          //   });
 
           // Change name of the viz
           scope.config.title = ""
         }
 
         // action triggered from the controller
-        scope.$on('group timeline', function(event, data) {
-          // console.log(event, data);
+        scope.$on('group timeline', function(event, json) {
+          console.log(event, json);
 
           groupInfo = {};
-          groupInfo["description"] = data.data["description"];
-          groupInfo["end_date_type"] = data.data["end_date_type"];
-          groupInfo["end_year"] = data.data["end_year"];
-          groupInfo["id"] = data.data["id"];
-          groupInfo["name"] = data.data["name"];
-          groupInfo["start_date_type"] = data.data["start_date_type"];
-          groupInfo["start_year"] = data.data["start_year"];
-          groupInfo["type"] = data.data["type"];
+          json.included.forEach( function(item) {
+            if (item.id === json.data.id) {
+              groupInfo["description"] = item.attributes["description"];
+              groupInfo["end_date_type"] = item.attributes["end_date_type"];
+              groupInfo["end_year"] = item.attributes["end_year"];
+              groupInfo["id"] = item.attributes["id"];
+              groupInfo["name"] = item.attributes["name"];
+              groupInfo["start_date_type"] = item.attributes["start_date_type"];
+              groupInfo["start_year"] = item.attributes["start_year"];
+              groupInfo["type"] = item.attributes["type"];
+            }
+          });
 
-          primary_people = data.data.attributes.primary_people;
+
+          primary_people = json.data.attributes.primary_people;
           members = [];
-          members = _.intersectionWith(data.included, primary_people, function(a, b) {
+          members = _.intersectionWith(json.included, primary_people, function(a, b) {
             return a.id == b;
           });
 
