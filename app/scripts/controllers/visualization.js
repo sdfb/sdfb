@@ -8,7 +8,7 @@
  * Controller of the redesign2017App
  */
 angular.module('redesign2017App')
-  .controller('VisualizationCtrl', function($scope, $uibModal, $http, $log, $document, apiService, initialConfig, initialData) {
+  .controller('VisualizationCtrl', function($scope, $uibModal, $http, $log, $document, $routeParams, apiService, initialConfig, initialData) {
     // console.log(initialConfig,initialData);
     $scope.config = initialConfig;
     $scope.data = initialData;
@@ -53,6 +53,25 @@ angular.module('redesign2017App')
         $log.info('Modal dismissed at: ' + new Date());
       });
     };
+
+    // $scope.getIDs = function(){
+      // $http.get('/#!/visualization/'+$routeParams.ids)/*, {params: {'ids': $scope.config.ids }})*/.then(
+      //   function(success){
+          console.log('Calling person network...')
+          $scope.config.ids = $routeParams.ids;
+          apiService.getNetwork($routeParams.ids).then(function(result) {
+            console.log('person network of',$routeParams.ids.toString(),'\n',result);
+            result.layout = 'individual-force';
+            $scope.config.viewMode = 'individual-force';
+            // scope.config.ids = $rou;
+            $scope.$broadcast('Update the force layout', result);
+          });
+        // },
+      //   function(error){
+      //     console.log(error);
+      //   }
+      // );
+    // }
 
     $scope.data4groups = function() {
       console.log('Creating data4groups');
@@ -104,7 +123,7 @@ angular.module('redesign2017App')
 
         // console.log('changed layout');
         if (newValue == 'individual-force') {
-          $scope.$broadcast('Update the force layout', { layout: 'individual-force' });
+          $scope.$broadcast('Update the force layout', result);
         } else if (newValue == 'individual-concentric') {
           $scope.$broadcast('Update the force layout', { layout: 'individual-concentric' });
         } else if (newValue == 'all') {

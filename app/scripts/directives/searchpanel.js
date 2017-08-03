@@ -11,7 +11,7 @@ angular.module('redesign2017App')
     return {
       templateUrl: './views/search-panel.html',
       restrict: 'E',
-      link: function postLink(scope, element, attrs) {
+      link: function postLink(scope, element, attrs, location) {
         // element.text('this is the searchPanel directive');
         scope.peopleToSelect = ['Francis Bacon (1600)', 'Francis Bacon (1587)', 'Francis Bacon (1561)', 'William Shakespeare (1564)', 'John Milton (1562)', 'Alice Spencer (1559)'];
         scope.person = { 'selected': scope.peopleToSelect[1] }
@@ -38,16 +38,21 @@ angular.module('redesign2017App')
           // var ids = [10004371, 10013232];
           // shakespeare + milton
           var ids = [10010937];
+
           // Sir Thomas Fanshawe + Sir Edwin Sandys
           // ids = [10004129,10010685];
           if (ids.length == 1) {
             console.log('Calling person network...')
-            apiService.getNetwork(ids).then(function(result) {
-              console.log('person network of',ids.toString(),'\n',result);
-              result.layout = 'individual-force';
-              scope.config.viewMode = 'force-layout';
-              scope.$broadcast('Update the force layout', result);
-            })
+            location.path('/visualization/'+ids.toString());
+            scope.$apply();
+            // apiService.getNetwork(ids).then(function(result) {
+            //   console.log('person network of',ids.toString(),'\n',result);
+            //   result.layout = 'individual-force';
+            //   scope.config.viewMode = 'individual-force';
+            //   // scope.ids = [10010937];
+            //   $routeParams.ids = ids.toString();
+            //   scope.$broadcast('Update the force layout', result);
+            // })
           }
         };
 

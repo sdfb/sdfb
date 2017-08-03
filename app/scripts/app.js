@@ -24,8 +24,9 @@ angular
       .when('/', {
         redirectTo: '/visualization'
       })
-      .when('/visualization', {
+      .when('/visualization/:ids', {
         templateUrl: 'views/visualization.html',
+        // templateUrl: function(params) {return 'views/visualization.html?ids='+params.ids},
         controller: 'VisualizationCtrl',
         controllerAs: 'Visualization',
         resolve: {
@@ -34,6 +35,7 @@ angular
               viewObject:0, //0 = people, 1 = groups
               viewMode:'individual-force',
               // viewMode:'all',
+              ids: 10000473,
               title: 'undefined title',
               networkComplexity: '1.75',
               dateMin:1500,
@@ -65,6 +67,6 @@ angular
         controllerAs: 'Modal'
       })
       .otherwise({
-        redirectTo: '/visualization'
+        redirectTo: '/visualization/'
       });
   });

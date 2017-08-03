@@ -17,9 +17,20 @@ angular.module('redesign2017App')
         var svg = d3.select(element[0]).select('svg'), // Root svg element
           width = +svg.node().getBoundingClientRect().width, // Width of viz
           height = +svg.node().getBoundingClientRect().height, // Height of viz
-          json = scope.data, // Get sample data from scope
-          sourceId = json.data.attributes.primary_people, // ID of searched node (Bacon in sample data)
-          confidenceMin = scope.config.confidenceMin, // Minimum edge weight (default 60)
+          // json = scope.data, // Get sample data from scope
+          simulation,
+          node,
+          link,
+          label,
+          cursor,
+          container,
+          sourceId;
+
+        function updatePersonNetwork(json, layout) {
+
+        sourceId = json.data.attributes.primary_people; // ID of searched node (Bacon in sample data)
+
+        var  confidenceMin = scope.config.confidenceMin, // Minimum edge weight (default 60)
           confidenceMax = scope.config.confidenceMax, // Maximum edge weight (default 100)
           dateMin = scope.config.dateMin, // Minimum date range (source's birthdate)
           dateMax = scope.config.dateMax, // Maximum date range (source's death date)
@@ -31,10 +42,9 @@ angular.module('redesign2017App')
           addedNodes = [], // Nodes user has added to the graph
           nodeAdded = false; // Toggle for user-added actions
 
-        function updatePersonNetwork(json) {
 
-          nodes = json.included, // All people data
-          links = [], // All relationship data, fill array below
+        var nodes = json.included, // All people data
+            links = []; // All relationship data, fill array belowre
 
         // Populate links array from JSON
         json.data.attributes.connections.forEach(function(c) {
@@ -75,22 +85,22 @@ angular.module('redesign2017App')
           })
           .on('mousemove', mousemove);
 
-        var container = svg.append('g'); // Create container for nodes and edges
+        container = svg.append('g'); // Create container for nodes and edges
 
         // Separate groups for links, nodes, and edges
-        var link = container.append("g")
+        link = container.append("g")
           .attr("class", "links")
           .selectAll(".link");
 
-        var node = container.append("g")
+        node = container.append("g")
           .attr("class", "nodes")
           .selectAll(".node");
 
-        var label = container.append("g")
+        label = container.append("g")
           .attr("class", "labels")
           .selectAll(".label");
 
-        var cursor = container.append("circle")
+        cursor = container.append("circle")
           .attr("r", 12.5)
           .attr("fill", "none")
           .attr("stroke", "orange")
@@ -104,7 +114,7 @@ angular.module('redesign2017App')
         //  SIMULATION  //
         //              //
 
-        var simulation = d3.forceSimulation(nodes)
+        simulation = d3.forceSimulation(nodes)
           .force("center", d3.forceCenter(width / 2, height / 2)) // Keep graph from floating off-screen
           .force("charge", d3.forceManyBody().strength(-100)) // Charge force works as gravity
           .force("link", d3.forceLink(links).id(function(d) { return d.id; }).iterations(2)) //Link force accounts for link distance
@@ -114,7 +124,260 @@ angular.module('redesign2017App')
           .alphaDecay(0.05)
           .on("tick", ticked);
 
-          update(addedNodes, confidenceMin, confidenceMax, dateMin, dateMax, complexity, args.layout);
+          /* The main update function draws the all of the elements of the visualization
+          and keeps them up to date using the D3 general update pattern. Takes as variables ranges
+          for confidence and date, as well as a complexity value and a layout type (force or concentric) */
+
+          var startTime = d3.now();
+          simulation.on("end", function() {
+            var endTime = d3.now();
+            console.log('Spatialization completed in', (endTime - startTime) / 1000, 'sec.');
+          })
+
+          console.log('force layout update function');
+          // Find the links that are within date and confidence ranges.
+          var thresholdLinks = links.filter(function(d) {
+            if (d.weight >= confidenceMin && d.weight <= confidenceMax && parseInt(d.start_year) <= dateMax && parseInt(d.end_year) >= dateMin) {
+              return d;
+            };
+          });
+
+          var newData = parseComplexity(thresholdLinks, complexity); // Use links in complexity function, which return nodes and links.
+          var newNodes = newData[0];
+          var newLinks = newData[1];
+
+          addedNodes.forEach(function(a) { newNodes.push(a); });
+
+          if (layout == 'individual-force') {
+            console.log('Layout: individual-force');
+            // For force layout, set fixed positions to null (undoes circle positioning)
+            newNodes.forEach(function(d) {
+              d.fx = null;
+              d.fy = null;
+            });
+          } else if (layout == 'individual-concentric') {
+            console.log('Layout: individual-concentric');
+            // For concentric layout, set fixed positions according to degree
+            newNodes.forEach(function(d) {
+              if (d.distance == 0) { // Set source node to center of view
+                d.fx = width / 2;
+                d.fy = height / 2;
+              }
+            })
+
+            var oneDegreeNodes = newNodes.filter(function(d) { if (d.distance == 1) { return d; } });
+            positionCircle(oneDegreeNodes, 200); // Put 1-degree nodes in circle of radius 200
+
+            var twoDegreeNodes = newNodes.filter(function(d) { if (d.distance == 2) { return d; } });
+            positionCircle(twoDegreeNodes, 500); // Put 2-degree nodes in circle of radius 500
+          } else {
+            console.log('ERROR: No compatible layout selected:', layout);
+          }
+
+
+
+          //          //
+          //  LINKS   //
+          //          //
+
+          // Sort "newlinks" array so to have the "altered" links at the end and display them on "foreground"
+          newLinks.sort(function(a, b) {
+            if (a.altered) {
+              return 1
+            }
+          });
+
+          // Data join with only new links from parseComplexity()
+          link = link.data(newLinks, function(d) {
+            return d.source.id + ', ' + d.target.id;
+          });
+
+          var linkEnter = link.enter().append('path') // Create enter variable for general update pattern
+
+          link.exit().remove(); // Remove exiting links
+
+          link = linkEnter.merge(link) // Merge new links
+            .attr('class', 'link')
+            .classed('altered', function(d) { // Style if link has been "altered" by a person
+              return d.altered ? true : false;
+            })
+            .on('click', function(d) { // Toggle link on click
+              toggleClick(d, newLinks);
+            });
+
+
+
+
+
+
+
+
+
+
+          //          //
+          //  NODES   //
+          //          //
+
+          // Data join with only new nodes from parseComplexity()
+          node = node.data(newNodes, function(d) {
+            return d.id;
+          })
+
+          var nodeEnter = node.enter().append('circle'); // Create enter variable for general update pattern
+
+
+          node.exit().remove(); // Remove exiting nodes
+
+          node = nodeEnter.merge(node) // Merge new nodes
+            .attr('class', function(d) { // Class by degree of distance
+              return 'node degree' + d.distance
+            })
+            .attr('id', function(d) { // Assign ID number
+              return "n" + d.id.toString();
+            })
+            .attr('r', function(d) { // Size nodes by degree of distance
+              if (d.distance == 0) {
+                return 25;
+              } else if (d.distance == 1) {
+                return 12.5;
+              } else {
+                return 6.25;
+              }
+            })
+            .on('click', function(d) {
+              // Toggle ego networks on click of node
+              toggleClick(d, newLinks, this);
+            })
+            // On hover, display label
+            .on('mouseenter', function(d) {
+              d3.selectAll('g.label').each(function(e) {
+                if (e.id == d.id) {
+                  d3.select(this)
+                    .classed('temporary-unhidden', true);
+                }
+              })
+              // sort elements so to bring the hovered one on top and make it readable.
+              svg.selectAll("g.label").each(function(e, i) {
+                if (d == e) {
+                  var myElement = this;
+                  d3.select(myElement).remove();
+                  d3.select('.labels').node().appendChild(myElement);
+                }
+              })
+            })
+            .on('mouseleave', function(d) {
+              d3.selectAll('g.label').each(function(e) {
+                if (e.id == d.id) {
+                  d3.select(this).classed('temporary-unhidden', false);
+                }
+              })
+            })
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+          //          //
+          //  LABELS  //
+          //          //
+
+          // Data join with only new nodes from parseComplexity()
+          label = label.data(newNodes, function(d) {
+            return d.id;
+          });
+
+          label.exit().remove(); // Remove exiting labels
+
+          // Create group for the label but define the position later
+          var labelEnter = label.enter().append('g')
+            .attr("class", function(d) {
+              return (d.distance < 2) ? 'label' : 'label hidden';
+            });
+
+          label.selectAll('*').remove();
+
+          label = labelEnter.merge(label); // Merge all entering labels
+
+          label.append('rect') // a placeholder to be reworked later
+
+          label.append('text')
+            .text(function(d) {
+              return d.attributes.name;
+            })
+
+          // Get the Bounding Box of the text created
+          d3.selectAll('.label text').each(function(d, i) {
+            if (!d.labelBBox) {
+              d.labelBBox = this.getBoundingClientRect();
+            }
+          });
+
+          // adjust the padding values depending on font and font size
+          var paddingLeftRight = 4;
+          var paddingTopBottom = 0;
+
+          // set dimentions and positions of rectangles depending on the BBox exctracted before
+          d3.selectAll(".label rect")
+            .attr("x", function(d) {
+              return 0 - d.labelBBox.width / 2 - paddingLeftRight / 2;
+            })
+            .attr("y", function(d) {
+              return 0 + 3 - d.labelBBox.height + paddingTopBottom / 2;
+            })
+            .attr("width", function(d) {
+              return d.labelBBox.width + paddingLeftRight;
+            })
+            .attr("height", function(d) {
+              return d.labelBBox.height + paddingTopBottom;
+            });
+
+          // if (oldLayout == layout) { // If layout has not changed
+          //   simulation.alphaTarget(0).restart(); // Don't reheat viz
+          // } else { //If layout has changed from force to concentric or vice versa
+            simulation.alpha(1).alphaDecay(0.05).restart(); // Reheat viz
+          // }
+
+          oldLayout = layout;
+
+          // Change name of the viz
+          scope.config.title = "Hooke network of Francis Bacon"
+
+          // if (!scope.config.contributionMode) {
+          //   d3.select('.degree3').remove();
+          // }
+        }
+
+        // Function triggered when user wants to add a node
+        scope.addingMode = function() {
+          nodeAdded = false;
+          cursor.attr("opacity", 1);
+          svg.on("click", addNode);
+        }
+
+        // Move the circle with the mouse, until the the user clicks
+        function mousemove() {
+          cursor.attr("transform", "translate(" + d3.mouse(container.node()) + ")");
+        }
+
+        // When canvas is clicked, add a new circle with dummy data
+        function addNode() {
+          if (!nodeAdded) {
+            var point = d3.mouse(container.node());
+            addedNodes.push({ attributes: { name: "John Ladd" }, id: '0100', distance: '3', x: point[0], y: point[1] });
+            update(addedNodes, confidenceMin, confidenceMax, dateMin, dateMax, complexity, 'individual-force', simulation);
+            nodeAdded = true;
+            cursor.attr("opacity", 0);
+          }
         }
 
 
@@ -437,277 +700,25 @@ angular.module('redesign2017App')
           });
         }
 
-        function update(addedNodes, confidenceMin, confidenceMax, dateMin, dateMax, complexity, layout) {
-          /* The main update function draws the all of the elements of the visualization
-          and keeps them up to date using the D3 general update pattern. Takes as variables ranges
-          for confidence and date, as well as a complexity value and a layout type (force or concentric) */
+        function update(addedNodes, confidenceMin, confidenceMax, dateMin, dateMax, complexity, layout, simulation) {
 
-          var startTime = d3.now();
-          simulation.on("end", function() {
-            var endTime = d3.now();
-            console.log('Spatialization completed in', (endTime - startTime) / 1000, 'sec.');
-          })
-
-          console.log('force layout update function');
-          // Find the links that are within date and confidence ranges.
-          var thresholdLinks = links.filter(function(d) {
-            if (d.weight >= confidenceMin && d.weight <= confidenceMax && parseInt(d.start_year) <= dateMax && parseInt(d.end_year) >= dateMin) {
-              return d;
-            };
-          });
-
-          var newData = parseComplexity(thresholdLinks, complexity); // Use links in complexity function, which return nodes and links.
-          var newNodes = newData[0];
-          var newLinks = newData[1];
-
-          addedNodes.forEach(function(a) { newNodes.push(a); });
-
-          if (layout == 'individual-force') {
-            console.log('Layout: individual-force');
-            // For force layout, set fixed positions to null (undoes circle positioning)
-            newNodes.forEach(function(d) {
-              d.fx = null;
-              d.fy = null;
-            });
-          } else if (layout == 'individual-concentric') {
-            console.log('Layout: individual-concentric');
-            // For concentric layout, set fixed positions according to degree
-            newNodes.forEach(function(d) {
-              if (d.distance == 0) { // Set source node to center of view
-                d.fx = width / 2;
-                d.fy = height / 2;
-              }
-            })
-
-            var oneDegreeNodes = newNodes.filter(function(d) { if (d.distance == 1) { return d; } });
-            positionCircle(oneDegreeNodes, 200); // Put 1-degree nodes in circle of radius 200
-
-            var twoDegreeNodes = newNodes.filter(function(d) { if (d.distance == 2) { return d; } });
-            positionCircle(twoDegreeNodes, 500); // Put 2-degree nodes in circle of radius 500
-          } else {
-            console.log('ERROR: No compatible layout selected:', layout);
-          }
-
-
-
-          //          //
-          //  LINKS   //
-          //          //
-
-          // Sort "newlinks" array so to have the "altered" links at the end and display them on "foreground"
-          newLinks.sort(function(a, b) {
-            if (a.altered) {
-              return 1
-            }
-          });
-
-          // Data join with only new links from parseComplexity()
-          link = link.data(newLinks, function(d) {
-            return d.source.id + ', ' + d.target.id;
-          });
-
-          var linkEnter = link.enter().append('path') // Create enter variable for general update pattern
-
-          link.exit().remove(); // Remove exiting links
-
-          link = linkEnter.merge(link) // Merge new links
-            .attr('class', 'link')
-            .classed('altered', function(d) { // Style if link has been "altered" by a person
-              return d.altered ? true : false;
-            })
-            .on('click', function(d) { // Toggle link on click
-              toggleClick(d, newLinks);
-            });
-
-
-
-
-
-
-
-
-
-
-          //          //
-          //  NODES   //
-          //          //
-
-          // Data join with only new nodes from parseComplexity()
-          node = node.data(newNodes, function(d) {
-            return d.id;
-          })
-
-          var nodeEnter = node.enter().append('circle'); // Create enter variable for general update pattern
-
-
-          node.exit().remove(); // Remove exiting nodes
-
-          node = nodeEnter.merge(node) // Merge new nodes
-            .attr('class', function(d) { // Class by degree of distance
-              return 'node degree' + d.distance
-            })
-            .attr('id', function(d) { // Assign ID number
-              return "n" + d.id.toString();
-            })
-            .attr('r', function(d) { // Size nodes by degree of distance
-              if (d.distance == 0) {
-                return 25;
-              } else if (d.distance == 1) {
-                return 12.5;
-              } else {
-                return 6.25;
-              }
-            })
-            .on('click', function(d) {
-              // Toggle ego networks on click of node
-              toggleClick(d, newLinks, this);
-            })
-            // On hover, display label
-            .on('mouseenter', function(d) {
-              d3.selectAll('g.label').each(function(e) {
-                if (e.id == d.id) {
-                  d3.select(this)
-                    .classed('temporary-unhidden', true);
-                }
-              })
-              // sort elements so to bring the hovered one on top and make it readable.
-              svg.selectAll("g.label").each(function(e, i) {
-                if (d == e) {
-                  var myElement = this;
-                  d3.select(myElement).remove();
-                  d3.select('.labels').node().appendChild(myElement);
-                }
-              })
-            })
-            .on('mouseleave', function(d) {
-              d3.selectAll('g.label').each(function(e) {
-                if (e.id == d.id) {
-                  d3.select(this).classed('temporary-unhidden', false);
-                }
-              })
-            })
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-          //          //
-          //  LABELS  //
-          //          //
-
-          // Data join with only new nodes from parseComplexity()
-          label = label.data(newNodes, function(d) {
-            return d.id;
-          });
-
-          label.exit().remove(); // Remove exiting labels
-
-          // Create group for the label but define the position later
-          var labelEnter = label.enter().append('g')
-            .attr("class", function(d) {
-              return (d.distance < 2) ? 'label' : 'label hidden';
-            });
-
-          label.selectAll('*').remove();
-
-          label = labelEnter.merge(label); // Merge all entering labels
-
-          label.append('rect') // a placeholder to be reworked later
-
-          label.append('text')
-            .text(function(d) {
-              return d.attributes.name;
-            })
-
-          // Get the Bounding Box of the text created
-          d3.selectAll('.label text').each(function(d, i) {
-            if (!d.labelBBox) {
-              d.labelBBox = this.getBoundingClientRect();
-            }
-          });
-
-          // adjust the padding values depending on font and font size
-          var paddingLeftRight = 4;
-          var paddingTopBottom = 0;
-
-          // set dimentions and positions of rectangles depending on the BBox exctracted before
-          d3.selectAll(".label rect")
-            .attr("x", function(d) {
-              return 0 - d.labelBBox.width / 2 - paddingLeftRight / 2;
-            })
-            .attr("y", function(d) {
-              return 0 + 3 - d.labelBBox.height + paddingTopBottom / 2;
-            })
-            .attr("width", function(d) {
-              return d.labelBBox.width + paddingLeftRight;
-            })
-            .attr("height", function(d) {
-              return d.labelBBox.height + paddingTopBottom;
-            });
-
-          // if (oldLayout == layout) { // If layout has not changed
-          //   simulation.alphaTarget(0).restart(); // Don't reheat viz
-          // } else { //If layout has changed from force to concentric or vice versa
-            simulation.alpha(1).alphaDecay(0.05).restart(); // Reheat viz
-          // }
-
-          oldLayout = layout;
-
-          // Change name of the viz
-          scope.config.title = "Hooke network of Francis Bacon"
-
-          // if (!scope.config.contributionMode) {
-          //   d3.select('.degree3').remove();
-          // }
-        }
-
-        // Function triggered when user wants to add a node
-        scope.addingMode = function() {
-          nodeAdded = false;
-          cursor.attr("opacity", 1);
-          svg.on("click", addNode);
-        }
-
-        // Move the circle with the mouse, until the the user clicks
-        function mousemove() {
-          cursor.attr("transform", "translate(" + d3.mouse(container.node()) + ")");
-        }
-
-        // When canvas is clicked, add a new circle with dummy data
-        function addNode() {
-          if (!nodeAdded) {
-            var point = d3.mouse(container.node());
-            addedNodes.push({ attributes: { name: "John Ladd" }, id: '0100', distance: '3', x: point[0], y: point[1] });
-            update(addedNodes, confidenceMin, confidenceMax, dateMin, dateMax, complexity, 'individual-force');
-            nodeAdded = true;
-            cursor.attr("opacity", 0);
-          }
         }
 
         // Trigger update automatically when the directive code is executed entirely (e.g. at loading)
-        update(addedNodes, confidenceMin, confidenceMax, dateMin, dateMax, complexity, 'individual-force');
+        // update(addedNodes, confidenceMin, confidenceMax, dateMin, dateMax, complexity, 'individual-force', simulation);
 
         // update triggered from the controller
         scope.$on('Update the force layout', function(event, args) {
           console.log('ON: Update the force layout')
 
           // Reassert variables from scope for update()
-          confidenceMin = scope.config.confidenceMin;
-          confidenceMax = scope.config.confidenceMax;
-          dateMin = scope.config.dateMin;
-          dateMax = scope.config.dateMax;
-          complexity = scope.config.networkComplexity;
-          update(addedNodes, confidenceMin, confidenceMax, dateMin, dateMax, complexity, args.layout);
+          // confidenceMin = scope.config.confidenceMin;
+          // confidenceMax = scope.config.confidenceMax;
+          // dateMin = scope.config.dateMin;
+          // dateMax = scope.config.dateMax;
+          // complexity = scope.config.networkComplexity;
+          // update(addedNodes, confidenceMin, confidenceMax, dateMin, dateMax, complexity, args.layout, simulation);
+          updatePersonNetwork(args, args.layout);
         });
 
       }
