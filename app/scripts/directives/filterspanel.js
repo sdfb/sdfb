@@ -12,6 +12,7 @@ angular.module('redesign2017App')
       templateUrl: './views/filters-panel.html',
       restrict: 'E',
       link: function postLink(scope, element, attrs) {
+        scope.reloadFilters = function() {
         var confidenceMin = scope.config.confidenceMin,
           confidenceMax = scope.config.confidenceMax,
           dateMin = scope.config.dateMin,
@@ -25,6 +26,9 @@ angular.module('redesign2017App')
           })[0],
           links = [];
 
+        var args = scope.data;
+
+        args.layout = scope.config.viewMode;
         // Populate links array from JSON
         scope.data.data.attributes.connections.forEach(function(c) {
           // Retain ID and type from level above in JSON
@@ -98,9 +102,7 @@ angular.module('redesign2017App')
             scope.$evalAsync(function() {
               scope.config.networkComplexity = complexity;
               // Trigger force layout update
-              scope.$broadcast('Update the force layout', {
-                layout: scope.config.viewMode
-              });
+              scope.$broadcast('force layout update', args);
             });
           });
         }
@@ -346,9 +348,7 @@ angular.module('redesign2017App')
               scope.$watchCollection('[config.confidenceMin, config.confidenceMax]', function(newValues, oldValues) {
                 if (newValues != oldValues) {
                   console.log('brushed with new values');
-                  scope.$broadcast('Update the force layout', {
-                    layout: scope.config.viewMode
-                  });
+                  scope.$broadcast('force layout update', args);
                 }
               })
             });
@@ -546,14 +546,13 @@ angular.module('redesign2017App')
               scope.$watchCollection('[config.dateMin, config.dateMax]', function(newValues, oldValues) {
                 if (newValues != oldValues) {
                   console.log('brushed with new values');
-                  scope.$broadcast('Update the force layout', {
-                    layout: scope.config.viewMode
-                  });
+                  scope.$broadcast('force layout update', args);
                 }
               })
             });
           }
         }
+      }
 
       }
     };

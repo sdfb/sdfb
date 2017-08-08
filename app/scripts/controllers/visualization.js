@@ -62,7 +62,7 @@ angular.module('redesign2017App')
       if ($scope.config.ids.length === 1) {
         result.layout = 'individual-force';
         $scope.config.viewMode = 'individual-force';
-        $scope.$broadcast('Update the force layout', result);
+        $scope.$broadcast('force layout generate', result);
       }
       else if ($scope.config.ids.length === 2) {
         $scope.config.viewMode = 'shared-network';
@@ -121,9 +121,11 @@ angular.module('redesign2017App')
 
         // console.log('changed layout');
         if (newValue == 'individual-force') {
-          $scope.$broadcast('Update the force layout', result);
+          $scope.data.layout = 'individual-force';
+          $scope.$broadcast('force layout update', $scope.data);
         } else if (newValue == 'individual-concentric') {
-          $scope.$broadcast('Update the force layout', { layout: 'individual-concentric' });
+          $scope.data.layout = 'individual-concentric';
+          $scope.$broadcast('force layout update', $scope.data);
         } else if (newValue == 'all') {
           apiService.getFile('./data/allgroups.json').then(function successCallback(response) {
             $scope.$broadcast('Show groups graph', response);

@@ -17,97 +17,93 @@ angular.module('redesign2017App')
         var svg = d3.select(element[0]).select('svg'), // Root svg element
           width = +svg.node().getBoundingClientRect().width, // Width of viz
           height = +svg.node().getBoundingClientRect().height, // Height of viz
-          // json = scope.data, // Get sample data from scope
           simulation,
-          node,
-          link,
-          label,
-          cursor,
-          container,
-          sourceId;
+          sourceId,
+          zoomfactor = 1; // Controls zoom buttons, begins at default scale;
 
-        function updatePersonNetwork(json, layout) {
+          svg.append('rect') // Create container for visualization
+            .attr('width', '100%')
+            .attr('height', '100%')
+            .attr('fill', 'transparent')
+            .on('click', function() {
+              // Clear selections on nodes and labels
+              d3.selectAll('.node, g.label').classed('selected', false);
+
+              // Restore nodes and links to normal opacity. (see toggleClick() below)
+              d3.selectAll('.link')
+                .classed('faded', false)
+
+              d3.selectAll('.node')
+                .classed('faded', false)
+
+              // Must select g.labels since it selects elements in other part of the interface
+              d3.selectAll('g.label')
+                .classed('hidden', function(d) {
+                  return (d.distance < 2) ? false : true;
+                });
+
+              // reset group bar
+              d3.selectAll('.group').classed('active', false);
+              d3.selectAll('.group').classed('unactive', false);
+
+              // update selction and trigger event for other directives
+              scope.currentSelection = {};
+              scope.$apply(); // no need to trigger events, just apply
+            })
+            .on('mousemove', mousemove);
+
+          var container = svg.append('g'); // Create container for nodes and edges
+
+          // Separate groups for links, nodes, and edges
+          var link = container.append("g")
+            .attr("class", "links")
+            .selectAll(".link");
+
+          var node = container.append("g")
+            .attr("class", "nodes")
+            .selectAll(".node");
+
+          var label = container.append("g")
+            .attr("class", "labels")
+            .selectAll(".label");
+
+          var cursor = container.append("circle")
+            .attr("r", 12.5)
+            .attr("fill", "none")
+            .attr("stroke", "orange")
+            .attr("stroke-width", 1.5)
+            .attr("opacity", 0)
+            .attr("transform", "translate(-100,-100)")
+            .attr("class", "cursor");
+
+        function getNodesAndLinks(json) {
+          var nodes = json.included, // All people data
+              links = []; // All relationship data, fill array belowre
+
+          // Populate links array from JSON
+          json.data.attributes.connections.forEach(function(c) {
+            // Retain ID and type from level above in JSON
+            c.attributes.id = c.id;
+            c.attributes.type = c.type;
+            links.push(c.attributes);
+          });
+
+          return [nodes, links];
+        }
+
+        function generatePersonNetwork(json) {
 
         sourceId = json.data.attributes.primary_people; // ID of searched node (Bacon in sample data)
 
-        var  confidenceMin = scope.config.confidenceMin, // Minimum edge weight (default 60)
-          confidenceMax = scope.config.confidenceMax, // Maximum edge weight (default 100)
-          dateMin = scope.config.dateMin, // Minimum date range (source's birthdate)
-          dateMax = scope.config.dateMax, // Maximum date range (source's death date)
-          complexity = scope.config.networkComplexity, // Visual density (default 2)
-          zoomfactor = 1, // Controls zoom buttons, begins at default scale
-          endTime = 500, // Length of viz transition
-          toggle = 0, // Toggle for ego networks on click (see toggleClick())
-          oldLayout = 'individual-force', // Keep track of whether the layout has changed
-          addedNodes = [], // Nodes user has added to the graph
-          nodeAdded = false; // Toggle for user-added actions
 
 
-        var nodes = json.included, // All people data
-            links = []; // All relationship data, fill array belowre
 
-        // Populate links array from JSON
-        json.data.attributes.connections.forEach(function(c) {
-          // Retain ID and type from level above in JSON
-          c.attributes.id = c.id;
-          c.attributes.type = c.type;
-          links.push(c.attributes);
-        });
+        var nodesAndLinks = getNodesAndLinks(json),
+            nodes = nodesAndLinks[0],
+            links = nodesAndLinks[1];
 
-        svg.append('rect') // Create container for visualization
-          .attr('width', '100%')
-          .attr('height', '100%')
-          .attr('fill', 'transparent')
-          .on('click', function() {
-            // Clear selections on nodes and labels
-            d3.selectAll('.node, g.label').classed('selected', false);
 
-            // Restore nodes and links to normal opacity. (see toggleClick() below)
-            d3.selectAll('.link')
-              .classed('faded', false)
 
-            d3.selectAll('.node')
-              .classed('faded', false)
-
-            // Must select g.labels since it selects elements in other part of the interface
-            d3.selectAll('g.label')
-              .classed('hidden', function(d) {
-                return (d.distance < 2) ? false : true;
-              });
-
-            // reset group bar
-            d3.selectAll('.group').classed('active', false);
-            d3.selectAll('.group').classed('unactive', false);
-
-            // update selction and trigger event for other directives
-            scope.currentSelection = {};
-            scope.$apply(); // no need to trigger events, just apply
-          })
-          .on('mousemove', mousemove);
-
-        container = svg.append('g'); // Create container for nodes and edges
-
-        // Separate groups for links, nodes, and edges
-        link = container.append("g")
-          .attr("class", "links")
-          .selectAll(".link");
-
-        node = container.append("g")
-          .attr("class", "nodes")
-          .selectAll(".node");
-
-        label = container.append("g")
-          .attr("class", "labels")
-          .selectAll(".label");
-
-        cursor = container.append("circle")
-          .attr("r", 12.5)
-          .attr("fill", "none")
-          .attr("stroke", "orange")
-          .attr("stroke-width", 1.5)
-          .attr("opacity", 0)
-          .attr("transform", "translate(-100,-100)")
-          .attr("class", "cursor");
 
 
         //              //
@@ -124,9 +120,30 @@ angular.module('redesign2017App')
           .alphaDecay(0.05)
           .on("tick", ticked);
 
+        }
+
+        function updatePersonNetwork(json) {
+
           /* The main update function draws the all of the elements of the visualization
           and keeps them up to date using the D3 general update pattern. Takes as variables ranges
           for confidence and date, as well as a complexity value and a layout type (force or concentric) */
+
+          var  confidenceMin = scope.config.confidenceMin, // Minimum edge weight (default 60)
+            confidenceMax = scope.config.confidenceMax, // Maximum edge weight (default 100)
+            dateMin = scope.config.dateMin, // Minimum date range (source's birthdate)
+            dateMax = scope.config.dateMax, // Maximum date range (source's death date)
+            complexity = scope.config.networkComplexity, // Visual density (default 2)
+            endTime = 500, // Length of viz transition
+            toggle = 0, // Toggle for ego networks on click (see toggleClick())
+            oldLayout = 'individual-force', // Keep track of whether the layout has changed
+            addedNodes = [], // Nodes user has added to the graph
+            nodeAdded = false; // Toggle for user-added actions
+
+          var layout = json.layout;
+
+          var nodesAndLinks = getNodesAndLinks(json),
+              nodes = nodesAndLinks[0],
+              links = nodesAndLinks[1];
 
           var startTime = d3.now();
           simulation.on("end", function() {
@@ -341,11 +358,11 @@ angular.module('redesign2017App')
               return d.labelBBox.height + paddingTopBottom;
             });
 
-          // if (oldLayout == layout) { // If layout has not changed
-          //   simulation.alphaTarget(0).restart(); // Don't reheat viz
-          // } else { //If layout has changed from force to concentric or vice versa
-            simulation.alpha(1).alphaDecay(0.05).restart(); // Reheat viz
-          // }
+          if (oldLayout == layout) { // If layout has not changed
+            simulation.alphaTarget(0).restart(); // Don't reheat viz
+          } else { //If layout has changed from force to concentric or vice versa
+            simulation.alphaTarget(0.3).restart(); // Reheat viz
+          }
 
           oldLayout = layout;
 
@@ -636,6 +653,7 @@ angular.module('redesign2017App')
         //Functions for zoom and recenter buttons
         scope.centerNetwork = function() {
           console.log("Recenter");
+          var nodes = scope.data.included;
           var sourceNode = nodes.filter(function(d) { return (d.id == sourceId) })[0]; // Get source node element by its ID
           // Transition source node to center of rect
           svg.transition().duration(750).call(zoom.transform, d3.zoomIdentity.translate(width / 2 - sourceNode.x, height / 2 - sourceNode.y));
@@ -700,25 +718,24 @@ angular.module('redesign2017App')
           });
         }
 
-        function update(addedNodes, confidenceMin, confidenceMax, dateMin, dateMax, complexity, layout, simulation) {
-
-        }
-
         // Trigger update automatically when the directive code is executed entirely (e.g. at loading)
         // update(addedNodes, confidenceMin, confidenceMax, dateMin, dateMax, complexity, 'individual-force', simulation);
 
         // update triggered from the controller
-        scope.$on('Update the force layout', function(event, args) {
-          console.log('ON: Update the force layout')
+        scope.$on('force layout generate', function(event, args) {
+          console.log('ON: force layout generate')
 
-          // Reassert variables from scope for update()
-          // confidenceMin = scope.config.confidenceMin;
-          // confidenceMax = scope.config.confidenceMax;
-          // dateMin = scope.config.dateMin;
-          // dateMax = scope.config.dateMax;
-          // complexity = scope.config.networkComplexity;
-          // update(addedNodes, confidenceMin, confidenceMax, dateMin, dateMax, complexity, args.layout, simulation);
-          updatePersonNetwork(args, args.layout);
+          scope.data = args;
+
+          console.log(scope.data);
+          generatePersonNetwork(args);
+          updatePersonNetwork(args);
+          scope.reloadFilters();
+        });
+
+        scope.$on('force layout update', function(event, args) {
+          console.log(args);
+          updatePersonNetwork(args);
         });
 
       }
