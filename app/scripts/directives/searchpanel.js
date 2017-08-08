@@ -7,11 +7,11 @@
  * # searchPanel
  */
 angular.module('redesign2017App')
-  .directive('searchPanel', function(apiService) {
+  .directive('searchPanel', ['$location', 'apiService', function($location, apiService) {
     return {
       templateUrl: './views/search-panel.html',
       restrict: 'E',
-      link: function postLink(scope, element, attrs, location) {
+      link: function postLink(scope, element, attrs) {
         // element.text('this is the searchPanel directive');
         scope.peopleToSelect = ['Francis Bacon (1600)', 'Francis Bacon (1587)', 'Francis Bacon (1561)', 'William Shakespeare (1564)', 'John Milton (1562)', 'Alice Spencer (1559)'];
         scope.person = { 'selected': scope.peopleToSelect[1] }
@@ -63,16 +63,18 @@ angular.module('redesign2017App')
           // var ids = [10004371, 10013232];
           // shakespeare + milton
           var ids = [10010937,10008309];
+          // $route.updateParams({people: ids.toString()});
+          $location.search('people', ids.toString());
           // Sir Thomas Fanshawe + Sir Edwin Sandys
           // ids = [10004129,10010685];
-          if (ids.length == 2) {
-            console.log('Calling shared network...')
-            apiService.getNetwork(ids).then(function(result) {
-              console.log('shared network between',ids.toString(),'\n',result);
-              scope.config.viewMode = 'shared-network';
-              scope.$broadcast('shared network query', result);
-            })
-          }
+          // if (ids.length == 2) {
+          //   console.log('Calling shared network...')
+          //   apiService.getNetwork(ids).then(function(result) {
+          //     console.log('shared network between',ids.toString(),'\n',result);
+          //     scope.config.viewMode = 'shared-network';
+          //     scope.$broadcast('shared network query', result);
+          //   })
+          // }
         };
 
         scope.groupTypeahead = { 'selected': undefined }
@@ -97,4 +99,4 @@ angular.module('redesign2017App')
         // scope.groupTypeaheadSelected = scope.groupsTypeahead[0];
       }
     };
-  });
+  }]);

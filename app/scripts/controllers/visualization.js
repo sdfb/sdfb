@@ -8,7 +8,7 @@
  * Controller of the redesign2017App
  */
 angular.module('redesign2017App')
-  .controller('VisualizationCtrl', function($scope, $uibModal, $http, $log, $document, $routeParams, apiService, initialConfig, initialData) {
+  .controller('VisualizationCtrl', function($scope, $uibModal, $http, $log, $document, $routeParams, $route, apiService, initialConfig, initialData) {
     // console.log(initialConfig,initialData);
     $scope.config = initialConfig;
     $scope.data = initialData;
@@ -54,24 +54,22 @@ angular.module('redesign2017App')
       });
     };
 
-    // $scope.getIDs = function(){
-      // $http.get('/#!/visualization/'+$routeParams.ids)/*, {params: {'ids': $scope.config.ids }})*/.then(
-      //   function(success){
-          console.log('Calling person network...')
-          $scope.config.ids = $routeParams.ids;
-          apiService.getNetwork($routeParams.ids).then(function(result) {
-            console.log('person network of',$routeParams.ids.toString(),'\n',result);
-            result.layout = 'individual-force';
-            $scope.config.viewMode = 'individual-force';
-            // scope.config.ids = $rou;
-            $scope.$broadcast('Update the force layout', result);
-          });
-        // },
-      //   function(error){
-      //     console.log(error);
-      //   }
-      // );
-    // }
+    console.log('Calling person network...')
+    $scope.config.ids = $routeParams.people.split(',');
+    console.log($routeParams.people.split(','));
+    apiService.getNetwork($routeParams.people).then(function(result) {
+      console.log('person network of',$routeParams.people.toString(),'\n',result);
+      if ($scope.config.ids.length === 1) {
+        result.layout = 'individual-force';
+        $scope.config.viewMode = 'individual-force';
+        $scope.$broadcast('Update the force layout', result);
+      }
+      else if ($scope.config.ids.length === 2) {
+        $scope.config.viewMode = 'shared-network';
+        $scope.$broadcast('shared network query', result);
+      }
+    });
+
 
     $scope.data4groups = function() {
       console.log('Creating data4groups');
