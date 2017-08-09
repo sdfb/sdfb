@@ -35,7 +35,7 @@ angular
               viewObject:0, //0 = people, 1 = groups
               viewMode:'individual-force',
               // viewMode:'all',
-              // ids: 10000473,
+              ids: [10000473],
               title: 'undefined title',
               networkComplexity: '1.75',
               dateMin:1500,

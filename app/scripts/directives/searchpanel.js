@@ -43,8 +43,8 @@ angular.module('redesign2017App')
           // ids = [10004129,10010685];
           if (ids.length == 1) {
             console.log('Calling person network...')
-            location.path('/visualization/'+ids.toString());
-            scope.$apply();
+            $location.search('people', ids.toString());
+            // scope.$apply();
             // apiService.getNetwork(ids).then(function(result) {
             //   console.log('person network of',ids.toString(),'\n',result);
             //   result.layout = 'individual-force';

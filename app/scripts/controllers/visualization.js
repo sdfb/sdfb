@@ -8,7 +8,7 @@
  * Controller of the redesign2017App
  */
 angular.module('redesign2017App')
-  .controller('VisualizationCtrl', function($scope, $uibModal, $http, $log, $document, $routeParams, $route, apiService, initialConfig, initialData) {
+  .controller('VisualizationCtrl', function($scope, $uibModal, $http, $log, $document, $routeParams, $route, $location, apiService, initialConfig, initialData) {
     // console.log(initialConfig,initialData);
     $scope.config = initialConfig;
     $scope.data = initialData;
@@ -17,6 +17,9 @@ angular.module('redesign2017App')
     $scope.peopleFinderClosed = true;
     $scope.addNodeClosed = true;
     $scope.addLinkClosed = true;
+    if ($routeParams.people === undefined) {
+      $location.search('people', $scope.config.ids.toString());
+    }
 
     // Container for data realted to groups
     $scope.groups = {};
