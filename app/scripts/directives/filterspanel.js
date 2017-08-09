@@ -12,37 +12,72 @@ angular.module('redesign2017App')
       templateUrl: './views/filters-panel.html',
       restrict: 'E',
       link: function postLink(scope, element, attrs) {
+        var confidenceMin,
+            confidenceMax,
+            dateMin,
+            dateMax,
+            complexity,
+            sources,
+            links,
+            args,
+            startYear,
+            endYear;
+
         scope.reloadFilters = function() {
-        var confidenceMin = scope.config.confidenceMin,
+          sources = scope.data.data.attributes.primary_people;
+          if (sources.length === 1) {
+            var sourceId = sources[0], // ID of node the user searched for.
+            sourceNode = getNodeInfo(sourceId); // Get object of attributes for sourceNode
+            startYear = sourceNode.birth_year;
+            endYear = sourceNode.death_year;
+            createDensityButtons();
+          }
+          else if (sources.length === 2) {
+            var sourceId1 = sources[0],
+                sourceId2 = sources[1],
+                sourceNode1 = getNodeInfo(sourceId1),
+                sourceNode2 = getNodeInfo(sourceId2),
+                birthYear1 = sourceNode1.birth_year,
+                birthYear2 = sourceNode2.birth_year,
+                deathYear1 = sourceNode1.death_year,
+                deathYear2 = sourceNode2.death_year;
+
+            startYear = Math.min(birthYear1, birthYear2);
+            endYear = Math.max(deathYear1, deathYear2);
+            createConnectionButtons();
+          }
+
+          confidenceMin = scope.config.confidenceMin,
           confidenceMax = scope.config.confidenceMax,
           dateMin = scope.config.dateMin,
           dateMax = scope.config.dateMax,
           complexity = scope.config.networkComplexity,
-          sourceId = scope.data.data.attributes.primary_people[0], // ID of node the user searched for.
-          sourceNode = scope.data.included.filter(function(d) { // Data corresponding to sourceID
-            if (d.id.toString() === sourceId) {
+          links = [],
+          args = scope.data;
+
+          args.layout = scope.config.viewMode;
+          // Populate links array from JSON
+          scope.data.data.attributes.connections.forEach(function(c) {
+            // Retain ID and type from level above in JSON
+            c.attributes.id = c.id;
+            c.attributes.type = c.type;
+            links.push(c.attributes);
+          });
+
+
+          createConfidenceGraph();
+          createDateGraph();
+        }
+
+        function getNodeInfo(id) {
+          var sourceNode = scope.data.included.filter(function(d) { // Data corresponding to sourceID
+            if (d.id.toString() === id) {
               return d;
             };
-          })[0],
-          links = [];
-
-        var args = scope.data;
-
-        args.layout = scope.config.viewMode;
-        // Populate links array from JSON
-        scope.data.data.attributes.connections.forEach(function(c) {
-          // Retain ID and type from level above in JSON
-          c.attributes.id = c.id;
-          c.attributes.type = c.type;
-          links.push(c.attributes);
-        });
-
-
-        sourceNode = sourceNode.attributes; // Get object of attributes for sourceNode
-
-        createDensityButtons();
-        createConfidenceGraph();
-        createDateGraph();
+          })[0];
+          sourceNode = sourceNode.attributes;
+          return sourceNode;
+        }
 
         function showTooltip(d) {
           $('.interaction-info').text(function() {
@@ -54,8 +89,12 @@ angular.module('redesign2017App')
               return 'All 1-degree people and 2-degree people with more than one 1-degree relationship';
             } else if (d == 2) {
               return 'All people; relationships between 1-degree and 2-degree people only';
-            } else {
+            } else if (d == 2.5){
               return 'All 1- and 2-degree people and relationships';
+            } else if (d == 'direct_connections') {
+              return 'People on a direct path between the two searched people'
+            } else if (d === 'all_connections') {
+              return 'All people within one degree of either searched person'
             }
           });
         }
@@ -107,6 +146,49 @@ angular.module('redesign2017App')
           });
         }
 
+        function createConnectionButtons() {
+          // Radio buttons for network complexity.
+          var complexityForm = d3.select('.connection-container').append('form'); // Create form
+
+          var complexityBox = complexityForm.selectAll('input') // Data join with 5-number scale
+            .data(['direct_connections', 'all_connections'])
+            .enter().append('div');
+
+          var complexityButtons = complexityBox.append('input')
+            .attr('type', 'radio')
+            .attr('name', 'complexity')
+            .attr('id', function(d) {
+              return 'radio-' + d;
+            })
+            .attr('checked', function(d) {
+              if (d == complexity) {
+                return 'checked';
+              }
+            })
+            .attr('value', function(d) {
+              return d;
+            });
+          complexityBox.append('label')
+            .attr('for', function(d) {
+              return 'radio-' + d;
+            })
+            .append('span')
+            .on("mouseover", showTooltip)
+            .on("mouseout", resetTooltip);
+
+          complexityButtons.on('change', function() {
+
+            // On change update value of networkComplexity config variable
+            complexity = this.value;
+            console.log(complexity);
+            scope.$evalAsync(function() {
+              scope.config.networkComplexity = complexity;
+              // Trigger force layout update
+              scope.$broadcast('shared network update', args);
+            });
+          });
+        }
+
         function countConfidenceFrequency() {
           // Create counts off all confidence values
           var confidence = d3.range(60, 101);
@@ -129,7 +211,7 @@ angular.module('redesign2017App')
 
         function countDateFrequency() {
           // Same as above with dates
-          var years = d3.range(parseInt(sourceNode.birth_year), parseInt(sourceNode.death_year) + 1); // Initial range is birth and death of source node
+          var years = d3.range(parseInt(startYear), parseInt(endYear) + 1); // Initial range is birth and death of source node
           var frequencies = {};
           years.forEach(function(y) {
             frequencies[y.toString()] = 0;
@@ -348,7 +430,12 @@ angular.module('redesign2017App')
               scope.$watchCollection('[config.confidenceMin, config.confidenceMax]', function(newValues, oldValues) {
                 if (newValues != oldValues) {
                   console.log('brushed with new values');
-                  scope.$broadcast('force layout update', args);
+                  if (sources.length === 1) {
+                    scope.$broadcast('force layout update', args);
+                  }
+                  else if (sources.length === 2) {
+                    scope.$broadcast('shared network update', args);
+                  }
                 }
               })
             });
@@ -496,7 +583,7 @@ angular.module('redesign2017App')
             });
 
             var s = d3.event.selection || dateX.range();
-            var convertDate = d3.scaleLinear().domain([0, dateWidth-4]).range([sourceNode.birth_year, sourceNode.death_year]);
+            var convertDate = d3.scaleLinear().domain([0, dateWidth-4]).range([startYear, endYear]);
             dateMin = Math.round(convertDate(s[0]));
             dateMax = Math.round(convertDate(s[1]));
 
@@ -536,7 +623,7 @@ angular.module('redesign2017App')
 
           function brushed() {
             var s = d3.event.selection || dateX.range();
-            var convertDate = d3.scaleLinear().domain([0, dateWidth-4]).range([sourceNode.birth_year, sourceNode.death_year]);
+            var convertDate = d3.scaleLinear().domain([0, dateWidth-4]).range([startYear, endYear]);
             dateMin = Math.round(convertDate(s[0]));
             dateMax = Math.round(convertDate(s[1]));
 
@@ -546,13 +633,18 @@ angular.module('redesign2017App')
               scope.$watchCollection('[config.dateMin, config.dateMax]', function(newValues, oldValues) {
                 if (newValues != oldValues) {
                   console.log('brushed with new values');
-                  scope.$broadcast('force layout update', args);
+                  if (sources.length === 1) {
+                    scope.$broadcast('force layout update', args);
+                  }
+                  else if (sources.length === 2) {
+                    scope.$broadcast('shared network update', args);
+                  }
                 }
               })
             });
           }
         }
-      }
+
 
       }
     };

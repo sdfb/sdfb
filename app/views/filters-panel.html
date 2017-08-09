@@ -1,6 +1,6 @@
 <section class="force-layout">
   <h3 class="">Filters</h3>
-  <div ng-show=" config.viewMode == 'individual-force' || config.viewMode == 'individual-concentric'">
+  <div ng-show=" config.viewMode == 'individual-force' || config.viewMode == 'individual-concentric' || config.viewMode == 'shared-network'">
     <div>
       <h4>Relationships confidence level</h4>
       <div class="confidence-container"></div>
@@ -11,7 +11,7 @@
       <div class="date-container"></div>
       <h5>Temporal window in which relationships existed</h5>
     </div>
-    <div>
+    <div ng-show=" config.viewMode == 'individual-force' || config.viewMode == 'individual-concentric'" >
       <h4>Visual density</h4>
       <div class="legend-line"></div>
       <div class="density-container"></div>
@@ -24,8 +24,16 @@
       </div>
       <h5 class="interaction-info">Hover on a value to learn more</h5>
     </div>
-  </div>
-  <div ng-show=" config.viewMode == 'shared-network'">
+    <div ng-show=" config.viewMode == 'shared-network'" >
+      <h4>Visual density</h4>
+      <div class="legend-line"></div>
+      <div class="connection-container"></div>
+      <div class="flex-container">
+        <div class="flex-item legend-text">Direct Connections</div>
+        <div class="flex-item legend-text">All Connections</div>
+      </div>
+      <h5 class="interaction-info">Hover on a value to learn more</h5>
+    </div>
   </div>
   <div ng-show=" config.viewMode == 'all'">
     <div>

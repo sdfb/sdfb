@@ -133,7 +133,7 @@ angular.module('redesign2017App')
             dateMin = scope.config.dateMin, // Minimum date range (source's birthdate)
             dateMax = scope.config.dateMax, // Maximum date range (source's death date)
             complexity = scope.config.networkComplexity, // Visual density (default 2)
-            endTime = 500, // Length of viz transition
+            endTime, // Length of viz transition
             toggle = 0, // Toggle for ego networks on click (see toggleClick())
             oldLayout = 'individual-force', // Keep track of whether the layout has changed
             addedNodes = [], // Nodes user has added to the graph
@@ -726,8 +726,6 @@ angular.module('redesign2017App')
           console.log('ON: force layout generate')
 
           scope.data = args;
-
-          console.log(scope.data);
           generatePersonNetwork(args);
           updatePersonNetwork(args);
           scope.reloadFilters();

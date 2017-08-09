@@ -840,7 +840,7 @@ filters-panel.panel h5 {
   font-style: italic;
 }
 
-.density-container form {
+.density-container form, .connection-container form {
   -ms-flex-line-pack: center;
   align-content: center;
   -webkit-box-align: center;
@@ -858,6 +858,8 @@ filters-panel.panel h5 {
     z-index: 99;
   }
 }
+
+
 
 input[name="complexity"] {
   display: none;

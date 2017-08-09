@@ -15,11 +15,108 @@ angular.module('redesign2017App')
 
         var svg = d3.select(element[0]).select('svg#shared-network'),
           width = +svg.node().getBoundingClientRect().width,
-          height = +svg.node().getBoundingClientRect().height
+          height = +svg.node().getBoundingClientRect().height,
+          simulation,
+          sources,
+          zoomfactor = 1;
+
+        svg.append('rect') // Create container for visualization
+          .attr('width', '100%')
+          .attr('height', '100%')
+          .attr('fill', 'transparent')
+          .on('click', function() {
+            // Clear selections on nodes and labels
+            d3.selectAll('.node, g.label').classed('selected', false);
+
+            // Restore nodes and links to normal opacity. (see toggleClick() below)
+            d3.selectAll('.link')
+              .classed('faded', false)
+
+            d3.selectAll('.node')
+              .classed('faded', false)
+
+            // Must select g.labels since it selects elements in other part of the interface
+            d3.selectAll('g.label')
+              .classed('hidden', function(d) {
+                return (d.distance === 0 || d.distance === 3) ? false : true;
+              });
+
+            // reset group bar
+            d3.selectAll('.group').classed('active', false);
+            d3.selectAll('.group').classed('unactive', false);
+
+            // update selction and trigger event for other directives
+            scope.currentSelection = {};
+            scope.$apply(); // no need to trigger events, just apply
+          });
+          // .on('mousemove', mousemove);
+
+        var container = svg.append('g'); // Create container for nodes and edges
+
+        // Separate groups for links, nodes, and edges
+        var link = container.append("g")
+          .attr("class", "links")
+          .selectAll(".link");
+
+        var node = container.append("g")
+          .attr("class", "nodes")
+          .selectAll(".node");
+
+        var label = container.append("g")
+          .attr("class", "labels")
+          .selectAll(".label");
+
+        var cursor = container.append("circle")
+          .attr("r", 12.5)
+          .attr("fill", "none")
+          .attr("stroke", "orange")
+          .attr("stroke-width", 1.5)
+          .attr("opacity", 0)
+          .attr("transform", "translate(-100,-100)")
+          .attr("class", "cursor");
+
+        function getNodesAndLinks(json) {
+          var nodes = json.included, // All people data
+              links = []; // All relationship data, fill array belowre
+
+          // Populate links array from JSON
+          json.data.attributes.connections.forEach(function(c) {
+            // Retain ID and type from level above in JSON
+            c.attributes.id = c.id;
+            c.attributes.type = c.type;
+            links.push(c.attributes);
+          });
+
+          return [nodes, links];
+        }
+
+        function generateSharedNetwork(json) {
+
+        sources = json.data.attributes.primary_people; // IDs of searched nodes
+
+        var nodesAndLinks = getNodesAndLinks(json),
+            nodes = nodesAndLinks[0],
+            links = nodesAndLinks[1];
+
+        //              //
+        //  SIMULATION  //
+        //              //
+
+        simulation = d3.forceSimulation(nodes)
+          .force("center", d3.forceCenter(width / 2, height / 2)) // Keep graph from floating off-screen
+          .force("charge", d3.forceManyBody().strength(-100)) // Charge force works as gravity
+          .force("link", d3.forceLink(links).id(function(d) { return d.id; }).iterations(2)) //Link force accounts for link distance
+          .force("collide", d3.forceCollide().iterations(0)) // in the tick function will be evaluated the moment in which turn on the anticollision (iterations > 1)
+          // general force settings
+          .alpha(1)
+          .alphaDecay(0.05)
+          .on("tick", ticked);
+
+        }
 
         // The function accepts a new variable (array of sources)
         function parseComplexity(thresholdLinks, complexity, sources) {
-          
+
           var sourceId1 = sources[0]
           var sourceId2 = sources[1]
           var oneDegreeNodes = [];
@@ -67,6 +164,12 @@ angular.module('redesign2017App')
 
           var newNodes = oneDegreeNodes;
 
+          if (complexity === "direct_connections") {
+            newNodes = newNodes.filter(function(d) {return d.distance === 0 || d.distance === 2 || d.distance === 3; });
+            newLinks = newLinks.filter(function(l) {
+              return newNodes.indexOf(l.source) != -1 && newNodes.indexOf(l.target) != -1;
+            });
+          }
           return [newNodes, newLinks];
 
         }
@@ -74,38 +177,6 @@ angular.module('redesign2017App')
 
 
         function updateSharedNetwork(json) {
-
-          var nodes = json.included;
-          var links = [];
-          // Populate links array from JSON
-          json.data.attributes.connections.forEach(function(c) {
-            // Retain ID and type from level above in JSON
-            c.attributes.id = c.id;
-            c.attributes.type = c.type;
-            links.push(c.attributes);
-          });
-
-          var simulation = d3.forceSimulation()
-            .force("link", d3.forceLink().id(function(d) {
-              return d.id;
-            })) //Link force accounts for link distance
-            .force("charge", d3.forceManyBody().strength(-75)) // Charge force works as gravity
-            .force("center", d3.forceCenter(width / 2, height / 2)) // Keep graph from floating off-screen
-            .force("collide", d3.forceCollide().radius(20)); //function(d) { // Collision detection
-            //   if (d.id in sources) { // Account for larger source node
-            //     return 26;
-            //   } else {
-            //     return 13;
-            //   }
-            // }));
-
-          simulation
-            .nodes(nodes)
-            .on("tick", ticked);
-
-          simulation.force("link")
-            .links(links);
-
 
 
           // console.log(links);
@@ -126,37 +197,15 @@ angular.module('redesign2017App')
             dateMin = scope.config.dateMin,
             dateMax = scope.config.dateMax,
             complexity = scope.config.networkComplexity,
-            sources = json.data.attributes.primary_people;
+            endTime;
 
+          var nodesAndLinks = getNodesAndLinks(json),
+              links = nodesAndLinks[1];
 
-          svg.append('rect') // Create container for visualization
-            .attr('width', '100%')
-            .attr('height', '100%')
-            .attr('fill', 'transparent')
-            .on('click', function() {
-            // Clear selections on nodes and labels
-            d3.selectAll('.node, g.label').classed('selected', false);
-
-            // Restore nodes and links to normal opacity. (see toggleClick() below)
-            d3.selectAll('.link')
-              .classed('faded', false)
-
-            d3.selectAll('.node')
-              .classed('faded', false)
-
-            // Must select g.labels since it selects elements in other part of the interface
-            d3.selectAll('g.label')
-              .classed('hidden', function(d) {
-                return (d.distance === 0) ? false : true;
-              });
-
-            // reset group bar
-            d3.selectAll('.group').classed('active', false);
-            d3.selectAll('.group').classed('unactive', false);
-
-            // update selction and trigger event for other directives
-            scope.currentSelection = {};
-            scope.$apply(); // no need to trigger events, just apply
+          var startTime = d3.now();
+          simulation.on("end", function() {
+            var endTime = d3.now();
+            console.log('Spatialization completed in', (endTime - startTime) / 1000, 'sec.');
           });
 
           var thresholdLinks = links.filter(function(d) {
@@ -170,6 +219,7 @@ angular.module('redesign2017App')
           var graph = {}
             // Define array of links
           graph.links = newData[1];
+          // console.log(graph.links);
 
           var bridges10 = newData[1].filter(function(d) {
             return d.distance === 2;
@@ -183,8 +233,7 @@ angular.module('redesign2017App')
 
           // Define array of nodes
           graph.nodes = newData[0];
-
-          var container = svg.append('g')
+          console.log(graph.nodes);
 
           //Fixed node positions for source nodes
           var sourceId1 = sources[0],
@@ -204,10 +253,6 @@ angular.module('redesign2017App')
           //          //
           //  LINKS   //
           //          //
-
-          var link = container.append("g")
-            .attr("class", "links")
-            .selectAll(".link");
 
           // Sort "newlinks" array so to have the "altered" links at the end and display them on "foreground"
           graph.links.sort(function(a, b) {
@@ -240,11 +285,6 @@ angular.module('redesign2017App')
           //          //
           //  NODES   //
           //          //
-
-
-          var node = container.append("g")
-            .attr("class", "nodes")
-            .selectAll(".node");
 
           // Data join with only new nodes from parseComplexity()
           node = node.data(graph.nodes, function(d) {
@@ -315,10 +355,6 @@ angular.module('redesign2017App')
           //  LABELS  //
           //          //
 
-          var label = container.append("g")
-            .attr("class", "labels")
-            .selectAll(".label");
-
           // Data join with only new nodes from parseComplexity()
           label = label.data(graph.nodes, function(d) {
             return d.id;
@@ -329,7 +365,7 @@ angular.module('redesign2017App')
           // Create group for the label but define the position later
           var labelEnter = label.enter().append('g')
             .attr("class", function(d) {
-              return (d.distance === 0) ? 'label' : 'label hidden';
+              return (d.distance === 0 || d.distance === 3) ? 'label' : 'label hidden';
             });
 
           label.selectAll('*').remove();
@@ -341,12 +377,12 @@ angular.module('redesign2017App')
           label.append('text')
             .text(function(d) {
               return d.attributes.name;
-            })
+            });
 
           // Get the Bounding Box of the text created
           d3.selectAll('.label text').each(function(d, i) {
             if (!d.labelBBox) {
-              d.labelBBox = this.getBBox();
+              d.labelBBox = this.getBoundingClientRect();
             }
           });
 
@@ -381,7 +417,7 @@ angular.module('redesign2017App')
           //   // Transition source node to center of rect
           //   svg.transition().duration(750).call(zoom.transform, d3.zoomIdentity.translate(width/2-sourceNode.x, height/2-sourceNode.y));
           // }
-          //
+
           // scope.zoomIn = function() {
           //   console.log("Zoom In")
           //   svg.transition().duration(500).call(zoom.scaleBy, zoomfactor + .5); // Scale by adjusted zoomfactor
@@ -396,29 +432,40 @@ angular.module('redesign2017App')
             container.attr("transform", "translate(" + d3.event.transform.x + ", " + d3.event.transform.y + ") scale(" + d3.event.transform.k + ")");
           }
 
-          simulation.restart();
+          simulation.alphaTarget(0).restart();
 
+        }
 
+        // Tick function for positioning links, node, and edges on each iteration of
+        // the force simulation
+        function ticked() {
+            link // Since we're using a path instead of a line, links only need "d" attr
+                .attr("d", function(d) {
+                  var dx = d.target.x - d.source.x,
+                      dy = d.target.y - d.source.y,
+                      dr = Math.sqrt(dx * dx + dy * dy);
+                  return "M" + d.source.x + "," + d.source.y + "A" + dr + "," + dr + " 0 0,1 " + d.target.x + "," + d.target.y;
+                });
 
-          // Tick function for positioning links, node, and edges on each iteration of
-          // the force simulation
-          function ticked() {
-              link // Since we're using a path instead of a line, links only need "d" attr
-                  .attr("d", function(d) {
-                    var dx = d.target.x - d.source.x,
-                        dy = d.target.y - d.source.y,
-                        dr = Math.sqrt(dx * dx + dy * dy);
-                    return "M" + d.source.x + "," + d.source.y + "A" + dr + "," + dr + " 0 0,1 " + d.target.x + "," + d.target.y;
-                  });
+            node // Take x and y values from data
+                .attr("cx", function(d) { return d.x; })
+                .attr("cy", function(d) { return d.y; });
 
-              node // Take x and y values from data
-                  .attr("cx", function(d) { return d.x; })
-                  .attr("cy", function(d) { return d.y; });
+            label // Position labels in center of nodes
+                .attr("transform", function(d) {
+                  return "translate(" + (d.x) + "," + (d.y + 2.5) + ")"
+                })
 
-              label // Position labels in center of nodes
-                  .attr("transform", function(d) {
-                    return "translate(" + (d.x) + "," + (d.y + 2.5) + ")"
-                  })
+            if (simulation.alpha() < 0.005 && simulation.force("collide").iterations() == 0) {
+              simulation.force("collide").iterations(1).radius(function(d) { // Collision detection
+                if (d.distance == 0) { // Account for larger source node
+                  return 50 / 2 + 1;
+                } else if (d.distance == 1) {
+                  return 25 / 2 + 1;
+                } else if (d.distance == 2) {
+                  return 12.5 / 2 + 1;
+                }
+              });
             }
         }
 
@@ -543,9 +590,12 @@ angular.module('redesign2017App')
           scope.config.title = "W. Shakespeare and J. Milton - Force Layout"
         }
 
-        scope.$on('shared network query', function(event, args) {
-          console.log(event, args);
+        scope.$on('shared network generate', function(event, args) {
+          console.log(args);
+          scope.data = args;
+          generateSharedNetwork(args);
           updateSharedNetwork(args);
+          scope.reloadFilters();
           // apiService.getFile('./data/sharednetwork.json').then(function(data) {
           //   console.log('sharedData', data);
 
@@ -553,7 +603,12 @@ angular.module('redesign2017App')
 
           // });
 
-        })
+        });
+
+        scope.$on('shared network update', function(event, args) {
+          console.log(args);
+          updateSharedNetwork(args);
+        });
 
 
       }

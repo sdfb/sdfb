@@ -69,7 +69,7 @@ angular.module('redesign2017App')
       }
       else if ($scope.config.ids.length === 2) {
         $scope.config.viewMode = 'shared-network';
-        $scope.$broadcast('shared network query', result);
+        $scope.$broadcast('shared network generate', result);
       }
     });
 
