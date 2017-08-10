@@ -267,10 +267,22 @@ groups-bar:hover::after {
 
 // shared network
 shared-network {
-  .links path {
-    stroke: #aaa;
+  .link {
+    stroke: #b9babc;
     fill: none;
+    shape-rendering: geometricPrecision; // -webkit-transition: all $opacityDuration, stroke-width 0s;
+    // transition: all $opacityDuration, stroke-width 0s;
+    cursor: pointer;
   }
+
+  .link:hover {
+    stroke-width: 3px;
+  }
+
+  .link.altered {
+    stroke: #000;
+  }
+
   .node.degree1 {
     fill: $indirect-acquaintance-fill;
     stroke: $degree0;
@@ -303,10 +315,21 @@ shared-network {
 all-groups-graph {
 
   .link {
+    stroke: #b9babc;
     fill: none;
-    stroke: #434055;
-    opacity: 0.75;
+    shape-rendering: geometricPrecision; // -webkit-transition: all $opacityDuration, stroke-width 0s;
+    // transition: all $opacityDuration, stroke-width 0s;
+    cursor: pointer;
   }
+
+  .link:hover {
+    stroke-width: 3px;
+  }
+
+  .link.altered {
+    stroke: #000;
+  }
+
 
   .node {
     fill: #78729F;
@@ -385,9 +408,19 @@ all-groups-graph {
 single-group-graph {
 
   .link {
+    stroke: #b9babc;
     fill: none;
-    stroke: #434055;
-    opacity: 0.75;
+    shape-rendering: geometricPrecision; // -webkit-transition: all $opacityDuration, stroke-width 0s;
+    // transition: all $opacityDuration, stroke-width 0s;
+    cursor: pointer;
+  }
+
+  .link:hover {
+    stroke-width: 3px;
+  }
+
+  .link.altered {
+    stroke: #000;
   }
 
   .node {

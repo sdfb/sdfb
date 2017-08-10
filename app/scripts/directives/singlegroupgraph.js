@@ -43,8 +43,8 @@ angular.module('redesign2017App')
           .on("click", function() {
             d3.selectAll('#single-group .node, #single-group g.label, #single-group .link').classed('faded', false);
             // update selction and trigger event for other directives
-            // scope.currentSelection = {};
-            // scope.$apply(); // no need to trigger events, just apply
+            scope.currentSelection = {};
+            scope.$apply(); // no need to trigger events, just apply
           });
 
         function zoomed() {
@@ -229,7 +229,24 @@ angular.module('redesign2017App')
             link.exit().remove();
             link = link.enter().append("path")
               .merge(link)
-              .attr("class", "link");
+              .attr("class", "link")
+              .on('click', function(d) {
+                // Toggle ego networks on click of node
+                toggleClick(d, this);
+              })
+              // On hover, display label
+              .on('mouseenter', function(d) {
+                d3.selectAll('g.label').classed('temporary-unhidden', function(e) {
+                  // console.log(typeof e.id);
+                  return (e.id === d.id) ? true: false;
+                })
+              })
+              .on('mouseleave', function(d) {
+                d3.selectAll('g.label').classed('temporary-unhidden', function(e) {
+                  if (e.id == d.id) { return false; }
+                });
+              });
+
             label = label.data(nodes, function(d) { return d.id; });
             label.exit().remove();
             label = label.enter().append("g")
@@ -237,7 +254,8 @@ angular.module('redesign2017App')
               .attr("class", "label")
               .classed("not-visible", function(d, i) {
                 return (i <= 10) ? false : true
-              })
+              });
+
             label.append('rect');
             label.append('text')
               .text(function(d) {
@@ -354,11 +372,36 @@ angular.module('redesign2017App')
             // // This triggers events in groupsbar.js and contextualinfopanel.js when a selection happens
             scope.currentSelection = d;
             scope.$broadcast('selectionUpdated', scope.currentSelection);
+          } else if (d.type == "relationship") { //Handler for when a link is clicked
+
+            // Remove selction from nodes and labels
+            d3.selectAll('.node, g.label').classed('selected', false);
+
+            d3.selectAll('.link') // Show only selected link
+              .classed('faded', function(l) {
+                return (l == d) ? false : true;
+              })
+
+            d3.selectAll('.node') // Show only source and target node
+              .classed('faded', function(n) {
+                return (n == d.source || n == d.target) ? false : true;
+              })
+
+            d3.selectAll('g.label') // Show only source and target label
+              .classed('hidden', function(m) {
+                return (m == d.source || m == d.target) ? false : true;
+              })
+
+            console.log('selection to be implemented');
+            // This triggers events in groupsbar.js and contextualinfopanel.js when a selection happens
+            scope.currentSelection = d;
+            scope.$broadcast('selectionUpdated', scope.currentSelection);
           }
+
         }
 
         // action triggered from the controller
-        scope.$on('single group', function(event, args) {
+        scope.$on('single group update', function(event, args) {
           // console.log(event, args);
           update(args, args.onlyMembers);
         });

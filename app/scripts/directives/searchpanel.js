@@ -89,7 +89,7 @@ angular.module('redesign2017App')
           apiService.getGroupNetwork($item.id).then(function(result) {
             console.log(result);
             scope.config.viewMode = 'group-force';
-            scope.$broadcast('single group', result);
+            scope.$broadcast('single group update', result);
             scope.$broadcast('group timeline', result);
           });
         }

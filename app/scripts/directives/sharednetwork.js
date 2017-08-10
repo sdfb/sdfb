@@ -585,9 +585,11 @@ angular.module('redesign2017App')
             scope.$broadcast('selectionUpdated', scope.currentSelection);
           }
 
-          // Change name of the viz
-          scope.config.title = "W. Shakespeare and J. Milton - Force Layout"
+
         }
+
+        // Change name of the viz
+        scope.config.title = "W. Shakespeare and J. Milton - Force Layout"
 
         scope.$on('shared network generate', function(event, args) {
           console.log(args);
