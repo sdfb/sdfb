@@ -411,21 +411,20 @@ angular.module('redesign2017App')
 
 
           // //Functions for zoom and recenter buttons
-          // scope.centerNetwork = function() {
-          //   console.log("Recenter");
-          //   var sourceNode = nodes.filter(function(d) { return (d.id == sourceId)})[0]; // Get source node element by its ID
-          //   // Transition source node to center of rect
-          //   svg.transition().duration(750).call(zoom.transform, d3.zoomIdentity.translate(width/2-sourceNode.x, height/2-sourceNode.y));
-          // }
+          scope.centerNetwork = function() {
+            console.log("Recenter");
+            // Transition source node to center of rect
+            svg.transition().duration(750).call(zoom.transform, d3.zoomIdentity);//.translate(width/2-sourceNode.x, height/2-sourceNode.y));
+          }
 
-          // scope.zoomIn = function() {
-          //   console.log("Zoom In")
-          //   svg.transition().duration(500).call(zoom.scaleBy, zoomfactor + .5); // Scale by adjusted zoomfactor
-          // }
-          // scope.zoomOut = function() {
-          //   console.log("Zoom Out")
-          //   svg.transition().duration(500).call(zoom.scaleBy, zoomfactor - .25); // Scale by adjusted zoomfactor, slightly lower since zoom out was more dramatic
-          // }
+          scope.zoomIn = function() {
+            console.log("Zoom In")
+            svg.transition().duration(500).call(zoom.scaleBy, zoomfactor + .5); // Scale by adjusted zoomfactor
+          }
+          scope.zoomOut = function() {
+            console.log("Zoom Out")
+            svg.transition().duration(500).call(zoom.scaleBy, zoomfactor - .25); // Scale by adjusted zoomfactor, slightly lower since zoom out was more dramatic
+          }
 
           // Zooming function translates the size of the svg container on wheel scroll.
           function zoomed() {
