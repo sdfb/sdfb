@@ -43,7 +43,7 @@ angular.module('redesign2017App')
           // ids = [10004129,10010685];
           if (ids.length == 1) {
             console.log('Calling person network...')
-            $location.search('people', ids.toString());
+            $location.search('ids', ids.toString());
             // scope.$apply();
             // apiService.getNetwork(ids).then(function(result) {
             //   console.log('person network of',ids.toString(),'\n',result);
@@ -64,7 +64,7 @@ angular.module('redesign2017App')
           // shakespeare + milton
           var ids = [10010937,10008309];
           // $route.updateParams({people: ids.toString()});
-          $location.search('people', ids.toString());
+          $location.search('ids', ids.toString());
           // Sir Thomas Fanshawe + Sir Edwin Sandys
           // ids = [10004129,10010685];
           // if (ids.length == 2) {
@@ -86,12 +86,8 @@ angular.module('redesign2017App')
 
         scope.groupSelected = function($item, $model, $label, $event) {
           console.log($item.name, $item.id, 'getting group network...');
-          apiService.getGroupNetwork($item.id).then(function(result) {
-            console.log(result);
-            scope.config.viewMode = 'group-force';
-            scope.$broadcast('single group update', result);
-            scope.$broadcast('group timeline', result);
-          });
+          $location.search('ids', $item.id);
+
         }
 
 

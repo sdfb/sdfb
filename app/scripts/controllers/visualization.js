@@ -17,8 +17,8 @@ angular.module('redesign2017App')
     $scope.peopleFinderClosed = true;
     $scope.addNodeClosed = true;
     $scope.addLinkClosed = true;
-    if ($routeParams.people === undefined) {
-      $location.search('people', $scope.config.ids.toString());
+    if ($routeParams.ids === undefined) {
+      $location.search('ids', $scope.config.ids.toString());
     }
 
     // Container for data realted to groups
@@ -57,21 +57,32 @@ angular.module('redesign2017App')
       });
     };
 
-    console.log('Calling person network...')
-    $scope.config.ids = $routeParams.people.split(',');
-    console.log($routeParams.people.split(','));
-    apiService.getNetwork($routeParams.people).then(function(result) {
-      console.log('person network of',$routeParams.people.toString(),'\n',result);
-      if ($scope.config.ids.length === 1) {
-        result.layout = 'individual-force';
-        $scope.config.viewMode = 'individual-force';
-        $scope.$broadcast('force layout generate', result);
-      }
-      else if ($scope.config.ids.length === 2) {
-        $scope.config.viewMode = 'shared-network';
-        $scope.$broadcast('shared network generate', result);
-      }
-    });
+    if ($routeParams.ids.length >= 8) {
+      $scope.config.ids = $routeParams.ids.split(',');
+      console.log($routeParams.ids.split(','));
+      apiService.getNetwork($routeParams.ids).then(function(result) {
+        console.log('person network of',$routeParams.ids.toString(),'\n',result);
+        if ($scope.config.ids.length === 1) {
+          console.log('Calling person network...')
+          result.layout = 'individual-force';
+          $scope.config.viewMode = 'individual-force';
+          $scope.$broadcast('force layout generate', result);
+        }
+        else if ($scope.config.ids.length === 2) {
+          console.log('Calling shared network...')
+          $scope.config.viewMode = 'shared-network';
+          $scope.$broadcast('shared network generate', result);
+        }
+      });
+    } else if ($routeParams.ids !== undefined) {
+      $scope.config.ids = $routeParams.ids;
+      apiService.getGroupNetwork($routeParams.ids).then(function(result) {
+        console.log("Calling group network");
+        $scope.config.viewMode = 'group-force';
+        $scope.$broadcast('single group update', result);
+        $scope.$broadcast('group timeline', result);
+      });
+    }
 
 
     $scope.data4groups = function() {
