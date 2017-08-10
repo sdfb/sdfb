@@ -41,7 +41,10 @@ angular.module('redesign2017App')
             .scaleExtent([1 / 2, 4])
             .on("zoom", zoomed))
           .on("click", function() {
-            d3.selectAll('#single-group .node, #single-group g.label, #single-group .link').classed('faded', false);
+            d3.selectAll('#single-group .node, #single-group .link').classed('faded', false);
+            d3.selectAll('#single-group g.label').classed("hidden", function(d, i) {
+              return (i <= 10) ? false : true;
+            });
             // update selction and trigger event for other directives
             scope.currentSelection = {};
             scope.$apply(); // no need to trigger events, just apply
@@ -200,10 +203,8 @@ angular.module('redesign2017App')
               // On hover, display label
               .on('mouseenter', function(d) {
                 // console.log(d, this);
-                d3.selectAll('single-group-graph g.label').each(function(e) {
-                  if (e.id == d.id) {
-                    d3.select(this).classed('temporary-unhidden', true);
-                  }
+                d3.selectAll('single-group-graph g.label').classed('temporary-unhidden', function(e) {
+                  return (e.id == d.id) ? true: false;
                 })
                 // sort elements so to bring the hovered one on top and make it readable.
                 svg.selectAll("single-group-graph g.label").each(function(e, i) {
@@ -215,12 +216,10 @@ angular.module('redesign2017App')
                 })
               })
               .on('mouseleave', function(d) {
-                d3.selectAll('single-group-graph g.label').each(function(e) {
-                  if (e.id == d.id) {
-                    d3.select(this).classed('temporary-unhidden', false);
-                  }
+                d3.selectAll('single-group-graph g.label').classed('temporary-unhidden', function(e) {
+                  if (e.id == d.id) { return false; }
                 })
-              })
+              });
 
 
 
@@ -233,18 +232,6 @@ angular.module('redesign2017App')
               .on('click', function(d) {
                 // Toggle ego networks on click of node
                 toggleClick(d, this);
-              })
-              // On hover, display label
-              .on('mouseenter', function(d) {
-                d3.selectAll('g.label').classed('temporary-unhidden', function(e) {
-                  // console.log(typeof e.id);
-                  return (e.id === d.id) ? true: false;
-                })
-              })
-              .on('mouseleave', function(d) {
-                d3.selectAll('g.label').classed('temporary-unhidden', function(e) {
-                  if (e.id == d.id) { return false; }
-                });
               });
 
             label = label.data(nodes, function(d) { return d.id; });
@@ -252,7 +239,7 @@ angular.module('redesign2017App')
             label = label.enter().append("g")
               .merge(label)
               .attr("class", "label")
-              .classed("not-visible", function(d, i) {
+              .classed("hidden", function(d, i) {
                 return (i <= 10) ? false : true
               });
 
@@ -346,23 +333,23 @@ angular.module('redesign2017App')
           //Handler for when a node is clicked
           if (d.type == "person") {
             // Fade everything
-            d3.selectAll('single-group-graph .node, single-group-graph g.label, single-group-graph .link').classed('faded', true);
+            d3.selectAll('single-group-graph .node, single-group-graph .link').classed('faded', true);
             // Unfade relevant things
             d3.select(selectedElement).classed('faded', false);
-            d3.selectAll('single-group-graph g.label').filter(function(e) {
-              return e.id == d.id;
-            }).classed('faded', false);
+            d3.selectAll('single-group-graph g.label').classed('hidden', function(e) {
+              return (e.id == d.id) ? false: true;
+            });
             // Find connected groups and unfade them
             links.forEach(function(l) {
               // console.log(l.source.id, l.target.id);
               if (d.id == l.source.id) {
                 d3.selectAll('single-group-graph .node, single-group-graph .label').filter(function(e) {
                   return e.id == l.target.id
-                }).classed('faded', false);
+                }).classed('faded', false).classed('hidden', false);
               } else if (d.id == l.target.id) {
                 d3.selectAll('single-group-graph .node, single-group-graph .label').filter(function(e) {
                   return e.id == l.source.id
-                }).classed('faded', false);
+                }).classed('faded', false).classed('hidden', false);
               }
             })
             // Find Connected edges and unfade them

@@ -362,7 +362,7 @@ all-groups-graph {
     stroke: #78729F;
   }
 
-  .label.not-visible {
+  .label.hidden {
     opacity: 0;
   }
 
@@ -459,6 +459,10 @@ single-group-graph {
   }
 
   .label.temporary-unhidden {
+    opacity: 1;
+  }
+
+  .label.visible {
     opacity: 1;
   }
 
