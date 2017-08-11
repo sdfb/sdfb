@@ -14,14 +14,15 @@ angular.module('redesign2017App')
       link: function postLink(scope, element, attrs) {
 
         var x = d3.scaleLinear()
-        updateGroupBar(scope.groups);
+        // updateGroupBar(scope.groups);
 
         // console.log('on')
         // scope.$on('Update the groups bar', function(event, args){
         //   console.log(event, args)
         // })
 
-        function updateGroupBar(data) {
+        scope.updateGroupBar = function(data) {
+          console.log(data);
 
           // size of the group bar
           var oldWidth = d3.select(element[0]).node().getBoundingClientRect().width;
@@ -62,7 +63,7 @@ angular.module('redesign2017App')
               return (i<20)?'group-tooltip':'other-groups-tooltip'
             })
             .attr("data-placement", "top")
-            .attr("title", "Group info is missing")
+            .attr("title", function(d) { return d.name; })
             .style('width', function(d) {
               var myWidth = x(d.value) / (width) * 100;
               var newTot = width / oldWidth * 100;
@@ -74,7 +75,7 @@ angular.module('redesign2017App')
               if (i == 20) {
                 return d.amount + ' minor groups (click to show)'
               } else {
-                return 'g' + d.groupId;
+                return d.name;
               }
             })
             .on('click', function(d, i) {

@@ -60,11 +60,9 @@ angular.module('redesign2017App')
     if ($routeParams.ids.length >= 8) {
       $scope.config.ids = $routeParams.ids.split(',');
       if ($scope.config.ids.length === 1) {
-        console.log('Calling person network...')
         $scope.config.viewMode = 'individual-force';
       }
       else if ($scope.config.ids.length === 2) {
-        console.log('Calling shared network...')
         $scope.config.viewMode = 'shared-network';
       }
     } else if ($routeParams.ids !== undefined) {
@@ -76,7 +74,7 @@ angular.module('redesign2017App')
       console.log('Creating data4groups');
       // GET DATA FOR GROUPS
       // use lodash to create a dictionary with groupId as key and group occurrencies as value (eg '81': 17)
-      var data4groups = $scope.data.included
+      var data4groups = $scope.data.included;
       var listGroups = [];
       data4groups.forEach(function(d) {
         if (d.attributes.groups) {
@@ -85,37 +83,43 @@ angular.module('redesign2017App')
           })
         }
       });
-      listGroups = _.countBy(listGroups);
+      console.log(listGroups.toString());
+      apiService.getGroups(listGroups.toString()).then(function (result) {
+        console.log(result);
 
-      //Transform that dictionary into an array of objects (eg {'groupId': '81', 'value': 17})
-      var arr = [];
-      for (var group in listGroups) {
-        if (listGroups.hasOwnProperty(group)) {
-          var obj = {
-            'groupId': group,
-            'value': listGroups[group]
-          }
-          arr.push(obj);
-        }
-      }
+        listGroups = _.countBy(listGroups);
 
-      //Sort the array in descending order
-      arr.sort(function(a, b) {
-        return d3.descending(a.value, b.value);
-      })
-      var cutAt = 20;
-      var groupsBar = _.slice(arr, 0, cutAt);
-      var otherGroups = _.slice(arr, cutAt);
-      var othersValue = 0;
-      otherGroups.forEach(function(d) {
-        othersValue += d.value;
+        //Transform that dictionary into an array of objects (eg {'groupId': '81', 'value': 17})
+        var arr = [];
+        result.data.forEach(function (d) {
+            var obj = {
+              'name': d.attributes.name,
+              'groupId': d.id,
+              'value': listGroups[d.id]
+            }
+            arr.push(obj);
+        });
+
+        //Sort the array in descending order
+        arr.sort(function(a, b) {
+          return d3.descending(a.value, b.value);
+        })
+        var cutAt = 20;
+        var groupsBar = _.slice(arr, 0, cutAt);
+        var otherGroups = _.slice(arr, cutAt);
+        var othersValue = 0;
+        otherGroups.forEach(function(d) {
+          othersValue += d.value;
+        });
+        groupsBar.push({ 'groupId': 'others', 'value': othersValue, 'amount': otherGroups.length });
+
+        $scope.groups.groupsBar = groupsBar;
+        $scope.groups.otherGroups = otherGroups;
+
+        // $scope.$emit('Update the groups bar', $scope.groups)
       });
-      groupsBar.push({ 'groupId': 'others', 'value': othersValue, 'amount': otherGroups.length });
-      $scope.groups.groupsBar = groupsBar;
-      $scope.groups.otherGroups = otherGroups;
-      // $scope.$emit('Update the groups bar', $scope.groups)
     }
-    $scope.data4groups();
+
 
     $scope.$watch('config.ids', function(newValue, oldValue) {
       if (newValue != oldValue || oldValue instanceof Array) {
@@ -127,6 +131,9 @@ angular.module('redesign2017App')
             result.layout = 'individual-force';
             $scope.config.viewMode = 'individual-force';
             $scope.$broadcast('force layout generate', result);
+            $scope.data4groups();
+            console.log($scope.groups);
+            $scope.updateGroupBar($scope.groups);
           });
         } else if ($scope.config.viewMode === 'shared-network') {
             console.log("Calling shared network...")
@@ -144,6 +151,7 @@ angular.module('redesign2017App')
         }
       }
     });
+
 
     $scope.$watch('config.viewMode', function(newValue, oldValue) {
       if (newValue !== oldValue) {
