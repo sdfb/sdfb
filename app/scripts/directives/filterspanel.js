@@ -24,6 +24,7 @@ angular.module('redesign2017App')
             endYear;
 
         scope.reloadFilters = function() {
+          removeAll();
           sources = scope.data.data.attributes.primary_people;
           if (sources.length === 1) {
             var sourceId = sources[0], // ID of node the user searched for.
@@ -77,6 +78,13 @@ angular.module('redesign2017App')
           })[0];
           sourceNode = sourceNode.attributes;
           return sourceNode;
+        }
+
+        function removeAll() {
+          d3.select('.density-container form').remove();
+          d3.select('.connection-container form').remove();
+          d3.select('.confidence-container svg').remove();
+          d3.select('.date-container svg').remove();
         }
 
         function showTooltip(d) {

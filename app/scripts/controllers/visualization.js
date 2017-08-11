@@ -118,12 +118,9 @@ angular.module('redesign2017App')
     $scope.data4groups();
 
     $scope.$watch('config.ids', function(newValue, oldValue) {
-      console.log(newValue);
-      console.log(oldValue);
       if (newValue != oldValue || oldValue instanceof Array) {
         if ($scope.config.viewMode == 'individual-force') {
           $scope.data.layout = 'individual-force';
-          console.log($routeParams.ids);
           console.log('Calling person network...')
           apiService.getNetwork($scope.config.ids.toString()).then(function(result) {
             console.log('person network of',$scope.config.ids.toString(),'\n',result);
