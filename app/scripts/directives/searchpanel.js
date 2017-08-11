@@ -7,7 +7,7 @@
  * # searchPanel
  */
 angular.module('redesign2017App')
-  .directive('searchPanel', ['$location', 'apiService', function($location, apiService) {
+  .directive('searchPanel', ['$location', 'apiService', "$route", '$routeParams', function($location, apiService, $route, $routeParams) {
     return {
       templateUrl: './views/search-panel.html',
       restrict: 'E',
@@ -37,23 +37,17 @@ angular.module('redesign2017App')
           //William Fleetwood + Sir Henry Yelverton
           // var ids = [10004371, 10013232];
           // shakespeare + milton
-          var ids = [10010937];
+          var ids = '10010937';
 
           // Sir Thomas Fanshawe + Sir Edwin Sandys
           // ids = [10004129,10010685];
-          if (ids.length == 1) {
-            console.log('Calling person network...')
-            $location.search('ids', ids.toString());
-            // scope.$apply();
-            // apiService.getNetwork(ids).then(function(result) {
-            //   console.log('person network of',ids.toString(),'\n',result);
-            //   result.layout = 'individual-force';
-            //   scope.config.viewMode = 'individual-force';
-            //   // scope.ids = [10010937];
-            //   $routeParams.ids = ids.toString();
-            //   scope.$broadcast('Update the force layout', result);
-            // })
-          }
+          $location.search('ids', ids);
+          var lastRoute = $route.current;
+          scope.$on('$locationChangeSuccess', function(event) {
+            $route.current = lastRoute;
+          });
+          scope.config.viewMode = 'individual-force';
+          scope.config.ids = ids;
         };
 
         scope.selectedShared = function($person2, $person1) {
@@ -62,9 +56,16 @@ angular.module('redesign2017App')
           //William Fleetwood + Sir Henry Yelverton
           // var ids = [10004371, 10013232];
           // shakespeare + milton
-          var ids = [10010937,10008309];
+          var ids = '10010937,10008309';
+          $location.search('ids', ids);
+          var lastRoute = $route.current;
+          scope.$on('$locationChangeSuccess', function(event) {
+            $route.current = lastRoute;
+          });
+          scope.config.viewMode = 'shared-network';
+          scope.config.ids = ids;
           // $route.updateParams({people: ids.toString()});
-          $location.search('ids', ids.toString());
+          // $location.search('ids', ids.toString());
           // Sir Thomas Fanshawe + Sir Edwin Sandys
           // ids = [10004129,10010685];
           // if (ids.length == 2) {
@@ -87,12 +88,19 @@ angular.module('redesign2017App')
         scope.groupSelected = function($item, $model, $label, $event) {
           console.log($item.name, $item.id, 'getting group network...');
           $location.search('ids', $item.id);
-
+          var lastRoute = $route.current;
+          scope.$on('$locationChangeSuccess', function(event) {
+            $route.current = lastRoute;
+          });
+          scope.config.viewMode = 'group-force';
+          scope.config.ids = $item.id;
+          scope.config.title = $item.name;
         }
 
 
         // scope.groupsTypeahead = ['Virginia Company (1606)', 'Marian martyrs 1555', 'Cavalier poets  1640', 'Puritans 1532', 'Castalian band  1584', 'Participants in the vestiarian controversy  1563'];
         // scope.groupTypeaheadSelected = scope.groupsTypeahead[0];
+
       }
     };
   }]);

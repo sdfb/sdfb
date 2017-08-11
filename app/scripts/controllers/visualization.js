@@ -59,31 +59,18 @@ angular.module('redesign2017App')
 
     if ($routeParams.ids.length >= 8) {
       $scope.config.ids = $routeParams.ids.split(',');
-      console.log($routeParams.ids.split(','));
-      apiService.getNetwork($routeParams.ids).then(function(result) {
-        console.log('person network of',$routeParams.ids.toString(),'\n',result);
-        if ($scope.config.ids.length === 1) {
-          console.log('Calling person network...')
-          result.layout = 'individual-force';
-          $scope.config.viewMode = 'individual-force';
-          $scope.$broadcast('force layout generate', result);
-        }
-        else if ($scope.config.ids.length === 2) {
-          console.log('Calling shared network...')
-          $scope.config.viewMode = 'shared-network';
-          $scope.$broadcast('shared network generate', result);
-        }
-      });
+      if ($scope.config.ids.length === 1) {
+        console.log('Calling person network...')
+        $scope.config.viewMode = 'individual-force';
+      }
+      else if ($scope.config.ids.length === 2) {
+        console.log('Calling shared network...')
+        $scope.config.viewMode = 'shared-network';
+      }
     } else if ($routeParams.ids !== undefined) {
-      $scope.config.ids = $routeParams.ids;
-      apiService.getGroupNetwork($routeParams.ids).then(function(result) {
-        console.log("Calling group network");
-        $scope.config.viewMode = 'group-force';
-        $scope.$broadcast('single group update', result);
-        $scope.$broadcast('group timeline', result);
-      });
+      $scope.config.ids = $routeParams.ids.split(",");
+      $scope.config.viewMode = 'group-force';
     }
-
 
     $scope.data4groups = function() {
       console.log('Creating data4groups');
@@ -130,14 +117,40 @@ angular.module('redesign2017App')
     }
     $scope.data4groups();
 
-    $scope.$watch('config.viewMode', function(newValue, oldValue) {
-      if (newValue != oldValue) {
-
-        // console.log('changed layout');
-        if (newValue == 'individual-force') {
+    $scope.$watch('config.ids', function(newValue, oldValue) {
+      console.log(newValue);
+      console.log(oldValue);
+      if (newValue != oldValue || oldValue instanceof Array) {
+        if ($scope.config.viewMode == 'individual-force') {
           $scope.data.layout = 'individual-force';
-          $scope.$broadcast('force layout update', $scope.data);
-        } else if (newValue == 'individual-concentric') {
+          console.log($routeParams.ids);
+          console.log('Calling person network...')
+          apiService.getNetwork($scope.config.ids.toString()).then(function(result) {
+            console.log('person network of',$scope.config.ids.toString(),'\n',result);
+            result.layout = 'individual-force';
+            $scope.config.viewMode = 'individual-force';
+            $scope.$broadcast('force layout generate', result);
+          });
+        } else if ($scope.config.viewMode === 'shared-network') {
+            console.log("Calling shared network...")
+            apiService.getNetwork($scope.config.ids.toString()).then(function(result) {
+              console.log('shared network of',$scope.config.ids.toString(),'\n',result);
+              $scope.$broadcast('shared network generate', result);
+            });
+        } else if ($scope.config.viewMode == 'group-force') {
+            console.log("Calling group network...")
+            apiService.getGroupNetwork($scope.config.ids.toString()).then(function(result) {
+              console.log('group network of',$scope.config.ids.toString(),'\n',result);
+              $scope.$broadcast('single group update', result);
+              $scope.$broadcast('group timeline', result);
+            });
+        }
+      }
+    });
+
+    $scope.$watch('config.viewMode', function(newValue, oldValue) {
+      if (newValue !== oldValue) {
+        if (newValue == 'individual-concentric') {
           $scope.data.layout = 'individual-concentric';
           $scope.$broadcast('force layout update', $scope.data);
         } else if (newValue == 'all') {
@@ -147,26 +160,10 @@ angular.module('redesign2017App')
             console.error("An error occured while fetching file", response);
             return response;
           });
-        } else if (newValue == 'group-force') {
-
-          console.log('force');
-        //   apiService.getFile('./data/virginiacompany.json').then(function successCallback(response) {
-        //     // console.log(response);
-        //     $scope.$broadcast('single group', { data: response, onlyMembers: $scope.config.onlyMembers });
-        //   }, function errorCallback(response) {
-        //     console.error("An error occured while fetching file", response);
-        //     return response;
-        //   });
-        //
-        // } else if (newValue == 'group-timeline') {
-        //   apiService.getFile('./data/virginiacompany.json').then(function successCallback(response) {
-        //     $scope.$broadcast('group timeline', response );
-        //   }, function errorCallback(response) {
-        //     console.error("An error occured while fetching file", response);
-        //     return response;
-        //   });
-        }
-
+        } //else if (newValue == 'individual-force') {
+        //   $scope.data.layout = 'individual-force';
+        //   $scope.$broadcast('force layout update', $scope.data);
+        // }
       }
     });
 
