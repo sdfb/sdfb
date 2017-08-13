@@ -709,12 +709,13 @@ angular.module('redesign2017App')
 
 
         function positionCircle(nodelist, r) {
+          console.log(nodelist.length);
           /* For concentric layout, with a given node array
           and a radius value, use trig to position the nodes in a circle */
-          var angle = 360 / nodelist.length; // Get angle based on number of nodes
+          var angle = 2*Math.PI*r / nodelist.length; // Get angle based on number of nodes
           nodelist.forEach(function(n, i) {
-            n.fx = (Math.cos(angle * (i + 1)) * r) + (width / 2); // Fix x coordinate
-            n.fy = (Math.sin(angle * (i + 1)) * r) + (height / 2); // Fix y coordinate
+            n.fx = r * Math.cos(angle * (i + 1)) + (width / 2); // Fix x coordinate
+            n.fy = r * Math.sin(angle * (i + 1)) + (height / 2); // Fix y coordinate
           });
         }
 
