@@ -22,7 +22,7 @@ angular.module('redesign2017App')
         // })
 
         scope.updateGroupBar = function(data) {
-          console.log(data);
+          console.log("Updating groups bar...");
 
           // size of the group bar
           var oldWidth = d3.select(element[0]).node().getBoundingClientRect().width;
@@ -39,8 +39,10 @@ angular.module('redesign2017App')
           x.domain([0, total]);
           x.range([0, width]);
 
+          var chartContainer = d3.select(element[0]).append('span').attr('class', 'groupBar');
+
           // declare chart
-          var chart = d3.select(element[0]).selectAll('group')
+          var chart = chartContainer.selectAll('group')
             .data(data.groupsBar);
 
           // append stuff

@@ -21,8 +21,10 @@ angular.module('redesign2017App')
       $location.search('ids', $scope.config.ids.toString());
     }
 
-    // Container for data realted to groups
+    // Container for data related to groups
     $scope.groups = {};
+    // $scope.groups.groupsBar = [];
+    // $scope.groups.otherGroups = [];
 
     // declare a $scope property where to store the future selections
     $scope.currentSelection = {}
@@ -83,9 +85,7 @@ angular.module('redesign2017App')
           })
         }
       });
-      console.log(listGroups.toString());
       apiService.getGroups(listGroups.toString()).then(function (result) {
-        console.log(result);
 
         listGroups = _.countBy(listGroups);
 
@@ -115,6 +115,8 @@ angular.module('redesign2017App')
 
         $scope.groups.groupsBar = groupsBar;
         $scope.groups.otherGroups = otherGroups;
+        console.log($scope.groups);
+        $scope.updateGroupBar($scope.groups);
 
         // $scope.$emit('Update the groups bar', $scope.groups)
       });
@@ -132,8 +134,6 @@ angular.module('redesign2017App')
             $scope.config.viewMode = 'individual-force';
             $scope.$broadcast('force layout generate', result);
             $scope.data4groups();
-            console.log($scope.groups);
-            $scope.updateGroupBar($scope.groups);
           });
         } else if ($scope.config.viewMode === 'shared-network') {
             console.log("Calling shared network...")
