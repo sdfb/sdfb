@@ -166,7 +166,7 @@ angular.module('redesign2017App')
         // HIGHLIGHT GROUPS WHEN SELECTION HAPPENS
         // This works for individual force layout only, at the moment
         scope.$on('selectionUpdated', function(event, args) {
-          // console.log(args);
+          console.log(args);
           if (args.type == 'person') {
             d3.selectAll('.group').classed('unactive', true);
             if (args.attributes.groups) {

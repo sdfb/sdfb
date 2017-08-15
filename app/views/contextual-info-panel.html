@@ -2,8 +2,8 @@
   <p class="help-info">Select a person or a relation to display contextual information.</p>
   <p ng-if="config.contributionMode" class="contribution">In contribution mode you can edit links and nodes, or create new ones.</p>
 </section>
-<section ng-if="currentSelection.type == 'person'" id="XXXcurrent-selection-person1">
-  <h2>{{currentSelection.attributes.name}}</h2>
+<section ng-if="currentSelection.type == 'person' " id="XXXcurrent-selection-person1">
+  <h2>{{currentSelection.attributes.name }}</h2>
   <p ng-if="currentSelection.attributes.historical_significance != ''">{{currentSelection.attributes.historical_significance}}</p>
   <p ng-if="currentSelection.attributes.historical_significance == ''"> &empty; </p>
   <small-timeline class="person" details="currentSelection"></small-timeline>

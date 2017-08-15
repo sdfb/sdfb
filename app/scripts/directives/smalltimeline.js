@@ -7,17 +7,18 @@
  * # smallTimeline
  */
 angular.module('redesign2017App')
-  .directive('smallTimeline', function() {
+  .directive('smallTimeline', ['apiService', function(apiService, scope) {
     return {
-      template: '<svg></svg>',
+      template: '',
       restrict: 'E',
       scope: {
         details: '=',
       },
       link: function postLink(scope, element, attrs) {
-        // console.log(scope.details)
+        // console.log(scope)
 
-        var svg = d3.select(element[0]).select('svg'),
+        var hist_sig = d3.select(element[0]).append('p'),
+          svg = d3.select(element[0]).append('svg'),
           width = +svg.node().getBoundingClientRect().width,
           height = +svg.node().getBoundingClientRect().height;
 
@@ -26,32 +27,38 @@ angular.module('redesign2017App')
           .domain([1450, 1750]);
 
         function update() {
-          console.log('details', scope.details);
+
+          hist_sig.text(scope.currentSelection.attributes.historical_significance);
+
+
+          // scope.currentSelection = result;
+          // scope.$apply();
+          console.log(scope.currentSelection);
 
           // if the data type = relationship, we have start_date instead of birth_date and end_date instead of death_date
           // The way in which the data is computated is the same
           // All we need to do is just to change the structure of the data so that it respect the one of type = person
 
-          if (scope.details.type == 'relationship') {
-          	if (!scope.details.attributes) {
-          		scope.details.attributes = {}
+          if (scope.type == 'relationship') {
+          	if (!scope.currentSelection.attributes) {
+          		scope.currentSelection.attributes = {}
           	}
-	          scope.details.attributes.birth_year = scope.details.start_year;
-	          scope.details.attributes.death_year = scope.details.end_year;
+	          scope.currentSelection.attributes.birth_year = scope.start_year;
+	          scope.currentSelection.attributes.death_year = scope.end_year;
 
-	          if(scope.details.start_year_type) {
-	          	scope.details.attributes.birth_year_type = scope.details.start_year_type
+	          if(scope.start_year_type) {
+	          	scope.currentSelection.attributes.birth_year_type = scope.start_year_type
 	          }
-	          if(scope.details.end_year_type) {
-	          	scope.details.attributes.death_year_type = scope.details.end_year_type
+	          if(scope.end_year_type) {
+	          	scope.currentSelection.attributes.death_year_type = scope.end_year_type
 	          }
-	          if(!scope.details.attributes.relationshipKind) {
-	          	scope.details.attributes.relationshipKind = 'Kind undefined'
+	          if(!scope.currentSelection.attributes.relationshipKind) {
+	          	scope.currentSelection.attributes.relationshipKind = 'Kind undefined'
 	          }
           }
 
           // calculate if birth and death years are too close together
-          var delta = scope.details.attributes.death_year - scope.details.attributes.birth_year;
+          var delta = scope.currentSelection.attributes.death_year - scope.currentSelection.attributes.birth_year;
 
           svg.selectAll('*').remove();
 
@@ -89,31 +96,31 @@ angular.module('redesign2017App')
           svg.append('path')
             .attr('class', 'life')
             .attr('d', function(d) {
-              return 'M' + x(scope.details.attributes.birth_year) + ',' + height / 2 + ' L' + x(scope.details.attributes.death_year) + ',' + height / 2;
+              return 'M' + x(scope.currentSelection.attributes.birth_year) + ',' + height / 2 + ' L' + x(scope.currentSelection.attributes.death_year) + ',' + height / 2;
             });
 
           svg.append('path')
             .attr('class', function(d) {
-              var classes = (scope.details.attributes.birth_year_type == 'CA' || scope.details.attributes.birth_year_type == 'ca') ? 'terminator birth filled' : 'terminator birth';
+              var classes = (scope.currentSelection.attributes.birth_year_type == 'CA' || scope.currentSelection.attributes.birth_year_type == 'ca') ? 'terminator birth filled' : 'terminator birth';
               return classes;
             })
             .attr('d', function(d) {
-              return terminators('birth', scope.details.attributes.birth_year_type, x(scope.details.attributes.birth_year), height / 2)
+              return terminators('birth', scope.currentSelection.attributes.birth_year_type, x(scope.currentSelection.attributes.birth_year), height / 2)
             });
 
           svg.append('path')
             .attr('class', function(d) {
-              var classes = (scope.details.attributes.death_year_type == 'CA' || scope.details.attributes.death_year_type == 'ca') ? 'terminator birth filled' : 'terminator birth';
+              var classes = (scope.currentSelection.attributes.death_year_type == 'CA' || scope.currentSelection.attributes.death_year_type == 'ca') ? 'terminator birth filled' : 'terminator birth';
               return classes
             })
             .attr('d', function(d) {
-              return terminators('death', scope.details.attributes.death_year_type, x(scope.details.attributes.death_year), height / 2)
+              return terminators('death', scope.currentSelection.attributes.death_year_type, x(scope.currentSelection.attributes.death_year), height / 2)
             });
 
           svg.append('text')
             .attr('class', 'label life')
             .attr("x", function(d) {
-              return x(scope.details.attributes.birth_year);
+              return x(scope.currentSelection.attributes.birth_year);
             })
             .attr("y", function(d) {
               return height / 2 - 8;
@@ -121,12 +128,12 @@ angular.module('redesign2017App')
             .classed("text-left", function(d) {
               return delta <= 25;
             })
-            .text(scope.details.attributes.birth_year);
+            .text(scope.currentSelection.attributes.birth_year);
 
           svg.append('text')
             .attr('class', 'label life')
             .attr("x", function(d) {
-              return x(scope.details.attributes.death_year);
+              return x(scope.currentSelection.attributes.death_year);
             })
             .attr("y", function(d) {
               return height / 2 - 8;
@@ -134,16 +141,16 @@ angular.module('redesign2017App')
             .classed("text-right", function(d) {
               return delta <= 25;
             })
-            .text(scope.details.attributes.death_year);
+            .text(scope.currentSelection.attributes.death_year);
 
-						if (scope.details.type == 'relationship') {
+						if (scope.type == 'relationship') {
 							svg.append('text')
 		            .attr('class', 'label relationship')
 		            .attr("x", width/2)
 		            .attr("y", function(d) {
 		              return height;
 		            })
-		            .text(scope.details.attributes.relationshipKind+' ('+scope.details.weight+'% confidence)');
+		            .text(scope.currentSelection.attributes.relationshipKind+' ('+scope.weight+'% confidence)');
 						}
           // console.log('timeline drawn');
         }
@@ -176,9 +183,15 @@ angular.module('redesign2017App')
 
         scope.$on('selectionUpdated', function(event, arg) {
           // console.log('update the timeline');
-          update();
+          console.log(arg.id);
+          var data = {};
+          apiService.getPeople(arg.id).then(function (result) {
+            console.log(result);
+            scope.currentSelection = result.data[0];
+            update();
+            // scope.$broadcast('selectionUpdated', scope.currentSelection);
+          });
         });
-
       }
     };
-  });
+  }]);
