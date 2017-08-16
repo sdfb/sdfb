@@ -497,7 +497,7 @@ angular.module('redesign2017App')
           (But NOT links between 2-degree nodes.) */
           if (complexity == '2') {
             newLinks = thresholdLinks.filter(function(l) {
-              if (oneDegreeNodes.indexOf(l.source) != -1 || oneDegreeNodes.indexOf(l.source) != -1) { //Link must have 1-degree node as source or target
+              if (oneDegreeNodes.indexOf(l.source) != -1 || oneDegreeNodes.indexOf(l.target) != -1) { //Link must have 1-degree node as source or target
                 return l;
               }
             });

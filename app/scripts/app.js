@@ -37,7 +37,7 @@ angular
               // viewMode:'all',
               ids: 10000473,
               title: 'undefined title',
-              networkComplexity: '1.75',
+              networkComplexity: '2',
               dateMin:1500,
               dateMax:1700,
               confidenceMin:60,
