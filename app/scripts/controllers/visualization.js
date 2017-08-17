@@ -140,6 +140,7 @@ angular.module('redesign2017App')
             apiService.getNetwork($scope.config.ids.toString()).then(function(result) {
               console.log('shared network of',$scope.config.ids.toString(),'\n',result);
               $scope.$broadcast('shared network generate', result);
+              $scope.data4groups();
             });
         } else if ($scope.config.viewMode == 'group-force') {
             console.log("Calling group network...")
