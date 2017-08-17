@@ -166,10 +166,10 @@ angular.module('redesign2017App')
             console.error("An error occured while fetching file", response);
             return response;
           });
-        } //else if (newValue == 'individual-force') {
-        //   $scope.data.layout = 'individual-force';
-        //   $scope.$broadcast('force layout update', $scope.data);
-        // }
+        } else if (newValue == 'individual-force') {
+          $scope.data.layout = 'individual-force';
+          $scope.$broadcast('force layout update', $scope.data);
+        }
       }
     });
 

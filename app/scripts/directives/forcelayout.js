@@ -140,6 +140,7 @@ angular.module('redesign2017App')
             nodeAdded = false; // Toggle for user-added actions
 
           var layout = json.layout;
+          console.log(layout);
 
           var nodesAndLinks = getNodesAndLinks(json),
               nodes = nodesAndLinks[0],
@@ -714,8 +715,8 @@ angular.module('redesign2017App')
           and a radius value, use trig to position the nodes in a circle */
           var angle = 2*Math.PI*r / nodelist.length; // Get angle based on number of nodes
           nodelist.forEach(function(n, i) {
-            n.fx = r * Math.cos(angle * (i + 1)) + (width / 2); // Fix x coordinate
-            n.fy = r * Math.sin(angle * (i + 1)) + (height / 2); // Fix y coordinate
+            n.fx = r * Math.cos(2 * Math.PI * i / nodelist.length) + (width / 2); // Fix x coordinate
+            n.fy = r * Math.sin(2 * Math.PI * i / nodelist.length) + (height / 2); // Fix y coordinate
           });
         }
 
