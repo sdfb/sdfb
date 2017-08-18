@@ -169,7 +169,7 @@ angular.module('redesign2017App')
           if (layout == 'individual-force') {
             console.log('Layout: individual-force');
             // For force layout, set fixed positions to null (undoes circle positioning)
-            newNodes.forEach(function(d) {
+            nodes.forEach(function(d) {
               d.fx = null;
               d.fy = null;
             });
