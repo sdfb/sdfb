@@ -1,8 +1,10 @@
 <section>
 	<h3 class="">Add person to this view</h3>
 	<h4 class="paragraph-title">Person Name</h4>
-  <input placeholder="Search for a person" type="text" ng-model="person.selected" uib-typeahead="person for person in peopleToSelect | filter:$viewValue | limitTo:8" class="form-control">
-	<input type="button" value="Add this person" ng-click="addingMode()">
+  <input placeholder="Search for a person" type="text" ng-model="person.added" uib-typeahead="person for person in peopleToSelect | filter:$viewValue | limitTo:8" class="form-control">
+	<button type="button" class="btn btn-primary" ng-click="addingMode() ">
+		Add this person
+	</button>
 </section>
 <span class="close" ng-click="addNodeClosed = !addNodeClosed; addLinkClosed = true;" style="color: white;">
 	<i ng-if="!addNodeClosed" class="fa fa-times" aria-hidden="true"></i>

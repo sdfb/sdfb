@@ -19,7 +19,10 @@ angular.module('redesign2017App')
           height = +svg.node().getBoundingClientRect().height, // Height of viz
           simulation,
           sourceId,
-          zoomfactor = 1; // Controls zoom buttons, begins at default scale;
+          zoomfactor = 1, // Controls zoom buttons, begins at default scale
+          addedNodes = [], // Nodes user has added to the graph
+          addToDB = {nodes: [], links: []},
+          nodeAdded = false; // Toggle for user-added actions
 
           svg.append('rect') // Create container for visualization
             .attr('width', '100%')
@@ -135,9 +138,7 @@ angular.module('redesign2017App')
             complexity = scope.config.networkComplexity, // Visual density (default 2)
             endTime, // Length of viz transition
             toggle = 0, // Toggle for ego networks on click (see toggleClick())
-            oldLayout = 'individual-force', // Keep track of whether the layout has changed
-            addedNodes = [], // Nodes user has added to the graph
-            nodeAdded = false; // Toggle for user-added actions
+            oldLayout = 'individual-force'; // Keep track of whether the layout has changed
 
           var layout = json.layout;
           console.log(layout);
@@ -389,13 +390,17 @@ angular.module('redesign2017App')
 
         // When canvas is clicked, add a new circle with dummy data
         function addNode() {
+          console.log(scope.person.added);
           if (!nodeAdded) {
             var point = d3.mouse(container.node());
-            addedNodes.push({ attributes: { name: "John Ladd" }, id: '0100', distance: '3', x: point[0], y: point[1] });
-            update(addedNodes, confidenceMin, confidenceMax, dateMin, dateMax, complexity, 'individual-force', simulation);
+            var newNode = { attributes: { name: scope.person.added }, id: '0100', distance: '3', x: point[0], y: point[1] };
+            addedNodes.push(newNode);
+            addToDB.nodes.push(newNode);
+            updatePersonNetwork(scope.data);
             nodeAdded = true;
             cursor.attr("opacity", 0);
           }
+          console.log(addToDB);
         }
 
 

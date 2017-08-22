@@ -166,7 +166,7 @@ angular.module('redesign2017App')
             console.error("An error occured while fetching file", response);
             return response;
           });
-        } else if (newValue == 'individual-force') {
+        } else if (newValue == 'individual-force' && oldValue == 'individual-concentric') {
           $scope.data.layout = 'individual-force';
           $scope.$broadcast('force layout update', $scope.data);
         }

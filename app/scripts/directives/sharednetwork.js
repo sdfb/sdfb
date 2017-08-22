@@ -16,7 +16,7 @@ angular.module('redesign2017App')
         var svg = d3.select(element[0]).select('svg#shared-network'),
           width = +svg.node().getBoundingClientRect().width,
           height = +svg.node().getBoundingClientRect().height,
-          simulation,
+          sharedSimulation,
           sources,
           zoomfactor = 1;
 
@@ -102,7 +102,7 @@ angular.module('redesign2017App')
         //  SIMULATION  //
         //              //
 
-        simulation = d3.forceSimulation(nodes)
+        sharedSimulation = d3.forceSimulation(nodes)
           .force("center", d3.forceCenter(width / 2, height / 2)) // Keep graph from floating off-screen
           .force("charge", d3.forceManyBody().strength(-100)) // Charge force works as gravity
           .force("link", d3.forceLink(links).id(function(d) { return d.id; }).iterations(2)) //Link force accounts for link distance
@@ -203,7 +203,7 @@ angular.module('redesign2017App')
               links = nodesAndLinks[1];
 
           var startTime = d3.now();
-          simulation.on("end", function() {
+          sharedSimulation.on("end", function() {
             var endTime = d3.now();
             console.log('Spatialization completed in', (endTime - startTime) / 1000, 'sec.');
           });
@@ -431,12 +431,12 @@ angular.module('redesign2017App')
             container.attr("transform", "translate(" + d3.event.transform.x + ", " + d3.event.transform.y + ") scale(" + d3.event.transform.k + ")");
           }
 
-          simulation.alphaTarget(0).restart();
+          sharedSimulation.alphaTarget(0).restart();
 
         }
 
         // Tick function for positioning links, node, and edges on each iteration of
-        // the force simulation
+        // the force sharedSimulation
         function ticked() {
             link // Since we're using a path instead of a line, links only need "d" attr
                 .attr("d", function(d) {
@@ -455,8 +455,8 @@ angular.module('redesign2017App')
                   return "translate(" + (d.x) + "," + (d.y + 2.5) + ")"
                 })
 
-            if (simulation.alpha() < 0.005 && simulation.force("collide").iterations() == 0) {
-              simulation.force("collide").iterations(1).radius(function(d) { // Collision detection
+            if (sharedSimulation.alpha() < 0.005 && sharedSimulation.force("collide").iterations() == 0) {
+              sharedSimulation.force("collide").iterations(1).radius(function(d) { // Collision detection
                 if (d.distance == 0) { // Account for larger source node
                   return 50 / 2 + 1;
                 } else if (d.distance == 1) {
