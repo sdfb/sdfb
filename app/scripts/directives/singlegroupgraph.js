@@ -20,6 +20,7 @@ angular.module('redesign2017App')
         var nodes = [];
         var links = [];
         var members = [];
+        var zoomfactor = 1;
 
         var simulation = d3.forceSimulation(nodes)
           .force("center", d3.forceCenter(width / 2, height / 2))
@@ -37,9 +38,9 @@ angular.module('redesign2017App')
           .attr("height", height)
           .style("fill", "none")
           .style("pointer-events", "all")
-          .call(d3.zoom()
-            .scaleExtent([1 / 2, 4])
-            .on("zoom", zoomed))
+          // .call(zoom
+            // .scaleExtent([1 / 2, 4])
+            // .on("zoom", zoomed))
           .on("click", function() {
             d3.selectAll('#single-group .node, #single-group .link').classed('faded', false);
             d3.selectAll('#single-group g.label').classed("hidden", function(d, i) {
@@ -50,8 +51,28 @@ angular.module('redesign2017App')
             scope.$apply(); // no need to trigger events, just apply
           });
 
+        var zoom = d3.zoom(); // Create a single zoom function
+        // Call zoom for svg container.
+        svg.call(zoom.on('zoom', zoomed)); //.on("dblclick.zoom", null); // See zoomed() below
+
         function zoomed() {
-          g.attr("transform", d3.event.transform);
+          g.attr("transform", "translate(" + d3.event.transform.x + ", " + d3.event.transform.y + ") scale(" + d3.event.transform.k + ")");
+        }
+
+        //Functions for zoom and recenter buttons
+        scope.centerNetwork = function() {
+          console.log("Recenter");
+          // Transition source node to center of rect
+          svg.transition().duration(750).call(zoom.transform, d3.zoomIdentity);
+        }
+
+        scope.zoomIn = function() {
+          console.log("Zoom In")
+          svg.transition().duration(500).call(zoom.scaleBy, zoomfactor + .5); // Scale by adjusted zoomfactor
+        }
+        scope.zoomOut = function() {
+          console.log("Zoom Out")
+          svg.transition().duration(500).call(zoom.scaleBy, zoomfactor - .25); // Scale by adjusted zoomfactor, slightly lower since zoom out was more dramatic
         }
 
         var g = svg.append("g").attr("transform", "translate(" + (width / 2) * 0 + "," + (height / 2) * 0 + ")"),
