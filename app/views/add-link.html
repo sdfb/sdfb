@@ -1,6 +1,7 @@
 <section>
   <h3 class="">Add link</h3>
-  <h4 class="paragraph-title">Souce node</h4>
+  <button type="button" class="btn btn-primary" ng-click="addingLink()">Draw Link</button>
+  <h4 class="paragraph-title">Source node</h4>
   <input placeholder="Search for a person" type="text" ng-model="person.selected" uib-typeahead="person for person in peopleToSelect | filter:$viewValue | limitTo:8" class="form-control">
 
   <h4>Target node</h4>

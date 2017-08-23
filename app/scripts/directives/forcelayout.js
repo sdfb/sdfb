@@ -21,8 +21,12 @@ angular.module('redesign2017App')
           sourceId,
           zoomfactor = 1, // Controls zoom buttons, begins at default scale
           addedNodes = [], // Nodes user has added to the graph
+          addedLinks = [], // Links user has added to the graph
           addToDB = {nodes: [], links: []},
-          nodeAdded = false; // Toggle for user-added actions
+          nodeAdded = false, // Toggle for user-added actions
+          linkAdded = false,
+          addedNodeID = 0,
+          addedLinkID = 0;
 
           svg.append('rect') // Create container for visualization
             .attr('width', '100%')
@@ -166,6 +170,7 @@ angular.module('redesign2017App')
           var newLinks = newData[1];
 
           addedNodes.forEach(function(a) { newNodes.push(a); });
+          addedLinks.forEach(function(a) { newLinks.push(a); });
 
           if (layout == 'individual-force') {
             console.log('Layout: individual-force');
@@ -377,10 +382,79 @@ angular.module('redesign2017App')
         }
 
         // Function triggered when user wants to add a node
-        scope.addingMode = function() {
+        scope.addingNode = function() {
           nodeAdded = false;
           cursor.attr("opacity", 1);
+          addedNodeID += 1;
           svg.on("click", addNode);
+        }
+
+        // Code for adding links adapted from: https://bl.ocks.org/emeeks/f2f6883ac7c965d09b90
+        scope.addingLink = function() {
+          console.log('Adding a link');
+          linkAdded = false;
+          addedLinkID += 1;
+          node.call(d3.drag()
+            .on("start", dragstarted)
+            .on("drag", dragged)
+            .on("end", dragended));
+        }
+
+        function dragged(d) {
+          if (d.distance === 3) {
+            d.x = d3.event.x;
+            d.y = d3.event.y;
+          }
+          else {
+            d.fx = d3.event.x;
+            d.fy = d3.event.y;
+          }
+          // var nodeOne = this;
+          // var foundOverlap = false;
+          // var nodes = scope.data.included;
+          // nodes.forEach(function (otherNode) {
+          //   var distance = Math.sqrt(Math.pow(otherNode.x - d3.event.x, 2) + Math.pow(otherNode.y - d3.event.y, 2));
+          //   if (otherNode != d && distance < 16) {
+          //     foundOverlap = true;
+          //     console.log(otherNode.attributes.name);
+          //   }
+          // })
+          // if (foundOverlap == true) {
+          //   d3.select(nodeDom).select("circle.background")
+          //     .style("opacity", 0.5)
+          // }
+          // else {
+          //   d3.select(nodeDom).select("circle.background")
+          //     .style("opacity", 0)
+          // }
+        }
+
+        function dragstarted(d) {
+
+          var nodes = scope.data.included;
+          nodes.forEach(function(n) {
+            n.fx = n.x;
+            n.fy = n.y;
+          });
+          if (!d3.event.active) simulation.alphaTarget(0.3).restart();
+        }
+
+        function dragended(d) {
+          var nodeOne = this;
+          var nodes = scope.data.included;
+          if (!linkAdded) {
+            nodes.forEach(function (otherNode) {
+              var distance = Math.sqrt(Math.pow(otherNode.x - d3.event.x, 2) + Math.pow(otherNode.y - d3.event.y, 2));
+              if (otherNode != d && distance < 16) {
+                console.log("new link added:", otherNode.attributes.name);
+                var newLink = {source: d, target: otherNode, weight: 100, start_year: 1500, end_year: 1700, id: addedLinkID};
+                addedLinks.push(newLink);
+                console.log(newLink);
+              }
+            })
+            updatePersonNetwork(scope.data);
+            linkAdded = true;
+          }
         }
 
         // Move the circle with the mouse, until the the user clicks
@@ -393,7 +467,7 @@ angular.module('redesign2017App')
           console.log(scope.person.added);
           if (!nodeAdded) {
             var point = d3.mouse(container.node());
-            var newNode = { attributes: { name: scope.person.added }, id: '0100', distance: '3', x: point[0], y: point[1] };
+            var newNode = { attributes: { name: scope.person.added }, id: addedNodeID, distance: 3, x: point[0], y: point[1]};
             addedNodes.push(newNode);
             addToDB.nodes.push(newNode);
             updatePersonNetwork(scope.data);
