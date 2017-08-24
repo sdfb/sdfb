@@ -20,6 +20,9 @@ class ApiController < ApplicationController
   end
 
 
+  def relationships
+  end
+
   def typeahead
     type   = params[:type]
     query = params[:q]
@@ -118,7 +121,7 @@ class ApiController < ApplicationController
       @groups = Group.find(ids)
 
       @people = @groups.map(&:people).reduce(:+).uniq
-      
+      puts @people
       # @member_ids = @people.map(&:id).flatten.uniq - ids
 
       @relationships = @people.map(&:relationships).flatten

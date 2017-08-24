@@ -51,7 +51,7 @@ Then(/^the data looks like a list of one group$/) do
   ]
   expect(group_data.keys).to eq(preferred_keys)
 
-  attribute_keys = ["name", "description", "start_year", "end_year"]
+  attribute_keys = ["name", "description", "start_year", "end_year", "people"]
   expect(group_data["attributes"].keys).to eq(attribute_keys)
 end
 
