@@ -29,7 +29,8 @@ test:
 #
 production:
   adapter: postgresql
-  database: sixdegs_prod 
+  #database: sixdegs_prod 
+  database: sdfb_prod-2017-05-15
   pool: 15
   timeout: 5000
   username: postgres
