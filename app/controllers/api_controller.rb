@@ -1,4 +1,10 @@
 class ApiController < ApplicationController
+  
+
+  # 
+  # [people description]
+  # 
+  # @return [type] [description]
   def people
     ids = params[:ids].split(",")
     begin
@@ -12,6 +18,7 @@ class ApiController < ApplicationController
       format.html { render :json}
     end
   end
+
 
   def typeahead
     type   = params[:type]
@@ -47,8 +54,8 @@ class ApiController < ApplicationController
       results = results.reduce([]){|memo,a| memo << a[1]}.flatten.uniq
     end
     @results =  results || []
-
   end
+
 
   def groups
     begin
@@ -57,8 +64,8 @@ class ApiController < ApplicationController
       else
         ids = params[:ids].split(",")
         @groups = Group.find(ids)
+        @people = @groups.map(&:people).reduce(:+).uniq
       end
-      @people = @groups.map(&:people).reduce(:+).uniq
     rescue ActiveRecord::RecordNotFound => e
       @errors = []
       @errors << {title: "Invalid group ID(s)"}
@@ -101,6 +108,7 @@ class ApiController < ApplicationController
       @errors << {title: "invalid person ID(s)"}
     end
   end
+
 
   def group_network
     begin
