@@ -90,6 +90,10 @@ shared-network {
     opacity: 1;
   }
 
+  .link.new {
+    stroke: orange;
+  }
+
   .node {
     stroke: #fff;
     stroke-width: 1px; // -webkit-transition: all $opacityDuration, r 0s ease-out;

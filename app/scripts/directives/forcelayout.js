@@ -225,6 +225,9 @@ angular.module('redesign2017App')
             .classed('altered', function(d) { // Style if link has been "altered" by a person
               return d.altered ? true : false;
             })
+            .classed('new', function(d) {
+              return d.new ? true : false;
+            })
             .on('click', function(d) { // Toggle link on click
               toggleClick(d, newLinks);
             });
@@ -411,22 +414,29 @@ angular.module('redesign2017App')
           }
           // var nodeOne = this;
           // var foundOverlap = false;
-          // var nodes = scope.data.included;
-          // nodes.forEach(function (otherNode) {
-          //   var distance = Math.sqrt(Math.pow(otherNode.x - d3.event.x, 2) + Math.pow(otherNode.y - d3.event.y, 2));
-          //   if (otherNode != d && distance < 16) {
-          //     foundOverlap = true;
-          //     console.log(otherNode.attributes.name);
-          //   }
-          // })
-          // if (foundOverlap == true) {
-          //   d3.select(nodeDom).select("circle.background")
-          //     .style("opacity", 0.5)
-          // }
-          // else {
-          //   d3.select(nodeDom).select("circle.background")
-          //     .style("opacity", 0)
-          // }
+          var nodes = scope.data.included;
+          nodes.forEach(function (otherNode) {
+            var distance = Math.sqrt(Math.pow(otherNode.x - d3.event.x, 2) + Math.pow(otherNode.y - d3.event.y, 2));
+            if (!linkAdded) {
+              if (otherNode != d && distance < 10) {
+                // foundOverlap = true;
+                // console.log(otherNode.attributes.name);
+                d3.select("#n"+otherNode.id).transition().attr('r', 40);
+                // console.log(d3.select("#n"+otherNode.id));
+              }
+              else {
+                d3.select("#n"+otherNode.id).transition().attr('r', function(d) { // Size nodes by degree of distance
+                  if (d.distance == 0) {
+                    return 25;
+                  } else if (d.distance == 1) {
+                    return 12.5;
+                  } else {
+                    return 6.25;
+                  }
+                });
+              }
+            }
+          });
         }
 
         function dragstarted(d) {
@@ -445,13 +455,23 @@ angular.module('redesign2017App')
           if (!linkAdded) {
             nodes.forEach(function (otherNode) {
               var distance = Math.sqrt(Math.pow(otherNode.x - d3.event.x, 2) + Math.pow(otherNode.y - d3.event.y, 2));
-              if (otherNode != d && distance < 16) {
+              if (otherNode != d && distance < 10) {
                 console.log("new link added:", otherNode.attributes.name);
-                var newLink = {source: d, target: otherNode, weight: 100, start_year: 1500, end_year: 1700, id: addedLinkID};
+                var newLink = {source: d, target: otherNode, weight: 100, start_year: 1500, end_year: 1700, id: addedLinkID, new: true};
                 addedLinks.push(newLink);
-                console.log(newLink);
+                addToDB.links.push({source: d.id, target: otherNode.id});
+                console.log(addToDB);
               }
             })
+            d3.selectAll(".node").attr('r', function(d) { // Size nodes by degree of distance
+              if (d.distance == 0) {
+                return 25;
+              } else if (d.distance == 1) {
+                return 12.5;
+              } else {
+                return 6.25;
+              }
+            });
             updatePersonNetwork(scope.data);
             linkAdded = true;
           }
