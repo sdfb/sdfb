@@ -22,7 +22,47 @@
     <add-node ng-show="config.contributionMode" class="panel collapsable collapsed orange-panel add-node" ng-class="{'collapsed' : addNodeClosed}"></add-node>
     <add-link ng-show="config.contributionMode" class="panel collapsable collapsed orange-panel add-link" ng-class="{'collapsed' : addLinkClosed}"></add-link>
 
+
   </section>
+  <div class="panel orange-panel add-node collapsable on-the-right" ng-show="config.contributionMode" id="nodeInfo">
+    <h3>Additional node information</h3>
+    <h4>{{ scope.person.added }}</h4>
+    <input class="form-control" id="birthdate" placeholder="Birth Year">
+    <input class="form-control" id="deathdate" placeholder="Death Year">
+    <input class="form-control" id="title" placeholder="Title">
+    <input class="form-control" id="suffix" placeholder="Suffix">
+    <input class="form-control" id="alternates" placeholder="Alternate Names (comma-separated)">
+    <button class="btn btn-primary" type="button" ng-click="submitNode() ">Done</button>
+  </div>
+
+  <div class="panel orange-panel add-node collapsable on-the-right" ng-show="config.contributionMode" id="linkInfo">
+    <h4 class="paragraph-title">Source node</h4>
+    <input placeholder="Search for a person" type="text" ng-model="person.selected" uib-typeahead="person for person in peopleToSelect | filter:$viewValue | limitTo:8" class="form-control">
+
+    <h4>Target node</h4>
+    <input placeholder="Search for a person" type="text" ng-model="person.selected" uib-typeahead="person for person in peopleToSelect | filter:$viewValue | limitTo:8" class="form-control">
+
+    <h4 class="paragraph-title">Relationship type</h4>
+    <input placeholder="Search for a person" type="text" ng-model="person.selected" uib-typeahead="person for person in peopleToSelect | filter:$viewValue | limitTo:8" class="form-control">
+
+    <h4>Start date</h4>
+    <div class="input-group">
+      <input class="form-control" uib-datepicker-popup="{{ config.dateFormat }}" ng-model="startDate">
+      <select class="input-group-addon" ng-model="selectedStartDateType" ng-options="type for type in config.dateTypes"></select><i class="fa fa-caret-down" aria-hidden="true"></i>
+    </div>
+
+    <h4>End date</h4>
+    <div class="input-group">
+      <input class="form-control" uib-datepicker-popup="{{ config.dateFormat }}" ng-model="endDate">
+      <select class="input-group-addon" ng-model="selectedEndDateType" ng-options="type for type in config.dateTypes"></select><i class="fa fa-caret-down" aria-hidden="true"></i>
+    </div>
+
+    <h4>Relationship confidence level</h4>
+    <rzslider rz-slider-model="slider.value" rz-slider-options="slider.options" class="with-legend"></rzslider>
+
+    <h5>Your submission needs to be validated by SDFB staff. You will see it as unapproved contribution in the meantime.</h5>
+    <button type="button" class="btn btn-primary" ng-click="submitLink()">Done</button>
+  </div>
 
 </div>
 <div class="visualization-container">

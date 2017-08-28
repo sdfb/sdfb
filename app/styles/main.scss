@@ -821,6 +821,10 @@ filters-panel {
   }
 }
 
+#nodeInfo, #linkInfo {
+  display: none;
+}
+
 filters-panel.panel h3 {
   margin-bottom: 16px;
 }

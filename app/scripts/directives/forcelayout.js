@@ -250,7 +250,7 @@ angular.module('redesign2017App')
             return d.id;
           })
 
-          var nodeEnter = node.enter().append('circle'); // Create enter variable for general update pattern
+          var nodeEnter = node.enter().append('g').append('circle'); // Create enter variable for general update pattern
 
 
           node.exit().remove(); // Remove exiting nodes
@@ -459,7 +459,12 @@ angular.module('redesign2017App')
                 console.log("new link added:", otherNode.attributes.name);
                 var newLink = {source: d, target: otherNode, weight: 100, start_year: 1500, end_year: 1700, id: addedLinkID, new: true};
                 addedLinks.push(newLink);
-                addToDB.links.push({source: d.id, target: otherNode.id});
+                // addToDB.links.push({source: d.id, target: otherNode.id});
+                d3.select('#linkInfo')
+                  .style('display', 'block')
+                  .style('position', 'absolute')
+                  .style('left', d3.event.x.toString()+"px")
+                  .style('top', d3.event.y.toString()+"px");
                 console.log(addToDB);
               }
             })
@@ -489,12 +494,34 @@ angular.module('redesign2017App')
             var point = d3.mouse(container.node());
             var newNode = { attributes: { name: scope.person.added }, id: addedNodeID, distance: 3, x: point[0], y: point[1]};
             addedNodes.push(newNode);
-            addToDB.nodes.push(newNode);
+
             updatePersonNetwork(scope.data);
             nodeAdded = true;
             cursor.attr("opacity", 0);
+            d3.select('#nodeInfo')
+              .style('display', 'block')
+              .style('position', 'absolute')
+              .style('left', point[0].toString()+"px")
+              .style('top', point[1].toString()+"px");
           }
+
+        }
+
+        scope.submitNode = function() {
+          console.log("node submitted");
+          var newNode = {attributes: {name: scope.person.added, birthdate: d3.select('#birthdate').node().value, deathdate: d3.select('#deathdate').node().value, title: d3.select('#title').node().value, suffix: d3.select('#suffix').node().value, alternate_names: d3.select('#alternates').node().value},  id: addedNodeID}
+          addToDB.nodes.push(newNode);
           console.log(addToDB);
+          d3.select('#nodeInfo').style('display', 'none');
+        }
+
+        scope.submitLink = function() {
+          console.log("link submitted");
+          // var newNode = {attributes: {name: scope.person.added, birthdate: d3.select('#birthdate').node().value, deathdate: d3.select('#deathdate').node().value, title: d3.select('#title').node().value, suffix: d3.select('#suffix').node().value, alternate_names: d3.select('#alternates').node().value},  id: addedNodeID}
+          var newLink = addedLinks[-1];
+          addToDB.links.push(newLink);
+          console.log(addToDB);
+          d3.select('#linkInfo').style('display', 'none');
         }
 
 
