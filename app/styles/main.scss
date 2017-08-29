@@ -260,7 +260,7 @@ path.danger {
   }
 
   &.add-link {
-    height: 572px;
+    height: 582px;
     background-color: $light-color;
     border: 1px solid $contribution-mode-fill;
 
@@ -823,6 +823,14 @@ filters-panel {
 
 #nodeInfo, #linkInfo {
   display: none;
+}
+
+#nodeInfo {
+  height: 250px;
+}
+
+#linkInfo {
+  height: 585px;
 }
 
 filters-panel.panel h3 {

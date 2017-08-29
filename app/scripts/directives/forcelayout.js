@@ -460,11 +460,13 @@ angular.module('redesign2017App')
                 var newLink = {source: d, target: otherNode, weight: 100, start_year: 1500, end_year: 1700, id: addedLinkID, new: true};
                 addedLinks.push(newLink);
                 // addToDB.links.push({source: d.id, target: otherNode.id});
-                d3.select('#linkInfo')
-                  .style('display', 'block')
-                  .style('position', 'absolute')
-                  .style('left', d3.event.x.toString()+"px")
-                  .style('top', d3.event.y.toString()+"px");
+                // d3.select('#linkInfo')
+                //   .style('display', 'block')
+                //   .style('position', 'absolute')
+                //   .style('left', d3.event.x.toString()+"px")
+                //   .style('top', d3.event.y.toString()+"px");
+                console.log(d3.select('input#source'));
+                d3.select('input#source').value = d.attributes.name;
                 console.log(addToDB);
               }
             })
