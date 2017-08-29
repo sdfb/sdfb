@@ -465,9 +465,8 @@ angular.module('redesign2017App')
                 //   .style('position', 'absolute')
                 //   .style('left', d3.event.x.toString()+"px")
                 //   .style('top', d3.event.y.toString()+"px");
-                console.log(d3.select('input#source'));
-                d3.select('input#source').value = d.attributes.name;
-                console.log(addToDB);
+                d3.select('input#source').property('value', d.attributes.name);
+                d3.select('input#target').property('value', otherNode.attributes.name);
               }
             })
             d3.selectAll(".node").attr('r', function(d) { // Size nodes by degree of distance
@@ -520,7 +519,23 @@ angular.module('redesign2017App')
         scope.submitLink = function() {
           console.log("link submitted");
           // var newNode = {attributes: {name: scope.person.added, birthdate: d3.select('#birthdate').node().value, deathdate: d3.select('#deathdate').node().value, title: d3.select('#title').node().value, suffix: d3.select('#suffix').node().value, alternate_names: d3.select('#alternates').node().value},  id: addedNodeID}
-          var newLink = addedLinks[-1];
+          var newLink = addedLinks[addedLinks.length-1];
+          var startDate = d3.select('#startDate').property('value');
+          var startDateType = d3.select('#startDateType').property('value');
+          var endDate = d3.select("#endDate").property('value');
+          var endDateType = d3.select("#endDateType").property('value');
+          var confidence = d3.select('#confidence').property('value');
+          var relType = d3.select('#relType').property('value');
+
+          newLink.source = newLink.source.id;
+          newLink.target = newLink.target.id;
+          newLink.weight = scope.slider.value;
+          newLink.start_year = startDate;
+          newLink.start_year_type = startDateType.split(':')[1];
+          newLink.end_year = endDate;
+          newLink.end_year_type = endDateType.split(':')[1];
+          newLink.type = relType;
+
           addToDB.links.push(newLink);
           console.log(addToDB);
           d3.select('#linkInfo').style('display', 'none');
