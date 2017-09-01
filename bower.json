@@ -12,6 +12,7 @@
     "angular-touch": "^1.4.0",
     "angular-bootstrap": "^2.5.0",
     "d3": "^4.8.0",
+    "d3-plugins-fisheye": "https://raw.githubusercontent.com/d3/d3-plugins/master/fisheye/fisheye.js",
     "lodash": "^4.17.4",
     "angularjs-slider": "^6.2.2",
     "components-font-awesome": "^4.7.0"

@@ -13,6 +13,7 @@ angular.module('redesign2017App')
       restrict: 'E',
       link: function postLink(scope, element, attrs) {
         // element.text('this is the addNode directive');
+        scope.selectedStartDateType = scope.selectedEndDateType = scope.config.dateTypes[1];
       }
     };
   });

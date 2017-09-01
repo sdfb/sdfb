@@ -1,6 +1,9 @@
 <section ng-if="!currentSelection.type">
-  <p class="help-info">Select a person or a relation to display contextual information.</p>
+  <p ng-if="!config.contributionMode" class="help-info">Select a person or a relation to display contextual information.</p>
   <p ng-if="config.contributionMode" class="contribution">In contribution mode you can edit links and nodes, or create new ones.</p>
+  <p ng-if="config.contributionMode" class="contribution">Click anywhere on the canvas to add a node.</p>
+  <p ng-if="config.contributionMode" class="contribution">Drag a node onto any other node to add a link.</p>
+  <p ng-if="config.contributionMode" class="contribution">Drag a node onto the groups bar to add a node to a group.</p>
 </section>
 <section ng-if="currentSelection.type == 'person' " id="XXXcurrent-selection-person1">
   <h2>{{currentSelection.attributes.name }}</h2>

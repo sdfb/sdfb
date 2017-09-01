@@ -23,10 +23,12 @@ angular.module('redesign2017App')
           addedNodes = [], // Nodes user has added to the graph
           addedLinks = [], // Links user has added to the graph
           addToDB = {nodes: [], links: []},
-          nodeAdded = false, // Toggle for user-added actions
-          linkAdded = false,
           addedNodeID = 0,
           addedLinkID = 0;
+
+          var fisheye = d3.fisheye.circular()
+            .radius(200)
+            .distortion(2);
 
           svg.append('rect') // Create container for visualization
             .attr('width', '100%')
@@ -250,7 +252,7 @@ angular.module('redesign2017App')
             return d.id;
           })
 
-          var nodeEnter = node.enter().append('g').append('circle'); // Create enter variable for general update pattern
+          var nodeEnter = node.enter().append('circle'); // Create enter variable for general update pattern
 
 
           node.exit().remove(); // Remove exiting nodes
@@ -299,6 +301,10 @@ angular.module('redesign2017App')
                 }
               })
             })
+            .call(d3.drag()
+              .on("start", dragstarted)
+              .on("drag", dragged)
+              .on("end", dragended));
 
 
 
@@ -378,30 +384,22 @@ angular.module('redesign2017App')
 
           // Change name of the viz
           scope.config.title = "Hooke network of Francis Bacon"
-
-          // if (!scope.config.contributionMode) {
-          //   d3.select('.degree3').remove();
-          // }
         }
 
-        // Function triggered when user wants to add a node
-        scope.addingNode = function() {
-          nodeAdded = false;
-          cursor.attr("opacity", 1);
-          addedNodeID += 1;
-          svg.on("click", addNode);
-        }
+        scope.$watch('config.contributionMode', function(newValue, oldValue) {
+          if (newValue !== oldValue) {
+            if (scope.config.contributionMode) {
+              cursor.attr("opacity", 1);
+              svg.on("click", addNode);
+            }
+            else {
+              cursor.attr("opacity", 0);
+              svg.on("click", null);
+            }
+          }
+        });
 
         // Code for adding links adapted from: https://bl.ocks.org/emeeks/f2f6883ac7c965d09b90
-        scope.addingLink = function() {
-          console.log('Adding a link');
-          linkAdded = false;
-          addedLinkID += 1;
-          node.call(d3.drag()
-            .on("start", dragstarted)
-            .on("drag", dragged)
-            .on("end", dragended));
-        }
 
         function dragged(d) {
           if (d.distance === 3) {
@@ -414,15 +412,39 @@ angular.module('redesign2017App')
           }
           // var nodeOne = this;
           // var foundOverlap = false;
+
+          // if (scope.config.contributionMode) {
+          //   fisheye.focus(d3.mouse(this));
+          //
+          //   node.each(function(f) { f.fisheye = fisheye(f); })
+          //       .attr("cx", function(f) { return f.fisheye.x; })
+          //       .attr("cy", function(f) { return f.fisheye.y; })
+          //       .attr("r", function(f) {
+          //         if (f.distance == 0) {
+          //           return 25 * f.fisheye.z;
+          //         } else if (f.distance == 1) {
+          //           return 12.5 * f.fisheye.z;
+          //         } else {
+          //           return 6.25 * f.fisheye.z;
+          //         }
+          //       });
+          //
+          //   link.attr("d", function(f) {
+          //     var dx = f.target.fisheye.x - f.source.fisheye.x,
+          //       dy = f.target.fisheye.y - f.source.fisheye.y,
+          //       dr = Math.sqrt(dx * dx + dy * dy);
+          //     return "M" + f.source.fisheye.x + "," + f.source.fisheye.y + "A" + dr + "," + dr + " 0 0,1 " + f.target.fisheye.x + "," + f.target.fisheye.y;
+          //   });
+          // }
           var nodes = scope.data.included;
           nodes.forEach(function (otherNode) {
             var distance = Math.sqrt(Math.pow(otherNode.x - d3.event.x, 2) + Math.pow(otherNode.y - d3.event.y, 2));
-            if (!linkAdded) {
+            if (scope.config.contributionMode) {
               if (otherNode != d && distance < 10) {
-                // foundOverlap = true;
-                // console.log(otherNode.attributes.name);
-                d3.select("#n"+otherNode.id).transition().attr('r', 40);
-                // console.log(d3.select("#n"+otherNode.id));
+                d3.select("#n"+otherNode.id).transition()
+                  .attr('r', 25)
+                  .attr('stroke', 'orange')
+                  .attr('stroke-dasharray', 5,5);
               }
               else {
                 d3.select("#n"+otherNode.id).transition().attr('r', function(d) { // Size nodes by degree of distance
@@ -433,13 +455,16 @@ angular.module('redesign2017App')
                   } else {
                     return 6.25;
                   }
-                });
+                })
+                .attr('stroke-dasharray', null);
               }
             }
           });
         }
 
         function dragstarted(d) {
+
+          cursor.attr("opacity", 0);
 
           var nodes = scope.data.included;
           nodes.forEach(function(n) {
@@ -450,23 +475,23 @@ angular.module('redesign2017App')
         }
 
         function dragended(d) {
+
           var nodeOne = this;
           var nodes = scope.data.included;
-          if (!linkAdded) {
+          if (scope.config.contributionMode) {
+            cursor.attr("opacity", 1);
             nodes.forEach(function (otherNode) {
               var distance = Math.sqrt(Math.pow(otherNode.x - d3.event.x, 2) + Math.pow(otherNode.y - d3.event.y, 2));
               if (otherNode != d && distance < 10) {
                 console.log("new link added:", otherNode.attributes.name);
                 var newLink = {source: d, target: otherNode, weight: 100, start_year: 1500, end_year: 1700, id: addedLinkID, new: true};
                 addedLinks.push(newLink);
-                // addToDB.links.push({source: d.id, target: otherNode.id});
-                // d3.select('#linkInfo')
-                //   .style('display', 'block')
-                //   .style('position', 'absolute')
-                //   .style('left', d3.event.x.toString()+"px")
-                //   .style('top', d3.event.y.toString()+"px");
                 d3.select('input#source').property('value', d.attributes.name);
                 d3.select('input#target').property('value', otherNode.attributes.name);
+                scope.$apply(function() {
+                  scope.addLinkClosed = false;
+                  scope.legendClosed = true;
+                });
               }
             })
             d3.selectAll(".node").attr('r', function(d) { // Size nodes by degree of distance
@@ -479,41 +504,61 @@ angular.module('redesign2017App')
               }
             });
             updatePersonNetwork(scope.data);
-            linkAdded = true;
+            addedLinkID += 1;
+
           }
         }
 
         // Move the circle with the mouse, until the the user clicks
         function mousemove() {
           cursor.attr("transform", "translate(" + d3.mouse(container.node()) + ")");
+          // if (scope.config.contributionMode) {
+          //   fisheye.focus(d3.mouse(this));
+          //
+          //   node.each(function(d) { d.fisheye = fisheye(d); })
+          //       .attr("cx", function(d) { return d.fisheye.x; })
+          //       .attr("cy", function(d) { return d.fisheye.y; })
+          //       .attr("r", function(d) {
+          //         if (d.distance == 0) {
+          //           return 25 * d.fisheye.z;
+          //         } else if (d.distance == 1) {
+          //           return 12.5 * d.fisheye.z;
+          //         } else {
+          //           return 6.25 * d.fisheye.z;
+          //         }
+          //       });
+          //
+          //   link.attr("d", function(d) {
+          //         var dx = d.target.fisheye.x - d.source.fisheye.x,
+          //           dy = d.target.fisheye.y - d.source.fisheye.y,
+          //           dr = Math.sqrt(dx * dx + dy * dy);
+          //         return "M" + d.source.fisheye.x + "," + d.source.fisheye.y + "A" + dr + "," + dr + " 0 0,1 " + d.target.fisheye.x + "," + d.target.fisheye.y;
+          //       });
+          // }
         }
 
         // When canvas is clicked, add a new circle with dummy data
         function addNode() {
-          console.log(scope.person.added);
-          if (!nodeAdded) {
-            var point = d3.mouse(container.node());
-            var newNode = { attributes: { name: scope.person.added }, id: addedNodeID, distance: 3, x: point[0], y: point[1]};
-            addedNodes.push(newNode);
+          var point = d3.mouse(container.node());
+          var newNode = { attributes: { name: scope.person.added }, id: addedNodeID, distance: 3, x: point[0], y: point[1]};
+          addedNodes.push(newNode);
+          addedNodeID += 1;
+          scope.$apply(function() {
+            scope.addNodeClosed = false;
+            scope.legendClosed = true;
+          });
 
-            updatePersonNetwork(scope.data);
-            nodeAdded = true;
-            cursor.attr("opacity", 0);
-            d3.select('#nodeInfo')
-              .style('display', 'block')
-              .style('position', 'absolute')
-              .style('left', point[0].toString()+"px")
-              .style('top', point[1].toString()+"px");
-          }
+          updatePersonNetwork(scope.data);
+
 
         }
 
         scope.submitNode = function() {
           console.log("node submitted");
-          var newNode = {attributes: {name: scope.person.added, birthdate: d3.select('#birthdate').node().value, deathdate: d3.select('#deathdate').node().value, title: d3.select('#title').node().value, suffix: d3.select('#suffix').node().value, alternate_names: d3.select('#alternates').node().value},  id: addedNodeID}
+          var newNode = {attributes: {name: scope.person.added, birthdate: d3.select('#birthDate').node().value, deathdate: d3.select('#deathDate').node().value, title: d3.select('#title').node().value, suffix: d3.select('#suffix').node().value, alternate_names: d3.select('#alternates').node().value},  notes: d3.select('#alternates').node().value, id: addedNodeID}
           addToDB.nodes.push(newNode);
-          console.log(addToDB);
-          d3.select('#nodeInfo').style('display', 'none');
+          scope.addNodeClosed = true;
+
         }
 
         scope.submitLink = function() {
@@ -538,7 +583,7 @@ angular.module('redesign2017App')
 
           addToDB.links.push(newLink);
           console.log(addToDB);
-          d3.select('#linkInfo').style('display', 'none');
+          scope.addLinkClosed = true;
         }
 
 

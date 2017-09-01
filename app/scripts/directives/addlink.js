@@ -13,15 +13,15 @@ angular.module('redesign2017App')
       link: function postLink(scope, element, attrs) {
         scope.selectedStartDateType = scope.selectedEndDateType = scope.config.dateTypes[1];
         scope.slider = {
-          value: 4,
+          value: 60,
           options: {
             // showTicksValues: true,
             floor: 0,
             ceil: 100,
-            step: 20,
-            hideLimitLabels: true,
+            // step: 20,
+            // hideLimitLabels: true,
             // hidePointerLabels: true,
-            showTicks: true,
+            // showTicks: true,
             // stepsArray: [
             //   { value: 0, legend: 'Impossible' },
             //   { value: 20, legend: 'Highly improbable'  },
@@ -31,22 +31,23 @@ angular.module('redesign2017App')
             //   { value: 100, legend: 'Sure' },
             // ],
             translate: function(v) {
-                switch (v) {
-                    case 0:
-                    return 'Impossible';
-                    case 20:
-                    return 'Highly improbable';
-                    case 40:
-                    return 'Improbable';
-                    case 60:
-                    return 'Possible';
-                    case 80:
-                    return 'Likely';
-                    case 100:
-                    return 'Sure';
-                    default:
-                    return 'mmm';
-                }
+                return v;
+                // switch (v) {
+                //     case 0:
+                //     return 'Highly improbable';
+                //     // case 20:
+                //     // return 'Highly improbable';
+                //     // case 40:
+                //     // return 'Improbable';
+                //     // case 60:
+                //     // return 'Possible';
+                //     // case 80:
+                //     // return 'Likely';
+                //     case 100:
+                //     return 'Certain';
+                //     default:
+                //     return 'mmm';
+                // }
             }
           }
         };
