@@ -1,5 +1,5 @@
 source 'https://rubygems.org'
-ruby '2.2.1'
+ruby '2.3.0'
 
 # Native Rails gems — (These are required).
 gem 'rails', '4.1.8'
@@ -11,7 +11,7 @@ gem 'actionpack-action_caching'
 gem 'protected_attributes'
 
 # Database Gems
-gem 'pg'
+gem 'pg', '0.18.4'
 
 # Webserver Gems
 gem 'puma'
@@ -40,6 +40,7 @@ gem "yajl-ruby"
 gem 'cancan'
 gem "carrierwave"
 gem 'bcrypt', :require => "bcrypt"
+gem 'nokogiri'
 
 group :production do
   gem 'rack-timeout'

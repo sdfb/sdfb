@@ -1,0 +1,38 @@
+Notes on the deployment of the website at PSC on bridges
+
+Server: vm057.bridges.psc.edu
+Centos7
+1-core
+9.8GB ram
+10GB storage
+
+
+# Webcode
+
+git checkout: /var/www/sixdegs/sdfb
+httpd config: /etc/httpd/conf.d/sixdegs.conf
+logs: /var/log/httpd/sixdegs_*
+
+Using StatusCake as external monitor
+
+# PostgreSQL
+
+data: /var/lib/pgsql/data
+config: /var/lib/pgsql/data/pg_hba.conf
+
+
+# Cron Jobs
+
+[root@vm057 sixdegs]# crontab -l
+# Run updates and restart
+0 1 * * mon bash ~/cron-updates.sh | tee ~/update.log
+3 1 * * mon bash ~/check-postgres.sh | tee ~/postgres.log
+15 1 * * mon bash ~/database-backup.sh | tee ~/backup.log
+
+cron-updates.sh - Runs yum update and restarts the server.  This is done to meet PSC security scan requirements
+check-postgres.sh - Ensures that postgresql was able to restart, and if not, manually starts it.
+database-backups.sh - Uses pg_dump to take database snapshot of sixdegs_prod and scp to remote location.  Removes backups locally older than 30 days.
+
+
+
+
