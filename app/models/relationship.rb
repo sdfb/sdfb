@@ -1,8 +1,12 @@
 class Relationship < ActiveRecord::Base
+
+  include Approvable
+
+
   attr_accessible :max_certainty, :created_by, :original_certainty, :person1_index, :person2_index,
-  :justification, :approved_by, :approved_on, :created_at, :edge_birthdate_certainty,
-  :is_approved, :start_year, :start_month, :start_day, :end_year, :end_month, :end_day,
-  :is_active, :is_rejected, :person1_autocomplete, :person2_autocomplete,
+  :justification, :created_at, :edge_birthdate_certainty,
+   :start_year, :start_month, :start_day, :end_year, :end_month, :end_day,
+  :person1_autocomplete, :person2_autocomplete,
   :start_date_type, :end_date_type, :type_certainty_list, :last_edit
   # The type certainty list is a 2d array that includes the relationship type id in the 0 index, 
   #  ...the average certainty of all relationship assignments with that relationship type, and the relationship type name
@@ -13,11 +17,10 @@ class Relationship < ActiveRecord::Base
   # -----------------------------
   belongs_to :user
   # if a relationship is deleted then all associated relationship type assignments are deleted
-  has_many :user_rel_contribs, :dependent => :destroy
+  has_many :user_rel_contribs, dependent: :destroy
   belongs_to :person
 
   # Misc Constants
-  DATE_TYPE_LIST = ["BF", "AF","IN","CA","BF/IN","AF/IN","NA"]
 
 	# Validations
 	# -----------------------------
@@ -27,23 +30,15 @@ class Relationship < ActiveRecord::Base
   validates_presence_of :person2_index
   validates_presence_of :original_certainty
   validates_presence_of :created_by
-  ## justification must be at least 4 characters
-  validates_length_of :justification, :minimum => 4, on: :create, :if => :just_present?
-  ## start date type is one included in the list
-  validates_inclusion_of :start_date_type, :in => DATE_TYPE_LIST, :if => :start_year_present?
-  ## end date type is one included in the list
-  validates_inclusion_of :end_date_type, :in => DATE_TYPE_LIST, :if => :end_year_present?
-  # custom validation that checks that start year and end years
-  validate :create_check_start_and_end_date
+  validates_length_of :justification, minimum: 4, on: :create, allow_nil: true
+  validates_inclusion_of :start_date_type, in: SDFB::DATE_TYPES, if: "self.start_year.present?"
+  validates_inclusion_of :end_date_type,   in: SDFB::DATE_TYPES, if: "self.end_year.present?"
+  validates :start_year, numericality: { greater_than_or_equal_to: SDFB::EARLIEST_YEAR, less_than_or_equal_to: SDFB::LATEST_YEAR }, allow_nil: true
+  validates :end_year,   numericality: { greater_than_or_equal_to: SDFB::EARLIEST_YEAR, less_than_or_equal_to: SDFB::LATEST_YEAR }, allow_nil: true
 
   # Scope
   # ----------------------------- 
-  scope :all_approved, -> { where(is_approved: true, is_active: true, is_rejected: false) }
-  scope :all_inactive, -> { where(is_active: false) }
-  scope :all_active_unrejected,  -> { where(is_active: true, is_rejected: false) }
-  scope :all_rejected, -> { where(is_rejected: true, is_active: true) }
   scope :all_no_dates, -> { where("start_year IS NULL or end_year IS NULL") }
-  scope :all_unapproved, -> { where(is_approved: false, is_rejected: false, is_active: true) }
   scope :for_user, -> (user_input) { where('created_by = ?', "#{user_input}") }
   scope :highest_certainty, -> { order(max_certainty: :desc) }
   scope :all_for_person, -> (personID) {
@@ -64,14 +59,12 @@ class Relationship < ActiveRecord::Base
   scope :for_rels_greater_than_100180000, -> { where("id > 100180000") }
   scope :all_recent, -> { order(updated_at: :desc) }
   scope :order_by_sdfb_id, -> { order(id: :asc) }
-  scope :approved_user, -> (user_id){ where('approved_by = ?', "#{user_id}") }
 
   # Callbacks
   # -----------------------------
   before_create :init_array 
   before_create :create_check_start_and_end_date
   before_create :check_if_approved
-  before_create :check_if_valid
   before_create :create_max_certainty_type_list
 
   before_update :update_type_list_max_certainty_on_rel
@@ -79,10 +72,9 @@ class Relationship < ActiveRecord::Base
   before_update :update_peoples_rel_sum
   before_update :check_if_approved_and_update_edit
 
-  after_create :create_met_record
   after_create :create_peoples_rel_sum
-  after_update :edit_met_record
   after_destroy :delete_from_rel_sum
+  after_save    :update_met_record
 
 	# Custom Methods
   # -----------------------------
@@ -113,23 +105,31 @@ class Relationship < ActiveRecord::Base
     self.last_edit = nil
   end
 
-  def create_met_record
-    new_met_record = UserRelContrib.new do |u| 
-      u.relationship_id = self.id
-      if (Relationship.find(u.relationship_id).is_approved == true)
-        u.is_approved = true
-      else
-        u.is_approved == false
-      end
-      u.is_rejected = false
-      u.is_active = true
-      u.is_locked = true
-      u.relationship_type_id = 4
-      u.certainty = self.original_certainty
-      u.created_by = 3
-      u.annotation = "This record was automatically generated when the relationship was created."
-      u.save!
-    end
+  def update_met_record
+    met_record = UserRelContrib.where(relationship_type_id: 4,
+                                      relationship_id: self.id)
+                               .first_or_create!(
+                                   relationship_id: self.id,
+                                   is_approved: self.is_approved,
+                                   is_rejected: false,
+                                   is_active: true,
+                                   is_locked: true,
+                                   relationship_type_id: 4,
+                                   created_by: 3,
+                                   annotation: "This record was automatically generated when the relationship was created.",
+                                   certainty: self.original_certainty
+                              )
+
+    met_record.update_attributes(certainty: self.original_certainty,
+                                 start_year: self.start_year,
+                                 start_month: self.start_month,
+                                 start_day: self.start_day,
+                                 end_year: self.end_year,
+                                 end_month: self.end_month,
+                                 end_day: self.end_day
+    )
+
+    met_record.save
   end
 
   def create_max_certainty_type_list
@@ -153,23 +153,11 @@ class Relationship < ActiveRecord::Base
     self.type_certainty_list = averages_by_rel_type
   end
 
-  def edit_met_record
-    met_record = UserRelContrib.all_for_relationship(self.id).is_locked.first
-
-    if ! met_record.nil?
-      if (met_record.certainty != self.original_certainty)
-        UserRelContrib.update(met_record.id, certainty: self.original_certainty)
-      end
-    end
-  end
-
   ## if a user submits a new relationship but does not include a start and end date it defaults to a start and end date based on the birth years of the people in the relationship
   ## This method also checks if the start and end date are within the defined min or max years 
   ## If the relationship is not within the min and max years, the record will only be accepted if the people in the relationship are alive at that time
   def create_check_start_and_end_date
-    # define defaults
-    min_year = 1500
-    max_year = 1700
+
     # stores whether the there are local variables for the people birth and death years
     retrieved_birth_death_year_flag = false
     # stores whether the max birth year and min death year were created to avoid duplicate calculations
@@ -211,7 +199,7 @@ class Relationship < ActiveRecord::Base
       else
         ##if there is no birthdates, set start date to the default after or in the min year
         new_start_year_type = "AF/IN"
-        new_start_year = min_year
+        new_start_year = SDFB::EARLIEST_YEAR
       end
       self.start_year = new_start_year
       self.start_date_type = new_start_year_type
@@ -226,7 +214,7 @@ class Relationship < ActiveRecord::Base
         # if start year is outside of the date range, check that there is 
         # at least one person in the relationship that has a birth/death year outside of the range
         # of else throw error message
-        if (self.start_year.to_i < min_year) || (self.start_year.to_i > max_year)
+        if (self.start_year.to_i < SDFB::EARLIEST_YEAR) || (self.start_year.to_i > SDFB::LATEST_YEAR)
           # check that the birth and death years were retrieved from the people or else retrieve them for comparisons
           if retrieved_birth_death_year_flag == false
             person1_record = Person.find(self.person1_index)
@@ -257,7 +245,7 @@ class Relationship < ActiveRecord::Base
 
           # if the user entered start year is outside of the person's birth year then throw and error and reject the new relationship or edit
           if (self.start_year < max_birth_year) || (self.start_year > min_death_year)
-            errors.add(:start_year, "The start year must be between #{min_year} and #{max_year} or between #{max_birth_year} (after the people were born) and #{min_death_year} (before the people died) ") 
+            errors.add(:start_year, "The start year must be between #{SDFB::EARLIEST_YEAR} and #{SDFB::LATEST_YEAR} or between #{max_birth_year} (after the people were born) and #{min_death_year} (before the people died) ") 
           end
         end
       end
@@ -284,7 +272,7 @@ class Relationship < ActiveRecord::Base
       else
         ##if there is no deathdates, set end date to the default before or in the max year
         new_end_year_type = "BF/IN"
-        new_end_year = max_year
+        new_end_year = SDFB::LATEST_YEAR
       end
       self.end_year = new_end_year
       self.end_date_type = new_end_year_type
@@ -300,7 +288,7 @@ class Relationship < ActiveRecord::Base
         # if end year is outside of the date range, check that there is 
         # at least one person in the relationship that has a death/death year outside of the range
         # of else throw error message
-        #if (self.end_year.to_i < min_year) || (self.end_year.to_i > max_year)
+        #if (self.end_year.to_i < SDFB::EARLIEST_YEAR) || (self.end_year.to_i > SDFB::LATEST_YEAR)
           # check that the death and death years were retrieved from the people or else retrieve them for comparisons
         #  if retrieved_death_death_year_flag == false
         #    person1_record = Person.find(self.person1_index)
@@ -332,7 +320,7 @@ class Relationship < ActiveRecord::Base
 
           # if the user entered end year outside of the range and also outside of the person's death year then throw and error and reject the new relationship or edit
         #  if (self.end_year < max_death_year) || (self.end_year > min_death_year)
-        #    errors.add(:end_year, "The end year must be between #{min_year} and #{max_year} or between #{max_birth_year} (after the people were born) and #{min_death_year} (before the people died) ") 
+        #    errors.add(:end_year, "The end year must be between #{SDFB::EARLIEST_YEAR} and #{SDFB::LATEST_YEAR} or between #{max_birth_year} (after the people were born) and #{min_death_year} (before the people died) ") 
         #  end
         # end
       end
@@ -367,7 +355,12 @@ class Relationship < ActiveRecord::Base
       end
       # update the certainty list with the new array of all averages by relationship type
       # create the array includes the relationship type id, the average certainty for that relationship type, and the relationship type name
-      averages_by_rel_type_array = averages_by_rel_type.map { |e| [e.relationship_type_id, e.avg_certainty.to_f, RelationshipType.find(e.relationship_type_id).name] }
+      averages_by_rel_type_array = averages_by_rel_type.map do |e|
+        [
+          e.relationship_type_id, e.avg_certainty.to_f,
+          RelationshipType.find(e.relationship_type_id).name
+        ]
+      end
 
       # calculate the relationship's maximum certainty
       new_max_certainty = averages_by_rel_type.map { |e| e.avg_certainty.to_f }.max 
@@ -400,13 +393,6 @@ class Relationship < ActiveRecord::Base
     end
   end
   
-  def start_year_present?
-    ! self.start_year.nil?
-  end
-
-  def end_year_present?
-    ! self.end_year.nil?
-  end
 
   def get_both_names
     return Person.find(person1_index).display_name + " & " + Person.find(person2_index).display_name 
@@ -428,9 +414,6 @@ class Relationship < ActiveRecord::Base
     end
   end
 
-  def just_present?
-    !justification.nil?
-  end
 
   def check_if_approved
     if (self.is_approved != true)

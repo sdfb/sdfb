@@ -9,8 +9,10 @@
  * compiled file, but it's generally better to create a new file per style scope.
  *
  *= require_self
- *= require "bootstrap_and_overrides"
+ *= require "landing"
  *= require "accordion"
  *= require "jquery-ui.min"
+ *= require "bootstrap_and_overrides"
  *= require "style"
- */
+ *= require  "insights.standalone.css"
+*/

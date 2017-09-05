@@ -6,7 +6,7 @@ class GroupsController < ApplicationController
   # before_filter :check_login, :only => [:new, :edit]
   # authorize_resource
 
-  autocomplete :group, :name, full: true, :display_value => :name
+  autocomplete :group, :name, full: true, display_value: :name, scopes: [:all_approved]
   load_and_authorize_resource
   
   def index
@@ -154,13 +154,9 @@ class GroupsController < ApplicationController
 
   def search
     @query = params[:query]
-    if @query != "" 
-      if (logged_in? == true)
-        if ((current_user.user_type == "Admin") || (current_user.user_type == "Curator"))
-          @all_results = Group.search_all(@query)
-        else
-          @all_results = Group.search_approved(@query)
-        end
+    unless @query.blank?
+      if logged_in? == true && (current_user.user_type == "Admin" || current_user.user_type == "Curator")
+        @all_results = Group.search_all(@query)
       else
         @all_results = Group.search_approved(@query)
       end
@@ -168,13 +164,11 @@ class GroupsController < ApplicationController
   end
 
   def export_groups
-    @all_groups_approved = Group.all_approved
-    @all_groups = Group.all_active_unrejected
     if (current_user.user_type == "Admin")
       group_csv = CSV.generate do |csv|
         csv << ["SDFB Group ID", "Name", "Description", "Start Year Type", "Start Year", "End Year Type", "End Year", "Members List (Name with SDFB Person ID)", "Justification", "Created By ID", "Created At", "Is approved?",
           "Approved By ID", "Approved On"]
-        @all_groups.each do |group|
+        Group.all_active_unrejected.each do |group|
           csv << [group.id, group.name, group.description, group.start_date_type, group.start_year, group.end_date_type, group.end_year, group.person_list, group.justification, group.created_by, group.created_at,
             group.is_approved, group.approved_by, group.approved_on]
         end
@@ -182,7 +176,7 @@ class GroupsController < ApplicationController
     else
       group_csv = CSV.generate do |csv|
         csv << ["SDFB Group ID", "Name", "Description", "Start Year Type", "Start Year", "End Year Type", "End Year", "Members List (Name with SDFB Person ID)"]
-        @all_groups_approved.each do |group|
+        Group.all_approved.each do |group|
           csv << [group.id, group.name, group.description, group.start_date_type, group.start_year, group.end_date_type, group.end_year, group.person_list]
         end
       end

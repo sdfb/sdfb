@@ -1,9 +1,11 @@
 class UserGroupContrib < ActiveRecord::Base
   # this class is known as "Group Notes" to the user
-  
-  attr_accessible :annotation, :bibliography, :group_id, :created_by, :approved_by,
-  :approved_on, :created_at, :is_approved, :is_active, :is_rejected, :last_edit
-  serialize :last_edit,Array
+
+  include TrackLastEdit
+  include WhitespaceStripper
+  include Approvable
+
+  attr_accessible :annotation, :bibliography, :group_id, :created_by, :created_at
 
   # Relationships
   # -----------------------------
@@ -12,91 +14,39 @@ class UserGroupContrib < ActiveRecord::Base
 
   # Validations
   # -----------------------------
-  validates_presence_of :annotation
   validates_presence_of :created_by
   validates_presence_of :group_id
-  ## annotation must be at least 10 characters
-  validates_length_of :annotation, :minimum => 10, :if => :annot_present?
-  ## bibliography must be at least 10 characters
-  validates_length_of :bibliography, :minimum => 10, :if => :bib_present?
+  validates_presence_of :annotation
+  validates_length_of   :annotation,   :minimum => 10
+  validates_length_of   :bibliography, :minimum => 10, allow_blank: true
 
   # Scope
   # ----------------------------- 
-  scope :all_approved, -> { where(is_approved: true, is_active: true, is_rejected: false) }
-  scope :all_inactive, -> { where(is_active: false) }
-  scope :all_rejected, -> { where(is_rejected: true, is_active: true) }
-  scope :all_unapproved, -> { where(is_approved: false, is_rejected: false, is_active: true) }
-  scope :for_user, -> ( user_input) { where('created_by = ?', "#{user_input}") }
-  scope :all_for_group, -> (groupID) {
-      select('user_group_contribs.*')
-      .where('group_id = ?', groupID)}
-  scope :all_recent, -> { order(updated_at: :desc) }
+  scope :for_user,         -> ( user_input) { where('created_by = ?', "#{user_input}") }
+  scope :all_for_group,    -> (groupID) {
+                                        select('user_group_contribs.*')
+                                        .where('group_id = ?', groupID)}
+  scope :all_recent,       -> { order(updated_at: :desc) }
   scope :order_by_sdfb_id, -> { order(id: :asc) }
-  scope :all_active_unrejected, -> { where(is_active: true, is_rejected: false) }
-  scope :approved_user, -> (user_id){ where('approved_by = ?', user_id) }
 
   # Callbacks
   # ----------------------------- 
-  before_create :init_array
-  before_create :check_if_approved
-  before_update :check_if_approved_and_update_edit
-  before_update :remove_trailing_spaces
-  before_create :remove_trailing_spaces
+  before_save { remove_trailing_spaces(:annotation, :bibliography)}
 
   # Custom Methods
   # -----------------------------
-  def init_array
-    self.last_edit = nil
-  end
 
-  def get_group_name
-    return Group.find(group_id)
-  end
+  ### The two methods below are never called.  Confirm they can be removed.  -DGN 2017-3-17
 
-  def remove_trailing_spaces
-    if ! self.annotation.nil?
-      self.annotation.strip!
-    end
-    if ! self.bibliography.nil?
-      self.bibliography.strip!
-    end
-  end
+  # def get_group_name
+  #   return Group.find(group_id)
+  # end
 
-  def check_if_approved
-    if (self.is_approved != true)
-      self.approved_by = nil
-      self.approved_on = nil
-    end  
-  end
-
-  def check_if_approved_and_update_edit
-    new_last_edit = []
-    new_last_edit.push(self.approved_by.to_i)
-    new_last_edit.push(Time.now)
-    self.last_edit = new_last_edit
-
-    # update approval
-    if (self.is_approved == true)
-      self.approved_on = Time.now
-    else
-      self.approved_by = nil
-      self.approved_on = nil
-    end  
-  end
-
-  def annot_present?
-    !self.annotation.blank?
-  end
-
-  def bib_present?
-    !self.bibliography.blank?
-  end
-
-  def get_users_name
-    if (created_by != nil)
-      return User.find(created_by).first_name + " " + User.find(created_by).last_name
-    else
-      return "ODNB"
-    end
-  end
+  # def get_users_name
+  #   if (created_by != nil)
+  #     return User.find(created_by).first_name + " " + User.find(created_by).last_name
+  #   else
+  #     return "ODNB"
+  #   end
+  # end
 end
