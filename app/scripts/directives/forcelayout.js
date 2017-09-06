@@ -27,7 +27,7 @@ angular.module('redesign2017App')
           addedLinkID = 0;
 
           var fisheye = d3.fisheye.circular()
-            .radius(200)
+            .radius(75)
             .distortion(2);
 
           svg.append('rect') // Create container for visualization
@@ -81,6 +81,7 @@ angular.module('redesign2017App')
             .attr("fill", "none")
             .attr("stroke", "orange")
             .attr("stroke-width", 1.5)
+            .attr('stroke-dasharray', 5,5)
             .attr("opacity", 0)
             .attr("transform", "translate(-100,-100)")
             .attr("class", "cursor");
@@ -335,6 +336,9 @@ angular.module('redesign2017App')
           var labelEnter = label.enter().append('g')
             .attr("class", function(d) {
               return (d.distance < 2) ? 'label' : 'label hidden';
+            })
+            .attr('id', function(d) { // Assign ID number
+              return "l" + d.id.toString();
             });
 
           label.selectAll('*').remove();
@@ -410,8 +414,11 @@ angular.module('redesign2017App')
             d.fx = d3.event.x;
             d.fy = d3.event.y;
           }
+
           // var nodeOne = this;
           // var foundOverlap = false;
+
+
 
           // if (scope.config.contributionMode) {
           //   fisheye.focus(d3.mouse(this));
@@ -440,13 +447,20 @@ angular.module('redesign2017App')
           nodes.forEach(function (otherNode) {
             var distance = Math.sqrt(Math.pow(otherNode.x - d3.event.x, 2) + Math.pow(otherNode.y - d3.event.y, 2));
             if (scope.config.contributionMode) {
+              node.on('mouseenter', null);
+              d3.select('#l'+d.id)
+                .classed('temporary-unhidden', true);
               if (otherNode != d && distance < 10) {
+                otherNode.radius = true;
                 d3.select("#n"+otherNode.id).transition()
                   .attr('r', 25)
                   .attr('stroke', 'orange')
                   .attr('stroke-dasharray', 5,5);
+                d3.select("#l"+d.id+" text")
+                  .text(d.attributes.name+" & "+otherNode.attributes.name);                
               }
               else {
+                otherNode.radius = false;
                 d3.select("#n"+otherNode.id).transition().attr('r', function(d) { // Size nodes by degree of distance
                   if (d.distance == 0) {
                     return 25;
@@ -457,9 +471,12 @@ angular.module('redesign2017App')
                   }
                 })
                 .attr('stroke-dasharray', null);
+                d3.select("#l"+d.id+" text")
+                  .text(d.attributes.name);
               }
             }
           });
+
         }
 
         function dragstarted(d) {
