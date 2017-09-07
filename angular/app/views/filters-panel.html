@@ -1,0 +1,55 @@
+<section class="force-layout">
+  <h3 class="">Filters</h3>
+  <div ng-show=" config.viewMode == 'individual-force' || config.viewMode == 'individual-concentric' || config.viewMode == 'shared-network'">
+    <div>
+      <h4>Relationships confidence level</h4>
+      <div class="confidence-container"></div>
+      <h5>Likelihood that a particular relationship existed</h5>
+    </div>
+    <div>
+      <h4>Relationships date range</h4>
+      <div class="date-container"></div>
+      <h5>Temporal window in which relationships existed</h5>
+    </div>
+    <div ng-show=" config.viewMode == 'individual-force' || config.viewMode == 'individual-concentric'" >
+      <h4>Visual density</h4>
+      <div class="legend-line"></div>
+      <div class="density-container"></div>
+      <div class="flex-container">
+        <div class="flex-item legend-text">1st</div>
+        <div class="flex-item legend-text">1.5</div>
+        <div class="flex-item legend-text">1.75</div>
+        <div class="flex-item legend-text">2nd</div>
+        <div class="flex-item legend-text">2+</div>
+      </div>
+      <h5 class="interaction-info">Hover on a value to learn more</h5>
+    </div>
+    <div ng-show=" config.viewMode == 'shared-network'" >
+      <h4>Visual density</h4>
+      <div class="legend-line"></div>
+      <div class="connection-container"></div>
+      <div class="flex-container">
+        <div class="flex-item legend-text">Direct Connections</div>
+        <div class="flex-item legend-text">All Connections</div>
+      </div>
+      <h5 class="interaction-info">Hover on a value to learn more</h5>
+    </div>
+  </div>
+  <div ng-show=" config.viewMode == 'all'">
+    <div>
+      <h4>Relationships date range</h4>
+      <div class="date-container"></div>
+      <h5>Temporal window in which relationships existed</h5>
+    </div>
+  </div>
+  <div ng-show=" config.viewMode == 'group-force'">
+    <div class="btn-group btn-group-justified">
+      <label class="btn btn-primary" ng-model="config.onlyMembers" uib-btn-radio="true">Only Members</label>
+      <label class="btn btn-primary" ng-model="config.onlyMembers" uib-btn-radio="false">One Degree</label>
+    </div>
+  </div>
+</section>
+<span class="close" ng-click="filtersClosed = !filtersClosed; peopleFinderClosed = true; legendClosed = true">
+	<i ng-if="!filtersClosed" class="fa fa-times" aria-hidden="true"></i>
+	<i ng-if="filtersClosed" class="fa fa-filter" aria-hidden="true"></i>
+</span>

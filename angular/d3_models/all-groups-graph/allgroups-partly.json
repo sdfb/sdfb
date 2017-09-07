@@ -1,0 +1,1347 @@
+{
+    "data":{
+        "attributes":{
+            "connections":[
+                
+                {
+                    "attributes":{
+                        "source":81,
+                        "target":86,
+                        "weight":1
+                    },
+                    "type":"relationship"
+                },
+                {
+                    "attributes":{
+                        "source":86,
+                        "target":88,
+                        "weight":1
+                    },
+                    "type":"relationship"
+                },
+                {
+                    "attributes":{
+                        "source":88,
+                        "target":90,
+                        "weight":1
+                    },
+                    "type":"relationship"
+                },
+                {
+                    "attributes":{
+                        "source":92,
+                        "target":97,
+                        "weight":1
+                    },
+                    "type":"relationship"
+                },
+                {
+                    "attributes":{
+                        "source":92,
+                        "target":106,
+                        "weight":1
+                    },
+                    "type":"relationship"
+                }
+            ]
+        },
+        "id":"all_groups",
+        "type":"network"
+    },
+    "included":[
+        {
+            "attributes":{
+                "degree":1,
+                "description":"Henry VII's council learned in the law",
+                "end_year":1509,
+                "end_year_type":"IN",
+                "name":"Henry VII's council learned in the law",
+                "start_year":1499,
+                "start_year_type":"CA"
+            },
+            "id":1,
+            "type":"group"
+        },
+        {
+            "attributes":{
+                "degree":4,
+                "description":"Participants in the Field of Cloth of Gold",
+                "end_year":1520,
+                "end_year_type":"IN",
+                "name":"Participants in the Field of Cloth of Gold",
+                "start_year":1520,
+                "start_year_type":"IN"
+            },
+            "id":2,
+            "type":"group"
+        },
+        {
+            "attributes":{
+                "degree":0,
+                "description":"Monastic visitors in England and Wales",
+                "end_year":1536,
+                "end_year_type":"IN",
+                "name":"Monastic visitors in England and Wales",
+                "start_year":1535,
+                "start_year_type":"IN"
+            },
+            "id":3,
+            "type":"group"
+        },
+        {
+            "attributes":{
+                "degree":1,
+                "description":"Participants in the Pilgrimage of Grace",
+                "end_year":1537,
+                "end_year_type":"IN",
+                "name":"Participants in the Pilgrimage of Grace",
+                "start_year":1536,
+                "start_year_type":"IN"
+            },
+            "id":4,
+            "type":"group"
+        },
+        {
+            "attributes":{
+                "degree":1,
+                "description":"Contributors to the metrical psalter of 1562",
+                "end_year":1562,
+                "end_year_type":"IN",
+                "name":"Contributors to the metrical psalter of 1562",
+                "start_year":1549,
+                "start_year_type":"CA"
+            },
+            "id":5,
+            "type":"group"
+        },
+        {
+            "attributes":{
+                "degree":0,
+                "description":"Contributors to A Mirror for Magistrates",
+                "end_year":1563,
+                "end_year_type":"IN",
+                "name":"Contributors to A Mirror for Magistrates",
+                "start_year":1553,
+                "start_year_type":"IN"
+            },
+            "id":6,
+            "type":"group"
+        },
+        {
+            "attributes":{
+                "degree":1,
+                "description":"Marian martyrs",
+                "end_year":1558,
+                "end_year_type":"CA",
+                "name":"Marian martyrs",
+                "start_year":1555,
+                "start_year_type":"CA"
+            },
+            "id":7,
+            "type":"group"
+        },
+        {
+            "attributes":{
+                "degree":2,
+                "description":"Lords of the congregation",
+                "end_year":1560,
+                "end_year_type":"IN",
+                "name":"Lords of the congregation",
+                "start_year":1557,
+                "start_year_type":"IN"
+            },
+            "id":8,
+            "type":"group"
+        },
+        {
+            "attributes":{
+                "degree":2,
+                "description":"Sea dogs",
+                "end_year":1603,
+                "end_year_type":"IN",
+                "name":"Sea dogs",
+                "start_year":1560,
+                "start_year_type":"IN"
+            },
+            "id":9,
+            "type":"group"
+        },
+        {
+            "attributes":{
+                "degree":3,
+                "description":"Participants in the vestiarian controversy",
+                "end_year":1570,
+                "end_year_type":"CA",
+                "name":"Participants in the vestiarian controversy",
+                "start_year":1563,
+                "start_year_type":"CA"
+            },
+            "id":10,
+            "type":"group"
+        },
+        {
+            "attributes":{
+                "degree":3,
+                "description":"Jesuit missionaries to England",
+                "end_year":1700,
+                "end_year_type":"CA",
+                "name":"Jesuit missionaries to England",
+                "start_year":1540,
+                "start_year_type":"IN"
+            },
+            "id":11,
+            "type":"group"
+        },
+        {
+            "attributes":{
+                "degree":0,
+                "description":"Members of the Dedham conference",
+                "end_year":1589,
+                "end_year_type":"IN",
+                "name":"Members of the Dedham conference",
+                "start_year":1582,
+                "start_year_type":"IN"
+            },
+            "id":12,
+            "type":"group"
+        },
+        {
+            "attributes":{
+                "degree":0,
+                "description":"Castalian band",
+                "end_year":1603,
+                "end_year_type":"IN",
+                "name":"Castalian band",
+                "start_year":1584,
+                "start_year_type":"IN"
+            },
+            "id":13,
+            "type":"group"
+        },
+        {
+            "attributes":{
+                "degree":10,
+                "description":"Metaphysical poets",
+                "end_year":1690,
+                "end_year_type":"CA",
+                "name":"Metaphysical poets",
+                "start_year":1600,
+                "start_year_type":"CA"
+            },
+            "id":16,
+            "type":"group"
+        },
+        {
+            "attributes":{
+                "degree":1,
+                "description":"Gunpowder plotters",
+                "end_year":1606,
+                "end_year_type":"IN",
+                "name":"Gunpowder plotters",
+                "start_year":1603,
+                "start_year_type":"IN"
+            },
+            "id":17,
+            "type":"group"
+        },
+        {
+            "attributes":{
+                "degree":1,
+                "description":"Founders of the Virginia Company",
+                "end_year":1624,
+                "end_year_type":"IN",
+                "name":"Founders of the Virginia Company",
+                "start_year":1606,
+                "start_year_type":"IN"
+            },
+            "id":18,
+            "type":"group"
+        },
+        {
+            "attributes":{
+                "degree":7,
+                "description":"Patrons of the Mermaid tavern;  a broader category than the separate group, \"Fraternity of Sireniacal gentlemen\"",
+                "end_year":1611,
+                "end_year_type":"CA",
+                "name":"Patrons of the Mermaid tavern",
+                "start_year":1611,
+                "start_year_type":"CA"
+            },
+            "id":19,
+            "type":"group"
+        },
+        {
+            "attributes":{
+                "degree":0,
+                "description":"Pilgrim Fathers",
+                "end_year":1620,
+                "end_year_type":"CA",
+                "name":"Pilgrim Fathers",
+                "start_year":1620,
+                "start_year_type":"CA"
+            },
+            "id":20,
+            "type":"group"
+        },
+        {
+            "attributes":{
+                "degree":9,
+                "description":"Sons of Ben",
+                "end_year":1629,
+                "end_year_type":"CA",
+                "name":"Sons of Ben",
+                "start_year":1620,
+                "start_year_type":"CA"
+            },
+            "id":21,
+            "type":"group"
+        },
+        {
+            "attributes":{
+                "degree":1,
+                "description":"Little Gidding community",
+                "end_year":1657,
+                "end_year_type":"IN",
+                "name":"Little Gidding community",
+                "start_year":1626,
+                "start_year_type":"IN"
+            },
+            "id":22,
+            "type":"group"
+        },
+        {
+            "attributes":{
+                "degree":0,
+                "description":"Cambridge Platonists",
+                "end_year":1690,
+                "end_year_type":"CA",
+                "name":"Cambridge Platonists",
+                "start_year":1630,
+                "start_year_type":"CA"
+            },
+            "id":23,
+            "type":"group"
+        },
+        {
+            "attributes":{
+                "degree":5,
+                "description":"Providence Island Company",
+                "end_year":1641,
+                "end_year_type":"IN",
+                "name":"Providence Island Company",
+                "start_year":1630,
+                "start_year_type":"IN"
+            },
+            "id":24,
+            "type":"group"
+        },
+        {
+            "attributes":{
+                "degree":7,
+                "description":"Cavalier poets",
+                "end_year":1660,
+                "end_year_type":"AF/IN",
+                "name":"Cavalier poets",
+                "start_year":1640,
+                "start_year_type":"BF/IN"
+            },
+            "id":26,
+            "type":"group"
+        },
+        {
+            "attributes":{
+                "degree":4,
+                "description":"Five members",
+                "end_year":1641,
+                "end_year_type":"IN",
+                "name":"Five members",
+                "start_year":1641,
+                "start_year_type":"IN"
+            },
+            "id":27,
+            "type":"group"
+        },
+        {
+            "attributes":{
+                "degree":2,
+                "description":"Smectymnuus",
+                "end_year":1641,
+                "end_year_type":"IN",
+                "name":"Smectymnuus",
+                "start_year":1641,
+                "start_year_type":"IN"
+            },
+            "id":28,
+            "type":"group"
+        },
+        {
+            "attributes":{
+                "degree":12,
+                "description":"Westminster assembly",
+                "end_year":1652,
+                "end_year_type":"IN",
+                "name":"Westminster assembly",
+                "start_year":1643,
+                "start_year_type":"IN"
+            },
+            "id":29,
+            "type":"group"
+        },
+        {
+            "attributes":{
+                "degree":3,
+                "description":"Invisible College",
+                "end_year":1647,
+                "end_year_type":"IN",
+                "name":"Invisible College",
+                "start_year":1646,
+                "start_year_type":"IN"
+            },
+            "id":30,
+            "type":"group"
+        },
+        {
+            "attributes":{
+                "degree":9,
+                "description":"Putney debaters",
+                "end_year":1647,
+                "end_year_type":"IN",
+                "name":"Putney debaters",
+                "start_year":1647,
+                "start_year_type":"IN"
+            },
+            "id":31,
+            "type":"group"
+        },
+        {
+            "attributes":{
+                "degree":1,
+                "description":"Kirk party",
+                "end_year":1651,
+                "end_year_type":"IN",
+                "name":"Kirk party",
+                "start_year":1648,
+                "start_year_type":"IN"
+            },
+            "id":32,
+            "type":"group"
+        },
+        {
+            "attributes":{
+                "degree":8,
+                "description":"Protectoral council",
+                "end_year":1659,
+                "end_year_type":"IN",
+                "name":"Protectoral council",
+                "start_year":1653,
+                "start_year_type":"IN"
+            },
+            "id":33,
+            "type":"group"
+        },
+        {
+            "attributes":{
+                "degree":0,
+                "description":"Sealed Knot",
+                "end_year":1659,
+                "end_year_type":"IN",
+                "name":"Sealed Knot",
+                "start_year":1653,
+                "start_year_type":"IN"
+            },
+            "id":34,
+            "type":"group"
+        },
+        {
+            "attributes":{
+                "degree":4,
+                "description":"Major-generals",
+                "end_year":1657,
+                "end_year_type":"IN",
+                "name":"Major-generals",
+                "start_year":1655,
+                "start_year_type":"IN"
+            },
+            "id":35,
+            "type":"group"
+        },
+        {
+            "attributes":{
+                "degree":5,
+                "description":"Founder members of the Royal Society",
+                "end_year":1663,
+                "end_year_type":"IN",
+                "name":"Founder members of the Royal Society",
+                "start_year":1660,
+                "start_year_type":"IN"
+            },
+            "id":36,
+            "type":"group"
+        },
+        {
+            "attributes":{
+                "degree":3,
+                "description":"Participants in the Savoy conference",
+                "end_year":1661,
+                "end_year_type":"IN",
+                "name":"Participants in the Savoy conference",
+                "start_year":1661,
+                "start_year_type":"IN"
+            },
+            "id":37,
+            "type":"group"
+        },
+        {
+            "attributes":{
+                "degree":0,
+                "description":"Participants in the Pentland rising",
+                "end_year":1666,
+                "end_year_type":"IN",
+                "name":"Participants in the Pentland rising",
+                "start_year":1666,
+                "start_year_type":"IN"
+            },
+            "id":38,
+            "type":"group"
+        },
+        {
+            "attributes":{
+                "degree":7,
+                "description":"Cabal",
+                "end_year":1673,
+                "end_year_type":"IN",
+                "name":"Cabal",
+                "start_year":1667,
+                "start_year_type":"IN"
+            },
+            "id":39,
+            "type":"group"
+        },
+        {
+            "attributes":{
+                "degree":6,
+                "description":"Green Ribbon Club",
+                "end_year":1683,
+                "end_year_type":"CA",
+                "name":"Green Ribbon Club",
+                "start_year":1674,
+                "start_year_type":"CA"
+            },
+            "id":40,
+            "type":"group"
+        },
+        {
+            "attributes":{
+                "degree":5,
+                "description":"Rye House plotters",
+                "end_year":1683,
+                "end_year_type":"IN",
+                "name":"Rye House plotters",
+                "start_year":1683,
+                "start_year_type":"IN"
+            },
+            "id":41,
+            "type":"group"
+        },
+        {
+            "attributes":{
+                "degree":1,
+                "description":"Immortal seven",
+                "end_year":1688,
+                "end_year_type":"IN",
+                "name":"Immortal seven",
+                "start_year":1688,
+                "start_year_type":"IN"
+            },
+            "id":42,
+            "type":"group"
+        },
+        {
+            "attributes":{
+                "degree":0,
+                "description":"Nonjuring bishops",
+                "end_year":1710,
+                "end_year_type":"IN",
+                "name":"Nonjuring bishops",
+                "start_year":1689,
+                "start_year_type":"IN"
+            },
+            "id":43,
+            "type":"group"
+        },
+        {
+            "attributes":{
+                "degree":0,
+                "description":"Society of the Virtuosi of St Luke",
+                "end_year":1743,
+                "end_year_type":"IN",
+                "name":"Society of the Virtuosi of St Luke",
+                "start_year":1689,
+                "start_year_type":"CA"
+            },
+            "id":44,
+            "type":"group"
+        },
+        {
+            "attributes":{
+                "degree":3,
+                "description":"Whig junto",
+                "end_year":1716,
+                "end_year_type":"CA",
+                "name":"Whig junto",
+                "start_year":1694,
+                "start_year_type":"CA"
+            },
+            "id":45,
+            "type":"group"
+        },
+        {
+            "attributes":{
+                "degree":0,
+                "description":"Darien investors and colonists",
+                "end_year":1707,
+                "end_year_type":"IN",
+                "name":"Darien investors and colonists",
+                "start_year":1695,
+                "start_year_type":"IN"
+            },
+            "id":46,
+            "type":"group"
+        },
+        {
+            "attributes":{
+                "degree":3,
+                "description":"Kit-Cat Club",
+                "end_year":1720,
+                "end_year_type":"IN",
+                "name":"Kit-Cat Club",
+                "start_year":1696,
+                "start_year_type":"IN"
+            },
+            "id":47,
+            "type":"group"
+        },
+        {
+            "attributes":{
+                "degree":0,
+                "description":"Ranters",
+                "end_year":1660,
+                "end_year_type":"CA",
+                "name":"Ranters",
+                "start_year":1649,
+                "start_year_type":"CA"
+            },
+            "id":48,
+            "type":"group"
+        },
+        {
+            "attributes":{
+                "degree":0,
+                "description":"Diggers",
+                "end_year":1649,
+                "end_year_type":"CA",
+                "name":"Diggers",
+                "start_year":1649,
+                "start_year_type":"CA"
+            },
+            "id":49,
+            "type":"group"
+        },
+        {
+            "attributes":{
+                "degree":3,
+                "description":"Levellers",
+                "end_year":1649,
+                "end_year_type":"AF",
+                "name":"Levellers",
+                "start_year":1647,
+                "start_year_type":"CA"
+            },
+            "id":50,
+            "type":"group"
+        },
+        {
+            "attributes":{
+                "degree":0,
+                "description":"Muggletonians",
+                "end_year":1800,
+                "end_year_type":"AF",
+                "name":"Muggletonians",
+                "start_year":1651,
+                "start_year_type":"CA"
+            },
+            "id":51,
+            "type":"group"
+        },
+        {
+            "attributes":{
+                "degree":0,
+                "description":"Socinians",
+                "end_year":1800,
+                "end_year_type":"AF",
+                "name":"Socinians",
+                "start_year":1540,
+                "start_year_type":"CA"
+            },
+            "id":52,
+            "type":"group"
+        },
+        {
+            "attributes":{
+                "degree":1,
+                "description":"Presbyterians",
+                "end_year":1800,
+                "end_year_type":"AF",
+                "name":"Presbyterians",
+                "start_year":1560,
+                "start_year_type":"CA"
+            },
+            "id":53,
+            "type":"group"
+        },
+        {
+            "attributes":{
+                "degree":0,
+                "description":"Erastians",
+                "end_year":1649,
+                "end_year_type":"CA",
+                "name":"Erastians",
+                "start_year":1643,
+                "start_year_type":"CA"
+            },
+            "id":54,
+            "type":"group"
+        },
+        {
+            "attributes":{
+                "degree":0,
+                "description":"Independents",
+                "end_year":1660,
+                "end_year_type":"AF",
+                "name":"Independents",
+                "start_year":1642,
+                "start_year_type":"BF"
+            },
+            "id":55,
+            "type":"group"
+        },
+        {
+            "attributes":{
+                "degree":2,
+                "description":"Quakers",
+                "end_year":1800,
+                "end_year_type":"AF",
+                "name":"Quakers",
+                "start_year":1650,
+                "start_year_type":"CA"
+            },
+            "id":56,
+            "type":"group"
+        },
+        {
+            "attributes":{
+                "degree":3,
+                "description":"Catholics",
+                "end_year":1800,
+                "end_year_type":"AF",
+                "name":"Catholics",
+                "start_year":1400,
+                "start_year_type":"BF"
+            },
+            "id":57,
+            "type":"group"
+        },
+        {
+            "attributes":{
+                "degree":1,
+                "description":"Puritans",
+                "end_year":1700,
+                "end_year_type":"AF",
+                "name":"Puritans",
+                "start_year":1532,
+                "start_year_type":"CA"
+            },
+            "id":58,
+            "type":"group"
+        },
+        {
+            "attributes":{
+                "degree":2,
+                "description":"Royalists",
+                "end_year":1678,
+                "end_year_type":"CA",
+                "name":"Royalists",
+                "start_year":1641,
+                "start_year_type":"CA"
+            },
+            "id":59,
+            "type":"group"
+        },
+        {
+            "attributes":{
+                "degree":14,
+                "description":"supporters of Parliament during the English Civil Wars",
+                "end_year":1678,
+                "end_year_type":"CA",
+                "name":"Parliamentarians",
+                "start_year":1641,
+                "start_year_type":"BF/IN"
+            },
+            "id":60,
+            "type":"group"
+        },
+        {
+            "attributes":{
+                "degree":3,
+                "description":"Whigs",
+                "end_year":1800,
+                "end_year_type":"AF",
+                "name":"Whigs",
+                "start_year":1678,
+                "start_year_type":"CA"
+            },
+            "id":61,
+            "type":"group"
+        },
+        {
+            "attributes":{
+                "degree":0,
+                "description":"Tories",
+                "end_year":1800,
+                "end_year_type":"AF",
+                "name":"Tories",
+                "start_year":1678,
+                "start_year_type":"CA"
+            },
+            "id":62,
+            "type":"group"
+        },
+        {
+            "attributes":{
+                "degree":7,
+                "description":"group of scholars who studied at the home of Lucius Cary, Viscount Falkland, in Great Tew, Oxfordshire",
+                "end_year":1639,
+                "end_year_type":"IN",
+                "name":"Great Tew Circle",
+                "start_year":1633,
+                "start_year_type":"IN"
+            },
+            "id":63,
+            "type":"group"
+        },
+        {
+            "attributes":{
+                "degree":0,
+                "description":"Hartlib Circle",
+                "end_year":1660,
+                "end_year_type":"CA",
+                "name":"Hartlib Circle",
+                "start_year":1630,
+                "start_year_type":"CA"
+            },
+            "id":64,
+            "type":"group"
+        },
+        {
+            "attributes":{
+                "degree":10,
+                "description":"society for the encouragement of philosophical studies",
+                "end_year":1800,
+                "end_year_type":"AF",
+                "name":"Royal Society",
+                "start_year":1662,
+                "start_year_type":"IN"
+            },
+            "id":65,
+            "type":"group"
+        },
+        {
+            "attributes":{
+                "degree":4,
+                "description":"Acting Company patented 19 May 1603 (formerly the Lord Chamberlain's Men)",
+                "end_year":1642,
+                "end_year_type":"CA",
+                "name":"King's Men",
+                "start_year":1603,
+                "start_year_type":"IN"
+            },
+            "id":66,
+            "type":"group"
+        },
+        {
+            "attributes":{
+                "degree":5,
+                "description":"theatrical company established by Charles Howard, Baron Howard of Effingham",
+                "end_year":1625,
+                "end_year_type":"IN",
+                "name":"Lord Admiral's Men",
+                "start_year":1594,
+                "start_year_type":"IN"
+            },
+            "id":67,
+            "type":"group"
+        },
+        {
+            "attributes":{
+                "degree":3,
+                "description":"theatrical company established by Henry Carey, Baron Hunsdon\r\n",
+                "end_year":1642,
+                "end_year_type":"IN",
+                "name":"Lord Chamberlain's Men",
+                "start_year":1594,
+                "start_year_type":"IN"
+            },
+            "id":68,
+            "type":"group"
+        },
+        {
+            "attributes":{
+                "degree":2,
+                "description":"East India Company",
+                "end_year":1800,
+                "end_year_type":"AF",
+                "name":"East India Company",
+                "start_year":1600,
+                "start_year_type":"IN"
+            },
+            "id":70,
+            "type":"group"
+        },
+        {
+            "attributes":{
+                "degree":0,
+                "description":"Merchant Taylors Company",
+                "end_year":1800,
+                "end_year_type":"AF",
+                "name":"Merchant Taylors Company",
+                "start_year":1400,
+                "start_year_type":"BF"
+            },
+            "id":71,
+            "type":"group"
+        },
+        {
+            "attributes":{
+                "degree":0,
+                "description":"Stationers Company",
+                "end_year":1800,
+                "end_year_type":"AF",
+                "name":"Stationers Company",
+                "start_year":1403,
+                "start_year_type":"IN"
+            },
+            "id":72,
+            "type":"group"
+        },
+        {
+            "attributes":{
+                "degree":3,
+                "description":"Muscovy Company",
+                "end_year":1800,
+                "end_year_type":"AF",
+                "name":"Muscovy Company",
+                "start_year":1555,
+                "start_year_type":"IN"
+            },
+            "id":73,
+            "type":"group"
+        },
+        {
+            "attributes":{
+                "degree":2,
+                "description":"Somers Island Company",
+                "end_year":1684,
+                "end_year_type":"IN",
+                "name":"Somers Island Company",
+                "start_year":1615,
+                "start_year_type":"IN"
+            },
+            "id":74,
+            "type":"group"
+        },
+        {
+            "attributes":{
+                "degree":2,
+                "description":"Royal Africa Company",
+                "end_year":1752,
+                "end_year_type":"IN",
+                "name":"Royal Africa Company",
+                "start_year":1660,
+                "start_year_type":"IN"
+            },
+            "id":75,
+            "type":"group"
+        },
+        {
+            "attributes":{
+                "degree":1,
+                "description":"59 signatories of Charles' death warrant; a subset of the Group 'Regicides'",
+                "end_year":1649,
+                "end_year_type":"IN",
+                "name":"Signatories of the Death Warrant of Charles I",
+                "start_year":1649,
+                "start_year_type":"IN"
+            },
+            "id":76,
+            "type":"group"
+        },
+        {
+            "attributes":{
+                "degree":10,
+                "description":"those involved in the death of Charles I; a broader class than the more specific group, 'Signatories of the death warrant of Charles I'",
+                "end_year":1649,
+                "end_year_type":"IN",
+                "name":"Regicides",
+                "start_year":1649,
+                "start_year_type":"IN"
+            },
+            "id":77,
+            "type":"group"
+        },
+        {
+            "attributes":{
+                "degree":7,
+                "description":"Those who wrote epic poems ",
+                "end_year":1800,
+                "end_year_type":"AF",
+                "name":"Epic Poets",
+                "start_year":1500,
+                "start_year_type":"BF"
+            },
+            "id":78,
+            "type":"group"
+        },
+        {
+            "attributes":{
+                "degree":2,
+                "description":"Religious dissenters from the Church of England",
+                "end_year":1800,
+                "end_year_type":"AF",
+                "name":"Dissenters",
+                "start_year":1550,
+                "start_year_type":"BF/IN"
+            },
+            "id":79,
+            "type":"group"
+        },
+        {
+            "attributes":{
+                "degree":1,
+                "description":"People associated with the mathematics or self-identifying as mathematicians and lovers of mathematics",
+                "end_year":1800,
+                "end_year_type":"AF",
+                "name":"Mathematicians",
+                "start_year":1400,
+                "start_year_type":"BF"
+            },
+            "id":80,
+            "type":"group"
+        },
+        {
+            "attributes":{
+                "degree":9,
+                "description":"a joint stock company chartered to establish colonies in North America",
+                "end_year":1624,
+                "end_year_type":"IN",
+                "name":"Virginia Company",
+                "start_year":1606,
+                "start_year_type":"IN"
+            },
+            "id":81,
+            "type":"group"
+        },
+        {
+            "attributes":{
+                "degree":0,
+                "description":"A theatrical troupe formerly known as Worcester's Men",
+                "end_year":1619,
+                "end_year_type":"IN",
+                "name":"Queen Anne's Men",
+                "start_year":1603,
+                "start_year_type":"IN"
+            },
+            "id":83,
+            "type":"group"
+        },
+        {
+            "attributes":{
+                "degree":2,
+                "description":"Joint stock corporation dedicated primarily to the brass and iron trades",
+                "end_year":1700,
+                "end_year_type":"AF/IN",
+                "name":"Company of Mineral and Battery Works",
+                "start_year":1568,
+                "start_year_type":"BF/IN"
+            },
+            "id":86,
+            "type":"group"
+        },
+        {
+            "attributes":{
+                "degree":3,
+                "description":"Students, Professors, and Practitioners of Roman Law.  Also known as \"Civilians.\" ",
+                "end_year":1800,
+                "end_year_type":"AF",
+                "name":"Civil Lawyers",
+                "start_year":1400,
+                "start_year_type":"BF"
+            },
+            "id":88,
+            "type":"group"
+        },
+        {
+            "attributes":{
+                "degree":0,
+                "description":"People interested in alchemy",
+                "end_year":1700,
+                "end_year_type":"CA",
+                "name":"Alchemists",
+                "start_year":1500,
+                "start_year_type":"CA"
+            },
+            "id":89,
+            "type":"group"
+        },
+        {
+            "attributes":{
+                "degree":5,
+                "description":"Individuals \"warranted by [their] sovereign to represent, officially, the English government to a foreign power or interest, located outside of English territorial boundaries\" (Bell, Handlist, 3)",
+                "end_year":1700,
+                "end_year_type":"IN",
+                "name":"English Diplomats",
+                "start_year":1500,
+                "start_year_type":"IN"
+            },
+            "id":90,
+            "type":"group"
+        },
+        {
+            "attributes":{
+                "degree":12,
+                "description":"Those holding \"a faith in the power of institutions to circumscribe\r\nthe authority of the monarch, allied to a belief that such institutions -\u0001\r\nParliament, the law courts, local and national government  -\u0001 had the\r\nmeans to make individuals more virtuous and so better able to govern.\"  (Andrew Hadfield, \"Republicanism in Sixteenth- and\r\nSeventeenth-Century Britain\")",
+                "end_year":1700,
+                "end_year_type":"CA",
+                "name":"Republicans",
+                "start_year":1500,
+                "start_year_type":"CA"
+            },
+            "id":92,
+            "type":"group"
+        },
+        {
+            "attributes":{
+                "degree":2,
+                "description":"member of the Society of Jesus",
+                "end_year":1700,
+                "end_year_type":"CA",
+                "name":"Jesuits",
+                "start_year":1500,
+                "start_year_type":"CA"
+            },
+            "id":93,
+            "type":"group"
+        },
+        {
+            "attributes":{
+                "degree":3,
+                "description":"A drinking society of some of the Elizabethan era's leading literary figures. They met on the first Friday of every month at the Mermaid, Three Cranes, or Mitre taverns in London.",
+                "end_year":1611,
+                "end_year_type":"AF",
+                "name":"Fraternity of Sireniacal Gentlemen",
+                "start_year":1603,
+                "start_year_type":"CA"
+            },
+            "id":95,
+            "type":"group"
+        },
+        {
+            "attributes":{
+                "degree":0,
+                "description":"In the years leading up to and particularly after the Revocation of the Edict of Nantes (1685), many French Protestants moved to London, particularly in the West End and Spitalfields area.",
+                "end_year":1700,
+                "end_year_type":"CA",
+                "name":"Huguenots",
+                "start_year":1685,
+                "start_year_type":"CA"
+            },
+            "id":96,
+            "type":"group"
+        },
+        {
+            "attributes":{
+                "degree":6,
+                "description":"Teachers and pupils of St Pauls School London",
+                "end_year":1700,
+                "end_year_type":"CA",
+                "name":"St Pauls School London",
+                "start_year":1509,
+                "start_year_type":"IN"
+            },
+            "id":97,
+            "type":"group"
+        },
+        {
+            "attributes":{
+                "degree":1,
+                "description":"Members of the British Monarch's Music, musicians employed at the English Court. (Members of court chapels were organized separately, though some members of the King's Musik were also  chapel members.)",
+                "end_year":1901,
+                "end_year_type":"AF",
+                "name":"The King's Musik",
+                "start_year":1469,
+                "start_year_type":"BF"
+            },
+            "id":98,
+            "type":"group"
+        },
+        {
+            "attributes":{
+                "degree":0,
+                "description":"Members of formal body of advisors to the sovereign",
+                "end_year":1700,
+                "end_year_type":"CA",
+                "name":"Privy Councillors",
+                "start_year":1500,
+                "start_year_type":"CA"
+            },
+            "id":99,
+            "type":"group"
+        },
+        {
+            "attributes":{
+                "degree":0,
+                "description":"Members of the Royal Household",
+                "end_year":1700,
+                "end_year_type":"CA",
+                "name":"Members of the Royal Household",
+                "start_year":1500,
+                "start_year_type":"CA"
+            },
+            "id":100,
+            "type":"group"
+        },
+        {
+            "attributes":{
+                "degree":0,
+                "description":"A society \"agreeable to the design of the Royal Society in London\" which grew out of a group headed by William Molyneux who were collecting materials for the projected Pitt atlas of the British Isles. Formed in January 1684, hiatus 1688, revived 1694 with meetings ceasing by 1698. The Society was refounded by Samuel Molyneux in 1707, but lasted for only one year. ",
+                "end_year":1708,
+                "end_year_type":"IN",
+                "name":"Dublin Philosophical Society",
+                "start_year":1684,
+                "start_year_type":"IN"
+            },
+            "id":101,
+            "type":"group"
+        },
+        {
+            "attributes":{
+                "degree":3,
+                "description":"one-time students of Eton College",
+                "end_year":1700,
+                "end_year_type":"CA",
+                "name":"Eton College",
+                "start_year":1500,
+                "start_year_type":"CA"
+            },
+            "id":102,
+            "type":"group"
+        },
+        {
+            "attributes":{
+                "degree":6,
+                "description":"Elizabethan playwrights",
+                "end_year":1603,
+                "end_year_type":"IN",
+                "name":"Elizabethan Playwrights",
+                "start_year":1558,
+                "start_year_type":"IN"
+            },
+            "id":103,
+            "type":"group"
+        },
+        {
+            "attributes":{
+                "degree":0,
+                "description":"Named midwives",
+                "end_year":1700,
+                "end_year_type":"CA",
+                "name":"Midwives",
+                "start_year":1500,
+                "start_year_type":"CA"
+            },
+            "id":104,
+            "type":"group"
+        },
+        {
+            "attributes":{
+                "degree":1,
+                "description":"Family members or close acquaintances of the extended Sidney circle",
+                "end_year":1640,
+                "end_year_type":"AF",
+                "name":"Sidney Circle",
+                "start_year":1580,
+                "start_year_type":"CA"
+            },
+            "id":105,
+            "type":"group"
+        },
+        {
+            "attributes":{
+                "degree":12,
+                "description":"The parliamentarian army commanded by the third Earl of Essex in the first English Civil War",
+                "end_year":1645,
+                "end_year_type":"IN",
+                "name":"Earl of Essex's army",
+                "start_year":1642,
+                "start_year_type":"IN"
+            },
+            "id":106,
+            "type":"group"
+        },
+        {
+            "attributes":{
+                "degree":0,
+                "description":"Legal trustees of the (Second) Blackfriars Theatre",
+                "end_year":1655,
+                "end_year_type":"IN",
+                "name":"Trustees of Blackfriars Playhouse",
+                "start_year":1596,
+                "start_year_type":"CA"
+            },
+            "id":108,
+            "type":"group"
+        },
+        {
+            "attributes":{
+                "degree":2,
+                "description":"Named contributors of recipes to the cookbook Sir Kenelm Digby's Closet Opened 1669. ",
+                "end_year":1669,
+                "end_year_type":"IN",
+                "name":"Recipe Contributors for Sir Kenelm Digby's Closet Opened",
+                "start_year":1669,
+                "start_year_type":"BF"
+            },
+            "id":109,
+            "type":"group"
+        },
+        {
+            "attributes":{
+                "degree":0,
+                "description":"A major branch of Protestantism that follows the theological tradition and forms of Christian practice of John Calvin ",
+                "end_year":1700,
+                "end_year_type":"AF",
+                "name":"Calvinists",
+                "start_year":1519,
+                "start_year_type":"CA"
+            },
+            "id":111,
+            "type":"group"
+        }
+    ],
+    "meta":{
+        "principal_investigators":[
+            "Daniel Shore",
+            "Chris Warren",
+            "Jessica Otis"
+        ]
+    }
+}

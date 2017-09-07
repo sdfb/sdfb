@@ -1,0 +1,62 @@
+<section ng-if="!currentSelection.type">
+  <p ng-if="!config.contributionMode" class="help-info">Select a person or a relation to display contextual information.</p>
+  <p ng-if="config.contributionMode" class="contribution">In contribution mode you can edit links and nodes, or create new ones.</p>
+  <p ng-if="config.contributionMode" class="contribution">Click anywhere on the canvas to add a node.</p>
+  <p ng-if="config.contributionMode" class="contribution">Drag a node onto any other node to add a link.</p>
+  <p ng-if="config.contributionMode" class="contribution">Drag a node onto the groups bar to add a node to a group.</p>
+</section>
+<section ng-if="currentSelection.type == 'person' " id="XXXcurrent-selection-person1">
+  <h2>{{currentSelection.attributes.name }}</h2>
+  <p ng-if="currentSelection.attributes.historical_significance != ''">{{currentSelection.attributes.historical_significance}}</p>
+  <p ng-if="currentSelection.attributes.historical_significance == ''"> &empty; </p>
+  <small-timeline class="person" details="currentSelection"></small-timeline>
+  <span ng-if="config.contributionMode" class="edit-btn person" ng-click="editData(currentSelection.id)">Edit data</span>
+</section>
+<section ng-if="currentSelection.type == 'relationship' ">
+  <h2>{{ currentSelection.source.attributes.name }}</h2>
+  <p ng-if="currentSelection.source.attributes.historical_significance != ''">{{ currentSelection.source.attributes.historical_significance }}</p>
+  <p ng-if="currentSelection.source.attributes.historical_significance == ''"> &empty; </p>
+  <small-timeline class="person" details="currentSelection.source"></small-timeline>
+  <span ng-if="config.contributionMode" class="edit-btn person" ng-click="editData(currentSelection.source.id)">Edit data</span>
+</section>
+<section ng-if="currentSelection.type == 'relationship' ">
+  <small-timeline class="relationship" details="currentSelection"></small-timeline>
+  <span ng-if="config.contributionMode" class="edit-btn relationship" ng-click="editData(currentSelection.id)">Edit data</span>
+</section>
+<section ng-if="currentSelection.type == 'relationship' ">
+  <h2>{{ currentSelection.target.attributes.name }}</h2>
+  <p ng-if="currentSelection.target.attributes.historical_significance != ''">{{ currentSelection.target.attributes.historical_significance }}</p>
+  <p ng-if="currentSelection.target.attributes.historical_significance == ''"> &empty; </p>
+  <small-timeline class="person" details="currentSelection.target"></small-timeline>
+  <span ng-if="config.contributionMode" class="edit-btn person" ng-click="editData(currentSelection.target.id)">Edit data</span>
+</section>
+<section ng-if="currentSelection.type == 'group'" id="">
+  <h2>{{currentSelection.groupInfo.name}}</h2>
+  <p ng-if="currentSelection.groupInfo.description != ''">{{currentSelection.groupInfo.description}}</p>
+  <p ng-if="currentSelection.attributes.historical_significance == ''"> &empty; </p>
+  <!-- <small-timeline class="person" details="currentSelection"></small-timeline> -->
+  <div ng-if="currentSelection.groupInfo.person_list.length > 0" class="group-members">
+    <div class="flex-boxed list-header">
+      <div><span style="width:20px; display: inline-block;">#</span> Member name</div>
+      <div>Since</div>
+    </div>
+    <div>
+      <div class="flex-boxed" ng-repeat="member in currentSelection.groupInfo.person_list">
+        <div><span style="width:20px; display: inline-block;">{{$index + 1}}</span> {{member}}</div>
+        <div>????</div>
+      </div>
+    </div>
+  </div>
+  <div ng-if="currentSelection.groupInfo.person_list.length < 1">
+      No members
+  </div>
+  <span ng-if="config.contributionMode" class="edit-btn person" ng-click="editData(currentSelection.id)">Edit data</span>
+</section>
+<section id="more-info" ng-if="currentSelection.type">
+  <p>
+    <button type="button" class="btn btn-primary" ng-click="searchODNB(currentSelection.attributes.odnb_id,currentSelection.attributes.name)">ODNB</button>
+    <button type="button" class="btn btn-primary" ng-click="searchJstor(currentSelection.attributes.name.replace(' ','+'))">J Stor</button>
+    <button type="button" class="btn btn-primary" ng-click="searchGoogle(currentSelection.attributes.name.replace(' ','+'))">Google</button>
+  </p>
+  <p><a href="http://www.sixdegreesoffrancisbacon.com/people/{{currentSelection.id}}" target="_blanc">Further info&hellip;</a></p>
+</section>

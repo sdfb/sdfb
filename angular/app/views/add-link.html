@@ -1,0 +1,37 @@
+<section>
+  <h3 class="">Add link</h3>
+  <!-- <button type="button" class="btn btn-primary" ng-click="addingLink()">Draw Link</button> -->
+  <h4 class="paragraph-title">Source node</h4>
+  <!-- <input placeholder="Search for a person" type="text" ng-model="person.selected" uib-typeahead="person for person in peopleToSelect | filter:$viewValue | limitTo:8" class="form-control" id="source"> -->
+  <input placeholder="Search for a person" type="text" class="form-control" id="source">
+
+  <h4>Target node</h4>
+  <!-- <input placeholder="Search for a person" type="text" ng-model="person.selected" uib-typeahead="person for person in peopleToSelect | filter:$viewValue | limitTo:8" class="form-control" id="target"> -->
+  <input placeholder="Search for a person" type="text" class="form-control" id="target">
+
+  <h4 class="paragraph-title">Relationship type</h4>
+  <input placeholder="Add relationship type" type="text" class="form-control" id="relType">
+
+  <h4>Start date</h4>
+  <div class="input-group">
+    <input class="form-control" uib-datepicker-popup="{{ config.dateFormat }}" ng-model="startDate" ng-model-options="{ getterSetter: true }" id="startDate">
+    <select class="input-group-addon" ng-model="selectedStartDateType" ng-options="type for type in config.dateTypes" id="startDateType"></select><i class="fa fa-caret-down" aria-hidden="true"></i>
+  </div>
+
+  <h4>End date</h4>
+  <div class="input-group">
+    <input class="form-control" uib-datepicker-popup="{{ config.dateFormat }}" ng-model="endDate" id="endDate">
+    <select class="input-group-addon" ng-model="selectedEndDateType" ng-options="type for type in config.dateTypes" id="endDateType"></select><i class="fa fa-caret-down" aria-hidden="true"></i>
+  </div>
+
+  <h4>Relationship confidence level</h4>
+  <rzslider rz-slider-model="slider.value" rz-slider-options="slider.options" class="with-legend" id="confidence"></rzslider>
+
+  <h5>Your submission needs to be validated by SDFB staff. You will see it as unapproved contribution in the meantime.</h5>
+  <button type="button" class="btn btn-primary" ng-click="submitLink() ">Done</button>
+
+</section>
+<span class="close" ng-click="addLinkClosed = !addLinkClosed; legendClosed = true" style="color: white;">
+	<i ng-if="!addLinkClosed" class="fa fa-times" aria-hidden="true"></i>
+	<i ng-if="addLinkClosed" class="faXX XXfa-plus-circle" aria-hidden="true" style="display: block; width: 12.5px; height: 14px; background-image: url('./images/add-link-icon.svg'); background-repeat: no-repeat; background-size: cover;"></i>
+</span>

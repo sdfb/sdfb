@@ -1,0 +1,243 @@
+<section class="legend-panel">
+  <h3 class="">Legend</h3>
+
+  <div ng-if=" config.viewMode == 'individual-force' || config.viewMode == 'individual-concentric'">
+    <div class="legend-box legend-svg">
+      <svg version="1.1" xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" viewBox="0 0 399.2 246.7">
+          <path class="svg-edge" d="M105.1 226.5c0 0 127 64 180-39"/>
+          <path class="svg-edge" d="M285 187.3c0 0 17.2-126.8-124.8-126.8"/>
+        <!-- <polygon class="svg-edge" points="160.1 60.5 104.1 226.5 284.1 187.5 "/> -->
+        <path class="svg-circle-2" d="M104.6 240.5c-8 0-14.5-6.5-14.5-14.5s6.5-14.5 14.5-14.5 14.5 6.5 14.5 14.5S112.6 240.5 104.6 240.5z"/>
+        <path class="svg-circle-0" d="M104.6 212c7.7 0 14 6.3 14 14s-6.3 14-14 14 -14-6.3-14-14S96.9 212 104.6 212M104.6 211c-8.3 0-15 6.7-15 15s6.7 15 15 15 15-6.7 15-15S112.9 211 104.6 211L104.6 211z"/>
+        <path class="svg-circle-1" d="M284.6 216.5c-16.3 0-29.5-13.2-29.5-29.5s13.2-29.5 29.5-29.5 29.5 13.2 29.5 29.5S300.9 216.5 284.6 216.5z"/>
+        <path class="svg-circle-white" d="M284.6 158c16 0 29 13 29 29s-13 29-29 29 -29-13-29-29S268.6 158 284.6 158M284.6 157c-16.6 0-30 13.4-30 30s13.4 30 30 30 30-13.4 30-30S301.2 157 284.6 157L284.6 157z"/>
+        <path class="svg-circle-0" d="M159.6 119.5c-32.8 0-59.5-26.7-59.5-59.5s26.7-59.5 59.5-59.5 59.5 26.7 59.5 59.5S192.4 119.5 159.6 119.5z"/>
+        <path class="svg-circle-white" d="M159.6 1c32.5 0 59 26.5 59 59s-26.5 59-59 59 -59-26.5-59-59S127.1 1 159.6 1M159.6 0c-33.1 0-60 26.9-60 60s26.9 60 60 60 60-26.9 60-60S192.8 0 159.6 0L159.6 0z"/>
+      </svg>
+      <div class="force-legend legend-text text-origin">Origin</div>
+      <div class="force-legend legend-text text-first-degree">1st degree</div>
+      <div class="force-legend legend-text text-second-degree">2nd degree</div>
+    </div>
+    <h5>Color and size of nodes is degree of separation</h5>
+    <!-- <div class="legend-box legend-size">
+      <div class="flex-container center-align">
+        <div class="flex-item legend-circle ghost"></div>
+        <div class="flex-item legend-circle white-circle circle-big"></div>
+        <div class="flex-item legend-circle white-circle circle-medium"></div>
+        <div class="flex-item legend-circle white-circle circle-small"></div>
+        <div class="flex-item legend-circle ghost"></div>
+      </div>
+    </div>
+    <h5>Size of nodes indicates distance from origin</h5> -->
+    <div class="legend-box">
+      <div class="flex-container">
+        <div class="flex-item legend-edge legend-text centered">Inferred<br/>Computationally</div>
+        <div class="flex-item legend-edge legend-text centered">Human<br/>Curated</div>
+      </div>
+    </div>
+    <h5>Color of edges is relationship certainty</h5>
+  </div>
+
+  <div ng-if=" config.viewMode == 'shared-network' ">
+    <div class="legend-box">
+      <div class="flex-container upper-text-legend">
+        <div class="flex-item legend-text">Left origin</div>
+        <div class="flex-item legend-text">Right origin</div>
+      </div>
+      <div class="flex-container">
+        <div class="legend-line small-segment"></div>
+        <div class="legend-line small-segment"></div>
+      </div>
+      <div class="flex-container shared-network">
+        <div class="flex-item legend-circle context"></div>
+        <div class="flex-item legend-circle origin"></div>
+        <div class="flex-item legend-circle ghost"></div>
+        <div class="flex-item legend-circle ghost"></div>
+        <div class="flex-item legend-circle origin"></div>
+        <div class="flex-item legend-circle context"></div>
+      </div>
+      <div class="flex-container text-spaced">
+        <div class="flex-item legend-text">Context</div>
+        <div class="flex-item legend-text">Context</div>
+      </div>
+      <div class="legend-line center-segment"></div>
+      <div class="flex-container shared-network">
+        <div class="flex-item legend-circle ghost"></div>
+        <div class="flex-item legend-circle origin"></div>
+        <div class="flex-item legend-circle direct"></div>
+        <div class="flex-item legend-circle ghost"></div>
+        <div class="flex-item legend-circle origin"></div>
+        <div class="flex-item legend-circle ghost"></div>
+      </div>
+      <div class="center text-spaced">
+        <div class="legend-text">Direct Acquaintance</div>
+      </div>
+      <div class="legend-line center-segment"></div>
+      <div class="flex-container shared-network">
+        <div class="flex-item legend-circle ghost"></div>
+        <div class="flex-item legend-circle origin"></div>
+        <div class="flex-item legend-circle indirect"></div>
+        <div class="flex-item legend-circle indirect"></div>
+        <div class="flex-item legend-circle origin"></div>
+        <div class="flex-item legend-circle ghost"></div>
+      </div>
+      <div class="center">
+        <div class="legend-text">Indirect Acquaintances</div>
+      </div>
+    </div>
+    <h5>Color of nodes is degree of separation</h5>
+    <!-- <div class="legend-box legend-size">
+      <div class="white-circle"></div>
+    </div>
+    <h5>Size of nodes indicates number of connections</h5> -->
+    <div class="legend-box">
+      <div class="flex-container">
+        <div class="flex-item legend-edge legend-text centered">Inferred<br/>Computationally</div>
+        <div class="flex-item legend-edge legend-text centered">Human<br/>Curated</div>
+      </div>
+    </div>
+    <h5>Color of edges is relationship certainty</h5>
+  </div>
+
+  <div ng-if=" config.viewMode == 'all' ">
+    <div class="legend-box legend-size-squares">
+    </div>
+    <h5>Size is amount of group members</h5>
+    <div class="legend-box legend-size-edges">
+    </div>
+    <h5>Thickness represents the amount of shared people</h5>
+  </div>
+
+  <div ng-if=" config.viewMode == 'group-force' ">
+    <div class="legend-box">
+      <div class="legend-line"></div>
+      <div class="flex-container group-network">
+        <div class="flex-item legend-circle origin"></div>
+        <div class="flex-item legend-circle first-degree"></div>
+      </div>
+      <div class="flex-container">
+        <div class="flex-item legend-text">Members</div>
+        <div class="flex-item legend-text">1st degree</div>
+      </div>
+    </div>
+    <h5>Color of nodes is degree of separation</h5>
+    <div class="legend-box legend-size">
+      <div class="flex-container center-align">
+
+      </div>
+    </div>
+    <h5>Size of nodes indicates distance from origin</h5>
+    <div class="legend-box">
+      <div class="flex-container">
+        <div class="flex-item legend-edge legend-text centered">Inferred<br/>Computationally</div>
+        <div class="flex-item legend-edge legend-text centered">Human<br/>Curated</div>
+      </div>
+    </div>
+    <h5>Color of edges is relationship certainty</h5>
+  </div>
+
+  <div ng-if=" config.viewMode == 'group-timeline' ">
+    <div class="legend-text centered">Member<br/>lifespan</div>
+    <div class="legend-line line-life"></div>
+    <div class="legend-text centered">Human curated<br/>membership</div>
+    <div class="legend-line line-human"></div>
+    <div class="legend-text centered">Computationally inferred<br/>membership</div>
+    <div class="legend-line line-computer"></div>
+    <h5>Lines are time intervals</h5>
+
+    <div class="flex-container">
+      <div class="legend-header right-aligned">Line start</div>
+      <div class="legend-header left-aligned">Line end</div>
+      <div class="legend-text right-aligned">On</div>
+      <div class="legend-terminator">
+        <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 20.9 8.5">
+            <path fill="none" stroke="#6F6F6F" stroke-width="2" d="M20.9,4.2H2.3"/>
+	        <polyline fill="none" stroke="#6F6F6F" stroke-width="3" points="1.5,0 1.5,4.2 1.5,8.5"/>
+        </svg>
+      </div>
+      <div class="legend-terminator">
+        <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 20.9 8.5">
+            <path  d="M0,4.2h18.6"/>
+            <polyline points="19.4,0 19.4,4.2 19.4,8.5"/>
+        </svg>
+      </div>
+      <div class="legend-text left-aligned">On</div>
+      <div class="legend-text right-aligned">Circa</div>
+      <div class="legend-terminator">
+          <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 21.6 10">
+              <path d="M21.6,5H8.1"/>
+	          <path d="M1,5c0,2.2,1.8,4,4,4s4-1.8,4-4S7.2,1,5,1S1,2.8,1,5z"/>
+          </svg>
+      </div>
+      <div class="legend-terminator">
+          <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 21.6 10">
+              <path d="M0,5h13.5"/>
+	          <path d="M20.6,5c0,2.2-1.8,4-4,4s-4-1.8-4-4s1.8-4,4-4S20.6,2.8,20.6,5z"/>
+          </svg>
+      </div>
+      <div class="legend-text left-aligned">Circa</div>
+      <div class="legend-text right-aligned">Only After</div>
+      <div class="legend-terminator">
+          <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 21.5 10">
+              <path d="M21.5,5H3.7"/>
+	          <path d="M5,9C2.8,9,1,7.2,1,5s1.8-4,4-4"/>
+          </svg>
+      </div>
+      <div class="legend-terminator">
+          <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 21.5 10">
+              <path d="M0,5h17.7"/>
+	          <path d="M16.5,9c2.2,0,4-1.8,4-4s-1.8-4-4-4"/>
+          </svg>
+      </div>
+      <div class="legend-text left-aligned">Only Before</div>
+      <div class="legend-text right-aligned">After-On</div>
+      <div class="legend-terminator">
+          <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 21.5 10">
+              <path d="M21.5,5H0.7"/>
+	          <path d="M5,9C2.8,9,1,7.2,1,5s1.8-4,4-4"/>
+          </svg>
+      </div>
+      <div class="legend-terminator">
+          <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 21.5 10">
+              <path d="M0,5h20.7"/>
+	          <path d="M16.5,9c2.2,0,4-1.8,4-4s-1.8-4-4-4"/>
+          </svg>
+      </div>
+      <div class="legend-text left-aligned">Before-On</div>
+      <div class="legend-text right-aligned">Before-On</div>
+      <div class="legend-terminator">
+          <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 20.5 10">
+              <path d="M20.5,5.2H3.6"/>
+	          <path d="M0,1c2.2,0,4,1.8,4,4S2.2,9,0,9"/>
+          </svg>
+      </div>
+      <div class="legend-terminator">
+          <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 20.5 10">
+              <path d="M0,5.2h16.9"/>
+	          <path d="M20.5,1c-2.2,0-4,1.8-4,4s1.8,4,4,4"/>
+          </svg>
+      </div>
+      <div class="legend-text left-aligned">After-On</div>
+      <div class="legend-text right-aligned"> Only Before</div>
+      <div class="legend-terminator">
+          <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 20.5 10">
+              <path d="M20.5,5.2H6.6"/>
+	          <path d="M0,1c2.2,0,4,1.8,4,4S2.2,9,0,9"/>
+          </svg>
+      </div>
+      <div class="legend-terminator">
+          <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 20.5 10">
+              <path d="M0,5.2h13.9"/>
+	          <path d="M20.5,1c-2.2,0-4,1.8-4,4s1.8,4,4,4"/>
+          </svg>
+      </div>
+      <div class="legend-text left-aligned">Only After</div>
+    </div>
+    <h5>Lines ending is temporal uncertainty</h5>
+  </div>
+
+</section>
+<span class="close" ng-click="legendClosed = !legendClosed; peopleFinderClosed = true; filtersClosed = true" ng-show=" config.viewMode != 'group-timeline' ">
+	<i ng-if="!legendClosed" class="fa fa-times" aria-hidden="true"></i>
+	<i ng-if="legendClosed" class="fa fa-question" aria-hidden="true"></i>
+</span>

@@ -1,0 +1,648 @@
+/* visualizations.scss*/
+
+
+/* Write here all the SCSS code for the visualizations, so to keep it separated from the panels and more general UI one*/
+
+
+/* List of visualizations:*/
+
+
+/* • Single Force Layout (Hooke)*/
+
+
+/* Variables*/
+
+
+/* General*/
+
+$text: #434055;
+$opacityDuration: 0.5s;
+
+
+
+
+
+
+
+/* RED version*/
+
+$degree0: #F45D4C;
+$degree1: #EE9F99;
+$degree3: #f2f2f3;
+
+
+
+
+
+
+
+/* BLUE version*/
+
+$degree0blue: #1239B4;
+
+
+$degree1blue: #5385A6;
+
+
+$degree3blue: #f2f2f3;
+
+$indirect-acquaintance-fill: #FDE6E5;
+
+
+
+
+
+
+
+
+/* Single Force Layout (Hooke)*/
+
+force-layout,
+shared-network {
+  .link {
+    stroke: #b9babc;
+    fill: none;
+    shape-rendering: geometricPrecision; // -webkit-transition: all $opacityDuration, stroke-width 0s;
+    // transition: all $opacityDuration, stroke-width 0s;
+    cursor: pointer;
+  }
+
+  .link:hover {
+    stroke-width: 3px;
+  }
+
+  .link.altered {
+    stroke: #000;
+  }
+
+  .link.faded,
+  .link.not-in-group {
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  .link.in-group {
+    stroke: #b9babc;
+    fill: none;
+    shape-rendering: geometricPrecision; // -webkit-transition: all $opacityDuration, stroke-width 0s;
+    // transition: all $opacityDuration, stroke-width 0s;
+    cursor: pointer;
+    opacity: 1;
+  }
+
+  .link.new {
+    stroke: orange;
+  }
+
+  .node {
+    stroke: #fff;
+    stroke-width: 1px; // -webkit-transition: all $opacityDuration, r 0s ease-out;
+    // transition: all $opacityDuration, r 0s ease-out;
+    cursor: pointer;
+  }
+
+  .node text {
+    pointer-events: none;
+    font: 10px sans-serif;
+  }
+
+  .node.degree0 {
+    fill: $degree0;
+  }
+
+  .node.degree1 {
+    fill: $degree1;
+  }
+
+  .node.degree2 {
+    fill: $degree3;
+    stroke: $degree0;
+  }
+
+  .node.degree3 {
+    fill: orange;
+    r: 12.5;
+  }
+
+  .node:hover {
+    stroke: #4A4A4A;
+    stroke-width: 2px;
+  }
+
+  .node.faded,
+  .node.not-in-group {
+    opacity: .1;
+  }
+
+  .node.focused {
+    stroke: #666666;
+  }
+
+  .label {
+    opacity: 1;
+    display: block;
+    pointer-events: none;
+    -webkit-transition: opacity $opacityDuration;
+    transition: opacity $opacityDuration;
+  }
+
+  .label.hidden,
+  .label.not-in-group {
+    opacity: 0;
+    display: block !important;
+  }
+
+  .label.in-group {
+    opacity: 1;
+    display: block !important;
+    pointer-events: none;
+    -webkit-transition: opacity $opacityDuration;
+    transition: opacity $opacityDuration;
+  }
+
+  .label.temporary-unhidden {
+    opacity: 1 !important;
+    display: block !important;
+  }
+
+  .label text {
+    fill: $text;
+    text-anchor: middle;
+    font-size: 8px;
+    font-weight: bold;
+  }
+
+  .label rect {
+    fill: white;
+    opacity: 1;
+    stroke: #b9babc;
+    stroke-width: 0.5px;
+  }
+
+  .label.selected rect {
+    fill: #4A4A4A;
+    stroke: $degree0;
+  }
+
+  .label.selected text {
+    fill: #ffffff;
+  }
+}
+
+#tools div {
+  display: inline;
+}
+
+
+
+
+
+
+
+
+/* groups bar*/
+
+.groupBar {
+  position: absolute;
+  height: 45px;
+  width: 100%;
+  bottom: 0;
+  background-color: #EFF1F4;
+  padding: 0 10px;
+  display: -webkit-box !important;
+  display: -ms-flexbox !important;
+  display: flex !important;
+  -webkit-box-pack: justify;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  .group {
+    background-color: #C6CACF;
+    border-radius: 2px;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    -webkit-box-pack: start;
+    -ms-flex-pack: start;
+    justify-content: flex-start;
+    height: 30px;
+    overflow: hidden;
+    padding: 0 0 0 5px;
+    -webkit-transition: all 0.5s;
+    transition: all 0.5s;
+    &:last-of-type {
+      cursor: pointer;
+    }
+  }
+  .group.active {
+    background-color: $degree0;
+    color: white;
+    pointer-events: auto;
+  }
+  .group.unactive {
+    opacity: 0.5;
+    pointer-events: none;
+  }
+}
+
+// groups-bar::after {
+//   content: 'This bar shows the people of the graph within the groups they are part of, click on a node to see if it has any group memberships.';
+//   display: block;
+//   position: absolute;
+//   bottom: 40px;
+//   opacity: 0;
+//   -webkit-transition: opacity 0.5s;
+//   transition: opacity 0.5s;
+// }
+groups-bar:hover::after {
+  opacity: 1;
+}
+
+.other-groups-list li.active {
+  color: red;
+}
+
+// shared network
+shared-network {
+  .link {
+    stroke: #b9babc;
+    fill: none;
+    shape-rendering: geometricPrecision; // -webkit-transition: all $opacityDuration, stroke-width 0s;
+    // transition: all $opacityDuration, stroke-width 0s;
+    cursor: pointer;
+  }
+
+  .link:hover {
+    stroke-width: 3px;
+  }
+
+  .link.altered {
+    stroke: #000;
+  }
+
+  .node.degree1 {
+    fill: $indirect-acquaintance-fill;
+    stroke: $degree0;
+  }
+  .node.degree2 {
+    fill: $degree0;
+    stroke: $degree3blue;
+  }
+  .node.degree3 {
+    fill: $degree1blue;
+    stroke: $degree3blue;
+  }
+
+  .node.degree4 {
+    fill: $degree3blue;
+    stroke: $degree1blue;
+  }
+
+  .label rect {
+    fill: white;
+    stroke: black;
+  }
+
+  .label text {
+    text-anchor: middle;
+  }
+}
+
+// ALL GROUPS GRAPH
+all-groups-graph {
+
+  .link {
+    stroke: #b9babc;
+    fill: none;
+    shape-rendering: geometricPrecision; // -webkit-transition: all $opacityDuration, stroke-width 0s;
+    // transition: all $opacityDuration, stroke-width 0s;
+    cursor: pointer;
+  }
+
+  .link:hover {
+    stroke-width: 3px;
+  }
+
+  .link.altered {
+    stroke: #000;
+  }
+
+
+  .node {
+    fill: #78729F;
+    -webkit-transform: rotate(30deg);
+    transform: rotate(30deg);
+    stroke: white;
+    stroke-width: 0.75px;
+    -webkit-transition: -webkit-transform 0.25s ease-in-out;
+    transition: -webkit-transform 0.25s ease-in-out;
+    transition: transform 0.25s ease-in-out;
+    transition: transform 0.25s ease-in-out, -webkit-transform 0.25s ease-in-out;
+    cursor: pointer;
+  }
+
+  .node:hover {
+    -webkit-transform: rotate(0deg);
+    transform: rotate(0deg);
+  }
+
+  .label {
+    pointer-events: none;
+  }
+
+  .label text {
+    text-anchor: middle;
+  }
+
+  .label rect {
+    fill: white;
+    stroke: #78729F;
+  }
+
+  .label.hidden {
+    opacity: 0;
+  }
+
+  .label.temporary-unhidden {
+    opacity: 1;
+  }
+
+  .faded {
+    opacity: 0.2;
+  }
+
+  .link.faded {
+    opacity: 0;
+  }
+}
+
+.group-members {
+  font-size: 11px;
+  position: relative;
+  .flex-boxed {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-pack: justify;
+    -ms-flex-pack: justify;
+    justify-content: space-between;
+    margin-bottom: 6px;
+  }
+  .flex-boxed:last-child {
+    margin-bottom: 24px;
+  }
+  .list-header {
+    margin-bottom: 8px;
+    font-weight: bold;
+  }
+
+  &>div:nth-child(2) {
+    max-height: 280px;
+    overflow-y: scroll;
+  }
+}
+
+single-group-graph {
+
+  .link {
+    stroke: #b9babc;
+    fill: none;
+    shape-rendering: geometricPrecision; // -webkit-transition: all $opacityDuration, stroke-width 0s;
+    // transition: all $opacityDuration, stroke-width 0s;
+    cursor: pointer;
+  }
+
+  .link:hover {
+    stroke-width: 3px;
+  }
+
+  .link.altered {
+    stroke: #000;
+  }
+
+  .node {
+    fill: #EFF1F4;
+    stroke: #78729F;
+    stroke-width: 0.75px;
+    -webkit-transition: -webkit-transform 0.25s ease-in-out;
+    transition: -webkit-transform 0.25s ease-in-out;
+    transition: transform 0.25s ease-in-out;
+    transition: transform 0.25s ease-in-out, -webkit-transform 0.25s ease-in-out;
+    cursor: pointer;
+  }
+
+  .node.member {
+    fill: #78729F;
+    stroke: white;
+  }
+
+  .node:hover {}
+
+  .label {
+    pointer-events: none;
+  }
+
+  .label text {
+    text-anchor: middle;
+  }
+
+  .label rect {
+    fill: white;
+    stroke: #78729F;
+  }
+
+  .label.not-visible {
+    opacity: 0;
+  }
+
+  .label.temporary-unhidden {
+    opacity: 1;
+  }
+
+  .label.visible {
+    opacity: 1;
+  }
+
+  .faded {
+    opacity: 0.2;
+  }
+
+  .link.faded {
+    opacity: 0;
+  }
+}
+
+
+group-timeline {
+
+  text-align: left !important;
+
+  .reset-rect {
+    stroke: none;
+    fill: transparent;
+  }
+
+  .g {
+    pointer-events: none;
+  }
+
+  .g * {
+    pointer-events: all;
+  }
+
+  .guide {
+    fill: none;
+    stroke: #434055;
+    stroke-width: 1px;
+    stroke-dasharray: 1px, 3px;
+    opacity: .4;
+  }
+
+  .guide-label {
+    fill: #434055;
+    text-anchor: middle;
+    font-size: 11px;
+    font-weight: normal;
+  }
+
+  .group-name {
+    fill: #434055;
+    text-anchor: middle;
+    font-size: 12px;
+    font-weight: bold;
+  }
+
+  .guide-group {
+    fill: none;
+    stroke: #434055;
+    stroke-width: 1px;
+    stroke-dasharray: 2px, 4px;
+    opacity: .7;
+  }
+
+  .name {
+    text-anchor: end;
+    stroke: none;
+    fill: #434055;
+    font-size: 11px;
+    font-weight: bold;
+    opacity: .7;
+  }
+
+  .historical-significance {
+    text-anchor: end;
+    stroke: none;
+    fill: #434055;
+    font-size: 11px;
+    font-weight: normal;
+    opacity: 0;
+    pointer-events: none;
+    -webkit-transition: opacity 0.5s ease;
+    transition: opacity 0.5s ease;
+
+    tspan {
+        pointer-events: none;
+    }
+  }
+
+  .timeline-button-rect {
+      fill: #F7F35D;
+      opacity: 0;
+      pointer-events: none;
+      stroke: #AEB1B5;
+      stroke-width: 1px;
+      -webkit-transition: opacity 0.5s ease;
+      transition: opacity 0.5s ease;
+  }
+
+  .timeline-button-text {
+      fill: #434055;
+      font-size: 11px;
+      font-weight: 700;
+      opacity: 0;
+      pointer-events: none;
+      stroke: none;
+      text-transform: uppercase;
+      -webkit-transition: opacity 0.5s ease;
+      transition: opacity 0.5s ease;
+  }
+
+  .birth-label {
+    text-anchor: start;
+  }
+
+  .membership.selected .historical-significance {
+    opacity: .8;
+  }
+
+  .membership.selected .timeline-button-rect,
+  .membership.selected .timeline-button-text {
+      opacity: 1;
+      pointer-events: all;
+  }
+
+  .membership:hover .name,
+  .membership.selected .name {
+    /*font-size: 12px;*/
+    opacity: 1;
+  }
+
+  .membership {
+    stroke: #78729F;
+    stroke-width: 2px;
+    cursor: pointer;
+  }
+
+  .active-area {
+    stroke: none;
+    fill: transparent;
+    /*    fill: white;
+  opacity: 0.5;*/
+  }
+
+  .membership:hover .active-area,
+  .membership.selected .active-area {
+    fill: #78729F;
+    opacity: 0.08;
+  }
+
+  .hover-area {
+    fill: transparent;
+  }
+
+  .life {
+    fill: transparent;
+    stroke: rgba(0, 0, 0, 0.4);
+    stroke-width: 1px;
+  }
+
+  .membership:hover .life {
+    stroke: rgba(0, 0, 0, 0.6);
+    stroke-width: 1.5px;
+  }
+
+  .terminator {
+    stroke: rgba(0, 0, 0, 0.4);
+    stroke-width: 1.5px;
+    fill: none;
+  }
+
+  .terminator.danger {
+    stroke: orange !important;
+  }
+
+  .terminator.filled {
+    fill: #EFF1F4
+  }
+
+  .membership:hover .terminator.filled {
+    fill: #e5e7ee;
+  }
+}

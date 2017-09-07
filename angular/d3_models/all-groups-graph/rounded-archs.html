@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<style>
+body {
+    height: 100vh;
+    width: 100vw;
+}
+svg {
+    border: 1px solid black;
+    width: 100%;
+    height: 100%;
+}
+.link {
+    fill: none;
+}
+</style>
+<svg></svg>
+<script src="https://d3js.org/d3.v4.min.js"></script>
+<script>
+var svg = d3.select("svg"),
+    // width = +svg.attr("width"),
+    width = svg.node().getBoundingClientRect().width
+    chartWidth = width,
+    // height = +svg.attr("height"),.
+    height = svg.node().getBoundingClientRect().height
+    color = d3.scaleOrdinal(d3.schemeCategory10);
+
+var nodes = [];
+var links = [];
+
+var simulation = d3.forceSimulation(nodes)
+    .force("center", d3.forceCenter(0, 0))
+    .force("charge", d3.forceManyBody()) // positive strength = attraction
+    .force("link", d3.forceLink(links).id(function(d) { return d.id }).strength(function(d){ return sizeEdge(d.weight)*0.1}))
+    .force("collide", d3.forceCollide(function(d) { return sizeScale(d.attributes.degree) + 1}))
+    .alpha(1)
+    .alphaDecay(0.01)
+    .on("tick", ticked)
+
+var g = svg.append("g").attr("transform", "translate(" + width / 2 + "," + height / 2 + ")"),
+    link = g.append("g").attr("stroke", "#000").attr("stroke-width", 1.5).selectAll(".link"),
+    node = g.append("g").attr("stroke", "#fff").attr("stroke-width", 1.5).selectAll(".node");
+
+var sizeScale = d3.scaleLinear()
+    .range([6, 25]);
+
+var sizeEdge = d3.scaleLinear()
+    .range([1, 10]);
+
+
+d3.json('allgroups.json', function(err, json) {
+    if (err) {
+        console.error(err);
+    }
+    nodes = json.included;
+    // console.log(nodes) 
+
+    var maxDegree = d3.max(nodes, function(d) { return d.attributes.degree; });
+    var minDegree = d3.min(nodes, function(d) { return d.attributes.degree; });
+    sizeScale.domain([minDegree, maxDegree]);
+
+    json.data.attributes.connections.forEach(function(l) {
+        links.push({
+            'type': l.type,
+            'source': l.attributes.source,
+            'target': l.attributes.target,
+            'weight': l.attributes.weight
+        })
+    })
+    // console.log(links)
+
+    var minWeight = d3.min(links, function(d) { return d.weight });
+    var maxWeight = d3.max(links, function(d) { return d.weight });
+    console.log(minWeight,maxWeight);
+    sizeEdge.domain([minWeight, maxWeight]);
+
+    update();
+
+})
+
+function update() {
+
+    var startTime = d3.now();
+
+    function drawGraph() {
+        // Apply the general update pattern to the nodes.
+        node = node.data(nodes, function(d) { return d.id; });
+        node.exit().remove();
+        node = node.enter().append("circle")
+            .attr("fill", function(d) { return color(d.id); })
+            // .attr('cx', function(d) { return d.x; })
+            // .attr('cy', function(d) { return d.y; })
+            .attr("r", function(d) { return sizeScale(d.attributes.degree); })
+            .call(d3.drag()
+                .on("start", dragstarted)
+                .on("drag", dragged)
+                .on("end", dragended));
+
+        // Apply the general update pattern to the links.
+        link = link.data(links, function(d) { return d.source.id + "-" + d.target.id; });
+        link.exit().remove();
+        link = link.enter().append("path")
+            .attr("class", "link")
+            .attr("stroke-width", function(d) { return sizeEdge(d.weight) })
+            .merge(link);
+    }
+
+    drawGraph();
+
+    // Update and restart the simulation.
+    simulation.nodes(nodes);
+    simulation.force("link").links(links);
+    simulation.alpha(1).restart();
+
+    simulation.on("end", function() {
+        console.log('spatialization done');
+        var endTime = d3.now();
+
+        console.log((endTime - startTime));
+    })
+}
+
+function dragstarted(d) {
+    simulation.restart();
+    simulation.alpha(1.0);
+    d.fx = d.x;
+    d.fy = d.y;
+}
+
+function dragged(d) {
+    d.fx = d3.event.x;
+    d.fy = d3.event.y;
+}
+
+function dragended(d) {
+    d.fx = null;
+    d.fy = null;
+}
+
+function ticked() {
+    node.attr("cx", function(d) { return d.x; })
+        .attr("cy", function(d) { return d.y; })
+
+    // link.attr("x1", function(d) { return d.source.x; })
+    //     .attr("y1", function(d) { return d.source.y; })
+    //     .attr("x2", function(d) { return d.target.x; })
+    //     .attr("y2", function(d) { return d.target.y; })
+
+    link.attr("d", function(d){
+        return linkArc(d);
+    })
+}
+
+// Draw curved edges, create d-value for link path
+function linkArc(d) {
+    var dx = d.target.x - d.source.x,
+        dy = d.target.y - d.source.y,
+        dr = Math.sqrt(dx * dx + dy * dy); //Pythagoras!
+    return "M" + d.source.x + "," + d.source.y + "A" + dr + "," + dr + " 0 0,1 " + d.target.x + "," + d.target.y;
+}
+
+// d3.timeout(function() {
+//     links.push({ source: a, target: b }); // Add a-b.
+//     links.push({ source: b, target: c }); // Add b-c.
+//     links.push({ source: c, target: a }); // Add c-a.
+//     update();
+// }, 1000);
+
+// d3.interval(function() {
+//     nodes.pop(); // Remove c.
+//     links.pop(); // Remove c-a.
+//     links.pop(); // Remove b-c.
+//     update();
+// }, 2000, d3.now());
+
+// d3.interval(function() {
+//     nodes.push(c); // Re-add c.
+//     links.push({ source: b, target: c }); // Re-add b-c.
+//     links.push({ source: c, target: a }); // Re-add c-a.
+//     update();
+// }, 2000, d3.now() + 1000);
+</script>

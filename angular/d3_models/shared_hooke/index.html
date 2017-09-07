@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<style>
+
+.links {
+  stroke: #000;
+  fill: none;
+  /*stroke: #000;*/
+  shape-rendering: geometricPrecision;
+  /*stroke-opacity: 1;*/
+}
+.node {
+  stroke: #fff;
+  stroke-width: 1.5px;
+  transition: stroke-width 0.5s, stroke 0.5s, opacity 0.5s;
+  cursor: pointer;
+}
+.node text {
+  pointer-events: none;
+  font: 10px sans-serif;
+}
+.node:hover {
+  stroke: #4A4A4A;
+  stroke-width: 2px;
+}
+.node.distance0 {
+  fill: #098CE4;
+}
+.node.distance1 {
+    fill: #ebf6fd;
+    stroke: #52A8E3;
+    stroke-width: 1.5px;
+}
+.node.distance2 {
+    fill: #fde6e5;
+    stroke: #EE897E;
+    stroke-width: 1.5px;
+}
+.node.distance3 {
+  fill: #F45D4C;
+  stroke-width: 1px;
+}
+
+.node.faded {
+  opacity: 0.2;
+}
+.node.focused {
+  stroke: #666666;
+}
+
+#tools div {
+  display: inline;
+}
+
+form, select {
+  float: right;
+  display: inline;
+}
+
+</style>
+<body>
+<div id='tools'></div>
+<svg width="1500" height="1150"></svg>
+<script src="https://d3js.org/d3.v4.min.js"></script>
+<script src="shared_hooke.js"></script>
+</body>

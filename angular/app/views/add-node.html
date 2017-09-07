@@ -1,0 +1,36 @@
+<section>
+	<h3 class="">Add person to this view</h3>
+	<h4 class="paragraph-title">Person Name</h4>
+  <input placeholder="Search for a person" type="text" ng-model="person.added" uib-typeahead="person for person in peopleToSelect | filter:$viewValue | limitTo:8" class="form-control">
+	<!-- <button type="button" class="btn btn-primary" ng-click="addingNode() ">
+		Add this person
+	</button> -->
+	<h4>Birth date</h4>
+  <div class="input-group">
+    <input class="form-control" uib-datepicker-popup="{{ config.dateFormat }}" ng-model="startDate" ng-model-options="{ getterSetter: true }" id="birthDate">
+    <select class="input-group-addon" ng-model="selectedStartDateType" ng-options="type for type in config.dateTypes" id="birthDateType"></select><i class="fa fa-caret-down" aria-hidden="true"></i>
+  </div>
+
+  <h4>Death date</h4>
+  <div class="input-group">
+    <input class="form-control" uib-datepicker-popup="{{ config.dateFormat }}" ng-model="endDate" id="deathDate">
+    <select class="input-group-addon" ng-model="selectedEndDateType" ng-options="type for type in config.dateTypes" id="deathDateType"></select><i class="fa fa-caret-down" aria-hidden="true"></i>
+  </div>
+
+	<h4>Title</h4>
+	<input class="form-control" id="title" placeholder="Title">
+
+	<h4>Suffix</h4>
+	<input class="form-control" id="suffix" placeholder="Suffix">
+
+	<h4>Alternate Names</h4>
+	<input class="form-control" id="alternates" placeholder="Alternate Names (comma-separated)">
+
+	<h4>Notes</h4>
+	<input class="form-control" id="notes" placeholder="Notes">
+	<button class="btn btn-primary" type="button" ng-click="submitNode() ">Done</button>
+</section>
+<span class="close" ng-click="addNodeClosed = !addNodeClosed;" style="color: white;">
+	<i ng-if="!addNodeClosed" class="fa fa-times" aria-hidden="true"></i>
+	<i ng-if="addNodeClosed" class="fa fa-plus-circle" aria-hidden="true"></i>
+</span>
