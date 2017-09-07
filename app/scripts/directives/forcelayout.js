@@ -457,7 +457,26 @@ angular.module('redesign2017App')
                   .attr('stroke', 'orange')
                   .attr('stroke-dasharray', 5,5);
                 d3.select("#l"+d.id+" text")
-                  .text(d.attributes.name+" & "+otherNode.attributes.name);                
+                  .text(d.attributes.name+" & "+otherNode.attributes.name);
+                  // Get the Bounding Box of the text created
+                d3.selectAll("#l"+d.id+" text").each(function(d, i) {
+                  d.labelBBox = this.getBoundingClientRect();
+                });
+                var paddingLeftRight = 4;
+                var paddingTopBottom = 0;
+                d3.select("#l"+d.id+" rect")
+                  .attr("x", function(d) {
+                    return 0 - d.labelBBox.width / 2 - paddingLeftRight / 2;
+                  })
+                  .attr("y", function(d) {
+                    return 0 + 3 - d.labelBBox.height + paddingTopBottom / 2;
+                  })
+                  .attr("width", function(d) {
+                    return d.labelBBox.width + paddingLeftRight;
+                  })
+                  .attr("height", function(d) {
+                    return d.labelBBox.height + paddingTopBottom;
+                  });
               }
               else {
                 otherNode.radius = false;
@@ -509,6 +528,9 @@ angular.module('redesign2017App')
                   scope.addLinkClosed = false;
                   scope.legendClosed = true;
                 });
+                updatePersonNetwork(scope.data);
+                addedLinkID += 1;
+
               }
             })
             d3.selectAll(".node").attr('r', function(d) { // Size nodes by degree of distance
@@ -520,8 +542,6 @@ angular.module('redesign2017App')
                 return 6.25;
               }
             });
-            updatePersonNetwork(scope.data);
-            addedLinkID += 1;
 
           }
         }
