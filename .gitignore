@@ -8,9 +8,9 @@ tmp
 Procfile.development
 Procfile.test
 .DS_Store
-/node_modules
-/dist
-/.tmp
-/.sass-cache
-/bower_components
+angular/node_modules
+angular/dist
+angular/.tmp
+angular/.sass-cache
+angular/bower_components
 .DS_Store
