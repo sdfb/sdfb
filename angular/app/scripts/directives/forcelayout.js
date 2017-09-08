@@ -456,9 +456,16 @@ angular.module('redesign2017App')
                   .attr('r', 25)
                   .attr('stroke', 'orange')
                   .attr('stroke-dasharray', 5,5);
-                d3.selectAll("#l"+d.id+" text").each(function(d, i) {
-                  d.labelBBox = this.getBoundingClientRect();
-                });
+                // d3.select("#l"+d.id+" rect").remove();
+                // d3.select("#l"+d.id+" text").remove();
+                // d3.select("#l"+d.id).append("rect");
+                // d3.select("#l"+d.id).append("text")
+                  // .text(d.attributes.name+" & "+otherNode.attributes.name);
+                d3.selectAll("#l"+d.id+" text")
+                  .text(d.attributes.name+" & "+otherNode.attributes.name)
+                  .each(function(d, i) {
+                    d.labelBBox = this.getBoundingClientRect();
+                  });
                 var paddingLeftRight = 4;
                 var paddingTopBottom = 0;
                 d3.select("#l"+d.id+" rect")
@@ -474,8 +481,7 @@ angular.module('redesign2017App')
                   .attr("height", function(d) {
                     return d.labelBBox.height + paddingTopBottom;
                   });
-                d3.select("#l"+d.id+" text")
-                  .text(d.attributes.name+" & "+otherNode.attributes.name);
+
                   // Get the Bounding Box of the text created
 
               }
@@ -491,8 +497,26 @@ angular.module('redesign2017App')
                   }
                 })
                 .attr('stroke-dasharray', null);
-                d3.select("#l"+d.id+" text")
-                  .text(d.attributes.name);
+                // d3.selectAll("#l"+d.id+" text")
+                //   .text(d.attributes.name)
+                //   .each(function(d, i) {
+                //     d.labelBBox = this.getBoundingClientRect();
+                //   });
+                // var paddingLeftRight = 4;
+                // var paddingTopBottom = 0;
+                // d3.select("#l"+d.id+" rect")
+                //   .attr("x", function(d) {
+                //     return 0 - d.labelBBox.width / 2 - paddingLeftRight / 2;
+                //   })
+                //   .attr("y", function(d) {
+                //     return 0 + 3 - d.labelBBox.height + paddingTopBottom / 2;
+                //   })
+                //   .attr("width", function(d) {
+                //     return d.labelBBox.width + paddingLeftRight;
+                //   })
+                //   .attr("height", function(d) {
+                //     return d.labelBBox.height + paddingTopBottom;
+                //   });
               }
             }
           });
