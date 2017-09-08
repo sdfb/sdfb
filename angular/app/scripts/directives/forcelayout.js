@@ -456,9 +456,6 @@ angular.module('redesign2017App')
                   .attr('r', 25)
                   .attr('stroke', 'orange')
                   .attr('stroke-dasharray', 5,5);
-                d3.select("#l"+d.id+" text")
-                  .text(d.attributes.name+" & "+otherNode.attributes.name);
-                  // Get the Bounding Box of the text created
                 d3.selectAll("#l"+d.id+" text").each(function(d, i) {
                   d.labelBBox = this.getBoundingClientRect();
                 });
@@ -477,6 +474,10 @@ angular.module('redesign2017App')
                   .attr("height", function(d) {
                     return d.labelBBox.height + paddingTopBottom;
                   });
+                d3.select("#l"+d.id+" text")
+                  .text(d.attributes.name+" & "+otherNode.attributes.name);
+                  // Get the Bounding Box of the text created
+
               }
               else {
                 otherNode.radius = false;
