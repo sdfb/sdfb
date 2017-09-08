@@ -17,14 +17,22 @@ test: &test
   pool: 15
   timeout: 5000
 
-
 production:
   adapter: postgresql
-  database: sdfb_prod-2017-05-15
+  database: sixdfbor_sdfb
+  host: localhost
+  port: 5432
   pool: 15
   timeout: 5000
   username: postgres
-  password: d3f@ult$ 
+  password: 6dfrannyb
+#production:
+  #adapter: postgresql
+  #database: sixdfbor_sdfb
+  #pool: 15
+  #timeout: 5000
+  #username: postgres
+  #password: 6dfrannyb 
 
 
 cucumber:
