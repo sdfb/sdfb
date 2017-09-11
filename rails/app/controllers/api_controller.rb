@@ -47,20 +47,29 @@ class ApiController < ApplicationController
     case type
     when "person"
       people = Person.pluck(:search_names_all, :display_name, :id)
+      full_name = ""
       people.each do |data|
         keys, name, id = data
-        keys.split(/\W+/).uniq!.each do |word|
+        keys.split(",").uniq.each_with_index do |word,i|
           lookup[word.downcase] ||= []
           lookup[word.downcase] << {name: name, id: id.to_s}
+          # full_name = "#{full_name} #{word.downcase}".strip
+          # lookup[full_name] ||= []
+          # lookup[full_name] << {name: name, id: id.to_s} if i
         end
       end
     when "group"
       groups = Group.pluck(:name, :id)
       groups.each do |data|
         group_name, id = data
-        group_name.split(/\W+/).uniq.each do |word|
-          lookup[word.downcase] ||= []
-          lookup[word.downcase] << {name: group_name, id: id.to_s}
+        group_name_parts = group_name.downcase.split(/\W+/)
+        while group_name_parts.length
+          word = group_name_parts.shift
+          lookup[word] ||= []
+          lookup[word] << {name: group_name, id: id.to_s}
+          break if group_name_parts.empty?
+          lookup[group_name_parts.join(" ")] ||= []
+          lookup[group_name_parts.join(" ")] << {name: group_name, id: id.to_s}
         end
       end
     end
@@ -68,7 +77,7 @@ class ApiController < ApplicationController
     if results
       results = results.reduce([]){|memo,a| memo << a[1]}.flatten.uniq
     end
-    @results =  results || []
+    @results =  results.sort_by{|r| r[:name]} || []
   end
 
 
