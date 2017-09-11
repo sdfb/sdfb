@@ -21,6 +21,18 @@ class ApiController < ApplicationController
 
 
   def relationships
+    ids = params[:ids].split(",")
+    begin
+      @relationships = Relationship.includes(:user_rel_contribs).find(ids)
+      puts @relationships.inspect
+    rescue ActiveRecord::RecordNotFound => e
+      @errors = []
+      @errors << {title: "Invalid relationship ID(s)"}
+    end
+    respond_to do |format|
+      format.json
+      format.html { render :json}
+    end
   end
 
   def typeahead
