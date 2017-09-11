@@ -79,6 +79,11 @@ class Relationship < ActiveRecord::Base
 	# Custom Methods
   # -----------------------------
 
+  def altered
+    !(approved_by.nil? || approved_by == 2)
+  end
+
+
   # delete the relationships from the rel sums of people 1 and people 2
   def delete_from_rel_sum
     rel_sum_person_1 = Person.find(self.person1_index).rel_sum

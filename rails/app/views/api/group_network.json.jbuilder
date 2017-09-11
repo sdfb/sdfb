@@ -3,13 +3,13 @@ if @groups
     json.id @display_id
     json.type "network"
     json.attributes do
-      json.primary_people @people.map{|p| p["id"].to_s}
+      json.primary_people @primary_people.map{|p| p["id"].to_s}
       json.connections do
         json.array! @relationships do |relationship|
           json.id relationship.id.to_s
           json.type "relationship"
           json.attributes do
-            json.altered true
+            json.altered relationship.altered
             json.end_year relationship.end_year
             json.end_year_type relationship.end_date_type
             json.source relationship.person2_index.to_s

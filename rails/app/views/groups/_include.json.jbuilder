@@ -4,6 +4,7 @@ json.attributes do
   json.description group.description
   json.start_year group.start_year
   json.end_year group.end_year
+  json.degree group.group_assignments.count
   json.people do
     json.array! group.group_assignments do |assignment|
      json.person_id assignment.person_id

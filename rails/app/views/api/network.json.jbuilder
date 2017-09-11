@@ -11,7 +11,7 @@ else
           json.id relationship.id.to_s
           json.type "relationship"
           json.attributes do
-            json.altered true
+            json.altered relationship.altered
             json.end_year relationship.end_year
             json.source relationship.person2_index.to_s
             json.start_year relationship.start_year
