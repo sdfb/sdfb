@@ -9,7 +9,7 @@ if @groups
           json.id relationship.id.to_s
           json.type "relationship"
           json.attributes do
-            json.altered true
+            json.altered relationship.altered
             json.end_year relationship.end_year
             json.end_year_type relationship.end_date_type
             json.source relationship.person2_index.to_s

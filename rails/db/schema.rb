@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160116033339) do
+ActiveRecord::Schema.define(version: 20170911012809) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -237,6 +237,9 @@ ActiveRecord::Schema.define(version: 20160116033339) do
     t.text     "last_edit",                default: "--- []\n"
     t.text     "bibliography"
   end
+
+  add_index "relationships", ["person1_index"], name: "index_relationships_on_person1_index", using: :btree
+  add_index "relationships", ["person2_index"], name: "index_relationships_on_person2_index", using: :btree
 
   create_table "user_group_contribs", force: true do |t|
     t.integer  "group_id"
