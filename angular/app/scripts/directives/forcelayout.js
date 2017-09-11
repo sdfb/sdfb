@@ -7,7 +7,7 @@
  * # forceLayout
  */
 angular.module('redesign2017App')
-  .directive('forceLayout', function() {
+  .directive('forceLayout', ['apiService', '$timeout', function(apiService, $timeout) {
     return {
       template: '<svg width="100%" height="100%"></svg>',
       restrict: 'E',
@@ -864,8 +864,17 @@ angular.module('redesign2017App')
             }
 
             // This triggers events in groupsbar.js and contextualinfopanel.js when a selection happens
-            scope.currentSelection = d;
-            scope.$broadcast('selectionUpdated', scope.currentSelection);
+            // scope.currentSelection = d;
+            apiService.getPeople(d.id).then(function (result) {
+              // console.log(result);
+              scope.currentSelection = result.data[0];
+              // console.log(scope.currentSelection);
+              $timeout(function(){
+                scope.$broadcast('selectionUpdated', scope.currentSelection);
+              });
+            });
+
+            // scope.$broadcast('selectionUpdated', scope.currentSelection);
 
           } else if (d.type == "relationship") { //Handler for when a link is clicked
 
@@ -889,8 +898,18 @@ angular.module('redesign2017App')
 
             console.log('selection to be implemented');
             // This triggers events in groupsbar.js and contextualinfopanel.js when a selection happens
-            scope.currentSelection = d;
-            scope.$broadcast('selectionUpdated', scope.currentSelection);
+            // scope.currentSelection = d;
+            // scope.$broadcast('selectionUpdated', scope.currentSelection);
+            apiService.getRelationship(d.id).then(function (result) {
+              // console.log(result);
+              scope.currentSelection = result.data[0];
+              scope.currentSelection.source = d.source;
+              scope.currentSelection.target = d.target;
+              // console.log(scope.currentSelection);
+              $timeout(function(){
+                scope.$broadcast('selectionUpdated', scope.currentSelection);
+              });
+            });
           }
 
         }
@@ -990,4 +1009,4 @@ angular.module('redesign2017App')
 
       }
     };
-  });
+  }]);

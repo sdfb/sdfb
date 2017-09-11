@@ -7,7 +7,7 @@
  * # smallTimeline
  */
 angular.module('redesign2017App')
-  .directive('smallTimeline', ['apiService', function(apiService, scope) {
+  .directive('smallTimeline', ['apiService', function(apiService) {
     return {
       template: '',
       restrict: 'E',
@@ -17,8 +17,7 @@ angular.module('redesign2017App')
       link: function postLink(scope, element, attrs) {
         // console.log(scope)
 
-        var hist_sig = d3.select(element[0]).append('p'),
-          svg = d3.select(element[0]).append('svg'),
+        var svg = d3.select(element[0]).append('svg'),
           width = +svg.node().getBoundingClientRect().width,
           height = +svg.node().getBoundingClientRect().height;
 
@@ -28,32 +27,28 @@ angular.module('redesign2017App')
 
         function update() {
 
-          hist_sig.text(scope.currentSelection.attributes.historical_significance);
 
-
-          // scope.currentSelection = result;
-          // scope.$apply();
           console.log(scope.currentSelection);
 
           // if the data type = relationship, we have start_date instead of birth_date and end_date instead of death_date
           // The way in which the data is computated is the same
           // All we need to do is just to change the structure of the data so that it respect the one of type = person
 
-          if (scope.type == 'relationship') {
+          if (scope.currentSelection.type == 'relationship') {
           	if (!scope.currentSelection.attributes) {
           		scope.currentSelection.attributes = {}
           	}
-	          scope.currentSelection.attributes.birth_year = scope.start_year;
-	          scope.currentSelection.attributes.death_year = scope.end_year;
+	          scope.currentSelection.attributes.birth_year = scope.currentSelection.types[0].start_year;
+	          scope.currentSelection.attributes.death_year = scope.currentSelection.types[0].end_year;
 
-	          if(scope.start_year_type) {
-	          	scope.currentSelection.attributes.birth_year_type = scope.start_year_type
+	          if(scope.currentSelection.start_year_type) {
+	          	scope.currentSelection.attributes.birth_year_type = scope.currentSelection.types[0].start_year_type
 	          }
-	          if(scope.end_year_type) {
-	          	scope.currentSelection.attributes.death_year_type = scope.end_year_type
+	          if(scope.currentSelection.end_year_type) {
+	          	scope.currentSelection.attributes.death_year_type = scope.currentSelection.types[0].end_year_type
 	          }
 	          if(!scope.currentSelection.attributes.relationshipKind) {
-	          	scope.currentSelection.attributes.relationshipKind = 'Kind undefined'
+	          	scope.currentSelection.attributes.relationshipKind = scope.currentSelection.types[0].type
 	          }
           }
 
@@ -182,15 +177,25 @@ angular.module('redesign2017App')
         }
 
         scope.$on('selectionUpdated', function(event, arg) {
+          scope.currentSelection = arg;
+          update();
           // console.log('update the timeline');
-          console.log(arg.id);
-          var data = {};
-          apiService.getPeople(arg.id).then(function (result) {
-            console.log(result);
-            scope.currentSelection = result.data[0];
-            update();
-            // scope.$broadcast('selectionUpdated', scope.currentSelection);
-          });
+        //   if (arg.type === 'person') {
+        //     console.log(arg.id);
+        //     apiService.getPeople(arg.id).then(function (result) {
+        //       console.log(result);
+        //       scope.currentSelection = result.data[0];
+        //       update();
+        //     });
+        //   }
+        //   else {
+        //     console.log(arg.id);
+        //     apiService.getRelationship(arg.id).then(function (result) {
+        //       console.log(result);
+        //       scope.currentSelection = result.data[0];
+        //       update();
+        //     });
+        //   }
         });
       }
     };

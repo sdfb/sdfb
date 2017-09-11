@@ -37,26 +37,27 @@ angular.module('redesign2017App')
           //William Fleetwood + Sir Henry Yelverton
           // var ids = [10004371, 10013232];
           // shakespeare + milton
-          var ids = '10010937';
+          // var ids = '10010937';
 
           // Sir Thomas Fanshawe + Sir Edwin Sandys
           // ids = [10004129,10010685];
-          $location.search('ids', ids);
+          $location.search('ids', $person1.id);
           var lastRoute = $route.current;
           scope.$on('$locationChangeSuccess', function(event) {
             $route.current = lastRoute;
           });
           scope.config.viewMode = 'individual-force';
-          scope.config.ids = ids;
+          scope.config.person1 = $person1.id
+          scope.config.ids = $person1.id;
         };
 
-        scope.selectedShared = function($person2, $person1) {
+        scope.selectedShared = function($person2) {
           // Manually inserted IDS since people typeahead API is not ready yet.
 
           //William Fleetwood + Sir Henry Yelverton
           // var ids = [10004371, 10013232];
           // shakespeare + milton
-          var ids = '10010937,10008309';
+          var ids = [scope.config.person1, $person2.id];
           $location.search('ids', ids);
           var lastRoute = $route.current;
           scope.$on('$locationChangeSuccess', function(event) {
@@ -83,6 +84,11 @@ angular.module('redesign2017App')
         scope.callGroupsTypeahead = function(val) {
           console.log(val)
           return apiService.groupsTypeahead(val);
+        };
+
+        scope.callPersonTypeahead = function(val) {
+          console.log(val)
+          return apiService.personTypeahead(val);
         };
 
         scope.groupSelected = function($item, $model, $label, $event) {

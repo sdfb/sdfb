@@ -47,6 +47,24 @@ angular.module('redesign2017App')
           return response;
         })
       },
+      personTypeahead : function(val) {
+        var url = baseUrl + '/api/typeahead';
+        return $http({
+          method: 'GET',
+          url : url,
+          params: {
+              q: val,
+              type: 'person'
+            }
+        }).then(function successCallback(response){
+          console.log('response:',response);
+          return response.data;
+        },function errorCallback(response){
+          console.error("An error occured while fetching file",response);
+          console.warn("If the issue is related to CORS Origin, try install this extention on Chrome: https://chrome.google.com/webstore/detail/allow-control-allow-origi/nlfbmbojpeacfghkpbjhddihlkkiljbi")
+          return response;
+        })
+      },
       getGroups : function(ids){
         // Works for a single group as well, just call with a singular ID
         var url = baseUrl + '/api/groups';
@@ -114,5 +132,22 @@ angular.module('redesign2017App')
           return response;
         });
       },
+      getRelationship : function(ids){
+
+        var url = baseUrl + '/api/relationships';
+        return $http({
+          method: 'GET',
+          url: url,
+          params: {
+              ids: ids.toString()
+            }
+        }).then(function successCallback(response){
+          return response.data;
+        },function errorCallback(response){
+          console.error("An error occured while fetching file",response);
+          console.warn("If the issue is related to CORS Origin, try install this extention on Chrome: https://chrome.google.com/webstore/detail/allow-control-allow-origi/nlfbmbojpeacfghkpbjhddihlkkiljbi")
+          return response;
+        });
+      }
     }
   });
