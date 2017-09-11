@@ -83,6 +83,8 @@ class ApiController < ApplicationController
   def network
     begin
       ids = params[:ids].split(",").map(&:to_i).uniq.sort
+      first_degree_ids = []
+      second_degree_ids = []
       @display_id = ids.join(",")
 
       @people = Person.includes(:groups).find(ids)
@@ -98,12 +100,17 @@ class ApiController < ApplicationController
       @relationships = @relationships | first_degree_relationships
 
       if ids.count == 1
-        second_degree_ids = second_degree_relationships.collect do |r| 
+        second_degree_ids = first_degree_relationships.collect do |r| 
           [r.person1_index, r.person2_index]
         end.flatten.uniq - (ids + first_degree_ids)
         second_degree_people = Person.includes(:groups).find(second_degree_ids)
+        second_degree_relationships = second_degree_people.map(&:relationships).reduce(:+).uniq
+        @relationships = @relationships | second_degree_relationships
         @sources = @sources | second_degree_people
       end
+
+      all_ids = ids | first_degree_ids | second_degree_ids
+      @relationships = @relationships.find_all{ |r| all_ids.include?(r.person1_index) && all_ids.include?(r.person2_index)   }
 
     rescue ActiveRecord::RecordNotFound => e
       @errors = []
