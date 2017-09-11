@@ -120,16 +120,15 @@ class ApiController < ApplicationController
 
       @groups = Group.find(ids)
 
-      @people = @groups.map(&:people).reduce(:+).uniq
-      puts @people
+      @primary_people = @groups.map(&:people).reduce(:+).uniq
       # @member_ids = @people.map(&:id).flatten.uniq - ids
 
-      @relationships = @people.map(&:relationships).flatten
+      @relationships = @primary_people.map(&:relationships).flatten
       first_degree_ids = @relationships.collect do |r|
         [r.person1_index, r.person2_index]
       end.flatten.uniq - ids
 
-      @people += Person.find(first_degree_ids)
+      @people = @primary_people + Person.includes(:groups).find(first_degree_ids)
     rescue ActiveRecord::RecordNotFound => e
       @errors = []
       @errors << {title: "invalid person ID(s)"}

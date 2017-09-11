@@ -3,7 +3,7 @@ if @groups
     json.id @display_id
     json.type "network"
     json.attributes do
-      json.primary_people @people.map{|p| p["id"].to_s}
+      json.primary_people @primary_people.map{|p| p["id"].to_s}
       json.connections do
         json.array! @relationships do |relationship|
           json.id relationship.id.to_s
