@@ -30,7 +30,7 @@ class ApiController < ApplicationController
       @errors << {title: "Invalid relationship ID(s)"}
     end
     respond_to do |format|
-      format.json
+      format.json 
       format.html { render :json}
     end
   end
@@ -82,22 +82,40 @@ class ApiController < ApplicationController
 
 
   def groups
-    begin
       if params[:ids].blank?
-        @groups = Group.all
+        @groups = Group.all.includes(:group_assignments)
+        group_list = Group.all.includes(:group_assignments, :people).to_a
+
+        @connections = []
+        while group_list.length > 0
+          group = group_list.pop
+          group_list.each do |comparison_group|
+            shared_members = group.people & comparison_group.people
+            if shared_members.length > 0
+              @connections << {target: comparison_group.id, source: group.id, weight: shared_members.length}
+            end
+          end
+        end
+
+
+        respond_to do |format|
+          format.json { render "all_groups"}
+          format.html { render :json}
+        end
       else
-        ids = params[:ids].split(",")
-        @groups = Group.find(ids)
-        @people = @groups.map(&:people).reduce(:+).uniq
+        begin
+          ids = params[:ids].split(",")
+          @groups = Group.find(ids)
+          @people = @groups.map(&:people).reduce(:+).uniq
+        rescue ActiveRecord::RecordNotFound => e
+          @errors = []
+          @errors << {title: "Invalid group ID(s)"}
+        end
+        respond_to do |format|
+          format.json
+          format.html { render :json}
+        end
       end
-    rescue ActiveRecord::RecordNotFound => e
-      @errors = []
-      @errors << {title: "Invalid group ID(s)"}
-    end
-    respond_to do |format|
-      format.json
-      format.html { render :json}
-    end
   end
 
 
