@@ -199,7 +199,7 @@ angular.module('redesign2017App')
 
         function countConfidenceFrequency() {
           // Create counts off all confidence values
-          var confidence = d3.range(60, 101);
+          var confidence = d3.range(0, 101);
           var frequencies = {}; // create object of frequencies
           confidence.forEach(function(c) {
             frequencies[c.toString()] = 0; // first with values of 0
@@ -374,7 +374,7 @@ angular.module('redesign2017App')
               return d.confidence + "%";
             });
 
-          cBrushSelection.call(cBrush.move, confidenceX.range());
+          cBrushSelection.call(cBrush.move, /*confidenceX.range()*/[confidenceX(60),confidenceWidth]);
 
           function updateBrush() {
             var brushPositionX = d3.select(".confidence-container .selection").node().getBBox().x,
@@ -387,7 +387,7 @@ angular.module('redesign2017App')
             });
 
             var s = d3.event.selection || confidenceX.range();
-            var convertConfidence = d3.scaleLinear().domain([0, confidenceWidth-4]).range([60, 100]);
+            var convertConfidence = d3.scaleLinear().domain([0, confidenceWidth-4]).range([0, 100]);
             var confidenceMin = Math.round(convertConfidence(s[0]));
             var confidenceMax = Math.round(convertConfidence(s[1]));
             // console.log(confidenceMax);
@@ -429,7 +429,7 @@ angular.module('redesign2017App')
           function brushed() {
             // When brush event ends, get values of confidence range and broadcast force layout
             var s = d3.event.selection || confidenceX.range();
-            var convertConfidence = d3.scaleLinear().domain([0, confidenceWidth-4]).range([60, 100]);
+            var convertConfidence = d3.scaleLinear().domain([0, confidenceWidth-4]).range([0, 100]);
             var confidenceMin = Math.round(convertConfidence(s[0]));
             var confidenceMax = Math.round(convertConfidence(s[1]));
             scope.$evalAsync(function() {

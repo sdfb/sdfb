@@ -1,10 +1,20 @@
 <uib-tabset active="config.viewObject" justified="true">
   <uib-tab index="0" heading="People">
     <h4>Individual Network<span class="remove-btn" ng-click=" resetIndividualNetwork() ">clear</span></h4>
-    <input placeholder="Search for a person" type="text" ng-model="person.selected" uib-typeahead="person for person in peopleToSelect | filter:$viewValue | limitTo:8" class="form-control" typeahead-on-select="selectedPerson(person.selected)">
+    <!-- <input placeholder="Search for a person" type="text" ng-model="person.selected" uib-typeahead="person for person in peopleToSelect | filter:$viewValue | limitTo:8" class="form-control" typeahead-on-select="selectedPerson(person.selected)"> -->
+    <input type="text" ng-model="personTypeahead.selected" placeholder="Search for a person" uib-typeahead="person as person.name for person in callPersonTypeahead($viewValue)" typeahead-loading="loadingPerson" typeahead-no-results="noResultsPerson" class="form-control" typeahead-template-url="./views/groupsTypeaheadTemplate.html" class="form-control" typeahead-show-hint="true" typeahead-min-length="3" typeahead-on-select="selectedPerson($item)">
+    <i ng-show="loadingPerson" class="glyphicon glyphicon-refresh"></i>
+    <div ng-show="noResultsPerson">
+      <i class="glyphicon glyphicon-remove"></i> No Results Found
+    </div>
     <h5>Search here<span ng-if="config.viewMode!='all'"> or double click on a node</span><span ng-if="config.viewMode=='all'"> for a person</span></h5>
     <h4>Shared Network<span class="remove-btn" ng-click=" resetSharedNetwork() ">clear</span></h4>
-    <input placeholder="Search for a person" type="text" ng-model="shared.selected" uib-typeahead="person for person in sharedToSelect | filter:$viewValue | limitTo:8" class="form-control" typeahead-on-select="selectedShared(shared.selected, person.selected)">
+    <!-- <input placeholder="Search for a person" type="text" ng-model="shared.selected" uib-typeahead="person for person in sharedToSelect | filter:$viewValue | limitTo:8" class="form-control" typeahead-on-select="selectedShared(shared.selected, person.selected)"> -->
+    <input type="text" ng-model="sharedTypeahead.selected" placeholder="Search for a person" uib-typeahead="person as person.name for person in callPersonTypeahead($viewValue)" typeahead-loading="loadingShared" typeahead-no-results="noResultsShared" class="form-control" typeahead-template-url="./views/groupsTypeaheadTemplate.html" class="form-control" typeahead-show-hint="true" typeahead-min-length="3" typeahead-on-select="selectedShared($item)">
+    <i ng-show="loadingShared" class="glyphicon glyphicon-refresh"></i>
+    <div ng-show="noResultsShared">
+      <i class="glyphicon glyphicon-remove"></i> No Results Found
+    </div>
     <h5>Add a person to visualize a shared network</h5>
     <span ng-show=" config.viewMode == 'individual-force' || config.viewMode == 'individual-concentric' ">
       <h4>Visualization layout</h4>
@@ -23,9 +33,9 @@
     <h4>Search a group</h4>
 
     <!-- <pre>Model: {{groupTypeahead | json}}</pre> -->
-    <input type="text" ng-model="groupTypeahead.selected" placeholder="Type here group names" uib-typeahead="group as group.name for group in callGroupsTypeahead($viewValue)" typeahead-loading="loadingGroups" typeahead-no-results="noResults" class="form-control" typeahead-template-url="./views/groupsTypeaheadTemplate.html" class="form-control" typeahead-show-hint="true" typeahead-min-length="3" typeahead-on-select="groupSelected($item, $model, $label, $event)">
+    <input type="text" ng-model="groupTypeahead.selected" placeholder="Type here group names" uib-typeahead="group as group.name for group in callGroupsTypeahead($viewValue)" typeahead-loading="loadingGroups" typeahead-no-results="noResultsGroups" class="form-control" typeahead-template-url="./views/groupsTypeaheadTemplate.html" class="form-control" typeahead-show-hint="true" typeahead-min-length="3" typeahead-on-select="groupSelected($item, $model, $label, $event)">
     <i ng-show="loadingGroups" class="glyphicon glyphicon-refresh"></i>
-    <div ng-show="noResults">
+    <div ng-show="noResultsGroups">
       <i class="glyphicon glyphicon-remove"></i> No Results Found
     </div>
 

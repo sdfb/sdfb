@@ -7,7 +7,7 @@
  * # forceLayout
  */
 angular.module('redesign2017App')
-  .directive('forceLayout', function() {
+  .directive('forceLayout', ['apiService', '$timeout', function(apiService, $timeout) {
     return {
       template: '<svg width="100%" height="100%"></svg>',
       restrict: 'E',
@@ -456,9 +456,16 @@ angular.module('redesign2017App')
                   .attr('r', 25)
                   .attr('stroke', 'orange')
                   .attr('stroke-dasharray', 5,5);
-                d3.selectAll("#l"+d.id+" text").each(function(d, i) {
-                  d.labelBBox = this.getBoundingClientRect();
-                });
+                // d3.select("#l"+d.id+" rect").remove();
+                // d3.select("#l"+d.id+" text").remove();
+                // d3.select("#l"+d.id).append("rect");
+                // d3.select("#l"+d.id).append("text")
+                  // .text(d.attributes.name+" & "+otherNode.attributes.name);
+                d3.selectAll("#l"+d.id+" text")
+                  .text(d.attributes.name+" & "+otherNode.attributes.name)
+                  .each(function(d, i) {
+                    d.labelBBox = this.getBoundingClientRect();
+                  });
                 var paddingLeftRight = 4;
                 var paddingTopBottom = 0;
                 d3.select("#l"+d.id+" rect")
@@ -474,8 +481,7 @@ angular.module('redesign2017App')
                   .attr("height", function(d) {
                     return d.labelBBox.height + paddingTopBottom;
                   });
-                d3.select("#l"+d.id+" text")
-                  .text(d.attributes.name+" & "+otherNode.attributes.name);
+
                   // Get the Bounding Box of the text created
 
               }
@@ -491,8 +497,26 @@ angular.module('redesign2017App')
                   }
                 })
                 .attr('stroke-dasharray', null);
-                d3.select("#l"+d.id+" text")
-                  .text(d.attributes.name);
+                // d3.selectAll("#l"+d.id+" text")
+                //   .text(d.attributes.name)
+                //   .each(function(d, i) {
+                //     d.labelBBox = this.getBoundingClientRect();
+                //   });
+                // var paddingLeftRight = 4;
+                // var paddingTopBottom = 0;
+                // d3.select("#l"+d.id+" rect")
+                //   .attr("x", function(d) {
+                //     return 0 - d.labelBBox.width / 2 - paddingLeftRight / 2;
+                //   })
+                //   .attr("y", function(d) {
+                //     return 0 + 3 - d.labelBBox.height + paddingTopBottom / 2;
+                //   })
+                //   .attr("width", function(d) {
+                //     return d.labelBBox.width + paddingLeftRight;
+                //   })
+                //   .attr("height", function(d) {
+                //     return d.labelBBox.height + paddingTopBottom;
+                //   });
               }
             }
           });
@@ -840,8 +864,17 @@ angular.module('redesign2017App')
             }
 
             // This triggers events in groupsbar.js and contextualinfopanel.js when a selection happens
-            scope.currentSelection = d;
-            scope.$broadcast('selectionUpdated', scope.currentSelection);
+            // scope.currentSelection = d;
+            apiService.getPeople(d.id).then(function (result) {
+              // console.log(result);
+              scope.currentSelection = result.data[0];
+              // console.log(scope.currentSelection);
+              $timeout(function(){
+                scope.$broadcast('selectionUpdated', scope.currentSelection);
+              });
+            });
+
+            // scope.$broadcast('selectionUpdated', scope.currentSelection);
 
           } else if (d.type == "relationship") { //Handler for when a link is clicked
 
@@ -865,8 +898,18 @@ angular.module('redesign2017App')
 
             console.log('selection to be implemented');
             // This triggers events in groupsbar.js and contextualinfopanel.js when a selection happens
-            scope.currentSelection = d;
-            scope.$broadcast('selectionUpdated', scope.currentSelection);
+            // scope.currentSelection = d;
+            // scope.$broadcast('selectionUpdated', scope.currentSelection);
+            apiService.getRelationship(d.id).then(function (result) {
+              // console.log(result);
+              scope.currentSelection = result.data[0];
+              scope.currentSelection.source = d.source;
+              scope.currentSelection.target = d.target;
+              // console.log(scope.currentSelection);
+              $timeout(function(){
+                scope.$broadcast('selectionUpdated', scope.currentSelection);
+              });
+            });
           }
 
         }
@@ -966,4 +1009,4 @@ angular.module('redesign2017App')
 
       }
     };
-  });
+  }]);
