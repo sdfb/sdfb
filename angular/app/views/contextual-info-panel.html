@@ -19,7 +19,7 @@
   <small-timeline class="person" details="currentSelection.source"></small-timeline>
   <span ng-if="config.contributionMode" class="edit-btn person" ng-click="editData(currentSelection.source.id)">Edit data</span>
 </section>
-<section ng-if="currentSelection.type == 'relationship' " ng-repeat='n in currentSelection.types'>
+<section class="rel-type" ng-if="currentSelection.type == 'relationship' " ng-repeat='n in currentSelection.types'>
   <small-timeline class="relationship" details="currentSelection"></small-timeline>
   <span ng-if="config.contributionMode" class="edit-btn relationship" ng-click="editData(currentSelection.id)">Edit data</span>
 </section>

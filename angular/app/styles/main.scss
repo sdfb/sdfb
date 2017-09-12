@@ -1170,7 +1170,7 @@ contextual-info-panel > section:first-child {
   }
 }
 
-contextual-info-panel > section:nth-child(2) {
+contextual-info-panel > section.rel-type {
   background-color: $panels-bg;
   border-top: 1px solid $panels-stroke;
   border-bottom: 1px solid $panels-stroke;
@@ -1178,7 +1178,7 @@ contextual-info-panel > section:nth-child(2) {
   padding-bottom: 12px;
 }
 
-.contribution-mode-on contextual-info-panel > section:nth-child(2) {
+.contribution-mode-on contextual-info-panel > section.rel-type {
   padding-bottom: 0;
   border-color: $contribution-mode-fill;
 }

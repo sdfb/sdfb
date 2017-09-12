@@ -15,7 +15,6 @@ angular.module('redesign2017App')
         details: '=',
       },
       link: function postLink(scope, element, attrs) {
-        // console.log(scope)
 
         var svg = d3.select(element[0]).append('svg'),
           width = +svg.node().getBoundingClientRect().width,
@@ -25,10 +24,10 @@ angular.module('redesign2017App')
           .rangeRound([0, width])
           .domain([1450, 1750]);
 
+        var rel_types = { '62':'Mentor/Teacher of', '61':'Sexual partner of', '53':'Rival of', '58':'Friend of', '56':'Knew in passing', '70':'Other-in-law of', '55':'Met', '68':'Ward of', '99':'Parishoner of', '101':'Lived with', '98':'Priest of', '52':'Enemy of', '94':'Rented to', '93':'Apprentice of', '92':'Employed by', '89':'Client of', '88':'Coworker of', '87':'Colleague of', '95':'Rented from', '84':'Godsibling of', '83':'Godchild of', '81':'Sibling of', '90':'Master of', '78':'Grandparent of', '77':'Great-grandparent of', '85':'Patron of', '73':'Heir(ess) of', '71':'Child-in-law of', '79':'Grandchild of', '69':'Testator to', '64':'Niece/Nephew of', '63':'Mentee/Student of', '54':'Acquaintance of', '75':'Great-grandchild of', '72':'Sibling-in-law of', '11':'Pupil/Student of', '3':'Acquaintance of', '1':'Enemy of', '5':'Knew in passing', '7':'Friend of', '13':'Aunt/Uncle of', '15':'Niece/Nephew of', '16':'Child-in-law of', '20':'Parent-in-law of', '18':'Heir(ess) of', '25':'Child of', '27':'Grandchild of', '28':'Grandparent of', '33':'Godsibling of', '34':'Client of', '35':'Collaborated with', '40':'Employed by', '41':'Employer of', '45':'Engaged to', '48':'Priest of', '50':'Lived with', '100':'Other religious', '96':'Engaged to', '57':'Close friend of', '66':'Aunt/Uncle of', '60':'Had child with', '97':'Spouse of', '91':'Employer of', '86':'Collaborated with', '82':'Godparent of', '76':'Parent of', '80':'Child of', '67':'Parent-in-law of', '74':'Guardian of', '102':'Neighbor of', '65':'Cousin of', '105':'Step-sibling of', '32':'Godparent of', '31':'Godchild of', '2':'Rival of', '4':'Met', '6':'Close friend of', '9':'Had child with', '12':'Mentor/Teacher of', '10':'Sexual partner of', '14':'Cousin of', '21':'Sibling-in-law of', '19':'Other-in-law of', '22':'Testator to', '17':'Guardian of', '24':'Great-grandparent of', '26':'Great-grandchild of', '29':'Parent of', '30':'Sibling of', '38':'Patron of', '36':'Colleague of', '37':'Coworker of', '39':'Apprentice of', '42':'Master of', '43':'Rented from', '44':'Rented to', '46':'Spouse of', '47':'Parishoner of', '59':'Admired by', '49':'Other religious relationship', '103':'Step-parent of', '51':'Neighbor of', '104':'Step-child of', '8':'Attracted to', '23':'Ward of', '107':'Debtor of', '106':'Creditor of', '109':'Correspondent of ', '111':'Had as midwife', '110':'Midwife for', '113':'Attended by', '112':'Attendant of', '108':'Schoolmate of' }
+
+
         function update() {
-
-
-          // console.log(scope.currentSelection);
 
           // if the data type = relationship, we have start_date instead of birth_date and end_date instead of death_date
           // The way in which the data is computated is the same
@@ -38,7 +37,6 @@ angular.module('redesign2017App')
             if (attrs.details == 'currentSelection.target') {
               var d = scope.currentSelection.target;
               apiService.getPeople(d.id).then(function (result) {
-                // console.log(result);
                 scope.currentSelection = result.data[0];
                 makeTimeline();
               });
@@ -46,7 +44,6 @@ angular.module('redesign2017App')
             else if (attrs.details == 'currentSelection.source') {
               var d = scope.currentSelection.source;
               apiService.getPeople(d.id).then(function (result) {
-                // console.log(result);
                 scope.currentSelection = result.data[0];
                 makeTimeline();
               });
@@ -55,25 +52,30 @@ angular.module('redesign2017App')
             	if (!scope.currentSelection.attributes) {
             		scope.currentSelection.attributes = {}
             	}
-  	          scope.currentSelection.attributes.birth_year = scope.currentSelection.types[0].start_year;
-  	          scope.currentSelection.attributes.death_year = scope.currentSelection.types[0].end_year;
+              var i = scope.$parent.$index;
+  	          scope.currentSelection.attributes.birth_year = scope.currentSelection.types[i].start_year;
+  	          scope.currentSelection.attributes.death_year = scope.currentSelection.types[i].end_year;
 
   	          if(scope.currentSelection.start_year_type) {
-  	          	scope.currentSelection.attributes.birth_year_type = scope.currentSelection.types[0].start_year_type
+  	          	scope.currentSelection.attributes.birth_year_type = scope.currentSelection.types[i].start_year_type
   	          }
+              if(!scope.currentSelection.start_year_type) {
+                scope.currentSelection.attributes.birth_year_type = 'IN'
+              }
   	          if(scope.currentSelection.end_year_type) {
-  	          	scope.currentSelection.attributes.death_year_type = scope.currentSelection.types[0].end_year_type
+  	          	scope.currentSelection.attributes.death_year_type = scope.currentSelection.types[i].end_year_type
   	          }
-  	          if(!scope.currentSelection.attributes.relationshipKind) {
-  	          	scope.currentSelection.attributes.relationshipKind = scope.currentSelection.types[0].type
-  	          }
+              if(!scope.currentSelection.end_year_type) {
+                scope.currentSelection.attributes.death_year_type = 'IN'
+              }
+
+	          	scope.currentSelection.attributes.relationshipKind = scope.currentSelection.types[i].type
+              scope.currentSelection.attributes.confidence = scope.currentSelection.types[i].confidence
               makeTimeline();
             }
           } else {
             makeTimeline();
           }
-
-          console.log(scope.currentSelection);
 
 
           function makeTimeline() {
@@ -163,17 +165,17 @@ angular.module('redesign2017App')
               })
               .text(scope.currentSelection.attributes.death_year);
 
-  						if (scope.type == 'relationship') {
+  						if (scope.currentSelection.type == 'relationship') {
+
   							svg.append('text')
   		            .attr('class', 'label relationship')
   		            .attr("x", width/2)
   		            .attr("y", function(d) {
   		              return height;
   		            })
-  		            .text(scope.currentSelection.attributes.relationshipKind+' ('+scope.weight+'% confidence)');
+  		            .text(rel_types[scope.currentSelection.attributes.relationshipKind]+' ('+scope.currentSelection.attributes.confidence+'% confidence)');
   						}
             }
-          // console.log('timeline drawn');
         }
 
         function terminators(position, type, refX, refY, width) {
@@ -205,23 +207,6 @@ angular.module('redesign2017App')
         scope.$on('selectionUpdated', function(event, arg) {
           scope.currentSelection = arg;
           update();
-          // console.log('update the timeline');
-        //   if (arg.type === 'person') {
-        //     console.log(arg.id);
-        //     apiService.getPeople(arg.id).then(function (result) {
-        //       console.log(result);
-        //       scope.currentSelection = result.data[0];
-        //       update();
-        //     });
-        //   }
-        //   else {
-        //     console.log(arg.id);
-        //     apiService.getRelationship(arg.id).then(function (result) {
-        //       console.log(result);
-        //       scope.currentSelection = result.data[0];
-        //       update();
-        //     });
-        //   }
         });
       }
     };

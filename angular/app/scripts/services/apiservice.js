@@ -39,7 +39,6 @@ angular.module('redesign2017App')
               type: 'group'
             }
         }).then(function successCallback(response){
-          console.log('response:',response);
           return response.data;
         },function errorCallback(response){
           console.error("An error occured while fetching file",response);
@@ -57,7 +56,6 @@ angular.module('redesign2017App')
               type: 'person'
             }
         }).then(function successCallback(response){
-          console.log('response:',response);
           return response.data;
         },function errorCallback(response){
           console.error("An error occured while fetching file",response);
