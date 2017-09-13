@@ -17,6 +17,7 @@ angular.module('redesign2017App')
     $scope.peopleFinderClosed = true;
     $scope.addNodeClosed = true;
     $scope.addLinkClosed = true;
+    $scope.groupAssignClosed = true;
     if ($routeParams.ids === undefined) {
       $location.search('ids', $scope.config.ids.toString());
     }

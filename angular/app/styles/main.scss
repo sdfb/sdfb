@@ -269,6 +269,16 @@ path.danger {
       border: 1px solid $contribution-mode-stroke;
     }
   }
+  &.group-assign {
+    height: 582px;
+    background-color: $light-color;
+    border: 1px solid $contribution-mode-fill;
+
+    &.collapsed {
+      background-color: $contribution-mode-fill;
+      border: 1px solid $contribution-mode-stroke;
+    }
+  }
 }
 
 .panel.collapsable.collapsed {
@@ -996,7 +1006,8 @@ label.btn-primary:first-of-type {
 }
 /* Contribution panels */
 add-link section,
-add-node section {
+add-node section,
+group-assign section {
   h3 {
     color: $contribution-mode-fill;
   }

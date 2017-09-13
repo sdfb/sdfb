@@ -22,7 +22,7 @@ angular.module('redesign2017App')
           zoomfactor = 1, // Controls zoom buttons, begins at default scale
           addedNodes = [], // Nodes user has added to the graph
           addedLinks = [], // Links user has added to the graph
-          addToDB = {nodes: [], links: []},
+          addToDB = {nodes: [], links: [], groups: []},
           addedNodeID = 0,
           addedLinkID = 0;
 
@@ -646,6 +646,22 @@ angular.module('redesign2017App')
           addToDB.links.push(newLink);
           console.log(addToDB);
           scope.addLinkClosed = true;
+        }
+
+        scope.submitGroupAssign = function() {
+          console.log("node submitted");
+          // var newNode = {attributes: {name: scope.person.added, birthdate: d3.select('#birthDate').node().value, deathdate: d3.select('#deathDate').node().value, title: d3.select('#title').node().value, suffix: d3.select('#suffix').node().value, alternate_names: d3.select('#alternates').node().value},  notes: d3.select('#alternates').node().value, id: addedNodeID}
+          var newGroupAssign = {};
+          newGroupAssign.person = d3.select('#person').property('value');
+          newGroupAssign.group = d3.select('#group').property('value');
+          newGroupAssign.start_year = d3.select('#gStartDate').property('value');
+          newGroupAssign.start_year_type = d3.select('#gStartDateType').property('value');
+          newGroupAssign.end_year = d3.select("#gEndDate").property('value');
+          newGroupAssign.end_year_type = d3.select("#gEndDateType").property('value');
+          addToDB.groups.push(newGroupAssign);
+          console.log(addToDB);
+          scope.groupAssignClosed = true;
+
         }
 
 
