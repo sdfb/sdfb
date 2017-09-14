@@ -443,6 +443,20 @@ angular.module('redesign2017App')
           //     return "M" + f.source.fisheye.x + "," + f.source.fisheye.y + "A" + dr + "," + dr + " 0 0,1 " + f.target.fisheye.x + "," + f.target.fisheye.y;
           //   });
           // }
+          d3.selectAll(".group").on('mouseenter', function(g) {
+            console.log(g);
+            d3.select('input#person').property('value', d.attributes.name);
+            d3.select('input#group').property('value', g.name);
+            scope.$apply(function() {
+              scope.groupAssignClosed = false;
+            });
+          })
+          .on('mouseleave', function(g) {
+            scope.$apply(function() {
+              scope.groupAssignClosed = true;
+            });
+          });
+
           var nodes = scope.data.included;
           nodes.forEach(function (otherNode) {
             var distance = Math.sqrt(Math.pow(otherNode.x - d3.event.x, 2) + Math.pow(otherNode.y - d3.event.y, 2));
@@ -542,8 +556,8 @@ angular.module('redesign2017App')
           if (scope.config.contributionMode) {
             cursor.attr("opacity", 1);
             nodes.forEach(function (otherNode) {
-              var distance = Math.sqrt(Math.pow(otherNode.x - d3.event.x, 2) + Math.pow(otherNode.y - d3.event.y, 2));
-              if (otherNode != d && distance < 10) {
+              var nodeDistance = Math.sqrt(Math.pow(otherNode.x - d3.event.x, 2) + Math.pow(otherNode.y - d3.event.y, 2));
+              if (otherNode != d && nodeDistance < 10) {
                 console.log("new link added:", otherNode.attributes.name);
                 var newLink = {source: d, target: otherNode, weight: 100, start_year: 1500, end_year: 1700, id: addedLinkID, new: true};
                 addedLinks.push(newLink);
@@ -553,11 +567,14 @@ angular.module('redesign2017App')
                   scope.addLinkClosed = false;
                   scope.legendClosed = true;
                 });
-                updatePersonNetwork(scope.data);
+
                 addedLinkID += 1;
 
               }
-            })
+
+              });
+            d3.selectAll(".group").on("mouseenter", null);
+            d3.selectAll(".group").on("mouseleave", null);
             d3.selectAll(".node").attr('r', function(d) { // Size nodes by degree of distance
               if (d.distance == 0) {
                 return 25;
@@ -567,6 +584,7 @@ angular.module('redesign2017App')
                 return 6.25;
               }
             });
+            updatePersonNetwork(scope.data);
 
           }
         }
