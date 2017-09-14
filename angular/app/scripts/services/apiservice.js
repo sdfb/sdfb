@@ -12,7 +12,7 @@ angular.module('redesign2017App')
     // var CORSproxy = 'https://crossorigin.me/';
     // CORSproxy = '';
     // var apiUrl = 'http://sixdegrees-api.herokuapp.com';
-    var apiUrl = "http://ec2-34-228-27-188.compute-1.amazonaws.com/tools"
+    var apiUrl = "http://ec2-54-242-188-143.compute-1.amazonaws.com/tools"
     // var baseUrl = CORSproxy + apiUrl;
     var baseUrl = apiUrl;
     // Public API here
