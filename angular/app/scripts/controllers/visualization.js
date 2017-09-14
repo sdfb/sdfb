@@ -60,7 +60,11 @@ angular.module('redesign2017App')
       });
     };
 
-    if ($routeParams.ids.length >= 8) {
+    if ($routeParams.ids == undefined) {
+      $scope.config.ids = '10000473';
+      $scope.config.viewMode = 'individual-force';
+    }
+    else if ($routeParams.ids.length >= 8) {
       $scope.config.ids = $routeParams.ids.split(',');
       if ($scope.config.ids.length === 1) {
         $scope.config.viewMode = 'individual-force';
