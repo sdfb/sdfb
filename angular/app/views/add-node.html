@@ -1,10 +1,12 @@
 <section>
 	<h3 class="">Add person to this view</h3>
 	<h4 class="paragraph-title">Person Name</h4>
-  <input placeholder="Search for a person" type="text" ng-model="person.added" uib-typeahead="person for person in peopleToSelect | filter:$viewValue | limitTo:8" class="form-control">
-	<!-- <button type="button" class="btn btn-primary" ng-click="addingNode() ">
-		Add this person
-	</button> -->
+  <!-- <input placeholder="Search for a person" type="text" ng-model="person.added" uib-typeahead="person for person in peopleToSelect | filter:$viewValue | limitTo:8" class="form-control"> -->
+	<input type="text" ng-model="person.added" placeholder="Search for a person" uib-typeahead="person as person.name for person in callPersonTypeahead($viewValue)" typeahead-loading="loadingPersonAdd" typeahead-no-results="noResultsPersonAdd" class="form-control" typeahead-template-url="./views/groupsTypeaheadTemplate.html" typeahead-show-hint="true" typeahead-min-length="5" typeahead-on-select="foundPerson($item)">
+	<i ng-show="loadingPersonAdd" class="glyphicon glyphicon-refresh"></i>
+	<div ng-show="noResultsPersonAdd">
+		<i class="glyphicon glyphicon-remove"></i> Person not found: can be added
+	</div>
 	<h4>Birth date</h4>
   <div class="input-group">
     <input class="form-control" uib-datepicker-popup="{{ config.dateFormat }}" ng-model="startDate" ng-model-options="{ getterSetter: true }" id="birthDate">

@@ -55,6 +55,9 @@ angular.module('redesign2017App')
               d3.selectAll('.group').classed('active', false);
               d3.selectAll('.group').classed('unactive', false);
 
+              if (scope.config.contributionMode) {
+                addNode();
+              }
               // update selction and trigger event for other directives
               scope.currentSelection = {};
               scope.$apply(); // no need to trigger events, just apply
@@ -82,7 +85,9 @@ angular.module('redesign2017App')
             .attr("stroke", "orange")
             .attr("stroke-width", 1.5)
             .attr('stroke-dasharray', 5,5)
-            .attr("opacity", 0)
+            .attr("opacity", 0)//function() {
+              // if (scope.config.contributionMode) {return 1;} else {return 0;}
+            // })
             .attr("transform", "translate(-100,-100)")
             .attr("class", "cursor");
 
@@ -277,6 +282,13 @@ angular.module('redesign2017App')
             .on('click', function(d) {
               // Toggle ego networks on click of node
               toggleClick(d, newLinks, this);
+              if (scope.config.contributionMode) {
+                console.log(d);
+                scope.person.added = d.attributes.name;
+                d3.select('#birthDate').property('value', d.attributes.birth_year);
+                d3.select('#deathDate').property('value', d.attributes.death_year);
+                scope.addNodeClosed = false;
+              }
             })
             // On hover, display label
             .on('mouseenter', function(d) {
@@ -394,11 +406,9 @@ angular.module('redesign2017App')
           if (newValue !== oldValue) {
             if (scope.config.contributionMode) {
               cursor.attr("opacity", 1);
-              svg.on("click", addNode);
             }
             else {
               cursor.attr("opacity", 0);
-              svg.on("click", null);
             }
           }
         });
@@ -594,11 +604,27 @@ angular.module('redesign2017App')
 
         }
 
+        scope.foundPerson = function($item) {
+          console.log($item);
+          apiService.getPeople($item.id).then(function (result) {
+            console.log(result);
+            var person = result.data[0];
+            scope.person.added = person.attributes.name;
+            d3.select('#birthDate').property('value', person.attributes.birth_year);
+            d3.select('#deathDate').property('value', person.attributes.death_year);
+
+          });
+        }
         scope.submitNode = function() {
           console.log("node submitted");
+          if (!addedNodes[addedNodes.length-1].attributes.name) {
+            addedNodes[addedNodes.length-1].attributes.name = scope.person.added;
+            updatePersonNetwork(scope.data);
+          }
           var newNode = {attributes: {name: scope.person.added, birthdate: d3.select('#birthDate').node().value, deathdate: d3.select('#deathDate').node().value, title: d3.select('#title').node().value, suffix: d3.select('#suffix').node().value, alternate_names: d3.select('#alternates').node().value},  notes: d3.select('#alternates').node().value, id: addedNodeID}
           addToDB.nodes.push(newNode);
           scope.addNodeClosed = true;
+          scope.person.added = null;
 
         }
 
