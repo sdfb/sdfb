@@ -24,7 +24,8 @@ angular.module('redesign2017App')
           addedLinks = [], // Links user has added to the graph
           addToDB = {nodes: [], links: [], groups: []},
           addedNodeID = 0,
-          addedLinkID = 0;
+          addedLinkID = 0,
+          submittedGroupID = 0;
 
           var fisheye = d3.fisheye.circular()
             .radius(75)
@@ -466,37 +467,16 @@ angular.module('redesign2017App')
                 .classed('temporary-unhidden', true);
               if (otherNode != d && distance < 10) {
                 otherNode.radius = true;
+
                 d3.select("#n"+otherNode.id).transition()
                   .attr('r', 25)
                   .attr('stroke', 'orange')
                   .attr('stroke-dasharray', 5,5);
-                // d3.select("#l"+d.id+" rect").remove();
-                // d3.select("#l"+d.id+" text").remove();
-                // d3.select("#l"+d.id).append("rect");
-                // d3.select("#l"+d.id).append("text")
-                  // .text(d.attributes.name+" & "+otherNode.attributes.name);
-                d3.selectAll("#l"+d.id+" text")
-                  .text(d.attributes.name+" & "+otherNode.attributes.name)
-                  .each(function(d, i) {
-                    d.labelBBox = this.getBoundingClientRect();
-                  });
-                var paddingLeftRight = 4;
-                var paddingTopBottom = 0;
-                d3.select("#l"+d.id+" rect")
-                  .attr("x", function(d) {
-                    return 0 - d.labelBBox.width / 2 - paddingLeftRight / 2;
-                  })
-                  .attr("y", function(d) {
-                    return 0 + 3 - d.labelBBox.height + paddingTopBottom / 2;
-                  })
-                  .attr("width", function(d) {
-                    return d.labelBBox.width + paddingLeftRight;
-                  })
-                  .attr("height", function(d) {
-                    return d.labelBBox.height + paddingTopBottom;
-                  });
-
-                  // Get the Bounding Box of the text created
+                d3.select('input#source').property('value', d.attributes.name);
+                d3.select('input#target').property('value', otherNode.attributes.name);
+                scope.$apply(function() {
+                  scope.addLinkClosed = false;
+                });
 
               }
               else {
@@ -511,26 +491,6 @@ angular.module('redesign2017App')
                   }
                 })
                 .attr('stroke-dasharray', null);
-                // d3.selectAll("#l"+d.id+" text")
-                //   .text(d.attributes.name)
-                //   .each(function(d, i) {
-                //     d.labelBBox = this.getBoundingClientRect();
-                //   });
-                // var paddingLeftRight = 4;
-                // var paddingTopBottom = 0;
-                // d3.select("#l"+d.id+" rect")
-                //   .attr("x", function(d) {
-                //     return 0 - d.labelBBox.width / 2 - paddingLeftRight / 2;
-                //   })
-                //   .attr("y", function(d) {
-                //     return 0 + 3 - d.labelBBox.height + paddingTopBottom / 2;
-                //   })
-                //   .attr("width", function(d) {
-                //     return d.labelBBox.width + paddingLeftRight;
-                //   })
-                //   .attr("height", function(d) {
-                //     return d.labelBBox.height + paddingTopBottom;
-                //   });
               }
             }
           });
@@ -561,14 +521,12 @@ angular.module('redesign2017App')
                 console.log("new link added:", otherNode.attributes.name);
                 var newLink = {source: d, target: otherNode, weight: 100, start_year: 1500, end_year: 1700, id: addedLinkID, new: true};
                 addedLinks.push(newLink);
-                d3.select('input#source').property('value', d.attributes.name);
-                d3.select('input#target').property('value', otherNode.attributes.name);
+
                 scope.$apply(function() {
-                  scope.addLinkClosed = false;
                   scope.legendClosed = true;
                 });
 
-                addedLinkID += 1;
+
 
               }
 
@@ -664,12 +622,14 @@ angular.module('redesign2017App')
           addToDB.links.push(newLink);
           console.log(addToDB);
           scope.addLinkClosed = true;
+          addedLinkID += 1;
         }
 
         scope.submitGroupAssign = function() {
           console.log("node submitted");
           // var newNode = {attributes: {name: scope.person.added, birthdate: d3.select('#birthDate').node().value, deathdate: d3.select('#deathDate').node().value, title: d3.select('#title').node().value, suffix: d3.select('#suffix').node().value, alternate_names: d3.select('#alternates').node().value},  notes: d3.select('#alternates').node().value, id: addedNodeID}
           var newGroupAssign = {};
+          newGroupAssign.id = submittedGroupID;
           newGroupAssign.person = d3.select('#person').property('value');
           newGroupAssign.group = d3.select('#group').property('value');
           newGroupAssign.start_year = d3.select('#gStartDate').property('value');
@@ -679,6 +639,7 @@ angular.module('redesign2017App')
           addToDB.groups.push(newGroupAssign);
           console.log(addToDB);
           scope.groupAssignClosed = true;
+          submittedGroupID += 1;
 
         }
 
