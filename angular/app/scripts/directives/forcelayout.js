@@ -24,8 +24,7 @@ angular.module('redesign2017App')
           addedLinks = [], // Links user has added to the graph
           addToDB = {nodes: [], links: [], groups: []},
           addedNodeID = 0,
-          addedLinkID = 0,
-          submittedGroupID = 0;
+          addedLinkID = 0;
 
           var fisheye = d3.fisheye.circular()
             .radius(75)
@@ -446,9 +445,13 @@ angular.module('redesign2017App')
           // }
           d3.selectAll(".group").on('mouseenter', function(g) {
             console.log(g);
-            d3.select('input#person').property('value', d.attributes.name);
-            d3.select('input#group').property('value', g.name);
+            // d3.select('input#person').property('value', d.attributes.name);
+            // d3.select('input#group').property('value', g.name);
             scope.$apply(function() {
+              scope.groupAssign.person.name = d.attributes.name;
+              scope.groupAssign.person.id = d.id;
+              scope.groupAssign.group.name = g.name;
+              scope.groupAssign.group.id = g.groupId;
               scope.groupAssignClosed = false;
             });
           })
@@ -521,7 +524,7 @@ angular.module('redesign2017App')
                 console.log("new link added:", otherNode.attributes.name);
                 var newLink = {source: d, target: otherNode, weight: 100, start_year: 1500, end_year: 1700, id: addedLinkID, new: true};
                 addedLinks.push(newLink);
-
+                addedLinkID += 1;
                 scope.$apply(function() {
                   scope.legendClosed = true;
                 });
@@ -601,7 +604,6 @@ angular.module('redesign2017App')
 
         scope.submitLink = function() {
           console.log("link submitted");
-          // var newNode = {attributes: {name: scope.person.added, birthdate: d3.select('#birthdate').node().value, deathdate: d3.select('#deathdate').node().value, title: d3.select('#title').node().value, suffix: d3.select('#suffix').node().value, alternate_names: d3.select('#alternates').node().value},  id: addedNodeID}
           var newLink = addedLinks[addedLinks.length-1];
           var startDate = d3.select('#startDate').property('value');
           var startDateType = d3.select('#startDateType').property('value');
@@ -622,16 +624,15 @@ angular.module('redesign2017App')
           addToDB.links.push(newLink);
           console.log(addToDB);
           scope.addLinkClosed = true;
-          addedLinkID += 1;
+
         }
 
         scope.submitGroupAssign = function() {
           console.log("node submitted");
           // var newNode = {attributes: {name: scope.person.added, birthdate: d3.select('#birthDate').node().value, deathdate: d3.select('#deathDate').node().value, title: d3.select('#title').node().value, suffix: d3.select('#suffix').node().value, alternate_names: d3.select('#alternates').node().value},  notes: d3.select('#alternates').node().value, id: addedNodeID}
           var newGroupAssign = {};
-          newGroupAssign.id = submittedGroupID;
-          newGroupAssign.person = d3.select('#person').property('value');
-          newGroupAssign.group = d3.select('#group').property('value');
+          newGroupAssign.person = scope.groupAssign.person.id;
+          newGroupAssign.group = scope.groupAssign.group.id;
           newGroupAssign.start_year = d3.select('#gStartDate').property('value');
           newGroupAssign.start_year_type = d3.select('#gStartDateType').property('value');
           newGroupAssign.end_year = d3.select("#gEndDate").property('value');
@@ -639,7 +640,6 @@ angular.module('redesign2017App')
           addToDB.groups.push(newGroupAssign);
           console.log(addToDB);
           scope.groupAssignClosed = true;
-          submittedGroupID += 1;
 
         }
 
