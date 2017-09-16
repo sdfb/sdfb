@@ -24,7 +24,8 @@ angular.module('redesign2017App')
           addedLinks = [], // Links user has added to the graph
           addToDB = {nodes: [], links: [], groups: []},
           addedNodeID = 0,
-          addedLinkID = 0;
+          addedLinkID = 0,
+          nodeExists = false;
 
           var fisheye = d3.fisheye.circular()
             .radius(75)
@@ -56,6 +57,7 @@ angular.module('redesign2017App')
               d3.selectAll('.group').classed('unactive', false);
 
               if (scope.config.contributionMode) {
+                nodeExists = false;
                 addNode();
               }
               // update selction and trigger event for other directives
@@ -281,14 +283,8 @@ angular.module('redesign2017App')
             })
             .on('click', function(d) {
               // Toggle ego networks on click of node
+              nodeExists = true;
               toggleClick(d, newLinks, this);
-              if (scope.config.contributionMode) {
-                console.log(d);
-                scope.person.added = d.attributes.name;
-                d3.select('#birthDate').property('value', d.attributes.birth_year);
-                d3.select('#deathDate').property('value', d.attributes.death_year);
-                scope.addNodeClosed = false;
-              }
             })
             // On hover, display label
             .on('mouseenter', function(d) {
@@ -606,6 +602,7 @@ angular.module('redesign2017App')
 
         scope.foundPerson = function($item) {
           console.log($item);
+          nodeExists = true;
           apiService.getPeople($item.id).then(function (result) {
             console.log(result);
             var person = result.data[0];
@@ -617,11 +614,11 @@ angular.module('redesign2017App')
         }
         scope.submitNode = function() {
           console.log("node submitted");
-          if (!addedNodes[addedNodes.length-1].attributes.name) {
+          if (addedNodes.length > 0 && !addedNodes[addedNodes.length-1].attributes.name) {
             addedNodes[addedNodes.length-1].attributes.name = scope.person.added;
             updatePersonNetwork(scope.data);
           }
-          var newNode = {attributes: {name: scope.person.added, birthdate: d3.select('#birthDate').node().value, deathdate: d3.select('#deathDate').node().value, title: d3.select('#title').node().value, suffix: d3.select('#suffix').node().value, alternate_names: d3.select('#alternates').node().value},  notes: d3.select('#alternates').node().value, id: addedNodeID}
+          var newNode = {attributes: {name: scope.person.added, birthdate: d3.select('#birthDate').node().value, deathdate: d3.select('#deathDate').node().value, title: d3.select('#title').node().value, suffix: d3.select('#suffix').node().value, alternate_names: d3.select('#alternates').node().value},  notes: d3.select('#alternates').node().value, id: addedNodeID, exists: nodeExists}
           addToDB.nodes.push(newNode);
           scope.addNodeClosed = true;
           scope.person.added = null;
@@ -1027,6 +1024,26 @@ angular.module('redesign2017App')
           console.log(args);
           updatePersonNetwork(args);
         });
+
+        scope.$on('selectionUpdated', function(event, args) {
+          if (scope.config.contributionMode && args.type === 'person') {
+            console.log(args);
+            scope.person.added = args.attributes.name;
+            d3.select('#birthDate').property('value', args.attributes.birth_year);
+            d3.select('#deathDate').property('value', args.attributes.death_year);
+            scope.addNodeClosed = false;
+          } else if (scope.config.contributionMode && args.type === 'relationship') {
+            console.log(args);
+            d3.select('#source').property('value', args.source.attributes.name);
+            d3.select('#target').property('value', args.target.attributes.name)
+            // d3.select('#startDate').property('value', Math.max(source.attributes.birth_year, target.attributes.birth_year));
+            // d3.select('#startDateType').property('value', 'After/On');
+            // d3.select("#endDate").property('value', Math.min(source.attributes.death_year, target.attributes.death_year));
+            // d3.select("#endDateType").property('value', 'Before/On');
+            // d3.select('#relType').property('value', 'has met');
+            scope.addLinkClosed = false;
+          }
+        })
 
       }
     };
