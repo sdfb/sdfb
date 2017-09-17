@@ -12,20 +12,21 @@ angular.module('redesign2017App')
       template: '<svg id="single-group" width="100%" height="100%"></svg>',
       restrict: 'E',
       link: function postLink(scope, element, attrs) {
-        var svg = d3.select(element[0]).select('svg'),
-          width = svg.node().getBoundingClientRect().width,
-          chartWidth = width,
-          height = svg.node().getBoundingClientRect().height;
 
+        scope.groupSvg = d3.select(element[0]).select('svg#single-group'); // Root svg element
+        scope.groupWidth = +scope.groupSvg.node().getBoundingClientRect().width; // Width of viz
+        scope.groupHeight = +scope.groupSvg.node().getBoundingClientRect().height; // Height of viz
+        scope.groupZoomfactor = 1;
+
+        var chartWidth = scope.groupWidth;
         var nodes = [];
         var links = [];
         var members = [];
-        var zoomfactor = 1;
 
         var simulation = d3.forceSimulation(nodes)
-          .force("center", d3.forceCenter(width / 2, height / 2))
-          .force("x", d3.forceX(width / 2))
-          .force("y", d3.forceY(height / 2))
+          .force("center", d3.forceCenter(scope.groupWidth / 2, scope.groupHeight / 2))
+          .force("x", d3.forceX(scope.groupWidth / 2))
+          .force("y", d3.forceY(scope.groupHeight / 2))
           .force("charge", d3.forceManyBody().strength(-300))
           .force("link", d3.forceLink(links).id(function(d) { return d.id }).iterations(1))
           .force("collide", d3.forceCollide(function(d) { return sizeScale(d.attributes.degree) + 1 }).iterations(0))
@@ -33,9 +34,9 @@ angular.module('redesign2017App')
           .alphaDecay(0.05)
           .on("tick", ticked);
 
-        svg.append("rect")
-          .attr("width", width)
-          .attr("height", height)
+        scope.groupSvg.append("rect")
+          .attr("width", scope.groupWidth)
+          .attr("height", scope.groupHeight)
           .style("fill", "none")
           .style("pointer-events", "all")
           // .call(zoom
@@ -51,31 +52,15 @@ angular.module('redesign2017App')
             scope.$apply(); // no need to trigger events, just apply
           });
 
-        var zoom = d3.zoom(); // Create a single zoom function
+        scope.groupZoom = d3.zoom(); // Create a single zoom function
         // Call zoom for svg container.
-        svg.call(zoom.on('zoom', zoomed)); //.on("dblclick.zoom", null); // See zoomed() below
+        scope.groupSvg.call(scope.groupZoom.on('zoom', zoomed)); //.on("dblclick.zoom", null); // See zoomed() below
 
         function zoomed() {
           g.attr("transform", "translate(" + d3.event.transform.x + ", " + d3.event.transform.y + ") scale(" + d3.event.transform.k + ")");
         }
 
-        //Functions for zoom and recenter buttons
-        scope.centerNetwork = function() {
-          console.log("Recenter");
-          // Transition source node to center of rect
-          svg.transition().duration(750).call(zoom.transform, d3.zoomIdentity);
-        }
-
-        scope.zoomIn = function() {
-          console.log("Zoom In")
-          svg.transition().duration(500).call(zoom.scaleBy, zoomfactor + .5); // Scale by adjusted zoomfactor
-        }
-        scope.zoomOut = function() {
-          console.log("Zoom Out")
-          svg.transition().duration(500).call(zoom.scaleBy, zoomfactor - .25); // Scale by adjusted zoomfactor, slightly lower since zoom out was more dramatic
-        }
-
-        var g = svg.append("g").attr("transform", "translate(" + (width / 2) * 0 + "," + (height / 2) * 0 + ")"),
+        var g = scope.groupSvg.append("g").attr("transform", "translate(" + (scope.groupWidth / 2) * 0 + "," + (scope.groupHeight / 2) * 0 + ")"),
           link = g.append("g").selectAll(".link"),
           node = g.append("g").selectAll(".node");
         var label = g.append("g").attr("class", "labels").selectAll(".label");
@@ -228,7 +213,7 @@ angular.module('redesign2017App')
                   return (e.id == d.id) ? true: false;
                 })
                 // sort elements so to bring the hovered one on top and make it readable.
-                svg.selectAll("single-group-graph g.label").each(function(e, i) {
+                scope.groupSvg.selectAll("single-group-graph g.label").each(function(e, i) {
                   if (d == e) {
                     var myElement = this;
                     d3.select(myElement).remove();

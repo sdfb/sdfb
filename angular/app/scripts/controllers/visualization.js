@@ -73,7 +73,7 @@ angular.module('redesign2017App')
       else if ($scope.config.ids.length === 2) {
         $scope.config.viewMode = 'shared-network';
       }
-    } else if ($routeParams.ids !== undefined) {
+    } else {
       $scope.config.ids = $routeParams.ids.split(",");
       $scope.config.viewMode = 'group-force';
     }
@@ -126,6 +126,44 @@ angular.module('redesign2017App')
 
         // $scope.$emit('Update the groups bar', $scope.groups)
       });
+    }
+
+    //Functions for zoom and recenter buttons
+    $scope.centerNetwork = function() {
+      console.log("Recenter");
+      if ($scope.config.viewMode == 'individual-force' || $scope.config.viewMode == 'individual-concentric') {
+        var nodes = $scope.data.included;
+        var sourceId = $scope.data.data.attributes.primary_people;
+        var sourceNode = nodes.filter(function(d) { return (d.id == sourceId) })[0]; // Get source node element by its ID
+        // Transition source node to center of rect
+        $scope.singleSvg.transition().duration(750).call($scope.singleZoom.transform, d3.zoomIdentity.translate($scope.singleWidth / 2 - sourceNode.x, $scope.singleHeight / 2 - sourceNode.y));
+      } else if ($scope.config.viewMode == 'shared-network') {
+        $scope.sharedSvg.transition().duration(750).call($scope.sharedZoom.transform, d3.zoomIdentity);
+      } else if ($scope.config.viewMode == 'group-force') {
+        $scope.groupSvg.transition().duration(750).call($scope.groupZoom.transform, d3.zoomIdentity);
+      }
+    }
+
+    $scope.zoomIn = function() {
+      console.log("Zoom In")
+      if ($scope.config.viewMode == 'individual-force' || $scope.config.viewMode == 'individual-concentric') {
+        $scope.singleSvg.transition().duration(500).call($scope.singleZoom.scaleBy, $scope.singleZoomfactor + .5); // Scale by adjusted $scope.zoomfactor
+      } else if ($scope.config.viewMode == 'shared-network') {
+        $scope.sharedSvg.transition().duration(500).call($scope.sharedZoom.scaleBy, $scope.sharedZoomfactor + .5); // Scale by adjusted $scope.zoomfactor
+      } else if ($scope.config.viewMode == 'group-force') {
+        $scope.groupSvg.transition().duration(500).call($scope.groupZoom.scaleBy, $scope.groupZoomfactor + .5); // Scale by adjusted $scope.zoomfactor
+      }
+    }
+    $scope.zoomOut = function() {
+      console.log("Zoom Out")
+      // Scale by adjusted $scope.zoomfactor, slightly lower since zoom out was more dramatic
+      if ($scope.config.viewMode == 'individual-force' || $scope.config.viewMode == 'individual-concentric') {
+        $scope.singleSvg.transition().duration(500).call($scope.singleZoom.scaleBy, $scope.singleZoomfactor - .25); // Scale by adjusted $scope.zoomfactor
+      } else if ($scope.config.viewMode == 'shared-network') {
+        $scope.sharedSvg.transition().duration(500).call($scope.sharedZoom.scaleBy, $scope.sharedZoomfactor - .25); // Scale by adjusted $scope.zoomfactor
+      } else if ($scope.config.viewMode == 'group-force') {
+        $scope.groupSvg.transition().duration(500).call($scope.groupZoom.scaleBy, $scope.groupZoomfactor - .25); // Scale by adjusted $scope.zoomfactor
+      }
     }
 
 

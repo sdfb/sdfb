@@ -13,14 +13,16 @@ angular.module('redesign2017App')
       restrict: 'E',
       link: function postLink(scope, element, attrs) {
 
-        var svg = d3.select(element[0]).select('svg#shared-network'),
-          width = +svg.node().getBoundingClientRect().width,
-          height = +svg.node().getBoundingClientRect().height,
-          sharedSimulation,
-          sources,
-          zoomfactor = 1;
 
-        svg.append('rect') // Create container for visualization
+        scope.sharedSvg = d3.select(element[0]).select('svg#shared-network'); // Root svg element
+        scope.sharedWidth = +scope.sharedSvg.node().getBoundingClientRect().width; // Width of viz
+        scope.sharedHeight = +scope.sharedSvg.node().getBoundingClientRect().height; // Height of viz
+        scope.sharedZoomfactor = 1;
+
+        var sharedSimulation,
+          sources;
+
+        scope.sharedSvg.append('rect') // Create container for visualization
           .attr('width', '100%')
           .attr('height', '100%')
           .attr('fill', 'transparent')
@@ -51,7 +53,7 @@ angular.module('redesign2017App')
           });
           // .on('mousemove', mousemove);
 
-        var container = svg.append('g'); // Create container for nodes and edges
+        var container = scope.sharedSvg.append('g'); // Create container for nodes and edges
 
         // Separate groups for links, nodes, and edges
         var link = container.append("g")
@@ -103,7 +105,7 @@ angular.module('redesign2017App')
         //              //
 
         sharedSimulation = d3.forceSimulation(nodes)
-          .force("center", d3.forceCenter(width / 2, height / 2)) // Keep graph from floating off-screen
+          .force("center", d3.forceCenter(scope.sharedWidth / 2, scope.sharedHeight / 2)) // Keep graph from floating off-screen
           .force("charge", d3.forceManyBody().strength(-100)) // Charge force works as gravity
           .force("link", d3.forceLink(links).id(function(d) { return d.id; }).iterations(2)) //Link force accounts for link distance
           .force("collide", d3.forceCollide().iterations(0)) // in the tick function will be evaluated the moment in which turn on the anticollision (iterations > 1)
@@ -241,12 +243,12 @@ angular.module('redesign2017App')
 
           graph.nodes.forEach( function(d) {
             if (d.id == sourceId1) {
-              d.fx = width/8;
-              d.fy = height/2;
+              d.fx = scope.sharedWidth/8;
+              d.fy = scope.sharedHeight/2;
             }
             if (d.id == sourceId2) {
-              d.fx = width * (7/8)
-              d.fy = height/2
+              d.fx = scope.sharedWidth * (7/8)
+              d.fy = scope.sharedHeight/2
             }
           })
 
@@ -334,7 +336,7 @@ angular.module('redesign2017App')
                 return (e.id === d.id) ? true: false;
               })
               // sort elements so to bring the hovered one on top and make it readable.
-              // svg.selectAll("g.label").each(function(e, i) {
+              // scope.sharedSvg.selectAll("g.label").each(function(e, i) {
               //   if (d == e) {
               //     var myElement = this;
               //     d3.select(myElement).remove();
@@ -405,26 +407,26 @@ angular.module('redesign2017App')
               return d.labelBBox.height + paddingTopBottom;
             });
 
-          var zoom = d3.zoom(); // Create a single zoom function
+          scope.sharedZoom = d3.zoom(); // Create a single zoom function
           // Call zoom for svg container.
-          svg.call(zoom.on('zoom', zoomed)); //.on("dblclick.zoom", null); // See zoomed() below
+          scope.sharedSvg.call(scope.sharedZoom.on('zoom', zoomed)); //.on("dblclick.zoom", null); // See zoomed() below
 
 
           // //Functions for zoom and recenter buttons
-          scope.centerNetwork = function() {
-            console.log("Recenter");
-            // Transition source node to center of rect
-            svg.transition().duration(750).call(zoom.transform, d3.zoomIdentity);//.translate(width/2-sourceNode.x, height/2-sourceNode.y));
-          }
-
-          scope.zoomIn = function() {
-            console.log("Zoom In")
-            svg.transition().duration(500).call(zoom.scaleBy, zoomfactor + .5); // Scale by adjusted zoomfactor
-          }
-          scope.zoomOut = function() {
-            console.log("Zoom Out")
-            svg.transition().duration(500).call(zoom.scaleBy, zoomfactor - .25); // Scale by adjusted zoomfactor, slightly lower since zoom out was more dramatic
-          }
+          // scope.centerNetwork = function() {
+          //   console.log("Recenter");
+          //   // Transition source node to center of rect
+          //   svg.transition().duration(750).call(zoom.transform, d3.zoomIdentity);//.translate(width/2-sourceNode.x, height/2-sourceNode.y));
+          // }
+          //
+          // scope.sharedZoomIn = function() {
+          //   console.log("Zoom In")
+          //   svg.transition().duration(500).call(zoom.scaleBy, scope.sharedZoomfactor + .5); // Scale by adjusted scope.sharedZoomfactor
+          // }
+          // scope.sharedZoomOut = function() {
+          //   console.log("Zoom Out")
+          //   svg.transition().duration(500).call(zoom.scaleBy, scope.sharedZoomfactor - .25); // Scale by adjusted scope.sharedZoomfactor, slightly lower since zoom out was more dramatic
+          // }
 
           // Zooming function translates the size of the svg container on wheel scroll.
           function zoomed() {
