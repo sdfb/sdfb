@@ -9,7 +9,7 @@
 angular.module('redesign2017App')
   .directive('forceLayout', ['apiService', '$timeout', function(apiService, $timeout) {
     return {
-      template: '<svg width="100%" height="100%"></scope.singleSvg>',
+      template: '<svg width="100%" height="100%"></svg>',
       restrict: 'E',
       link: function postLink(scope, element, attrs) {
         console.log('drawing network the first time');
