@@ -1,34 +1,36 @@
 <section>
-  <h3 class="">Add group assignment</h3>
-  <!-- <button type="button" class="btn btn-primary" ng-click="addingLink()">Draw Link</button> -->
-  <h4 class="paragraph-title">Person</h4>
-  <!-- <input placeholder="Search for a person" type="text" ng-model="person.selected" uib-typeahead="person for person in peopleToSelect | filter:$viewValue | limitTo:8" class="form-control" id="source"> -->
-  <input placeholder="Search for a person" type="text" ng-model="groupAssign.person.name" class="form-control" id="person">
+  <form ng-submit= "submitGroupAssign()">
+    <h3 class="">Add group assignment</h3>
+    <!-- <button type="button" class="btn btn-primary" ng-click="addingLink()">Draw Link</button> -->
+    <h4 class="paragraph-title">Person</h4>
+    <!-- <input placeholder="Search for a person" type="text" ng-model="person.selected" uib-typeahead="person for person in peopleToSelect | filter:$viewValue | limitTo:8" class="form-control" id="source"> -->
+    <input placeholder="Search for a person" type="text" ng-model="groupAssign.person.name" class="form-control">
 
-  <h4>Group</h4>
-  <!-- <input placeholder="Search for a person" type="text" ng-model="person.selected" uib-typeahead="person for person in peopleToSelect | filter:$viewValue | limitTo:8" class="form-control" id="target"> -->
-  <input placeholder="Search for a person" type="text" ng-model="groupAssign.group.name" class="form-control" id="group">
+    <h4>Group</h4>
+    <!-- <input placeholder="Search for a person" type="text" ng-model="person.selected" uib-typeahead="person for person in peopleToSelect | filter:$viewValue | limitTo:8" class="form-control" id="target"> -->
+    <input placeholder="Search for a person" type="text" ng-model="groupAssign.group.name" class="form-control">
 
-  <!-- <h4 class="paragraph-title">Relationship type</h4>
-  <input placeholder="Add relationship type" type="text" class="form-control" id="relType"> -->
+    <!-- <h4 class="paragraph-title">Relationship type</h4>
+    <input placeholder="Add relationship type" type="text" class="form-control" id="relType"> -->
 
-  <h4>Start date</h4>
-  <div class="input-group">
-    <input class="form-control" uib-datepicker-popup="{{ config.dateFormat }}" ng-model="startDate" ng-model-options="{ getterSetter: true }" id="gStartDate">
-    <select class="input-group-addon" ng-model="selectedStartDateType" ng-options="type for type in config.dateTypes" id="gStartDateType"></select><i class="fa fa-caret-down" aria-hidden="true"></i>
-  </div>
+    <h4>Start date</h4>
+    <div class="input-group">
+      <select class="input-group-addon" ng-model="groupAssign.startDateType" ng-options="type for type in config.dateTypes"></select><i class="fa fa-caret-down" aria-hidden="true"></i>
+      <input class="form-control" ng-model="groupAssign.startDate" ng-model-options="{ getterSetter: true }">
+    </div>
 
-  <h4>End date</h4>
-  <div class="input-group">
-    <input class="form-control" uib-datepicker-popup="{{ config.dateFormat }}" ng-model="endDate" id="gEndDate">
-    <select class="input-group-addon" ng-model="selectedEndDateType" ng-options="type for type in config.dateTypes" id="gEndDateType"></select><i class="fa fa-caret-down" aria-hidden="true"></i>
-  </div>
+    <h4>End date</h4>
+    <div class="input-group">
+      <select class="input-group-addon" ng-model="groupAssign.endDateType" ng-options="type for type in config.dateTypes"></select><i class="fa fa-caret-down" aria-hidden="true"></i>
+      <input class="form-control" ng-model="groupAssign.endDate">
+    </div>
 
-  <!-- <h4>Relationship confidence level</h4>
-  <rzslider rz-slider-model="slider.value" rz-slider-options="slider.options" class="with-legend" id="confidence"></rzslider> -->
+    <!-- <h4>Relationship confidence level</h4>
+    <rzslider rz-slider-model="slider.value" rz-slider-options="slider.options" class="with-legend" id="confidence"></rzslider> -->
 
-  <h5>Your submission needs to be validated by SDFB staff. You will see it as unapproved contribution in the meantime.</h5>
-  <button type="button" class="btn btn-primary" ng-click="submitGroupAssign() ">Done</button>
+    <h5>Your submission needs to be validated by SDFB staff. You will see it as unapproved contribution in the meantime.</h5>
+    <button type="submit" class="btn btn-primary">Done</button>
+  </form>
 
 </section>
 <span class="close" ng-click="groupAssignClosed = !groupAssignClosed; legendClosed = true" style="color: white;">

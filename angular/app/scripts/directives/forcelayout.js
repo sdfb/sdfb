@@ -447,23 +447,7 @@ angular.module('redesign2017App')
           //     return "M" + f.source.fisheye.x + "," + f.source.fisheye.y + "A" + dr + "," + dr + " 0 0,1 " + f.target.fisheye.x + "," + f.target.fisheye.y;
           //   });
           // }
-          d3.selectAll(".group").on('mouseenter', function(g) {
-            console.log(g);
-            // d3.select('input#person').property('value', d.attributes.name);
-            // d3.select('input#group').property('value', g.name);
-            scope.$apply(function() {
-              scope.groupAssign.person.name = d.attributes.name;
-              scope.groupAssign.person.id = d.id;
-              scope.groupAssign.group.name = g.name;
-              scope.groupAssign.group.id = g.groupId;
-              scope.groupAssignClosed = false;
-            });
-          })
-          .on('mouseleave', function(g) {
-            scope.$apply(function() {
-              scope.groupAssignClosed = true;
-            });
-          });
+          scope.showGroupAssign(d);
 
           scope.showNewLink(d);
 
@@ -487,8 +471,7 @@ angular.module('redesign2017App')
           if (scope.config.contributionMode) {
             cursor.attr("opacity", 1);
             scope.createNewLink(d, nodes, scope.addedLinks);
-            d3.selectAll(".group").on("mouseenter", null);
-            d3.selectAll(".group").on("mouseleave", null);
+            scope.endGroupEvents();
             scope.updatePersonNetwork(scope.data);
 
           }
@@ -526,21 +509,7 @@ angular.module('redesign2017App')
 
 
 
-        scope.submitGroupAssign = function() {
-          console.log("node submitted");
-          // var newNode = {attributes: {name: scope.person.added, birthdate: d3.select('#birthDate').node().value, deathdate: d3.select('#deathDate').node().value, title: d3.select('#title').node().value, suffix: d3.select('#suffix').node().value, alternate_names: d3.select('#alternates').node().value},  notes: d3.select('#alternates').node().value, id: addedNodeID}
-          var newGroupAssign = {};
-          newGroupAssign.person = scope.groupAssign.person.id;
-          newGroupAssign.group = scope.groupAssign.group.id;
-          newGroupAssign.start_year = d3.select('#gStartDate').property('value');
-          newGroupAssign.start_year_type = d3.select('#gStartDateType').property('value');
-          newGroupAssign.end_year = d3.select("#gEndDate").property('value');
-          newGroupAssign.end_year_type = d3.select("#gEndDateType").property('value');
-          addToDB.groups.push(newGroupAssign);
-          console.log(addToDB);
-          scope.groupAssignClosed = true;
 
-        }
 
 
         // VISUAL DENSITY PARSER
