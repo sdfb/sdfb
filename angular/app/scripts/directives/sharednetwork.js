@@ -7,7 +7,7 @@
  * # sharedNetwork
  */
 angular.module('redesign2017App')
-  .directive('sharedNetwork', function(apiService) {
+  .directive('sharedNetwork', ['apiService', '$timeout', function(apiService, $timeout) {
     return {
       template: '<svg id="shared-network" width="100%" height="100%"></svg>',
       restrict: 'E',
@@ -18,6 +18,8 @@ angular.module('redesign2017App')
         scope.sharedWidth = +scope.sharedSvg.node().getBoundingClientRect().width; // Width of viz
         scope.sharedHeight = +scope.sharedSvg.node().getBoundingClientRect().height; // Height of viz
         scope.sharedZoomfactor = 1;
+        scope.addedSharedNodes = [];
+        scope.addedSharedLinks = [];
 
         var sharedSimulation,
           sources;
@@ -47,11 +49,16 @@ angular.module('redesign2017App')
             d3.selectAll('.group').classed('active', false);
             d3.selectAll('.group').classed('unactive', false);
 
+            if (scope.config.contributionMode) {
+              var point = d3.mouse(container.node());
+              scope.addNode(scope.addedSharedNodes, point, scope.updateSharedNetwork);
+            }
+
             // update selction and trigger event for other directives
             scope.currentSelection = {};
             scope.$apply(); // no need to trigger events, just apply
-          });
-          // .on('mousemove', mousemove);
+          })
+          .on('mousemove', mousemove);
 
         var container = scope.sharedSvg.append('g'); // Create container for nodes and edges
 
@@ -73,7 +80,10 @@ angular.module('redesign2017App')
           .attr("fill", "none")
           .attr("stroke", "orange")
           .attr("stroke-width", 1.5)
-          .attr("opacity", 0)
+          .attr('stroke-dasharray', 5,5)
+          .attr("opacity", 0)//function() {
+            // if (scope.config.contributionMode) {return 1;} else {return 0;}
+          // })
           .attr("transform", "translate(-100,-100)")
           .attr("class", "cursor");
 
@@ -178,7 +188,7 @@ angular.module('redesign2017App')
 
 
 
-        function updateSharedNetwork(json) {
+        scope.updateSharedNetwork = function(json) {
 
 
           // console.log(links);
@@ -235,7 +245,9 @@ angular.module('redesign2017App')
 
           // Define array of nodes
           graph.nodes = newData[0];
-          console.log(graph.nodes);
+
+          scope.addedSharedNodes.forEach(function(a) { graph.nodes.push(a); });
+          scope.addedSharedLinks.forEach(function(a) { graph.links.push(a); });
 
           //Fixed node positions for source nodes
           var sourceId1 = sources[0],
@@ -277,6 +289,9 @@ angular.module('redesign2017App')
             .classed('altered', function(d) { // Style if link has been "altered" by a person
               return d.altered ? true : false;
             })
+            .classed('new', function(d) {
+              return d.new ? true : false;
+            })
             .on('click', function(d) { // Toggle link on click
               toggleClick(d, graph.links);
             });
@@ -311,6 +326,9 @@ angular.module('redesign2017App')
               }
               else if (d.distance === 3) {
                 return 'node degree' + 0
+              }
+              else if (d.distance === 7) {
+                return 'node degree' + 7
               }
             })
             .attr('id', function(d) { // Assign ID number
@@ -348,7 +366,11 @@ angular.module('redesign2017App')
               d3.selectAll('g.label').classed('temporary-unhidden', function(e) {
                 if (e.id == d.id) { return false; }
               })
-            });
+            })
+            .call(d3.drag()
+              .on("start", dragstarted)
+              .on("drag", dragged)
+              .on("end", dragended));
 
 
 
@@ -411,29 +433,12 @@ angular.module('redesign2017App')
           // Call zoom for svg container.
           scope.sharedSvg.call(scope.sharedZoom.on('zoom', zoomed)); //.on("dblclick.zoom", null); // See zoomed() below
 
-
-          // //Functions for zoom and recenter buttons
-          // scope.centerNetwork = function() {
-          //   console.log("Recenter");
-          //   // Transition source node to center of rect
-          //   svg.transition().duration(750).call(zoom.transform, d3.zoomIdentity);//.translate(width/2-sourceNode.x, height/2-sourceNode.y));
-          // }
-          //
-          // scope.sharedZoomIn = function() {
-          //   console.log("Zoom In")
-          //   svg.transition().duration(500).call(zoom.scaleBy, scope.sharedZoomfactor + .5); // Scale by adjusted scope.sharedZoomfactor
-          // }
-          // scope.sharedZoomOut = function() {
-          //   console.log("Zoom Out")
-          //   svg.transition().duration(500).call(zoom.scaleBy, scope.sharedZoomfactor - .25); // Scale by adjusted scope.sharedZoomfactor, slightly lower since zoom out was more dramatic
-          // }
-
           // Zooming function translates the size of the svg container on wheel scroll.
           function zoomed() {
             container.attr("transform", "translate(" + d3.event.transform.x + ", " + d3.event.transform.y + ") scale(" + d3.event.transform.k + ")");
           }
 
-          sharedSimulation.alphaTarget(0).restart();
+          sharedSimulation.alphaTarget(0.3).restart();
 
         }
 
@@ -468,6 +473,115 @@ angular.module('redesign2017App')
                 }
               });
             }
+        }
+
+        scope.$watch('config.contributionMode', function(newValue, oldValue) {
+          if (newValue !== oldValue) {
+            if (scope.config.contributionMode) {
+              cursor.attr("opacity", 1);
+            }
+            else {
+              cursor.attr("opacity", 0);
+            }
+          }
+        });
+
+        // Code for adding links adapted from: https://bl.ocks.org/emeeks/f2f6883ac7c965d09b90
+
+        function dragged(d) {
+          if (d.distance === 7) {
+            d.x = d3.event.x;
+            d.y = d3.event.y;
+          }
+          else {
+            d.fx = d3.event.x;
+            d.fy = d3.event.y;
+          }
+
+          // var nodeOne = this;
+          // var foundOverlap = false;
+
+
+
+          // if (scope.config.contributionMode) {
+          //   fisheye.focus(d3.mouse(this));
+          //
+          //   node.each(function(f) { f.fisheye = fisheye(f); })
+          //       .attr("cx", function(f) { return f.fisheye.x; })
+          //       .attr("cy", function(f) { return f.fisheye.y; })
+          //       .attr("r", function(f) {
+          //         if (f.distance == 0) {
+          //           return 25 * f.fisheye.z;
+          //         } else if (f.distance == 1) {
+          //           return 12.5 * f.fisheye.z;
+          //         } else {
+          //           return 6.25 * f.fisheye.z;
+          //         }
+          //       });
+          //
+          //   link.attr("d", function(f) {
+          //     var dx = f.target.fisheye.x - f.source.fisheye.x,
+          //       dy = f.target.fisheye.y - f.source.fisheye.y,
+          //       dr = Math.sqrt(dx * dx + dy * dy);
+          //     return "M" + f.source.fisheye.x + "," + f.source.fisheye.y + "A" + dr + "," + dr + " 0 0,1 " + f.target.fisheye.x + "," + f.target.fisheye.y;
+          //   });
+          // }
+          scope.showGroupAssign(d);
+
+          scope.showNewLink(d);
+
+        }
+
+        function dragstarted(d) {
+
+          cursor.attr("opacity", 0);
+
+          var nodes = scope.data.included;
+          nodes.forEach(function(n) {
+            n.fx = n.x;
+            n.fy = n.y;
+          });
+          if (!d3.event.active) sharedSimulation.alphaTarget(0.3).restart();
+        }
+
+        function dragended(d) {
+
+          var nodes = scope.data.included;
+          if (scope.config.contributionMode) {
+            cursor.attr("opacity", 1);
+            scope.createNewLink(d, nodes, scope.addedSharedLinks);
+            scope.endGroupEvents();
+            scope.updateSharedNetwork(scope.data);
+
+          }
+        }
+
+        // Move the circle with the mouse, until the the user clicks
+        function mousemove() {
+          cursor.attr("transform", "translate(" + d3.mouse(container.node()) + ")");
+          // if (scope.config.contributionMode) {
+          //   fisheye.focus(d3.mouse(this));
+          //
+          //   node.each(function(d) { d.fisheye = fisheye(d); })
+          //       .attr("cx", function(d) { return d.fisheye.x; })
+          //       .attr("cy", function(d) { return d.fisheye.y; })
+          //       .attr("r", function(d) {
+          //         if (d.distance == 0) {
+          //           return 25 * d.fisheye.z;
+          //         } else if (d.distance == 1) {
+          //           return 12.5 * d.fisheye.z;
+          //         } else {
+          //           return 6.25 * d.fisheye.z;
+          //         }
+          //       });
+          //
+          //   link.attr("d", function(d) {
+          //         var dx = d.target.fisheye.x - d.source.fisheye.x,
+          //           dy = d.target.fisheye.y - d.source.fisheye.y,
+          //           dr = Math.sqrt(dx * dx + dy * dy);
+          //         return "M" + d.source.fisheye.x + "," + d.source.fisheye.y + "A" + dr + "," + dr + " 0 0,1 " + d.target.fisheye.x + "," + d.target.fisheye.y;
+          //       });
+          // }
         }
 
         // A function to handle click toggling based on neighboring nodes.
@@ -558,8 +672,15 @@ angular.module('redesign2017App')
             }
 
             // This triggers events in groupsbar.js and contextualinfopanel.js when a selection happens
-            scope.currentSelection = d;
-            scope.$broadcast('selectionUpdated', scope.currentSelection);
+            // scope.currentSelection = d;
+            apiService.getPeople(d.id).then(function (result) {
+              // console.log(result);
+              scope.currentSelection = result.data[0];
+              // console.log(scope.currentSelection);
+              $timeout(function(){
+                scope.$broadcast('selectionUpdated', scope.currentSelection);
+              });
+            });
 
           } else if (d.type == "relationship") { //Handler for when a link is clicked
 
@@ -597,7 +718,7 @@ angular.module('redesign2017App')
           console.log(args);
           scope.data = args;
           generateSharedNetwork(args);
-          updateSharedNetwork(args);
+          scope.updateSharedNetwork(args);
           scope.reloadFilters();
           // apiService.getFile('./data/sharednetwork.json').then(function(data) {
           //   console.log('sharedData', data);
@@ -610,10 +731,10 @@ angular.module('redesign2017App')
 
         scope.$on('shared network update', function(event, args) {
           console.log(args);
-          updateSharedNetwork(args);
+          scope.updateSharedNetwork(args);
         });
 
 
       }
     };
-  });
+  }]);

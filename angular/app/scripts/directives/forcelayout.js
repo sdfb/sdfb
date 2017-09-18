@@ -22,9 +22,7 @@ angular.module('redesign2017App')
         scope.addedNodes = []; // Nodes user has added to the graph
         scope.addedLinks = []; // Links user has added to the graph
         var simulation,
-          sourceId,
-          addedNodeID = 0,
-          addedLinkID = 0;
+          sourceId;
 
           var fisheye = d3.fisheye.circular()
             .radius(75)
@@ -410,7 +408,7 @@ angular.module('redesign2017App')
         // Code for adding links adapted from: https://bl.ocks.org/emeeks/f2f6883ac7c965d09b90
 
         function dragged(d) {
-          if (d.distance === 3) {
+          if (d.distance === 7) {
             d.x = d3.event.x;
             d.y = d3.event.y;
           }

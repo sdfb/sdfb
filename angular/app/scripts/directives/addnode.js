@@ -16,12 +16,11 @@ angular.module('redesign2017App')
         scope.newNode.birthDateType = scope.newNode.deathDateType = scope.config.dateTypes[1];
 
         // When canvas is clicked, add a new circle with dummy data
-        scope.addNode = function(addedNodes, addedNodeID, point, update) {
+        scope.addNode = function(addedNodes, point, update) {
           scope.newNode.exists = false;
 
-          var newNode = { attributes: { name: scope.newNode.name }, id: addedNodeID, distance: 3, x: point[0], y: point[1]};
+          var newNode = { attributes: { name: scope.newNode.name }, id: 0, distance: 7, x: point[0], y: point[1]};
           addedNodes.push(newNode);
-          addedNodeID += 1;
           scope.$apply(function() {
             scope.addNodeClosed = false;
             scope.legendClosed = true;
@@ -44,12 +43,20 @@ angular.module('redesign2017App')
 
           });
         }
-        scope.submitNode = function(addedNodes, update) {
+        scope.submitNode = function() {
           console.log("node submitted");
           var newNode = angular.copy(scope.newNode);
-          if (addedNodes.length > 0 && !addedNodes[addedNodes.length-1].attributes.name) {
-            addedNodes[addedNodes.length-1].attributes.name = newNode.name;
-            update(scope.data);
+
+          if (scope.config.viewMode === 'individual-force' ||  scope.config.viewMode === 'individual-concentric') {
+            if (scope.addedNodes.length > 0 && !scope.addedNodes[scope.addedNodes.length-1].attributes.name) {
+              scope.addedNodes[scope.addedNodes.length-1].attributes.name = newNode.name;
+            }
+            scope.updatePersonNetwork(scope.data);
+          } else if (scope.config.viewMode === 'shared-network') {
+            if (scope.addedSharedNodes.length > 0 && !scope.addedSharedNodes[scope.addedSharedNodes.length-1].attributes.name) {
+              scope.addedSharedNodes[scope.addedSharedNodes.length-1].attributes.name = newNode.name;
+            }
+            scope.updateSharedNetwork(scope.data);
           }
 
           scope.addToDB.nodes.push(newNode);

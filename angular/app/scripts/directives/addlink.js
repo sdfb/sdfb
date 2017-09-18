@@ -125,7 +125,7 @@ angular.module('redesign2017App')
           });
         }
 
-        scope.submitLink = function(addedLinks) {
+        scope.submitLink = function() {
           console.log("link submitted");
           var newLink = angular.copy(scope.newLink)
           scope.addToDB.links.push(newLink);
