@@ -20,9 +20,9 @@ angular.module('redesign2017App')
         scope.singleHeight = +scope.singleSvg.node().getBoundingClientRect().height; // Height of viz
         scope.singleZoomfactor = 1;
         scope.addedNodes = []; // Nodes user has added to the graph
+        scope.addedLinks = []; // Links user has added to the graph
         var simulation,
           sourceId,
-          addedLinks = [], // Links user has added to the graph
           addedNodeID = 0,
           addedLinkID = 0;
 
@@ -178,7 +178,7 @@ angular.module('redesign2017App')
           var newLinks = newData[1];
 
           scope.addedNodes.forEach(function(a) { newNodes.push(a); });
-          addedLinks.forEach(function(a) { newLinks.push(a); });
+          scope.addedLinks.forEach(function(a) { newLinks.push(a); });
 
           if (layout == 'individual-force') {
             console.log('Layout: individual-force');
@@ -465,42 +465,7 @@ angular.module('redesign2017App')
             });
           });
 
-          var nodes = scope.data.included;
-          nodes.forEach(function (otherNode) {
-            var distance = Math.sqrt(Math.pow(otherNode.x - d3.event.x, 2) + Math.pow(otherNode.y - d3.event.y, 2));
-            if (scope.config.contributionMode) {
-              node.on('mouseenter', null);
-              d3.select('#l'+d.id)
-                .classed('temporary-unhidden', true);
-              if (otherNode != d && distance < 10) {
-                otherNode.radius = true;
-
-                d3.select("#n"+otherNode.id).transition()
-                  .attr('r', 25)
-                  .attr('stroke', 'orange')
-                  .attr('stroke-dasharray', 5,5);
-                d3.select('input#source').property('value', d.attributes.name);
-                d3.select('input#target').property('value', otherNode.attributes.name);
-                scope.$apply(function() {
-                  scope.addLinkClosed = false;
-                });
-
-              }
-              else {
-                otherNode.radius = false;
-                d3.select("#n"+otherNode.id).transition().attr('r', function(d) { // Size nodes by degree of distance
-                  if (d.distance == 0) {
-                    return 25;
-                  } else if (d.distance == 1) {
-                    return 12.5;
-                  } else {
-                    return 6.25;
-                  }
-                })
-                .attr('stroke-dasharray', null);
-              }
-            }
-          });
+          scope.showNewLink(d);
 
         }
 
@@ -518,37 +483,12 @@ angular.module('redesign2017App')
 
         function dragended(d) {
 
-          var nodeOne = this;
           var nodes = scope.data.included;
           if (scope.config.contributionMode) {
             cursor.attr("opacity", 1);
-            nodes.forEach(function (otherNode) {
-              var nodeDistance = Math.sqrt(Math.pow(otherNode.x - d3.event.x, 2) + Math.pow(otherNode.y - d3.event.y, 2));
-              if (otherNode != d && nodeDistance < 10) {
-                console.log("new link added:", otherNode.attributes.name);
-                var newLink = {source: d, target: otherNode, weight: 100, start_year: 1500, end_year: 1700, id: addedLinkID, new: true};
-                addedLinks.push(newLink);
-                addedLinkID += 1;
-                scope.$apply(function() {
-                  scope.legendClosed = true;
-                });
-
-
-
-              }
-
-              });
+            scope.createNewLink(d, nodes, scope.addedLinks);
             d3.selectAll(".group").on("mouseenter", null);
             d3.selectAll(".group").on("mouseleave", null);
-            d3.selectAll(".node").attr('r', function(d) { // Size nodes by degree of distance
-              if (d.distance == 0) {
-                return 25;
-              } else if (d.distance == 1) {
-                return 12.5;
-              } else {
-                return 6.25;
-              }
-            });
             scope.updatePersonNetwork(scope.data);
 
           }
@@ -584,30 +524,7 @@ angular.module('redesign2017App')
 
 
 
-        scope.submitLink = function() {
-          console.log("link submitted");
-          var newLink = addedLinks[addedLinks.length-1];
-          var startDate = d3.select('#startDate').property('value');
-          var startDateType = d3.select('#startDateType').property('value');
-          var endDate = d3.select("#endDate").property('value');
-          var endDateType = d3.select("#endDateType").property('value');
-          var confidence = d3.select('#confidence').property('value');
-          var relType = d3.select('#relType').property('value');
 
-          newLink.source = newLink.source.id;
-          newLink.target = newLink.target.id;
-          newLink.weight = scope.slider.value;
-          newLink.start_year = startDate;
-          newLink.start_year_type = startDateType.split(':')[1];
-          newLink.end_year = endDate;
-          newLink.end_year_type = endDateType.split(':')[1];
-          newLink.type = relType;
-
-          addToDB.links.push(newLink);
-          console.log(addToDB);
-          scope.addLinkClosed = true;
-
-        }
 
         scope.submitGroupAssign = function() {
           console.log("node submitted");

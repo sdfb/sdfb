@@ -69,18 +69,8 @@ angular.module('redesign2017App')
             scope.newNode.deathDateType = args.attributes.death_year_type;
             scope.newNode.exists = true;
             scope.addNodeClosed = false;
-          } else if (scope.config.contributionMode && args.type === 'relationship') {
-            console.log(args);
-            d3.select('#source').property('value', args.source.attributes.name);
-            d3.select('#target').property('value', args.target.attributes.name)
-            // d3.select('#startDate').property('value', Math.max(source.attributes.birth_year, target.attributes.birth_year));
-            // d3.select('#startDateType').property('value', 'After/On');
-            // d3.select("#endDate").property('value', Math.min(source.attributes.death_year, target.attributes.death_year));
-            // d3.select("#endDateType").property('value', 'Before/On');
-            // d3.select('#relType').property('value', 'has met');
-            scope.addLinkClosed = false;
           }
-        })
+        });
       }
     };
   }]);
