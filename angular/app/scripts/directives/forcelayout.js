@@ -19,14 +19,12 @@ angular.module('redesign2017App')
         scope.singleWidth = +scope.singleSvg.node().getBoundingClientRect().width; // Width of viz
         scope.singleHeight = +scope.singleSvg.node().getBoundingClientRect().height; // Height of viz
         scope.singleZoomfactor = 1;
+        scope.addedNodes = []; // Nodes user has added to the graph
         var simulation,
           sourceId,
-          addedNodes = [], // Nodes user has added to the graph
           addedLinks = [], // Links user has added to the graph
-          addToDB = {nodes: [], links: [], groups: []},
           addedNodeID = 0,
-          addedLinkID = 0,
-          nodeExists = false;
+          addedLinkID = 0;
 
           var fisheye = d3.fisheye.circular()
             .radius(75)
@@ -58,8 +56,8 @@ angular.module('redesign2017App')
               d3.selectAll('.group').classed('unactive', false);
 
               if (scope.config.contributionMode) {
-                nodeExists = false;
-                addNode();
+                var point = d3.mouse(container.node());
+                scope.addNode(scope.addedNodes, addedNodeID, point, scope.updatePersonNetwork);
               }
               // update selction and trigger event for other directives
               scope.currentSelection = {};
@@ -139,7 +137,7 @@ angular.module('redesign2017App')
 
         }
 
-        function updatePersonNetwork(json) {
+        scope.updatePersonNetwork = function(json) {
 
           /* The main update function draws the all of the elements of the visualization
           and keeps them up to date using the D3 general update pattern. Takes as variables ranges
@@ -179,7 +177,7 @@ angular.module('redesign2017App')
           var newNodes = newData[0];
           var newLinks = newData[1];
 
-          addedNodes.forEach(function(a) { newNodes.push(a); });
+          scope.addedNodes.forEach(function(a) { newNodes.push(a); });
           addedLinks.forEach(function(a) { newLinks.push(a); });
 
           if (layout == 'individual-force') {
@@ -283,7 +281,7 @@ angular.module('redesign2017App')
             })
             .on('click', function(d) {
               // Toggle ego networks on click of node
-              nodeExists = true;
+
               toggleClick(d, newLinks, this);
             })
             // On hover, display label
@@ -551,7 +549,7 @@ angular.module('redesign2017App')
                 return 6.25;
               }
             });
-            updatePersonNetwork(scope.data);
+            scope.updatePersonNetwork(scope.data);
 
           }
         }
@@ -584,46 +582,7 @@ angular.module('redesign2017App')
           // }
         }
 
-        // When canvas is clicked, add a new circle with dummy data
-        function addNode() {
-          var point = d3.mouse(container.node());
-          var newNode = { attributes: { name: scope.person.added }, id: addedNodeID, distance: 3, x: point[0], y: point[1]};
-          addedNodes.push(newNode);
-          addedNodeID += 1;
-          scope.$apply(function() {
-            scope.addNodeClosed = false;
-            scope.legendClosed = true;
-          });
 
-          updatePersonNetwork(scope.data);
-
-
-        }
-
-        scope.foundPerson = function($item) {
-          console.log($item);
-          nodeExists = true;
-          apiService.getPeople($item.id).then(function (result) {
-            console.log(result);
-            var person = result.data[0];
-            scope.person.added = person.attributes.name;
-            d3.select('#birthDate').property('value', person.attributes.birth_year);
-            d3.select('#deathDate').property('value', person.attributes.death_year);
-
-          });
-        }
-        scope.submitNode = function() {
-          console.log("node submitted");
-          if (addedNodes.length > 0 && !addedNodes[addedNodes.length-1].attributes.name) {
-            addedNodes[addedNodes.length-1].attributes.name = scope.person.added;
-            updatePersonNetwork(scope.data);
-          }
-          var newNode = {attributes: {name: scope.person.added, birthdate: d3.select('#birthDate').node().value, deathdate: d3.select('#deathDate').node().value, title: d3.select('#title').node().value, suffix: d3.select('#suffix').node().value, alternate_names: d3.select('#alternates').node().value},  notes: d3.select('#alternates').node().value, id: addedNodeID, exists: nodeExists}
-          addToDB.nodes.push(newNode);
-          scope.addNodeClosed = true;
-          scope.person.added = null;
-
-        }
 
         scope.submitLink = function() {
           console.log("link submitted");
@@ -992,7 +951,7 @@ angular.module('redesign2017App')
         }
 
         // Trigger update automatically when the directive code is executed entirely (e.g. at loading)
-        // update(addedNodes, confidenceMin, confidenceMax, dateMin, dateMax, complexity, 'individual-force', simulation);
+        // update(scope.addedNodes, confidenceMin, confidenceMax, dateMin, dateMax, complexity, 'individual-force', simulation);
 
         // update triggered from the controller
         scope.$on('force layout generate', function(event, args) {
@@ -1000,34 +959,16 @@ angular.module('redesign2017App')
 
           scope.data = args;
           generatePersonNetwork(args);
-          updatePersonNetwork(args);
+          scope.updatePersonNetwork(args);
           scope.reloadFilters();
         });
 
         scope.$on('force layout update', function(event, args) {
           console.log(args);
-          updatePersonNetwork(args);
+          scope.updatePersonNetwork(args);
         });
 
-        scope.$on('selectionUpdated', function(event, args) {
-          if (scope.config.contributionMode && args.type === 'person') {
-            console.log(args);
-            scope.person.added = args.attributes.name;
-            d3.select('#birthDate').property('value', args.attributes.birth_year);
-            d3.select('#deathDate').property('value', args.attributes.death_year);
-            scope.addNodeClosed = false;
-          } else if (scope.config.contributionMode && args.type === 'relationship') {
-            console.log(args);
-            d3.select('#source').property('value', args.source.attributes.name);
-            d3.select('#target').property('value', args.target.attributes.name)
-            // d3.select('#startDate').property('value', Math.max(source.attributes.birth_year, target.attributes.birth_year));
-            // d3.select('#startDateType').property('value', 'After/On');
-            // d3.select("#endDate").property('value', Math.min(source.attributes.death_year, target.attributes.death_year));
-            // d3.select("#endDateType").property('value', 'Before/On');
-            // d3.select('#relType').property('value', 'has met');
-            scope.addLinkClosed = false;
-          }
-        })
+
 
       }
     };

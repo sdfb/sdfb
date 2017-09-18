@@ -18,6 +18,9 @@ angular.module('redesign2017App')
     $scope.addNodeClosed = true;
     $scope.addLinkClosed = true;
     $scope.groupAssignClosed = true;
+    $scope.addToDB = {nodes: [], links: [], groups: []};
+    $scope.newNode = {};
+    $scope.newLink = {};
     $scope.groupAssign = {person: {}, group: {}};
     if ($routeParams.ids === undefined) {
       $location.search('ids', $scope.config.ids.toString());

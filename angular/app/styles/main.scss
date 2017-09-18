@@ -1022,6 +1022,7 @@ group-assign section {
 
     input.form-control {
       width: 60%;
+      float: right;
     }
 
     .input-group-addon {
@@ -1033,6 +1034,7 @@ group-assign section {
       height: 30px;
       padding: 6px;
       text-align: left;
+      float: left;
       text-transform: uppercase;
       width: 40%;
       -moz-appearance: none;
@@ -1069,7 +1071,7 @@ group-assign section {
       padding-left: 6px;
       pointer-events: none;
       position: absolute;
-      right: 5px;
+      right: 62%;
     }
   }
 
