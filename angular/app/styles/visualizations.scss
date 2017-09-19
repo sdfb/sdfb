@@ -435,6 +435,10 @@ single-group-graph {
     stroke: #000;
   }
 
+  .link.new {
+    stroke: orange;
+  }
+
   .node {
     fill: #EFF1F4;
     stroke: #78729F;

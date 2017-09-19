@@ -7,7 +7,7 @@
  * # singleGroupGraph
  */
 angular.module('redesign2017App')
-  .directive('singleGroupGraph', function() {
+  .directive('singleGroupGraph', ['apiService', '$timeout', function(apiService, $timeout) {
     return {
       template: '<svg id="single-group" width="100%" height="100%"></svg>',
       restrict: 'E',
@@ -27,11 +27,12 @@ angular.module('redesign2017App')
 
         var simulation = d3.forceSimulation(nodes)
           .force("center", d3.forceCenter(scope.groupWidth / 2, scope.groupHeight / 2))
-          .force("x", d3.forceX(scope.groupWidth / 2))
-          .force("y", d3.forceY(scope.groupHeight / 2))
-          .force("charge", d3.forceManyBody().strength(-300))
+          // .force("x", d3.forceX(scope.groupWidth / 2))
+          // .force("y", d3.forceY(scope.groupHeight / 2))
+          .force("charge", d3.forceManyBody().strength(-100))
           .force("link", d3.forceLink(links).id(function(d) { return d.id }).iterations(1))
-          .force("collide", d3.forceCollide(function(d) { return sizeScale(d.attributes.degree) + 1 }).iterations(0))
+          .force("collide", d3.forceCollide().iterations(0))
+          // .force("collide", d3.forceCollide(function(d) { return sizeScale(d.attributes.degree) + 1 }).iterations(0))
           .alpha(1)
           .alphaDecay(0.05)
           .on("tick", ticked);
@@ -59,7 +60,7 @@ angular.module('redesign2017App')
           .on("click", function() {
             d3.selectAll('#single-group .node, #single-group .link').classed('faded', false);
             d3.selectAll('#single-group g.label').classed("hidden", function(d, i) {
-              return (i <= 10) ? false : true;
+              return (d3.select('#n'+d.id).classed('member') === true) ? false : true;
             });
             // update selction and trigger event for other directives
             scope.currentSelection = {};
@@ -117,7 +118,8 @@ angular.module('redesign2017App')
                 'type': l.type,
                 'source': l.attributes.source,
                 'target': l.attributes.target,
-                'weight': l.attributes.weight
+                'weight': l.attributes.weight,
+                'id': l.id
               })
             })
             // console.log('links', links.length)
@@ -152,7 +154,8 @@ angular.module('redesign2017App')
                 'type': l.type,
                 'source': l.attributes.source,
                 'target': l.attributes.target,
-                'weight': l.attributes.weight
+                'weight': l.attributes.weight,
+                'id': l.id
               })
             })
           }
@@ -225,6 +228,9 @@ angular.module('redesign2017App')
               .classed('new', function(d) {
                 return d.distance === 7;
               })
+              .attr('id', function(d) { // Assign ID number
+                return "n" + d.id.toString();
+              })
               .attr("r", function(d) { return sizeScale(d.attributes.degree); })
               .on("click", function(d) {
                 toggleClick(d, this);
@@ -265,6 +271,9 @@ angular.module('redesign2017App')
             link = link.enter().append("path")
               .merge(link)
               .attr("class", "link")
+              .classed('new', function(d) {
+                return d.new ? true : false;
+              })
               .on('click', function(d) {
                 // Toggle ego networks on click of node
                 toggleClick(d, this);
@@ -276,7 +285,7 @@ angular.module('redesign2017App')
               .merge(label)
               .attr("class", "label")
               .classed("hidden", function(d, i) {
-                return (i <= 10) ? false : true
+                return (d3.select('#n'+d.id).classed('member') === true) ? false : true;
               });
 
             label.append('rect');
@@ -516,6 +525,7 @@ angular.module('redesign2017App')
             // This triggers events in groupsbar.js and contextualinfopanel.js when a selection happens
             // scope.currentSelection = d;
             // scope.$broadcast('selectionUpdated', scope.currentSelection);
+            console.log(d);
             apiService.getRelationship(d.id).then(function (result) {
               // console.log(result);
               scope.currentSelection = result.data[0];
@@ -539,4 +549,4 @@ angular.module('redesign2017App')
 
       }
     };
-  });
+  }]);
