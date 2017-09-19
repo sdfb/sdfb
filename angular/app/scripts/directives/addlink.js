@@ -86,7 +86,8 @@ angular.module('redesign2017App')
               }
               else {
                 otherNode.radius = false;
-                d3.select("#n"+otherNode.id).transition().attr('r', function(d) { // Size nodes by degree of distance
+                d3.select("#n"+otherNode.id)
+                  .transition().attr('r', function(d) { // Size nodes by degree of distance
                   if (d.distance == 0) {
                     return 25;
                   } else if (d.distance == 1) {

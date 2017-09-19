@@ -120,8 +120,8 @@ angular.module('redesign2017App')
           .force("link", d3.forceLink(links).id(function(d) { return d.id; }).iterations(2)) //Link force accounts for link distance
           .force("collide", d3.forceCollide().iterations(0)) // in the tick function will be evaluated the moment in which turn on the anticollision (iterations > 1)
           // general force settings
-          .alpha(1)
-          .alphaDecay(0.05)
+          // .alpha(1)
+          // .alphaDecay(0.05)
           .on("tick", ticked);
 
         }
@@ -208,8 +208,7 @@ angular.module('redesign2017App')
             confidenceMax = scope.config.confidenceMax,
             dateMin = scope.config.dateMin,
             dateMax = scope.config.dateMax,
-            complexity = scope.config.networkComplexity,
-            endTime;
+            complexity = scope.config.networkComplexity;
 
           var nodesAndLinks = getNodesAndLinks(json),
               links = nodesAndLinks[1];
@@ -438,7 +437,7 @@ angular.module('redesign2017App')
             container.attr("transform", "translate(" + d3.event.transform.x + ", " + d3.event.transform.y + ") scale(" + d3.event.transform.k + ")");
           }
 
-          sharedSimulation.alphaTarget(0.3).restart();
+          // sharedSimulation.alphaTarget(0.3).restart();
 
         }
 
@@ -464,11 +463,11 @@ angular.module('redesign2017App')
 
             if (sharedSimulation.alpha() < 0.005 && sharedSimulation.force("collide").iterations() == 0) {
               sharedSimulation.force("collide").iterations(1).radius(function(d) { // Collision detection
-                if (d.distance == 0) { // Account for larger source node
+                if (d.distance === 0 || d.distance === 3) { // Account for larger source node
                   return 50 / 2 + 1;
-                } else if (d.distance == 1) {
+                } else if (d.distance === 2) {
                   return 25 / 2 + 1;
-                } else if (d.distance == 2) {
+                } else {
                   return 12.5 / 2 + 1;
                 }
               });
@@ -552,6 +551,7 @@ angular.module('redesign2017App')
             scope.createNewLink(d, nodes, scope.addedSharedLinks);
             scope.endGroupEvents();
             scope.updateSharedNetwork(scope.data);
+            sharedSimulation.restart();
 
           }
         }

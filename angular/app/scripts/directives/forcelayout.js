@@ -55,7 +55,7 @@ angular.module('redesign2017App')
 
               if (scope.config.contributionMode) {
                 var point = d3.mouse(container.node());
-                scope.addNode(scope.addedNodes, addedNodeID, point, scope.updatePersonNetwork);
+                scope.addNode(scope.addedNodes, point, scope.updatePersonNetwork);
               }
               // update selction and trigger event for other directives
               scope.currentSelection = {};
