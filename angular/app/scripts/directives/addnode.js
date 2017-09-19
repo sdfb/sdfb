@@ -19,14 +19,18 @@ angular.module('redesign2017App')
         scope.addNode = function(addedNodes, point, update) {
           scope.newNode.exists = false;
 
-          var newNode = { attributes: { name: scope.newNode.name }, id: 0, distance: 7, x: point[0], y: point[1]};
+          var newNode = { attributes: { name: scope.newNode.name, degree: 1 }, id: 0, distance: 7, x: point[0], y: point[1]};
           addedNodes.push(newNode);
           scope.$apply(function() {
             scope.addNodeClosed = false;
             scope.legendClosed = true;
           });
 
-          update(scope.data);
+          if (scope.config.viewMode === 'group-force') {
+            update(scope.data, scope.data.onlyMembers);
+          }
+          else { update(scope.data); }
+
 
 
         }
@@ -57,6 +61,11 @@ angular.module('redesign2017App')
               scope.addedSharedNodes[scope.addedSharedNodes.length-1].attributes.name = newNode.name;
             }
             scope.updateSharedNetwork(scope.data);
+          } else if (scope.config.viewMode === 'group-force') {
+            if (scope.addedGroupNodes.length > 0 && !scope.addedGroupNodes[scope.addedGroupNodes.length-1].attributes.name) {
+              scope.addedGroupNodes[scope.addedGroupNodes.length-1].attributes.name = newNode.name;
+            }
+            scope.updateGroupNetwork(scope.data);
           }
 
           scope.addToDB.nodes.push(newNode);

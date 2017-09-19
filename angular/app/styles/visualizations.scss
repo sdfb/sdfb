@@ -451,6 +451,10 @@ single-group-graph {
     stroke: white;
   }
 
+  .node.new {
+    fill: orange;
+  }
+
   .node:hover {}
 
   .label {

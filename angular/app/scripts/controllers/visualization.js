@@ -79,6 +79,9 @@ angular.module('redesign2017App')
     } else {
       $scope.config.ids = $routeParams.ids.split(",");
       $scope.config.viewMode = 'group-force';
+      apiService.getGroups($scope.config.ids.toString()).then(function(result) {
+        $scope.groupName = result.data[0].attributes.name;
+      });
     }
 
     $scope.data4groups = function() {
