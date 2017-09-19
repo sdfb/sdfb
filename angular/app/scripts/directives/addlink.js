@@ -53,6 +53,7 @@ angular.module('redesign2017App')
             }
           }
         };
+        scope.newLink.confidence = scope.slider.value;
         scope.refreshSlider = function() {
           $timeout(function() {
           	console.log('refresh');
