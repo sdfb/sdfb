@@ -5,32 +5,36 @@
 	  <!-- <input placeholder="Search for a person" type="text" ng-model="person.added" uib-typeahead="person for person in peopleToSelect | filter:$viewValue | limitTo:8" class="form-control"> -->
 		<input type="text" ng-model="newNode.name" placeholder="Search for a person" uib-typeahead="person as person.name for person in callPersonTypeahead($viewValue)" typeahead-loading="loadingPersonAdd" typeahead-no-results="noResultsPersonAdd" class="form-control" typeahead-template-url="./views/groupsTypeaheadTemplate.html" typeahead-show-hint="true" typeahead-min-length="5" typeahead-on-select="foundPerson($item)">
 		<i ng-show="loadingPersonAdd" class="glyphicon glyphicon-refresh"></i>
-		<div ng-show="noResultsPersonAdd">
+		<!-- <div ng-show="noResultsPersonAdd">
 			<i class="glyphicon glyphicon-remove"></i> Person not found: click canvas to add
+		</div> -->
+		<div ng-show="newNode.exists">
+			<p>Person already in <i>Six Degrees</i>: {{newNode.historical_significance}}</p>
+			<p ng-show="notInView">Click anywhere to add to this view.</p>
 		</div>
 		<h4>Birth date</h4>
 	  <div class="input-group">
-			<select class="input-group-addon" ng-model="newNode.birthDateType" ng-options="type for type in config.dateTypes"></select><i class="fa fa-caret-down" aria-hidden="true"></i>
-	    <input class="form-control" ng-model="newNode.birthDate">
+			<select class="input-group-addon" ng-model="newNode.birthDateType" ng-disabled="newNode.exists" ng-options="type for type in config.dateTypes"></select><i class="fa fa-caret-down" aria-hidden="true"></i>
+	    <input ng-disabled="newNode.exists" class="form-control" ng-model="newNode.birthDate">
 	  </div>
 
 	  <h4>Death date</h4>
 	  <div class="input-group">
-			<select class="input-group-addon" ng-model="newNode.deathDateType" ng-options="type for type in config.dateTypes"></select><i class="fa fa-caret-down" aria-hidden="true"></i>
-	    <input class="form-control" ng-model="newNode.deathDate">
+			<select class="input-group-addon" ng-model="newNode.deathDateType" ng-disabled="newNode.exists" ng-options="type for type in config.dateTypes"></select><i class="fa fa-caret-down" aria-hidden="true"></i>
+	    <input class="form-control" ng-disabled="newNode.exists" ng-model="newNode.deathDate">
 	  </div>
 
 		<h4>Title</h4>
-		<input class="form-control" ng-model="newNode.title" placeholder="Title">
+		<input class="form-control" ng-model="newNode.title" ng-disabled="newNode.exists" placeholder="Title">
 
 		<h4>Suffix</h4>
-		<input class="form-control" ng-model="newNode.suffix" placeholder="Suffix">
+		<input class="form-control" ng-model="newNode.suffix" ng-disabled="newNode.exists" placeholder="Suffix">
 
 		<h4>Alternate Names</h4>
-		<input class="form-control" ng-model="newNode.alternates" placeholder="Alternate Names (comma-separated)">
+		<input class="form-control" ng-model="newNode.alternates" ng-disabled="newNode.exists" placeholder="Alternate Names (comma-separated)">
 
-		<h4>Notes</h4>
-		<input class="form-control" ng-model="newNode.notes" placeholder="Notes">
+		<!-- <h4>Notes</h4>
+		<input class="form-control" ng-model="newNode.notes" ng-disabled="newNode.exists" placeholder="Notes"> -->
 
 		<input ng-show="config.viewMode == 'group-force'" type="checkbox" ng-model="alsoGroupAssign" aria-label="Toggle ngShow">
 		<h4 style="display:inline;" ng-show="config.viewMode == 'group-force'">Also add to {{groupName}}</h4>

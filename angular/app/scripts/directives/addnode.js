@@ -15,6 +15,18 @@ angular.module('redesign2017App')
         // element.text('this is the addNode directive');
         scope.newNode.birthDateType = scope.newNode.deathDateType = scope.config.dateTypes[1];
 
+        // if (scope.noResultsPersonAdd) {
+        //   scope.newNode = {};
+        //   scope.newNode.exists = false;
+        // }
+
+        scope.watch('noResultsPersonAdd', function(newValue, oldValue) {
+          // scope.noResults = newValue;
+          if (newValue) {
+            scope.newNode.exists = false;
+          }
+        })
+
         // When canvas is clicked, add a new circle with dummy data
         scope.addNode = function(addedNodes, point, update) {
           scope.newNode.exists = false;
@@ -44,8 +56,19 @@ angular.module('redesign2017App')
             scope.newNode.birthDateType = person.attributes.birth_year_type;
             scope.newNode.deathDate = person.attributes.death_year;
             scope.newNode.deathDateType = person.attributes.death_year_type;
-
+            scope.newNode.historical_significance = person.attributes.historical_significance;
           });
+          var ids_in_view = {};
+          d3.selectAll('.node').each(function(d) { ids_in_view[d.id] = true; });
+          if ($item.id in ids_in_view) {
+            var origValue = d3.select('#n'+$item.id).attr('r');
+            d3.select('#n'+$item.id)
+              .transition(5000).attr('r', 50)
+              .transition(5000).attr('r', origValue);
+          }
+          else {
+            scope.notInView = true;
+          }
         }
         scope.submitNode = function() {
           console.log("node submitted");
@@ -68,9 +91,9 @@ angular.module('redesign2017App')
             scope.updateGroupNetwork(scope.data);
           }
 
-          scope.addToDB.nodes.push(newNode);
+          if (!scope.newNode.exists) { scope.addToDB.nodes.push(newNode); }
           scope.addNodeClosed = true;
-          scope.newNode.name = null;
+          scope.newNode = {};
           console.log(scope.addToDB);
 
         }
@@ -83,6 +106,7 @@ angular.module('redesign2017App')
             scope.newNode.birthDateType = args.attributes.birth_year_type;
             scope.newNode.deathDate = args.attributes.death_year;
             scope.newNode.deathDateType = args.attributes.death_year_type;
+            scope.newNode.historical_significance = args.attributes.historical_significance;
             scope.newNode.exists = true;
             scope.addNodeClosed = false;
           }
