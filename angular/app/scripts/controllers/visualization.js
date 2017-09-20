@@ -247,7 +247,7 @@ angular.module('redesign2017App')
           } else if ($scope.config.viewMode === 'group-force') {
             $scope.addedGroupNodes = [];
             $scope.addedGroupLinks = [];
-            $scope.updateSharedNetwork($scope.data, $scope.data.onlyMembers);
+            $scope.updateGroupNetwork($scope.data, $scope.data.onlyMembers);
           }
         }
       }

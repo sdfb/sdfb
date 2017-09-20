@@ -28,6 +28,7 @@ angular.module('redesign2017App')
           scope.newNode.exists = false;
 
           var newNode = { attributes: { name: scope.newNode.name, degree: 1 }, id: 0, distance: 7, x: point[0], y: point[1]};
+          console.log(newNode);
           addedNodes.push(newNode);
           scope.$apply(function() {
             scope.addNodeClosed = false;
