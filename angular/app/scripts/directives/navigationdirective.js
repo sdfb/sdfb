@@ -12,6 +12,7 @@ angular.module('redesign2017App')
       templateUrl: './views/navigation-directive.html',
       restrict: 'E',
       link: function postLink(scope, element, attrs) {
+        
       }
     };
   });

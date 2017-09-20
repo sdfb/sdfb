@@ -14,23 +14,21 @@ angular.module('redesign2017App')
       link: function postLink(scope, element, attrs) {
         console.log('drawing network the first time');
         // console.log(scope.data);
-        var svg = d3.select(element[0]).select('svg'), // Root svg element
-          width = +svg.node().getBoundingClientRect().width, // Width of viz
-          height = +svg.node().getBoundingClientRect().height, // Height of viz
-          simulation,
-          sourceId,
-          zoomfactor = 1, // Controls zoom buttons, begins at default scale
-          addedNodes = [], // Nodes user has added to the graph
-          addedLinks = [], // Links user has added to the graph
-          addToDB = {nodes: [], links: []},
-          addedNodeID = 0,
-          addedLinkID = 0;
+
+        scope.singleSvg = d3.select(element[0]).select('svg'); // Root svg element
+        scope.singleWidth = +scope.singleSvg.node().getBoundingClientRect().width; // Width of viz
+        scope.singleHeight = +scope.singleSvg.node().getBoundingClientRect().height; // Height of viz
+        scope.singleZoomfactor = 1;
+        scope.addedNodes = []; // Nodes user has added to the graph
+        scope.addedLinks = []; // Links user has added to the graph
+        var simulation,
+          sourceId;
 
           var fisheye = d3.fisheye.circular()
             .radius(75)
             .distortion(2);
 
-          svg.append('rect') // Create container for visualization
+          scope.singleSvg.append('rect') // Create container for visualization
             .attr('width', '100%')
             .attr('height', '100%')
             .attr('fill', 'transparent')
@@ -55,13 +53,17 @@ angular.module('redesign2017App')
               d3.selectAll('.group').classed('active', false);
               d3.selectAll('.group').classed('unactive', false);
 
+              if (scope.config.contributionMode) {
+                var point = d3.mouse(container.node());
+                scope.addNode(scope.addedNodes, point, scope.updatePersonNetwork);
+              }
               // update selction and trigger event for other directives
               scope.currentSelection = {};
               scope.$apply(); // no need to trigger events, just apply
             })
             .on('mousemove', mousemove);
 
-          var container = svg.append('g'); // Create container for nodes and edges
+          var container = scope.singleSvg.append('g'); // Create container for nodes and edges
 
           // Separate groups for links, nodes, and edges
           var link = container.append("g")
@@ -82,7 +84,9 @@ angular.module('redesign2017App')
             .attr("stroke", "orange")
             .attr("stroke-width", 1.5)
             .attr('stroke-dasharray', 5,5)
-            .attr("opacity", 0)
+            .attr("opacity", 0)//function() {
+              // if (scope.config.contributionMode) {return 1;} else {return 0;}
+            // })
             .attr("transform", "translate(-100,-100)")
             .attr("class", "cursor");
 
@@ -102,7 +106,6 @@ angular.module('redesign2017App')
         }
 
         function generatePersonNetwork(json) {
-
         sourceId = json.data.attributes.primary_people; // ID of searched node (Bacon in sample data)
 
 
@@ -121,7 +124,7 @@ angular.module('redesign2017App')
         //              //
 
         simulation = d3.forceSimulation(nodes)
-          .force("center", d3.forceCenter(width / 2, height / 2)) // Keep graph from floating off-screen
+          .force("center", d3.forceCenter(scope.singleWidth / 2, scope.singleHeight / 2)) // Keep graph from floating off-screen
           .force("charge", d3.forceManyBody().strength(-100)) // Charge force works as gravity
           .force("link", d3.forceLink(links).id(function(d) { return d.id; }).iterations(2)) //Link force accounts for link distance
           .force("collide", d3.forceCollide().iterations(0)) // in the tick function will be evaluated the moment in which turn on the anticollision (iterations > 1)
@@ -132,7 +135,7 @@ angular.module('redesign2017App')
 
         }
 
-        function updatePersonNetwork(json) {
+        scope.updatePersonNetwork = function(json) {
 
           /* The main update function draws the all of the elements of the visualization
           and keeps them up to date using the D3 general update pattern. Takes as variables ranges
@@ -172,8 +175,8 @@ angular.module('redesign2017App')
           var newNodes = newData[0];
           var newLinks = newData[1];
 
-          addedNodes.forEach(function(a) { newNodes.push(a); });
-          addedLinks.forEach(function(a) { newLinks.push(a); });
+          scope.addedNodes.forEach(function(a) { newNodes.push(a); });
+          scope.addedLinks.forEach(function(a) { newLinks.push(a); });
 
           if (layout == 'individual-force') {
             console.log('Layout: individual-force');
@@ -187,8 +190,8 @@ angular.module('redesign2017App')
             // For concentric layout, set fixed positions according to degree
             newNodes.forEach(function(d) {
               if (d.distance == 0) { // Set source node to center of view
-                d.fx = width / 2;
-                d.fy = height / 2;
+                d.fx = scope.singleWidth / 2;
+                d.fy = scope.singleHeight / 2;
               }
             })
 
@@ -276,6 +279,7 @@ angular.module('redesign2017App')
             })
             .on('click', function(d) {
               // Toggle ego networks on click of node
+
               toggleClick(d, newLinks, this);
             })
             // On hover, display label
@@ -287,7 +291,7 @@ angular.module('redesign2017App')
                 }
               })
               // sort elements so to bring the hovered one on top and make it readable.
-              svg.selectAll("g.label").each(function(e, i) {
+              scope.singleSvg.selectAll("g.label").each(function(e, i) {
                 if (d == e) {
                   var myElement = this;
                   d3.select(myElement).remove();
@@ -394,11 +398,9 @@ angular.module('redesign2017App')
           if (newValue !== oldValue) {
             if (scope.config.contributionMode) {
               cursor.attr("opacity", 1);
-              svg.on("click", addNode);
             }
             else {
               cursor.attr("opacity", 0);
-              svg.on("click", null);
             }
           }
         });
@@ -406,7 +408,7 @@ angular.module('redesign2017App')
         // Code for adding links adapted from: https://bl.ocks.org/emeeks/f2f6883ac7c965d09b90
 
         function dragged(d) {
-          if (d.distance === 3) {
+          if (d.distance === 7) {
             d.x = d3.event.x;
             d.y = d3.event.y;
           }
@@ -443,83 +445,9 @@ angular.module('redesign2017App')
           //     return "M" + f.source.fisheye.x + "," + f.source.fisheye.y + "A" + dr + "," + dr + " 0 0,1 " + f.target.fisheye.x + "," + f.target.fisheye.y;
           //   });
           // }
-          var nodes = scope.data.included;
-          nodes.forEach(function (otherNode) {
-            var distance = Math.sqrt(Math.pow(otherNode.x - d3.event.x, 2) + Math.pow(otherNode.y - d3.event.y, 2));
-            if (scope.config.contributionMode) {
-              node.on('mouseenter', null);
-              d3.select('#l'+d.id)
-                .classed('temporary-unhidden', true);
-              if (otherNode != d && distance < 10) {
-                otherNode.radius = true;
-                d3.select("#n"+otherNode.id).transition()
-                  .attr('r', 25)
-                  .attr('stroke', 'orange')
-                  .attr('stroke-dasharray', 5,5);
-                // d3.select("#l"+d.id+" rect").remove();
-                // d3.select("#l"+d.id+" text").remove();
-                // d3.select("#l"+d.id).append("rect");
-                // d3.select("#l"+d.id).append("text")
-                  // .text(d.attributes.name+" & "+otherNode.attributes.name);
-                d3.selectAll("#l"+d.id+" text")
-                  .text(d.attributes.name+" & "+otherNode.attributes.name)
-                  .each(function(d, i) {
-                    d.labelBBox = this.getBoundingClientRect();
-                  });
-                var paddingLeftRight = 4;
-                var paddingTopBottom = 0;
-                d3.select("#l"+d.id+" rect")
-                  .attr("x", function(d) {
-                    return 0 - d.labelBBox.width / 2 - paddingLeftRight / 2;
-                  })
-                  .attr("y", function(d) {
-                    return 0 + 3 - d.labelBBox.height + paddingTopBottom / 2;
-                  })
-                  .attr("width", function(d) {
-                    return d.labelBBox.width + paddingLeftRight;
-                  })
-                  .attr("height", function(d) {
-                    return d.labelBBox.height + paddingTopBottom;
-                  });
+          scope.showGroupAssign(d);
 
-                  // Get the Bounding Box of the text created
-
-              }
-              else {
-                otherNode.radius = false;
-                d3.select("#n"+otherNode.id).transition().attr('r', function(d) { // Size nodes by degree of distance
-                  if (d.distance == 0) {
-                    return 25;
-                  } else if (d.distance == 1) {
-                    return 12.5;
-                  } else {
-                    return 6.25;
-                  }
-                })
-                .attr('stroke-dasharray', null);
-                // d3.selectAll("#l"+d.id+" text")
-                //   .text(d.attributes.name)
-                //   .each(function(d, i) {
-                //     d.labelBBox = this.getBoundingClientRect();
-                //   });
-                // var paddingLeftRight = 4;
-                // var paddingTopBottom = 0;
-                // d3.select("#l"+d.id+" rect")
-                //   .attr("x", function(d) {
-                //     return 0 - d.labelBBox.width / 2 - paddingLeftRight / 2;
-                //   })
-                //   .attr("y", function(d) {
-                //     return 0 + 3 - d.labelBBox.height + paddingTopBottom / 2;
-                //   })
-                //   .attr("width", function(d) {
-                //     return d.labelBBox.width + paddingLeftRight;
-                //   })
-                //   .attr("height", function(d) {
-                //     return d.labelBBox.height + paddingTopBottom;
-                //   });
-              }
-            }
-          });
+          scope.showNewLink(d);
 
         }
 
@@ -537,36 +465,12 @@ angular.module('redesign2017App')
 
         function dragended(d) {
 
-          var nodeOne = this;
           var nodes = scope.data.included;
           if (scope.config.contributionMode) {
             cursor.attr("opacity", 1);
-            nodes.forEach(function (otherNode) {
-              var distance = Math.sqrt(Math.pow(otherNode.x - d3.event.x, 2) + Math.pow(otherNode.y - d3.event.y, 2));
-              if (otherNode != d && distance < 10) {
-                console.log("new link added:", otherNode.attributes.name);
-                var newLink = {source: d, target: otherNode, weight: 100, start_year: 1500, end_year: 1700, id: addedLinkID, new: true};
-                addedLinks.push(newLink);
-                d3.select('input#source').property('value', d.attributes.name);
-                d3.select('input#target').property('value', otherNode.attributes.name);
-                scope.$apply(function() {
-                  scope.addLinkClosed = false;
-                  scope.legendClosed = true;
-                });
-                updatePersonNetwork(scope.data);
-                addedLinkID += 1;
-
-              }
-            })
-            d3.selectAll(".node").attr('r', function(d) { // Size nodes by degree of distance
-              if (d.distance == 0) {
-                return 25;
-              } else if (d.distance == 1) {
-                return 12.5;
-              } else {
-                return 6.25;
-              }
-            });
+            scope.createNewLink(d, nodes, scope.addedLinks);
+            scope.endGroupEvents();
+            scope.updatePersonNetwork(scope.data);
 
           }
         }
@@ -599,54 +503,11 @@ angular.module('redesign2017App')
           // }
         }
 
-        // When canvas is clicked, add a new circle with dummy data
-        function addNode() {
-          var point = d3.mouse(container.node());
-          var newNode = { attributes: { name: scope.person.added }, id: addedNodeID, distance: 3, x: point[0], y: point[1]};
-          addedNodes.push(newNode);
-          addedNodeID += 1;
-          scope.$apply(function() {
-            scope.addNodeClosed = false;
-            scope.legendClosed = true;
-          });
-
-          updatePersonNetwork(scope.data);
 
 
-        }
 
-        scope.submitNode = function() {
-          console.log("node submitted");
-          var newNode = {attributes: {name: scope.person.added, birthdate: d3.select('#birthDate').node().value, deathdate: d3.select('#deathDate').node().value, title: d3.select('#title').node().value, suffix: d3.select('#suffix').node().value, alternate_names: d3.select('#alternates').node().value},  notes: d3.select('#alternates').node().value, id: addedNodeID}
-          addToDB.nodes.push(newNode);
-          scope.addNodeClosed = true;
 
-        }
 
-        scope.submitLink = function() {
-          console.log("link submitted");
-          // var newNode = {attributes: {name: scope.person.added, birthdate: d3.select('#birthdate').node().value, deathdate: d3.select('#deathdate').node().value, title: d3.select('#title').node().value, suffix: d3.select('#suffix').node().value, alternate_names: d3.select('#alternates').node().value},  id: addedNodeID}
-          var newLink = addedLinks[addedLinks.length-1];
-          var startDate = d3.select('#startDate').property('value');
-          var startDateType = d3.select('#startDateType').property('value');
-          var endDate = d3.select("#endDate").property('value');
-          var endDateType = d3.select("#endDateType").property('value');
-          var confidence = d3.select('#confidence').property('value');
-          var relType = d3.select('#relType').property('value');
-
-          newLink.source = newLink.source.id;
-          newLink.target = newLink.target.id;
-          newLink.weight = scope.slider.value;
-          newLink.start_year = startDate;
-          newLink.start_year_type = startDateType.split(':')[1];
-          newLink.end_year = endDate;
-          newLink.end_year_type = endDateType.split(':')[1];
-          newLink.type = relType;
-
-          addToDB.links.push(newLink);
-          console.log(addToDB);
-          scope.addLinkClosed = true;
-        }
 
 
         // VISUAL DENSITY PARSER
@@ -915,30 +776,14 @@ angular.module('redesign2017App')
         }
 
 
-        var zoom = d3.zoom(); // Create a single zoom function
-        // Call zoom for svg container.
-        svg.call(zoom.on('zoom', zoomed)); //.on("dblclick.zoom", null); // See zoomed() below
+        scope.singleZoom = d3.zoom(); // Create a single zoom function
+        // Call zoom for scope.singleSvg container.
+        scope.singleSvg.call(scope.singleZoom.on('zoom', zoomed)); //.on("dblclick.zoom", null); // See zoomed() below
 
 
-        //Functions for zoom and recenter buttons
-        scope.centerNetwork = function() {
-          console.log("Recenter");
-          var nodes = scope.data.included;
-          var sourceNode = nodes.filter(function(d) { return (d.id == sourceId) })[0]; // Get source node element by its ID
-          // Transition source node to center of rect
-          svg.transition().duration(750).call(zoom.transform, d3.zoomIdentity.translate(width / 2 - sourceNode.x, height / 2 - sourceNode.y));
-        }
 
-        scope.zoomIn = function() {
-          console.log("Zoom In")
-          svg.transition().duration(500).call(zoom.scaleBy, zoomfactor + .5); // Scale by adjusted zoomfactor
-        }
-        scope.zoomOut = function() {
-          console.log("Zoom Out")
-          svg.transition().duration(500).call(zoom.scaleBy, zoomfactor - .25); // Scale by adjusted zoomfactor, slightly lower since zoom out was more dramatic
-        }
 
-        // Zooming function translates the size of the svg container on wheel scroll.
+        // Zooming function translates the size of the scope.singleSvg container on wheel scroll.
         function zoomed() {
           container.attr("transform", "translate(" + d3.event.transform.x + ", " + d3.event.transform.y + ") scale(" + d3.event.transform.k + ")");
         }
@@ -984,13 +829,13 @@ angular.module('redesign2017App')
           and a radius value, use trig to position the nodes in a circle */
           var angle = 2*Math.PI*r / nodelist.length; // Get angle based on number of nodes
           nodelist.forEach(function(n, i) {
-            n.fx = r * Math.cos(2 * Math.PI * i / nodelist.length) + (width / 2); // Fix x coordinate
-            n.fy = r * Math.sin(2 * Math.PI * i / nodelist.length) + (height / 2); // Fix y coordinate
+            n.fx = r * Math.cos(2 * Math.PI * i / nodelist.length) + (scope.singleWidth / 2); // Fix x coordinate
+            n.fy = r * Math.sin(2 * Math.PI * i / nodelist.length) + (scope.singleHeight / 2); // Fix y coordinate
           });
         }
 
         // Trigger update automatically when the directive code is executed entirely (e.g. at loading)
-        // update(addedNodes, confidenceMin, confidenceMax, dateMin, dateMax, complexity, 'individual-force', simulation);
+        // update(scope.addedNodes, confidenceMin, confidenceMax, dateMin, dateMax, complexity, 'individual-force', simulation);
 
         // update triggered from the controller
         scope.$on('force layout generate', function(event, args) {
@@ -998,14 +843,16 @@ angular.module('redesign2017App')
 
           scope.data = args;
           generatePersonNetwork(args);
-          updatePersonNetwork(args);
+          scope.updatePersonNetwork(args);
           scope.reloadFilters();
         });
 
         scope.$on('force layout update', function(event, args) {
           console.log(args);
-          updatePersonNetwork(args);
+          scope.updatePersonNetwork(args);
         });
+
+
 
       }
     };

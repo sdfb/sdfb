@@ -119,9 +119,8 @@ shared-network {
     stroke: $degree0;
   }
 
-  .node.degree3 {
+  .node.degree7 {
     fill: orange;
-    r: 12.5;
   }
 
   .node:hover {
@@ -287,6 +286,10 @@ shared-network {
     stroke: #000;
   }
 
+  .link.new {
+    stroke: orange;
+  }
+
   .node.degree1 {
     fill: $indirect-acquaintance-fill;
     stroke: $degree0;
@@ -303,6 +306,11 @@ shared-network {
   .node.degree4 {
     fill: $degree3blue;
     stroke: $degree1blue;
+  }
+
+  .node.degree7 {
+    fill: orange;
+    r: 12.5;
   }
 
   .label rect {
@@ -427,6 +435,10 @@ single-group-graph {
     stroke: #000;
   }
 
+  .link.new {
+    stroke: orange;
+  }
+
   .node {
     fill: #EFF1F4;
     stroke: #78729F;
@@ -441,6 +453,10 @@ single-group-graph {
   .node.member {
     fill: #78729F;
     stroke: white;
+  }
+
+  .node.new {
+    fill: orange;
   }
 
   .node:hover {}

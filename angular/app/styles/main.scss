@@ -260,13 +260,39 @@ path.danger {
   }
 
   &.add-link {
-    height: 582px;
+    height: 632px;
     background-color: $light-color;
     border: 1px solid $contribution-mode-fill;
 
     &.collapsed {
       background-color: $contribution-mode-fill;
       border: 1px solid $contribution-mode-stroke;
+    }
+  }
+  &.group-assign {
+    height: 482px;
+    background-color: $light-color;
+    border: 1px solid $contribution-mode-fill;
+
+    &.collapsed {
+      background-color: $contribution-mode-fill;
+      border: 1px solid $contribution-mode-stroke;
+    }
+  }
+  &.submit-data {
+    height: 582px;
+    cursor: pointer;
+    background-color: $light-color;
+    border: 1px solid $contribution-mode-fill;
+
+    &.collapsed {
+      background-color: $contribution-mode-fill;
+      border: 1px solid $contribution-mode-stroke;
+      width: 100px;
+      color: white;
+      line-height: 5px;
+      display: inline-block;
+      vertical-align: middle;
     }
   }
 }
@@ -996,7 +1022,8 @@ label.btn-primary:first-of-type {
 }
 /* Contribution panels */
 add-link section,
-add-node section {
+add-node section,
+group-assign section {
   h3 {
     color: $contribution-mode-fill;
   }
@@ -1011,6 +1038,7 @@ add-node section {
 
     input.form-control {
       width: 60%;
+      float: right;
     }
 
     .input-group-addon {
@@ -1022,6 +1050,7 @@ add-node section {
       height: 30px;
       padding: 6px;
       text-align: left;
+      float: left;
       text-transform: uppercase;
       width: 40%;
       -moz-appearance: none;
@@ -1058,7 +1087,7 @@ add-node section {
       padding-left: 6px;
       pointer-events: none;
       position: absolute;
-      right: 5px;
+      right: 62%;
     }
   }
 

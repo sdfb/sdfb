@@ -1,34 +1,45 @@
 <section>
-  <h3 class="">Add link</h3>
-  <!-- <button type="button" class="btn btn-primary" ng-click="addingLink()">Draw Link</button> -->
-  <h4 class="paragraph-title">Source node</h4>
-  <!-- <input placeholder="Search for a person" type="text" ng-model="person.selected" uib-typeahead="person for person in peopleToSelect | filter:$viewValue | limitTo:8" class="form-control" id="source"> -->
-  <input placeholder="Search for a person" type="text" class="form-control" id="source">
+  <form ng-submit= "submitLink()">
+    <h3 class="">Add link</h3>
+    <p>To add a link, drag a node onto any other (or click an existing link), and these fields will auto-populate. If you need a node that's not in the current view, click the canvas or add it with the form above.</p>
+    <!-- <button type="button" class="btn btn-primary" ng-click="addingLink()">Draw Link</button> -->
+    <h4 class="paragraph-title">Source node</h4>
+    <input ng-disabled="true" type="text" class="form-control" ng-model="newLink.source.name">
+    <!-- <input type="text" ng-model="newLink.source.name" placeholder="Search for a person" uib-typeahead="person as person.name for person in callPersonTypeahead($viewValue)" typeahead-loading="loadingPerson1Add" typeahead-no-results="noResultsPerson1Add" class="form-control" typeahead-template-url="./views/groupsTypeaheadTemplate.html" typeahead-show-hint="true" typeahead-min-length="5" typeahead-on-select="foundSourcePerson($item)">
+		<i ng-show="loadingPersonAdd" class="glyphicon glyphicon-refresh"></i>
+		<div ng-show="noResultsPersonAdd">
+			<i class="glyphicon glyphicon-remove"></i> Person not found
+		</div> -->
 
-  <h4>Target node</h4>
-  <!-- <input placeholder="Search for a person" type="text" ng-model="person.selected" uib-typeahead="person for person in peopleToSelect | filter:$viewValue | limitTo:8" class="form-control" id="target"> -->
-  <input placeholder="Search for a person" type="text" class="form-control" id="target">
+    <h4>Target node</h4>
+    <input ng-disabled="true" type="text" class="form-control" ng-model="newLink.target.name">
+    <!-- <input type="text" ng-model="newLink.target.name" placeholder="Search for a person" uib-typeahead="person as person.name for person in callPersonTypeahead($viewValue)" typeahead-loading="loadingPerson2Add" typeahead-no-results="noResultsPerson2Add" class="form-control" typeahead-template-url="./views/groupsTypeaheadTemplate.html" typeahead-show-hint="true" typeahead-min-length="5" typeahead-on-select="foundTargetPerson($item)">
+		<i ng-show="loadingPerson2Add" class="glyphicon glyphicon-refresh"></i>
+		<div ng-show="noResultsPerson2Add">
+			<i class="glyphicon glyphicon-remove"></i> Person not found
+		</div> -->
 
-  <h4 class="paragraph-title">Relationship type</h4>
-  <input placeholder="Add relationship type" type="text" class="form-control" id="relType">
+    <h4 class="paragraph-title">Relationship type</h4>
+    <input placeholder="Add relationship type" type="text" class="form-control" ng-model="newLink.relType">
 
-  <h4>Start date</h4>
-  <div class="input-group">
-    <input class="form-control" uib-datepicker-popup="{{ config.dateFormat }}" ng-model="startDate" ng-model-options="{ getterSetter: true }" id="startDate">
-    <select class="input-group-addon" ng-model="selectedStartDateType" ng-options="type for type in config.dateTypes" id="startDateType"></select><i class="fa fa-caret-down" aria-hidden="true"></i>
-  </div>
+    <h4>Start date</h4>
+    <div class="input-group">
+      <select class="input-group-addon" ng-model="newLink.startDateType" ng-options="type for type in config.dateTypes" id="startDateType"></select><i class="fa fa-caret-down" aria-hidden="true"></i>
+      <input class="form-control" ng-model="newLink.startDate" ng-model-options="{ getterSetter: true }" id="startDate">
+    </div>
 
-  <h4>End date</h4>
-  <div class="input-group">
-    <input class="form-control" uib-datepicker-popup="{{ config.dateFormat }}" ng-model="endDate" id="endDate">
-    <select class="input-group-addon" ng-model="selectedEndDateType" ng-options="type for type in config.dateTypes" id="endDateType"></select><i class="fa fa-caret-down" aria-hidden="true"></i>
-  </div>
+    <h4>End date</h4>
+    <div class="input-group">
+      <select class="input-group-addon" ng-model="newLink.endDateType" ng-options="type for type in config.dateTypes" id="endDateType"></select><i class="fa fa-caret-down" aria-hidden="true"></i>
+      <input class="form-control" ng-model="newLink.endDate" id="endDate">
+    </div>
 
-  <h4>Relationship confidence level</h4>
-  <rzslider rz-slider-model="slider.value" rz-slider-options="slider.options" class="with-legend" id="confidence"></rzslider>
+    <h4>Your confidence level</h4>
+    <rzslider rz-slider-model="newLink.confidence" rz-slider-options="slider.options" class="with-legend" ng-model="newLink.confidence"></rzslider>
 
-  <h5>Your submission needs to be validated by SDFB staff. You will see it as unapproved contribution in the meantime.</h5>
-  <button type="button" class="btn btn-primary" ng-click="submitLink() ">Done</button>
+    <h5>Your submission needs to be validated by SDFB staff. You will see it as unapproved contribution in the meantime.</h5>
+    <button type="submit" class="btn btn-primary">Done</button>
+  </form>
 
 </section>
 <span class="close" ng-click="addLinkClosed = !addLinkClosed; legendClosed = true" style="color: white;">

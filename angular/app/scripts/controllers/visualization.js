@@ -8,7 +8,7 @@
  * Controller of the redesign2017App
  */
 angular.module('redesign2017App')
-  .controller('VisualizationCtrl', function($scope, $uibModal, $http, $log, $document, $routeParams, $route, $location, apiService, initialConfig, initialData) {
+  .controller('VisualizationCtrl', function($scope, $uibModal, $http, $log, $document, $routeParams, $route, $location, $window, apiService, initialConfig, initialData) {
     // console.log(initialConfig,initialData);
     $scope.config = initialConfig;
     $scope.data = initialData;
@@ -17,6 +17,11 @@ angular.module('redesign2017App')
     $scope.peopleFinderClosed = true;
     $scope.addNodeClosed = true;
     $scope.addLinkClosed = true;
+    $scope.groupAssignClosed = true;
+    $scope.addToDB = {nodes: [], links: [], groups: []};
+    $scope.newNode = {};
+    $scope.newLink = {};
+    $scope.groupAssign = {person: {}, group: {}};
     if ($routeParams.ids === undefined) {
       $location.search('ids', $scope.config.ids.toString());
     }
@@ -71,9 +76,12 @@ angular.module('redesign2017App')
       else if ($scope.config.ids.length === 2) {
         $scope.config.viewMode = 'shared-network';
       }
-    } else if ($routeParams.ids !== undefined) {
+    } else {
       $scope.config.ids = $routeParams.ids.split(",");
       $scope.config.viewMode = 'group-force';
+      apiService.getGroups($scope.config.ids.toString()).then(function(result) {
+        $scope.groupName = result.data[0].attributes.name;
+      });
     }
 
     $scope.data4groups = function() {
@@ -126,6 +134,49 @@ angular.module('redesign2017App')
       });
     }
 
+    //Functions for zoom and recenter buttons
+    $scope.centerNetwork = function() {
+      console.log("Recenter");
+      if ($scope.config.viewMode == 'individual-force' || $scope.config.viewMode == 'individual-concentric') {
+        var nodes = $scope.data.included;
+        var sourceId = $scope.data.data.attributes.primary_people;
+        var sourceNode = nodes.filter(function(d) { return (d.id == sourceId) })[0]; // Get source node element by its ID
+        // Transition source node to center of rect
+        $scope.singleSvg.transition().duration(750).call($scope.singleZoom.transform, d3.zoomIdentity.translate($scope.singleWidth / 2 - sourceNode.x, $scope.singleHeight / 2 - sourceNode.y));
+      } else if ($scope.config.viewMode == 'shared-network') {
+        $scope.sharedSvg.transition().duration(750).call($scope.sharedZoom.transform, d3.zoomIdentity);
+      } else if ($scope.config.viewMode == 'group-force') {
+        $scope.groupSvg.transition().duration(750).call($scope.groupZoom.transform, d3.zoomIdentity);
+      }
+    }
+
+    $scope.zoomIn = function() {
+      console.log("Zoom In")
+      if ($scope.config.viewMode == 'individual-force' || $scope.config.viewMode == 'individual-concentric') {
+        $scope.singleSvg.transition().duration(500).call($scope.singleZoom.scaleBy, $scope.singleZoomfactor + .5); // Scale by adjusted $scope.zoomfactor
+      } else if ($scope.config.viewMode == 'shared-network') {
+        $scope.sharedSvg.transition().duration(500).call($scope.sharedZoom.scaleBy, $scope.sharedZoomfactor + .5); // Scale by adjusted $scope.zoomfactor
+      } else if ($scope.config.viewMode == 'group-force') {
+        $scope.groupSvg.transition().duration(500).call($scope.groupZoom.scaleBy, $scope.groupZoomfactor + .5); // Scale by adjusted $scope.zoomfactor
+      }
+    }
+    $scope.zoomOut = function() {
+      console.log("Zoom Out")
+      // Scale by adjusted $scope.zoomfactor, slightly lower since zoom out was more dramatic
+      if ($scope.config.viewMode == 'individual-force' || $scope.config.viewMode == 'individual-concentric') {
+        $scope.singleSvg.transition().duration(500).call($scope.singleZoom.scaleBy, $scope.singleZoomfactor - .25); // Scale by adjusted $scope.zoomfactor
+      } else if ($scope.config.viewMode == 'shared-network') {
+        $scope.sharedSvg.transition().duration(500).call($scope.sharedZoom.scaleBy, $scope.sharedZoomfactor - .25); // Scale by adjusted $scope.zoomfactor
+      } else if ($scope.config.viewMode == 'group-force') {
+        $scope.groupSvg.transition().duration(500).call($scope.groupZoom.scaleBy, $scope.groupZoomfactor - .25); // Scale by adjusted $scope.zoomfactor
+      }
+    }
+
+    $scope.sendData = function() {
+      console.log($scope.addToDB);
+      $scope.addToDB = {nodes: [], links: [], groups: []};
+    }
+
 
     $scope.$watch('config.ids', function(newValue, oldValue) {
       if (newValue != oldValue || oldValue instanceof Array) {
@@ -176,6 +227,31 @@ angular.module('redesign2017App')
         }
       }
     });
+
+    $scope.$watch('config.contributionMode', function(newValue, oldValue) {
+      // var emptyDB = {nodes: [], links: [], groups: []}
+      if (newValue !== oldValue && !newValue) {
+        if ($scope.addToDB.nodes.length !== 0 || $scope.addToDB.links.length !== 0 || $scope.addToDB.groups.length !== 0) {
+          $window.alert("You are about to turn off contribution mode, but you still have unsaved changes. Click the 'submit' button to send your changes to the database before exiting contribution mode.");
+          $scope.config.contributionMode = true;
+        }
+        else {
+          if ($scope.config.viewMode === 'individual-force' || $scope.config.viewMode === 'individual-concentric') {
+            $scope.addedNodes = [];
+            $scope.addedLinks = [];
+            $scope.updatePersonNetwork($scope.data);
+          } else if ($scope.config.viewMode === 'shared-network') {
+            $scope.addedSharedNodes = [];
+            $scope.addedSharedLinks = [];
+            $scope.updateSharedNetwork($scope.data);
+          } else if ($scope.config.viewMode === 'group-force') {
+            $scope.addedGroupNodes = [];
+            $scope.addedGroupLinks = [];
+            $scope.updateGroupNetwork($scope.data, $scope.data.onlyMembers);
+          }
+        }
+      }
+    })
 
     $scope.$watch('config.onlyMembers', function(newValue, oldValue) {
       if (newValue !== oldValue) {

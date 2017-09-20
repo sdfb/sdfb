@@ -21,6 +21,8 @@
 
     <add-node ng-show="config.contributionMode" class="panel collapsable collapsed orange-panel add-node" ng-class="{'collapsed' : addNodeClosed}"></add-node>
     <add-link ng-show="config.contributionMode" class="panel collapsable collapsed orange-panel add-link" ng-class="{'collapsed' : addLinkClosed}"></add-link>
+    <group-assign ng-show="config.contributionMode && config.viewMode !== 'group-force'" class="panel collapsable collapsed orange-panel add-link" ng-class="{'collapsed' : groupAssignClosed}"></group-assign>
+    <span ng-show="config.contributionMode" class="panel collapsable collapsed orange-panel submit-data" ng-click="sendData()"><i class="fa fa-paper-plane-o close" style="color: white;" aria-hidden="true"></i>Submit</span>
 
 
   </section>

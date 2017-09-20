@@ -47,7 +47,7 @@ angular
                 user: 'Elizabeth',
               },
               contributionMode: false,
-              dateTypes : ['On', 'Circa', 'Before', 'Before/On','After', 'After/On'],
+              dateTypes : ['IN', 'CIRCA', 'BEFORE', 'BEFORE/IN','AFTER', 'AFTER/IN'],
               onlyMembers: false
             }
           },
