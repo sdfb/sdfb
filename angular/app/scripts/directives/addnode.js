@@ -116,19 +116,19 @@ angular.module('redesign2017App')
 
         }
 
-        scope.$on('selectionUpdated', function(event, args) {
-          if (scope.config.contributionMode && args.type === 'person') {
-            console.log(args);
-            scope.newNode.name = args.attributes.name;
-            scope.newNode.birthDate = args.attributes.birth_year;
-            scope.newNode.birthDateType = args.attributes.birth_year_type;
-            scope.newNode.deathDate = args.attributes.death_year;
-            scope.newNode.deathDateType = args.attributes.death_year_type;
-            scope.newNode.historical_significance = args.attributes.historical_significance;
-            scope.newNode.exists = true;
-            scope.addNodeClosed = false;
-          }
-        });
+        // scope.$on('selectionUpdated', function(event, args) {
+        //   if (scope.config.contributionMode && args.type === 'person') {
+        //     console.log(args);
+        //     scope.newNode.name = args.attributes.name;
+        //     scope.newNode.birthDate = args.attributes.birth_year;
+        //     scope.newNode.birthDateType = args.attributes.birth_year_type;
+        //     scope.newNode.deathDate = args.attributes.death_year;
+        //     scope.newNode.deathDateType = args.attributes.death_year_type;
+        //     scope.newNode.historical_significance = args.attributes.historical_significance;
+        //     scope.newNode.exists = true;
+        //     scope.addNodeClosed = false;
+        //   }
+        // });
       }
     };
   }]);

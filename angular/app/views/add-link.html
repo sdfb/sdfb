@@ -1,14 +1,23 @@
 <section>
   <form ng-submit= "submitLink()">
     <h3 class="">Add link</h3>
+    <p>To add a link, drag a node onto any other (or click an existing link), and these fields will auto-populate. If you need a node that's not in the current view, click the canvas or add it with the form above.</p>
     <!-- <button type="button" class="btn btn-primary" ng-click="addingLink()">Draw Link</button> -->
     <h4 class="paragraph-title">Source node</h4>
-    <!-- <input placeholder="Search for a person" type="text" ng-model="person.selected" uib-typeahead="person for person in peopleToSelect | filter:$viewValue | limitTo:8" class="form-control" id="source"> -->
-    <input placeholder="Search for a person" type="text" class="form-control" ng-model="newLink.source.name">
+    <input ng-disabled="true" type="text" class="form-control" ng-model="newLink.source.name">
+    <!-- <input type="text" ng-model="newLink.source.name" placeholder="Search for a person" uib-typeahead="person as person.name for person in callPersonTypeahead($viewValue)" typeahead-loading="loadingPerson1Add" typeahead-no-results="noResultsPerson1Add" class="form-control" typeahead-template-url="./views/groupsTypeaheadTemplate.html" typeahead-show-hint="true" typeahead-min-length="5" typeahead-on-select="foundSourcePerson($item)">
+		<i ng-show="loadingPersonAdd" class="glyphicon glyphicon-refresh"></i>
+		<div ng-show="noResultsPersonAdd">
+			<i class="glyphicon glyphicon-remove"></i> Person not found
+		</div> -->
 
     <h4>Target node</h4>
-    <!-- <input placeholder="Search for a person" type="text" ng-model="person.selected" uib-typeahead="person for person in peopleToSelect | filter:$viewValue | limitTo:8" class="form-control" id="target"> -->
-    <input placeholder="Search for a person" type="text" class="form-control" ng-model="newLink.target.name">
+    <input ng-disabled="true" type="text" class="form-control" ng-model="newLink.target.name">
+    <!-- <input type="text" ng-model="newLink.target.name" placeholder="Search for a person" uib-typeahead="person as person.name for person in callPersonTypeahead($viewValue)" typeahead-loading="loadingPerson2Add" typeahead-no-results="noResultsPerson2Add" class="form-control" typeahead-template-url="./views/groupsTypeaheadTemplate.html" typeahead-show-hint="true" typeahead-min-length="5" typeahead-on-select="foundTargetPerson($item)">
+		<i ng-show="loadingPerson2Add" class="glyphicon glyphicon-refresh"></i>
+		<div ng-show="noResultsPerson2Add">
+			<i class="glyphicon glyphicon-remove"></i> Person not found
+		</div> -->
 
     <h4 class="paragraph-title">Relationship type</h4>
     <input placeholder="Add relationship type" type="text" class="form-control" ng-model="newLink.relType">
