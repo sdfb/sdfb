@@ -8,7 +8,7 @@
  * Controller of the redesign2017App
  */
 angular.module('redesign2017App')
-  .controller('VisualizationCtrl', function($scope, $uibModal, $http, $log, $document, $routeParams, $route, $location, apiService, initialConfig, initialData) {
+  .controller('VisualizationCtrl', function($scope, $uibModal, $http, $log, $document, $routeParams, $route, $location, $window, apiService, initialConfig, initialData) {
     // console.log(initialConfig,initialData);
     $scope.config = initialConfig;
     $scope.data = initialData;
@@ -172,6 +172,11 @@ angular.module('redesign2017App')
       }
     }
 
+    $scope.sendData = function() {
+      console.log($scope.addToDB);
+      $scope.addToDB = {nodes: [], links: [], groups: []};
+    }
+
 
     $scope.$watch('config.ids', function(newValue, oldValue) {
       if (newValue != oldValue || oldValue instanceof Array) {
@@ -222,6 +227,31 @@ angular.module('redesign2017App')
         }
       }
     });
+
+    $scope.$watch('config.contributionMode', function(newValue, oldValue) {
+      // var emptyDB = {nodes: [], links: [], groups: []}
+      if (newValue !== oldValue && !newValue) {
+        if ($scope.addToDB.nodes.length !== 0 || $scope.addToDB.links.length !== 0 || $scope.addToDB.groups.length !== 0) {
+          $window.alert("You are about to turn off contribution mode, but you still have unsaved changes. Click the 'submit' button to send your changes to the database before exiting contribution mode.");
+          $scope.config.contributionMode = true;
+        }
+        else {
+          if ($scope.config.viewMode === 'individual-force' || $scope.config.viewMode === 'individual-concentric') {
+            $scope.addedNodes = [];
+            $scope.addedLinks = [];
+            $scope.updatePersonNetwork($scope.data);
+          } else if ($scope.config.viewMode === 'shared-network') {
+            $scope.addedSharedNodes = [];
+            $scope.addedSharedLinks = [];
+            $scope.updateSharedNetwork($scope.data);
+          } else if ($scope.config.viewMode === 'group-force') {
+            $scope.addedGroupNodes = [];
+            $scope.addedGroupLinks = [];
+            $scope.updateSharedNetwork($scope.data, $scope.data.onlyMembers);
+          }
+        }
+      }
+    })
 
     $scope.$watch('config.onlyMembers', function(newValue, oldValue) {
       if (newValue !== oldValue) {

@@ -279,6 +279,22 @@ path.danger {
       border: 1px solid $contribution-mode-stroke;
     }
   }
+  &.submit-data {
+    height: 582px;
+    cursor: pointer;
+    background-color: $light-color;
+    border: 1px solid $contribution-mode-fill;
+
+    &.collapsed {
+      background-color: $contribution-mode-fill;
+      border: 1px solid $contribution-mode-stroke;
+      width: 100px;
+      color: white;
+      line-height: 5px;
+      display: inline-block;
+      vertical-align: middle;
+    }
+  }
 }
 
 .panel.collapsable.collapsed {

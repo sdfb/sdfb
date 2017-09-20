@@ -406,7 +406,7 @@ angular.module('redesign2017App')
           if (scope.config.contributionMode) {
             cursor.attr("opacity", 1);
             scope.createNewLink(d, nodes, scope.addedGroupLinks);
-            scope.updateGroupNetwork(scope.data);
+            scope.updateGroupNetwork(scope.data, scope.data.onlyMembers);
 
           }
         }

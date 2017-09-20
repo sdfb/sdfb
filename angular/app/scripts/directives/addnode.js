@@ -104,7 +104,7 @@ angular.module('redesign2017App')
               var newNode = { attributes: { name: scope.newNode.name, degree: 1 }, id: 0, distance: 7, x: scope.singleWidth/2, y: scope.singleHeight/2};
               scope.addedGroupNodes.push(newNode);
             }
-            scope.updateGroupNetwork(scope.data);
+            scope.updateGroupNetwork(scope.data, scope.data.onlyMembers);
           }
 
           if (scope.notInView === true)
