@@ -215,7 +215,12 @@ angular.module('redesign2017App')
           $scope.data.layout = 'individual-concentric';
           $scope.$broadcast('force layout update', $scope.data);
         } else if (newValue == 'all') {
-          apiService.getFile('./data/allgroups.json').then(function successCallback(response) {
+          $location.search('all-groups');
+          var lastRoute = $route.current;
+          $scope.$on('$locationChangeSuccess', function(event) {
+            $route.current = lastRoute;
+          });
+          apiService.getAllGroups().then(function successCallback(response) {
             $scope.$broadcast('Show groups graph', response);
           }, function errorCallback(response) {
             console.error("An error occured while fetching file", response);
