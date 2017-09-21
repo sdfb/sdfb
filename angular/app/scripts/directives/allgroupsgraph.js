@@ -7,7 +7,7 @@
  * # allGroupsGraph
  */
 angular.module('redesign2017App')
-  .directive('allGroupsGraph', function() {
+  .directive('allGroupsGraph', ['apiService', '$timeout', function(apiService, $timeout) {
     return {
       template: '<svg width="100%" height="100%"></svg>',
       restrict: 'E',
@@ -327,8 +327,19 @@ angular.module('redesign2017App')
 
 
             // This triggers events in groupsbar.js and contextualinfopanel.js when a selection happens
-            scope.currentSelection = d;
-            scope.$broadcast('selectionUpdated', scope.currentSelection);
+            // scope.currentSelection = d;
+            console.log(d.id);
+            apiService.getGroups(d.id).then(function (result) {
+              // console.log(result);
+              scope.currentSelection = result.data[0];
+              scope.currentSelection.type = 'group';
+              // console.log(scope.currentSelection);
+              console.log(scope.currentSelection);
+              $timeout(function(){
+                scope.$broadcast('selectionUpdated', scope.currentSelection);
+              });
+            });
+            // scope.$broadcast('selectionUpdated', scope.currentSelection);
 
           } else if (d.type == "relationship") { //Handler for when a link is clicked
 
@@ -386,4 +397,4 @@ angular.module('redesign2017App')
 
       }
     };
-  });
+  }]);

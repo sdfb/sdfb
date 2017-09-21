@@ -64,7 +64,8 @@ angular.module('redesign2017App')
       });
     };
 
-    if ($routeParams.ids == undefined) {
+    // console.log($routeParams['all-groups']);
+    if ($routeParams.ids == undefined && !$routeParams['all-groups']) {
       $scope.config.ids = '10000473';
       $scope.config.viewMode = 'individual-force';
     }
