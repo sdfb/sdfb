@@ -18,6 +18,7 @@ angular.module('redesign2017App')
     $scope.addNodeClosed = true;
     $scope.addLinkClosed = true;
     $scope.groupAssignClosed = true;
+    $scope.addGroupClosed = true;
     $scope.addToDB = {nodes: [], links: [], groups: []};
     $scope.newNode = {};
     $scope.newLink = {};
@@ -175,6 +176,7 @@ angular.module('redesign2017App')
 
     $scope.sendData = function() {
       console.log($scope.addToDB);
+      $window.alert($scope.addToDB.toString());
       $scope.addToDB = {nodes: [], links: [], groups: []};
     }
 
