@@ -361,6 +361,10 @@ all-groups-graph {
     transform: rotate(0deg);
   }
 
+  .node.new {
+    fill: orange;
+  }
+
   .label {
     pointer-events: none;
   }

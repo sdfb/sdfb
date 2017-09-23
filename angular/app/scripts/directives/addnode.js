@@ -84,8 +84,8 @@ angular.module('redesign2017App')
               scope.addedNodes[scope.addedNodes.length-1].attributes.name = newNode.name;
             }
             else if (scope.notInView === true && (scope.addedNodes.length === 0 || !checkForNameless(scope.addedNodes))) {
-              var newNode = { attributes: { name: scope.newNode.name, degree: 1 }, id: 0, distance: 7, x: scope.singleWidth/2, y: scope.singleHeight/2};
-              scope.addedNodes.push(newNode);
+              var realNewNode = { attributes: { name: scope.newNode.name, degree: 1 }, id: 0, distance: 7, x: scope.singleWidth/2, y: scope.singleHeight/2};
+              scope.addedNodes.push(realNewNode);
             }
             scope.updatePersonNetwork(scope.data);
           } else if (scope.config.viewMode === 'shared-network') {
@@ -93,8 +93,8 @@ angular.module('redesign2017App')
               scope.addedSharedNodes[scope.addedSharedNodes.length-1].attributes.name = newNode.name;
             }
             else if (scope.notInView === true && (scope.addedSharedNodes.length === 0 || !checkForNameless(scope.addedSharedNodes))) {
-              var newNode = { attributes: { name: scope.newNode.name, degree: 1 }, id: 0, distance: 7, x: scope.singleWidth/2, y: scope.singleHeight/2};
-              scope.addedSharedNodes.push(newNode);
+              var realNewNode = { attributes: { name: scope.newNode.name, degree: 1 }, id: 0, distance: 7, x: scope.singleWidth/2, y: scope.singleHeight/2};
+              scope.addedSharedNodes.push(realNewNode);
             }
             scope.updateSharedNetwork(scope.data);
           } else if (scope.config.viewMode === 'group-force') {
@@ -102,8 +102,8 @@ angular.module('redesign2017App')
               scope.addedGroupNodes[scope.addedGroupNodes.length-1].attributes.name = newNode.name;
             }
             else if (scope.notInView === true && (scope.addedGroupNodes.length === 0 || !checkForNameless(scope.addedGroupNodes))) {
-              var newNode = { attributes: { name: scope.newNode.name, degree: 1 }, id: 0, distance: 7, x: scope.singleWidth/2, y: scope.singleHeight/2};
-              scope.addedGroupNodes.push(newNode);
+              var realNewNode = { attributes: { name: scope.newNode.name, degree: 1 }, id: 0, distance: 7, x: scope.singleWidth/2, y: scope.singleHeight/2};
+              scope.addedGroupNodes.push(realNewNode);
             }
             scope.updateGroupNetwork(scope.data, scope.data.onlyMembers);
           }

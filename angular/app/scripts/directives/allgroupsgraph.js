@@ -20,6 +20,8 @@ angular.module('redesign2017App')
         var nodes = [];
         var links = [];
 
+        scope.addedGroups = [];
+
         var simulation = d3.forceSimulation(nodes)
 
           // set the center of the force layout, this schould not influence the general force field
@@ -63,6 +65,11 @@ angular.module('redesign2017App')
             .on("zoom", zoomed))
           .on("click", function() {
             d3.selectAll('all-groups-graph .node, all-groups-graph g.label, all-groups-graph .link').classed('faded', false);
+
+            if (scope.config.contributionMode) {
+              var point = d3.mouse(svg.node());
+              scope.addGroupNode(scope.addedGroups, point, scope.updateAllGroups);
+            }
             // update selction and trigger event for other directives
             scope.currentSelection = {};
             scope.$apply(); // no need to trigger events, just apply
@@ -84,7 +91,7 @@ angular.module('redesign2017App')
         var sizeEdge = d3.scaleLinear()
           .range([1, 10]);
 
-        function update() {
+        scope.updateAllGroups = function() {
 
           var startTime = d3.now();
 
@@ -135,6 +142,8 @@ angular.module('redesign2017App')
 
             weightLegend.exit().remove();
 
+            scope.addedGroups.forEach(function(a) { nodes.push(a); });
+
             // Apply the general update pattern to the nodes.
             nodes.sort(function(x, y) {
               return d3.descending(x.attributes.degree, y.attributes.degree);
@@ -148,6 +157,7 @@ angular.module('redesign2017App')
               .attr("height", function(d) { return (2 * sizeScale(d.attributes.degree)) / Math.sqrt(2); })
               .attr("rx", 2)
               .attr("ry", 2)
+              .classed("new", function(d) { return d.distance === 7; })
               .on("click", function(d) {
                 // console.log(d, d.attributes.name)
                 // Toggle ego networks on click of node
@@ -392,7 +402,7 @@ angular.module('redesign2017App')
           var maxWeight = d3.max(links, function(d) { return d.weight });
           sizeEdge.domain([minWeight, maxWeight]);
           // console.log(nodes)
-          update();
+          scope.updateAllGroups();
         });
 
       }
