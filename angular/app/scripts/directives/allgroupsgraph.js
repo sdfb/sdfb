@@ -164,7 +164,22 @@ angular.module('redesign2017App')
                 toggleClick(d, this);
               })
               .on('dblclick', function(d){
-                console.log('double clicked:',d)
+                console.log('double clicked:',d);
+                if (d.id !== 0) {
+                  scope.groupSelected(d);
+                } else {
+                  console.log('new node');
+                  scope.$apply(function() {
+                    scope.config.viewMode = 'group-force';
+                    scope.data = {};
+                    scope.data.included = [];
+                    scope.data.data = {};
+                    scope.data.data.attributes = {};
+                    scope.data.data.attributes.primary_people = [];
+                    scope.data.data.attributes.connections = [];
+                  });
+
+                }
               })
               // On hover, display label
               .on('mouseenter', function(d) {

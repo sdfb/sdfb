@@ -88,7 +88,6 @@ angular.module('redesign2017App')
           // Format data
           members = [];
           members = json.data.attributes.primary_people;
-          console.log(members);
           nodes = [];
           links = [];
           var excludedNodes = [];
