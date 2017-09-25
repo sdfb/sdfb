@@ -7,7 +7,7 @@
  * # searchPanel
  */
 angular.module('redesign2017App')
-  .directive('searchPanel', ['$location', 'apiService', "$route", '$routeParams', function($location, apiService, $route, $routeParams) {
+  .directive('searchPanel', ['$location', 'apiService', function($location, apiService) {
     return {
       templateUrl: './views/search-panel.html',
       restrict: 'E',

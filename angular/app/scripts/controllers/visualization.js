@@ -7,11 +7,33 @@
  * # VisualizationCtrl
  * Controller of the redesign2017App
  */
-angular.module('redesign2017App')
-  .controller('VisualizationCtrl', function($scope, $uibModal, $http, $log, $document, $routeParams, $route, $location, $window, apiService, initialConfig, initialData) {
+angular.module('redesign2017App').component('visualization', {
+  // bindings: { data: '<' },
+  templateUrl: 'views/visualization.html',
+  controller: function($scope, $uibModal, $http, $log, $document, $location, $window, apiService) {
+    // console.log(this);
+    var initialConfig = {
+          viewObject:0, //0 = people, 1 = groups
+          viewMode:'individual-force',
+          // viewMode:'all',
+          ids: 10000473,
+          title: 'undefined title',
+          networkComplexity: '2',
+          dateMin:1500,
+          dateMax:1700,
+          confidenceMin:60,
+          confidenceMax:100,
+          login: {
+            status: true,
+            user: 'Elizabeth',
+          },
+          contributionMode: false,
+          dateTypes : ['IN', 'CIRCA', 'BEFORE', 'BEFORE/IN','AFTER', 'AFTER/IN'],
+          onlyMembers: false
+        }
     // console.log(initialConfig,initialData);
     $scope.config = initialConfig;
-    $scope.data = initialData;
+    // $scope.data = initialData;
     $scope.legendClosed = false;
     $scope.filtersClosed = true;
     $scope.peopleFinderClosed = true;
@@ -24,9 +46,9 @@ angular.module('redesign2017App')
     $scope.newLink = {};
     $scope.newGroup = {};
     $scope.groupAssign = {person: {}, group: {}};
-    if ($routeParams.ids === undefined) {
-      $location.search('ids', $scope.config.ids.toString());
-    }
+    // if ($routeParams.ids === undefined) {
+    //   $location.search('ids', $scope.config.ids.toString());
+    // }
 
     // Container for data related to groups
     $scope.groups = {};
@@ -67,25 +89,25 @@ angular.module('redesign2017App')
     };
 
     // console.log($routeParams['all-groups']);
-    if ($routeParams.ids == undefined && !$routeParams['all-groups']) {
-      $scope.config.ids = '10000473';
-      $scope.config.viewMode = 'individual-force';
-    }
-    else if ($routeParams.ids.length >= 8) {
-      $scope.config.ids = $routeParams.ids.split(',');
-      if ($scope.config.ids.length === 1) {
-        $scope.config.viewMode = 'individual-force';
-      }
-      else if ($scope.config.ids.length === 2) {
-        $scope.config.viewMode = 'shared-network';
-      }
-    } else {
-      $scope.config.ids = $routeParams.ids.split(",");
-      $scope.config.viewMode = 'group-force';
-      apiService.getGroups($scope.config.ids.toString()).then(function(result) {
-        $scope.groupName = result.data[0].attributes.name;
-      });
-    }
+    // if ($routeParams.ids == undefined && !$routeParams['all-groups']) {
+    //   $scope.config.ids = '10000473';
+    //   $scope.config.viewMode = 'individual-force';
+    // }
+    // else if ($routeParams.ids.length >= 8) {
+    //   $scope.config.ids = $routeParams.ids.split(',');
+    //   if ($scope.config.ids.length === 1) {
+    //     $scope.config.viewMode = 'individual-force';
+    //   }
+    //   else if ($scope.config.ids.length === 2) {
+    //     $scope.config.viewMode = 'shared-network';
+    //   }
+    // } else {
+    //   $scope.config.ids = $routeParams.ids.split(",");
+    //   $scope.config.viewMode = 'group-force';
+    //   apiService.getGroups($scope.config.ids.toString()).then(function(result) {
+    //     $scope.groupName = result.data[0].attributes.name;
+    //   });
+    // }
 
     $scope.data4groups = function() {
       console.log('Creating data4groups');
@@ -188,6 +210,14 @@ angular.module('redesign2017App')
     }
 
 
+    // $scope.watch('person', function(newValue, oldValue) {
+    //   if (newValue != oldValue) {
+    //     $scope.$broadcast('force layout generate', $scope.person);
+    //   }
+    // })
+
+
+    // $scope.data4groups();
     $scope.$watch('config.ids', function(newValue, oldValue) {
       if (newValue != oldValue || oldValue instanceof Array) {
         if ($scope.config.viewMode == 'individual-force') {
@@ -278,4 +308,5 @@ angular.module('redesign2017App')
         });
       }
     });
-  });
+  }
+});

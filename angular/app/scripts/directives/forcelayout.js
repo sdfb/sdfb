@@ -1,26 +1,59 @@
 'use strict';
 
 /**
- * @ngdoc directive
- * @name redesign2017App.directive:forceLayout
+ * @ngdoc component
+ * @name redesign2017App.component:forceLayout
  * @description
  * # forceLayout
  */
-angular.module('redesign2017App')
-  .directive('forceLayout', ['apiService', '$timeout', function(apiService, $timeout) {
-    return {
-      template: '<svg width="100%" height="100%"></svg>',
-      restrict: 'E',
-      link: function postLink(scope, element, attrs) {
+angular.module('redesign2017App').component('forceLayout', {
+  bindings: { networkData: '<' },
+  template: '<svg network-data="$resolve.networkData" width="100%" height="100%"></svg>',
+  controller: function($scope, $stateParams, apiService, $timeout) {
         console.log('drawing network the first time');
-        // console.log(scope.data);
+        // console.log($stateParams.ids);
 
-        scope.singleSvg = d3.select(element[0]).select('svg'); // Root svg element
-        scope.singleWidth = +scope.singleSvg.node().getBoundingClientRect().width; // Width of viz
-        scope.singleHeight = +scope.singleSvg.node().getBoundingClientRect().height; // Height of viz
-        scope.singleZoomfactor = 1;
-        scope.addedNodes = []; // Nodes user has added to the graph
-        scope.addedLinks = []; // Links user has added to the graph
+        this.$onChanges = function() {
+          this.networkData.layout = 'individual-force';
+          generatePersonNetwork(this.networkData);
+          $scope.updatePersonNetwork(this.networkData);
+        };
+
+        var initialConfig = {
+              viewObject:0, //0 = people, 1 = groups
+              viewMode:'individual-force',
+              // viewMode:'all',
+              ids: 10000473,
+              title: 'undefined title',
+              networkComplexity: '2',
+              dateMin:1500,
+              dateMax:1700,
+              confidenceMin:60,
+              confidenceMax:100,
+              login: {
+                status: true,
+                user: 'Elizabeth',
+              },
+              contributionMode: false,
+              dateTypes : ['IN', 'CIRCA', 'BEFORE', 'BEFORE/IN','AFTER', 'AFTER/IN'],
+              onlyMembers: false
+            }
+        // console.log(initialConfig,initialData);
+        $scope.config = initialConfig;
+
+        // apiService.getNetwork($stateParams.ids).then(function(result) {
+        //   console.log('person network of',$stateParams.ids,'\n',result);
+        //   generatePersonNetwork(result);
+        //   $scope.updatePersonNetwork(result);
+        //   $scope.data = result;
+        // });
+
+        $scope.singleSvg = d3.select('svg'); // Root svg element
+        $scope.singleWidth = +$scope.singleSvg.node().getBoundingClientRect().width; // Width of viz
+        $scope.singleHeight = +$scope.singleSvg.node().getBoundingClientRect().height; // Height of viz
+        $scope.singleZoomfactor = 1;
+        $scope.addedNodes = []; // Nodes user has added to the graph
+        $scope.addedLinks = []; // Links user has added to the graph
         var simulation,
           sourceId;
 
@@ -28,7 +61,7 @@ angular.module('redesign2017App')
             .radius(75)
             .distortion(2);
 
-          scope.singleSvg.append('rect') // Create container for visualization
+          $scope.singleSvg.append('rect') // Create container for visualization
             .attr('width', '100%')
             .attr('height', '100%')
             .attr('fill', 'transparent')
@@ -53,17 +86,17 @@ angular.module('redesign2017App')
               d3.selectAll('.group').classed('active', false);
               d3.selectAll('.group').classed('unactive', false);
 
-              if (scope.config.contributionMode) {
+              if ($scope.config.contributionMode) {
                 var point = d3.mouse(container.node());
-                scope.addNode(scope.addedNodes, point, scope.updatePersonNetwork);
+                $scope.addNode($scope.addedNodes, point, $scope.updatePersonNetwork);
               }
               // update selction and trigger event for other directives
-              scope.currentSelection = {};
-              scope.$apply(); // no need to trigger events, just apply
+              $scope.currentSelection = {};
+              $scope.$apply(); // no need to trigger events, just apply
             })
             .on('mousemove', mousemove);
 
-          var container = scope.singleSvg.append('g'); // Create container for nodes and edges
+          var container = $scope.singleSvg.append('g'); // Create container for nodes and edges
 
           // Separate groups for links, nodes, and edges
           var link = container.append("g")
@@ -85,7 +118,7 @@ angular.module('redesign2017App')
             .attr("stroke-width", 1.5)
             .attr('stroke-dasharray', 5,5)
             .attr("opacity", 0)//function() {
-              // if (scope.config.contributionMode) {return 1;} else {return 0;}
+              // if ($scope.config.contributionMode) {return 1;} else {return 0;}
             // })
             .attr("transform", "translate(-100,-100)")
             .attr("class", "cursor");
@@ -124,7 +157,7 @@ angular.module('redesign2017App')
         //              //
 
         simulation = d3.forceSimulation(nodes)
-          .force("center", d3.forceCenter(scope.singleWidth / 2, scope.singleHeight / 2)) // Keep graph from floating off-screen
+          .force("center", d3.forceCenter($scope.singleWidth / 2, $scope.singleHeight / 2)) // Keep graph from floating off-screen
           .force("charge", d3.forceManyBody().strength(-100)) // Charge force works as gravity
           .force("link", d3.forceLink(links).id(function(d) { return d.id; }).iterations(2)) //Link force accounts for link distance
           .force("collide", d3.forceCollide().iterations(0)) // in the tick function will be evaluated the moment in which turn on the anticollision (iterations > 1)
@@ -135,17 +168,17 @@ angular.module('redesign2017App')
 
         }
 
-        scope.updatePersonNetwork = function(json) {
+        $scope.updatePersonNetwork = function(json) {
 
           /* The main update function draws the all of the elements of the visualization
           and keeps them up to date using the D3 general update pattern. Takes as variables ranges
           for confidence and date, as well as a complexity value and a layout type (force or concentric) */
 
-          var  confidenceMin = scope.config.confidenceMin, // Minimum edge weight (default 60)
-            confidenceMax = scope.config.confidenceMax, // Maximum edge weight (default 100)
-            dateMin = scope.config.dateMin, // Minimum date range (source's birthdate)
-            dateMax = scope.config.dateMax, // Maximum date range (source's death date)
-            complexity = scope.config.networkComplexity, // Visual density (default 2)
+          var  confidenceMin = $scope.config.confidenceMin, // Minimum edge weight (default 60)
+            confidenceMax = $scope.config.confidenceMax, // Maximum edge weight (default 100)
+            dateMin = $scope.config.dateMin, // Minimum date range (source's birthdate)
+            dateMax = $scope.config.dateMax, // Maximum date range (source's death date)
+            complexity = $scope.config.networkComplexity, // Visual density (default 2)
             endTime, // Length of viz transition
             toggle = 0, // Toggle for ego networks on click (see toggleClick())
             oldLayout = 'individual-force'; // Keep track of whether the layout has changed
@@ -175,8 +208,8 @@ angular.module('redesign2017App')
           var newNodes = newData[0];
           var newLinks = newData[1];
 
-          scope.addedNodes.forEach(function(a) { newNodes.push(a); });
-          scope.addedLinks.forEach(function(a) { newLinks.push(a); });
+          $scope.addedNodes.forEach(function(a) { newNodes.push(a); });
+          $scope.addedLinks.forEach(function(a) { newLinks.push(a); });
 
           if (layout == 'individual-force') {
             console.log('Layout: individual-force');
@@ -190,8 +223,8 @@ angular.module('redesign2017App')
             // For concentric layout, set fixed positions according to degree
             newNodes.forEach(function(d) {
               if (d.distance == 0) { // Set source node to center of view
-                d.fx = scope.singleWidth / 2;
-                d.fy = scope.singleHeight / 2;
+                d.fx = $scope.singleWidth / 2;
+                d.fy = $scope.singleHeight / 2;
               }
             })
 
@@ -291,7 +324,7 @@ angular.module('redesign2017App')
                 }
               })
               // sort elements so to bring the hovered one on top and make it readable.
-              scope.singleSvg.selectAll("g.label").each(function(e, i) {
+              $scope.singleSvg.selectAll("g.label").each(function(e, i) {
                 if (d == e) {
                   var myElement = this;
                   d3.select(myElement).remove();
@@ -391,12 +424,12 @@ angular.module('redesign2017App')
           oldLayout = layout;
 
           // Change name of the viz
-          scope.config.title = "Hooke network of Francis Bacon"
+          $scope.config.title = "Hooke network of Francis Bacon"
         }
 
-        scope.$watch('config.contributionMode', function(newValue, oldValue) {
+        $scope.$watch('config.contributionMode', function(newValue, oldValue) {
           if (newValue !== oldValue) {
-            if (scope.config.contributionMode) {
+            if ($scope.config.contributionMode) {
               cursor.attr("opacity", 1);
             }
             else {
@@ -422,7 +455,7 @@ angular.module('redesign2017App')
 
 
 
-          // if (scope.config.contributionMode) {
+          // if ($scope.config.contributionMode) {
           //   fisheye.focus(d3.mouse(this));
           //
           //   node.each(function(f) { f.fisheye = fisheye(f); })
@@ -445,9 +478,9 @@ angular.module('redesign2017App')
           //     return "M" + f.source.fisheye.x + "," + f.source.fisheye.y + "A" + dr + "," + dr + " 0 0,1 " + f.target.fisheye.x + "," + f.target.fisheye.y;
           //   });
           // }
-          scope.showGroupAssign(d);
+          $scope.showGroupAssign(d);
 
-          scope.showNewLink(d);
+          $scope.showNewLink(d);
 
         }
 
@@ -455,7 +488,7 @@ angular.module('redesign2017App')
 
           cursor.attr("opacity", 0);
 
-          var nodes = scope.data.included;
+          var nodes = $scope.data.included;
           nodes.forEach(function(n) {
             n.fx = n.x;
             n.fy = n.y;
@@ -465,12 +498,12 @@ angular.module('redesign2017App')
 
         function dragended(d) {
 
-          var nodes = scope.data.included;
-          if (scope.config.contributionMode) {
+          var nodes = $scope.data.included;
+          if ($scope.config.contributionMode) {
             cursor.attr("opacity", 1);
-            scope.createNewLink(d, nodes, scope.addedLinks);
-            scope.endGroupEvents();
-            scope.updatePersonNetwork(scope.data);
+            $scope.createNewLink(d, nodes, $scope.addedLinks);
+            $scope.endGroupEvents();
+            $scope.updatePersonNetwork($scope.data);
 
           }
         }
@@ -478,7 +511,7 @@ angular.module('redesign2017App')
         // Move the circle with the mouse, until the the user clicks
         function mousemove() {
           cursor.attr("transform", "translate(" + d3.mouse(container.node()) + ")");
-          // if (scope.config.contributionMode) {
+          // if ($scope.config.contributionMode) {
           //   fisheye.focus(d3.mouse(this));
           //
           //   node.each(function(d) { d.fisheye = fisheye(d); })
@@ -725,17 +758,17 @@ angular.module('redesign2017App')
             }
 
             // This triggers events in groupsbar.js and contextualinfopanel.js when a selection happens
-            // scope.currentSelection = d;
+            // $scope.currentSelection = d;
             apiService.getPeople(d.id).then(function (result) {
               // console.log(result);
-              scope.currentSelection = result.data[0];
-              // console.log(scope.currentSelection);
+              $scope.currentSelection = result.data[0];
+              // console.log($scope.currentSelection);
               $timeout(function(){
-                scope.$broadcast('selectionUpdated', scope.currentSelection);
+                $scope.$broadcast('selectionUpdated', $scope.currentSelection);
               });
             });
 
-            // scope.$broadcast('selectionUpdated', scope.currentSelection);
+            // $scope.$broadcast('selectionUpdated', $scope.currentSelection);
 
           } else if (d.type == "relationship") { //Handler for when a link is clicked
 
@@ -759,16 +792,16 @@ angular.module('redesign2017App')
 
             console.log('selection to be implemented');
             // This triggers events in groupsbar.js and contextualinfopanel.js when a selection happens
-            // scope.currentSelection = d;
-            // scope.$broadcast('selectionUpdated', scope.currentSelection);
+            // $scope.currentSelection = d;
+            // $scope.$broadcast('selectionUpdated', $scope.currentSelection);
             apiService.getRelationship(d.id).then(function (result) {
               // console.log(result);
-              scope.currentSelection = result.data[0];
-              scope.currentSelection.source = d.source;
-              scope.currentSelection.target = d.target;
-              // console.log(scope.currentSelection);
+              $scope.currentSelection = result.data[0];
+              $scope.currentSelection.source = d.source;
+              $scope.currentSelection.target = d.target;
+              // console.log($scope.currentSelection);
               $timeout(function(){
-                scope.$broadcast('selectionUpdated', scope.currentSelection);
+                $scope.$broadcast('selectionUpdated', $scope.currentSelection);
               });
             });
           }
@@ -776,14 +809,14 @@ angular.module('redesign2017App')
         }
 
 
-        scope.singleZoom = d3.zoom(); // Create a single zoom function
-        // Call zoom for scope.singleSvg container.
-        scope.singleSvg.call(scope.singleZoom.on('zoom', zoomed)); //.on("dblclick.zoom", null); // See zoomed() below
+        $scope.singleZoom = d3.zoom(); // Create a single zoom function
+        // Call zoom for $scope.singleSvg container.
+        $scope.singleSvg.call($scope.singleZoom.on('zoom', zoomed)); //.on("dblclick.zoom", null); // See zoomed() below
 
 
 
 
-        // Zooming function translates the size of the scope.singleSvg container on wheel scroll.
+        // Zooming function translates the size of the $scope.singleSvg container on wheel scroll.
         function zoomed() {
           container.attr("transform", "translate(" + d3.event.transform.x + ", " + d3.event.transform.y + ") scale(" + d3.event.transform.k + ")");
         }
@@ -829,31 +862,30 @@ angular.module('redesign2017App')
           and a radius value, use trig to position the nodes in a circle */
           var angle = 2*Math.PI*r / nodelist.length; // Get angle based on number of nodes
           nodelist.forEach(function(n, i) {
-            n.fx = r * Math.cos(2 * Math.PI * i / nodelist.length) + (scope.singleWidth / 2); // Fix x coordinate
-            n.fy = r * Math.sin(2 * Math.PI * i / nodelist.length) + (scope.singleHeight / 2); // Fix y coordinate
+            n.fx = r * Math.cos(2 * Math.PI * i / nodelist.length) + ($scope.singleWidth / 2); // Fix x coordinate
+            n.fy = r * Math.sin(2 * Math.PI * i / nodelist.length) + ($scope.singleHeight / 2); // Fix y coordinate
           });
         }
 
         // Trigger update automatically when the directive code is executed entirely (e.g. at loading)
-        // update(scope.addedNodes, confidenceMin, confidenceMax, dateMin, dateMax, complexity, 'individual-force', simulation);
+        // update($scope.addedNodes, confidenceMin, confidenceMax, dateMin, dateMax, complexity, 'individual-force', simulation);
 
         // update triggered from the controller
-        scope.$on('force layout generate', function(event, args) {
+        $scope.$on('force layout generate', function(event, args) {
           console.log('ON: force layout generate')
 
-          scope.data = args;
+          $scope.data = args;
           generatePersonNetwork(args);
-          scope.updatePersonNetwork(args);
-          scope.reloadFilters();
+          $scope.updatePersonNetwork(args);
+          $scope.reloadFilters();
         });
 
-        scope.$on('force layout update', function(event, args) {
+        $scope.$on('force layout update', function(event, args) {
           console.log(args);
-          scope.updatePersonNetwork(args);
+          $scope.updatePersonNetwork(args);
         });
 
 
 
       }
-    };
-  }]);
+    });
