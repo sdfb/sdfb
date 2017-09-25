@@ -8,10 +8,13 @@
  */
 angular.module('redesign2017App').component('forceLayout', {
   bindings: { networkData: '<' },
-  template: '<svg network-data="$resolve.networkData" width="100%" height="100%"></svg>',
+  template: '<svg id="graph" width="100%" height="100%"></svg>',
   controller: function($scope, $stateParams, apiService, $timeout) {
         console.log('drawing network the first time');
         // console.log($stateParams.ids);
+        console.log($stateParams.date.split(','))
+
+        $scope.filtersClosed = true;
 
         this.$onChanges = function() {
           this.networkData.layout = 'individual-force';
@@ -48,7 +51,7 @@ angular.module('redesign2017App').component('forceLayout', {
         //   $scope.data = result;
         // });
 
-        $scope.singleSvg = d3.select('svg'); // Root svg element
+        $scope.singleSvg = d3.select('svg#graph'); // Root svg element
         $scope.singleWidth = +$scope.singleSvg.node().getBoundingClientRect().width; // Width of viz
         $scope.singleHeight = +$scope.singleSvg.node().getBoundingClientRect().height; // Height of viz
         $scope.singleZoomfactor = 1;

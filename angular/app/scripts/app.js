@@ -76,24 +76,15 @@ redesign2017App.config(function($stateProvider, $locationProvider) {
   var homeState = {
     name: 'home',
     url: '/',
-    component: 'visualization'
-    // resolve: {
-    //   data: function(apiService, $transition$) {
-    //     var ids = $transition$.params().ids;
-    //     return apiService.getNetwork(ids);//.then(function(result) {
-    //     //   console.log('person network of',ids,'\n',result);
-    //     //   return result;
-    //     //   // result.layout = 'individual-force';
-    //     //   // $scope.config.viewMode = 'individual-force';
-    //     //   // $scope.$broadcast('force layout generate', result);
-    //     //   // $scope.data4groups();
-    //     // });
-    //   }
-    // }
+    component: 'visualization',
   }
   var forceState = {
     name: 'home.forceLayout',
-    url: '?ids',
+    url: '?ids&date&confidence&density',
+    views: {
+      'filters@home': 'filtersPanel',
+      'graph@home': 'forceLayout'
+    },
     resolve: {
       networkData: function(apiService, $stateParams) {
           console.log($stateParams.ids);
@@ -102,11 +93,20 @@ redesign2017App.config(function($stateProvider, $locationProvider) {
             return apiService.result;
           });
       }
-    },
-    component: 'forceLayout'
+    }
   }
+  // var filtersState = {
+  //   name: 'home.filtersPanel',
+  //   url: '?ids&date&confidence',
+  //   resolve: {
+  //     networkData: function(forceState) {
+  //       console.log(forceState.networkData);
+  //     }
+  //   }
+  // }
 
   $stateProvider.state(homeState);
   $stateProvider.state(forceState);
+  // $stateProvider.state(filtersState);
   $locationProvider.html5Mode(true);
 })
