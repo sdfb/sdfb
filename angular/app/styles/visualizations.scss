@@ -356,6 +356,11 @@ all-groups-graph {
     cursor: pointer;
   }
 
+  // .cursor {
+  //   -webkit-transform: rotate(30deg);
+  //   transform: rotate(30deg);
+  // }
+
   .node:hover {
     -webkit-transform: rotate(0deg);
     transform: rotate(0deg);

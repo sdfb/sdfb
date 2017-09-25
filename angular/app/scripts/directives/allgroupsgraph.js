@@ -12,13 +12,14 @@ angular.module('redesign2017App')
       template: '<svg width="100%" height="100%"></svg>',
       restrict: 'E',
       link: function postLink(scope, element, attrs) {
-        var svg = d3.select(element[0]).select('svg'),
-          width = svg.node().getBoundingClientRect().width,
-          chartWidth = width,
-          height = svg.node().getBoundingClientRect().height;
+        scope.allGroupSvg = d3.select(element[0]).select('svg');
+        var width = +scope.allGroupSvg.node().getBoundingClientRect().width,
+            chartWidth = width,
+            height = +scope.allGroupSvg.node().getBoundingClientRect().height;
 
         var nodes = [];
         var links = [];
+        scope.allGroupZoomfactor = 1;
 
         scope.addedGroups = [];
 
@@ -27,9 +28,9 @@ angular.module('redesign2017App')
           // set the center of the force layout, this schould not influence the general force field
           .force("center", d3.forceCenter(width / 2, height / 2))
 
-          // attract all the nodes to the center of the svg
+          // attract all the nodes to the center of the scope.allGroupSvg
           // this result in a force that is summed up to the others
-          // helpfull when you don't want nodes to be pushed outside the svg borders, since it LIMITS this behaviour
+          // helpfull when you don't want nodes to be pushed outside the scope.allGroupSvg borders, since it LIMITS this behaviour
           .force("x", d3.forceX(width / 2))
           .force("y", d3.forceY(height / 2))
 
@@ -55,31 +56,26 @@ angular.module('redesign2017App')
           .alphaDecay(0.02)
           .on("tick", ticked)
 
-        svg.append("rect")
+        scope.allGroupSvg.append("rect")
           .attr("width", width)
           .attr("height", height)
           .style("fill", "none")
           .style("pointer-events", "all")
-          .call(d3.zoom()
-            .scaleExtent([1 / 2, 4])
-            .on("zoom", zoomed))
           .on("click", function() {
             d3.selectAll('all-groups-graph .node, all-groups-graph g.label, all-groups-graph .link').classed('faded', false);
 
             if (scope.config.contributionMode) {
-              var point = d3.mouse(svg.node());
+              var point = d3.mouse(scope.allGroupSvg.node());
               scope.addGroupNode(scope.addedGroups, point, scope.updateAllGroups);
             }
             // update selction and trigger event for other directives
             scope.currentSelection = {};
             scope.$apply(); // no need to trigger events, just apply
           })
+          .on('mousemove', mousemove);
 
-        function zoomed() {
-          g.attr("transform", d3.event.transform);
-        }
 
-        var g = svg.append("g").attr("transform", "translate(" + (width / 2) * 0 + "," + (height / 2) * 0 + ")"),
+        var g = scope.allGroupSvg.append("g").attr("transform", "translate(" + (width / 2) * 0 + "," + (height / 2) * 0 + ")"),
           link = g.append("g").selectAll(".link"),
           node = g.append("g").selectAll(".node");
 
@@ -90,6 +86,30 @@ angular.module('redesign2017App')
 
         var sizeEdge = d3.scaleLinear()
           .range([1, 10]);
+
+        var cursor = scope.allGroupSvg.append("rect")
+          // .attr("r", 12.5)
+          .attr("width", 20)//function(d) { return (2 * sizeScale(d.attributes.degree)) / Math.sqrt(2); })
+          .attr("height", 20)//function(d) { return (2 * sizeScale(d.attributes.degree)) / Math.sqrt(2); })
+          .attr("rx", 2)
+          .attr("ry", 2)
+          .attr("fill", "none")
+          .attr("stroke", "orange")
+          .attr("stroke-width", 1.5)
+          .attr('stroke-dasharray', 5,5)
+          .attr("opacity", 0)//function() {
+            // if (scope.config.contributionMode) {return 1;} else {return 0;}
+          // })
+          .attr("transform", "translate(-100,-100)")
+          .attr("class", "cursor");
+
+        scope.allGroupZoom = d3.zoom(); // Create a single zoom function
+        // Call zoom for scope.allGroupSvg container.
+        scope.allGroupSvg.call(scope.allGroupZoom.on('zoom', zoomed)); //.on("dblclick.zoom", null); // See zoomed() below
+
+        function zoomed() {
+          g.attr("transform", "translate(" + d3.event.transform.x + ", " + d3.event.transform.y + ") scale(" + d3.event.transform.k + ")");
+        }
 
         scope.updateAllGroups = function() {
 
@@ -189,7 +209,7 @@ angular.module('redesign2017App')
                   }
                 })
                 // // sort elements so to bring the hovered one on top and make it readable.
-                svg.selectAll("all-groups-graph g.label").each(function(e, i) {
+                scope.allGroupSvg.selectAll("all-groups-graph g.label").each(function(e, i) {
                   if (d == e) {
                     var myElement = this;
                     d3.select(myElement).remove();
@@ -308,6 +328,34 @@ angular.module('redesign2017App')
           })
         }
 
+        // Move the circle with the mouse, until the the user clicks
+        function mousemove() {
+          cursor.attr("transform", "translate(" + d3.mouse(scope.allGroupSvg.node()) + ")");
+          // if (scope.config.contributionMode) {
+          //   fisheye.focus(d3.mouse(this));
+          //
+          //   node.each(function(d) { d.fisheye = fisheye(d); })
+          //       .attr("cx", function(d) { return d.fisheye.x; })
+          //       .attr("cy", function(d) { return d.fisheye.y; })
+          //       .attr("r", function(d) {
+          //         if (d.distance == 0) {
+          //           return 25 * d.fisheye.z;
+          //         } else if (d.distance == 1) {
+          //           return 12.5 * d.fisheye.z;
+          //         } else {
+          //           return 6.25 * d.fisheye.z;
+          //         }
+          //       });
+          //
+          //   link.attr("d", function(d) {
+          //         var dx = d.target.fisheye.x - d.source.fisheye.x,
+          //           dy = d.target.fisheye.y - d.source.fisheye.y,
+          //           dr = Math.sqrt(dx * dx + dy * dy);
+          //         return "M" + d.source.fisheye.x + "," + d.source.fisheye.y + "A" + dr + "," + dr + " 0 0,1 " + d.target.fisheye.x + "," + d.target.fisheye.y;
+          //       });
+          // }
+        }
+
         // Draw curved edges, create d-value for link path
         function linkArc(d) {
           var dx = d.target.x - d.source.x,
@@ -395,6 +443,17 @@ angular.module('redesign2017App')
           }
 
         }
+
+        scope.$watch('config.contributionMode', function(newValue, oldValue) {
+          if (newValue !== oldValue) {
+            if (scope.config.contributionMode) {
+              cursor.attr("opacity", 1);
+            }
+            else {
+              cursor.attr("opacity", 0);
+            }
+          }
+        });
 
         // action triggered from the controller
         scope.$on('Show groups graph', function(event, json) {

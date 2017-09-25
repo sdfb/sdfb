@@ -150,6 +150,8 @@ angular.module('redesign2017App')
         $scope.sharedSvg.transition().duration(750).call($scope.sharedZoom.transform, d3.zoomIdentity);
       } else if ($scope.config.viewMode == 'group-force') {
         $scope.groupSvg.transition().duration(750).call($scope.groupZoom.transform, d3.zoomIdentity);
+      } else if ($scope.config.viewMode == 'all') {
+        $scope.allGroupSvg.transition().duration(750).call($scope.allGroupZoom.transform, d3.zoomIdentity);
       }
     }
 
@@ -161,6 +163,8 @@ angular.module('redesign2017App')
         $scope.sharedSvg.transition().duration(500).call($scope.sharedZoom.scaleBy, $scope.sharedZoomfactor + .5); // Scale by adjusted $scope.zoomfactor
       } else if ($scope.config.viewMode == 'group-force') {
         $scope.groupSvg.transition().duration(500).call($scope.groupZoom.scaleBy, $scope.groupZoomfactor + .5); // Scale by adjusted $scope.zoomfactor
+      } else if ($scope.config.viewMode == 'all') {
+        $scope.allGroupSvg.transition().duration(500).call($scope.allGroupZoom.scaleBy, $scope.allGroupZoomfactor + .5); // Scale by adjusted $scope.zoomfactor
       }
     }
     $scope.zoomOut = function() {
@@ -172,6 +176,8 @@ angular.module('redesign2017App')
         $scope.sharedSvg.transition().duration(500).call($scope.sharedZoom.scaleBy, $scope.sharedZoomfactor - .25); // Scale by adjusted $scope.zoomfactor
       } else if ($scope.config.viewMode == 'group-force') {
         $scope.groupSvg.transition().duration(500).call($scope.groupZoom.scaleBy, $scope.groupZoomfactor - .25); // Scale by adjusted $scope.zoomfactor
+      } else if ($scope.config.viewMode == 'all') {
+        $scope.allGroupSvg.transition().duration(500).call($scope.allGroupZoom.scaleBy, $scope.allGroupZoomfactor - .25); // Scale by adjusted $scope.zoomfactor
       }
     }
 
