@@ -18,9 +18,11 @@ angular.module('redesign2017App')
     $scope.addNodeClosed = true;
     $scope.addLinkClosed = true;
     $scope.groupAssignClosed = true;
-    $scope.addToDB = {nodes: [], links: [], groups: []};
+    $scope.addGroupClosed = true;
+    $scope.addToDB = {nodes: [], links: [], groups: [], group_assignments: []};
     $scope.newNode = {};
     $scope.newLink = {};
+    $scope.newGroup = {};
     $scope.groupAssign = {person: {}, group: {}};
     if ($routeParams.ids === undefined) {
       $location.search('ids', $scope.config.ids.toString());
@@ -64,7 +66,8 @@ angular.module('redesign2017App')
       });
     };
 
-    if ($routeParams.ids == undefined) {
+    // console.log($routeParams['all-groups']);
+    if ($routeParams.ids == undefined && !$routeParams['all-groups']) {
       $scope.config.ids = '10000473';
       $scope.config.viewMode = 'individual-force';
     }
@@ -147,6 +150,8 @@ angular.module('redesign2017App')
         $scope.sharedSvg.transition().duration(750).call($scope.sharedZoom.transform, d3.zoomIdentity);
       } else if ($scope.config.viewMode == 'group-force') {
         $scope.groupSvg.transition().duration(750).call($scope.groupZoom.transform, d3.zoomIdentity);
+      } else if ($scope.config.viewMode == 'all') {
+        $scope.allGroupSvg.transition().duration(750).call($scope.allGroupZoom.transform, d3.zoomIdentity);
       }
     }
 
@@ -158,6 +163,8 @@ angular.module('redesign2017App')
         $scope.sharedSvg.transition().duration(500).call($scope.sharedZoom.scaleBy, $scope.sharedZoomfactor + .5); // Scale by adjusted $scope.zoomfactor
       } else if ($scope.config.viewMode == 'group-force') {
         $scope.groupSvg.transition().duration(500).call($scope.groupZoom.scaleBy, $scope.groupZoomfactor + .5); // Scale by adjusted $scope.zoomfactor
+      } else if ($scope.config.viewMode == 'all') {
+        $scope.allGroupSvg.transition().duration(500).call($scope.allGroupZoom.scaleBy, $scope.allGroupZoomfactor + .5); // Scale by adjusted $scope.zoomfactor
       }
     }
     $scope.zoomOut = function() {
@@ -169,11 +176,14 @@ angular.module('redesign2017App')
         $scope.sharedSvg.transition().duration(500).call($scope.sharedZoom.scaleBy, $scope.sharedZoomfactor - .25); // Scale by adjusted $scope.zoomfactor
       } else if ($scope.config.viewMode == 'group-force') {
         $scope.groupSvg.transition().duration(500).call($scope.groupZoom.scaleBy, $scope.groupZoomfactor - .25); // Scale by adjusted $scope.zoomfactor
+      } else if ($scope.config.viewMode == 'all') {
+        $scope.allGroupSvg.transition().duration(500).call($scope.allGroupZoom.scaleBy, $scope.allGroupZoomfactor - .25); // Scale by adjusted $scope.zoomfactor
       }
     }
 
     $scope.sendData = function() {
       console.log($scope.addToDB);
+      $window.alert($scope.addToDB.toString());
       $scope.addToDB = {nodes: [], links: [], groups: []};
     }
 
@@ -215,7 +225,12 @@ angular.module('redesign2017App')
           $scope.data.layout = 'individual-concentric';
           $scope.$broadcast('force layout update', $scope.data);
         } else if (newValue == 'all') {
-          apiService.getFile('./data/allgroups.json').then(function successCallback(response) {
+          $location.search('all-groups');
+          var lastRoute = $route.current;
+          $scope.$on('$locationChangeSuccess', function(event) {
+            $route.current = lastRoute;
+          });
+          apiService.getAllGroups().then(function successCallback(response) {
             $scope.$broadcast('Show groups graph', response);
           }, function errorCallback(response) {
             console.error("An error occured while fetching file", response);

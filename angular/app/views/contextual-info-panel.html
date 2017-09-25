@@ -30,24 +30,24 @@
   <small-timeline class="person" details="currentSelection.target"></small-timeline>
   <span ng-if="config.contributionMode" class="edit-btn person" ng-click="editData(currentSelection.target.id)">Edit data</span>
 </section>
-<section ng-if="currentSelection.type == 'group'" id="">
-  <h2>{{currentSelection.groupInfo.name}}</h2>
-  <p ng-if="currentSelection.groupInfo.description != ''">{{currentSelection.groupInfo.description}}</p>
-  <p ng-if="currentSelection.attributes.historical_significance == ''"> &empty; </p>
+<section ng-if="currentSelection.type == 'group'">
+  <h2>{{currentSelection.attributes.name}}</h2>
+  <p ng-if="currentSelection.attributes.description != ''">{{currentSelection.attributes.description}}</p>
+  <!-- <p ng-if="currentSelection.attributes.historical_significance == ''"> &empty; </p> -->
   <!-- <small-timeline class="person" details="currentSelection"></small-timeline> -->
-  <div ng-if="currentSelection.groupInfo.person_list.length > 0" class="group-members">
+  <div ng-if="currentSelection.attributes.people.length > 0" class="group-members">
     <div class="flex-boxed list-header">
       <div><span style="width:20px; display: inline-block;">#</span> Member name</div>
       <div>Since</div>
     </div>
     <div>
-      <div class="flex-boxed" ng-repeat="member in currentSelection.groupInfo.person_list">
-        <div><span style="width:20px; display: inline-block;">{{$index + 1}}</span> {{member}}</div>
-        <div>????</div>
+      <div class="flex-boxed" ng-repeat="member in currentSelection.attributes.people">
+        <div><span style="width:20px; display: inline-block;">{{$index + 1}}</span> {{member.person_id}}</div>
+        <div>{{member.start_year_type}} {{member.start_year}}</div>
       </div>
     </div>
   </div>
-  <div ng-if="currentSelection.groupInfo.person_list.length < 1">
+  <div ng-if="currentSelection.attributes.people.length < 1">
       No members
   </div>
   <span ng-if="config.contributionMode" class="edit-btn person" ng-click="editData(currentSelection.id)">Edit data</span>

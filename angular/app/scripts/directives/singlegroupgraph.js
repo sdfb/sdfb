@@ -24,18 +24,9 @@ angular.module('redesign2017App')
         var nodes = [];
         var links = [];
         var members = [];
+        var simulation;
 
-        var simulation = d3.forceSimulation(nodes)
-          .force("center", d3.forceCenter(scope.groupWidth / 2, scope.groupHeight / 2))
-          // .force("x", d3.forceX(scope.groupWidth / 2))
-          // .force("y", d3.forceY(scope.groupHeight / 2))
-          .force("charge", d3.forceManyBody().strength(-100))
-          .force("link", d3.forceLink(links).id(function(d) { return d.id }).iterations(1))
-          .force("collide", d3.forceCollide().iterations(0))
-          // .force("collide", d3.forceCollide(function(d) { return sizeScale(d.attributes.degree) + 1 }).iterations(0))
-          .alpha(1)
-          .alphaDecay(0.05)
-          .on("tick", ticked);
+
 
         var cursor = scope.groupSvg.append("circle")
           .attr("r", 12.5)
@@ -97,7 +88,6 @@ angular.module('redesign2017App')
           // Format data
           members = [];
           members = json.data.attributes.primary_people;
-          console.log(members);
           nodes = [];
           links = [];
           var excludedNodes = [];
@@ -169,6 +159,18 @@ angular.module('redesign2017App')
 
           sizeEdge.domain([minWeight, maxWeight]);
 
+          simulation = d3.forceSimulation(nodes)
+            .force("center", d3.forceCenter(scope.groupWidth / 2, scope.groupHeight / 2))
+            // .force("x", d3.forceX(scope.groupWidth / 2))
+            // .force("y", d3.forceY(scope.groupHeight / 2))
+            .force("charge", d3.forceManyBody().strength(-100))
+            .force("link", d3.forceLink(links).id(function(d) { return d.id }).iterations(1))
+            .force("collide", d3.forceCollide().iterations(0))
+            // .force("collide", d3.forceCollide(function(d) { return sizeScale(d.attributes.degree) + 1 }).iterations(0))
+            .alpha(1)
+            .alphaDecay(0.05)
+            .on("tick", ticked);
+
           // draw things
           function drawGraph() {
             // Apply the general update pattern to the nodes.
@@ -231,7 +233,10 @@ angular.module('redesign2017App')
               .attr('id', function(d) { // Assign ID number
                 return "n" + d.id.toString();
               })
-              .attr("r", function(d) { return sizeScale(d.attributes.degree); })
+              .attr("r", function(d) {
+                if (members.indexOf(d.id) === -1) { return 6.25; }
+                else { return 12.5; };
+              })
               .on("click", function(d) {
                 toggleClick(d, this);
               })
@@ -322,8 +327,8 @@ angular.module('redesign2017App')
           }
           drawGraph();
           // Update and restart the simulation.
-          simulation.nodes(nodes);
-          simulation.force("link").links(links);
+          // simulation.nodes(nodes);
+          // simulation.force("link").links(links);
           simulation.alphaTarget(0).restart();
           simulation.on("end", function() {
             var endTime = d3.now();
@@ -450,8 +455,11 @@ angular.module('redesign2017App')
           label.attr("transform", function(d) {
             return "translate(" + (d.x) + "," + (d.y) + ")"
           })
-          if (simulation.alpha() < 0.007 && simulation.force("collide").iterations() == 0) {
-            simulation.force("collide").iterations(1).radius(function(d) { return sizeScale(d.attributes.degree) + 1 });
+          if (simulation.alpha() < 0.005 && simulation.force("collide").iterations() == 0) {
+            simulation.force("collide").iterations(1).radius(function(d) {
+              if (members.indexOf(d.id) === -1) { return 6.25; }
+              else { return 12.5; };
+            });
           }
         }
 
