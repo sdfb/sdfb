@@ -6,10 +6,12 @@
  * @description
  * # filtersPanel
  */
-angular.module('redesign2017App').component('filtersPanel', {
-      bindings: { networkData: '<' },
-      templateUrl: './views/filters-panel.html',
-      controller: function($scope, $state, $stateParams) {
+angular.module('redesign2017App')
+  .directive('filtersPanel', function() {
+        return {
+          templateUrl: './views/filters-panel.html',
+          restrict: 'E',
+          link: function postLink(scope, element, attrs) {
         var confidenceMin,
             confidenceMax,
             dateMin,
@@ -21,39 +23,9 @@ angular.module('redesign2017App').component('filtersPanel', {
             startYear,
             endYear;
 
-            $scope.filtersClosed = true;
-
-            var initialConfig = {
-                  viewObject:0, //0 = people, 1 = groups
-                  viewMode:'individual-force',
-                  // viewMode:'all',
-                  ids: 10000473,
-                  title: 'undefined title',
-                  networkComplexity: '2',
-                  dateMin:1500,
-                  dateMax:1700,
-                  confidenceMin:60,
-                  confidenceMax:100,
-                  login: {
-                    status: true,
-                    user: 'Elizabeth',
-                  },
-                  contributionMode: false,
-                  dateTypes : ['IN', 'CIRCA', 'BEFORE', 'BEFORE/IN','AFTER', 'AFTER/IN'],
-                  onlyMembers: false
-                }
-            // console.log(initialConfig,initialData);
-            $scope.config = initialConfig;
-
-        this.$onChanges = function() {
-          $scope.data = this.networkData;
-          console.log($scope.data);
-          $scope.reloadFilters();
-        };
-
-        $scope.reloadFilters = function() {
+        scope.reloadFilters = function() {
           removeAll();
-          sources = $scope.data.data.attributes.primary_people;
+          sources = scope.data.data.attributes.primary_people;
           if (sources.length === 1) {
             var sourceId = sources[0], // ID of node the user searched for.
             sourceNode = getNodeInfo(sourceId); // Get object of attributes for sourceNode
@@ -76,17 +48,17 @@ angular.module('redesign2017App').component('filtersPanel', {
             createConnectionButtons();
           }
 
-          confidenceMin = $scope.config.confidenceMin,
-          confidenceMax = $scope.config.confidenceMax,
-          dateMin = $scope.config.dateMin,
-          dateMax = $scope.config.dateMax,
-          complexity = $scope.config.networkComplexity,
+          confidenceMin = scope.config.confidenceMin,
+          confidenceMax = scope.config.confidenceMax,
+          dateMin = scope.config.dateMin,
+          dateMax = scope.config.dateMax,
+          complexity = scope.config.networkComplexity,
           links = [],
-          args = $scope.data;
+          args = scope.data;
 
-          args.layout = $scope.config.viewMode;
+          args.layout = scope.config.viewMode;
           // Populate links array from JSON
-          $scope.data.data.attributes.connections.forEach(function(c) {
+          scope.data.data.attributes.connections.forEach(function(c) {
             // Retain ID and type from level above in JSON
             c.attributes.id = c.id;
             c.attributes.type = c.type;
@@ -99,7 +71,7 @@ angular.module('redesign2017App').component('filtersPanel', {
         }
 
         function getNodeInfo(id) {
-          var sourceNode = $scope.data.included.filter(function(d) { // Data corresponding to sourceID
+          var sourceNode = scope.data.included.filter(function(d) { // Data corresponding to sourceID
             if (d.id.toString() === id) {
               return d;
             };
@@ -174,10 +146,10 @@ angular.module('redesign2017App').component('filtersPanel', {
             // On change update value of networkComplexity config variable
             complexity = this.value;
             console.log(complexity);
-            $scope.$evalAsync(function() {
-              $scope.config.networkComplexity = complexity;
+            scope.$evalAsync(function() {
+              scope.config.networkComplexity = complexity;
               // Trigger force layout update
-              $scope.$broadcast('force layout update', args);
+              scope.$broadcast('force layout update', args);
             });
           });
         }
@@ -217,10 +189,10 @@ angular.module('redesign2017App').component('filtersPanel', {
             // On change update value of networkComplexity config variable
             complexity = this.value;
             console.log(complexity);
-            $scope.$evalAsync(function() {
-              $scope.config.networkComplexity = complexity;
+            scope.$evalAsync(function() {
+              scope.config.networkComplexity = complexity;
               // Trigger force layout update
-              $scope.$broadcast('shared network update', args);
+              scope.$broadcast('shared network update', args);
             });
           });
         }
@@ -460,17 +432,17 @@ angular.module('redesign2017App').component('filtersPanel', {
             var convertConfidence = d3.scaleLinear().domain([0, confidenceWidth-4]).range([0, 100]);
             var confidenceMin = Math.round(convertConfidence(s[0]));
             var confidenceMax = Math.round(convertConfidence(s[1]));
-            $scope.$evalAsync(function() {
-              $scope.config.confidenceMin = confidenceMin;
-              $scope.config.confidenceMax = confidenceMax;
-              $scope.$watchCollection('[config.confidenceMin, config.confidenceMax]', function(newValues, oldValues) {
+            scope.$evalAsync(function() {
+              scope.config.confidenceMin = confidenceMin;
+              scope.config.confidenceMax = confidenceMax;
+              scope.$watchCollection('[config.confidenceMin, config.confidenceMax]', function(newValues, oldValues) {
                 if (newValues != oldValues) {
                   console.log('brushed with new values');
                   if (sources.length === 1) {
-                    $scope.$broadcast('force layout update', args);
+                    scope.$broadcast('force layout update', args);
                   }
                   else if (sources.length === 2) {
-                    $scope.$broadcast('shared network update', args);
+                    scope.$broadcast('shared network update', args);
                   }
                 }
               })
@@ -663,19 +635,19 @@ angular.module('redesign2017App').component('filtersPanel', {
             dateMin = Math.round(convertDate(s[0]));
             dateMax = Math.round(convertDate(s[1]));
 
-            $state.go('home.forceLayout', {date: dateMin.toString()+','+dateMax.toString()});
+            // $state.go('home.forceLayout', {date: dateMin.toString()+','+dateMax.toString()});
 
-            $scope.$evalAsync(function() {
-              $scope.config.dateMin = dateMin;
-              $scope.config.dateMax = dateMax;
-              $scope.$watchCollection('[config.dateMin, config.dateMax]', function(newValues, oldValues) {
+            scope.$evalAsync(function() {
+              scope.config.dateMin = dateMin;
+              scope.config.dateMax = dateMax;
+              scope.$watchCollection('[config.dateMin, config.dateMax]', function(newValues, oldValues) {
                 if (newValues != oldValues) {
                   console.log('brushed with new values');
                   if (sources.length === 1) {
-                    $scope.$broadcast('force layout update', args);
+                    scope.$broadcast('force layout update', args);
                   }
                   else if (sources.length === 2) {
-                    $scope.$broadcast('shared network update', args);
+                    scope.$broadcast('shared network update', args);
                   }
                 }
               })
@@ -683,6 +655,11 @@ angular.module('redesign2017App').component('filtersPanel', {
           }
         }
 
+        scope.$watch('$stateParams.ids', function(newValue, oldValue) {
+          scope.reloadFilters(scope.data);
+        }, true);
+
 
       }
-    });
+    }
+  });

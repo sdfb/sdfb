@@ -152,7 +152,7 @@ path.danger {
   width: 100vw;
   height: calc(100vh - 50px);
   padding: 10px;
-  position: relative;
+  position: fixed;
   pointer-events: none;
   z-index: 100;
 }

@@ -1,5 +1,4 @@
-<div class="panel collapsable collapsed" ng-class="{'collapsed' : filtersClosed, 'allGroupFilter': config.viewMode == 'all', 'individualFilter': config.viewMode == 'individual-force' || config.viewMode == 'individual-concentric' || config.viewMode == 'shared-network', 'singleGroupFilter': config.viewMode == 'single-group'}">
-  <section class="force-layout">
+<section class="force-layout">
   <h3 class="">Filters</h3>
   <div ng-show=" config.viewMode == 'individual-force' || config.viewMode == 'individual-concentric' || config.viewMode == 'shared-network'">
     <div>
@@ -54,4 +53,3 @@
 	<i ng-if="!filtersClosed" class="fa fa-times" aria-hidden="true"></i>
 	<i ng-if="filtersClosed" class="fa fa-filter" aria-hidden="true"></i>
 </span>
-</div>

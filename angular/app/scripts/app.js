@@ -76,15 +76,11 @@ redesign2017App.config(function($stateProvider, $locationProvider) {
   var homeState = {
     name: 'home',
     url: '/',
-    component: 'visualization',
+    component: 'home'
   }
-  var forceState = {
-    name: 'home.forceLayout',
-    url: '?ids&date&confidence&density',
-    views: {
-      'filters@home': 'filtersPanel',
-      'graph@home': 'forceLayout'
-    },
+  var vizState = {
+    name: 'home.visualization',
+    url: '?ids',
     resolve: {
       networkData: function(apiService, $stateParams) {
           console.log($stateParams.ids);
@@ -93,20 +89,12 @@ redesign2017App.config(function($stateProvider, $locationProvider) {
             return apiService.result;
           });
       }
-    }
+    },
+    component: 'visualization'
   }
-  // var filtersState = {
-  //   name: 'home.filtersPanel',
-  //   url: '?ids&date&confidence',
-  //   resolve: {
-  //     networkData: function(forceState) {
-  //       console.log(forceState.networkData);
-  //     }
-  //   }
-  // }
 
   $stateProvider.state(homeState);
-  $stateProvider.state(forceState);
+  $stateProvider.state(vizState);
   // $stateProvider.state(filtersState);
   $locationProvider.html5Mode(true);
 })

@@ -8,7 +8,7 @@
  * Controller of the redesign2017App
  */
 angular.module('redesign2017App').component('visualization', {
-  // bindings: { data: '<' },
+  bindings: { networkData: '<' },
   templateUrl: 'views/visualization.html',
   controller: function($scope, $uibModal, $http, $log, $document, $location, $window, apiService) {
     // console.log(this);
@@ -49,6 +49,11 @@ angular.module('redesign2017App').component('visualization', {
     // if ($routeParams.ids === undefined) {
     //   $location.search('ids', $scope.config.ids.toString());
     // }
+
+    this.$onChanges = function() {
+      this.networkData.layout = 'individual-force';
+      $scope.data = this.networkData;
+    };
 
     // Container for data related to groups
     $scope.groups = {};
