@@ -1,3 +1,4 @@
+
 'use strict';
 
 /**
@@ -346,6 +347,9 @@ angular.module('redesign2017App')
               // Toggle ego networks on click of node
               toggleClick(d, graph.links, this);
             })
+            .on('dblclick', function(d){
+              scope.selectedPerson(d);
+            })
             // On hover, display label
             .on('mouseenter', function(d) {
               d3.selectAll('g.label').classed('temporary-unhidden', function(e) {
@@ -430,7 +434,7 @@ angular.module('redesign2017App')
 
           scope.sharedZoom = d3.zoom(); // Create a single zoom function
           // Call zoom for svg container.
-          scope.sharedSvg.call(scope.sharedZoom.on('zoom', zoomed)); //.on("dblclick.zoom", null); // See zoomed() below
+          scope.sharedSvg.call(scope.sharedZoom.on('zoom', zoomed)).on("dblclick.zoom", null); // See zoomed() below
 
           // Zooming function translates the size of the svg container on wheel scroll.
           function zoomed() {

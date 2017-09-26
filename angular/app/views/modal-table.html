@@ -25,7 +25,7 @@
                 <td>{{ person.name }}</td>
                 <td class="text-right">{{ person.degree }}</td>
                 <td>
-                    <button type="button" class="btn btn-primary">
+                    <button ng-click="$ctrl.selectedPerson(person); $ctrl.cancel()" type="button" class="btn btn-primary">
                         Visualize
                     </button>
                     <!-- <button type="button" class="btn btn-primary">

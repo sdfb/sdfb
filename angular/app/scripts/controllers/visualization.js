@@ -81,6 +81,9 @@ angular.module('redesign2017App')
         resolve: {
           data: function() {
             return $scope.data;
+          },
+          selectedPerson: function() {
+            return $scope.selectedPerson;
           }
         //   currentSelection: function() {
         //     return $scope.currentSelection;

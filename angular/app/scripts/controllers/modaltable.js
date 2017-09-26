@@ -8,7 +8,7 @@
  * Controller of the redesign2017App
  */
 angular.module('redesign2017App')
-  .controller('ModalTableCtrl', function($scope, $uibModalInstance, data) {
+  .controller('ModalTableCtrl', function($scope, $uibModalInstance, data, selectedPerson) {
 
     // console.log('currentSelection', currentSelection);
     // console.log('groups', groups);
@@ -27,8 +27,9 @@ angular.module('redesign2017App')
     //
     var $ctrl = this;
     $ctrl.data = data;
+    $ctrl.selectedPerson = selectedPerson;
     $ctrl.personData = $ctrl.data.included[0].attributes;
-    console.log($ctrl.data);
+    // console.log($ctrl.data);
 
     var sourceId = $ctrl.data.data.attributes.primary_people[0]
 
@@ -44,7 +45,7 @@ angular.module('redesign2017App')
       }
     });
 
-    console.log($ctrl.one_degree_nodes);
+    // console.log($ctrl.one_degree_nodes);
     //
     // // Pre-selection
     // $ctrl.selected = {
