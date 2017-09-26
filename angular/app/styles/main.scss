@@ -1359,7 +1359,7 @@ people-finder {
 }
 /* modal styles*/
 .modal-dialog {
-  width: 775px;
+  width: 1000px;
 
   .modal-content {
     background-color: $panels-bg;
@@ -1379,7 +1379,14 @@ people-finder {
     text-transform: uppercase;
   }
 
+  .person-info p {
+    font-size: 14px;
+    font-weight: bold;
+    text-align: center;
+  }
+
   table {
+    font-size: 12px;
     table-layout: fixed;
     white-space: nowrap;
 
@@ -1390,19 +1397,19 @@ people-finder {
     }
 
     .id-column {
-      width: 6%;
+      width: 25%;
     }
 
     .name-column {
-      width: 48%;
+      width: 50%;
     }
 
-    .members-column {
-      width: 16%;
+    .connection-column {
+      width: 10%;
     }
 
     .action-column {
-      width: 35%;
+      width: 15%;
     }
   }
 
