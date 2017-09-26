@@ -1,0 +1,51 @@
+<!-- <div class="modal-header">
+    <h3 class="modal-title" id="modal-title">List of Minor Groups</h3>
+</div> -->
+<div class="modal-body other-groups-list" id="modal-table-body">
+    <h3 class="modal-title" id="modal-table">Table for Hooke Network of {{$ctrl.personData.name}}</h3>
+    <i class="fa fa-times close-btn" aria-hidden="true" type="button" ng-click="$ctrl.cancel()" aria-label="Close"></i>
+    <div class="person-info">
+      <p>Name: {{$ctrl.personData.name}}</p>
+      <p>{{$ctrl.personData.historical_significance}}</p>
+      <p>Born {{$ctrl.personData.birth_year_type}} {{$ctrl.personData.birth_year}}</p>
+      <p>Died {{$ctrl.personData.death_year_type}} {{$ctrl.personData.death_year}}</p>
+    </div>
+    <table class="table table-hover">
+        <thead>
+            <tr>
+                <td class="id-column">ID</td>
+                <td class="name-column">Name</td>
+                <td class="connections-column">Degree</td>
+                <td class="action-column">Action</td>
+            </tr>
+        </thead>
+        <tbody>
+            <tr class="person {{'p'+person.id}}" ng-class="{ 'active': group.active }" ng-repeat="person in $ctrl.one_degree_nodes">
+                <td>{{ person.id }}</td>
+                <td>{{ person.name }}</td>
+                <td class="text-right">{{ person.degree }}</td>
+                <td>
+                    <button type="button" class="btn btn-primary">
+                        Visualize
+                    </button>
+                    <!-- <button type="button" class="btn btn-primary">
+                        Table view
+                    </button>
+                    <button type="button" class="btn btn-primary">
+                        Edit
+                    </button> -->
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <!-- <ul>
+        <li class="group {{'g'+group.groupId}}" ng-class="{ 'active': group.active }" ng-repeat="group in $ctrl.groups">
+            <a href="#" ng-click="$event.preventDefault(); $ctrl.selected.group = group">Group ID: {{ group.groupId }} - Number of people: {{ group.value }}</a>
+        </li>
+    </ul>
+    Selected: <b>{{ $ctrl.selected.group }}</b> -->
+</div>
+<div class="modal-footer">
+    <!-- <button class="btn btn-primary" type="button" ng-click="$ctrl.ok()">OK</button> -->
+    <button class="btn btn-warning" type="button" ng-click="$ctrl.cancel()">Close</button>
+</div>

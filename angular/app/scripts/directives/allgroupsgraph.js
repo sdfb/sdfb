@@ -105,7 +105,7 @@ angular.module('redesign2017App')
 
         scope.allGroupZoom = d3.zoom(); // Create a single zoom function
         // Call zoom for scope.allGroupSvg container.
-        scope.allGroupSvg.call(scope.allGroupZoom.on('zoom', zoomed)); //.on("dblclick.zoom", null); // See zoomed() below
+        scope.allGroupSvg.call(scope.allGroupZoom.on('zoom', zoomed)).on("dblclick.zoom", null); // See zoomed() below
 
         function zoomed() {
           g.attr("transform", "translate(" + d3.event.transform.x + ", " + d3.event.transform.y + ") scale(" + d3.event.transform.k + ")");
