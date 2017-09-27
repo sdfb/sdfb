@@ -1381,8 +1381,12 @@ people-finder {
 
   .person-info p {
     font-size: 14px;
+    // font-weight: bold;
+    text-align: right;
+  }
+
+  .person-info p:first-child {
     font-weight: bold;
-    text-align: center;
   }
 
   table {
@@ -1410,6 +1414,38 @@ people-finder {
 
     .action-column {
       width: 15%;
+    }
+  }
+
+  table.all-groups {
+    font-size: 12px;
+    table-layout: fixed;
+    white-space: nowrap;
+
+    td {
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .id-column {
+      width: 10%;
+    }
+
+    .name-column {
+      width: 40%;
+    }
+
+    .start-column {
+      width: 20%;
+    }
+
+    .end-column {
+      width: 20%;
+    }
+
+    .action-column {
+      width: 10%;
     }
   }
 

@@ -4,7 +4,7 @@
   <p ng-if="config.contributionMode" class="contribution">Click anywhere on the canvas to add a node.</p>
   <p ng-if="config.contributionMode" class="contribution">Drag a node onto any other node to add a link.</p>
   <p ng-if="config.contributionMode" class="contribution">Drag a node onto the groups bar to add a node to a group.</p>
-  <p><button type="button" class="btn btn-primary" ng-click="openTable()">See Table View</button></p>
+  <p><button ng-show="config.viewMode !== 'group-force'" type="button" class="btn btn-primary" ng-click="openTable()">See Table View</button></p>
 </section>
 <section ng-if="currentSelection.type == 'person' " id="XXXcurrent-selection-person1">
   <h2>{{currentSelection.attributes.name }}</h2>

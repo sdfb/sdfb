@@ -8,7 +8,7 @@
  * Controller of the redesign2017App
  */
 angular.module('redesign2017App')
-  .controller('ModalTableCtrl', function($scope, $uibModalInstance, data, selectedPerson) {
+  .controller('ModalTableCtrl', function($scope, $uibModalInstance, data, selectedPerson, viewMode, groupSelected) {
 
     // console.log('currentSelection', currentSelection);
     // console.log('groups', groups);
@@ -27,25 +27,46 @@ angular.module('redesign2017App')
     //
     var $ctrl = this;
     $ctrl.data = data;
-    $ctrl.selectedPerson = selectedPerson;
-    $ctrl.personData = $ctrl.data.included[0].attributes;
     // console.log($ctrl.data);
+    $ctrl.selectedPerson = selectedPerson;
+    $ctrl.groupSelected = groupSelected;
+    $ctrl.viewMode = viewMode;
 
-    var sourceId = $ctrl.data.data.attributes.primary_people[0]
+    if ($ctrl.viewMode === 'individual-force' || $ctrl.viewMode === 'individual-concentric') {
+      $ctrl.personData = [$ctrl.data.included[0].attributes];
 
-    $ctrl.one_degree_nodes = []
+      var sourceId = $ctrl.data.data.attributes.primary_people[0];
 
-    $ctrl.data.data.attributes.connections.forEach(function(l) {
-      if (l.attributes.source.id === sourceId) {
-        l.attributes.target.attributes.id = l.attributes.target.id;
-        $ctrl.one_degree_nodes.push(l.attributes.target.attributes);
-      } else if (l.attributes.target.id === sourceId) {
-        l.attributes.source.attributes.id = l.attributes.source.id;
-        $ctrl.one_degree_nodes.push(l.attributes.source.attributes);
-      }
-    });
+      $ctrl.peopleList = [];
 
-    // console.log($ctrl.one_degree_nodes);
+      $ctrl.data.data.attributes.connections.forEach(function(l) {
+        if (l.attributes.source.id === sourceId) {
+          l.attributes.target.attributes.id = l.attributes.target.id;
+          $ctrl.peopleList.push(l.attributes.target.attributes);
+        } else if (l.attributes.target.id === sourceId) {
+          l.attributes.source.attributes.id = l.attributes.source.id;
+          $ctrl.peopleList.push(l.attributes.source.attributes);
+        }
+      });
+    } else if ($ctrl.viewMode === 'shared-network') {
+      $ctrl.personData = []
+      $ctrl.data.included.slice(0,2).forEach( function(i) { $ctrl.personData.push(i.attributes); });
+      var sources = $ctrl.data.data.attributes.primary_people[0];
+
+      $ctrl.peopleList = [];
+
+      $ctrl.data.included.forEach(function(i) {
+        if (sources.indexOf(i.id) === -1) {
+          i.attributes.id = i.id;
+          $ctrl.peopleList.push(i.attributes);
+        }
+      });
+
+    } else if ($ctrl.viewMode === 'all') {
+      $ctrl.groupList = $ctrl.data.included;
+    }
+
+    // console.log($ctrl.peopleList);
     //
     // // Pre-selection
     // $ctrl.selected = {

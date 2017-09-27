@@ -84,6 +84,12 @@ angular.module('redesign2017App')
           },
           selectedPerson: function() {
             return $scope.selectedPerson;
+          },
+          viewMode: function() {
+            return $scope.config.viewMode;
+          },
+          groupSelected: function() {
+            return $scope.groupSelected;
           }
         //   currentSelection: function() {
         //     return $scope.currentSelection;

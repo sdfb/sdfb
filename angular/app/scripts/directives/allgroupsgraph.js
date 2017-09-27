@@ -474,6 +474,7 @@ angular.module('redesign2017App')
           })
           var minWeight = d3.min(links, function(d) { return d.weight });
           var maxWeight = d3.max(links, function(d) { return d.weight });
+          scope.data = json;
           sizeEdge.domain([minWeight, maxWeight]);
           // console.log(nodes)
           scope.updateAllGroups();

@@ -2,15 +2,16 @@
     <h3 class="modal-title" id="modal-title">List of Minor Groups</h3>
 </div> -->
 <div class="modal-body other-groups-list" id="modal-table-body">
-    <h3 class="modal-title" id="modal-table">Table for Hooke Network of {{$ctrl.personData.name}}</h3>
+    <h3 ng-show="$ctrl.viewMode === 'individual-force' || $ctrl.viewMode === 'individual-concentric'" class="modal-title" id="modal-table">Table for Hooke Network of {{$ctrl.personData[0].name}}</h3>
+    <h3 ng-show="$ctrl.viewMode === 'shared-network'" class="modal-title" id="modal-table">Table for Shared Network of {{$ctrl.personData[0].name}} and {{$ctrl.personData[1].name}}</h3>
+    <h3 ng-show="$ctrl.viewMode === 'all'" class="modal-title" id="modal-table">Table for All Groups</h3>
     <i class="fa fa-times close-btn" aria-hidden="true" type="button" ng-click="$ctrl.cancel()" aria-label="Close"></i>
-    <div class="person-info">
-      <p>Name: {{$ctrl.personData.name}}</p>
-      <p>{{$ctrl.personData.historical_significance}}</p>
-      <p>Born {{$ctrl.personData.birth_year_type}} {{$ctrl.personData.birth_year}}</p>
-      <p>Died {{$ctrl.personData.death_year_type}} {{$ctrl.personData.death_year}}</p>
+    <div ng-show="$ctrl.viewMode !== 'all'" class="person-info" ng-repeat="person in $ctrl.personData">
+      <p>{{person.name}}: {{person.historical_significance}}</p>
+      <p>Born {{person.birth_year_type}} {{person.birth_year}}</p>
+      <p>Died {{person.death_year_type}} {{person.death_year}}</p>
     </div>
-    <table class="table table-hover">
+    <table ng-show="$ctrl.viewMode !== 'all'" class="table table-hover">
         <thead>
             <tr>
                 <td class="id-column">ID</td>
@@ -20,20 +21,38 @@
             </tr>
         </thead>
         <tbody>
-            <tr class="person {{'p'+person.id}}" ng-class="{ 'active': group.active }" ng-repeat="person in $ctrl.one_degree_nodes">
+            <tr class="person {{'p'+person.id}}" ng-class="{ 'active': group.active }" ng-repeat="person in $ctrl.peopleList">
                 <td>{{ person.id }}</td>
                 <td>{{ person.name }}</td>
-                <td class="text-right">{{ person.degree }}</td>
+                <td>{{ person.degree }}</td>
                 <td>
                     <button ng-click="$ctrl.selectedPerson(person); $ctrl.cancel()" type="button" class="btn btn-primary">
                         Visualize
                     </button>
-                    <!-- <button type="button" class="btn btn-primary">
-                        Table view
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table ng-show="$ctrl.viewMode === 'all'" class="table all-groups table-hover">
+        <thead>
+            <tr>
+                <td class="id-column">ID</td>
+                <td class="name-column">Name</td>
+                <td class="start-column">Start Date</td>
+                <td class="end-column">End Date</td>
+                <td class="action-column">Action</td>
+            </tr>
+        </thead>
+        <tbody>
+            <tr class="group {{'g'+group.id}}" ng-class="{ 'active': group.active }" ng-repeat="group in $ctrl.groupList">
+                <td>{{ group.id }}</td>
+                <td>{{ group.attributes.name }}</td>
+                <td>{{ group.attributes.start_year_type }} {{ group.attributes.start_year }}</td>
+                <td>{{ group.attributes.end_year_type }} {{ group.attributes.end_year }}</td>
+                <td>
+                    <button ng-click="$ctrl.groupSelected(group); $ctrl.cancel()" type="button" class="btn btn-primary">
+                        Visualize
                     </button>
-                    <button type="button" class="btn btn-primary">
-                        Edit
-                    </button> -->
                 </td>
             </tr>
         </tbody>
@@ -45,7 +64,7 @@
     </ul>
     Selected: <b>{{ $ctrl.selected.group }}</b> -->
 </div>
-<div class="modal-footer">
-    <!-- <button class="btn btn-primary" type="button" ng-click="$ctrl.ok()">OK</button> -->
+<!-- <div class="modal-footer">
+    <button class="btn btn-primary" type="button" ng-click="$ctrl.ok()">OK</button>
     <button class="btn btn-warning" type="button" ng-click="$ctrl.cancel()">Close</button>
-</div>
+</div> -->
