@@ -16,6 +16,9 @@
             <tr>
                 <td class="id-column">ID</td>
                 <td class="name-column">Name</td>
+                <td class="sig-column">Historical Significance</td>
+                <td class="birth-column">Birth Date</td>
+                <td class="death-column">Death Date</td>
                 <td class="connections-column">Degree</td>
                 <td class="action-column">Action</td>
             </tr>
@@ -23,8 +26,11 @@
         <tbody>
             <tr class="person {{'p'+person.id}}" ng-class="{ 'active': group.active }" ng-repeat="person in $ctrl.peopleList">
                 <td>{{ person.id }}</td>
-                <td>{{ person.name }}</td>
-                <td>{{ person.degree }}</td>
+                <td>{{ person.attributes.name }}</td>
+                <td>{{ person.attributes.historical_significance }}</td>
+                <td>{{ person.attributes.birth_year_type }} {{ person.attributes.birth_year }}</td>
+                <td>{{ person.attributes.death_year_type }} {{ person.attributes.death_year }}</td>
+                <td>{{ person.attributes.degree }}</td>
                 <td>
                     <button ng-click="$ctrl.selectedPerson(person); $ctrl.cancel()" type="button" class="btn btn-primary">
                         Visualize

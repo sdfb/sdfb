@@ -1401,14 +1401,26 @@ people-finder {
     }
 
     .id-column {
-      width: 25%;
+      width: 15%;
     }
 
     .name-column {
-      width: 50%;
+      width: 20%;
     }
 
-    .connection-column {
+    .sig-column {
+      width: 20%;
+    }
+
+    .birth-column {
+      width: 10%
+    }
+
+    .death-column {
+      width: 10%;
+    }
+
+    .connections-column {
       width: 10%;
     }
 

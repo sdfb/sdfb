@@ -8,23 +8,8 @@
  * Controller of the redesign2017App
  */
 angular.module('redesign2017App')
-  .controller('ModalTableCtrl', function($scope, $uibModalInstance, data, selectedPerson, viewMode, groupSelected) {
+  .controller('ModalTableCtrl', function($scope, $uibModalInstance, $timeout, data, selectedPerson, viewMode, groupSelected, apiService) {
 
-    // console.log('currentSelection', currentSelection);
-    // console.log('groups', groups);
-    //
-    // if (currentSelection.attributes) {
-    //   currentSelection.attributes.groups.forEach(function(selectedGroup) {
-    //     // console.log(selectedGroup);
-    //     groups.forEach(function(group) {
-    //       // console.log(group);
-    //       if (selectedGroup == group.groupId) {
-    //         group.active = true;
-    //       }
-    //     })
-    //   });
-    // }
-    //
     var $ctrl = this;
     $ctrl.data = data;
     // console.log($ctrl.data);
@@ -37,41 +22,46 @@ angular.module('redesign2017App')
 
       var sourceId = $ctrl.data.data.attributes.primary_people[0];
 
-      $ctrl.peopleList = [];
+      var searchIds = [];
 
       $ctrl.data.data.attributes.connections.forEach(function(l) {
         if (l.attributes.source.id === sourceId) {
-          l.attributes.target.attributes.id = l.attributes.target.id;
-          $ctrl.peopleList.push(l.attributes.target.attributes);
+          searchIds.push(l.attributes.target.id);
         } else if (l.attributes.target.id === sourceId) {
-          l.attributes.source.attributes.id = l.attributes.source.id;
-          $ctrl.peopleList.push(l.attributes.source.attributes);
+          searchIds.push(l.attributes.source.id);
         }
+      });
+      searchIds = searchIds.join();
+
+      apiService.getPeople(searchIds).then(function (result) {
+
+        var all_people = result.data;
+        $timeout(function(){
+          $ctrl.peopleList = all_people;
+        });
       });
     } else if ($ctrl.viewMode === 'shared-network') {
       $ctrl.personData = []
       $ctrl.data.included.slice(0,2).forEach( function(i) { $ctrl.personData.push(i.attributes); });
       var sources = $ctrl.data.data.attributes.primary_people[0];
 
-      $ctrl.peopleList = [];
+      var searchIds = [];
 
-      $ctrl.data.included.forEach(function(i) {
-        if (sources.indexOf(i.id) === -1) {
-          i.attributes.id = i.id;
-          $ctrl.peopleList.push(i.attributes);
-        }
+      $ctrl.data.included.forEach(function(i) { if (sources.indexOf(i.id) === -1) { searchIds.push(i.id); } });
+
+      searchIds = searchIds.join();
+
+      apiService.getPeople(searchIds).then(function (result) {
+
+        var all_people = result.data;
+        $timeout(function(){
+          $ctrl.peopleList = all_people;
+        });
       });
 
     } else if ($ctrl.viewMode === 'all') {
       $ctrl.groupList = $ctrl.data.included;
     }
-
-    // console.log($ctrl.peopleList);
-    //
-    // // Pre-selection
-    // $ctrl.selected = {
-    //   group: $ctrl.groups[0]
-    // };
 
     $ctrl.ok = function() {
       $uibModalInstance.close($ctrl.selected.group);
