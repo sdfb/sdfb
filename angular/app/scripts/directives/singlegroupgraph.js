@@ -66,7 +66,7 @@ angular.module('redesign2017App')
 
         scope.groupZoom = d3.zoom(); // Create a single zoom function
         // Call zoom for svg container.
-        scope.groupSvg.call(scope.groupZoom.on('zoom', zoomed)); //.on("dblclick.zoom", null); // See zoomed() below
+        scope.groupSvg.call(scope.groupZoom.on('zoom', zoomed)).on("dblclick.zoom", null); // See zoomed() below
 
         function zoomed() {
           g.attr("transform", "translate(" + d3.event.transform.x + ", " + d3.event.transform.y + ") scale(" + d3.event.transform.k + ")");
@@ -241,7 +241,7 @@ angular.module('redesign2017App')
                 toggleClick(d, this);
               })
               .on("dblclick", function(d) {
-                console.log('Try to go in individual-force', d);
+                scope.selectedPerson(d);
               })
               // On hover, display label
               .on('mouseenter', function(d) {

@@ -105,7 +105,7 @@ angular.module('redesign2017App')
 
         scope.allGroupZoom = d3.zoom(); // Create a single zoom function
         // Call zoom for scope.allGroupSvg container.
-        scope.allGroupSvg.call(scope.allGroupZoom.on('zoom', zoomed)); //.on("dblclick.zoom", null); // See zoomed() below
+        scope.allGroupSvg.call(scope.allGroupZoom.on('zoom', zoomed)).on("dblclick.zoom", null); // See zoomed() below
 
         function zoomed() {
           g.attr("transform", "translate(" + d3.event.transform.x + ", " + d3.event.transform.y + ") scale(" + d3.event.transform.k + ")");
@@ -474,6 +474,7 @@ angular.module('redesign2017App')
           })
           var minWeight = d3.min(links, function(d) { return d.weight });
           var maxWeight = d3.max(links, function(d) { return d.weight });
+          scope.data = json;
           sizeEdge.domain([minWeight, maxWeight]);
           // console.log(nodes)
           scope.updateAllGroups();

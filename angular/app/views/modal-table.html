@@ -1,0 +1,76 @@
+<!-- <div class="modal-header">
+    <h3 class="modal-title" id="modal-title">List of Minor Groups</h3>
+</div> -->
+<div class="modal-body other-groups-list" id="modal-table-body">
+    <h3 ng-show="$ctrl.viewMode === 'individual-force' || $ctrl.viewMode === 'individual-concentric'" class="modal-title" id="modal-table">Table for Hooke Network of {{$ctrl.personData[0].name}}</h3>
+    <h3 ng-show="$ctrl.viewMode === 'shared-network'" class="modal-title" id="modal-table">Table for Shared Network of {{$ctrl.personData[0].name}} and {{$ctrl.personData[1].name}}</h3>
+    <h3 ng-show="$ctrl.viewMode === 'all'" class="modal-title" id="modal-table">Table for All Groups</h3>
+    <i class="fa fa-times close-btn" aria-hidden="true" type="button" ng-click="$ctrl.cancel()" aria-label="Close"></i>
+    <div ng-show="$ctrl.viewMode !== 'all'" class="person-info" ng-repeat="person in $ctrl.personData">
+      <p>{{person.name}}: {{person.historical_significance}}</p>
+      <p>Born {{person.birth_year_type}} {{person.birth_year}}</p>
+      <p>Died {{person.death_year_type}} {{person.death_year}}</p>
+    </div>
+    <table ng-show="$ctrl.viewMode !== 'all'" class="table table-hover">
+        <thead>
+            <tr>
+                <td class="id-column">ID</td>
+                <td class="name-column">Name</td>
+                <td class="sig-column">Historical Significance</td>
+                <td class="birth-column">Birth Date</td>
+                <td class="death-column">Death Date</td>
+                <td class="connections-column">Degree</td>
+                <td class="action-column">Action</td>
+            </tr>
+        </thead>
+        <tbody>
+            <tr class="person {{'p'+person.id}}" ng-class="{ 'active': group.active }" ng-repeat="person in $ctrl.peopleList">
+                <td>{{ person.id }}</td>
+                <td>{{ person.attributes.name }}</td>
+                <td>{{ person.attributes.historical_significance }}</td>
+                <td>{{ person.attributes.birth_year_type }} {{ person.attributes.birth_year }}</td>
+                <td>{{ person.attributes.death_year_type }} {{ person.attributes.death_year }}</td>
+                <td>{{ person.attributes.degree }}</td>
+                <td>
+                    <button ng-click="$ctrl.selectedPerson(person); $ctrl.cancel()" type="button" class="btn btn-primary">
+                        Visualize
+                    </button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table ng-show="$ctrl.viewMode === 'all'" class="table all-groups table-hover">
+        <thead>
+            <tr>
+                <td class="id-column">ID</td>
+                <td class="name-column">Name</td>
+                <td class="start-column">Start Date</td>
+                <td class="end-column">End Date</td>
+                <td class="action-column">Action</td>
+            </tr>
+        </thead>
+        <tbody>
+            <tr class="group {{'g'+group.id}}" ng-class="{ 'active': group.active }" ng-repeat="group in $ctrl.groupList">
+                <td>{{ group.id }}</td>
+                <td>{{ group.attributes.name }}</td>
+                <td>{{ group.attributes.start_year_type }} {{ group.attributes.start_year }}</td>
+                <td>{{ group.attributes.end_year_type }} {{ group.attributes.end_year }}</td>
+                <td>
+                    <button ng-click="$ctrl.groupSelected(group); $ctrl.cancel()" type="button" class="btn btn-primary">
+                        Visualize
+                    </button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <!-- <ul>
+        <li class="group {{'g'+group.groupId}}" ng-class="{ 'active': group.active }" ng-repeat="group in $ctrl.groups">
+            <a href="#" ng-click="$event.preventDefault(); $ctrl.selected.group = group">Group ID: {{ group.groupId }} - Number of people: {{ group.value }}</a>
+        </li>
+    </ul>
+    Selected: <b>{{ $ctrl.selected.group }}</b> -->
+</div>
+<!-- <div class="modal-footer">
+    <button class="btn btn-primary" type="button" ng-click="$ctrl.ok()">OK</button>
+    <button class="btn btn-warning" type="button" ng-click="$ctrl.cancel()">Close</button>
+</div> -->
