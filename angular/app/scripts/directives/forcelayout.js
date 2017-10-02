@@ -293,6 +293,10 @@ angular.module('redesign2017App').directive('forceLayout', ['apiService', '$time
 
               toggleClick(d, newLinks, this);
             })
+            .on('dblclick', function(d){
+              console.log('double clicked:',d);
+              scope.selectedPerson(d);
+            })
             // On hover, display label
             .on('mouseenter', function(d) {
               d3.selectAll('g.label').each(function(e) {
@@ -789,7 +793,7 @@ angular.module('redesign2017App').directive('forceLayout', ['apiService', '$time
 
         scope.singleZoom = d3.zoom(); // Create a single zoom function
         // Call zoom for scope.singleSvg container.
-        scope.singleSvg.call(scope.singleZoom.on('zoom', zoomed)); //.on("dblclick.zoom", null); // See zoomed() below
+        scope.singleSvg.call(scope.singleZoom.on('zoom', zoomed)).on("dblclick.zoom", null); // See zoomed() below
 
 
 

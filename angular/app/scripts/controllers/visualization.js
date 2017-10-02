@@ -93,6 +93,43 @@ angular.module('redesign2017App').component('visualization', {
       });
     };
 
+    $scope.openTable = function(size, parentSelector) {
+      var parentElem = parentSelector ?
+        angular.element($document[0].querySelector('.modal-demo ' + parentSelector)) : undefined;
+      var modalInstance = $uibModal.open({
+        animation: $scope.modalAnimationsEnabled,
+        ariaLabelledBy: 'modal-table',
+        ariaDescribedBy: 'modal-table-body',
+        templateUrl: './views/modal-table.html',
+        controller: 'ModalTableCtrl',
+        controllerAs: '$ctrl',
+        size: size,
+        appendTo: parentElem,
+        resolve: {
+          data: function() {
+            return $scope.data;
+          },
+          selectedPerson: function() {
+            return $scope.selectedPerson;
+          },
+          viewMode: function() {
+            return $scope.config.viewMode;
+          },
+          groupSelected: function() {
+            return $scope.groupSelected;
+          }
+        //   currentSelection: function() {
+        //     return $scope.currentSelection;
+        //   }
+        }
+      });
+      modalInstance.result.then(function(selectedItem) {
+        $scope.selected = selectedItem;
+      }, function() {
+        $log.info('Modal dismissed at: ' + new Date());
+      });
+    };
+
     // console.log($routeParams['all-groups']);
     // if ($routeParams.ids == undefined && !$routeParams['all-groups']) {
     //   $scope.config.ids = '10000473';

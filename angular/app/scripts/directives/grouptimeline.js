@@ -221,20 +221,30 @@ angular.module('redesign2017App')
             .attr('class', 'timeline-button');
 
           timelineButton.append('rect')
+
             .attr('class', 'timeline-button-rect')
             .attr('x', -115)
             .attr('y', y.bandwidth() + 38)
-            .attr('width', 115)
+            .attr('width', 95)
             .attr('height', 24)
             .attr('rx', 12)
             .attr('ry', 12);
+            // .text('Hooke Layout')
+
 
           timelineButton.append('text')
+            .data(data, function(d) { return d.id; })
             .attr('class', 'timeline-button-text')
-            .attr('x', -15)
+            .attr('x', -40)
             .attr('y', y.bandwidth() + 53)
             .attr('text-anchor', 'end')
-            .text('Hooke Layout');
+            .text('Visualize')
+            .on('click', function(d) {
+              scope.selectedPerson(d);
+              scope.$apply(function() {
+                scope.config.viewObject = 0;
+              });
+            });
 
           person.append('text')
             .attr('class', 'birth-label historical-significance')
