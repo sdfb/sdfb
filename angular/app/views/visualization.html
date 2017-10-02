@@ -30,10 +30,8 @@
 
 </div>
 <div class="visualization-container">
-  <force-layout ng-show=" config.viewMode == 'individual-force' || config.viewMode == 'individual-concentric' || config.viewMode == 'shared-network' || config.viewMode = 'group-force'"></force-layout>
-  <!-- <shared-network ng-show=" config.viewMode == 'shared-network' "></shared-network> -->
+  <force-layout ng-hide=" config.viewMode == 'all' || config.viewMode == 'group-timeline'"></force-layout>
   <groups-bar ng-show=" config.viewMode == 'individual-force' || config.viewMode == 'individual-concentric' || config.viewMode == 'shared-network' "></groups-bar>
   <all-groups-graph ng-show=" config.viewMode == 'all' "></all-groups-graph>
-  <!-- <single-group-graph ng-show=" config.viewMode == 'group-force' "></single-group-graph> -->
   <group-timeline ng-show=" config.viewMode == 'group-timeline' "></group-timeline>
 </div>

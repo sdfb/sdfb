@@ -194,13 +194,7 @@ angular.module('redesign2017App').directive('forceLayout', ['apiService', '$time
           scope.addedNodes.forEach(function(a) { newNodes.push(a); });
           scope.addedLinks.forEach(function(a) { newLinks.push(a); });
 
-          if (layout == 'individual-force') {
-            // For force layout, set fixed positions to null (undoes circle positioning)
-            nodes.forEach(function(d) {
-              d.fx = null;
-              d.fy = null;
-            });
-          } else if (layout == 'individual-concentric') {
+          if (scope.config.viewMode == 'individual-concentric') {
             // For concentric layout, set fixed positions according to degree
             newNodes.forEach(function(d) {
               if (d.distance == 0) { // Set source node to center of view
@@ -214,9 +208,7 @@ angular.module('redesign2017App').directive('forceLayout', ['apiService', '$time
 
             var twoDegreeNodes = newNodes.filter(function(d) { if (d.distance == 2) { return d; } });
             positionCircle(twoDegreeNodes, 500); // Put 2-degree nodes in circle of radius 500
-          }
-
-          if (scope.config.viewMode === 'shared-network') {
+          } else if (scope.config.viewMode === 'shared-network') {
             newNodes.forEach( function(d) {
               if (d.id == sources[0]) {
                 d.fx = scope.singleWidth/8;
@@ -228,7 +220,11 @@ angular.module('redesign2017App').directive('forceLayout', ['apiService', '$time
               }
             })
           } else {
-            console.log('ERROR: No compatible layout selected:', layout);
+            // For force layout, set fixed positions to null (undoes circle positioning)
+            nodes.forEach(function(d) {
+              d.fx = null;
+              d.fy = null;
+            });
           }
 
 
@@ -876,15 +872,12 @@ angular.module('redesign2017App').directive('forceLayout', ['apiService', '$time
             }
 
             // This triggers events in groupsbar.js and contextualinfopanel.js when a selection happens
-            // scope.currentSelection = d;
             apiService.getPeople(d.id).then(function (result) {
               scope.currentSelection = result.data[0];
               $timeout(function(){
                 scope.$broadcast('selectionUpdated', scope.currentSelection);
               });
             });
-
-            // scope.$broadcast('selectionUpdated', scope.currentSelection);
 
           } else if (d.type == "relationship") { //Handler for when a link is clicked
 
