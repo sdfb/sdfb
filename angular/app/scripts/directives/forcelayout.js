@@ -6,7 +6,7 @@
  * @description
  * # forceLayout
  */
-angular.module('redesign2017App').directive('forceLayout', ['apiService', '$timeout', function(apiService, $timeout) {
+angular.module('redesign2017App').directive('forceLayout', ['apiService', '$timeout', '$state', function(apiService, $timeout, $state) {
     return {
       template: '<svg width="100%" height="100%"></svg>',
       restrict: 'E',
@@ -344,8 +344,7 @@ angular.module('redesign2017App').directive('forceLayout', ['apiService', '$time
               toggleClick(d, newLinks, this);
             })
             .on('dblclick', function(d){
-              console.log('double clicked:',d);
-              scope.selectedPerson(d);
+              $state.go('home.visualization', {ids: d.id});
             })
             // On hover, display label
             .on('mouseenter', function(d) {
