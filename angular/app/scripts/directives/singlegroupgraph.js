@@ -548,12 +548,17 @@ angular.module('redesign2017App')
 
         }
 
-        // action triggered from the controller
-        scope.$on('single group update', function(event, args) {
-          // console.log(event, args);
-          scope.data = args;
-          scope.updateGroupNetwork(args, args.onlyMembers);
-        });
+        // // action triggered from the controller
+        // scope.$on('single group update', function(event, args) {
+        //   // console.log(event, args);
+        //   scope.data = args;
+        //   scope.updateGroupNetwork(args, args.onlyMembers);
+        // });
+
+        scope.$watch('data', function(newValue, oldValue) {
+          // generatePersonNetwork(newValue);
+          scope.updateGroupNetwork(newValue);
+        }, true);
 
       }
     };

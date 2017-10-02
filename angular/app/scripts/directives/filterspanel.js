@@ -149,7 +149,7 @@ angular.module('redesign2017App')
             scope.$evalAsync(function() {
               scope.config.networkComplexity = complexity;
               // Trigger force layout update
-              scope.$broadcast('force layout update', args);
+              scope.updateNetwork(args);
             });
           });
         }
@@ -192,7 +192,7 @@ angular.module('redesign2017App')
             scope.$evalAsync(function() {
               scope.config.networkComplexity = complexity;
               // Trigger force layout update
-              scope.$broadcast('shared network update', args);
+              scope.updateNetwork(args);
             });
           });
         }
@@ -438,12 +438,7 @@ angular.module('redesign2017App')
               scope.$watchCollection('[config.confidenceMin, config.confidenceMax]', function(newValues, oldValues) {
                 if (newValues != oldValues) {
                   console.log('brushed with new values');
-                  if (sources.length === 1) {
-                    scope.$broadcast('force layout update', args);
-                  }
-                  else if (sources.length === 2) {
-                    scope.$broadcast('shared network update', args);
-                  }
+                  scope.updateNetwork(args);
                 }
               })
             });
@@ -643,12 +638,7 @@ angular.module('redesign2017App')
               scope.$watchCollection('[config.dateMin, config.dateMax]', function(newValues, oldValues) {
                 if (newValues != oldValues) {
                   console.log('brushed with new values');
-                  if (sources.length === 1) {
-                    scope.$broadcast('force layout update', args);
-                  }
-                  else if (sources.length === 2) {
-                    scope.$broadcast('shared network update', args);
-                  }
+                  scope.updateNetwork(args);
                 }
               })
             });

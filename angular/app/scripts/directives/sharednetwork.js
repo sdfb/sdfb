@@ -718,25 +718,36 @@ angular.module('redesign2017App')
         // Change name of the viz
         scope.config.title = "W. Shakespeare and J. Milton - Force Layout"
 
-        scope.$on('shared network generate', function(event, args) {
-          console.log(args);
-          scope.data = args;
-          generateSharedNetwork(args);
-          scope.updateSharedNetwork(args);
-          scope.reloadFilters();
-          // apiService.getFile('./data/sharednetwork.json').then(function(data) {
-          //   console.log('sharedData', data);
+        // scope.$on('shared network generate', function(event, args) {
+        //   console.log(args);
+        //   scope.data = args;
+        //   generateSharedNetwork(args);
+        //   scope.updateSharedNetwork(args);
+        //   scope.reloadFilters();
+        //   // apiService.getFile('./data/sharednetwork.json').then(function(data) {
+        //   //   console.log('sharedData', data);
+        //
+        //   //   updateSharedNetwork(data);
+        //
+        //   // });
+        //
+        // });
+        //
+        // scope.$on('shared network update', function(event, args) {
+        //   console.log(args);
+        //   scope.updateSharedNetwork(args);
+        // });
 
-          //   updateSharedNetwork(data);
+        scope.$watch('$stateParams.ids', function(newValue, oldValue) {
+          generateSharedNetwork(scope.data);
+          scope.data4groups(scope.data);
+          // scope.updatePersonNetwork(newValue);
+        }, true);
 
-          // });
-
-        });
-
-        scope.$on('shared network update', function(event, args) {
-          console.log(args);
-          scope.updateSharedNetwork(args);
-        });
+        scope.$watch('data', function(newValue, oldValue) {
+          // generatePersonNetwork(newValue);
+          scope.updateSharedNetwork(newValue);
+        }, true);
 
 
       }

@@ -84,10 +84,19 @@ redesign2017App.config(function($stateProvider, $locationProvider) {
     resolve: {
       networkData: function(apiService, $stateParams) {
           console.log($stateParams.ids);
-          return apiService.getNetwork($stateParams.ids).then(function(result){
-            apiService.result = result;
-            return apiService.result;
-          });
+          if ($stateParams.ids.length < 8) {
+            return apiService.getGroupNetwork($stateParams.ids).then(function(result){
+              apiService.result = result;
+              console.log(result);
+              return apiService.result;
+            });
+          } else {
+            return apiService.getNetwork($stateParams.ids).then(function(result){
+              apiService.result = result;
+              console.log(result);
+              return apiService.result;
+            });
+          }
       }
     },
     component: 'visualization'

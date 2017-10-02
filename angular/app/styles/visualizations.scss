@@ -119,8 +119,34 @@ shared-network {
     stroke: $degree0;
   }
 
+  .node.degree3 {
+    fill: $degree1blue;
+    stroke: $degree3blue;
+  }
+
+  .node.degree4 {
+    fill: $degree3blue;
+    stroke: $degree1blue;
+  }
+
   .node.degree7 {
     fill: orange;
+  }
+
+  .node.not-member {
+    fill: #EFF1F4;
+    stroke: #78729F;
+    stroke-width: 0.75px;
+    -webkit-transition: -webkit-transform 0.25s ease-in-out;
+    transition: -webkit-transform 0.25s ease-in-out;
+    transition: transform 0.25s ease-in-out;
+    transition: transform 0.25s ease-in-out, -webkit-transform 0.25s ease-in-out;
+    cursor: pointer;
+  }
+
+  .node.member {
+    fill: #78729F;
+    stroke: white;
   }
 
   .node:hover {

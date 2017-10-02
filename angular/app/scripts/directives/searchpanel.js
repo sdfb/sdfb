@@ -7,7 +7,7 @@
  * # searchPanel
  */
 angular.module('redesign2017App')
-  .directive('searchPanel', ['$location', 'apiService', function($location, apiService) {
+  .directive('searchPanel', ['$state', 'apiService', function($state, apiService) {
     return {
       templateUrl: './views/search-panel.html',
       restrict: 'E',
@@ -41,14 +41,15 @@ angular.module('redesign2017App')
 
           // Sir Thomas Fanshawe + Sir Edwin Sandys
           // ids = [10004129,10010685];
-          $location.search('ids', $person1.id);
-          var lastRoute = $route.current;
-          scope.$on('$locationChangeSuccess', function(event) {
-            $route.current = lastRoute;
-          });
-          scope.config.viewMode = 'individual-force';
-          scope.config.person1 = $person1.id
-          scope.config.ids = $person1.id;
+          // $location.search('ids', $person1.id);
+          // var lastRoute = $route.current;
+          // scope.$on('$locationChangeSuccess', function(event) {
+          //   $route.current = lastRoute;
+          // });
+          // scope.config.viewMode = 'individual-force';
+          // scope.config.person1 = $person1.id
+          // scope.config.ids = $person1.id;
+          $state.go('home.visualization', {ids: $person1.id});
         };
 
         scope.selectedShared = function($person2) {
@@ -93,14 +94,15 @@ angular.module('redesign2017App')
 
         scope.groupSelected = function($item, $model, $label, $event) {
           console.log($item.name, $item.id, 'getting group network...');
-          $location.search('ids', $item.id);
-          var lastRoute = $route.current;
-          scope.$on('$locationChangeSuccess', function(event) {
-            $route.current = lastRoute;
-          });
-          scope.config.viewMode = 'group-force';
-          scope.config.ids = $item.id;
-          scope.config.title = $item.name;
+          // $location.search('ids', $item.id);
+          // var lastRoute = $route.current;
+          // scope.$on('$locationChangeSuccess', function(event) {
+          //   $route.current = lastRoute;
+          // });
+          // scope.config.viewMode = 'group-force';
+          // scope.config.ids = $item.id;
+          // scope.config.title = $item.name;
+          $state.go('home.visualization', {ids: $item.id});
         }
 
 
