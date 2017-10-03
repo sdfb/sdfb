@@ -53,7 +53,7 @@ angular.module('redesign2017App').directive('forceLayout', ['apiService', '$time
                     var members = scope.data.data.attributes.primary_people;
                     return (members.indexOf(d.id) === -1) ? true : false;
                   } else if (scope.config.viewMode === 'all') {
-                    return (d.attributes.degree <= 10) ? true : false;
+                    return false;
                   } else {
                     return (d.distance < 2) ? false : true;
                   }
@@ -495,7 +495,7 @@ angular.module('redesign2017App').directive('forceLayout', ['apiService', '$time
               } else if (scope.config.viewMode === 'group-force') {
                 return (members.indexOf(d.id) === -1) ? 'label hidden' : 'label';
               } else if (scope.config.viewMode === 'all') {
-                return (d.attributes.degree <= 10) ? 'label hidden' : 'label';
+                return 'label';
               }{
                 return (d.distance < 2) ? 'label' : 'label hidden';
               }
