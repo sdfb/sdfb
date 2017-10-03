@@ -171,7 +171,6 @@ angular.module('redesign2017App').component('visualization', {
 
         $scope.groups.groupsBar = groupsBar;
         $scope.groups.otherGroups = otherGroups;
-        console.log($scope.groups);
         $scope.updateGroupBar($scope.groups);
 
         // $scope.$emit('Update the groups bar', $scope.groups)

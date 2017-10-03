@@ -14,12 +14,6 @@ angular.module('redesign2017App')
       link: function postLink(scope, element, attrs) {
 
         var x = d3.scaleLinear()
-        // updateGroupBar(scope.groups);
-
-        // console.log('on')
-        // scope.$on('Update the groups bar', function(event, args){
-        //   console.log(event, args)
-        // })
 
         scope.updateGroupBar = function(data) {
           console.log("Updating groups bar...");
@@ -103,7 +97,6 @@ angular.module('redesign2017App')
                       d3.selectAll('.link').filter(function(f) {
                         var linkClassName = 'not-in-group';
                         if (f.source.attributes.groups && f.target.attributes.groups) {
-                          // console.log(f.source.attributes.groups, f.target.attributes.groups);
                           var sourceInGroup = inGroup.some(function (e) {
                             return f.source.attributes.groups.indexOf(e) != -1 });
                           var targetInGroup = inGroup.some(function(e) {
@@ -132,7 +125,6 @@ angular.module('redesign2017App')
                       d3.selectAll('.link').filter(function(f) {
                         var linkClassName = 'not-in-group';
                         if (f.source.attributes.groups && f.target.attributes.groups) {
-                          // console.log(f.source.attributes.groups, f.target.attributes.groups);
                           var sourceInGroup = inGroup.some(function(e) {
                             return f.source.attributes.groups.indexOf(e) != -1 });
                           var targetInGroup = inGroup.some(function(e) {
@@ -166,7 +158,6 @@ angular.module('redesign2017App')
         // HIGHLIGHT GROUPS WHEN SELECTION HAPPENS
         // This works for individual force layout only, at the moment
         scope.$on('selectionUpdated', function(event, args) {
-          console.log(args);
           if (args.type == 'person') {
             d3.selectAll('.group').classed('unactive', true);
             if (args.attributes.groups) {

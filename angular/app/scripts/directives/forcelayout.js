@@ -448,13 +448,7 @@ angular.module('redesign2017App').directive('forceLayout', ['apiService', '$time
               return d.labelBBox.height + paddingTopBottom;
             });
 
-          if (oldLayout == layout) { // If layout has not changed
-            simulation.alphaTarget(0).restart(); // Don't reheat viz
-          } else if (scope.config.viewMode === 'group-force') {
-            simulation.alphaTarget(0).restart();
-          } else { //If layout has changed from force to concentric or vice versa
-            simulation.alphaTarget(0.3).restart(); // Reheat viz
-          }
+          simulation.alphaTarget(0).restart();
 
           oldLayout = layout;
 
@@ -992,6 +986,11 @@ angular.module('redesign2017App').directive('forceLayout', ['apiService', '$time
 
         scope.$watch('config.onlyMembers', function(newValue, oldValue) {
           scope.updateNetwork(scope.data);
+        }, true);
+
+        scope.$watch('config.viewMode', function(newValue, oldValue) {
+          scope.updateNetwork(scope.data);
+          simulation.alpha(1);
         }, true);
 
 
