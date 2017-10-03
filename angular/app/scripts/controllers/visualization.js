@@ -46,12 +46,8 @@ angular.module('redesign2017App').component('visualization', {
     $scope.newLink = {};
     $scope.newGroup = {};
     $scope.groupAssign = {person: {}, group: {}};
-    // if ($routeParams.ids === undefined) {
-    //   $location.search('ids', $scope.config.ids.toString());
-    // }
 
     this.$onChanges = function() {
-      this.networkData.layout = 'individual-force';
       $scope.data = this.networkData;
       if (this.networkData.data.attributes.primary_people.length === 1) {
         $scope.config.viewMode = 'individual-force';
@@ -123,9 +119,6 @@ angular.module('redesign2017App').component('visualization', {
           groupSelected: function() {
             return $scope.groupSelected;
           }
-        //   currentSelection: function() {
-        //     return $scope.currentSelection;
-        //   }
         }
       });
       modalInstance.result.then(function(selectedItem) {

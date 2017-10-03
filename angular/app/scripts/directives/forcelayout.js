@@ -986,7 +986,7 @@ angular.module('redesign2017App').directive('forceLayout', ['apiService', '$time
           scope.data4groups(scope.data);
         }, true);
 
-        scope.$watch('data', function(newValue, oldValue) {
+        scope.$watchCollection('data', function(newValue, oldValue) {
           scope.updateNetwork(newValue);
         }, true);
 
