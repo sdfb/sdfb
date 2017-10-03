@@ -83,7 +83,7 @@ redesign2017App.config(function($stateProvider, $locationProvider) {
     url: '?ids&type',
     resolve: {
       networkData: function(apiService, $stateParams) {
-        if($stateParams.type === 'network') {
+        if ($stateParams.type === 'network' || $stateParams.type === 'timeline') {
           if ($stateParams.ids.length < 8) {
             return apiService.getGroupNetwork($stateParams.ids).then(function(result){
               apiService.result = result;

@@ -232,6 +232,7 @@ path.danger {
   transition-timing-function: ease-in-out;
   width: 100%;
 
+
   &.individual {
     height: 346px;
   }
@@ -736,6 +737,8 @@ group-timeline {
 }
 
 .timeline-legend {
+  margin-top: 345px;
+  
   .legend-line {
     margin: 0 auto 8px;
     top: 3px;

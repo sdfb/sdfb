@@ -51,6 +51,8 @@ angular.module('redesign2017App').component('visualization', {
       $scope.data = this.networkData;
       if ($stateParams.type === 'all-groups') {
         $scope.config.viewMode = 'all';
+      } else if ($stateParams.ids.length < 8 && $stateParams.type === 'timeline') {
+        $scope.config.viewMode = 'group-timeline'
       } else if (this.networkData.data.attributes.primary_people.length === 1) {
         $scope.config.viewMode = 'individual-force';
       } else if (this.networkData.data.attributes.primary_people.length === 2) {

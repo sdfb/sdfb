@@ -35,8 +35,8 @@
     <h5>Search here or double click on a node</h5>
     <h4>Visualization layout</h4>
     <div class="btn-group btn-group-justified">
-      <label class="btn btn-primary" ng-model="config.viewMode" uib-btn-radio="'group-force'">Hooke</label>
-      <label class="btn btn-primary" ng-model="config.viewMode" uib-btn-radio="'group-timeline'">Timeline</label>
+      <label class="btn btn-primary" ui-sref="home.visualization({ type: 'network' })">Hooke</label>
+      <label class="btn btn-primary" ui-sref="home.visualization({ type: 'timeline' })">Timeline</label>
     </div>
   </uib-tab>
 </uib-tabset>

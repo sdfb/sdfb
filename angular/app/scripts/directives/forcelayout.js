@@ -1095,23 +1095,31 @@ angular.module('redesign2017App').directive('forceLayout', ['apiService', '$time
         }
 
         scope.$watch('$stateParams.ids', function(newValue, oldValue) {
-          generateNetwork(scope.data);
-          if (scope.config.viewMode !== 'all' && scope.config.viewMode !== 'group-force') {
-            scope.data4groups(scope.data);
+          if (scope.config.viewMode !== 'group-timeline') {
+            generateNetwork(scope.data);
+            if (scope.config.viewMode !== 'all' && scope.config.viewMode !== 'group-force') {
+              scope.data4groups(scope.data);
+            }
           }
         }, true);
 
         scope.$watchCollection('data', function(newValue, oldValue) {
-          scope.updateNetwork(newValue);
+          if (scope.config.viewMode !== 'group-timeline') {
+            scope.updateNetwork(newValue);
+          }
         }, true);
 
         scope.$watch('config.onlyMembers', function(newValue, oldValue) {
-          scope.updateNetwork(scope.data);
+          if (scope.config.viewMode !== 'group-timeline') {
+            scope.updateNetwork(scope.data);
+          }
         }, true);
 
         scope.$watch('config.viewMode', function(newValue, oldValue) {
-          scope.updateNetwork(scope.data);
-          simulation.alpha(1);
+          if (scope.config.viewMode !== 'group-timeline') {
+            scope.updateNetwork(scope.data);
+            simulation.alpha(1);
+          }
         }, true);
 
 

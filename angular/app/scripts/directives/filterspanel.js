@@ -646,7 +646,7 @@ angular.module('redesign2017App')
         }
 
         scope.$watch('$stateParams.ids', function(newValue, oldValue) {
-          if (scope.config.viewMode !== 'group-force' && scope.config.viewMode !== 'all') {
+          if (scope.config.viewMode !== 'group-force' && scope.config.viewMode !== 'all' && scope.config.viewMode !== 'group-timeline') {
             scope.reloadFilters(scope.data);
           }
         }, true);
