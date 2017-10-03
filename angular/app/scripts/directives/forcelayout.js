@@ -115,7 +115,7 @@ angular.module('redesign2017App').directive('forceLayout', ['apiService', '$time
           return [nodes, links];
         }
 
-        function generatePersonNetwork(json) {
+        function generateNetwork(json) {
         sourceId = json.data.attributes.primary_people; // ID of searched node (Bacon in sample data)
 
 
@@ -325,9 +325,8 @@ angular.module('redesign2017App').directive('forceLayout', ['apiService', '$time
                 toggleClick(d, newLinks, this);
               })
               .on('dblclick', function(d){
-                console.log('double clicked:',d);
                 if (d.id !== 0) {
-                  scope.groupSelected(d);
+                  $state.go('home.visualization', {ids: d.id, type: 'network'});
                 } else {
                   console.log('new node');
                   scope.$apply(function() {
@@ -1096,8 +1095,10 @@ angular.module('redesign2017App').directive('forceLayout', ['apiService', '$time
         }
 
         scope.$watch('$stateParams.ids', function(newValue, oldValue) {
-          generatePersonNetwork(scope.data);
-          scope.data4groups(scope.data);
+          generateNetwork(scope.data);
+          if (scope.config.viewMode !== 'all' && scope.config.viewMode !== 'group-force') {
+            scope.data4groups(scope.data);
+          }
         }, true);
 
         scope.$watchCollection('data', function(newValue, oldValue) {
