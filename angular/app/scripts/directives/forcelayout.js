@@ -52,6 +52,8 @@ angular.module('redesign2017App').directive('forceLayout', ['apiService', '$time
                   } else if (scope.config.viewMode === 'group-force') {
                     var members = scope.data.data.attributes.primary_people;
                     return (members.indexOf(d.id) === -1) ? true : false;
+                  } else if (scope.config.viewMode === 'all') {
+                    return (d.attributes.degree <= 10) ? true : false;
                   } else {
                     return (d.distance < 2) ? false : true;
                   }
@@ -183,9 +185,21 @@ angular.module('redesign2017App').directive('forceLayout', ['apiService', '$time
           } else if (scope.config.viewMode === 'shared-network') {
             var sources = json.data.attributes.primary_people;
             var newData = parseSharedComplexity(thresholdLinks, complexity, sources);
-          } else {
+          } else if (scope.config.viewMode === 'group-force') {
             var members = json.data.attributes.primary_people;
             var newData = parseGroupComplexity(json, scope.config.onlyMembers);
+          } else {
+            var nodes = json.included;
+            var links = [];
+            json.data.attributes.connections.forEach(function(l) {
+              links.push({
+                'type': l.type,
+                'source': l.attributes.source,
+                'target': l.attributes.target,
+                'weight': l.attributes.weight
+              })
+            });
+            var newData = [nodes, links];
           }
 
           var newNodes = newData[0];
@@ -257,6 +271,16 @@ angular.module('redesign2017App').directive('forceLayout', ['apiService', '$time
             .classed('new', function(d) {
               return d.new ? true : false;
             })
+            .attr("stroke-width", function(d) {
+              if (scope.config.viewMode === 'all') {
+                var sizeEdge = d3.scaleLinear()
+                  .range([1, 10]);
+                var minWeight = d3.min(newLinks, function(d) { return d.weight });
+                var maxWeight = d3.max(newLinks, function(d) { return d.weight });
+                sizeEdge.domain([minWeight, maxWeight]);
+                return sizeEdge(d.weight)
+              }
+            })
             .on('click', function(d) { // Toggle link on click
               toggleClick(d, newLinks);
             });
@@ -279,97 +303,165 @@ angular.module('redesign2017App').directive('forceLayout', ['apiService', '$time
             return d.id;
           })
 
-          var nodeEnter = node.enter().append('circle'); // Create enter variable for general update pattern
+          if (scope.config.viewMode === 'all') {
+            var sizeScale = d3.scaleLinear()
+              .range([8, 30]);
 
-
-          node.exit().remove(); // Remove exiting nodes
-
-          node = nodeEnter.merge(node) // Merge new nodes
-            .attr('class', function(d) { // Class by degree of distance
-              if (scope.config.viewMode == 'shared-network') {
-                if (d.distance === 0) {
-                  return 'node degree' + 3
-                }
-                else if (d.distance === 1) {
-                  return 'node degree' + 4
-                }
-                else if (d.distance === 2) {
-                  return 'node degree' + 1
-                }
-                else if (d.distance === 3) {
-                  return 'node degree' + 0
-                }
-                else if (d.distance === 7) {
-                  return 'node degree' + 7
-                }
-              } else if (scope.config.viewMode === 'group-force') {
-                if (members.indexOf(d.id) === -1) { return 'node not-member'; }
-                else { return 'node member'; };
-              } else {
-                return 'node degree' + d.distance
-              }
-            })
-            .attr('id', function(d) { // Assign ID number
-              return "n" + d.id.toString();
-            })
-            .attr('r', function(d) { // Size nodes by degree of distance
-              if (scope.config.viewMode == 'shared-network') {
-                if (d.distance === 0 || d.distance === 3) {
-                  return 25;
-                } else if (d.distance === 2) {
-                  return 12.5;
+            var maxDegree = d3.max(newNodes, function(d) { return d.attributes.degree; });
+            var minDegree = d3.min(newNodes, function(d) { return d.attributes.degree; });
+            sizeScale.domain([minDegree, maxDegree]);
+            node.exit().remove();
+            node = node.enter().append("rect")
+              .merge(node)
+              .attr("class", "node all")
+              .attr("width", function(d) { return (2 * sizeScale(d.attributes.degree)) / Math.sqrt(2); })
+              .attr("height", function(d) { return (2 * sizeScale(d.attributes.degree)) / Math.sqrt(2); })
+              .attr("rx", 2)
+              .attr("ry", 2)
+              .classed("new", function(d) { return d.distance === 7; })
+              .on("click", function(d) {
+                // console.log(d, d.attributes.name)
+                // Toggle ego networks on click of node
+                toggleClick(d, newLinks, this);
+              })
+              .on('dblclick', function(d){
+                console.log('double clicked:',d);
+                if (d.id !== 0) {
+                  scope.groupSelected(d);
                 } else {
-                  return 6.25;
-                }
-              } else if (scope.config.viewMode === 'group-force') {
-                if (members.indexOf(d.id) === -1) { return 6.25; }
-                else { return 12.5; };
-              } else {
-                if (d.distance == 0) {
-                  return 25;
-                } else if (d.distance == 1) {
-                  return 12.5;
-                } else {
-                  return 6.25;
-                }
-              }
-            })
-            .on('click', function(d) {
-              // Toggle ego networks on click of node
+                  console.log('new node');
+                  scope.$apply(function() {
+                    scope.config.viewMode = 'group-force';
+                    scope.data = {};
+                    scope.data.included = [];
+                    scope.data.data = {};
+                    scope.data.data.attributes = {};
+                    scope.data.data.attributes.primary_people = [];
+                    scope.data.data.attributes.connections = [];
+                  });
 
-              toggleClick(d, newLinks, this);
-            })
-            .on('dblclick', function(d){
-              $state.go('home.visualization', {ids: d.id});
-            })
-            // On hover, display label
-            .on('mouseenter', function(d) {
-              d3.selectAll('g.label').each(function(e) {
-                if (e.id == d.id) {
-                  d3.select(this)
-                    .classed('temporary-unhidden', true);
                 }
               })
-              // sort elements so to bring the hovered one on top and make it readable.
-              scope.singleSvg.selectAll("g.label").each(function(e, i) {
-                if (d == e) {
-                  var myElement = this;
-                  d3.select(myElement).remove();
-                  d3.select('.labels').node().appendChild(myElement);
+              // On hover, display label
+              .on('mouseenter', function(d) {
+                d3.selectAll('g.label').each(function(e) {
+                  if (e.id == d.id) {
+                    d3.select(this).classed('temporary-unhidden', true);
+                  }
+                })
+                // // sort elements so to bring the hovered one on top and make it readable.
+                scope.singleSvg.selectAll("g.label").each(function(e, i) {
+                  if (d == e) {
+                    var myElement = this;
+                    d3.select(myElement).remove();
+                    d3.select('.labels').node().appendChild(myElement);
+                  }
+                })
+              })
+              .on('mouseleave', function(d) {
+                d3.selectAll('g.label').each(function(e) {
+                  if (e.id == d.id) {
+                    d3.select(this).classed('temporary-unhidden', false);
+                  }
+                })
+              })
+              .call(d3.drag()
+                .on("start", dragstarted)
+                .on("drag", dragged)
+                .on("end", dragended));
+          } else {
+            var nodeEnter = node.enter().append('circle'); // Create enter variable for general update pattern
+
+
+            node.exit().remove(); // Remove exiting nodes
+
+            node = nodeEnter.merge(node) // Merge new nodes
+              .attr('class', function(d) { // Class by degree of distance
+                if (scope.config.viewMode == 'shared-network') {
+                  if (d.distance === 0) {
+                    return 'node degree' + 3
+                  }
+                  else if (d.distance === 1) {
+                    return 'node degree' + 4
+                  }
+                  else if (d.distance === 2) {
+                    return 'node degree' + 1
+                  }
+                  else if (d.distance === 3) {
+                    return 'node degree' + 0
+                  }
+                  else if (d.distance === 7) {
+                    return 'node degree' + 7
+                  }
+                } else if (scope.config.viewMode === 'group-force') {
+                  if (members.indexOf(d.id) === -1) { return 'node not-member'; }
+                  else { return 'node member'; };
+                } else {
+                  return 'node degree' + d.distance
                 }
               })
-            })
-            .on('mouseleave', function(d) {
-              d3.selectAll('g.label').each(function(e) {
-                if (e.id == d.id) {
-                  d3.select(this).classed('temporary-unhidden', false);
+              .attr('id', function(d) { // Assign ID number
+                return "n" + d.id.toString();
+              })
+              .attr('r', function(d) { // Size nodes by degree of distance
+                if (scope.config.viewMode == 'shared-network') {
+                  if (d.distance === 0 || d.distance === 3) {
+                    return 25;
+                  } else if (d.distance === 2) {
+                    return 12.5;
+                  } else {
+                    return 6.25;
+                  }
+                } else if (scope.config.viewMode === 'group-force') {
+                  if (members.indexOf(d.id) === -1) { return 6.25; }
+                  else { return 12.5; };
+                } else {
+                  if (d.distance == 0) {
+                    return 25;
+                  } else if (d.distance == 1) {
+                    return 12.5;
+                  } else {
+                    return 6.25;
+                  }
                 }
               })
-            })
-            .call(d3.drag()
-              .on("start", dragstarted)
-              .on("drag", dragged)
-              .on("end", dragended));
+              .on('click', function(d) {
+                // Toggle ego networks on click of node
+
+                toggleClick(d, newLinks, this);
+              })
+              .on('dblclick', function(d){
+                $state.go('home.visualization', {ids: d.id});
+              })
+              // On hover, display label
+              .on('mouseenter', function(d) {
+                d3.selectAll('g.label').each(function(e) {
+                  if (e.id == d.id) {
+                    d3.select(this)
+                      .classed('temporary-unhidden', true);
+                  }
+                })
+                // sort elements so to bring the hovered one on top and make it readable.
+                scope.singleSvg.selectAll("g.label").each(function(e, i) {
+                  if (d == e) {
+                    var myElement = this;
+                    d3.select(myElement).remove();
+                    d3.select('.labels').node().appendChild(myElement);
+                  }
+                })
+              })
+              .on('mouseleave', function(d) {
+                d3.selectAll('g.label').each(function(e) {
+                  if (e.id == d.id) {
+                    d3.select(this).classed('temporary-unhidden', false);
+                  }
+                })
+              })
+              .call(d3.drag()
+                .on("start", dragstarted)
+                .on("drag", dragged)
+                .on("end", dragended));
+            }
 
 
 
@@ -403,7 +495,9 @@ angular.module('redesign2017App').directive('forceLayout', ['apiService', '$time
                 return (d.distance === 0 || d.distance === 3) ? 'label' : 'label hidden';
               } else if (scope.config.viewMode === 'group-force') {
                 return (members.indexOf(d.id) === -1) ? 'label hidden' : 'label';
-              } else {
+              } else if (scope.config.viewMode === 'all') {
+                return (d.attributes.degree <= 10) ? 'label hidden' : 'label';
+              }{
                 return (d.distance < 2) ? 'label' : 'label hidden';
               }
             })
@@ -785,7 +879,7 @@ angular.module('redesign2017App').directive('forceLayout', ['apiService', '$time
           d3.selectAll('.group').classed('active', false);
           d3.selectAll('.group').classed('unactive', false);
 
-          if (d.type == "person") { //Handler for when a node is clicked
+          if (d.type == "person" || d.type == "group") { //Handler for when a node is clicked
 
             // Handle signifier for selected node
             d3.selectAll('.node, g.label').classed('selected', false);
@@ -865,13 +959,23 @@ angular.module('redesign2017App').directive('forceLayout', ['apiService', '$time
                 });
             }
 
-            // This triggers events in groupsbar.js and contextualinfopanel.js when a selection happens
-            apiService.getPeople(d.id).then(function (result) {
-              scope.currentSelection = result.data[0];
-              $timeout(function(){
-                scope.$broadcast('selectionUpdated', scope.currentSelection);
+            if (d.type === "person") {
+              // This triggers events in groupsbar.js and contextualinfopanel.js when a selection happens
+              apiService.getPeople(d.id).then(function (result) {
+                scope.currentSelection = result.data[0];
+                $timeout(function(){
+                  scope.$broadcast('selectionUpdated', scope.currentSelection);
+                });
               });
-            });
+            } else {
+              apiService.getGroups(d.id).then(function (result) {
+                scope.currentSelection = result.data[0];
+                scope.currentSelection.type = 'group';
+                $timeout(function(){
+                  scope.$broadcast('selectionUpdated', scope.currentSelection);
+                });
+              });
+            }
 
           } else if (d.type == "relationship") { //Handler for when a link is clicked
 
@@ -931,9 +1035,25 @@ angular.module('redesign2017App').directive('forceLayout', ['apiService', '$time
               return "M" + d.source.x + "," + d.source.y + "A" + dr + "," + dr + " 0 0,1 " + d.target.x + "," + d.target.y;
             });
 
-          node // Take x and y values from data
-            .attr("cx", function(d) { return d.x; })
-            .attr("cy", function(d) { return d.y; });
+          if (scope.config.viewMode === 'all') {
+            var nodes = scope.data.included;
+            var sizeScale = d3.scaleLinear()
+              .range([8, 30]);
+
+            var maxDegree = d3.max(nodes, function(d) { return d.attributes.degree; });
+            var minDegree = d3.min(nodes, function(d) { return d.attributes.degree; });
+            sizeScale.domain([minDegree, maxDegree]);
+            node.attr("x", function(d) { return d.x - sizeScale(d.attributes.degree) / Math.sqrt(2) })
+              .attr("y", function(d) { return d.y - sizeScale(d.attributes.degree) / Math.sqrt(2) })
+              .style("transform-origin", function(d) {
+                var translationValue = d.x + 'px ' + d.y + 'px';
+                return translationValue;
+              })
+          } else {
+            node // Take x and y values from data
+              .attr("cx", function(d) { return d.x; })
+              .attr("cy", function(d) { return d.y; });
+          }
 
           label // Position labels in center of nodes
             .attr("transform", function(d) {

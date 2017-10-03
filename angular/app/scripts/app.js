@@ -80,9 +80,10 @@ redesign2017App.config(function($stateProvider, $locationProvider) {
   }
   var vizState = {
     name: 'home.visualization',
-    url: '?ids',
+    url: '?ids&type',
     resolve: {
       networkData: function(apiService, $stateParams) {
+        if($stateParams.type === 'network') {
           if ($stateParams.ids.length < 8) {
             return apiService.getGroupNetwork($stateParams.ids).then(function(result){
               apiService.result = result;
@@ -94,6 +95,12 @@ redesign2017App.config(function($stateProvider, $locationProvider) {
               return apiService.result;
             });
           }
+        } else if ($stateParams.type === 'all-groups') {
+          return apiService.getAllGroups().then(function(result){
+            apiService.result = result;
+            return apiService.result;
+          });
+        }
       }
     },
     component: 'visualization'

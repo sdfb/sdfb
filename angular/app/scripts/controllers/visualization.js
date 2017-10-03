@@ -49,7 +49,9 @@ angular.module('redesign2017App').component('visualization', {
 
     this.$onChanges = function() {
       $scope.data = this.networkData;
-      if (this.networkData.data.attributes.primary_people.length === 1) {
+      if ($stateParams.type === 'all-groups') {
+        $scope.config.viewMode = 'all';
+      } else if (this.networkData.data.attributes.primary_people.length === 1) {
         $scope.config.viewMode = 'individual-force';
       } else if (this.networkData.data.attributes.primary_people.length === 2) {
         $scope.config.viewMode = 'shared-network';

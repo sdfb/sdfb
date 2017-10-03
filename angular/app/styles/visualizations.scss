@@ -144,6 +144,24 @@ shared-network {
     cursor: pointer;
   }
 
+  .node.all {
+    fill: #78729F;
+    -webkit-transform: rotate(30deg);
+    transform: rotate(30deg);
+    stroke: white;
+    stroke-width: 0.75px;
+    -webkit-transition: -webkit-transform 0.25s ease-in-out;
+    transition: -webkit-transform 0.25s ease-in-out;
+    transition: transform 0.25s ease-in-out;
+    transition: transform 0.25s ease-in-out, -webkit-transform 0.25s ease-in-out;
+    cursor: pointer;
+  }
+
+  .node.all:hover {
+    -webkit-transform: rotate(0deg);
+    transform: rotate(0deg);
+  }
+
   .node.member {
     fill: #78729F;
     stroke: white;
@@ -369,7 +387,7 @@ all-groups-graph {
   }
 
 
-  .node {
+  .node.all {
     fill: #78729F;
     -webkit-transform: rotate(30deg);
     transform: rotate(30deg);
@@ -382,12 +400,7 @@ all-groups-graph {
     cursor: pointer;
   }
 
-  // .cursor {
-  //   -webkit-transform: rotate(30deg);
-  //   transform: rotate(30deg);
-  // }
-
-  .node:hover {
+  .node.all:hover {
     -webkit-transform: rotate(0deg);
     transform: rotate(0deg);
   }

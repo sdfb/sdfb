@@ -26,12 +26,12 @@ angular.module('redesign2017App')
 
         scope.selectedPerson = function($person1) {
           scope.config.person1 = $person1.id
-          $state.go('home.visualization', {ids: $person1.id});
+          $state.go('home.visualization', {ids: $person1.id, type:'network'});
         };
 
         scope.selectedShared = function($person2) {
           var ids = [scope.config.person1, $person2.id].join()
-          $state.go('home.visualization', {ids: ids});
+          $state.go('home.visualization', {ids: ids, type:'network'});
         };
 
         scope.groupTypeahead = { 'selected': undefined }
@@ -48,7 +48,7 @@ angular.module('redesign2017App')
 
         scope.groupSelected = function($item, $model, $label, $event) {
           console.log($item.name, $item.id, 'getting group network...');
-          $state.go('home.visualization', {ids: $item.id});
+          $state.go('home.visualization', {ids: $item.id, type:'network'});
         }
 
       }

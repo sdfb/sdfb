@@ -30,8 +30,8 @@
 
 </div>
 <div class="visualization-container">
-  <force-layout ng-hide=" config.viewMode == 'all' || config.viewMode == 'group-timeline'"></force-layout>
+  <force-layout ng-hide=" config.viewMode == 'group-timeline' "></force-layout>
   <groups-bar ng-show=" config.viewMode == 'individual-force' || config.viewMode == 'individual-concentric' || config.viewMode == 'shared-network' "></groups-bar>
-  <all-groups-graph ng-show=" config.viewMode == 'all' "></all-groups-graph>
+  <!-- <all-groups-graph ng-show=" config.viewMode == 'all' "></all-groups-graph> -->
   <group-timeline ng-show=" config.viewMode == 'group-timeline' "></group-timeline>
 </div>
