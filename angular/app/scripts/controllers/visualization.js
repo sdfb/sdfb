@@ -27,7 +27,7 @@ angular.module('redesign2017App').component('visualization', {
             status: true,
             user: 'Elizabeth',
           },
-          contributionMode: false,
+          contributionMode: $scope.$parent.config.contributionMode,
           dateTypes : ['IN', 'CIRCA', 'BEFORE', 'BEFORE/IN','AFTER', 'AFTER/IN'],
           onlyMembers: false
         }
@@ -46,6 +46,10 @@ angular.module('redesign2017App').component('visualization', {
     $scope.newLink = {};
     $scope.newGroup = {};
     $scope.groupAssign = {person: {}, group: {}};
+
+    $scope.$watch('$parent.config.contributionMode', function(newValue, oldValue) {
+      $scope.config.contributionMode = newValue;
+    });
 
     this.$onChanges = function() {
       $scope.data = this.networkData;
@@ -77,6 +81,7 @@ angular.module('redesign2017App').component('visualization', {
         $scope.data.included = $scope.data.included.filter(function(n) { return n.id !== $scope.data.data.id; });
         $scope.networkName = "Hooke Network of " + groupName;
         $scope.$parent.groupTypeahead.selected = groupName;
+        $scope.$parent.config.viewObject = 1;
       }
     };
 
@@ -252,19 +257,9 @@ angular.module('redesign2017App').component('visualization', {
           $scope.config.contributionMode = true;
         }
         else {
-          if ($scope.config.viewMode === 'individual-force' || $scope.config.viewMode === 'individual-concentric') {
-            $scope.addedNodes = [];
-            $scope.addedLinks = [];
-            $scope.updatePersonNetwork($scope.data);
-          } else if ($scope.config.viewMode === 'shared-network') {
-            $scope.addedSharedNodes = [];
-            $scope.addedSharedLinks = [];
-            $scope.updateSharedNetwork($scope.data);
-          } else if ($scope.config.viewMode === 'group-force') {
-            $scope.addedGroupNodes = [];
-            $scope.addedGroupLinks = [];
-            $scope.updateGroupNetwork($scope.data, $scope.data.onlyMembers);
-          }
+          $scope.addedNodes = [];
+          $scope.addedLinks = [];
+          $scope.updateNetwork($scope.data);
         }
       }
     })

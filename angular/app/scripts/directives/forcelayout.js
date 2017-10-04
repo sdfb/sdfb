@@ -203,6 +203,7 @@ angular.module('redesign2017App').directive('forceLayout', ['apiService', '$time
           }
 
           var newNodes = newData[0];
+          console.log(newNodes);
           var newLinks = newData[1];
 
           scope.addedNodes.forEach(function(a) { newNodes.push(a); });
@@ -393,7 +394,10 @@ angular.module('redesign2017App').directive('forceLayout', ['apiService', '$time
                     return 'node degree' + 7
                   }
                 } else if (scope.config.viewMode === 'group-force') {
-                  if (members.indexOf(d.id) === -1) { return 'node not-member'; }
+                  if (members.indexOf(d.id) === -1) {
+                    if (d.distance === 7) { return 'node degree7'; }
+                    else { return 'node not-member'; }
+                  }
                   else { return 'node member'; };
                 } else {
                   return 'node degree' + d.distance
@@ -722,7 +726,7 @@ angular.module('redesign2017App').directive('forceLayout', ['apiService', '$time
 
 
         function parseGroupComplexity(json, onlyMembers) {
-          var members = scope.data.data.attributes.primary_people;
+          var members = json.data.attributes.primary_people;
           if (onlyMembers === false) {
             var links = [];
             json.data.attributes.connections.forEach(function (l) {
