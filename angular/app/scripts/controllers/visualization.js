@@ -53,9 +53,9 @@ angular.module('redesign2017App').component('visualization', {
         $scope.config.viewMode = 'all';
       } else if ($stateParams.ids.length < 8 && $stateParams.type === 'timeline') {
         $scope.config.viewMode = 'group-timeline'
-      } else if (this.networkData.data.attributes.primary_people.length === 1) {
+      } else if ($stateParams.ids.length > 8 && this.networkData.data.attributes.primary_people.length === 1) {
         $scope.config.viewMode = 'individual-force';
-      } else if (this.networkData.data.attributes.primary_people.length === 2) {
+      } else if ($stateParams.ids.length > 8 && this.networkData.data.attributes.primary_people.length === 2) {
         $scope.config.viewMode = 'shared-network';
       } else if ($stateParams.ids.length < 8) {
         $scope.config.viewMode = 'group-force';

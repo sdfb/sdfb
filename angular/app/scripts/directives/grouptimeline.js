@@ -311,29 +311,31 @@ angular.module('redesign2017App')
         // action triggered from the controller
         scope.$watch('data', function(newValue, oldValue) {
           // console.log(event, json);
-          var json = newValue;
-          groupInfo = {};
-          json.included.forEach( function(item) {
-            if (item.id === json.data.id) {
-              groupInfo["description"] = item.attributes["description"];
-              groupInfo["end_date_type"] = item.attributes["end_date_type"];
-              groupInfo["end_year"] = item.attributes["end_year"];
-              groupInfo["id"] = item.attributes["id"];
-              groupInfo["name"] = item.attributes["name"];
-              groupInfo["start_date_type"] = item.attributes["start_date_type"];
-              groupInfo["start_year"] = item.attributes["start_year"];
-              groupInfo["type"] = item.attributes["type"];
-            }
-          });
+          if (scope.config.viewMode === 'group-timeline') {
+            var json = newValue;
+            groupInfo = {};
+            json.included.forEach( function(item) {
+              if (item.id === json.data.id) {
+                groupInfo["description"] = item.attributes["description"];
+                groupInfo["end_date_type"] = item.attributes["end_date_type"];
+                groupInfo["end_year"] = item.attributes["end_year"];
+                groupInfo["id"] = item.attributes["id"];
+                groupInfo["name"] = item.attributes["name"];
+                groupInfo["start_date_type"] = item.attributes["start_date_type"];
+                groupInfo["start_year"] = item.attributes["start_year"];
+                groupInfo["type"] = item.attributes["type"];
+              }
+            });
 
 
-          primary_people = json.data.attributes.primary_people;
-          members = [];
-          members = _.intersectionWith(json.included, primary_people, function(a, b) {
-            return a.id == b;
-          });
+            primary_people = json.data.attributes.primary_people;
+            members = [];
+            members = _.intersectionWith(json.included, primary_people, function(a, b) {
+              return a.id == b;
+            });
 
-          update(members);
+            update(members);
+          }
         });
 
       }
