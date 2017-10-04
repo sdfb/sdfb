@@ -76,7 +76,8 @@ redesign2017App.config(function($stateProvider, $locationProvider) {
   var homeState = {
     name: 'home',
     url: '/',
-    component: 'home'
+    component: 'home',
+    redirectTo: { state: 'home.visualization', params: { ids: '10000473', type: 'network' } }
   }
   var vizState = {
     name: 'home.visualization',

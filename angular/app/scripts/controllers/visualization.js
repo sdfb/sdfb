@@ -52,12 +52,17 @@ angular.module('redesign2017App').component('visualization', {
       if ($stateParams.type === 'all-groups') {
         $scope.config.viewMode = 'all';
         $scope.networkName = "Co-membership of All Groups"
+        $scope.$parent.groupTypeahead.selected = '';
       } else if ($stateParams.ids.length < 8 && $stateParams.type === 'timeline') {
         $scope.config.viewMode = 'group-timeline';
       } else if ($stateParams.ids.length >= 8 && this.networkData.data.attributes.primary_people.length === 1) {
+        var personName = this.networkData.included[0].attributes.name;
         $scope.config.viewMode = 'individual-force';
         $scope.$parent.config.person1 = $stateParams.ids;
-        $scope.networkName = "Hooke Network of " + this.networkData.included[0].attributes.name;
+        $scope.networkName = "Hooke Network of " + personName;
+        $scope.$parent.personTypeahead.selected = personName;
+        $scope.$parent.sharedTypeahead.selected = '';
+        $scope.$parent.config.viewObject = 0;
       } else if ($stateParams.ids.length > 8 && this.networkData.data.attributes.primary_people.length === 2) {
         $scope.config.viewMode = 'shared-network';
         $scope.networkName = "Hooke Network of " + this.networkData.included[0].attributes.name + " & " + this.networkData.included[1].attributes.name;
@@ -71,6 +76,7 @@ angular.module('redesign2017App').component('visualization', {
         });
         $scope.data.included = $scope.data.included.filter(function(n) { return n.id !== $scope.data.data.id; });
         $scope.networkName = "Hooke Network of " + groupName;
+        $scope.$parent.groupTypeahead.selected = groupName;
       }
     };
 

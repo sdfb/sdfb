@@ -24,6 +24,9 @@ angular.module('redesign2017App')
           scope.config.viewMode = 'individual-force';
         }
 
+        scope.personTypeahead = { 'selected': undefined }
+        scope.sharedTypeahead = { 'selected': undefined }
+
         scope.selectedPerson = function($person1) {
           scope.config.person1 = $person1.id
           $state.go('home.visualization', {ids: $person1.id, type:'network'});
