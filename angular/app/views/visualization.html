@@ -1,9 +1,8 @@
 <div class="panels-container">
   <section class="on-the-left">
-    <!-- {{config.viewMode}} -->
     <contextual-info-panel class="panel" ng-show=" config.viewMode != 'group-timeline' "></contextual-info-panel>
     <legend-panel class="panel timeline-legend" ng-if=" config.viewMode == 'group-timeline' "></legend-panel>
-    <span id="viz-title">{{ $ctrl.networkName }}</span>
+    <span id="viz-title">{{ networkName }}</span>
   </section>
   <section class="on-the-right" ng-show=" config.viewMode != 'group-timeline' ">
     <legend-panel class="panel collapsable" ng-class="{'collapsed' : legendClosed, 'group': config.viewMode == 'all', 'shared': config.viewMode == 'shared-network', 'individual': config.viewMode == 'individual-force' || config.viewMode == 'individual-concentric','single-group': config.viewMode == 'group-force', 'timeline': config.viewMode == 'group-timeline'}"></legend-panel>

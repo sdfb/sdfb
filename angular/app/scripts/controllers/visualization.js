@@ -51,14 +51,26 @@ angular.module('redesign2017App').component('visualization', {
       $scope.data = this.networkData;
       if ($stateParams.type === 'all-groups') {
         $scope.config.viewMode = 'all';
+        $scope.networkName = "Co-membership of All Groups"
       } else if ($stateParams.ids.length < 8 && $stateParams.type === 'timeline') {
-        $scope.config.viewMode = 'group-timeline'
-      } else if ($stateParams.ids.length > 8 && this.networkData.data.attributes.primary_people.length === 1) {
+        $scope.config.viewMode = 'group-timeline';
+      } else if ($stateParams.ids.length >= 8 && this.networkData.data.attributes.primary_people.length === 1) {
         $scope.config.viewMode = 'individual-force';
+        $scope.$parent.config.person1 = $stateParams.ids;
+        $scope.networkName = "Hooke Network of " + this.networkData.included[0].attributes.name;
       } else if ($stateParams.ids.length > 8 && this.networkData.data.attributes.primary_people.length === 2) {
         $scope.config.viewMode = 'shared-network';
+        $scope.networkName = "Hooke Network of " + this.networkData.included[0].attributes.name + " & " + this.networkData.included[1].attributes.name;
       } else if ($stateParams.ids.length < 8) {
         $scope.config.viewMode = 'group-force';
+        var groupName;
+        $scope.data.included.forEach( function(item) {
+          if (item.id === $scope.data.data.id) {
+            groupName = item.attributes.name;
+          }
+        });
+        $scope.data.included = $scope.data.included.filter(function(n) { return n.id !== $scope.data.data.id; });
+        $scope.networkName = "Hooke Network of " + groupName;
       }
     };
 
