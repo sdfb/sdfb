@@ -244,12 +244,11 @@ angular.module('redesign2017App').component('visualization', {
 
     $scope.sendData = function() {
       console.log($scope.addToDB);
-      $window.alert($scope.addToDB.toString());
       $scope.addToDB = {nodes: [], links: [], groups: []};
     }
 
 
-    $scope.$watch('config.contributionMode', function(newValue, oldValue) {
+    $scope.$watch('$parent.config.contributionMode', function(newValue, oldValue) {
       // var emptyDB = {nodes: [], links: [], groups: []}
       if (newValue !== oldValue && !newValue) {
         if ($scope.addToDB.nodes.length !== 0 || $scope.addToDB.links.length !== 0 || $scope.addToDB.groups.length !== 0) {
@@ -259,6 +258,7 @@ angular.module('redesign2017App').component('visualization', {
         else {
           $scope.addedNodes = [];
           $scope.addedLinks = [];
+          $scope.addedGroups = [];
           $scope.updateNetwork($scope.data);
         }
       }

@@ -22,6 +22,7 @@ angular.module('redesign2017App').directive('forceLayout', ['apiService', '$time
         scope.singleZoomfactor = 1;
         scope.addedNodes = []; // Nodes user has added to the graph
         scope.addedLinks = []; // Links user has added to the graph
+        scope.addedGroups = []; // Groups user has added to the graph
         var simulation,
           sourceId;
 
@@ -65,7 +66,11 @@ angular.module('redesign2017App').directive('forceLayout', ['apiService', '$time
 
               if (scope.config.contributionMode) {
                 var point = d3.mouse(container.node());
-                scope.addNode(scope.addedNodes, point, scope.updateNetwork);
+                if (scope.config.viewMode === 'all') {
+                  scope.addGroupNode(scope.addedGroups, point, scope.updateNetwork);
+                } else {
+                  scope.addNode(scope.addedNodes, point, scope.updateNetwork);
+                }
               }
               // update selction and trigger event for other directives
               scope.currentSelection = {};
@@ -207,6 +212,9 @@ angular.module('redesign2017App').directive('forceLayout', ['apiService', '$time
           var newLinks = newData[1];
 
           scope.addedNodes.forEach(function(a) { newNodes.push(a); });
+          if (scope.config.viewMode === 'all') {
+            scope.addedGroups.forEach(function(a) { newNodes.push(a); });
+          }
           scope.addedLinks.forEach(function(a) { newLinks.push(a); });
 
           if (scope.config.viewMode == 'individual-concentric') {
@@ -314,12 +322,13 @@ angular.module('redesign2017App').directive('forceLayout', ['apiService', '$time
             node.exit().remove();
             node = node.enter().append("rect")
               .merge(node)
-              .attr("class", "node all")
+              .attr("class", "node")
               .attr("width", function(d) { return (2 * sizeScale(d.attributes.degree)) / Math.sqrt(2); })
               .attr("height", function(d) { return (2 * sizeScale(d.attributes.degree)) / Math.sqrt(2); })
               .attr("rx", 2)
               .attr("ry", 2)
-              .classed("new", function(d) { return d.distance === 7; })
+              .classed("degree7", function(d) { return d.distance === 7; })
+              .classed("all", function (d) { return d.distance !== 7; })
               .on("click", function(d) {
                 // console.log(d, d.attributes.name)
                 // Toggle ego networks on click of node

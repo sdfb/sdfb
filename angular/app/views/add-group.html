@@ -3,7 +3,7 @@
 		<h3 class="">Create new Group</h3>
 		<h4 class="paragraph-title">Group Name</h4>
 	  <!-- <input placeholder="Search for a person" type="text" ng-model="person.added" uib-typeahead="person for person in peopleToSelect | filter:$viewValue | limitTo:8" class="form-control"> -->
-		<input type="text" ng-model="newGroup.name" placeholder="Search for a group" uib-typeahead="group as group.name for group in callGroupsTypeahead($viewValue)" typeahead-loading="loadingNewGroups" typeahead-no-results="noResultsNewGroups" class="form-control" typeahead-template-url="./views/groupsTypeaheadTemplate.html" class="form-control" typeahead-show-hint="true" typeahead-min-length="3" typeahead-on-select="foundNewGroup($item)">
+		<input type="text" ng-model="newGroup.name" placeholder="Search for a group" uib-typeahead="group as group.name for group in $parent.callGroupsTypeahead($viewValue)" typeahead-loading="loadingNewGroups" typeahead-no-results="noResultsNewGroups" class="form-control" typeahead-template-url="./views/groupsTypeaheadTemplate.html" class="form-control" typeahead-show-hint="true" typeahead-min-length="3" typeahead-on-select="foundNewGroup($item)">
     <i ng-show="loadingNewGroups" class="glyphicon glyphicon-refresh"></i>
     <div ng-show="noResultsNewGroups">
       <i class="glyphicon glyphicon-remove"></i> No Results Found: Add this group
