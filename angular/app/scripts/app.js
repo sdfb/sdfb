@@ -76,14 +76,14 @@ redesign2017App.config(function($stateProvider, $locationProvider) {
   var homeState = {
     name: 'home',
     url: '/',
-    component: 'home',
-    redirectTo: { state: 'home.visualization', params: { ids: '10000473', type: 'network' } }
+    component: 'home'
+//    redirectTo: { state: 'home.visualization', params: { ids: '10000473', type: 'network' } }
   }
   var vizState = {
     name: 'home.visualization',
     url: '?ids&type',
     resolve: {
-      networkData: function(apiService, $stateParams) {
+      networkData: ['apiService', '$stateParams', function(apiService, $stateParams) {
         if ($stateParams.type === 'network' || $stateParams.type === 'timeline') {
           if ($stateParams.ids.length < 8) {
             return apiService.getGroupNetwork($stateParams.ids).then(function(result){
@@ -102,7 +102,7 @@ redesign2017App.config(function($stateProvider, $locationProvider) {
             return apiService.result;
           });
         }
-      }
+      }]
     },
     component: 'visualization'
   }
