@@ -152,7 +152,7 @@ path.danger {
   width: 100vw;
   height: calc(100vh - 50px);
   padding: 10px;
-  position: relative;
+  position: fixed;
   pointer-events: none;
   z-index: 100;
 }
@@ -231,6 +231,7 @@ path.danger {
   -webkit-transition-timing-function: ease-in-out;
   transition-timing-function: ease-in-out;
   width: 100%;
+
 
   &.individual {
     height: 346px;
@@ -736,6 +737,8 @@ group-timeline {
 }
 
 .timeline-legend {
+  margin-top: 345px;
+  
   .legend-line {
     margin: 0 auto 8px;
     top: 3px;
@@ -812,7 +815,7 @@ group-timeline {
 /* filters styles */
 filters-panel {
   &.individualFilter {
-    height: 475px;
+    height: 525px;
   }
 
   svg .bar {
@@ -1181,6 +1184,7 @@ add-link.panel section {
 /* Contextual Info Panel*/
 contextual-info-panel.panel {
   background-color: $light-color;
+  margin-top: 345px;
 }
 
 .contribution-mode-on contextual-info-panel.panel {

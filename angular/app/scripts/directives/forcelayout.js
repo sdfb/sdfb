@@ -1,19 +1,20 @@
 'use strict';
 
 /**
- * @ngdoc directive
- * @name redesign2017App.directive:forceLayout
+ * @ngdoc component
+ * @name redesign2017App.component:forceLayout
  * @description
  * # forceLayout
  */
-angular.module('redesign2017App')
-  .directive('forceLayout', ['apiService', '$timeout', function(apiService, $timeout) {
+angular.module('redesign2017App').directive('forceLayout', ['apiService', '$timeout', '$state', function(apiService, $timeout, $state) {
     return {
       template: '<svg width="100%" height="100%"></svg>',
       restrict: 'E',
+      // scope: {
+      //   data: '='
+      // },
       link: function postLink(scope, element, attrs) {
         console.log('drawing network the first time');
-        // console.log(scope.data);
 
         scope.singleSvg = d3.select(element[0]).select('svg'); // Root svg element
         scope.singleWidth = +scope.singleSvg.node().getBoundingClientRect().width; // Width of viz
@@ -21,6 +22,7 @@ angular.module('redesign2017App')
         scope.singleZoomfactor = 1;
         scope.addedNodes = []; // Nodes user has added to the graph
         scope.addedLinks = []; // Links user has added to the graph
+        scope.addedGroups = []; // Groups user has added to the graph
         var simulation,
           sourceId;
 
@@ -46,7 +48,16 @@ angular.module('redesign2017App')
               // Must select g.labels since it selects elements in other part of the interface
               d3.selectAll('g.label')
                 .classed('hidden', function(d) {
-                  return (d.distance < 2) ? false : true;
+                  if (scope.config.viewMode === 'shared-network') {
+                    return (d.distance === 0 || d.distance === 3) ? false : true;
+                  } else if (scope.config.viewMode === 'group-force') {
+                    var members = scope.data.data.attributes.primary_people;
+                    return (members.indexOf(d.id) === -1) ? true : false;
+                  } else if (scope.config.viewMode === 'all') {
+                    return false;
+                  } else {
+                    return (d.distance < 2) ? false : true;
+                  }
                 });
 
               // reset group bar
@@ -55,7 +66,11 @@ angular.module('redesign2017App')
 
               if (scope.config.contributionMode) {
                 var point = d3.mouse(container.node());
-                scope.addNode(scope.addedNodes, point, scope.updatePersonNetwork);
+                if (scope.config.viewMode === 'all') {
+                  scope.addGroupNode(scope.addedGroups, point, scope.updateNetwork);
+                } else {
+                  scope.addNode(scope.addedNodes, point, scope.updateNetwork);
+                }
               }
               // update selction and trigger event for other directives
               scope.currentSelection = {};
@@ -105,7 +120,7 @@ angular.module('redesign2017App')
           return [nodes, links];
         }
 
-        function generatePersonNetwork(json) {
+        function generateNetwork(json) {
         sourceId = json.data.attributes.primary_people; // ID of searched node (Bacon in sample data)
 
 
@@ -135,7 +150,7 @@ angular.module('redesign2017App')
 
         }
 
-        scope.updatePersonNetwork = function(json) {
+        scope.updateNetwork = function(json) {
 
           /* The main update function draws the all of the elements of the visualization
           and keeps them up to date using the D3 general update pattern. Takes as variables ranges
@@ -151,7 +166,6 @@ angular.module('redesign2017App')
             oldLayout = 'individual-force'; // Keep track of whether the layout has changed
 
           var layout = json.layout;
-          console.log(layout);
 
           var nodesAndLinks = getNodesAndLinks(json),
               nodes = nodesAndLinks[0],
@@ -171,22 +185,39 @@ angular.module('redesign2017App')
             };
           });
 
-          var newData = parseComplexity(thresholdLinks, complexity); // Use links in complexity function, which return nodes and links.
+          if (scope.config.viewMode === 'individual-force' || scope.config.viewMode === 'individual-concentric') {
+            var newData = parseIndComplexity(thresholdLinks, complexity); // Use links in complexity function, which return nodes and links.
+          } else if (scope.config.viewMode === 'shared-network') {
+            var sources = json.data.attributes.primary_people;
+            var newData = parseSharedComplexity(thresholdLinks, complexity, sources);
+          } else if (scope.config.viewMode === 'group-force') {
+            var members = json.data.attributes.primary_people;
+            var newData = parseGroupComplexity(json, scope.config.onlyMembers);
+          } else {
+            var nodes = json.included;
+            var links = [];
+            json.data.attributes.connections.forEach(function(l) {
+              links.push({
+                'type': l.type,
+                'source': l.attributes.source,
+                'target': l.attributes.target,
+                'weight': l.attributes.weight
+              })
+            });
+            var newData = [nodes, links];
+          }
+
           var newNodes = newData[0];
+          console.log(newNodes);
           var newLinks = newData[1];
 
           scope.addedNodes.forEach(function(a) { newNodes.push(a); });
+          if (scope.config.viewMode === 'all') {
+            scope.addedGroups.forEach(function(a) { newNodes.push(a); });
+          }
           scope.addedLinks.forEach(function(a) { newLinks.push(a); });
 
-          if (layout == 'individual-force') {
-            console.log('Layout: individual-force');
-            // For force layout, set fixed positions to null (undoes circle positioning)
-            nodes.forEach(function(d) {
-              d.fx = null;
-              d.fy = null;
-            });
-          } else if (layout == 'individual-concentric') {
-            console.log('Layout: individual-concentric');
+          if (scope.config.viewMode == 'individual-concentric') {
             // For concentric layout, set fixed positions according to degree
             newNodes.forEach(function(d) {
               if (d.distance == 0) { // Set source node to center of view
@@ -200,8 +231,23 @@ angular.module('redesign2017App')
 
             var twoDegreeNodes = newNodes.filter(function(d) { if (d.distance == 2) { return d; } });
             positionCircle(twoDegreeNodes, 500); // Put 2-degree nodes in circle of radius 500
+          } else if (scope.config.viewMode === 'shared-network') {
+            newNodes.forEach( function(d) {
+              if (d.id == sources[0]) {
+                d.fx = scope.singleWidth/8;
+                d.fy = scope.singleHeight/2;
+              }
+              if (d.id == sources[1]) {
+                d.fx = scope.singleWidth * (7/8)
+                d.fy = scope.singleHeight/2
+              }
+            })
           } else {
-            console.log('ERROR: No compatible layout selected:', layout);
+            // For force layout, set fixed positions to null (undoes circle positioning)
+            nodes.forEach(function(d) {
+              d.fx = null;
+              d.fy = null;
+            });
           }
 
 
@@ -234,6 +280,16 @@ angular.module('redesign2017App')
             .classed('new', function(d) {
               return d.new ? true : false;
             })
+            .attr("stroke-width", function(d) {
+              if (scope.config.viewMode === 'all') {
+                var sizeEdge = d3.scaleLinear()
+                  .range([1, 10]);
+                var minWeight = d3.min(newLinks, function(d) { return d.weight });
+                var maxWeight = d3.max(newLinks, function(d) { return d.weight });
+                sizeEdge.domain([minWeight, maxWeight]);
+                return sizeEdge(d.weight)
+              }
+            })
             .on('click', function(d) { // Toggle link on click
               toggleClick(d, newLinks);
             });
@@ -256,64 +312,168 @@ angular.module('redesign2017App')
             return d.id;
           })
 
-          var nodeEnter = node.enter().append('circle'); // Create enter variable for general update pattern
+          if (scope.config.viewMode === 'all') {
+            var sizeScale = d3.scaleLinear()
+              .range([8, 30]);
 
+            var maxDegree = d3.max(newNodes, function(d) { return d.attributes.degree; });
+            var minDegree = d3.min(newNodes, function(d) { return d.attributes.degree; });
+            sizeScale.domain([minDegree, maxDegree]);
+            node.exit().remove();
+            node = node.enter().append("rect")
+              .merge(node)
+              .attr("class", "node")
+              .attr("width", function(d) { return (2 * sizeScale(d.attributes.degree)) / Math.sqrt(2); })
+              .attr("height", function(d) { return (2 * sizeScale(d.attributes.degree)) / Math.sqrt(2); })
+              .attr("rx", 2)
+              .attr("ry", 2)
+              .classed("degree7", function(d) { return d.distance === 7; })
+              .classed("all", function (d) { return d.distance !== 7; })
+              .on("click", function(d) {
+                // console.log(d, d.attributes.name)
+                // Toggle ego networks on click of node
+                toggleClick(d, newLinks, this);
+              })
+              .on('dblclick', function(d){
+                if (d.id !== 0) {
+                  $state.go('home.visualization', {ids: d.id, type: 'network'});
+                } else {
+                  console.log('new node');
+                  scope.$apply(function() {
+                    scope.config.viewMode = 'group-force';
+                    scope.data = {};
+                    scope.data.included = [];
+                    scope.data.data = {};
+                    scope.data.data.attributes = {};
+                    scope.data.data.attributes.primary_people = [];
+                    scope.data.data.attributes.connections = [];
+                  });
 
-          node.exit().remove(); // Remove exiting nodes
-
-          node = nodeEnter.merge(node) // Merge new nodes
-            .attr('class', function(d) { // Class by degree of distance
-              return 'node degree' + d.distance
-            })
-            .attr('id', function(d) { // Assign ID number
-              return "n" + d.id.toString();
-            })
-            .attr('r', function(d) { // Size nodes by degree of distance
-              if (d.distance == 0) {
-                return 25;
-              } else if (d.distance == 1) {
-                return 12.5;
-              } else {
-                return 6.25;
-              }
-            })
-            .on('click', function(d) {
-              // Toggle ego networks on click of node
-
-              toggleClick(d, newLinks, this);
-            })
-            .on('dblclick', function(d){
-              console.log('double clicked:',d);
-              scope.selectedPerson(d);
-            })
-            // On hover, display label
-            .on('mouseenter', function(d) {
-              d3.selectAll('g.label').each(function(e) {
-                if (e.id == d.id) {
-                  d3.select(this)
-                    .classed('temporary-unhidden', true);
                 }
               })
-              // sort elements so to bring the hovered one on top and make it readable.
-              scope.singleSvg.selectAll("g.label").each(function(e, i) {
-                if (d == e) {
-                  var myElement = this;
-                  d3.select(myElement).remove();
-                  d3.select('.labels').node().appendChild(myElement);
+              // On hover, display label
+              .on('mouseenter', function(d) {
+                d3.selectAll('g.label').each(function(e) {
+                  if (e.id == d.id) {
+                    d3.select(this).classed('temporary-unhidden', true);
+                  }
+                })
+                // // sort elements so to bring the hovered one on top and make it readable.
+                scope.singleSvg.selectAll("g.label").each(function(e, i) {
+                  if (d == e) {
+                    var myElement = this;
+                    d3.select(myElement).remove();
+                    d3.select('.labels').node().appendChild(myElement);
+                  }
+                })
+              })
+              .on('mouseleave', function(d) {
+                d3.selectAll('g.label').each(function(e) {
+                  if (e.id == d.id) {
+                    d3.select(this).classed('temporary-unhidden', false);
+                  }
+                })
+              })
+              .call(d3.drag()
+                .on("start", dragstarted)
+                .on("drag", dragged)
+                .on("end", dragended));
+          } else {
+            var nodeEnter = node.enter().append('circle'); // Create enter variable for general update pattern
+
+
+            node.exit().remove(); // Remove exiting nodes
+
+            node = nodeEnter.merge(node) // Merge new nodes
+              .attr('class', function(d) { // Class by degree of distance
+                if (scope.config.viewMode == 'shared-network') {
+                  if (d.distance === 0) {
+                    return 'node degree' + 3
+                  }
+                  else if (d.distance === 1) {
+                    return 'node degree' + 4
+                  }
+                  else if (d.distance === 2) {
+                    return 'node degree' + 1
+                  }
+                  else if (d.distance === 3) {
+                    return 'node degree' + 0
+                  }
+                  else if (d.distance === 7) {
+                    return 'node degree' + 7
+                  }
+                } else if (scope.config.viewMode === 'group-force') {
+                  if (members.indexOf(d.id) === -1) {
+                    if (d.distance === 7) { return 'node degree7'; }
+                    else { return 'node not-member'; }
+                  }
+                  else { return 'node member'; };
+                } else {
+                  return 'node degree' + d.distance
                 }
               })
-            })
-            .on('mouseleave', function(d) {
-              d3.selectAll('g.label').each(function(e) {
-                if (e.id == d.id) {
-                  d3.select(this).classed('temporary-unhidden', false);
+              .attr('id', function(d) { // Assign ID number
+                return "n" + d.id.toString();
+              })
+              .attr('r', function(d) { // Size nodes by degree of distance
+                if (scope.config.viewMode == 'shared-network') {
+                  if (d.distance === 0 || d.distance === 3) {
+                    return 25;
+                  } else if (d.distance === 2) {
+                    return 12.5;
+                  } else {
+                    return 6.25;
+                  }
+                } else if (scope.config.viewMode === 'group-force') {
+                  if (members.indexOf(d.id) === -1) { return 6.25; }
+                  else { return 12.5; };
+                } else {
+                  if (d.distance == 0) {
+                    return 25;
+                  } else if (d.distance == 1) {
+                    return 12.5;
+                  } else {
+                    return 6.25;
+                  }
                 }
               })
-            })
-            .call(d3.drag()
-              .on("start", dragstarted)
-              .on("drag", dragged)
-              .on("end", dragended));
+              .on('click', function(d) {
+                // Toggle ego networks on click of node
+
+                toggleClick(d, newLinks, this);
+              })
+              .on('dblclick', function(d){
+                $state.go('home.visualization', {ids: d.id});
+              })
+              // On hover, display label
+              .on('mouseenter', function(d) {
+                d3.selectAll('g.label').each(function(e) {
+                  if (e.id == d.id) {
+                    d3.select(this)
+                      .classed('temporary-unhidden', true);
+                  }
+                })
+                // sort elements so to bring the hovered one on top and make it readable.
+                scope.singleSvg.selectAll("g.label").each(function(e, i) {
+                  if (d == e) {
+                    var myElement = this;
+                    d3.select(myElement).remove();
+                    d3.select('.labels').node().appendChild(myElement);
+                  }
+                })
+              })
+              .on('mouseleave', function(d) {
+                d3.selectAll('g.label').each(function(e) {
+                  if (e.id == d.id) {
+                    d3.select(this).classed('temporary-unhidden', false);
+                  }
+                })
+              })
+              .call(d3.drag()
+                .on("start", dragstarted)
+                .on("drag", dragged)
+                .on("end", dragended));
+            }
 
 
 
@@ -343,7 +503,15 @@ angular.module('redesign2017App')
           // Create group for the label but define the position later
           var labelEnter = label.enter().append('g')
             .attr("class", function(d) {
-              return (d.distance < 2) ? 'label' : 'label hidden';
+              if (scope.config.viewMode === 'shared-network') {
+                return (d.distance === 0 || d.distance === 3) ? 'label' : 'label hidden';
+              } else if (scope.config.viewMode === 'group-force') {
+                return (members.indexOf(d.id) === -1) ? 'label hidden' : 'label';
+              } else if (scope.config.viewMode === 'all') {
+                return 'label';
+              }{
+                return (d.distance < 2) ? 'label' : 'label hidden';
+              }
             })
             .attr('id', function(d) { // Assign ID number
               return "l" + d.id.toString();
@@ -386,11 +554,7 @@ angular.module('redesign2017App')
               return d.labelBBox.height + paddingTopBottom;
             });
 
-          if (oldLayout == layout) { // If layout has not changed
-            simulation.alphaTarget(0).restart(); // Don't reheat viz
-          } else { //If layout has changed from force to concentric or vice versa
-            simulation.alphaTarget(0.3).restart(); // Reheat viz
-          }
+          simulation.alphaTarget(0).restart();
 
           oldLayout = layout;
 
@@ -474,7 +638,7 @@ angular.module('redesign2017App')
             cursor.attr("opacity", 1);
             scope.createNewLink(d, nodes, scope.addedLinks);
             scope.endGroupEvents();
-            scope.updatePersonNetwork(scope.data);
+            scope.updateNetwork(scope.data);
 
           }
         }
@@ -509,13 +673,92 @@ angular.module('redesign2017App')
 
 
 
+        // The function accepts a new variable (array of sources)
+        function parseSharedComplexity(thresholdLinks, complexity, sources) {
+
+          var sourceId1 = sources[0]
+          var sourceId2 = sources[1]
+          var oneDegreeNodes = [];
+          thresholdLinks.forEach( function (l) {
+            if (l.source.id == sourceId1 || l.source.id == sourceId2 || l.target.id == sourceId1 || l.target.id == sourceId2) {
+              oneDegreeNodes.push(l.target); oneDegreeNodes.push(l.source);
+            }
+          })
+          oneDegreeNodes = Array.from(new Set(oneDegreeNodes));
+
+          var newLinks = thresholdLinks.filter(function(l) { if (oneDegreeNodes.indexOf(l.target) != -1 && oneDegreeNodes.indexOf(l.source) != -1) {return l; }; });
+
+          var sourceOneNeighbors = [];
+          var sourceTwoNeighbors = [];
+          newLinks.forEach(function(l){
+            if (l.source.id == sourceId1) {sourceOneNeighbors.push(l.target);}
+            else if (l.target.id == sourceId1) {sourceOneNeighbors.push(l.source);}
+            else if (l.source.id == sourceId2) {sourceTwoNeighbors.push(l.target);}
+            else if (l.target.id == sourceId2) {sourceTwoNeighbors.push(l.source);}
+          })
+          oneDegreeNodes.forEach(function(d){
+            d.distance = null;
+            if (d.id == sourceId1 || d.id == sourceId2) { d.distance = 0; }
+            else if (sourceOneNeighbors.indexOf(d) != -1 && sourceTwoNeighbors.indexOf(d) != -1) {d.distance = 3;}
+            else if (sourceOneNeighbors.indexOf(d) != -1) {
+              newLinks.forEach(function(l) {
+                if ((l.source.id == d.id && sourceTwoNeighbors.indexOf(l.target) != -1) || (l.target.id == d.id && sourceTwoNeighbors.indexOf(l.source) != -1)) {
+                  d.distance = 2;
+                }
+              });
+            }
+            else if (sourceTwoNeighbors.indexOf(d) != -1) {
+              newLinks.forEach(function(l) {
+                if ((l.source.id == d.id && sourceOneNeighbors.indexOf(l.target) != -1) || (l.target.id == d.id && sourceOneNeighbors.indexOf(l.source) != -1)) {
+                  d.distance = 2;
+                }
+              });
+            }
+            // else if (d.distance == null) {d.distance = 1;}
+          });
+
+          oneDegreeNodes.forEach(function(d) {
+            if (d.distance == null) {d.distance = 1;}
+          });
+
+          var newNodes = oneDegreeNodes;
+
+          if (complexity === "direct_connections") {
+            newNodes = newNodes.filter(function(d) {return d.distance === 0 || d.distance === 2 || d.distance === 3; });
+            newLinks = newLinks.filter(function(l) {
+              return newNodes.indexOf(l.source) != -1 && newNodes.indexOf(l.target) != -1;
+            });
+          }
+          return [newNodes, newLinks];
+
+        }
 
 
-
-
+        function parseGroupComplexity(json, onlyMembers) {
+          var members = json.data.attributes.primary_people;
+          if (onlyMembers === false) {
+            var links = [];
+            json.data.attributes.connections.forEach(function (l) {
+              l.attributes.id = l.id;
+              links.push(l.attributes);
+            });
+            var newData = [json.included, links];
+          } else if (onlyMembers === true) {
+            var nodes = json.included.filter(function(n) { return members.indexOf(n.id) !== -1; });
+            var links = [];
+            json.data.attributes.connections.forEach(function (l) {
+              l.attributes.id = l.id;
+              if (members.indexOf(l.attributes.source.id) !== -1 && members.indexOf(l.attributes.target.id) !== -1) {
+                links.push(l.attributes);
+              }
+            });
+            var newData = [nodes, links];
+          }
+          return newData;
+        }
 
         // VISUAL DENSITY PARSER
-        function parseComplexity(thresholdLinks, complexity) {
+        function parseIndComplexity(thresholdLinks, complexity) {
           /* Given a list of links already limited according to date and confidence
           range, return nodes and links according to given complexity (visual density)
           measure. */
@@ -648,7 +891,7 @@ angular.module('redesign2017App')
           d3.selectAll('.group').classed('active', false);
           d3.selectAll('.group').classed('unactive', false);
 
-          if (d.type == "person") { //Handler for when a node is clicked
+          if (d.type == "person" || d.type == "group") { //Handler for when a node is clicked
 
             // Handle signifier for selected node
             d3.selectAll('.node, g.label').classed('selected', false);
@@ -728,18 +971,23 @@ angular.module('redesign2017App')
                 });
             }
 
-            // This triggers events in groupsbar.js and contextualinfopanel.js when a selection happens
-            // scope.currentSelection = d;
-            apiService.getPeople(d.id).then(function (result) {
-              // console.log(result);
-              scope.currentSelection = result.data[0];
-              // console.log(scope.currentSelection);
-              $timeout(function(){
-                scope.$broadcast('selectionUpdated', scope.currentSelection);
+            if (d.type === "person") {
+              // This triggers events in groupsbar.js and contextualinfopanel.js when a selection happens
+              apiService.getPeople(d.id).then(function (result) {
+                scope.currentSelection = result.data[0];
+                $timeout(function(){
+                  scope.$broadcast('selectionUpdated', scope.currentSelection);
+                });
               });
-            });
-
-            // scope.$broadcast('selectionUpdated', scope.currentSelection);
+            } else {
+              apiService.getGroups(d.id).then(function (result) {
+                scope.currentSelection = result.data[0];
+                scope.currentSelection.type = 'group';
+                $timeout(function(){
+                  scope.$broadcast('selectionUpdated', scope.currentSelection);
+                });
+              });
+            }
 
           } else if (d.type == "relationship") { //Handler for when a link is clicked
 
@@ -763,14 +1011,10 @@ angular.module('redesign2017App')
 
             console.log('selection to be implemented');
             // This triggers events in groupsbar.js and contextualinfopanel.js when a selection happens
-            // scope.currentSelection = d;
-            // scope.$broadcast('selectionUpdated', scope.currentSelection);
             apiService.getRelationship(d.id).then(function (result) {
-              // console.log(result);
               scope.currentSelection = result.data[0];
               scope.currentSelection.source = d.source;
               scope.currentSelection.target = d.target;
-              // console.log(scope.currentSelection);
               $timeout(function(){
                 scope.$broadcast('selectionUpdated', scope.currentSelection);
               });
@@ -803,9 +1047,25 @@ angular.module('redesign2017App')
               return "M" + d.source.x + "," + d.source.y + "A" + dr + "," + dr + " 0 0,1 " + d.target.x + "," + d.target.y;
             });
 
-          node // Take x and y values from data
-            .attr("cx", function(d) { return d.x; })
-            .attr("cy", function(d) { return d.y; });
+          if (scope.config.viewMode === 'all') {
+            var nodes = scope.data.included;
+            var sizeScale = d3.scaleLinear()
+              .range([8, 30]);
+
+            var maxDegree = d3.max(nodes, function(d) { return d.attributes.degree; });
+            var minDegree = d3.min(nodes, function(d) { return d.attributes.degree; });
+            sizeScale.domain([minDegree, maxDegree]);
+            node.attr("x", function(d) { return d.x - sizeScale(d.attributes.degree) / Math.sqrt(2) })
+              .attr("y", function(d) { return d.y - sizeScale(d.attributes.degree) / Math.sqrt(2) })
+              .style("transform-origin", function(d) {
+                var translationValue = d.x + 'px ' + d.y + 'px';
+                return translationValue;
+              })
+          } else {
+            node // Take x and y values from data
+              .attr("cx", function(d) { return d.x; })
+              .attr("cy", function(d) { return d.y; });
+          }
 
           label // Position labels in center of nodes
             .attr("transform", function(d) {
@@ -814,12 +1074,22 @@ angular.module('redesign2017App')
 
           if (simulation.alpha() < 0.005 && simulation.force("collide").iterations() == 0) {
             simulation.force("collide").iterations(1).radius(function(d) { // Collision detection
-              if (d.distance == 0) { // Account for larger source node
-                return 50 / 2 + 1;
-              } else if (d.distance == 1) {
-                return 25 / 2 + 1;
-              } else if (d.distance == 2) {
-                return 12.5 / 2 + 1;
+              if (scope.config.viewMode === 'shared-network') {
+                if (d.distance === 0 || d.distance === 3) { // Account for larger source node
+                  return 50 / 2 + 1;
+                } else if (d.distance === 2) {
+                  return 25 / 2 + 1;
+                } else {
+                  return 12.5 / 2 + 1;
+                }
+              } else {
+                if (d.distance == 0) { // Account for larger source node
+                  return 50 / 2 + 1;
+                } else if (d.distance == 1) {
+                  return 25 / 2 + 1;
+                } else if (d.distance == 2) {
+                  return 12.5 / 2 + 1;
+                }
               }
             });
           }
@@ -828,7 +1098,6 @@ angular.module('redesign2017App')
 
 
         function positionCircle(nodelist, r) {
-          console.log(nodelist.length);
           /* For concentric layout, with a given node array
           and a radius value, use trig to position the nodes in a circle */
           var angle = 2*Math.PI*r / nodelist.length; // Get angle based on number of nodes
@@ -838,26 +1107,35 @@ angular.module('redesign2017App')
           });
         }
 
-        // Trigger update automatically when the directive code is executed entirely (e.g. at loading)
-        // update(scope.addedNodes, confidenceMin, confidenceMax, dateMin, dateMax, complexity, 'individual-force', simulation);
+        scope.$watch('$stateParams.ids', function(newValue, oldValue) {
+          if (scope.config.viewMode !== 'group-timeline') {
+            generateNetwork(scope.data);
+            if (scope.config.viewMode !== 'all' && scope.config.viewMode !== 'group-force') {
+              scope.data4groups(scope.data);
+            }
+          }
+        }, true);
 
-        // update triggered from the controller
-        scope.$on('force layout generate', function(event, args) {
-          console.log('ON: force layout generate')
+        scope.$watchCollection('data', function(newValue, oldValue) {
+          if (scope.config.viewMode !== 'group-timeline') {
+            scope.updateNetwork(newValue);
+          }
+        }, true);
 
-          scope.data = args;
-          generatePersonNetwork(args);
-          scope.updatePersonNetwork(args);
-          scope.reloadFilters();
-        });
+        scope.$watch('config.onlyMembers', function(newValue, oldValue) {
+          if (scope.config.viewMode !== 'group-timeline') {
+            scope.updateNetwork(scope.data);
+          }
+        }, true);
 
-        scope.$on('force layout update', function(event, args) {
-          console.log(args);
-          scope.updatePersonNetwork(args);
-        });
-
+        scope.$watch('config.viewMode', function(newValue, oldValue) {
+          if (scope.config.viewMode !== 'group-timeline') {
+            scope.updateNetwork(scope.data);
+            simulation.alpha(1);
+          }
+        }, true);
 
 
       }
-    };
+    }
   }]);

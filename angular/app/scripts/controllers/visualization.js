@@ -7,11 +7,33 @@
  * # VisualizationCtrl
  * Controller of the redesign2017App
  */
-angular.module('redesign2017App')
-  .controller('VisualizationCtrl', function($scope, $uibModal, $http, $log, $document, $routeParams, $route, $location, $window, apiService, initialConfig, initialData) {
+angular.module('redesign2017App').component('visualization', {
+  bindings: { networkData: '<' },
+  templateUrl: 'views/visualization.html',
+  controller: function($scope, $uibModal, $http, $log, $document, $location, $window, apiService, $stateParams) {
+    // console.log(this);
+    var initialConfig = {
+          viewObject:0, //0 = people, 1 = groups
+          viewMode:'individual-force',
+          // viewMode:'all',
+          ids: 10000473,
+          title: 'undefined title',
+          networkComplexity: '2',
+          dateMin:1500,
+          dateMax:1700,
+          confidenceMin:60,
+          confidenceMax:100,
+          login: {
+            status: true,
+            user: 'Elizabeth',
+          },
+          contributionMode: $scope.$parent.config.contributionMode,
+          dateTypes : ['IN', 'CIRCA', 'BEFORE', 'BEFORE/IN','AFTER', 'AFTER/IN'],
+          onlyMembers: false
+        }
     // console.log(initialConfig,initialData);
     $scope.config = initialConfig;
-    $scope.data = initialData;
+    // $scope.data = initialData;
     $scope.legendClosed = false;
     $scope.filtersClosed = true;
     $scope.peopleFinderClosed = true;
@@ -24,14 +46,47 @@ angular.module('redesign2017App')
     $scope.newLink = {};
     $scope.newGroup = {};
     $scope.groupAssign = {person: {}, group: {}};
-    if ($routeParams.ids === undefined) {
-      $location.search('ids', $scope.config.ids.toString());
-    }
+
+    $scope.$watch('$parent.config.contributionMode', function(newValue, oldValue) {
+      $scope.config.contributionMode = newValue;
+    });
+
+    this.$onChanges = function() {
+      $scope.data = this.networkData;
+      if ($stateParams.type === 'all-groups') {
+        $scope.config.viewMode = 'all';
+        $scope.networkName = "Co-membership of All Groups"
+        $scope.$parent.groupTypeahead.selected = '';
+      } else if ($stateParams.ids.length < 8 && $stateParams.type === 'timeline') {
+        $scope.config.viewMode = 'group-timeline';
+      } else if ($stateParams.ids.length >= 8 && this.networkData.data.attributes.primary_people.length === 1) {
+        var personName = this.networkData.included[0].attributes.name;
+        $scope.config.viewMode = 'individual-force';
+        $scope.$parent.config.person1 = $stateParams.ids;
+        $scope.networkName = "Hooke Network of " + personName;
+        $scope.$parent.personTypeahead.selected = personName;
+        $scope.$parent.sharedTypeahead.selected = '';
+        $scope.$parent.config.viewObject = 0;
+      } else if ($stateParams.ids.length > 8 && this.networkData.data.attributes.primary_people.length === 2) {
+        $scope.config.viewMode = 'shared-network';
+        $scope.networkName = "Hooke Network of " + this.networkData.included[0].attributes.name + " & " + this.networkData.included[1].attributes.name;
+      } else if ($stateParams.ids.length < 8) {
+        $scope.config.viewMode = 'group-force';
+        var groupName;
+        $scope.data.included.forEach( function(item) {
+          if (item.id === $scope.data.data.id) {
+            groupName = item.attributes.name;
+          }
+        });
+        $scope.data.included = $scope.data.included.filter(function(n) { return n.id !== $scope.data.data.id; });
+        $scope.networkName = "Hooke Network of " + groupName;
+        $scope.$parent.groupTypeahead.selected = groupName;
+        $scope.$parent.config.viewObject = 1;
+      }
+    };
 
     // Container for data related to groups
     $scope.groups = {};
-    // $scope.groups.groupsBar = [];
-    // $scope.groups.otherGroups = [];
 
     // declare a $scope property where to store the future selections
     $scope.currentSelection = {}
@@ -91,9 +146,6 @@ angular.module('redesign2017App')
           groupSelected: function() {
             return $scope.groupSelected;
           }
-        //   currentSelection: function() {
-        //     return $scope.currentSelection;
-        //   }
         }
       });
       modalInstance.result.then(function(selectedItem) {
@@ -102,27 +154,6 @@ angular.module('redesign2017App')
         $log.info('Modal dismissed at: ' + new Date());
       });
     };
-
-    // console.log($routeParams['all-groups']);
-    if ($routeParams.ids == undefined && !$routeParams['all-groups']) {
-      $scope.config.ids = '10000473';
-      $scope.config.viewMode = 'individual-force';
-    }
-    else if ($routeParams.ids.length >= 8) {
-      $scope.config.ids = $routeParams.ids.split(',');
-      if ($scope.config.ids.length === 1) {
-        $scope.config.viewMode = 'individual-force';
-      }
-      else if ($scope.config.ids.length === 2) {
-        $scope.config.viewMode = 'shared-network';
-      }
-    } else {
-      $scope.config.ids = $routeParams.ids.split(",");
-      $scope.config.viewMode = 'group-force';
-      apiService.getGroups($scope.config.ids.toString()).then(function(result) {
-        $scope.groupName = result.data[0].attributes.name;
-      });
-    }
 
     $scope.data4groups = function() {
       console.log('Creating data4groups');
@@ -167,7 +198,6 @@ angular.module('redesign2017App')
 
         $scope.groups.groupsBar = groupsBar;
         $scope.groups.otherGroups = otherGroups;
-        console.log($scope.groups);
         $scope.updateGroupBar($scope.groups);
 
         // $scope.$emit('Update the groups bar', $scope.groups)
@@ -183,10 +213,8 @@ angular.module('redesign2017App')
         var sourceNode = nodes.filter(function(d) { return (d.id == sourceId) })[0]; // Get source node element by its ID
         // Transition source node to center of rect
         $scope.singleSvg.transition().duration(750).call($scope.singleZoom.transform, d3.zoomIdentity.translate($scope.singleWidth / 2 - sourceNode.x, $scope.singleHeight / 2 - sourceNode.y));
-      } else if ($scope.config.viewMode == 'shared-network') {
-        $scope.sharedSvg.transition().duration(750).call($scope.sharedZoom.transform, d3.zoomIdentity);
-      } else if ($scope.config.viewMode == 'group-force') {
-        $scope.groupSvg.transition().duration(750).call($scope.groupZoom.transform, d3.zoomIdentity);
+      } else if ($scope.config.viewMode == 'shared-network' || $scope.config.viewMode == 'group-force') {
+        $scope.singleSvg.transition().duration(750).call($scope.singleZoom.transform, d3.zoomIdentity);
       } else if ($scope.config.viewMode == 'all') {
         $scope.allGroupSvg.transition().duration(750).call($scope.allGroupZoom.transform, d3.zoomIdentity);
       }
@@ -196,10 +224,8 @@ angular.module('redesign2017App')
       console.log("Zoom In")
       if ($scope.config.viewMode == 'individual-force' || $scope.config.viewMode == 'individual-concentric') {
         $scope.singleSvg.transition().duration(500).call($scope.singleZoom.scaleBy, $scope.singleZoomfactor + .5); // Scale by adjusted $scope.zoomfactor
-      } else if ($scope.config.viewMode == 'shared-network') {
-        $scope.sharedSvg.transition().duration(500).call($scope.sharedZoom.scaleBy, $scope.sharedZoomfactor + .5); // Scale by adjusted $scope.zoomfactor
-      } else if ($scope.config.viewMode == 'group-force') {
-        $scope.groupSvg.transition().duration(500).call($scope.groupZoom.scaleBy, $scope.groupZoomfactor + .5); // Scale by adjusted $scope.zoomfactor
+      } else if ($scope.config.viewMode == 'shared-network' || $scope.config.viewMode == 'group-force') {
+        $scope.singleSvg.transition().duration(500).call($scope.singleZoom.scaleBy, $scope.singleZoomfactor + .5); // Scale by adjusted $scope.zoomfactor
       } else if ($scope.config.viewMode == 'all') {
         $scope.allGroupSvg.transition().duration(500).call($scope.allGroupZoom.scaleBy, $scope.allGroupZoomfactor + .5); // Scale by adjusted $scope.zoomfactor
       }
@@ -209,10 +235,8 @@ angular.module('redesign2017App')
       // Scale by adjusted $scope.zoomfactor, slightly lower since zoom out was more dramatic
       if ($scope.config.viewMode == 'individual-force' || $scope.config.viewMode == 'individual-concentric') {
         $scope.singleSvg.transition().duration(500).call($scope.singleZoom.scaleBy, $scope.singleZoomfactor - .25); // Scale by adjusted $scope.zoomfactor
-      } else if ($scope.config.viewMode == 'shared-network') {
-        $scope.sharedSvg.transition().duration(500).call($scope.sharedZoom.scaleBy, $scope.sharedZoomfactor - .25); // Scale by adjusted $scope.zoomfactor
-      } else if ($scope.config.viewMode == 'group-force') {
-        $scope.groupSvg.transition().duration(500).call($scope.groupZoom.scaleBy, $scope.groupZoomfactor - .25); // Scale by adjusted $scope.zoomfactor
+      } else if ($scope.config.viewMode == 'shared-network' || $scope.config.viewMode == 'group-force') {
+        $scope.singleSvg.transition().duration(500).call($scope.singleZoom.scaleBy, $scope.singleZoomfactor - .25); // Scale by adjusted $scope.zoomfactor
       } else if ($scope.config.viewMode == 'all') {
         $scope.allGroupSvg.transition().duration(500).call($scope.allGroupZoom.scaleBy, $scope.allGroupZoomfactor - .25); // Scale by adjusted $scope.zoomfactor
       }
@@ -220,67 +244,11 @@ angular.module('redesign2017App')
 
     $scope.sendData = function() {
       console.log($scope.addToDB);
-      $window.alert($scope.addToDB.toString());
       $scope.addToDB = {nodes: [], links: [], groups: []};
     }
 
 
-    $scope.$watch('config.ids', function(newValue, oldValue) {
-      if (newValue != oldValue || oldValue instanceof Array) {
-        if ($scope.config.viewMode == 'individual-force') {
-          $scope.data.layout = 'individual-force';
-          console.log('Calling person network...')
-          apiService.getNetwork($scope.config.ids.toString()).then(function(result) {
-            console.log('person network of',$scope.config.ids.toString(),'\n',result);
-            result.layout = 'individual-force';
-            $scope.config.viewMode = 'individual-force';
-            $scope.$broadcast('force layout generate', result);
-            $scope.data4groups();
-          });
-        } else if ($scope.config.viewMode === 'shared-network') {
-            console.log("Calling shared network...")
-            apiService.getNetwork($scope.config.ids.toString()).then(function(result) {
-              console.log('shared network of',$scope.config.ids.toString(),'\n',result);
-              $scope.$broadcast('shared network generate', result);
-              $scope.data4groups();
-            });
-        } else if ($scope.config.viewMode == 'group-force') {
-            console.log("Calling group network...")
-            apiService.getGroupNetwork($scope.config.ids.toString()).then(function(result) {
-              console.log('group network of',$scope.config.ids.toString(),'\n',result);
-              $scope.$broadcast('single group update', result);
-              $scope.$broadcast('group timeline', result);
-            });
-        }
-      }
-    });
-
-
-    $scope.$watch('config.viewMode', function(newValue, oldValue) {
-      if (newValue !== oldValue) {
-        if (newValue == 'individual-concentric') {
-          $scope.data.layout = 'individual-concentric';
-          $scope.$broadcast('force layout update', $scope.data);
-        } else if (newValue == 'all') {
-          $location.search('all-groups');
-          var lastRoute = $route.current;
-          $scope.$on('$locationChangeSuccess', function(event) {
-            $route.current = lastRoute;
-          });
-          apiService.getAllGroups().then(function successCallback(response) {
-            $scope.$broadcast('Show groups graph', response);
-          }, function errorCallback(response) {
-            console.error("An error occured while fetching file", response);
-            return response;
-          });
-        } else if (newValue == 'individual-force' && oldValue == 'individual-concentric') {
-          $scope.data.layout = 'individual-force';
-          $scope.$broadcast('force layout update', $scope.data);
-        }
-      }
-    });
-
-    $scope.$watch('config.contributionMode', function(newValue, oldValue) {
+    $scope.$watch('$parent.config.contributionMode', function(newValue, oldValue) {
       // var emptyDB = {nodes: [], links: [], groups: []}
       if (newValue !== oldValue && !newValue) {
         if ($scope.addToDB.nodes.length !== 0 || $scope.addToDB.links.length !== 0 || $scope.addToDB.groups.length !== 0) {
@@ -288,31 +256,12 @@ angular.module('redesign2017App')
           $scope.config.contributionMode = true;
         }
         else {
-          if ($scope.config.viewMode === 'individual-force' || $scope.config.viewMode === 'individual-concentric') {
-            $scope.addedNodes = [];
-            $scope.addedLinks = [];
-            $scope.updatePersonNetwork($scope.data);
-          } else if ($scope.config.viewMode === 'shared-network') {
-            $scope.addedSharedNodes = [];
-            $scope.addedSharedLinks = [];
-            $scope.updateSharedNetwork($scope.data);
-          } else if ($scope.config.viewMode === 'group-force') {
-            $scope.addedGroupNodes = [];
-            $scope.addedGroupLinks = [];
-            $scope.updateGroupNetwork($scope.data, $scope.data.onlyMembers);
-          }
+          $scope.addedNodes = [];
+          $scope.addedLinks = [];
+          $scope.addedGroups = [];
+          $scope.updateNetwork($scope.data);
         }
       }
     })
-
-    $scope.$watch('config.onlyMembers', function(newValue, oldValue) {
-      if (newValue !== oldValue) {
-        apiService.getFile('./data/virginiacompany.json').then(function successCallback(response) {
-          $scope.$broadcast('single group', { data: response, onlyMembers: $scope.config.onlyMembers });
-        }, function errorCallback(response) {
-          console.error("An error occured while fetching file", response);
-          return response;
-        });
-      }
-    });
-  });
+  }
+});

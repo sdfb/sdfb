@@ -19,6 +19,7 @@
   <!-- build:css(.tmp) styles/visualizations.css -->
   <link rel="stylesheet" href="styles/visualizations.css">
   <!-- endbuild -->
+  <base href="/" />
 </head>
 
 <body ng-app="redesign2017App">
@@ -28,7 +29,10 @@
 
 
 
-  <div ng-view="" style="position:relative;" ng-class="{ 'contribution-mode-on': config.contributionMode }"></div>
+  <!-- <div ng-view="" style="position:relative;" ng-class="{ 'contribution-mode-on': config.contributionMode }"></div> -->
+
+  <!-- <a ui-sref="visualization" ui-sref-active="active">Visualization</a> -->
+  <ui-view></ui-view>
 
   <!-- Google Analytics: change UA-XXXXX-X to be your site's ID -->
   <script>
@@ -55,6 +59,7 @@
   <script src="bower_components/angular-sanitize/angular-sanitize.js"></script>
   <script src="bower_components/angular-touch/angular-touch.js"></script>
   <script src="bower_components/angular-bootstrap/ui-bootstrap-tpls.js"></script>
+  <script src="bower_components/angular-ui-router/release/angular-ui-router.js"></script>
   <script src="bower_components/d3/d3.js"></script>
   <script src="bower_components/d3-plugins-fisheye/index.js"></script>
   <script src="bower_components/lodash/lodash.js"></script>
@@ -64,10 +69,11 @@
 
   <!-- build:js({.tmp,app}) scripts/scripts.js -->
   <script src="scripts/app.js"></script>
+  <script src="scripts/controllers/home.js"></script>
   <script src="scripts/controllers/table.js"></script>
+  <script src="scripts/services/apiservice.js"></script>
   <script src="scripts/controllers/visualization.js"></script>
   <script src="scripts/directives/forcelayout.js"></script>
-  <script src="scripts/services/apiservice.js"></script>
   <script src="scripts/directives/contextualinfopanel.js"></script>
   <script src="scripts/directives/searchpanel.js"></script>
   <script src="scripts/directives/legendpanel.js"></script>
@@ -77,14 +83,11 @@
   <script src="scripts/controllers/modalinstance.js"></script>
   <script src="scripts/controllers/modaltable.js"></script>
   <script src="scripts/directives/peoplefinder.js"></script>
-  <script src="scripts/directives/sharednetwork.js"></script>
   <script src="scripts/directives/navigationdirective.js"></script>
   <script src="scripts/directives/addnode.js"></script>
   <script src="scripts/directives/addlink.js"></script>
   <script src="scripts/directives/groupassign.js"></script>
   <script src="scripts/directives/addgroup.js"></script>
-  <script src="scripts/directives/allgroupsgraph.js"></script>
-  <script src="scripts/directives/singlegroupgraph.js"></script>
   <script src="scripts/directives/grouptimeline.js"></script>
   <!-- endbuild -->
 

@@ -25,20 +25,20 @@ angular.module('redesign2017App')
 
         // When canvas is clicked, add a new circle with dummy data
         scope.addNode = function(addedNodes, point, update) {
+          console.log(scope.data);
+
           scope.newNode.exists = false;
 
           var newNode = { attributes: { name: scope.newNode.name, degree: 1 }, id: 0, distance: 7, x: point[0], y: point[1]};
+          newNode.vx = null;
+          newNode.vy = null;
           console.log(newNode);
           addedNodes.push(newNode);
           scope.$apply(function() {
             scope.addNodeClosed = false;
             scope.legendClosed = true;
           });
-
-          if (scope.config.viewMode === 'group-force') {
-            update(scope.data, scope.data.onlyMembers);
-          }
-          else { update(scope.data); }
+          update(scope.data);
 
 
 
@@ -79,34 +79,16 @@ angular.module('redesign2017App')
           console.log("node submitted");
           var newNode = angular.copy(scope.newNode);
 
-          if (scope.config.viewMode === 'individual-force' ||  scope.config.viewMode === 'individual-concentric') {
-            if (scope.notInView === true && scope.addedNodes.length > 0 && !scope.addedNodes[scope.addedNodes.length-1].attributes.name) {
-              scope.addedNodes[scope.addedNodes.length-1].attributes.name = newNode.name;
-            }
-            else if (scope.notInView === true && (scope.addedNodes.length === 0 || !checkForNameless(scope.addedNodes))) {
-              var realNewNode = { attributes: { name: scope.newNode.name, degree: 1 }, id: 0, distance: 7, x: scope.singleWidth/2, y: scope.singleHeight/2};
-              scope.addedNodes.push(realNewNode);
-            }
-            scope.updatePersonNetwork(scope.data);
-          } else if (scope.config.viewMode === 'shared-network') {
-            if (scope.addedSharedNodes.length > 0 && !scope.addedSharedNodes[scope.addedSharedNodes.length-1].attributes.name) {
-              scope.addedSharedNodes[scope.addedSharedNodes.length-1].attributes.name = newNode.name;
-            }
-            else if (scope.notInView === true && (scope.addedSharedNodes.length === 0 || !checkForNameless(scope.addedSharedNodes))) {
-              var realNewNode = { attributes: { name: scope.newNode.name, degree: 1 }, id: 0, distance: 7, x: scope.singleWidth/2, y: scope.singleHeight/2};
-              scope.addedSharedNodes.push(realNewNode);
-            }
-            scope.updateSharedNetwork(scope.data);
-          } else if (scope.config.viewMode === 'group-force') {
-            if (scope.addedGroupNodes.length > 0 && !scope.addedGroupNodes[scope.addedGroupNodes.length-1].attributes.name) {
-              scope.addedGroupNodes[scope.addedGroupNodes.length-1].attributes.name = newNode.name;
-            }
-            else if (scope.notInView === true && (scope.addedGroupNodes.length === 0 || !checkForNameless(scope.addedGroupNodes))) {
-              var realNewNode = { attributes: { name: scope.newNode.name, degree: 1 }, id: 0, distance: 7, x: scope.singleWidth/2, y: scope.singleHeight/2};
-              scope.addedGroupNodes.push(realNewNode);
-            }
-            scope.updateGroupNetwork(scope.data, scope.data.onlyMembers);
+          if (scope.notInView === true && scope.addedNodes.length > 0 && !scope.addedNodes[scope.addedNodes.length-1].attributes.name) {
+            scope.addedNodes[scope.addedNodes.length-1].attributes.name = newNode.name;
           }
+          else if (scope.notInView === true && (scope.addedNodes.length === 0 || !checkForNameless(scope.addedNodes))) {
+            var realNewNode = { attributes: { name: scope.newNode.name, degree: 1 }, id: 0, distance: 7, x: scope.singleWidth/2, y: scope.singleHeight/2};
+            realNewNode.vx = null;
+            realNewNode.vy = null;
+            scope.addedNodes.push(realNewNode);
+          }
+          scope.updateNetwork(scope.data);
 
           if (scope.notInView === true)
 

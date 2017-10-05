@@ -32,7 +32,7 @@
                 <td>{{ person.attributes.death_year_type }} {{ person.attributes.death_year }}</td>
                 <td>{{ person.attributes.degree }}</td>
                 <td>
-                    <button ng-click="$ctrl.selectedPerson(person); $ctrl.cancel()" type="button" class="btn btn-primary">
+                    <button ng-click="$ctrl.cancel()" ui-sref="home.visualization({ ids: person.id })" type="button" class="btn btn-primary">
                         Visualize
                     </button>
                 </td>
@@ -56,7 +56,7 @@
                 <td>{{ group.attributes.start_year_type }} {{ group.attributes.start_year }}</td>
                 <td>{{ group.attributes.end_year_type }} {{ group.attributes.end_year }}</td>
                 <td>
-                    <button ng-click="$ctrl.groupSelected(group); $ctrl.cancel()" type="button" class="btn btn-primary">
+                    <button ng-click="$ctrl.cancel()" ui-sref="home.visualization({ ids: group.id })" type="button" class="btn btn-primary">
                         Visualize
                     </button>
                 </td>

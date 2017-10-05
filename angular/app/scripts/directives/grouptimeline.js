@@ -7,7 +7,7 @@
  * # groupTimeline
  */
 angular.module('redesign2017App')
-  .directive('groupTimeline', function() {
+  .directive('groupTimeline', ['$state', function($state) {
     return {
       template: '<svg id="group-timeline"></svg>',
       restrict: 'E',
@@ -240,10 +240,11 @@ angular.module('redesign2017App')
             .attr('text-anchor', 'end')
             .text('Visualize')
             .on('click', function(d) {
-              scope.selectedPerson(d);
-              scope.$apply(function() {
-                scope.config.viewObject = 0;
-              });
+              // scope.selectedPerson(d);
+              // scope.$apply(function() {
+              //   scope.config.viewObject = 0;
+              // });
+              $state.go('home.visualization', {ids: d.id});
             });
 
           person.append('text')
@@ -308,33 +309,35 @@ angular.module('redesign2017App')
         }
 
         // action triggered from the controller
-        scope.$on('group timeline', function(event, json) {
-          console.log(event, json);
+        scope.$watch('data', function(newValue, oldValue) {
+          // console.log(event, json);
+          if (scope.config.viewMode === 'group-timeline') {
+            var json = newValue;
+            groupInfo = {};
+            json.included.forEach( function(item) {
+              if (item.id === json.data.id) {
+                groupInfo["description"] = item.attributes["description"];
+                groupInfo["end_date_type"] = item.attributes["end_date_type"];
+                groupInfo["end_year"] = item.attributes["end_year"];
+                groupInfo["id"] = item.attributes["id"];
+                groupInfo["name"] = item.attributes["name"];
+                groupInfo["start_date_type"] = item.attributes["start_date_type"];
+                groupInfo["start_year"] = item.attributes["start_year"];
+                groupInfo["type"] = item.attributes["type"];
+              }
+            });
 
-          groupInfo = {};
-          json.included.forEach( function(item) {
-            if (item.id === json.data.id) {
-              groupInfo["description"] = item.attributes["description"];
-              groupInfo["end_date_type"] = item.attributes["end_date_type"];
-              groupInfo["end_year"] = item.attributes["end_year"];
-              groupInfo["id"] = item.attributes["id"];
-              groupInfo["name"] = item.attributes["name"];
-              groupInfo["start_date_type"] = item.attributes["start_date_type"];
-              groupInfo["start_year"] = item.attributes["start_year"];
-              groupInfo["type"] = item.attributes["type"];
-            }
-          });
 
+            primary_people = json.data.attributes.primary_people;
+            members = [];
+            members = _.intersectionWith(json.included, primary_people, function(a, b) {
+              return a.id == b;
+            });
 
-          primary_people = json.data.attributes.primary_people;
-          members = [];
-          members = _.intersectionWith(json.included, primary_people, function(a, b) {
-            return a.id == b;
-          });
-
-          update(members);
+            update(members);
+          }
         });
 
       }
     };
-  });
+  }]);

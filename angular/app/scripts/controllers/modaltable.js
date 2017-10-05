@@ -8,13 +8,10 @@
  * Controller of the redesign2017App
  */
 angular.module('redesign2017App')
-  .controller('ModalTableCtrl', function($scope, $uibModalInstance, $timeout, data, selectedPerson, viewMode, groupSelected, apiService) {
+  .controller('ModalTableCtrl', function($scope, $uibModalInstance, $timeout, data, viewMode, apiService) {
 
     var $ctrl = this;
     $ctrl.data = data;
-    // console.log($ctrl.data);
-    $ctrl.selectedPerson = selectedPerson;
-    $ctrl.groupSelected = groupSelected;
     $ctrl.viewMode = viewMode;
 
     if ($ctrl.viewMode === 'individual-force' || $ctrl.viewMode === 'individual-concentric') {

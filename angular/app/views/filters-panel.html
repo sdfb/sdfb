@@ -34,12 +34,19 @@
       </div>
       <h5 class="interaction-info">Hover on a value to learn more</h5>
     </div>
+    <span ng-show=" config.viewMode == 'individual-force' || config.viewMode == 'individual-concentric'">
+      <h4>Visualization layout</h4>
+      <div class="btn-group btn-group-justified">
+        <label class="btn btn-primary" ng-model="config.viewMode" uib-btn-radio="'individual-force'">Hooke</label>
+        <label class="btn btn-primary" ng-model="config.viewMode" uib-btn-radio="'individual-concentric'">Concentric</label>
+      </div>
+    </span>
   </div>
   <div ng-show=" config.viewMode == 'all'">
     <div>
-      <h4>Relationships date range</h4>
-      <div class="date-container"></div>
-      <h5>Temporal window in which relationships existed</h5>
+      <h4>No filters for All Groups visualization</h4>
+      <!-- <div class="date-container"></div>
+      <h5>Temporal window in which relationships existed</h5> -->
     </div>
   </div>
   <div ng-show=" config.viewMode == 'group-force'">

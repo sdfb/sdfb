@@ -28,6 +28,8 @@ angular.module('redesign2017App')
           scope.newGroup.exists = false;
 
           var newGroup = { attributes: { name: scope.newGroup.name, degree: 1 }, id: 0, distance: 7, x: point[0], y: point[1]};
+          newGroup.vx = null;
+          newGroup.vy = null;
           console.log(newGroup);
           addedGroups.push(newGroup);
           scope.$apply(function() {
@@ -43,7 +45,7 @@ angular.module('redesign2017App')
 
         scope.foundNewGroup = function($item) {
           scope.newGroup.exists = true;
-          apiService.getPeople($item.id).then(function (result) {
+          apiService.getGroups($item.id).then(function (result) {
             console.log(result);
             var group = result.data[0];
 
@@ -75,7 +77,7 @@ angular.module('redesign2017App')
             var realNewGroup = { attributes: { name: scope.newGroup.name, degree: 1 }, id: 0, distance: 7, x: scope.singleWidth/2, y: scope.singleHeight/2};
             scope.addedGroups.push(realNewGroup);
           }
-          scope.updateAllGroups(scope.data);
+          scope.updateNetwork(scope.data);
 
 
           if (!scope.newGroup.exists) { scope.addToDB.groups.push(newGroup); }
