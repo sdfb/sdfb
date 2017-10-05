@@ -208,7 +208,6 @@ angular.module('redesign2017App').directive('forceLayout', ['apiService', '$time
           }
 
           var newNodes = newData[0];
-          console.log(newNodes);
           var newLinks = newData[1];
 
           scope.addedNodes.forEach(function(a) { newNodes.push(a); });
@@ -1123,7 +1122,7 @@ angular.module('redesign2017App').directive('forceLayout', ['apiService', '$time
         }, true);
 
         scope.$watch('config.onlyMembers', function(newValue, oldValue) {
-          if (scope.config.viewMode !== 'group-timeline') {
+          if (scope.config.viewMode === 'group-force') {
             scope.updateNetwork(scope.data);
           }
         }, true);
