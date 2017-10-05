@@ -8,7 +8,7 @@
  * Controller of the redesign2017App
  */
 angular.module('redesign2017App')
-  .controller('ModalTableCtrl', function($scope, $uibModalInstance, $timeout, data, viewMode, apiService) {
+  .controller('ModalTableCtrl', ['$scope', '$uibModalInstance', '$timeout', 'data', 'viewMode', 'apiService', function($scope, $uibModalInstance, $timeout, data, viewMode, apiService) {
 
     var $ctrl = this;
     $ctrl.data = data;
@@ -69,4 +69,4 @@ angular.module('redesign2017App')
       $uibModalInstance.dismiss('cancel');
     };
 
-  });
+  }]);

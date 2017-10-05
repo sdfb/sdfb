@@ -10,7 +10,7 @@
 angular.module('redesign2017App').component('visualization', {
   bindings: { networkData: '<' },
   templateUrl: 'views/visualization.html',
-  controller: function($scope, $uibModal, $http, $log, $document, $location, $window, apiService, $stateParams) {
+  controller: ['$scope', '$uibModal', '$http', '$log', '$document', '$location', '$window', 'apiService', '$stateParams', function($scope, $uibModal, $http, $log, $document, $location, $window, apiService, $stateParams) {
     // console.log(this);
     var initialConfig = {
           viewObject:0, //0 = people, 1 = groups
@@ -263,5 +263,5 @@ angular.module('redesign2017App').component('visualization', {
         }
       }
     })
-  }
+  }]
 });

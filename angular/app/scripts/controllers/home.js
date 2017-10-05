@@ -10,8 +10,8 @@
 angular.module('redesign2017App').component('home', {
   // bindings: { networkData: '<' },
   templateUrl: 'views/home.html',
-  controller: function($scope, $uibModal, $http, $log, $document, $location, $window, apiService) {
+  controller: ['$scope', function($scope) {
     $scope.config = {contributionMode: false};
     // $scope.config.contributionMode = false;
-	}
+	}]
 });

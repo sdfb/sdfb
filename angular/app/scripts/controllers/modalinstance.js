@@ -8,7 +8,7 @@
  * Controller of the redesign2017App
  */
 angular.module('redesign2017App')
-  .controller('ModalinstanceCtrl', function($scope, $uibModalInstance, groups, currentSelection) {
+  .controller('ModalinstanceCtrl', ['$scope', '$uibModalInstance', 'groups', 'currentSelection', function($scope, $uibModalInstance, groups, currentSelection) {
 
     console.log('currentSelection', currentSelection);
     console.log('groups', groups);
@@ -42,4 +42,4 @@ angular.module('redesign2017App')
       $uibModalInstance.dismiss('cancel');
     };
 
-  });
+  }]);
