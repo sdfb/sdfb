@@ -7,7 +7,7 @@
  * # groupsBar
  */
 angular.module('redesign2017App')
-  .directive('groupsBar', function() {
+  .directive('groupsBar', ['$state', function($state) {
     return {
       template: '',
       restrict: 'E',
@@ -66,6 +66,7 @@ angular.module('redesign2017App')
               var value = (myWidth * newTot) / 100;
               return value + '%';
             })
+            .style('white-space', 'nowrap')
             .merge(chart)
             .text(function(d, i) {
               if (i == 20) {
@@ -145,6 +146,9 @@ angular.module('redesign2017App')
             .on('mouseleave', function(d) {
               d3.selectAll('.node, .label, .link').classed('not-in-group', false);
               d3.selectAll('.node, .label, .link').classed('in-group', false);
+            })
+            .on('dblclick', function(d) {
+              $state.go('home.visualization', {ids: d.groupId, type: 'network'});
             });
 
           // remove stuff
@@ -192,4 +196,4 @@ angular.module('redesign2017App')
 
       }
     };
-  });
+  }]);

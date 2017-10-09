@@ -738,7 +738,7 @@ group-timeline {
 
 .timeline-legend {
   margin-top: 345px;
-  
+
   .legend-line {
     margin: 0 auto 8px;
     top: 3px;
@@ -1187,6 +1187,12 @@ contextual-info-panel.panel {
   margin-top: 345px;
 }
 
+// .groupBar .group {
+//   overflow: visible;
+//   cursor: pointer;
+//   // text-overflow: ellipsis;
+// }
+
 .contribution-mode-on contextual-info-panel.panel {
   border-color: $contribution-mode-fill;
 }
@@ -1426,6 +1432,34 @@ people-finder {
 
     .connections-column {
       width: 10%;
+    }
+
+    .action-column {
+      width: 15%;
+    }
+  }
+
+  table.more-groups {
+    font-size: 12px;
+    table-layout: fixed;
+    white-space: nowrap;
+
+    td {
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .id-column {
+      width: 15%;
+    }
+
+    .name-column {
+      width: 50%;
+    }
+
+    .members-column {
+      width: 20%;
     }
 
     .action-column {

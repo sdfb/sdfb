@@ -4,30 +4,30 @@
 <div class="modal-body other-groups-list" id="modal-body">
     <h3 class="modal-title" id="modal-title">List of Minor Groups</h3>
     <i class="fa fa-times close-btn" aria-hidden="true" type="button" ng-click="$ctrl.cancel()" aria-label="Close"></i>
-    <table class="table table-hover">
+    <table class="table table-hover more-groups">
         <thead>
             <tr>
                 <td class="id-column">ID</td>
                 <td class="name-column">Group name</td>
-                <td class="members-column">Members</td>
+                <td class="text-right" class="members-column"># of Members in this View</td>
                 <td class="action-column">Action</td>
             </tr>
         </thead>
         <tbody>
             <tr class="group {{'g'+group.groupId}}" ng-class="{ 'active': group.active }" ng-repeat="group in $ctrl.groups">
                 <td>{{ group.groupId }}</td>
-                <td>Group name</td>
-                <td class="text-right">{{ group.value }} (NNN)</td>
+                <td>{{ group.name }}</td>
+                <td class="text-right">{{ group.value }}</td>
                 <td>
-                    <button type="button" class="btn btn-primary">
+                    <button ng-click="$ctrl.cancel()" ui-sref="home.visualization({ ids: group.groupId })"type="button" class="btn btn-primary">
                         Visualize
                     </button>
-                    <button type="button" class="btn btn-primary">
+                    <!-- <button type="button" class="btn btn-primary">
                         Table view
                     </button>
                     <button type="button" class="btn btn-primary">
                         Edit
-                    </button>
+                    </button> -->
                 </td>
             </tr>
         </tbody>
