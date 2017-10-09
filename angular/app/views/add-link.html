@@ -38,11 +38,11 @@
     <rzslider rz-slider-model="newLink.confidence" rz-slider-options="slider.options" class="with-legend" ng-model="newLink.confidence"></rzslider>
 
     <h5>Your submission needs to be validated by SDFB curators. You will see it as unapproved contribution in the meantime.</h5>
-    <button type="submit" class="btn btn-primary">Done</button>
+    <button type="submit" class="btn btn-primary">Add & Continue</button>
   </form>
 
 </section>
-<span class="close" ng-click="addLinkClosed = !addLinkClosed; legendClosed = true" style="color: white;">
+<span class="close" ng-click="addLinkClosed = !addLinkClosed; peopleFinderClosed = true; legendClosed = true; filtersClosed = true;" style="color: white;">
 	<i ng-if="!addLinkClosed" class="fa fa-times" aria-hidden="true"></i>
 	<i ng-if="addLinkClosed" class="faXX XXfa-plus-circle" aria-hidden="true" style="display: block; width: 12.5px; height: 14px; background-image: url('./images/add-link-icon.svg'); background-repeat: no-repeat; background-size: cover;"></i>
 </span>

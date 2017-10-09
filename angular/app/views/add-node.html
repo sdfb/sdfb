@@ -39,12 +39,12 @@
 		<input ng-show="config.viewMode == 'group-force'" type="checkbox" ng-model="alsoGroupAssign" aria-label="Toggle ngShow">
 		<h4 style="display:inline;" ng-show="config.viewMode == 'group-force'">Also add to {{groupName}}</h4>
 
-		<button class="btn btn-primary" type="submit">Done</button>
+		<button class="btn btn-primary" type="submit">Add & Continue</button>
 
 
 	</form>
 </section>
-<span class="close" ng-click="addNodeClosed = !addNodeClosed;" style="color: white;">
+<span class="close" ng-click="addNodeClosed = !addNodeClosed; peopleFinderClosed = true; legendClosed = true; filtersClosed = true;" style="color: white;">
 	<i ng-if="!addNodeClosed" class="fa fa-times" aria-hidden="true"></i>
 	<i ng-if="addNodeClosed" class="fa fa-plus-circle" aria-hidden="true"></i>
 </span>

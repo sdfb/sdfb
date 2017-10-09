@@ -18,7 +18,7 @@ angular.module('redesign2017App').directive('forceLayout', ['apiService', '$time
 
         scope.singleSvg = d3.select(element[0]).select('svg') // Root svg element
           .attr("preserveAspectRatio", "xMinYMin meet")
-          .attr("viewBox", "0 0 1400 1000")
+          .attr("viewBox", function() { return "0 0 "+this.getBoundingClientRect().width+' '+this.getBoundingClientRect().height; })
           .classed("svg-content-responsive", true);
         scope.singleWidth = +scope.singleSvg.node().getBoundingClientRect().width; // Width of viz
         scope.singleHeight = +scope.singleSvg.node().getBoundingClientRect().height; // Height of viz
@@ -565,8 +565,6 @@ angular.module('redesign2017App').directive('forceLayout', ['apiService', '$time
 
           oldLayout = layout;
 
-          // Change name of the viz
-          scope.config.title = "Hooke network of Francis Bacon"
         }
 
         scope.$watch('config.contributionMode', function(newValue, oldValue) {
@@ -1036,8 +1034,6 @@ angular.module('redesign2017App').directive('forceLayout', ['apiService', '$time
         scope.singleSvg.call(scope.singleZoom.on('zoom', zoomed)).on("dblclick.zoom", null); // See zoomed() below
 
 
-
-
         // Zooming function translates the size of the scope.singleSvg container on wheel scroll.
         function zoomed() {
           container.attr("transform", "translate(" + d3.event.transform.x + ", " + d3.event.transform.y + ") scale(" + d3.event.transform.k + ")");
@@ -1120,6 +1116,7 @@ angular.module('redesign2017App').directive('forceLayout', ['apiService', '$time
             if (scope.config.viewMode !== 'all' && scope.config.viewMode !== 'group-force') {
               scope.data4groups(scope.data);
             }
+            // scope.centerNetwork();
           }
         }, true);
 

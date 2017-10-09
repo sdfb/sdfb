@@ -78,6 +78,7 @@ angular.module('redesign2017App').component('visualization', {
             groupName = item.attributes.name;
           }
         });
+        $scope.groupName = groupName;
         $scope.data.included = $scope.data.included.filter(function(n) { return n.id !== $scope.data.data.id; });
         $scope.networkName = "Hooke Network of " + groupName;
         $scope.$parent.groupTypeahead.selected = groupName;

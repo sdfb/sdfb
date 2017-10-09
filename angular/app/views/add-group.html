@@ -28,12 +28,12 @@
 	  </div>
 
 
-		<button ng-disabled="newGroup.exists" class="btn btn-primary" type="submit">Done</button>
+		<button ng-disabled="newGroup.exists" class="btn btn-primary" type="submit">Add & Continue</button>
 
 
 	</form>
 </section>
-<span class="close" ng-click="addGroupClosed = !addGroupClosed; legendClosed = true" style="color: white;">
+<span class="close" ng-click="addGroupClosed = !addGroupClosed; peopleFinderClosed = true; legendClosed = true; filtersClosed = true;" style="color: white;">
 	<i ng-if="!addGroupClosed" class="fa fa-times" aria-hidden="true"></i>
 	<i ng-if="addGroupClosed" class="fa fa-plus-square" aria-hidden="true"></i>
 </span>
