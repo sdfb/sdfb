@@ -1187,11 +1187,9 @@ contextual-info-panel.panel {
   margin-top: 345px;
 }
 
-// .groupBar .group {
-//   overflow: visible;
-//   cursor: pointer;
-//   // text-overflow: ellipsis;
-// }
+.groupBar .group {
+  cursor: pointer;
+}
 
 .contribution-mode-on contextual-info-panel.panel {
   border-color: $contribution-mode-fill;

@@ -23,6 +23,7 @@ angular.module('redesign2017App').directive('forceLayout', ['apiService', '$time
         scope.addedNodes = []; // Nodes user has added to the graph
         scope.addedLinks = []; // Links user has added to the graph
         scope.addedGroups = []; // Groups user has added to the graph
+        scope.groupsToggle = false;
         var simulation,
           sourceId;
 
@@ -44,6 +45,10 @@ angular.module('redesign2017App').directive('forceLayout', ['apiService', '$time
 
               d3.selectAll('.node')
                 .classed('faded', false)
+
+              d3.selectAll('.node, .label, .link').classed('not-in-group', false);
+              d3.selectAll('.node, .label, .link').classed('in-group', false);
+              scope.groupsToggle = false;
 
               // Must select g.labels since it selects elements in other part of the interface
               d3.selectAll('g.label')

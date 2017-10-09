@@ -7,7 +7,7 @@
  * # groupsBar
  */
 angular.module('redesign2017App')
-  .directive('groupsBar', ['$state', function($state) {
+  .directive('groupsBar', ['$state', 'apiService', '$timeout', function($state, apiService, $timeout) {
     return {
       template: '',
       restrict: 'E',
@@ -83,6 +83,78 @@ angular.module('redesign2017App')
               }
             })
             .on('mouseenter', function(d, i) {
+              if (!scope.groupsToggle) {
+                if (i < 20) {
+                  d3.selectAll('.link').classed('not-in-group', true);
+                  // assign class in-group or not-in-group to labels and to nodes
+                  d3.selectAll('g.label, .node').each(function(n) {
+                    var className = 'not-in-group';
+                    if (n.attributes.groups) {
+                      var inGroup = n.attributes.groups.filter(function(e) {
+                        return e == d.groupId;
+                      })
+                      if (inGroup.length) {
+                        className = 'in-group';
+                        // hide or display groups depending on group membership of source and target
+                        d3.selectAll('.link').filter(function(f) {
+                          var linkClassName = 'not-in-group';
+                          if (f.source.attributes.groups && f.target.attributes.groups) {
+                            var sourceInGroup = inGroup.some(function (e) {
+                              return f.source.attributes.groups.indexOf(e) != -1 });
+                            var targetInGroup = inGroup.some(function(e) {
+                              return f.target.attributes.groups.indexOf(e) != -1 });
+                            if (sourceInGroup && targetInGroup) {
+                              linkClassName = 'in-group';
+                            }
+                            d3.select(this).classed(linkClassName, true);
+                          }
+                        })
+                      }
+                    }
+                    d3.select(this).classed(className, true);
+                  })
+                  d3.selectAll('.link').classed('not-in-group', true);
+                } else {
+                  d3.selectAll('g.label, .node').each(function(n) {
+                    var className = 'not-in-group';
+                    if (n.attributes.groups) {
+                      var inGroup = _.intersectionWith(scope.groups.otherGroups, n.attributes.groups, function(a, b) {
+                        return a.groupId == b;
+                      });
+                      if (inGroup.length) {
+                        className = 'in-group'
+                          // hide or display groups depending on group membership of source and target
+                        d3.selectAll('.link').filter(function(f) {
+                          var linkClassName = 'not-in-group';
+                          if (f.source.attributes.groups && f.target.attributes.groups) {
+                            var sourceInGroup = inGroup.some(function(e) {
+                              return f.source.attributes.groups.indexOf(e) != -1 });
+                            var targetInGroup = inGroup.some(function(e) {
+                              return f.target.attributes.groups.indexOf(e) != -1 });
+                            if (sourceInGroup && targetInGroup) {
+                              linkClassName = 'in-group';
+                            }
+                            d3.select(this).classed(linkClassName, true);
+                          }
+                        })
+                      }
+                    }
+                    d3.select(this).classed(className, true);
+                  })
+                  d3.selectAll('.link').classed('not-in-group', true);
+                }
+              }
+            })
+            .on('mouseleave', function(d) {
+              if (!scope.groupsToggle) {
+                d3.selectAll('.node, .label, .link').classed('not-in-group', false);
+                d3.selectAll('.node, .label, .link').classed('in-group', false);
+              }
+            })
+            .on('click', function(d, i) {
+              scope.groupsToggle = true;
+              d3.selectAll('.node, .label, .link').classed('not-in-group', false);
+              d3.selectAll('.node, .label, .link').classed('in-group', false);
               if (i < 20) {
                 d3.selectAll('.link').classed('not-in-group', true);
                 // assign class in-group or not-in-group to labels and to nodes
@@ -142,10 +214,13 @@ angular.module('redesign2017App')
                 })
                 d3.selectAll('.link').classed('not-in-group', true);
               }
-            })
-            .on('mouseleave', function(d) {
-              d3.selectAll('.node, .label, .link').classed('not-in-group', false);
-              d3.selectAll('.node, .label, .link').classed('in-group', false);
+              apiService.getGroups(d.groupId).then(function (result) {
+                scope.currentSelection = result.data[0];
+                scope.currentSelection.type = 'group';
+                $timeout(function(){
+                  scope.$broadcast('selectionUpdated', scope.currentSelection);
+                });
+              });
             })
             .on('dblclick', function(d) {
               $state.go('home.visualization', {ids: d.groupId, type: 'network'});
