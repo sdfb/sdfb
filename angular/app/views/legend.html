@@ -18,7 +18,7 @@
       <div class="force-legend legend-text text-first-degree">1st degree</div>
       <div class="force-legend legend-text text-second-degree">2nd degree</div>
     </div>
-    <h5>Color and size of nodes is degree of separation</h5>
+    <h5>Color and size of nodes indicates degree of separation</h5>
     <!-- <div class="legend-box legend-size">
       <div class="flex-container center-align">
         <div class="flex-item legend-circle ghost"></div>
@@ -31,11 +31,11 @@
     <h5>Size of nodes indicates distance from origin</h5> -->
     <div class="legend-box">
       <div class="flex-container">
-        <div class="flex-item legend-edge legend-text centered">Inferred<br/>Computationally</div>
-        <div class="flex-item legend-edge legend-text centered">Human<br/>Curated</div>
+        <div class="flex-item legend-edge legend-text centered">Statistical<br/>Inference</div>
+        <div class="flex-item legend-edge legend-text centered">Human<br/>Contribution</div>
       </div>
     </div>
-    <h5>Color of edges is relationship certainty</h5>
+    <h5>Color of edges indicates relationship certainty</h5>
   </div>
 
   <div ng-if=" config.viewMode == 'shared-network' ">
@@ -85,27 +85,27 @@
         <div class="legend-text">Indirect Acquaintances</div>
       </div>
     </div>
-    <h5>Color of nodes is degree of separation</h5>
+    <h5>Color of nodes indicates degree of separation</h5>
     <!-- <div class="legend-box legend-size">
       <div class="white-circle"></div>
     </div>
     <h5>Size of nodes indicates number of connections</h5> -->
     <div class="legend-box">
       <div class="flex-container">
-        <div class="flex-item legend-edge legend-text centered">Inferred<br/>Computationally</div>
-        <div class="flex-item legend-edge legend-text centered">Human<br/>Curated</div>
+        <div class="flex-item legend-edge legend-text centered">Statistical<br/>Inference</div>
+        <div class="flex-item legend-edge legend-text centered">Human<br/>Contribution</div>
       </div>
     </div>
-    <h5>Color of edges is relationship certainty</h5>
+    <h5>Color of edges indicates relationship certainty</h5>
   </div>
 
   <div ng-if=" config.viewMode == 'all' ">
     <div class="legend-box legend-size-squares">
     </div>
-    <h5>Size is amount of group members</h5>
+    <h5>Size indicates amount of group members</h5>
     <div class="legend-box legend-size-edges">
     </div>
-    <h5>Thickness represents the amount of shared people</h5>
+    <h5>Thickness indicates the amount of shared people</h5>
   </div>
 
   <div ng-if=" config.viewMode == 'group-force' ">
@@ -120,28 +120,28 @@
         <div class="flex-item legend-text">1st degree</div>
       </div>
     </div>
-    <h5>Color of nodes is degree of separation</h5>
-    <div class="legend-box legend-size">
+    <h5>Color and size of nodes indicates membership or degree of separation</h5>
+    <!-- <div class="legend-box legend-size">
       <div class="flex-container center-align">
 
       </div>
-    </div>
-    <h5>Size of nodes indicates distance from origin</h5>
+    </div> -->
+    <!-- <h5>Size of nodes indicates distance from origin</h5> -->
     <div class="legend-box">
       <div class="flex-container">
-        <div class="flex-item legend-edge legend-text centered">Inferred<br/>Computationally</div>
-        <div class="flex-item legend-edge legend-text centered">Human<br/>Curated</div>
+        <div class="flex-item legend-edge legend-text centered">Statistical<br/>Inference</div>
+        <div class="flex-item legend-edge legend-text centered">Human<br/>Contribution</div>
       </div>
     </div>
-    <h5>Color of edges is relationship certainty</h5>
+    <h5>Color of edges indicates relationship certainty</h5>
   </div>
 
   <div ng-if=" config.viewMode == 'group-timeline' ">
     <div class="legend-text centered">Member<br/>lifespan</div>
     <div class="legend-line line-life"></div>
-    <div class="legend-text centered">Human curated<br/>membership</div>
+    <div class="legend-text centered">Human-contributed<br/>dates</div>
     <div class="legend-line line-human"></div>
-    <div class="legend-text centered">Computationally inferred<br/>membership</div>
+    <div class="legend-text centered">Auto-populated<br/>dates</div>
     <div class="legend-line line-computer"></div>
     <h5>Lines are time intervals</h5>
 

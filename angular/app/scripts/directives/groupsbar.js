@@ -70,7 +70,7 @@ angular.module('redesign2017App')
             .merge(chart)
             .text(function(d, i) {
               if (i == 20) {
-                return d.amount + ' minor groups (click to show)'
+                return d.amount + ' other groups (click to show)'
               } else {
                 return d.name;
               }
