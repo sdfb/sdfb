@@ -16,7 +16,10 @@ angular.module('redesign2017App').directive('forceLayout', ['apiService', '$time
       link: function postLink(scope, element, attrs) {
         console.log('drawing network the first time');
 
-        scope.singleSvg = d3.select(element[0]).select('svg'); // Root svg element
+        scope.singleSvg = d3.select(element[0]).select('svg') // Root svg element
+          .attr("preserveAspectRatio", "xMinYMin meet")
+          .attr("viewBox", "0 0 1400 1000")
+          .classed("svg-content-responsive", true);
         scope.singleWidth = +scope.singleSvg.node().getBoundingClientRect().width; // Width of viz
         scope.singleHeight = +scope.singleSvg.node().getBoundingClientRect().height; // Height of viz
         scope.singleZoomfactor = 1;
