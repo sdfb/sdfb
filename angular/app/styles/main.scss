@@ -1138,8 +1138,15 @@ add-link.panel section {
     font-size: 13px;
   }
 
+  input.confidence {
+    width: 20%;
+    float: left;
+    margin-right: 5%;
+  }
+
   .rzslider {
-    margin: 10px 0 25px;
+    margin: 15px 0 25px;
+    width: 75%;
 
     .rz-bar {
       background-color: $mainTextColor;
@@ -1162,7 +1169,7 @@ add-link.panel section {
     }
 
     .rz-bubble {
-      bottom: -22px;
+      bottom: 8px;
       font-size: 11px;
       padding: 1px 0;
     }
