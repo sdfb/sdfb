@@ -1057,6 +1057,15 @@ group-assign section {
     }
 
     .input-group-addon {
+      width: 40%;
+    }
+
+    .input-group-reltype {
+      width: 100%;
+      border-radius: 4px;
+    }
+
+    .input-group-addon, .input-group-reltype {
       background-color: $contribution-mode-fill;
       border: 1px solid $contribution-mode-stroke;
       color: $light-color;
@@ -1067,7 +1076,6 @@ group-assign section {
       text-align: left;
       float: left;
       text-transform: uppercase;
-      width: 40%;
       -moz-appearance: none;
       appearance: none;
       -webkit-appearance: none;
@@ -1093,6 +1101,14 @@ group-assign section {
     }
 
     .fa-caret-down {
+      right: 62%;
+    }
+
+    .fa-caret-down.reltype {
+      right: 5%;
+    }
+
+    .fa-caret-down, .fa-caret-down.reltype {
       border-left: 1px solid rgba(255,255,255,0.5);
       bottom: 3px;
       color: $light-color;
@@ -1102,7 +1118,6 @@ group-assign section {
       padding-left: 6px;
       pointer-events: none;
       position: absolute;
-      right: 62%;
     }
   }
 

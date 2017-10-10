@@ -20,7 +20,10 @@
 		</div> -->
 
     <h4 class="paragraph-title">Relationship type</h4>
-    <input placeholder="Add relationship type" type="text" class="form-control" ng-model="newLink.relType">
+    <!-- <input placeholder="Add relationship type" type="text" class="form-control" ng-model="newLink.relType"> -->
+    <div class="input-group">
+      <select class="input-group-reltype" ng-model="newLink.relType" ng-options="type.name for type in config.relTypes"></select><i class="fa fa-caret-down reltype" aria-hidden="true"></i>
+    </div>
 
     <h4>Start date</h4>
     <div class="input-group">
