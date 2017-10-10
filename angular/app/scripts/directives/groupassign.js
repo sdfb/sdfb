@@ -23,6 +23,10 @@ angular.module('redesign2017App')
               scope.groupAssign.group.name = g.name;
               scope.groupAssign.group.id = g.groupId;
               scope.groupAssignClosed = false;
+              scope.addLinkClosed = true;
+              scope.legendClosed = true;
+              scope.filtersClosed = true;
+              scope.peopleFinderClosed = true;
             });
           })
           .on('mouseleave', function(g) {

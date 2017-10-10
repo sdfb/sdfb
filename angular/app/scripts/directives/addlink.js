@@ -129,6 +129,9 @@ angular.module('redesign2017App')
                 scope.newLink.target.id = otherNode.id;
                 scope.$apply(function() {
                   scope.addLinkClosed = false;
+                  scope.legendClosed = true;
+                  scope.filtersClosed = true;
+                  scope.peopleFinderClosed = true;
                 });
 
               }
