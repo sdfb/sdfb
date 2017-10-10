@@ -15,6 +15,10 @@ angular.module('redesign2017App')
         // element.text('this is the groupAssign directive');
 				scope.groupAssign.startDateType = scope.groupAssign.endDateType = scope.config.dateTypes[1];
 
+        scope.groupAssignSelected = function($item, $model, $label, $event) {
+          scope.groupAssign.group = $item;
+        }
+
         scope.showGroupAssign = function(d) {
           d3.selectAll(".group").on('mouseenter', function(g) {
             scope.$apply(function() {

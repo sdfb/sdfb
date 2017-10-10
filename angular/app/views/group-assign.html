@@ -7,7 +7,7 @@
     <input ng-disabled="true" type="text" ng-model="groupAssign.person.name" class="form-control">
 
     <h4>Group</h4>
-    <input ng-disabled="true" type="text" ng-model="groupAssign.group.name" class="form-control">
+    <input type="text" ng-model="groupAssign.group.name" class="form-control" uib-typeahead="group as group.name for group in $parent.callGroupsTypeahead($viewValue)" typeahead-loading="loadingGroups" typeahead-no-results="noResultsGroups" typeahead-template-url="./views/groupsTypeaheadTemplate.html" typeahead-show-hint="true" typeahead-min-length="3" typeahead-on-select="groupAssignSelected($item, $model, $label, $event)">
 
     <h4>Start date</h4>
     <div class="input-group">

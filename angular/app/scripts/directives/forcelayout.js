@@ -984,6 +984,17 @@ angular.module('redesign2017App').directive('forceLayout', ['apiService', '$time
                   scope.$broadcast('selectionUpdated', scope.currentSelection);
                 });
               });
+              if (scope.config.contributionMode) {
+                scope.$apply(function() {
+                  scope.groupAssign.person.name = d.attributes.name;
+                  scope.groupAssign.person.id = d.id;
+                  scope.groupAssignClosed = false;
+                  scope.addLinkClosed = true;
+                  scope.legendClosed = true;
+                  scope.filtersClosed = true;
+                  scope.peopleFinderClosed = true;
+                });
+              }
             } else {
               apiService.getGroups(d.id).then(function (result) {
                 scope.currentSelection = result.data[0];
