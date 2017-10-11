@@ -107,8 +107,8 @@ angular.module('redesign2017App')
           }, 500);
         };
 
-        scope.showNewLink = function(d) {
-          var nodes = scope.data.included;
+        scope.showNewLink = function(d, nodes) {
+          // var nodes = scope.data.included;
           nodes.forEach(function (otherNode) {
             var distance = Math.sqrt(Math.pow(otherNode.x - d3.event.x, 2) + Math.pow(otherNode.y - d3.event.y, 2));
             if (scope.config.contributionMode) {
@@ -132,24 +132,26 @@ angular.module('redesign2017App')
                   scope.filtersClosed = true;
                   scope.peopleFinderClosed = true;
                 });
-                apiService.getPeople(d.id.toString()+','+otherNode.id.toString()).then(function (result) {
-                  var person1BirthYear = parseInt(result.data[0].attributes.birth_year);
-                  var person1DeathYear = parseInt(result.data[0].attributes.death_year);
-                  var person2BirthYear = parseInt(result.data[1].attributes.birth_year);
-                  var person2DeathYear = parseInt(result.data[1].attributes.death_year);
-                  $timeout(function(){
-                    if (person1BirthYear >= person2BirthYear) {
-                      d3.select('#startDate').attr('placeholder', person1BirthYear);
-                    } else {
-                      d3.select('#startDate').attr('placeholder', person2BirthYear);
-                    };
-                    if (person1DeathYear <= person2DeathYear) {
-                      d3.select('#endDate').attr('placeholder', person1DeathYear);
-                    } else {
-                      d3.select('#endDate').attr('placeholder', person2DeathYear);
-                    }
-                  })
-                });
+                if (d.id && otherNode.id) {
+                  apiService.getPeople(d.id.toString()+','+otherNode.id.toString()).then(function (result) {
+                    var person1BirthYear = parseInt(result.data[0].attributes.birth_year);
+                    var person1DeathYear = parseInt(result.data[0].attributes.death_year);
+                    var person2BirthYear = parseInt(result.data[1].attributes.birth_year);
+                    var person2DeathYear = parseInt(result.data[1].attributes.death_year);
+                    $timeout(function(){
+                      if (person1BirthYear >= person2BirthYear) {
+                        d3.select('#startDate').attr('placeholder', person1BirthYear);
+                      } else {
+                        d3.select('#startDate').attr('placeholder', person2BirthYear);
+                      };
+                      if (person1DeathYear <= person2DeathYear) {
+                        d3.select('#endDate').attr('placeholder', person1DeathYear);
+                      } else {
+                        d3.select('#endDate').attr('placeholder', person2DeathYear);
+                      }
+                    })
+                  });
+                }
               }
               else {
                 otherNode.radius = false;
