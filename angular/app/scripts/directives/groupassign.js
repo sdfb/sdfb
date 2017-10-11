@@ -7,16 +7,18 @@
  * # addNode
  */
 angular.module('redesign2017App')
-  .directive('groupAssign', function () {
+  .directive('groupAssign', ['apiService', '$timeout', function (apiService, $timeout) {
     return {
       templateUrl: './views/group-assign.html',
       restrict: 'E',
       link: function postLink(scope, element, attrs) {
         // element.text('this is the groupAssign directive');
-				scope.groupAssign.startDateType = scope.groupAssign.endDateType = scope.config.dateTypes[1];
+				scope.groupAssign.startDateType = scope.config.dateTypes[5];
+        scope.groupAssign.endDateType = scope.config.dateTypes[3];
 
         scope.groupAssignSelected = function($item, $model, $label, $event) {
           scope.groupAssign.group = $item;
+          scope.populateGroupDates(scope.groupAssign.person.id, $item.id);
         }
 
         scope.showGroupAssign = function(d) {
@@ -31,6 +33,7 @@ angular.module('redesign2017App')
               scope.legendClosed = true;
               scope.filtersClosed = true;
               scope.peopleFinderClosed = true;
+              scope.populateGroupDates(d.id, g.groupId);
             });
           })
           .on('mouseleave', function(g) {
@@ -54,6 +57,31 @@ angular.module('redesign2017App')
           scope.groupAssignClosed = true;
 
         }
+
+        scope.populateGroupDates = function(personId, groupId) {
+          apiService.getPeople(personId).then(function (result) {
+            var personBirthYear = parseInt(result.data[0].attributes.birth_year);
+            var personDeathYear = parseInt(result.data[0].attributes.death_year);
+            $timeout(function(){
+              apiService.getGroups(groupId).then(function (result) {
+                var groupStartYear = result.data[0].attributes.start_year;
+                var groupEndYear = result.data[0].attributes.end_year;
+                $timeout(function(){
+                  if (personBirthYear >= groupStartYear) {
+                    scope.groupAssign.startDate = personBirthYear;
+                  } else {
+                    scope.groupAssign.startDate = groupStartYear;
+                  };
+                  if (personDeathYear <= groupEndYear) {
+                    scope.groupAssign.endDate = personDeathYear;
+                  } else {
+                    scope.groupAssign.endDate = groupEndYear;
+                  }
+                });
+              });
+            });
+          });
+        }
       }
     };
-  });
+  }]);

@@ -58,7 +58,6 @@ angular.module('redesign2017App')
               {'name': 'Midwife for/Had as midwife', 'id': 110},
               {'name': 'Attendant of/Attended by', 'id': 112}]
         scope.newLink.relType = scope.config.relTypes[3];
-        console.log(scope.config.relTypes[3].name);
         scope.newLink.source = {};
         scope.newLink.target = {};
         scope.slider = {
