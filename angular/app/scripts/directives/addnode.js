@@ -62,6 +62,8 @@ angular.module('redesign2017App')
           var ids_in_view = {};
           d3.selectAll('.node').each(function(d) { ids_in_view[d.id] = true; });
           if ($item.id in ids_in_view) {
+            scope.notInView = false;
+
             var origValue = d3.select('#n'+$item.id).attr('r');
             d3.select('#n'+$item.id)
               .transition(5000).attr('r', 50)

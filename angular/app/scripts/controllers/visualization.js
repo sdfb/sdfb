@@ -70,6 +70,8 @@ angular.module('redesign2017App').component('visualization', {
       } else if ($stateParams.ids.length > 8 && this.networkData.data.attributes.primary_people.length === 2) {
         $scope.config.viewMode = 'shared-network';
         $scope.networkName = "Hooke Network of " + this.networkData.included[0].attributes.name + " & " + this.networkData.included[1].attributes.name;
+        // $scope.$parent.personTypeahead.selected = this.networkData.included[0].attributes.name;
+        // $scope.$parent.sharedTypeahead.selected = this.networkData.included[1].attributes.name;
       } else if ($stateParams.ids.length < 8) {
         $scope.config.viewMode = 'group-force';
         var groupName;

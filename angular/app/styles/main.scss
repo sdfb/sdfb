@@ -370,6 +370,11 @@ path.danger {
   cursor: pointer;
 }
 
+.remove-btn.contribute {
+  position: relative;
+  font-size: 10px;
+}
+
 #viz-title {
   // position: absolute;
   display: inline-block;

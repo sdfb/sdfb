@@ -1,6 +1,6 @@
 <uib-tabset active="config.viewObject" justified="true">
   <uib-tab index="0" heading="People">
-    <h4>Individual Network<span class="remove-btn" ng-click=" resetIndividualNetwork() ">clear</span></h4>
+    <h4>Individual Network<span class="remove-btn" ng-click=" personTypeahead.selected = '' ">clear</span></h4>
     <!-- <input placeholder="Search for a person" type="text" ng-model="person.selected" uib-typeahead="person for person in peopleToSelect | filter:$viewValue | limitTo:8" class="form-control" typeahead-on-select="selectedPerson(person.selected)"> -->
     <input type="text" ng-model="personTypeahead.selected" placeholder="Search for a person" uib-typeahead="person as person.name for person in callPersonTypeahead($viewValue)" typeahead-loading="loadingPerson" typeahead-no-results="noResultsPerson" class="form-control" class="form-control" typeahead-show-hint="true" typeahead-min-length="5" typeahead-on-select="selectedPerson($item)" typeahead-wait-ms='500'>
     <i ng-show="loadingPerson" class="glyphicon glyphicon-refresh"></i>
@@ -8,7 +8,7 @@
       <i class="glyphicon glyphicon-remove"></i> No Results Found
     </div>
     <h5>Search here<span ng-if="config.viewMode!='all'"> or double click on a node</span><span ng-if="config.viewMode=='all'"> for a person</span></h5>
-    <h4>Shared Network<span class="remove-btn" ng-click=" resetSharedNetwork() ">clear</span></h4>
+    <h4>Shared Network<span class="remove-btn" ng-click=" sharedTypeahead.selected = '' ">clear</span></h4>
     <!-- <input placeholder="Search for a person" type="text" ng-model="shared.selected" uib-typeahead="person for person in sharedToSelect | filter:$viewValue | limitTo:8" class="form-control" typeahead-on-select="selectedShared(shared.selected, person.selected)"> -->
     <input type="text" ng-model="sharedTypeahead.selected" placeholder="Search for a person" uib-typeahead="person as person.name for person in callPersonTypeahead($viewValue)" typeahead-loading="loadingShared" typeahead-no-results="noResultsShared" class="form-control" class="form-control" typeahead-show-hint="true" typeahead-min-length="5" typeahead-on-select="selectedShared($item)" typeahead-wait-ms='500'>
     <i ng-show="loadingShared" class="glyphicon glyphicon-refresh"></i>
