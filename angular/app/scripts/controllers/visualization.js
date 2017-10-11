@@ -10,7 +10,7 @@
 angular.module('redesign2017App').component('visualization', {
   bindings: { networkData: '<' },
   templateUrl: 'views/visualization.html',
-  controller: ['$scope', '$uibModal', '$http', '$log', '$document', '$location', '$window', 'apiService', '$stateParams', function($scope, $uibModal, $http, $log, $document, $location, $window, apiService, $stateParams) {
+  controller: ['$scope', '$uibModal', '$http', '$log', '$document', '$location', '$window', 'apiService', '$stateParams', '$transitions', function($scope, $uibModal, $http, $log, $document, $location, $window, apiService, $stateParams, $transitions) {
     // console.log(this);
     var initialConfig = {
           viewObject:0, //0 = people, 1 = groups
@@ -261,8 +261,16 @@ angular.module('redesign2017App').component('visualization', {
       // var emptyDB = {nodes: [], links: [], groups: []}
       if (newValue !== oldValue && !newValue) {
         if ($scope.addToDB.nodes.length !== 0 || $scope.addToDB.links.length !== 0 || $scope.addToDB.groups.length !== 0) {
-          $window.alert("You are about to turn off contribution mode, but you still have unsaved changes. Click the 'submit' button to send your changes to the database before exiting contribution mode.");
-          $scope.config.contributionMode = true;
+          if ($window.confirm("You are about to turn off contribution mode, but you still have unsaved changes. Click 'cancel' and then the 'submit' button to send your changes to the database before exiting contribution mode. Discard changes and continue anyway?") === true) {
+            $scope.addedNodes = [];
+            $scope.addedLinks = [];
+            $scope.addedGroups = [];
+            $scope.newNode = {};
+            $scope.newLink = {source:{}, target: {}};
+            $scope.newGroup = {};
+            $scope.groupAssign = {person: {}, group: {}};
+            $scope.updateNetwork($scope.data);
+          };
         }
         else {
           $scope.addedNodes = [];
@@ -276,5 +284,17 @@ angular.module('redesign2017App').component('visualization', {
         }
       }
     })
+
+    $transitions.onStart({}, function(transition) {
+      if ($scope.config.contributionMode) {
+        if ($window.confirm('If you leave this page without submitting your changes, they will be lost. Would you like to leave anyway?')) {
+          return true;
+        } else {
+          return false;
+        }
+      }
+    });
+
+
   }]
 });
