@@ -15,6 +15,8 @@ angular.module('redesign2017App')
         // element.text('this is the addNode directive');
         scope.newNode.birthDateType = scope.newNode.deathDateType = scope.config.dateTypes[1];
 
+        scope.addedNodeId = 0;
+
         scope.watch('noResultsPersonAdd', function(newValue, oldValue) {
           // scope.noResults = newValue;
           if (newValue) {
@@ -29,7 +31,7 @@ angular.module('redesign2017App')
 
           scope.newNode.exists = false;
 
-          var newNode = { attributes: { name: scope.newNode.name, degree: 1 }, id: 0, distance: 7, x: point[0], y: point[1]};
+          var newNode = { attributes: { name: scope.newNode.name, degree: 1 }, id: scope.addedNodeId, distance: 7, x: point[0], y: point[1]};
           newNode.vx = null;
           newNode.vy = null;
           console.log(newNode);
@@ -37,6 +39,7 @@ angular.module('redesign2017App')
           scope.$apply(function() {
             scope.addNodeClosed = false;
             scope.legendClosed = true;
+            scope.newNode.id = scope.addedNodeId;
           });
           update(scope.data);
 
@@ -54,6 +57,7 @@ angular.module('redesign2017App')
             scope.newNode.deathDate = person.attributes.death_year;
             scope.newNode.deathDateType = person.attributes.death_year_type;
             scope.newNode.historical_significance = person.attributes.historical_significance;
+            scope.newNode.id = person.id;
           });
           var ids_in_view = {};
           d3.selectAll('.node').each(function(d) { ids_in_view[d.id] = true; });
@@ -81,37 +85,26 @@ angular.module('redesign2017App')
 
           if (scope.notInView === true && scope.addedNodes.length > 0 && !scope.addedNodes[scope.addedNodes.length-1].attributes.name) {
             scope.addedNodes[scope.addedNodes.length-1].attributes.name = newNode.name;
+            newNode = angular.copy(scope.newNode);
           }
           else if (scope.notInView === true && (scope.addedNodes.length === 0 || !checkForNameless(scope.addedNodes))) {
-            var realNewNode = { attributes: { name: scope.newNode.name, degree: 1 }, id: 0, distance: 7, x: scope.singleWidth/2, y: scope.singleHeight/2};
+            scope.newNode.id = scope.addedNodeId;
+            var realNewNode = { attributes: { name: scope.newNode.name, degree: 1 }, id: scope.newNode.id, distance: 7, x: scope.singleWidth/2, y: scope.singleHeight/2};
+            newNode = angular.copy(scope.newNode);
+            console.log(realNewNode);
             realNewNode.vx = null;
             realNewNode.vy = null;
             scope.addedNodes.push(realNewNode);
           }
           scope.updateNetwork(scope.data);
 
-          if (scope.notInView === true)
-
           if (!scope.newNode.exists) { scope.addToDB.nodes.push(newNode); }
           scope.addNodeClosed = true;
           scope.newNode = {};
           console.log(scope.addToDB);
+          scope.addedNodeId += 1;
 
         }
-
-        // scope.$on('selectionUpdated', function(event, args) {
-        //   if (scope.config.contributionMode && args.type === 'person') {
-        //     console.log(args);
-        //     scope.newNode.name = args.attributes.name;
-        //     scope.newNode.birthDate = args.attributes.birth_year;
-        //     scope.newNode.birthDateType = args.attributes.birth_year_type;
-        //     scope.newNode.deathDate = args.attributes.death_year;
-        //     scope.newNode.deathDateType = args.attributes.death_year_type;
-        //     scope.newNode.historical_significance = args.attributes.historical_significance;
-        //     scope.newNode.exists = true;
-        //     scope.addNodeClosed = false;
-        //   }
-        // });
       }
     };
   }]);

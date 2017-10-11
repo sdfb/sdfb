@@ -165,10 +165,12 @@ path.danger {
 
 .on-the-left {
   float: left;
+  text-align: left;
 }
 
 .on-the-right {
   float: right;
+  text-align: left;
 }
 
 .on-the-right > * {

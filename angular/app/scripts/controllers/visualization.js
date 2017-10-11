@@ -246,6 +246,11 @@ angular.module('redesign2017App').component('visualization', {
     $scope.sendData = function() {
       console.log($scope.addToDB);
       $scope.addToDB = {nodes: [], links: [], groups: []};
+      $scope.newNode = {};
+      $scope.newLink = {};
+      $scope.newGroup = {};
+      $scope.groupAssign = {person: {}, group: {}};
+      $scope.addedNodeId = 0;
     }
 
 
@@ -260,6 +265,10 @@ angular.module('redesign2017App').component('visualization', {
           $scope.addedNodes = [];
           $scope.addedLinks = [];
           $scope.addedGroups = [];
+          $scope.newNode = {};
+          $scope.newLink = {source:{}, target: {}};
+          $scope.newGroup = {};
+          $scope.groupAssign = {person: {}, group: {}};
           $scope.updateNetwork($scope.data);
         }
       }
