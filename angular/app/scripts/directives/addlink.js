@@ -132,7 +132,24 @@ angular.module('redesign2017App')
                   scope.filtersClosed = true;
                   scope.peopleFinderClosed = true;
                 });
-
+                apiService.getPeople(d.id.toString()+','+otherNode.id.toString()).then(function (result) {
+                  var person1BirthYear = parseInt(result.data[0].attributes.birth_year);
+                  var person1DeathYear = parseInt(result.data[0].attributes.death_year);
+                  var person2BirthYear = parseInt(result.data[1].attributes.birth_year);
+                  var person2DeathYear = parseInt(result.data[1].attributes.death_year);
+                  $timeout(function(){
+                    if (person1BirthYear >= person2BirthYear) {
+                      d3.select('#startDate').attr('placeholder', person1BirthYear);
+                    } else {
+                      d3.select('#startDate').attr('placeholder', person2BirthYear);
+                    };
+                    if (person1DeathYear <= person2DeathYear) {
+                      d3.select('#endDate').attr('placeholder', person1DeathYear);
+                    } else {
+                      d3.select('#endDate').attr('placeholder', person2DeathYear);
+                    }
+                  })
+                });
               }
               else {
                 otherNode.radius = false;
@@ -234,9 +251,18 @@ angular.module('redesign2017App')
         scope.submitLink = function() {
           console.log("link submitted");
           var newLink = angular.copy(scope.newLink)
+          if (!newLink.startDate) {
+            newLink.startDate = d3.select('#startDate').attr('placeholder');
+          }
+          if (!newLink.endDate) {
+            newLink.endDate = d3.select('#endDate').attr('placeholder');
+          }
           scope.addToDB.links.push(newLink);
           console.log(scope.addToDB);
           scope.addLinkClosed = true;
+          scope.newLink = {source: {}, target: {}};
+          d3.select('#startDate').attr('placeholder', null);
+          d3.select('#endDate').attr('placeholder', null);
 
         }
 

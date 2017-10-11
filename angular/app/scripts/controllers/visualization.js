@@ -253,6 +253,7 @@ angular.module('redesign2017App').component('visualization', {
       $scope.newGroup = {};
       $scope.groupAssign = {person: {}, group: {}};
       $scope.addedNodeId = 0;
+      $window.alert("Updates Submitted! They'll show up on the website once they've been approved by a curator.")
     }
 
 

@@ -1,6 +1,6 @@
 <section>
   <form ng-submit= "submitLink()">
-    <h3 class="">Add link</h3><span class="remove-btn contribute" ng-click=" newLink = {source:{}, target: {}}; ">clear</span>
+    <h3 class="">Add link</h3><span class="remove-btn contribute" ng-click=" newLink = {source:{}, target: {}}; d3.select('#startDate').attr('placeholder', null); d3.select('#endDate').attr('placeholder', null);">clear</span>
     <p>To add a link, drag a node onto any other (or click an existing link), and these fields will auto-populate. If you need a node that's not in the current view, click the canvas or add it with the form above.</p>
     <!-- <button type="button" class="btn btn-primary" ng-click="addingLink()">Draw Link</button> -->
     <h4 class="paragraph-title">Source node</h4>
