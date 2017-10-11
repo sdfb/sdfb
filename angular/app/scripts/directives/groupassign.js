@@ -23,6 +23,7 @@ angular.module('redesign2017App')
 
         scope.showGroupAssign = function(d) {
           d3.selectAll(".group").on('mouseenter', function(g) {
+            d3.select(this).classed('active', true);
             scope.$apply(function() {
               scope.groupAssign.person.name = d.attributes.name;
               scope.groupAssign.person.id = d.id;
@@ -40,6 +41,7 @@ angular.module('redesign2017App')
             scope.$apply(function() {
               scope.groupAssignClosed = true;
             });
+            d3.select(this).classed('active', false);
           });
         }
 
@@ -54,7 +56,18 @@ angular.module('redesign2017App')
           var newGroupAssign = angular.copy(scope.groupAssign);
           scope.addToDB.group_assignments.push(newGroupAssign);
           console.log(scope.addToDB);
+
+          scope.dragNodes.forEach(function(d) {
+            if (d.distance === 7 && d.id === scope.groupAssign.person.id) {
+              d.x = scope.singleWidth/2;
+              d.y = scope.singleHeight/2;
+              d.vx = null;
+              d.vy = null;
+            }
+          });
+          d3.select('.g'+scope.groupAssign.group.id).classed('active', false);
           scope.groupAssignClosed = true;
+          scope.updateNetwork(scope.data);
 
         }
 

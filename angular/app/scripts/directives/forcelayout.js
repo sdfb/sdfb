@@ -27,9 +27,9 @@ angular.module('redesign2017App').directive('forceLayout', ['apiService', '$time
         scope.addedLinks = []; // Links user has added to the graph
         scope.addedGroups = []; // Groups user has added to the graph
         scope.groupsToggle = false;
+        scope.dragNodes = [];
         var simulation,
-          sourceId,
-          dragNodes;
+          sourceId;
 
           var fisheye = d3.fisheye.circular()
             .radius(75)
@@ -217,7 +217,7 @@ angular.module('redesign2017App').directive('forceLayout', ['apiService', '$time
           }
 
           var newNodes = newData[0];
-          dragNodes = newNodes
+          scope.dragNodes = newNodes
           var newLinks = newData[1];
 
           scope.addedNodes.forEach(function(a) { newNodes.push(a); });
@@ -622,7 +622,7 @@ angular.module('redesign2017App').directive('forceLayout', ['apiService', '$time
           // }
           scope.showGroupAssign(d);
 
-          scope.showNewLink(d, dragNodes);
+          scope.showNewLink(d, scope.dragNodes);
 
         }
 
@@ -643,7 +643,7 @@ angular.module('redesign2017App').directive('forceLayout', ['apiService', '$time
           // var nodes = scope.data.included;
           if (scope.config.contributionMode) {
             cursor.attr("opacity", 1);
-            scope.createNewLink(d, dragNodes, scope.addedLinks);
+            scope.createNewLink(d, scope.dragNodes, scope.addedLinks);
             scope.endGroupEvents();
             scope.updateNetwork(scope.data);
 
