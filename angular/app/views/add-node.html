@@ -30,8 +30,14 @@
 		<h4>Suffix</h4>
 		<input class="form-control" ng-model="newNode.suffix" ng-disabled="newNode.exists" placeholder="Suffix">
 
+		<h4>Historical Significance</h4>
+    <input type="text" ng-model="newLink.historical_significance" class="form-control" placeholder="Historical Significance">
+
 		<h4>Alternate Names</h4>
 		<input class="form-control" ng-model="newNode.alternates" ng-disabled="newNode.exists" placeholder="Alternate Names (comma-separated)">
+
+		<h4>Citation</h4>
+    <textarea type="text" ng-model="newLink.citation" class="form-control"></textarea>
 
 		<!-- <h4>Notes</h4>
 		<input class="form-control" ng-model="newNode.notes" ng-disabled="newNode.exists" placeholder="Notes"> -->

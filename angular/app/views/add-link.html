@@ -19,7 +19,7 @@
 			<i class="glyphicon glyphicon-remove"></i> Person not found
 		</div> -->
 
-    <h4 class="paragraph-title">Relationship type</h4>
+    <h4>Relationship type</h4>
     <!-- <input placeholder="Add relationship type" type="text" class="form-control" ng-model="newLink.relType"> -->
     <div class="input-group">
       <select class="input-group-reltype" ng-model="newLink.relType" ng-options="type.name for type in config.relTypes"></select><i class="fa fa-caret-down reltype" aria-hidden="true"></i>
@@ -41,7 +41,10 @@
     <input class="form-control confidence" ng-model="newLink.confidence">
     <rzslider rz-slider-model="newLink.confidence" rz-slider-options="slider.options" class="with-legend" ng-model="newLink.confidence"></rzslider>
 
-    <h5>Your submission needs to be validated by SDFB curators. You will see it as unapproved contribution in the meantime.</h5>
+    <h4>Citation</h4>
+    <textarea type="text" ng-model="newLink.citation" class="form-control"></textarea>
+
+    <p>Your submission needs to be validated by SDFB curators. You will see it as unapproved contribution in the meantime.</p>
     <button type="submit" class="btn btn-primary">Add & Continue</button>
   </form>
 
