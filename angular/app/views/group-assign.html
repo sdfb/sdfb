@@ -1,31 +1,33 @@
 <section>
   <form ng-submit= "submitGroupAssign()">
     <h3 class="">Add group assignment</h3><span class="remove-btn contribute" ng-click=" groupAssign = {person: {}, group: {}}; ">clear</span>
-    <p>To add a person to a group, drag a node onto a group in the Groups Bar (below), and these fields will auto-populate. If you need a node that's not in the current view, click the canvas or add it with the form above. If you need a group that's not in the view, drag the node into the "minor groups" section.</p>
+    <div class="form-content">
+      <p>To add a person to a group, drag a node onto a group in the Groups Bar (below), and these fields will auto-populate. If you need a node that's not in the current view, click the canvas or add it with the form above. If you need a group that's not in the view, drag the node into the "minor groups" section.</p>
 
-    <h4 class="paragraph-title">Person</h4>
-    <input ng-disabled="true" type="text" ng-model="groupAssign.person.name" class="form-control">
+      <h4 class="paragraph-title">Person</h4>
+      <input ng-disabled="true" type="text" ng-model="groupAssign.person.name" class="form-control">
 
-    <h4>Group</h4>
-    <input type="text" ng-model="groupAssign.group.name" class="form-control" uib-typeahead="group as group.name for group in $parent.callGroupsTypeahead($viewValue)" typeahead-loading="loadingGroups" typeahead-no-results="noResultsGroups" typeahead-template-url="./views/groupsTypeaheadTemplate.html" typeahead-show-hint="true" typeahead-min-length="3" typeahead-on-select="groupAssignSelected($item, $model, $label, $event)">
+      <h4>Group</h4>
+      <input type="text" ng-model="groupAssign.group.name" class="form-control" uib-typeahead="group as group.name for group in $parent.callGroupsTypeahead($viewValue)" typeahead-loading="loadingGroups" typeahead-no-results="noResultsGroups" typeahead-template-url="./views/groupsTypeaheadTemplate.html" typeahead-show-hint="true" typeahead-min-length="3" typeahead-on-select="groupAssignSelected($item, $model, $label, $event)">
 
-    <h4>Start date</h4>
-    <div class="input-group">
-      <select class="input-group-addon" ng-model="groupAssign.startDateType" ng-options="type for type in config.dateTypes"></select><i class="fa fa-caret-down" aria-hidden="true"></i>
-      <input class="form-control" ng-model="groupAssign.startDate" ng-model-options="{ getterSetter: true }">
+      <h4>Start date</h4>
+      <div class="input-group">
+        <select class="input-group-addon" ng-model="groupAssign.startDateType" ng-options="type for type in config.dateTypes"></select><i class="fa fa-caret-down" aria-hidden="true"></i>
+        <input class="form-control" ng-model="groupAssign.startDate" ng-model-options="{ getterSetter: true }">
+      </div>
+
+      <h4>End date</h4>
+      <div class="input-group">
+        <select class="input-group-addon" ng-model="groupAssign.endDateType" ng-options="type for type in config.dateTypes"></select><i class="fa fa-caret-down" aria-hidden="true"></i>
+        <input class="form-control" ng-model="groupAssign.endDate">
+      </div>
+
+      <h4>Citation</h4>
+      <textarea type="text" ng-model="groupAssign.citation" class="form-control"></textarea>
+
+      <p>Your submission needs to be validated by SDFB curators. You will see it as unapproved contribution in the meantime.</p>
+      <button type="submit" class="btn btn-primary">Add & Continue</button>
     </div>
-
-    <h4>End date</h4>
-    <div class="input-group">
-      <select class="input-group-addon" ng-model="groupAssign.endDateType" ng-options="type for type in config.dateTypes"></select><i class="fa fa-caret-down" aria-hidden="true"></i>
-      <input class="form-control" ng-model="groupAssign.endDate">
-    </div>
-
-    <h4>Citation</h4>
-    <textarea type="text" ng-model="groupAssign.citation" class="form-control"></textarea>
-
-    <p>Your submission needs to be validated by SDFB curators. You will see it as unapproved contribution in the meantime.</p>
-    <button type="submit" class="btn btn-primary">Add & Continue</button>
   </form>
 
 </section>

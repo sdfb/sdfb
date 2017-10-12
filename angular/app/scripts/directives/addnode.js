@@ -17,7 +17,7 @@ angular.module('redesign2017App')
 
         scope.addedNodeId = 0;
 
-        scope.watch('noResultsPersonAdd', function(newValue, oldValue) {
+        scope.$watch('noResultsPersonAdd', function(newValue, oldValue) {
           // scope.noResults = newValue;
           if (newValue) {
             scope.newNode.exists = false;

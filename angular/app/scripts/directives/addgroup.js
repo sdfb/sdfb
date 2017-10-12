@@ -15,7 +15,7 @@ angular.module('redesign2017App')
         // element.text('this is the addNode directive');
         scope.newGroup.startDateType = scope.newGroup.endDateType = scope.config.dateTypes[1];
 
-        scope.watch('noResultsPersonAdd', function(newValue, oldValue) {
+        scope.$watch('noResultsPersonAdd', function(newValue, oldValue) {
           // scope.noResults = newValue;
           if (newValue) {
             scope.newGroup.exists = false;

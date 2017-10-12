@@ -255,13 +255,17 @@ path.danger {
 
   &.add-node {
     height: 45vh;
-    overflow-y: auto;
     background-color: $light-color;
     border: 1px solid $contribution-mode-fill;
 
     &.collapsed {
       background-color: $contribution-mode-fill;
       border: 1px solid $contribution-mode-stroke;
+    }
+
+    .form-content {
+      height: 38vh;
+      overflow-y: auto;
     }
   }
 
@@ -275,6 +279,11 @@ path.danger {
       background-color: $contribution-mode-fill;
       border: 1px solid $contribution-mode-stroke;
     }
+
+    .form-content {
+      height: 38vh;
+      overflow-y: auto;
+    }
   }
   &.group-assign {
     height: 45vh;
@@ -286,6 +295,11 @@ path.danger {
       background-color: $contribution-mode-fill;
       border: 1px solid $contribution-mode-stroke;
     }
+
+    .form-content {
+      height: 38vh;
+      overflow-y: auto;
+    }
   }
   &.add-group {
     height: 45vh;
@@ -296,6 +310,11 @@ path.danger {
     &.collapsed {
       background-color: $contribution-mode-fill;
       border: 1px solid $contribution-mode-stroke;
+    }
+
+    .form-content {
+      height: 38vh;
+      overflow-y: auto;
     }
   }
   &.submit-data {

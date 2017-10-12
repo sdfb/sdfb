@@ -1,36 +1,38 @@
 <section>
   <form ng-submit= "submitGroup()">
 		<h3 class="">Create new Group</h3><span class="remove-btn contribute" ng-click=" newGroup = {}; ">clear</span>
-		<h4 class="paragraph-title">Group Name</h4>
-	  <!-- <input placeholder="Search for a person" type="text" ng-model="person.added" uib-typeahead="person for person in peopleToSelect | filter:$viewValue | limitTo:8" class="form-control"> -->
-		<input type="text" ng-model="newGroup.name" placeholder="Search for a group" uib-typeahead="group as group.name for group in $parent.callGroupsTypeahead($viewValue)" typeahead-loading="loadingNewGroups" typeahead-no-results="noResultsNewGroups" class="form-control" typeahead-template-url="./views/groupsTypeaheadTemplate.html" class="form-control" typeahead-show-hint="true" typeahead-min-length="3" typeahead-on-select="foundNewGroup($item)">
-    <i ng-show="loadingNewGroups" class="glyphicon glyphicon-refresh"></i>
-    <div ng-show="noResultsNewGroups">
-      <i class="glyphicon glyphicon-remove"></i> No Results Found: Add this group
+    <div class="form-content">
+  		<h4 class="paragraph-title">Group Name</h4>
+  	  <!-- <input placeholder="Search for a person" type="text" ng-model="person.added" uib-typeahead="person for person in peopleToSelect | filter:$viewValue | limitTo:8" class="form-control"> -->
+  		<input type="text" ng-model="newGroup.name" placeholder="Search for a group" uib-typeahead="group as group.name for group in $parent.callGroupsTypeahead($viewValue)" typeahead-loading="loadingNewGroups" typeahead-no-results="noResultsNewGroups" class="form-control" typeahead-template-url="./views/groupsTypeaheadTemplate.html" class="form-control" typeahead-show-hint="true" typeahead-min-length="3" typeahead-on-select="foundNewGroup($item)">
+      <i ng-show="loadingNewGroups" class="glyphicon glyphicon-refresh"></i>
+      <div ng-show="noResultsNewGroups">
+        <i class="glyphicon glyphicon-remove"></i> No Results Found: Add this group
+      </div>
+  		<div ng-show="newGroup.exists">
+  			<p>Group already in <i>Six Degrees</i>. Try a different group name.</p>
+  		</div>
+
+      <h4>Description</h4>
+      <input class="form-control" ng-model="newGroup.description" ng-disabled="newGroup.exists" placeholder="Description">
+
+  		<h4>Start date</h4>
+  	  <div class="input-group">
+  			<select class="input-group-addon" ng-model="newGroup.startDateType" ng-disabled="newGroup.exists" ng-options="type for type in config.dateTypes"></select><i class="fa fa-caret-down" aria-hidden="true"></i>
+  	    <input ng-disabled="newGroup.exists" class="form-control" ng-model="newGroup.startDate">
+  	  </div>
+
+  	  <h4>End date</h4>
+  	  <div class="input-group">
+  			<select class="input-group-addon" ng-model="newGroup.endDateType" ng-disabled="newGroup.exists" ng-options="type for type in config.dateTypes"></select><i class="fa fa-caret-down" aria-hidden="true"></i>
+  	    <input class="form-control" ng-disabled="newGroup.exists" ng-model="newGroup.endDate">
+  	  </div>
+
+      <h4>Citation</h4>
+      <textarea type="text" ng-model="newLink.citation" class="form-control"></textarea>
+
+  		<button ng-disabled="newGroup.exists" class="btn btn-primary" type="submit">Add & Continue</button>
     </div>
-		<div ng-show="newGroup.exists">
-			<p>Group already in <i>Six Degrees</i>. Try a different group name.</p>
-		</div>
-
-    <h4>Description</h4>
-    <input class="form-control" ng-model="newGroup.description" ng-disabled="newGroup.exists" placeholder="Description">
-
-		<h4>Start date</h4>
-	  <div class="input-group">
-			<select class="input-group-addon" ng-model="newGroup.startDateType" ng-disabled="newGroup.exists" ng-options="type for type in config.dateTypes"></select><i class="fa fa-caret-down" aria-hidden="true"></i>
-	    <input ng-disabled="newGroup.exists" class="form-control" ng-model="newGroup.startDate">
-	  </div>
-
-	  <h4>End date</h4>
-	  <div class="input-group">
-			<select class="input-group-addon" ng-model="newGroup.endDateType" ng-disabled="newGroup.exists" ng-options="type for type in config.dateTypes"></select><i class="fa fa-caret-down" aria-hidden="true"></i>
-	    <input class="form-control" ng-disabled="newGroup.exists" ng-model="newGroup.endDate">
-	  </div>
-
-    <h4>Citation</h4>
-    <textarea type="text" ng-model="newLink.citation" class="form-control"></textarea>
-
-		<button ng-disabled="newGroup.exists" class="btn btn-primary" type="submit">Add & Continue</button>
 
 
 	</form>

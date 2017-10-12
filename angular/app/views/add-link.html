@@ -1,51 +1,53 @@
 <section>
   <form ng-submit= "submitLink()">
     <h3 class="">Add link</h3><span class="remove-btn contribute" ng-click=" newLink = {source:{}, target: {}}; d3.select('#startDate').attr('placeholder', null); d3.select('#endDate').attr('placeholder', null);">clear</span>
-    <p>To add a link, drag a node onto any other (or click an existing link), and these fields will auto-populate. If you need a node that's not in the current view, click the canvas or add it with the form above.</p>
-    <!-- <button type="button" class="btn btn-primary" ng-click="addingLink()">Draw Link</button> -->
-    <h4 class="paragraph-title">Source node</h4>
-    <input ng-disabled="true" type="text" class="form-control" ng-model="newLink.source.name">
-    <!-- <input type="text" ng-model="newLink.source.name" placeholder="Search for a person" uib-typeahead="person as person.name for person in callPersonTypeahead($viewValue)" typeahead-loading="loadingPerson1Add" typeahead-no-results="noResultsPerson1Add" class="form-control" typeahead-template-url="./views/groupsTypeaheadTemplate.html" typeahead-show-hint="true" typeahead-min-length="5" typeahead-on-select="foundSourcePerson($item)">
-		<i ng-show="loadingPersonAdd" class="glyphicon glyphicon-refresh"></i>
-		<div ng-show="noResultsPersonAdd">
-			<i class="glyphicon glyphicon-remove"></i> Person not found
-		</div> -->
+    <div class="form-content">
+      <p>To add a link, drag a node onto any other (or click an existing link), and these fields will auto-populate. If you need a node that's not in the current view, click the canvas or add it with the form above.</p>
+      <!-- <button type="button" class="btn btn-primary" ng-click="addingLink()">Draw Link</button> -->
+      <h4 class="paragraph-title">Source node</h4>
+      <input ng-disabled="true" type="text" class="form-control" ng-model="newLink.source.name">
+      <!-- <input type="text" ng-model="newLink.source.name" placeholder="Search for a person" uib-typeahead="person as person.name for person in callPersonTypeahead($viewValue)" typeahead-loading="loadingPerson1Add" typeahead-no-results="noResultsPerson1Add" class="form-control" typeahead-template-url="./views/groupsTypeaheadTemplate.html" typeahead-show-hint="true" typeahead-min-length="5" typeahead-on-select="foundSourcePerson($item)">
+  		<i ng-show="loadingPersonAdd" class="glyphicon glyphicon-refresh"></i>
+  		<div ng-show="noResultsPersonAdd">
+  			<i class="glyphicon glyphicon-remove"></i> Person not found
+  		</div> -->
 
-    <h4>Target node</h4>
-    <input ng-disabled="true" type="text" class="form-control" ng-model="newLink.target.name">
-    <!-- <input type="text" ng-model="newLink.target.name" placeholder="Search for a person" uib-typeahead="person as person.name for person in callPersonTypeahead($viewValue)" typeahead-loading="loadingPerson2Add" typeahead-no-results="noResultsPerson2Add" class="form-control" typeahead-template-url="./views/groupsTypeaheadTemplate.html" typeahead-show-hint="true" typeahead-min-length="5" typeahead-on-select="foundTargetPerson($item)">
-		<i ng-show="loadingPerson2Add" class="glyphicon glyphicon-refresh"></i>
-		<div ng-show="noResultsPerson2Add">
-			<i class="glyphicon glyphicon-remove"></i> Person not found
-		</div> -->
+      <h4>Target node</h4>
+      <input ng-disabled="true" type="text" class="form-control" ng-model="newLink.target.name">
+      <!-- <input type="text" ng-model="newLink.target.name" placeholder="Search for a person" uib-typeahead="person as person.name for person in callPersonTypeahead($viewValue)" typeahead-loading="loadingPerson2Add" typeahead-no-results="noResultsPerson2Add" class="form-control" typeahead-template-url="./views/groupsTypeaheadTemplate.html" typeahead-show-hint="true" typeahead-min-length="5" typeahead-on-select="foundTargetPerson($item)">
+  		<i ng-show="loadingPerson2Add" class="glyphicon glyphicon-refresh"></i>
+  		<div ng-show="noResultsPerson2Add">
+  			<i class="glyphicon glyphicon-remove"></i> Person not found
+  		</div> -->
 
-    <h4>Relationship type</h4>
-    <!-- <input placeholder="Add relationship type" type="text" class="form-control" ng-model="newLink.relType"> -->
-    <div class="input-group">
-      <select class="input-group-reltype" ng-model="newLink.relType" ng-options="type.name for type in config.relTypes"></select><i class="fa fa-caret-down reltype" aria-hidden="true"></i>
+      <h4>Relationship type</h4>
+      <!-- <input placeholder="Add relationship type" type="text" class="form-control" ng-model="newLink.relType"> -->
+      <div class="input-group">
+        <select class="input-group-reltype" ng-model="newLink.relType" ng-options="type.name for type in config.relTypes"></select><i class="fa fa-caret-down reltype" aria-hidden="true"></i>
+      </div>
+
+      <h4>Start date</h4>
+      <div class="input-group">
+        <select class="input-group-addon" ng-model="newLink.startDateType" ng-options="type for type in config.dateTypes" id="startDateType"></select><i class="fa fa-caret-down" aria-hidden="true"></i>
+        <input class="form-control" ng-model="newLink.startDate" ng-model-options="{ getterSetter: true }" id="startDate">
+      </div>
+
+      <h4>End date</h4>
+      <div class="input-group">
+        <select class="input-group-addon" ng-model="newLink.endDateType" ng-options="type for type in config.dateTypes" id="endDateType"></select><i class="fa fa-caret-down" aria-hidden="true"></i>
+        <input class="form-control" ng-model="newLink.endDate" id="endDate">
+      </div>
+
+      <h4>Your confidence level</h4>
+      <input class="form-control confidence" ng-model="newLink.confidence">
+      <rzslider rz-slider-model="newLink.confidence" rz-slider-options="slider.options" class="with-legend" ng-model="newLink.confidence"></rzslider>
+
+      <h4>Citation</h4>
+      <textarea type="text" ng-model="newLink.citation" class="form-control"></textarea>
+
+      <p>Your submission needs to be validated by SDFB curators. You will see it as unapproved contribution in the meantime.</p>
+      <button type="submit" class="btn btn-primary">Add & Continue</button>
     </div>
-
-    <h4>Start date</h4>
-    <div class="input-group">
-      <select class="input-group-addon" ng-model="newLink.startDateType" ng-options="type for type in config.dateTypes" id="startDateType"></select><i class="fa fa-caret-down" aria-hidden="true"></i>
-      <input class="form-control" ng-model="newLink.startDate" ng-model-options="{ getterSetter: true }" id="startDate">
-    </div>
-
-    <h4>End date</h4>
-    <div class="input-group">
-      <select class="input-group-addon" ng-model="newLink.endDateType" ng-options="type for type in config.dateTypes" id="endDateType"></select><i class="fa fa-caret-down" aria-hidden="true"></i>
-      <input class="form-control" ng-model="newLink.endDate" id="endDate">
-    </div>
-
-    <h4>Your confidence level</h4>
-    <input class="form-control confidence" ng-model="newLink.confidence">
-    <rzslider rz-slider-model="newLink.confidence" rz-slider-options="slider.options" class="with-legend" ng-model="newLink.confidence"></rzslider>
-
-    <h4>Citation</h4>
-    <textarea type="text" ng-model="newLink.citation" class="form-control"></textarea>
-
-    <p>Your submission needs to be validated by SDFB curators. You will see it as unapproved contribution in the meantime.</p>
-    <button type="submit" class="btn btn-primary">Add & Continue</button>
   </form>
 
 </section>
