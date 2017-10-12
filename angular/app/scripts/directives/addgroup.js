@@ -30,7 +30,6 @@ angular.module('redesign2017App')
           var newGroup = { attributes: { name: scope.newGroup.name, degree: 1 }, id: 0, distance: 7, x: point[0], y: point[1]};
           newGroup.vx = null;
           newGroup.vy = null;
-          console.log(newGroup);
           addedGroups.push(newGroup);
           scope.$apply(function() {
             scope.addGroupClosed = false;

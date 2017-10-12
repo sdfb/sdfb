@@ -73,7 +73,7 @@ angular.module('redesign2017App').directive('forceLayout', ['apiService', '$time
               d3.selectAll('.group').classed('active', false);
               d3.selectAll('.group').classed('unactive', false);
 
-              if (scope.config.contributionMode) {
+              if (scope.$parent.config.contributionMode) {
                 var point = d3.mouse(container.node());
                 if (scope.config.viewMode === 'all') {
                   scope.addGroupNode(scope.addedGroups, point, scope.updateNetwork);
@@ -630,8 +630,7 @@ angular.module('redesign2017App').directive('forceLayout', ['apiService', '$time
 
           cursor.attr("opacity", 0);
 
-          var nodes = scope.data.included;
-          nodes.forEach(function(n) {
+          scope.dragNodes.forEach(function(n) {
             n.fx = n.x;
             n.fy = n.y;
           });
@@ -641,7 +640,7 @@ angular.module('redesign2017App').directive('forceLayout', ['apiService', '$time
         function dragended(d) {
 
           // var nodes = scope.data.included;
-          if (scope.config.contributionMode) {
+          if (scope.$parent.config.contributionMode) {
             cursor.attr("opacity", 1);
             scope.createNewLink(d, scope.dragNodes, scope.addedLinks);
             scope.endGroupEvents();
