@@ -387,7 +387,7 @@ angular.module('redesign2017App')
             });
 
             var s = d3.event.selection || confidenceX.range();
-            var convertConfidence = d3.scaleLinear().domain([0, confidenceWidth-4]).range([0, 100]);
+            var convertConfidence = d3.scaleLinear().domain([0, confidenceWidth-4]).range([0, 100]).clamp(true);
             var confidenceMin = Math.round(convertConfidence(s[0]));
             var confidenceMax = Math.round(convertConfidence(s[1]));
             // console.log(confidenceMax);

@@ -1,6 +1,6 @@
 <section>
   <form ng-submit= "submitLink()">
-    <h3 class="">Add link</h3>
+    <h3 class="">Add link</h3><span class="remove-btn contribute" ng-click=" newLink = {source:{}, target: {}}; d3.select('#startDate').attr('placeholder', null); d3.select('#endDate').attr('placeholder', null);">clear</span>
     <p>To add a link, drag a node onto any other (or click an existing link), and these fields will auto-populate. If you need a node that's not in the current view, click the canvas or add it with the form above.</p>
     <!-- <button type="button" class="btn btn-primary" ng-click="addingLink()">Draw Link</button> -->
     <h4 class="paragraph-title">Source node</h4>
@@ -19,8 +19,11 @@
 			<i class="glyphicon glyphicon-remove"></i> Person not found
 		</div> -->
 
-    <h4 class="paragraph-title">Relationship type</h4>
-    <input placeholder="Add relationship type" type="text" class="form-control" ng-model="newLink.relType">
+    <h4>Relationship type</h4>
+    <!-- <input placeholder="Add relationship type" type="text" class="form-control" ng-model="newLink.relType"> -->
+    <div class="input-group">
+      <select class="input-group-reltype" ng-model="newLink.relType" ng-options="type.name for type in config.relTypes"></select><i class="fa fa-caret-down reltype" aria-hidden="true"></i>
+    </div>
 
     <h4>Start date</h4>
     <div class="input-group">
@@ -35,14 +38,18 @@
     </div>
 
     <h4>Your confidence level</h4>
+    <input class="form-control confidence" ng-model="newLink.confidence">
     <rzslider rz-slider-model="newLink.confidence" rz-slider-options="slider.options" class="with-legend" ng-model="newLink.confidence"></rzslider>
 
-    <h5>Your submission needs to be validated by SDFB staff. You will see it as unapproved contribution in the meantime.</h5>
-    <button type="submit" class="btn btn-primary">Done</button>
+    <h4>Citation</h4>
+    <textarea type="text" ng-model="newLink.citation" class="form-control"></textarea>
+
+    <p>Your submission needs to be validated by SDFB curators. You will see it as unapproved contribution in the meantime.</p>
+    <button type="submit" class="btn btn-primary">Add & Continue</button>
   </form>
 
 </section>
-<span class="close" ng-click="addLinkClosed = !addLinkClosed; legendClosed = true" style="color: white;">
+<span class="close" ng-click="addLinkClosed = !addLinkClosed; peopleFinderClosed = true; legendClosed = true; filtersClosed = true;" style="color: white;">
 	<i ng-if="!addLinkClosed" class="fa fa-times" aria-hidden="true"></i>
 	<i ng-if="addLinkClosed" class="faXX XXfa-plus-circle" aria-hidden="true" style="display: block; width: 12.5px; height: 14px; background-image: url('./images/add-link-icon.svg'); background-repeat: no-repeat; background-size: cover;"></i>
 </span>

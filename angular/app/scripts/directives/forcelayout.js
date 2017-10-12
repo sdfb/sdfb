@@ -16,13 +16,18 @@ angular.module('redesign2017App').directive('forceLayout', ['apiService', '$time
       link: function postLink(scope, element, attrs) {
         console.log('drawing network the first time');
 
-        scope.singleSvg = d3.select(element[0]).select('svg'); // Root svg element
+        scope.singleSvg = d3.select(element[0]).select('svg') // Root svg element
+          .attr("preserveAspectRatio", "xMinYMin meet")
+          .attr("viewBox", function() { return "0 0 "+this.getBoundingClientRect().width+' '+this.getBoundingClientRect().height; })
+          .classed("svg-content-responsive", true);
         scope.singleWidth = +scope.singleSvg.node().getBoundingClientRect().width; // Width of viz
         scope.singleHeight = +scope.singleSvg.node().getBoundingClientRect().height; // Height of viz
         scope.singleZoomfactor = 1;
         scope.addedNodes = []; // Nodes user has added to the graph
         scope.addedLinks = []; // Links user has added to the graph
         scope.addedGroups = []; // Groups user has added to the graph
+        scope.groupsToggle = false;
+        scope.dragNodes = [];
         var simulation,
           sourceId;
 
@@ -45,6 +50,10 @@ angular.module('redesign2017App').directive('forceLayout', ['apiService', '$time
               d3.selectAll('.node')
                 .classed('faded', false)
 
+              d3.selectAll('.node, .label, .link').classed('not-in-group', false);
+              d3.selectAll('.node, .label, .link').classed('in-group', false);
+              scope.groupsToggle = false;
+
               // Must select g.labels since it selects elements in other part of the interface
               d3.selectAll('g.label')
                 .classed('hidden', function(d) {
@@ -64,7 +73,7 @@ angular.module('redesign2017App').directive('forceLayout', ['apiService', '$time
               d3.selectAll('.group').classed('active', false);
               d3.selectAll('.group').classed('unactive', false);
 
-              if (scope.config.contributionMode) {
+              if (scope.$parent.config.contributionMode) {
                 var point = d3.mouse(container.node());
                 if (scope.config.viewMode === 'all') {
                   scope.addGroupNode(scope.addedGroups, point, scope.updateNetwork);
@@ -208,6 +217,7 @@ angular.module('redesign2017App').directive('forceLayout', ['apiService', '$time
           }
 
           var newNodes = newData[0];
+          scope.dragNodes = newNodes
           var newLinks = newData[1];
 
           scope.addedNodes.forEach(function(a) { newNodes.push(a); });
@@ -557,8 +567,6 @@ angular.module('redesign2017App').directive('forceLayout', ['apiService', '$time
 
           oldLayout = layout;
 
-          // Change name of the viz
-          scope.config.title = "Hooke network of Francis Bacon"
         }
 
         scope.$watch('config.contributionMode', function(newValue, oldValue) {
@@ -614,7 +622,7 @@ angular.module('redesign2017App').directive('forceLayout', ['apiService', '$time
           // }
           scope.showGroupAssign(d);
 
-          scope.showNewLink(d);
+          scope.showNewLink(d, scope.dragNodes);
 
         }
 
@@ -622,8 +630,7 @@ angular.module('redesign2017App').directive('forceLayout', ['apiService', '$time
 
           cursor.attr("opacity", 0);
 
-          var nodes = scope.data.included;
-          nodes.forEach(function(n) {
+          scope.dragNodes.forEach(function(n) {
             n.fx = n.x;
             n.fy = n.y;
           });
@@ -632,10 +639,10 @@ angular.module('redesign2017App').directive('forceLayout', ['apiService', '$time
 
         function dragended(d) {
 
-          var nodes = scope.data.included;
-          if (scope.config.contributionMode) {
+          // var nodes = scope.data.included;
+          if (scope.$parent.config.contributionMode) {
             cursor.attr("opacity", 1);
-            scope.createNewLink(d, nodes, scope.addedLinks);
+            scope.createNewLink(d, scope.dragNodes, scope.addedLinks);
             scope.endGroupEvents();
             scope.updateNetwork(scope.data);
 
@@ -978,6 +985,17 @@ angular.module('redesign2017App').directive('forceLayout', ['apiService', '$time
                   scope.$broadcast('selectionUpdated', scope.currentSelection);
                 });
               });
+              if (scope.config.contributionMode) {
+                scope.$apply(function() {
+                  scope.groupAssign.person.name = d.attributes.name;
+                  scope.groupAssign.person.id = d.id;
+                  scope.groupAssignClosed = false;
+                  scope.addLinkClosed = true;
+                  scope.legendClosed = true;
+                  scope.filtersClosed = true;
+                  scope.peopleFinderClosed = true;
+                });
+              }
             } else {
               apiService.getGroups(d.id).then(function (result) {
                 scope.currentSelection = result.data[0];
@@ -1026,8 +1044,6 @@ angular.module('redesign2017App').directive('forceLayout', ['apiService', '$time
         scope.singleZoom = d3.zoom(); // Create a single zoom function
         // Call zoom for scope.singleSvg container.
         scope.singleSvg.call(scope.singleZoom.on('zoom', zoomed)).on("dblclick.zoom", null); // See zoomed() below
-
-
 
 
         // Zooming function translates the size of the scope.singleSvg container on wheel scroll.
@@ -1112,6 +1128,7 @@ angular.module('redesign2017App').directive('forceLayout', ['apiService', '$time
             if (scope.config.viewMode !== 'all' && scope.config.viewMode !== 'group-force') {
               scope.data4groups(scope.data);
             }
+            // scope.centerNetwork();
           }
         }, true);
 

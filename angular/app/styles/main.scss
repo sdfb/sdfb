@@ -47,6 +47,7 @@ body {
   font-weight: 400;
   font-family: 'Open Sans', sans-serif;
   color: $mainTextColor;
+  overflow: hidden;
 }
 
 h2 {
@@ -155,6 +156,7 @@ path.danger {
   position: fixed;
   pointer-events: none;
   z-index: 100;
+  text-align: center;
 }
 
 .panels-container * {
@@ -163,10 +165,12 @@ path.danger {
 
 .on-the-left {
   float: left;
+  text-align: left;
 }
 
 .on-the-right {
   float: right;
+  text-align: left;
 }
 
 .on-the-right > * {
@@ -250,7 +254,8 @@ path.danger {
   }
 
   &.add-node {
-    height: 582px;
+    height: 45vh;
+    overflow-y: auto;
     background-color: $light-color;
     border: 1px solid $contribution-mode-fill;
 
@@ -261,7 +266,8 @@ path.danger {
   }
 
   &.add-link {
-    height: 632px;
+    height: 45vh;
+    overflow-y: auto;
     background-color: $light-color;
     border: 1px solid $contribution-mode-fill;
 
@@ -271,7 +277,8 @@ path.danger {
     }
   }
   &.group-assign {
-    height: 482px;
+    height: 45vh;
+    overflow-y: auto;
     background-color: $light-color;
     border: 1px solid $contribution-mode-fill;
 
@@ -281,7 +288,8 @@ path.danger {
     }
   }
   &.add-group {
-    height: 482px;
+    height: 45vh;
+    overflow-y: auto;
     background-color: $light-color;
     border: 1px solid $contribution-mode-fill;
 
@@ -366,15 +374,25 @@ path.danger {
   cursor: pointer;
 }
 
+.remove-btn.contribute {
+  position: relative;
+  font-size: 10px;
+}
+
 #viz-title {
-  position: absolute;
-  top: 10px;
-  left: calc(100% + 10px);
+  // position: absolute;
+  display: inline-block;
+  // top: 10px;
+  // left: calc(100% + 10px);
   font-size: 18px;
   color: #434055;
   letter-spacing: 0.75px;
   max-width: 200%;
   white-space: nowrap;
+  background-color: $panels-bg;
+  border: 1px solid $panels-stroke;
+  border-radius: 4px;
+  padding: 2.5px;
 }
 /* search panel styles*/
 search-panel.panel {
@@ -737,8 +755,10 @@ group-timeline {
 }
 
 .timeline-legend {
+  height: 35vh;
   margin-top: 345px;
-  
+  overflow-y: auto;
+
   .legend-line {
     margin: 0 auto 8px;
     top: 3px;
@@ -1056,6 +1076,15 @@ group-assign section {
     }
 
     .input-group-addon {
+      width: 40%;
+    }
+
+    .input-group-reltype {
+      width: 100%;
+      border-radius: 4px;
+    }
+
+    .input-group-addon, .input-group-reltype {
       background-color: $contribution-mode-fill;
       border: 1px solid $contribution-mode-stroke;
       color: $light-color;
@@ -1066,7 +1095,6 @@ group-assign section {
       text-align: left;
       float: left;
       text-transform: uppercase;
-      width: 40%;
       -moz-appearance: none;
       appearance: none;
       -webkit-appearance: none;
@@ -1092,6 +1120,14 @@ group-assign section {
     }
 
     .fa-caret-down {
+      right: 62%;
+    }
+
+    .fa-caret-down.reltype {
+      right: 5%;
+    }
+
+    .fa-caret-down, .fa-caret-down.reltype {
       border-left: 1px solid rgba(255,255,255,0.5);
       bottom: 3px;
       color: $light-color;
@@ -1101,7 +1137,6 @@ group-assign section {
       padding-left: 6px;
       pointer-events: none;
       position: absolute;
-      right: 62%;
     }
   }
 
@@ -1122,8 +1157,15 @@ add-link.panel section {
     font-size: 13px;
   }
 
+  input.confidence {
+    width: 20%;
+    float: left;
+    margin-right: 5%;
+  }
+
   .rzslider {
-    margin: 10px 0 25px;
+    margin: 15px 0 25px;
+    width: 75%;
 
     .rz-bar {
       background-color: $mainTextColor;
@@ -1146,7 +1188,7 @@ add-link.panel section {
     }
 
     .rz-bubble {
-      bottom: -22px;
+      bottom: 8px;
       font-size: 11px;
       padding: 1px 0;
     }
@@ -1185,6 +1227,10 @@ add-link.panel section {
 contextual-info-panel.panel {
   background-color: $light-color;
   margin-top: 345px;
+}
+
+.groupBar .group {
+  cursor: pointer;
 }
 
 .contribution-mode-on contextual-info-panel.panel {
@@ -1426,6 +1472,34 @@ people-finder {
 
     .connections-column {
       width: 10%;
+    }
+
+    .action-column {
+      width: 15%;
+    }
+  }
+
+  table.more-groups {
+    font-size: 12px;
+    table-layout: fixed;
+    white-space: nowrap;
+
+    td {
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .id-column {
+      width: 15%;
+    }
+
+    .name-column {
+      width: 50%;
+    }
+
+    .members-column {
+      width: 20%;
     }
 
     .action-column {

@@ -1,6 +1,6 @@
 <section>
   <form ng-submit= "submitGroup()">
-		<h3 class="">Create new Group</h3>
+		<h3 class="">Create new Group</h3><span class="remove-btn contribute" ng-click=" newGroup = {}; ">clear</span>
 		<h4 class="paragraph-title">Group Name</h4>
 	  <!-- <input placeholder="Search for a person" type="text" ng-model="person.added" uib-typeahead="person for person in peopleToSelect | filter:$viewValue | limitTo:8" class="form-control"> -->
 		<input type="text" ng-model="newGroup.name" placeholder="Search for a group" uib-typeahead="group as group.name for group in $parent.callGroupsTypeahead($viewValue)" typeahead-loading="loadingNewGroups" typeahead-no-results="noResultsNewGroups" class="form-control" typeahead-template-url="./views/groupsTypeaheadTemplate.html" class="form-control" typeahead-show-hint="true" typeahead-min-length="3" typeahead-on-select="foundNewGroup($item)">
@@ -27,13 +27,15 @@
 	    <input class="form-control" ng-disabled="newGroup.exists" ng-model="newGroup.endDate">
 	  </div>
 
+    <h4>Citation</h4>
+    <textarea type="text" ng-model="newLink.citation" class="form-control"></textarea>
 
-		<button ng-disabled="newGroup.exists" class="btn btn-primary" type="submit">Done</button>
+		<button ng-disabled="newGroup.exists" class="btn btn-primary" type="submit">Add & Continue</button>
 
 
 	</form>
 </section>
-<span class="close" ng-click="addGroupClosed = !addGroupClosed; legendClosed = true" style="color: white;">
+<span class="close" ng-click="addGroupClosed = !addGroupClosed; peopleFinderClosed = true; legendClosed = true; filtersClosed = true;" style="color: white;">
 	<i ng-if="!addGroupClosed" class="fa fa-times" aria-hidden="true"></i>
 	<i ng-if="addGroupClosed" class="fa fa-plus-square" aria-hidden="true"></i>
 </span>

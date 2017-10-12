@@ -7,7 +7,7 @@
  * # contextualInfoPanel
  */
 angular.module('redesign2017App')
-  .directive('contextualInfoPanel', function() {
+  .directive('contextualInfoPanel', ['apiService', function(apiService) {
     return {
       templateUrl: './views/contextual-info-panel.html',
       restrict: 'E',
@@ -36,6 +36,27 @@ angular.module('redesign2017App')
           window.open(url.replace('{{name}}', name.toLowerCase()), '_blank');
         }
 
+        scope.$watch('currentSelection', function(newValue, oldValue) {
+          if (scope.currentSelection.type == 'group') {
+            var groupMembers = [];
+            scope.currentSelection.attributes.people.forEach(function(p) {
+              groupMembers.push(p.person_id);
+            });
+            groupMembers = groupMembers.join();
+            apiService.getPeople(groupMembers).then(function (result) {
+              result.data.forEach(function(d) {
+                scope.currentSelection.attributes.people.forEach (function(p) {
+                  if (p.person_id === parseInt(d.id)) {
+                    p.name = d.attributes.name;
+                  }
+                });
+                // scope.currentSelection.attributes.people[i].name = d.attributes.name;
+              });
+            });
+          }
+        })
+
+
       }
     };
-  });
+  }]);

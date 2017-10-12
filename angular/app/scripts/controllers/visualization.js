@@ -10,7 +10,7 @@
 angular.module('redesign2017App').component('visualization', {
   bindings: { networkData: '<' },
   templateUrl: 'views/visualization.html',
-  controller: ['$scope', '$uibModal', '$http', '$log', '$document', '$location', '$window', 'apiService', '$stateParams', function($scope, $uibModal, $http, $log, $document, $location, $window, apiService, $stateParams) {
+  controller: ['$scope', '$uibModal', '$http', '$log', '$document', '$location', '$window', 'apiService', '$stateParams', '$transitions', function($scope, $uibModal, $http, $log, $document, $location, $window, apiService, $stateParams, $transitions) {
     // console.log(this);
     var initialConfig = {
           viewObject:0, //0 = people, 1 = groups
@@ -70,6 +70,8 @@ angular.module('redesign2017App').component('visualization', {
       } else if ($stateParams.ids.length > 8 && this.networkData.data.attributes.primary_people.length === 2) {
         $scope.config.viewMode = 'shared-network';
         $scope.networkName = "Hooke Network of " + this.networkData.included[0].attributes.name + " & " + this.networkData.included[1].attributes.name;
+        // $scope.$parent.personTypeahead.selected = this.networkData.included[0].attributes.name;
+        // $scope.$parent.sharedTypeahead.selected = this.networkData.included[1].attributes.name;
       } else if ($stateParams.ids.length < 8) {
         $scope.config.viewMode = 'group-force';
         var groupName;
@@ -78,6 +80,7 @@ angular.module('redesign2017App').component('visualization', {
             groupName = item.attributes.name;
           }
         });
+        $scope.groupName = groupName;
         $scope.data.included = $scope.data.included.filter(function(n) { return n.id !== $scope.data.data.id; });
         $scope.networkName = "Hooke Network of " + groupName;
         $scope.$parent.groupTypeahead.selected = groupName;
@@ -245,6 +248,12 @@ angular.module('redesign2017App').component('visualization', {
     $scope.sendData = function() {
       console.log($scope.addToDB);
       $scope.addToDB = {nodes: [], links: [], groups: []};
+      $scope.newNode = {};
+      $scope.newLink = {};
+      $scope.newGroup = {};
+      $scope.groupAssign = {person: {}, group: {}};
+      $scope.addedNodeId = 0;
+      $window.alert("Updates Submitted! They'll show up on the website once they've been approved by a curator.")
     }
 
 
@@ -252,16 +261,40 @@ angular.module('redesign2017App').component('visualization', {
       // var emptyDB = {nodes: [], links: [], groups: []}
       if (newValue !== oldValue && !newValue) {
         if ($scope.addToDB.nodes.length !== 0 || $scope.addToDB.links.length !== 0 || $scope.addToDB.groups.length !== 0) {
-          $window.alert("You are about to turn off contribution mode, but you still have unsaved changes. Click the 'submit' button to send your changes to the database before exiting contribution mode.");
-          $scope.config.contributionMode = true;
+          if ($window.confirm("You are about to turn off contribution mode, but you still have unsaved changes. Click 'cancel' and then the 'submit' button to send your changes to the database before exiting contribution mode. Discard changes and continue anyway?") === true) {
+            $scope.addedNodes = [];
+            $scope.addedLinks = [];
+            $scope.addedGroups = [];
+            $scope.newNode = {};
+            $scope.newLink = {source:{}, target: {}};
+            $scope.newGroup = {};
+            $scope.groupAssign = {person: {}, group: {}};
+            $scope.updateNetwork($scope.data);
+          };
         }
         else {
           $scope.addedNodes = [];
           $scope.addedLinks = [];
           $scope.addedGroups = [];
+          $scope.newNode = {};
+          $scope.newLink = {source:{}, target: {}};
+          $scope.newGroup = {};
+          $scope.groupAssign = {person: {}, group: {}};
           $scope.updateNetwork($scope.data);
         }
       }
     })
+
+    $transitions.onStart({}, function(transition) {
+      if ($scope.$parent.config.contributionMode) {
+        if ($window.confirm('If you leave this page without submitting your changes, they will be lost. Would you like to leave anyway?')) {
+          return true;
+        } else {
+          return false;
+        }
+      }
+    });
+
+
   }]
 });

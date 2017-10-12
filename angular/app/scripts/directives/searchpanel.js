@@ -7,7 +7,7 @@
  * # searchPanel
  */
 angular.module('redesign2017App')
-  .directive('searchPanel', ['$state', 'apiService', function($state, apiService) {
+  .directive('searchPanel', ['$state', 'apiService', '$stateParams', function($state, apiService, $stateParams) {
     return {
       templateUrl: './views/search-panel.html',
       restrict: 'E',
@@ -52,6 +52,15 @@ angular.module('redesign2017App')
         scope.groupSelected = function($item, $model, $label, $event) {
           console.log($item.name, $item.id, 'getting group network...');
           $state.go('home.visualization', {ids: $item.id, type:'network'});
+        }
+
+        scope.groupView = function(view) {
+          console.log($stateParams.ids);
+          if ($stateParams.ids.length >= 8) {
+            $state.go('home.visualization', {ids: 81, type: view});
+          } else {
+            $state.go('home.visualization', {type: view});
+          }
         }
 
       }
