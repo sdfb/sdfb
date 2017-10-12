@@ -157,13 +157,27 @@ angular.module('redesign2017App')
                 otherNode.radius = false;
                 d3.select("#n"+otherNode.id)
                   .transition().attr('r', function(d) { // Size nodes by degree of distance
-                  if (d.distance == 0) {
-                    return 25;
-                  } else if (d.distance == 1) {
-                    return 12.5;
-                  } else {
-                    return 6.25;
-                  }
+                    if (scope.config.viewMode == 'shared-network') {
+                      if (d.distance === 0 || d.distance === 3) {
+                        return 25;
+                      } else if (d.distance === 2) {
+                        return 12.5;
+                      } else {
+                        return 6.25;
+                      }
+                    } else if (scope.config.viewMode === 'group-force') {
+                      var members = scope.data.data.attributes.primary_people;
+                      if (members.indexOf(d.id) === -1) { return 6.25; }
+                      else { return 12.5; };
+                    } else {
+                      if (d.distance == 0) {
+                        return 25;
+                      } else if (d.distance == 1) {
+                        return 12.5;
+                      } else {
+                        return 6.25;
+                      }
+                    }
                 })
                 .attr('stroke-dasharray', null);
               }
