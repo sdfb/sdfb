@@ -254,7 +254,8 @@ path.danger {
   }
 
   &.add-node {
-    height: 612px;
+    height: 45vh;
+    overflow-y: auto;
     background-color: $light-color;
     border: 1px solid $contribution-mode-fill;
 
@@ -265,7 +266,8 @@ path.danger {
   }
 
   &.add-link {
-    height: 682px;
+    height: 45vh;
+    overflow-y: auto;
     background-color: $light-color;
     border: 1px solid $contribution-mode-fill;
 
@@ -275,7 +277,8 @@ path.danger {
     }
   }
   &.group-assign {
-    height: 482px;
+    height: 45vh;
+    overflow-y: auto;
     background-color: $light-color;
     border: 1px solid $contribution-mode-fill;
 
@@ -285,7 +288,8 @@ path.danger {
     }
   }
   &.add-group {
-    height: 482px;
+    height: 45vh;
+    overflow-y: auto;
     background-color: $light-color;
     border: 1px solid $contribution-mode-fill;
 
@@ -751,7 +755,9 @@ group-timeline {
 }
 
 .timeline-legend {
+  height: 35vh;
   margin-top: 345px;
+  overflow-y: auto;
 
   .legend-line {
     margin: 0 auto 8px;

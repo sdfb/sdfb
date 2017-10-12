@@ -286,7 +286,7 @@ angular.module('redesign2017App').component('visualization', {
     })
 
     $transitions.onStart({}, function(transition) {
-      if ($scope.config.contributionMode) {
+      if ($scope.$parent.config.contributionMode) {
         if ($window.confirm('If you leave this page without submitting your changes, they will be lost. Would you like to leave anyway?')) {
           return true;
         } else {
