@@ -1,0 +1,45 @@
+table#people {
+  font-size: 12px;
+  table-layout: fixed;
+  white-space: nowrap;
+	text-align: left;
+	overflow-y: scroll;
+
+  td {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .id-column {
+    width: 15%;
+  }
+
+  .name-column {
+    width: 20%;
+  }
+
+  .sig-column {
+    width: 20%;
+  }
+
+  .birth-column {
+    width: 10%
+  }
+
+  .death-column {
+    width: 10%;
+  }
+
+  .connections-column {
+    width: 10%;
+  }
+
+  .action-column {
+    width: 15%;
+  }
+}
+
+.btn-group-justified {
+	width: 250px;
+}
