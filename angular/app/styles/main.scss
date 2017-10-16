@@ -1338,7 +1338,12 @@ small-timeline.relationship path.life {
 
 small-timeline path.terminator {
   stroke-width: 2px;
-  stroke: $timelineColor;
+  stroke: $degree0;
+  fill: none;
+}
+
+small-timeline path.filled {
+  fill: $light-color;
 }
 
 small-timeline .label {
