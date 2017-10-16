@@ -18,6 +18,7 @@ var redesign2017App = angular
     'ngTouch',
     'ui.bootstrap',
     'ui.router',
+    'angular-loading-bar',
     'rzModule'
   ]);
   // .config(function ($routeProvider) {
