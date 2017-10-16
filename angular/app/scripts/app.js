@@ -122,5 +122,5 @@ redesign2017App.config(function($stateProvider, $locationProvider) {
   $stateProvider.state(homeState);
   $stateProvider.state(vizState);
   $stateProvider.state(tableState);
-  // $locationProvider.html5Mode(true);
+  $locationProvider.html5Mode(true);
 })
