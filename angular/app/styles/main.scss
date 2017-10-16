@@ -238,7 +238,7 @@ path.danger {
 
 
   &.individual {
-    height: 346px;
+    height: 352px;
   }
 
   &.shared {
@@ -1163,6 +1163,7 @@ group-assign section {
     background-color: $contribution-mode-fill;
     border-color: $contribution-mode-stroke;
     color: $light-color;
+    margin-top: 10px;
 
     &:hover {
       background-color: $contribution-mode-stroke;

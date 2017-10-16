@@ -80,6 +80,8 @@ angular.module('redesign2017App')
                 scope.open();
               } else {
                 scope.groupsToggle = true;
+                d3.selectAll('.group').classed('active', false);
+                d3.select(this).classed('active', true);
                 d3.selectAll('.node, .label, .link').classed('not-in-group', false);
                 d3.selectAll('.node, .label, .link').classed('in-group', false);
                 d3.selectAll('.link').classed('not-in-group', true);
