@@ -49,13 +49,12 @@ class ApiController < ApplicationController
       people = Person.pluck(:search_names_all, :display_name, :id)
       full_name = ""
       people.each do |data|
-        keys, name, id = data
-        keys.split(",").uniq.each_with_index do |word,i|
+        keys, display_name, id = data
+        name_words = keys.split(",").join(" ")
+        name_words = "#{display_name} #{name_words}".downcase.split(/\W+/)
+        name_words.uniq.each_with_index do |word,i|
           lookup[word.downcase] ||= []
-          lookup[word.downcase] << {name: name, id: id.to_s}
-          # full_name = "#{full_name} #{word.downcase}".strip
-          # lookup[full_name] ||= []
-          # lookup[full_name] << {name: name, id: id.to_s} if i
+          lookup[word.downcase] << {name: display_name, id: id.to_s}
         end
       end
     when "group"
