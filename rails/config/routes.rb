@@ -11,6 +11,7 @@ Sdfb::Application.routes.draw do
     get 'api/network'
     get 'api/groups/network', action: :group_network, controller: :api
     get 'api/typeahead'
+    post 'api/write'
   end
 
   # Static Pages

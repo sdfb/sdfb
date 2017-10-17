@@ -1,6 +1,70 @@
 class ApiController < ApplicationController
-  
+  skip_before_filter :verify_authenticity_token
 
+  def write
+
+    id_lookup = {}
+    if nodes = params[:nodes]
+      nodes.each do |node|
+        placeholder_id = nil
+        if node["id"] && node["id"]< 1_000_000 
+          placeholder_id = node["id"]
+          node.delete("id")
+        end
+        if node["citation"]
+          node["bibliography"] = node["citation"]
+          node.delete("citation")
+        end
+        if node["name"]
+          node["display_name"] = node["name"]
+          node.delete("name")
+        end
+        if node["alternates"]
+          node["search_names_all"] = node["alternates"]
+          node.delete("alternates")
+        end
+        if node["birthDate"]
+          node["ext_birth_year"] = node["birthDate"]
+          node.delete("birthDate")
+        end
+        if node["birthDateType"]
+          node["birth_year_type"] = node["birthDateType"]
+          node.delete("birthDateType")
+        end
+        if node["deathDate"]
+          node["ext_death_year"] = node["deathDate"]
+          node.delete("deathDate")
+        end
+        if node["deathDateType"]
+          node["death_year_type"] = node["deathDateType"]
+          node.delete("deathDateType")
+        end
+        if node["id"]
+          Person.find_by(node["id"]).update(node)
+          Person.save!
+        else
+          new_person = Person.create!(node)
+          puts new_person.inspect
+          new_person.delete
+        end
+      end
+    end
+
+    if groups = params[:groups]
+
+    end
+
+    if links = params[:links]
+
+    end
+
+    if group_assignments = params[:group_assignments]
+
+    end
+
+
+    render json: {ok: true}, status: :accepted
+  end
   # 
   # [people description]
   # 
