@@ -50,11 +50,19 @@ class ApiController < ApplicationController
       full_name = ""
       people.each do |data|
         keys, display_name, id = data
-        name_words = keys.split(",").join(" ")
-        name_words = "#{display_name} #{name_words}".downcase.split(/\W+/)
-        name_words.uniq.each_with_index do |word,i|
-          lookup[word.downcase] ||= []
-          lookup[word.downcase] << {name: display_name, id: id.to_s}
+        name_words = keys.split(", ")
+        # name_words << display_name
+        name_words.uniq!
+        name_words.uniq.each do |typeahead_name|
+          typeahead_parts = typeahead_name.downcase.split(/\W+/)
+          while typeahead_parts.length != 0
+            lookup[typeahead_parts.join(" ")] ||= []
+            lookup[typeahead_parts.join(" ")] << {name: display_name, id: id.to_s}
+
+            word = typeahead_parts.shift
+            lookup[word] ||= []
+            lookup[word] << {name: display_name, id: id.to_s}
+          end
         end
       end
     when "group"
@@ -63,12 +71,12 @@ class ApiController < ApplicationController
         group_name, id = data
         group_name_parts = group_name.downcase.split(/\W+/)
         while group_name_parts.length
+          lookup[group_name_parts.join(" ")] ||= []
+          lookup[group_name_parts.join(" ")] << {name: group_name, id: id.to_s}
+
           word = group_name_parts.shift
           lookup[word] ||= []
           lookup[word] << {name: group_name, id: id.to_s}
-          break if group_name_parts.empty?
-          lookup[group_name_parts.join(" ")] ||= []
-          lookup[group_name_parts.join(" ")] << {name: group_name, id: id.to_s}
         end
       end
     end
