@@ -90,8 +90,14 @@ class ApiController < ApplicationController
 
   def groups
       if params[:ids].blank?
-        @groups = Group.all.includes(:group_assignments)
-        group_list = Group.all.includes(:group_assignments, :people).to_a
+        @groups = Group.all
+          .includes(:group_assignments)
+          .where('group_assignments.is_approved = ?', true).references(:group_assignments)
+        group_list = Group.all
+          .includes(:group_assignments, :people)
+          .where('group_assignments.is_approved = ?', true)
+          .references(:group_assignments)
+          .to_a
 
         @connections = []
         while group_list.length > 0
@@ -112,7 +118,10 @@ class ApiController < ApplicationController
       else
         begin
           ids = params[:ids].split(",")
-          @groups = Group.find(ids)
+          @groups = Group
+            .includes(:group_assignments, :people)
+            .where('group_assignments.is_approved = ?', true).references(:group_assignments)
+            .find(ids)
           @people = @groups.map(&:people).reduce(:+).uniq
         rescue ActiveRecord::RecordNotFound => e
           @errors = []
