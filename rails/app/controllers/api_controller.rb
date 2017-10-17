@@ -103,7 +103,7 @@ class ApiController < ApplicationController
         while group_list.length > 0
           group = group_list.pop
           group_list.each do |comparison_group|
-            shared_members = group.people & comparison_group.people
+            shared_members = group.group_assignments.map(&:person) & comparison_group.group_assignments.map(&:person)
             if shared_members.length > 0
               @connections << {target: comparison_group.id, source: group.id, weight: shared_members.length}
             end
@@ -122,7 +122,7 @@ class ApiController < ApplicationController
             .includes(:group_assignments, :people)
             .where('group_assignments.is_approved = ?', true).references(:group_assignments)
             .find(ids)
-          @people = @groups.map(&:people).reduce(:+).uniq
+          @people = @groups.map{|g| g.group_assignments.map(&:person)}.reduce(:+).uniq
         rescue ActiveRecord::RecordNotFound => e
           @errors = []
           @errors << {title: "Invalid group ID(s)"}
