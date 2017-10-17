@@ -970,7 +970,7 @@ angular.module('redesign2017App').directive('forceLayout', ['apiService', '$time
               }
             } else {
               apiService.getGroups(d.id).then(function (result) {
-                scope.currentSelection = result.data[0];
+                scope.currentSelection = result.data;
                 scope.currentSelection.type = 'group';
                 $timeout(function(){
                   scope.$broadcast('selectionUpdated', scope.currentSelection);

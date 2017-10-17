@@ -171,39 +171,53 @@ angular.module('redesign2017App').component('visualization', {
           })
         }
       });
-      apiService.getGroups(listGroups.toString()).then(function (result) {
-
-        listGroups = _.countBy(listGroups);
-
-        //Transform that dictionary into an array of objects (eg {'groupId': '81', 'value': 17})
-        var arr = [];
-        result.data.forEach(function (d) {
-            var obj = {
-              'name': d.attributes.name,
-              'groupId': d.id,
-              'value': listGroups[d.id]
-            }
-            arr.push(obj);
+      console.log(listGroups.length);
+      apiService.getAllGroups().then(function(result) {
+        var validIDs = [];
+        result.included.forEach(function(g) {validIDs.push(g.id)});
+        var validListGroups = [];
+        listGroups.forEach(function(g) {
+          if (validIDs.indexOf(parseInt(g)) !== -1) {
+            validListGroups.push(g);
+          }
         });
+        console.log(validListGroups);
+        console.log(validListGroups.length);
 
-        //Sort the array in descending order
-        arr.sort(function(a, b) {
-          return d3.descending(a.value, b.value);
-        })
-        var cutAt = 20;
-        var groupsBar = _.slice(arr, 0, cutAt);
-        var otherGroups = _.slice(arr, cutAt);
-        var othersValue = 0;
-        otherGroups.forEach(function(d) {
-          othersValue += d.value;
+        apiService.getGroups(validListGroups.toString()).then(function (r) {
+
+          listGroups = _.countBy(validListGroups);
+
+          //Transform that dictionary into an array of objects (eg {'groupId': '81', 'value': 17})
+          var arr = [];
+          r.data.data.forEach(function (d) {
+              var obj = {
+                'name': d.attributes.name,
+                'groupId': d.id,
+                'value': listGroups[d.id]
+              }
+              arr.push(obj);
+          });
+
+          //Sort the array in descending order
+          arr.sort(function(a, b) {
+            return d3.descending(a.value, b.value);
+          })
+          var cutAt = 20;
+          var groupsBar = _.slice(arr, 0, cutAt);
+          var otherGroups = _.slice(arr, cutAt);
+          var othersValue = 0;
+          otherGroups.forEach(function(d) {
+            othersValue += d.value;
+          });
+          groupsBar.push({ 'groupId': 'others', 'value': othersValue, 'amount': otherGroups.length });
+
+          $scope.groups.groupsBar = groupsBar;
+          $scope.groups.otherGroups = otherGroups;
+          $scope.updateGroupBar($scope.groups);
+
+          // $scope.$emit('Update the groups bar', $scope.groups)
         });
-        groupsBar.push({ 'groupId': 'others', 'value': othersValue, 'amount': otherGroups.length });
-
-        $scope.groups.groupsBar = groupsBar;
-        $scope.groups.otherGroups = otherGroups;
-        $scope.updateGroupBar($scope.groups);
-
-        // $scope.$emit('Update the groups bar', $scope.groups)
       });
     }
 

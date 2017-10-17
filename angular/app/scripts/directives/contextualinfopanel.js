@@ -38,21 +38,15 @@ angular.module('redesign2017App')
 
         scope.$watch('currentSelection', function(newValue, oldValue) {
           if (scope.currentSelection.type == 'group') {
-            var groupMembers = [];
-            scope.currentSelection.attributes.people.forEach(function(p) {
-              groupMembers.push(p.person_id);
-            });
-            groupMembers = groupMembers.join();
-            apiService.getPeople(groupMembers).then(function (result) {
-              result.data.forEach(function(d) {
-                scope.currentSelection.attributes.people.forEach (function(p) {
-                  if (p.person_id === parseInt(d.id)) {
-                    p.name = d.attributes.name;
-                  }
-                });
-                // scope.currentSelection.attributes.people[i].name = d.attributes.name;
-              });
-            });
+            // var groupMembers = [];
+            // scope.currentSelection.includes.forEach(function(p) {
+            //   console.log(p);
+            // });
+            console.log(scope.currentSelection.data[0].attributes.people);
+            scope.currentSelection.includes.forEach(function(p, i) {
+              p.start_year = scope.currentSelection.data[0].attributes.people[i].start_year;
+              p.start_year_type = scope.currentSelection.data[0].attributes.people[i].start_year_type;
+            })
           }
         })
 

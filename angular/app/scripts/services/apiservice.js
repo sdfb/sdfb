@@ -73,7 +73,7 @@ angular.module('redesign2017App')
               ids: ids
             }
         }).then(function successCallback(response){
-          return response.data;
+          return response;
         },function errorCallback(response){
           console.error("An error occured while fetching file",response);
           console.warn("If the issue is related to CORS Origin, try install this extention on Chrome: https://chrome.google.com/webstore/detail/allow-control-allow-origi/nlfbmbojpeacfghkpbjhddihlkkiljbi")
