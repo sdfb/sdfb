@@ -59,6 +59,7 @@ $indirect-acquaintance-fill: #FDE6E5;
 
 force-layout,
 shared-network {
+
   .link {
     stroke: #b9babc;
     fill: none;
@@ -442,6 +443,7 @@ all-groups-graph {
 .group-members {
   font-size: 11px;
   position: relative;
+  overflow-y: scroll;
   .flex-boxed {
     display: -webkit-box;
     display: -ms-flexbox;
@@ -461,7 +463,7 @@ all-groups-graph {
 
   &>div:nth-child(2) {
     max-height: 280px;
-    overflow-y: scroll;
+    // overflow-y: scroll;
   }
 }
 

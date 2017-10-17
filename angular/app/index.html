@@ -11,6 +11,7 @@
   <!-- bower:css -->
   <link rel="stylesheet" href="bower_components/angularjs-slider/dist/rzslider.css" />
   <link rel="stylesheet" href="bower_components/components-font-awesome/css/font-awesome.css" />
+  <link rel='stylesheet' href='bower_components/angular-loading-bar/build/loading-bar.min.css' type='text/css' media='all' />
   <!-- endbower -->
   <!-- endbuild -->
   <!-- build:css(.tmp) styles/main.css -->
@@ -18,6 +19,9 @@
   <!-- endbuild -->
   <!-- build:css(.tmp) styles/visualizations.css -->
   <link rel="stylesheet" href="styles/visualizations.css">
+  <!-- endbuild -->
+  <!-- build:css(.tmp) styles/table.css -->
+  <link rel="stylesheet" href="styles/table.css">
   <!-- endbuild -->
   <base href="/" />
 </head>
@@ -62,6 +66,7 @@
   <script src="bower_components/angular-ui-router/release/angular-ui-router.js"></script>
   <script src="bower_components/d3/d3.js"></script>
   <script src="bower_components/d3-plugins-fisheye/index.js"></script>
+  <script src="bower_components/angular-loading-bar/build/loading-bar.min.js"></script>
   <script src="bower_components/lodash/lodash.js"></script>
   <script src="bower_components/angularjs-slider/dist/rzslider.js"></script>
   <!-- endbower -->
@@ -70,7 +75,7 @@
   <!-- build:js({.tmp,app}) scripts/scripts.js -->
   <script src="scripts/app.js"></script>
   <script src="scripts/controllers/home.js"></script>
-  <script src="scripts/controllers/table.js"></script>
+  <script src="scripts/controllers/browse.js"></script>
   <script src="scripts/services/apiservice.js"></script>
   <script src="scripts/controllers/visualization.js"></script>
   <script src="scripts/directives/forcelayout.js"></script>

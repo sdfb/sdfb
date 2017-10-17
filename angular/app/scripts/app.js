@@ -18,6 +18,7 @@ var redesign2017App = angular
     'ngTouch',
     'ui.bootstrap',
     'ui.router',
+    'angular-loading-bar',
     'rzModule'
   ]);
   // .config(function ($routeProvider) {
@@ -106,9 +107,21 @@ redesign2017App.config(function($stateProvider, $locationProvider) {
     },
     component: 'visualization'
   }
+  var tableState = {
+    name: 'browse',
+    url: 'browse',
+    resolve: {
+      tableData: ['$http', function($http) {
+        return $http.get("/data/SDFB_people_2017_10_13.csv").then(function(result){
+          return result.data;
+        });
+      }]
+    },
+    component: 'browse'
+  }
 
   $stateProvider.state(homeState);
   $stateProvider.state(vizState);
-  // $stateProvider.state(filtersState);
+  $stateProvider.state(tableState);
   $locationProvider.html5Mode(true);
 })

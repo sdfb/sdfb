@@ -32,18 +32,18 @@
   <span ng-if="config.contributionMode" class="edit-btn person" ng-click="editData(currentSelection.target.id)">Edit data</span>
 </section>
 <section ng-if="currentSelection.type == 'group'">
-  <h2>{{currentSelection.attributes.name}}</h2>
-  <p ng-if="currentSelection.attributes.description != ''">{{currentSelection.attributes.description}}</p>
+  <h2>{{currentSelection.data[0].attributes.name}}</h2>
+  <p ng-if="currentSelection.attributes.description != ''">{{currentSelection.data[0].attributes.description}}</p>
   <!-- <p ng-if="currentSelection.attributes.historical_significance == ''"> &empty; </p> -->
   <!-- <small-timeline class="person" details="currentSelection"></small-timeline> -->
-  <div ng-if="currentSelection.attributes.people.length > 0" class="group-members">
+  <div ng-if="currentSelection.includes.length > 0" class="group-members">
     <div class="flex-boxed list-header">
       <div><span style="width:20px; display: inline-block;">#</span> Member name</div>
       <div>Since</div>
     </div>
     <div>
-      <div class="flex-boxed" ng-repeat="member in currentSelection.attributes.people">
-        <div><span style="width:20px; display: inline-block;">{{$index + 1}}</span> {{member.name}}</div>
+      <div class="flex-boxed" ng-repeat="member in currentSelection.includes">
+        <div><span style="width:20px; display: inline-block;">{{$index + 1}}</span> {{member.attributes.name}}</div>
         <div>{{member.start_year_type}} {{member.start_year}}</div>
       </div>
     </div>

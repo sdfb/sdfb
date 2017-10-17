@@ -29,7 +29,7 @@
 
 </div>
 <div class="visualization-container">
-  <force-layout ng-hide=" config.viewMode == 'group-timeline' "></force-layout>
+  <force-layout ng-hide=" config.viewMode == 'group-timeline' " ng-style="$parent.cursorStyle"></force-layout>
   <groups-bar ng-show=" config.viewMode == 'individual-force' || config.viewMode == 'individual-concentric' || config.viewMode == 'shared-network' "></groups-bar>
   <group-timeline ng-show=" config.viewMode == 'group-timeline' "></group-timeline>
 </div>

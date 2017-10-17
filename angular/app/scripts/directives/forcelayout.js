@@ -84,8 +84,7 @@ angular.module('redesign2017App').directive('forceLayout', ['apiService', '$time
               // update selction and trigger event for other directives
               scope.currentSelection = {};
               scope.$apply(); // no need to trigger events, just apply
-            })
-            .on('mousemove', mousemove);
+            });
 
           var container = scope.singleSvg.append('g'); // Create container for nodes and edges
 
@@ -101,18 +100,6 @@ angular.module('redesign2017App').directive('forceLayout', ['apiService', '$time
           var label = container.append("g")
             .attr("class", "labels")
             .selectAll(".label");
-
-          var cursor = container.append("circle")
-            .attr("r", 12.5)
-            .attr("fill", "none")
-            .attr("stroke", "orange")
-            .attr("stroke-width", 1.5)
-            .attr('stroke-dasharray', 5,5)
-            .attr("opacity", 0)//function() {
-              // if (scope.config.contributionMode) {return 1;} else {return 0;}
-            // })
-            .attr("transform", "translate(-100,-100)")
-            .attr("class", "cursor");
 
         function getNodesAndLinks(json) {
           var nodes = json.included, // All people data
@@ -569,17 +556,6 @@ angular.module('redesign2017App').directive('forceLayout', ['apiService', '$time
 
         }
 
-        scope.$watch('config.contributionMode', function(newValue, oldValue) {
-          if (newValue !== oldValue) {
-            if (scope.config.contributionMode) {
-              cursor.attr("opacity", 1);
-            }
-            else {
-              cursor.attr("opacity", 0);
-            }
-          }
-        });
-
         // Code for adding links adapted from: https://bl.ocks.org/emeeks/f2f6883ac7c965d09b90
 
         function dragged(d) {
@@ -628,8 +604,6 @@ angular.module('redesign2017App').directive('forceLayout', ['apiService', '$time
 
         function dragstarted(d) {
 
-          cursor.attr("opacity", 0);
-
           scope.dragNodes.forEach(function(n) {
             n.fx = n.x;
             n.fy = n.y;
@@ -641,7 +615,6 @@ angular.module('redesign2017App').directive('forceLayout', ['apiService', '$time
 
           // var nodes = scope.data.included;
           if (scope.$parent.config.contributionMode) {
-            cursor.attr("opacity", 1);
             scope.createNewLink(d, scope.dragNodes, scope.addedLinks);
             scope.endGroupEvents();
             scope.updateNetwork(scope.data);
@@ -651,7 +624,6 @@ angular.module('redesign2017App').directive('forceLayout', ['apiService', '$time
 
         // Move the circle with the mouse, until the the user clicks
         function mousemove() {
-          cursor.attr("transform", "translate(" + d3.mouse(container.node()) + ")");
           // if (scope.config.contributionMode) {
           //   fisheye.focus(d3.mouse(this));
           //
@@ -998,7 +970,7 @@ angular.module('redesign2017App').directive('forceLayout', ['apiService', '$time
               }
             } else {
               apiService.getGroups(d.id).then(function (result) {
-                scope.currentSelection = result.data[0];
+                scope.currentSelection = result.data;
                 scope.currentSelection.type = 'group';
                 $timeout(function(){
                   scope.$broadcast('selectionUpdated', scope.currentSelection);
