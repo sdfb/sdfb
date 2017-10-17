@@ -49,13 +49,20 @@ class ApiController < ApplicationController
       people = Person.pluck(:search_names_all, :display_name, :id)
       full_name = ""
       people.each do |data|
-        keys, name, id = data
-        keys.split(",").uniq.each_with_index do |word,i|
-          lookup[word.downcase] ||= []
-          lookup[word.downcase] << {name: name, id: id.to_s}
-          # full_name = "#{full_name} #{word.downcase}".strip
-          # lookup[full_name] ||= []
-          # lookup[full_name] << {name: name, id: id.to_s} if i
+        keys, display_name, id = data
+        name_words = keys.split(", ")
+        # name_words << display_name
+        name_words.uniq!
+        name_words.uniq.each do |typeahead_name|
+          typeahead_parts = typeahead_name.downcase.split(/\W+/)
+          while typeahead_parts.length != 0
+            lookup[typeahead_parts.join(" ")] ||= []
+            lookup[typeahead_parts.join(" ")] << {name: display_name, id: id.to_s}
+
+            word = typeahead_parts.shift
+            lookup[word] ||= []
+            lookup[word] << {name: display_name, id: id.to_s}
+          end
         end
       end
     when "group"
@@ -64,12 +71,12 @@ class ApiController < ApplicationController
         group_name, id = data
         group_name_parts = group_name.downcase.split(/\W+/)
         while group_name_parts.length
+          lookup[group_name_parts.join(" ")] ||= []
+          lookup[group_name_parts.join(" ")] << {name: group_name, id: id.to_s}
+
           word = group_name_parts.shift
           lookup[word] ||= []
           lookup[word] << {name: group_name, id: id.to_s}
-          break if group_name_parts.empty?
-          lookup[group_name_parts.join(" ")] ||= []
-          lookup[group_name_parts.join(" ")] << {name: group_name, id: id.to_s}
         end
       end
     end
@@ -83,14 +90,20 @@ class ApiController < ApplicationController
 
   def groups
       if params[:ids].blank?
-        @groups = Group.all.includes(:group_assignments)
-        group_list = Group.all.includes(:group_assignments, :people).to_a
+        @groups = Group.all
+          .includes(:group_assignments)
+          .where('group_assignments.is_approved = ?', true).references(:group_assignments)
+        group_list = Group.all
+          .includes(:group_assignments, :people)
+          .where('group_assignments.is_approved = ?', true)
+          .references(:group_assignments)
+          .to_a
 
         @connections = []
         while group_list.length > 0
           group = group_list.pop
           group_list.each do |comparison_group|
-            shared_members = group.people & comparison_group.people
+            shared_members = group.group_assignments.map(&:person) & comparison_group.group_assignments.map(&:person)
             if shared_members.length > 0
               @connections << {target: comparison_group.id, source: group.id, weight: shared_members.length}
             end
@@ -105,8 +118,11 @@ class ApiController < ApplicationController
       else
         begin
           ids = params[:ids].split(",")
-          @groups = Group.find(ids)
-          @people = @groups.map(&:people).reduce(:+).uniq
+          @groups = Group
+            .includes(:group_assignments, :people)
+            .where('group_assignments.is_approved = ?', true).references(:group_assignments)
+            .find(ids)
+          @people = @groups.map{|g| g.group_assignments.map(&:person)}.reduce(:+).uniq
         rescue ActiveRecord::RecordNotFound => e
           @errors = []
           @errors << {title: "Invalid group ID(s)"}
