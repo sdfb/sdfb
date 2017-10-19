@@ -105,6 +105,11 @@ class Person < ActiveRecord::Base
   # Custom Methods
   # -----------------------------
 
+  def approved_groups
+    groups = self.group_assignments.where('group_assignments.is_approved = ?', true).map{|ga| ga.group_id}
+    Group.find(groups)
+  end
+
   # if the display name is blank then add one
   def add_display_name_if_blank
     if self.display_name.blank?
