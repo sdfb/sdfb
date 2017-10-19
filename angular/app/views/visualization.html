@@ -5,7 +5,7 @@
   </section>
   <div id="viz-title">{{ networkName }}</div>
   <section class="on-the-right" ng-show=" config.viewMode != 'group-timeline' ">
-    <span ng-show="config.contributionMode" class="panel collapsable collapsed orange-panel submit-data" ng-click="sendData()"><i class="fa fa-paper-plane-o close" style="color: white;" aria-hidden="true"></i>Submit</span>
+    <span ng-show="config.contributionMode" class="panel collapsable collapsed orange-panel submit-data" ng-click="openReview()"><i class="fa fa-paper-plane-o close" style="color: white;" aria-hidden="true"></i>Submit</span>
     <add-node ng-show="config.contributionMode && config.viewMode !== 'all'" class="panel collapsable collapsed orange-panel add-node" ng-class="{'collapsed' : addNodeClosed}"></add-node>
     <add-link ng-show="config.contributionMode && config.viewMode !== 'all'" class="panel collapsable collapsed orange-panel add-link" ng-class="{'collapsed' : addLinkClosed}"></add-link>
     <group-assign ng-show="config.contributionMode && config.viewMode !== 'group-force' && config.viewMode !== 'all'" class="panel collapsable collapsed orange-panel add-link" ng-class="{'collapsed' : groupAssignClosed}"></group-assign>

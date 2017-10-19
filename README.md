@@ -22,12 +22,19 @@ Before you do anything else, clone this Github repo into `/var/www`. Just naviga
 
 1. Go to the app by typing `cd sdfb/angular`
 2. Type the following commands in order. You may have to use `sudo` and type in a password for any of these.
+
 `npm install`
+
 `npm install -g bower`
+
 `bower install` (with `--allow-root` option if using sudo)
+
 `npm install -g grunt-cli`
+
 `sudo gem install compass`
+
 `sudo grunt build`
+
 3. Now angular is ready to go. For future changes to the site, you'll want to run `sudo grunt build` again to rebuild the site.
 
 ### In rails app:
@@ -45,9 +52,11 @@ I will be following these: https://www.phusionpassenger.com/library/walkthroughs
 production:
   secret_key_base: [the value that you copied from 'rake secret']
 ```
-3. Compile your assets and migrate databse: `sudo bundle exec rake assets:precompile db:migrate RAILS_ENV=production`
+3. Compile your assets and migrate database: `sudo bundle exec rake assets:precompile db:migrate RAILS_ENV=production`
 4. Follow [these instructions](https://www.phusionpassenger.com/library/walkthroughs/deploy/ruby/ownserver/nginx/oss/xenial/install_passenger.html) to install Passenger.
 5. Add or uncomment `include /etc/nginx/passenger.conf;` to `/etc/nginx/nginx.conf`
+6. Restart Nginx: `sudo service nginx restart`
+6. Now rails is ready to go. For future changes to the site, you may have to run `sudo bundle exec rake assets:precompile db:migrate RAILS_ENV=production` again to recompile assets. You'll also want to restart Nginx: `sudo service nginx restart`
 
 ## Set up Nginx
 

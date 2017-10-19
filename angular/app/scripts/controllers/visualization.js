@@ -160,6 +160,31 @@ angular.module('redesign2017App').component('visualization', {
       });
     };
 
+    $scope.openReview = function(size, parentSelector) {
+      var parentElem = parentSelector ?
+        angular.element($document[0].querySelector('.modal-demo ' + parentSelector)) : undefined;
+      var modalInstance = $uibModal.open({
+        animation: $scope.modalAnimationsEnabled,
+        ariaLabelledBy: 'modal-review',
+        ariaDescribedBy: 'modal-review-body',
+        templateUrl: './views/modal-review.html',
+        controller: 'ModalReviewCtrl',
+        controllerAs: '$ctrl',
+        size: size,
+        appendTo: parentElem,
+        resolve: {
+          addToDB: function() {
+            return $scope.addToDB;
+          }
+        }
+      });
+      modalInstance.result.then(function(selectedItem) {
+        $scope.selected = selectedItem;
+      }, function() {
+        $log.info('Modal dismissed at: ' + new Date());
+      });
+    };
+
     $scope.data4groups = function() {
       console.log('Creating data4groups');
       // GET DATA FOR GROUPS
