@@ -16,7 +16,7 @@ class Person < ActiveRecord::Base
                   # :uncertain, :unlikely, :likely, :possible, :certain,       # none of these appear in the code. - DGN 3/11/2017            
                   :birth_year_type, :ext_birth_year, :alt_birth_year,       
                   :death_year_type, :ext_death_year, :alt_death_year,
-                  :rel_sum, :group_list,
+                  :rel_sum, :group_list, :bibliography,
                   :created_by, :created_at
 
   serialize :rel_sum,    Array
@@ -58,7 +58,7 @@ class Person < ActiveRecord::Base
 
   # Validations
   # -----------------------------
-  validates_presence_of :first_name
+  # validates_presence_of :first_name
   # validates_presence_of :last_name
   validates_presence_of :created_by
   validates_presence_of :gender
@@ -77,7 +77,7 @@ class Person < ActiveRecord::Base
   ## suffix must be at least 1 character
   validates_length_of :suffix, :minimum => 1, :allow_blank => true
   ## title must be at least 4 characters
-  validates_length_of :title, :minimum => 4, :allow_blank => true
+  validates_length_of :title, :minimum => 1, :allow_blank => true
   ## justification must be at least 4 characters
   validates_length_of :justification, :minimum => 4, :allow_blank => true
   ## birth year type is one included in the list
@@ -104,6 +104,11 @@ class Person < ActiveRecord::Base
 
   # Custom Methods
   # -----------------------------
+
+  def approved_groups
+    groups = self.group_assignments.where('group_assignments.is_approved = ?', true).map{|ga| ga.group_id}
+    Group.find(groups)
+  end
 
   # if the display name is blank then add one
   def add_display_name_if_blank

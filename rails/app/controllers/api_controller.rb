@@ -1,6 +1,147 @@
 class ApiController < ApplicationController
-  
+  skip_before_filter :verify_authenticity_token
 
+  def write
+
+    person_lookup = {}
+    group_lookup = {}
+    if nodes = params[:nodes]
+      nodes.each do |node|
+        placeholder_id = nil
+        if node["id"] && node["id"]< 1_000_000 
+          placeholder_id = node["id"]
+          node.delete("id")
+        end
+        if node["citation"]
+          node["bibliography"] = node["citation"]
+          node.delete("citation")
+        end
+        if node["name"]
+          node["display_name"] = node["name"]
+          node.delete("name")
+        end
+        if node["alternates"]
+          node["search_names_all"] = node["alternates"]
+          node.delete("alternates")
+        end
+        if node["birthDate"]
+          node["ext_birth_year"] = node["birthDate"]
+          node.delete("birthDate")
+        end
+        if node["birthDateType"]
+          node["birth_year_type"] = node["birthDateType"]
+          node.delete("birthDateType")
+        end
+        if node["deathDate"]
+          node["ext_death_year"] = node["deathDate"]
+          node.delete("deathDate")
+        end
+        if node["deathDateType"]
+          node["death_year_type"] = node["deathDateType"]
+          node.delete("deathDateType")
+        end
+        if node["id"]
+          Person.find_by(node["id"]).update(node)
+          Person.save!
+        else
+          new_person = Person.create!(node)
+          puts new_person.inspect
+          person_lookup[placeholder_id] = new_person.id
+        end
+      end
+    end
+
+    if groups = params[:groups]
+      groups.each do |group|
+        placeholder_id = nil
+        if group["id"] && group["id"]< 0 
+          placeholder_id = group["id"]
+          group.delete("id")
+        end
+        new_record = {
+          name: group["name"],
+          start_year: group["startDate"],
+          end_year: group["endDate"],
+          created_by: group["created_by"],
+          start_date_type: group["startDateType"],
+          end_date_type: group["endDateType"],
+          description: group["description"],
+          justification: group["justification"],
+          bibliography: group["citation"]
+        }
+
+        if group["id"]
+          Group.find_by(group["id"]).update(new_record)
+          Group.save!
+        else
+          new_group = Group.create!(new_record)
+          puts new_group.inspect
+          group_lookup[placeholder_id] = new_group.id
+        end
+      end
+    end
+
+    if links = params[:links]
+      links.each do |link|
+        source_id = link["source"]["id"].to_i
+        target_id  = link["target"]["id"].to_i
+        source_id = person_lookup[source_id]  if source_id  < 1_000_000
+        target_id  = person_lookup[target_id] if target_id  < 1_000_000
+        
+        rel = Relationship.where("person1_index = ? AND person2_index = ?", source_id, target_id).first
+        rel ||= Relationship.where("person1_index = ? AND person2_index = ?", target_id, source_id).first
+        puts rel
+        if rel.nil?
+          new_record = {
+            person1_index: source_id,
+            person2_index: target_id,
+            created_by: link["created_by"],
+            original_certainty: link["confidence"],
+          }
+          rel = Relationship.create!(new_record)
+        end
+
+        new_rel_asssign = {
+          relationship_id: rel.id,
+
+          start_date_type: link["startDateType"],
+          end_date_type: link["endDateType"],
+          created_by: link["created_by"],
+          start_year: link["startDate"],
+          end_year: link["endDate"],
+          certainty: link["confidence"],
+          bibliography: link["citation"],
+          annotation: link["annotation"],
+          relationship_type_id: link["relType"]
+        }
+        UserRelContrib.create!(new_rel_asssign)
+      end
+    end
+
+    if group_assignments = params[:group_assignments]
+      group_assignments.each do |assignment|
+        person_id = assignment["person"]["id"].to_i
+        group_id  = assignment["group"]["id"].to_i
+        person_id = person_lookup[person_id] if person_id < 1_000_000
+        group_id  = group_lookup[group_id]   if group_id  < 0
+        new_record = {
+          person_id: person_id,
+          group_id: group_id,
+          start_year: assignment["startDate"],
+          end_year: assignment["endDate"],
+          created_by: assignment["created_by"],
+          start_date_type: assignment["startDateType"],
+          end_date_type: assignment["endDateType"],
+          annotation: assignment["annotation"],
+          bibliography: assignment["citation"]
+        }
+
+        record = GroupAssignment.create!(new_record)
+      end
+    end
+
+    render json: {status: "200"}
+  end
   # 
   # [people description]
   # 
@@ -46,7 +187,7 @@ class ApiController < ApplicationController
     lookup = {}
     case type
     when "person"
-      people = Person.pluck(:search_names_all, :display_name, :id)
+      people = Person.all_approved.pluck(:search_names_all, :display_name, :id)
       full_name = ""
       people.each do |data|
         keys, display_name, id = data
@@ -66,11 +207,11 @@ class ApiController < ApplicationController
         end
       end
     when "group"
-      groups = Group.pluck(:name, :id)
+      groups = Group.all_approved.pluck(:name, :id)
       groups.each do |data|
         group_name, id = data
         group_name_parts = group_name.downcase.split(/\W+/)
-        while group_name_parts.length
+        while group_name_parts.length != 0
           lookup[group_name_parts.join(" ")] ||= []
           lookup[group_name_parts.join(" ")] << {name: group_name, id: id.to_s}
 
@@ -142,7 +283,7 @@ class ApiController < ApplicationController
       second_degree_ids = []
       @display_id = ids.join(",")
 
-      @people = Person.includes(:groups).find(ids)
+      @people = Person.all_approved.includes(:groups).find(ids)
 
       @relationships = @people.map(&:relationships).reduce(:+).uniq
       
@@ -151,7 +292,7 @@ class ApiController < ApplicationController
       end.flatten.uniq - ids
 
       @sources = Person.includes(:groups).find(first_degree_ids)
-      first_degree_relationships = @sources.map(&:relationships).reduce(:+).uniq
+      first_degree_relationships = @sources.map(&:relationships).reduce(:+)&.uniq || []
       @relationships = @relationships | first_degree_relationships
 
       if ids.count == 1
@@ -159,7 +300,7 @@ class ApiController < ApplicationController
           [r.person1_index, r.person2_index]
         end.flatten.uniq - (ids + first_degree_ids)
         second_degree_people = Person.includes(:groups).find(second_degree_ids)
-        second_degree_relationships = second_degree_people.map(&:relationships).reduce(:+).uniq
+        second_degree_relationships = second_degree_people.map(&:relationships).reduce(:+)&.uniq || []
         @relationships = @relationships | second_degree_relationships
         @sources = @sources | second_degree_people
       end
@@ -179,17 +320,17 @@ class ApiController < ApplicationController
       ids = params[:ids].split(",").map(&:to_i).uniq.sort
       @display_id = ids.join(",")
 
-      @groups = Group.find(ids)
+      @groups = Group.all_approved.find(ids)
 
       @primary_people = @groups.map(&:people).reduce(:+).uniq
-      # @member_ids = @people.map(&:id).flatten.uniq - ids
+      @primary_people.reject { |e| !e.is_approved }
 
       @relationships = @primary_people.map(&:relationships).flatten
       first_degree_ids = @relationships.collect do |r|
         [r.person1_index, r.person2_index]
       end.flatten.uniq - ids
 
-      @people = @primary_people | Person.includes(:groups).find(first_degree_ids)
+      @people = @primary_people | Person.all_approved.includes(:groups).find(first_degree_ids)
     rescue ActiveRecord::RecordNotFound => e
       @errors = []
       @errors << {title: "invalid person ID(s)"}

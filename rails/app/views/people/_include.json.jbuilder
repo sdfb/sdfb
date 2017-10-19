@@ -7,6 +7,6 @@ json.attributes do
   json.historical_significance person.historical_significance
   json.name person.display_name
   json.degree person.relationships.to_a.count
-  json.groups person.groups.map{|p| p.id.to_s}
+  json.groups person.approved_groups.map{|group| group.id.to_s}
 end
 json.type "person"
