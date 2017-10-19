@@ -76,6 +76,9 @@ angular.module('redesign2017App')
             var realNewGroup = { attributes: { name: scope.newGroup.name, degree: 1 }, id: 0, distance: 7, x: scope.singleWidth/2, y: scope.singleHeight/2};
             scope.addedGroups.push(realNewGroup);
           }
+          newGroup.startDateType = newGroup.startDateType.abbr;
+          newGroup.endDateType = newGroup.endDateType.abbr;
+          newGroup.created_by = scope.config.userId;
           scope.updateNetwork(scope.data);
 
 

@@ -28,7 +28,7 @@ angular.module('redesign2017App').component('visualization', {
             user: 'Elizabeth',
           },
           contributionMode: $scope.$parent.config.contributionMode,
-          dateTypes : ['IN', 'CIRCA', 'BEFORE', 'BEFORE/IN','AFTER', 'AFTER/IN'],
+          dateTypes : [{'name':'IN', 'abbr': 'IN'}, {'name': 'CIRCA', 'abbr': 'CA'}, {'name': 'BEFORE', 'abbr': 'BF'}, {'name': 'BEFORE/IN', 'abbr': 'BF/IN'},{'name': 'AFTER', 'abbr': 'AF'}, {'name': 'AFTER/IN', 'abbr': 'AF/IN'}],
           genderTypes : ['male', 'female', 'gender_nonconforming'],
           userId : 11,
           onlyMembers: false

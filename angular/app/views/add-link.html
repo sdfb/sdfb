@@ -28,13 +28,13 @@
 
       <h4>Start date</h4>
       <div class="input-group">
-        <select class="input-group-addon" ng-model="newLink.startDateType" ng-options="type for type in config.dateTypes" id="startDateType"></select><i class="fa fa-caret-down" aria-hidden="true"></i>
+        <select class="input-group-addon" ng-model="newLink.startDateType" ng-options="type.name for type in config.dateTypes" id="startDateType"></select><i class="fa fa-caret-down" aria-hidden="true"></i>
         <input class="form-control" ng-model="newLink.startDate" ng-model-options="{ getterSetter: true }" id="startDate">
       </div>
 
       <h4>End date</h4>
       <div class="input-group">
-        <select class="input-group-addon" ng-model="newLink.endDateType" ng-options="type for type in config.dateTypes" id="endDateType"></select><i class="fa fa-caret-down" aria-hidden="true"></i>
+        <select class="input-group-addon" ng-model="newLink.endDateType" ng-options="type.name for type in config.dateTypes" id="endDateType"></select><i class="fa fa-caret-down" aria-hidden="true"></i>
         <input class="form-control" ng-model="newLink.endDate" id="endDate">
       </div>
 

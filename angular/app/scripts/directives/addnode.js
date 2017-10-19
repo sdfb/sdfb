@@ -99,6 +99,8 @@ angular.module('redesign2017App')
             scope.addedNodes.push(realNewNode);
           }
           newNode.created_by = scope.config.userId;
+          newNode.birthDateType = newNode.birthDateType.abbr;
+          newNode.deathDateType = newNode.deathDateType.abbr;
           scope.updateNetwork(scope.data);
 
           if (!scope.newNode.exists) { scope.addToDB.nodes.push(newNode); }

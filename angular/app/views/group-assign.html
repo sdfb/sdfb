@@ -12,13 +12,13 @@
 
       <h4>Start date</h4>
       <div class="input-group">
-        <select class="input-group-addon" ng-model="groupAssign.startDateType" ng-options="type for type in config.dateTypes"></select><i class="fa fa-caret-down" aria-hidden="true"></i>
+        <select class="input-group-addon" ng-model="groupAssign.startDateType" ng-options="type.name for type in config.dateTypes"></select><i class="fa fa-caret-down" aria-hidden="true"></i>
         <input class="form-control" ng-model="groupAssign.startDate" ng-model-options="{ getterSetter: true }">
       </div>
 
       <h4>End date</h4>
       <div class="input-group">
-        <select class="input-group-addon" ng-model="groupAssign.endDateType" ng-options="type for type in config.dateTypes"></select><i class="fa fa-caret-down" aria-hidden="true"></i>
+        <select class="input-group-addon" ng-model="groupAssign.endDateType" ng-options="type.name for type in config.dateTypes"></select><i class="fa fa-caret-down" aria-hidden="true"></i>
         <input class="form-control" ng-model="groupAssign.endDate">
       </div>
 

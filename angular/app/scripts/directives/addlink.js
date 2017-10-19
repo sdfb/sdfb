@@ -209,61 +209,6 @@ angular.module('redesign2017App')
           });
         }
 
-        // Functions for adding links with Typeahead, do we want to allow this?
-        // scope.foundSourcePerson = function($item) {
-        //   scope.newNode.exists = true;
-        //   apiService.getPeople($item.id).then(function (result) {
-        //     var person = result.data[0];
-        //     scope.newLink.source.name = person.attributes.name;
-        //     scope.newLink.source.id = $item.id;
-        //   });
-        // }
-        //
-        // function checkForLink(arr) {
-        //   arr.forEach(function(l) {
-        //     if (l.source === scope.newLink.source.id || l.source === scope.newLink.target.id) {
-        //       if (l.target === scope.newLink.source.id || l.target === scope.newLink.target.id) {
-        //         return true;
-        //       }
-        //     }
-        //   })
-        // }
-        //
-        // scope.foundTargetPerson = function($item) {
-        //   scope.newNode.exists = true;
-        //   apiService.getPeople($item.id).then(function (result) {
-        //     var person = result.data[0];
-        //     scope.newLink.target.name = person.attributes.name;
-        //     scope.newLink.target.id = $item.id;
-        //   });
-        //
-        //   if (scope.config.viewMode === 'individual-force' || scope.config.viewMode === 'individual-concentric') {
-        //     if (!checkForLink(scope.addedLinks)) {
-        //       var newSource = angular.copy(scope.newLink.source.id);
-        //       var newTarget = angular.copy(scope.newLink.target.id)
-        //       var newLink = {source: newSource, target: newTarget, weight: 100, start_year: 1500, end_year: 1700, new: true};
-        //       scope.addedLinks.push(newLink);
-        //       scope.updatePersonNetwork(scope.data);
-        //     }
-        //   } else if (scope.config.viewMode === 'shared-network') {
-        //     if (!checkForLink(scope.addedSharedLinks)) {
-        //       var newSource = angular.copy(scope.newLink.source.id);
-        //       var newTarget = angular.copy(scope.newLink.target.id)
-        //       var newLink = {source: newSource, target: newTarget, weight: 100, start_year: 1500, end_year: 1700, new: true};
-        //       scope.addedSharedLinks.push(newLink);
-        //       scope.updateSharedNetwork(scope.data);
-        //     }
-        //   } else if (scope.config.viewMode === 'group-force') {
-        //     if (!checkForLink(scope.addedGroupLinks)) {
-        //       var newSource = angular.copy(scope.newLink.source.id);
-        //       var newTarget = angular.copy(scope.newLink.target.id)
-        //       var newLink = {source: newSource, target: newTarget, weight: 100, start_year: 1500, end_year: 1700, new: true};
-        //       scope.addedGroupLinks.push(newLink);
-        //       scope.updateGroupNetwork(scope.data);
-        //     }
-        //   }
-        // }
-
         scope.submitLink = function() {
           console.log("link submitted");
           var newLink = angular.copy(scope.newLink)
@@ -273,6 +218,10 @@ angular.module('redesign2017App')
           if (!newLink.endDate) {
             newLink.endDate = d3.select('#endDate').attr('placeholder');
           }
+          newLink.startDateType = newLink.startDateType.abbr;
+          newLink.endDateType = newLink.endDateType.abbr;
+          newLink.relType = newLink.relType.id.toString();
+          newLink.created_by = scope.config.userId;
           scope.addToDB.links.push(newLink);
           console.log(scope.addToDB);
           scope.addLinkClosed = true;
