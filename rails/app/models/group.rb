@@ -3,7 +3,7 @@ class Group < ActiveRecord::Base
   include TrackLastEdit
   include Approvable
 
-  attr_accessible  :description, :name, :justification,
+  attr_accessible  :description, :name, :justification, :bibliography,
                    :start_year, :end_year, :start_date_type, :end_date_type,
                    :created_by, :created_at, 
                    :person_list

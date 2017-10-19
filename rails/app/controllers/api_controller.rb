@@ -3,7 +3,8 @@ class ApiController < ApplicationController
 
   def write
 
-    id_lookup = {}
+    person_lookup = {}
+    group_lookup = {}
     if nodes = params[:nodes]
       nodes.each do |node|
         placeholder_id = nil
@@ -45,25 +46,101 @@ class ApiController < ApplicationController
         else
           new_person = Person.create!(node)
           puts new_person.inspect
-          new_person.delete
+          person_lookup[placeholder_id] = new_person.id
         end
       end
     end
 
     if groups = params[:groups]
+      groups.each do |group|
+        placeholder_id = nil
+        if group["id"] && group["id"]< 0 
+          placeholder_id = group["id"]
+          group.delete("id")
+        end
+        new_record = {
+          name: group["name"],
+          start_year: group["startDate"],
+          end_year: group["endDate"],
+          created_by: group["created_by"],
+          start_date_type: group["startDateType"],
+          end_date_type: group["endDateType"],
+          description: group["description"],
+          justification: group["justification"],
+          bibliography: group["citation"]
+        }
 
+        if group["id"]
+          Group.find_by(group["id"]).update(new_record)
+          Group.save!
+        else
+          new_group = Group.create!(new_record)
+          puts new_group.inspect
+          group_lookup[placeholder_id] = new_group.id
+        end
+      end
     end
 
     if links = params[:links]
+      links.each do |link|
+        source_id = link["source"]["id"].to_i
+        target_id  = link["target"]["id"].to_i
+        source_id = person_lookup[source_id]  if source_id  < 1_000_000
+        target_id  = person_lookup[target_id] if target_id  < 1_000_000
+        
+        rel = Relationship.where("person1_index = ? AND person2_index = ?", source_id, target_id).first
+        rel ||= Relationship.where("person1_index = ? AND person2_index = ?", target_id, source_id).first
+        puts rel
+        if rel.nil?
+          new_record = {
+            person1_index: source_id,
+            person2_index: target_id,
+            created_by: link["created_by"],
+            original_certainty: link["confidence"],
+          }
+          rel = Relationship.create!(new_record)
+        end
 
+        new_rel_asssign = {
+          relationship_id: rel.id,
+
+          start_date_type: link["startDateType"],
+          end_date_type: link["endDateType"],
+          created_by: link["created_by"],
+          start_year: link["startDate"],
+          end_year: link["endDate"],
+          certainty: link["confidence"],
+          bibliography: link["citation"],
+          annotation: link["annotation"],
+          relationship_type_id: link["relType"]
+        }
+        UserRelContrib.create!(new_rel_asssign)
+      end
     end
 
     if group_assignments = params[:group_assignments]
+      group_assignments.each do |assignment|
+        person_id = assignment["person"]["id"].to_i
+        group_id  = assignment["group"]["id"].to_i
+        person_id = person_lookup[person_id] if person_id < 1_000_000
+        group_id  = group_lookup[group_id]   if group_id  < 0
+        new_record = {
+          person_id: person_id,
+          group_id: group_id,
+          start_year: assignment["startDate"],
+          end_year: assignment["endDate"],
+          created_by: assignment["created_by"],
+          start_date_type: assignment["startDateType"],
+          end_date_type: assignment["endDateType"],
+          annotation: assignment["annotation"],
+          bibliography: assignment["citation"]
+        }
 
+        record = GroupAssignment.create!(new_record)
+      end
     end
 
-
-    render json: {ok: true}, status: :accepted
+    render json: {status: "200"}
   end
   # 
   # [people description]
