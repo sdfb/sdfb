@@ -110,7 +110,7 @@ class ApiController < ApplicationController
     lookup = {}
     case type
     when "person"
-      people = Person.pluck(:search_names_all, :display_name, :id)
+      people = Person.all_approved.pluck(:search_names_all, :display_name, :id)
       full_name = ""
       people.each do |data|
         keys, display_name, id = data
@@ -130,11 +130,11 @@ class ApiController < ApplicationController
         end
       end
     when "group"
-      groups = Group.pluck(:name, :id)
+      groups = Group.all_approved.pluck(:name, :id)
       groups.each do |data|
         group_name, id = data
         group_name_parts = group_name.downcase.split(/\W+/)
-        while group_name_parts.length
+        while group_name_parts.length != 0
           lookup[group_name_parts.join(" ")] ||= []
           lookup[group_name_parts.join(" ")] << {name: group_name, id: id.to_s}
 
