@@ -29,6 +29,8 @@ angular.module('redesign2017App').component('visualization', {
           },
           contributionMode: $scope.$parent.config.contributionMode,
           dateTypes : ['IN', 'CIRCA', 'BEFORE', 'BEFORE/IN','AFTER', 'AFTER/IN'],
+          genderTypes : ['male', 'female', 'gender_nonconforming'],
+          userId : 11,
           onlyMembers: false
         }
     // console.log(initialConfig,initialData);
@@ -73,7 +75,6 @@ angular.module('redesign2017App').component('visualization', {
         // $scope.$parent.personTypeahead.selected = this.networkData.included[0].attributes.name;
         // $scope.$parent.sharedTypeahead.selected = this.networkData.included[1].attributes.name;
       } else if ($stateParams.ids.length < 8) {
-        console.log($scope.data);
         $scope.config.viewMode = 'group-force';
         var groupName;
         $scope.data.included.forEach( function(item) {

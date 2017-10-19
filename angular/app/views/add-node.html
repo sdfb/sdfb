@@ -26,6 +26,14 @@
 		    <input class="form-control" ng-disabled="newNode.exists" ng-model="newNode.deathDate">
 		  </div>
 
+			<h4>Gender</h4>
+		  <div class="input-group">
+				<select class="input-group-reltype" ng-model="newNode.gender" ng-disabled="newNode.exists" ng-options="type for type in config.genderTypes"></select><i class="fa fa-caret-down reltype" aria-hidden="true"></i>
+		  </div>
+
+			<h4>Prefix</h4>
+			<input class="form-control" ng-model="newNode.prefix" ng-disabled="newNode.exists" placeholder="Prefix">
+
 			<h4>Title</h4>
 			<input class="form-control" ng-model="newNode.title" ng-disabled="newNode.exists" placeholder="Title">
 
