@@ -80,7 +80,7 @@ class Relationship < ActiveRecord::Base
   # -----------------------------
 
   def altered
-    was_altered = (created_by && created_by != 2) || user_rel_contribs.length > 0
+    was_altered = (created_by && created_by != 2) || user_rel_contribs.where("created_by != ?",3).count > 0
   end
 
 
