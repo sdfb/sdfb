@@ -108,6 +108,7 @@ angular.module('redesign2017App')
           scope.newNode = {};
           console.log(scope.addToDB);
           scope.addedNodeId += 1;
+          scope.config.added = true;
 
         }
       }

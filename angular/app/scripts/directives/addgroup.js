@@ -86,6 +86,7 @@ angular.module('redesign2017App')
           scope.addGroupClosed = true;
           scope.newGroup = {};
           console.log(scope.addToDB);
+          scope.config.added = true;
 
         }
       }

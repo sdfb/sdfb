@@ -228,6 +228,7 @@ angular.module('redesign2017App')
           scope.newLink = {source: {}, target: {}};
           d3.select('#startDate').attr('placeholder', null);
           d3.select('#endDate').attr('placeholder', null);
+          scope.config.added = true;
 
         }
 

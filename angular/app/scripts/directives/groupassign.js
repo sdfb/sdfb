@@ -138,6 +138,7 @@ angular.module('redesign2017App')
           d3.select('.g'+scope.groupAssign.group.id).classed('active', false);
           scope.groupAssignClosed = true;
           scope.updateNetwork(scope.data);
+          scope.config.added = true;
 
         }
 

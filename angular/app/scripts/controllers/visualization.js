@@ -31,7 +31,8 @@ angular.module('redesign2017App').component('visualization', {
           dateTypes : [{'name':'IN', 'abbr': 'IN'}, {'name': 'CIRCA', 'abbr': 'CA'}, {'name': 'BEFORE', 'abbr': 'BF'}, {'name': 'BEFORE/IN', 'abbr': 'BF/IN'},{'name': 'AFTER', 'abbr': 'AF'}, {'name': 'AFTER/IN', 'abbr': 'AF/IN'}],
           genderTypes : ['male', 'female', 'gender_nonconforming'],
           userId : 11,
-          onlyMembers: false
+          onlyMembers: false,
+          added: false
         }
     // console.log(initialConfig,initialData);
     $scope.config = initialConfig;
@@ -182,10 +183,7 @@ angular.module('redesign2017App').component('visualization', {
         resolve: {
           addToDB: function() {
             return $scope.addToDB;
-          }//,
-          // sendData: function() {
-          //   return $scope.sendData();
-          // }
+          }
         }
       });
       modalInstance.result.then(function(result) {
@@ -199,6 +197,7 @@ angular.module('redesign2017App').component('visualization', {
         $scope.newLink = {source:{}, target: {}};
         $scope.newGroup = {};
         $scope.groupAssign = {person: {}, group: {}};
+        $scope.config.added = false;
         $scope.updateNetwork($scope.data);
       }, function() {
         $log.info('Modal dismissed at: ' + new Date());

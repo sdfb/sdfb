@@ -1037,8 +1037,30 @@ input[type="radio"]:checked + label span {
   }
 }
 
+.btn.contribute {
+  background-color: $contribution-mode-fill;
+  border-color: $contribution-mode-stroke;
+  color: $light-color;
+
+  i {
+    color: $light-color;
+    opacity: 1;
+  }
+}
+
+.btn.submit-data {
+  height: 30px;
+  width: 180px;
+  margin-bottom: 10px;
+  padding-top: 5px;
+  padding-bottom: 5px;
+}
 label.btn-primary:first-of-type {
   border-right: none;
+}
+
+.filters.collapsed {
+  border-color: $active-color;
 }
 /* form styles*/
 .form-control {

@@ -5,14 +5,14 @@
   </section>
   <div id="viz-title">{{ networkName }}</div>
   <section class="on-the-right" ng-show=" config.viewMode != 'group-timeline' ">
-    <span ng-show="config.contributionMode" class="panel collapsable collapsed orange-panel submit-data" ng-click="openReview()"><i class="fa fa-paper-plane-o close" style="color: white;" aria-hidden="true"></i>Submit</span>
+    <button ng-show="config.contributionMode && config.added" class="btn btn-primary contribute submit-data" ng-click="openReview()">Review & Submit<i class="fa fa-paper-plane-o" aria-hidden="true"></i></button>
     <add-node ng-show="config.contributionMode && config.viewMode !== 'all'" class="panel collapsable collapsed orange-panel add-node" ng-class="{'collapsed' : addNodeClosed}"></add-node>
     <add-link ng-show="config.contributionMode && config.viewMode !== 'all'" class="panel collapsable collapsed orange-panel add-link" ng-class="{'collapsed' : addLinkClosed}"></add-link>
     <group-assign ng-show="config.contributionMode && config.viewMode !== 'group-force' && config.viewMode !== 'all'" class="panel collapsable collapsed orange-panel add-link" ng-class="{'collapsed' : groupAssignClosed}"></group-assign>
     <add-group ng-show="config.contributionMode && config.viewMode === 'all'" class="panel collapsable collapsed orange-panel add-node" ng-class="{'collapsed' : addGroupClosed}"></add-group>
 
     <legend-panel class="panel collapsable" ng-class="{'collapsed' : legendClosed, 'group': config.viewMode == 'all', 'shared': config.viewMode == 'shared-network', 'individual': config.viewMode == 'individual-force' || config.viewMode == 'individual-concentric','single-group': config.viewMode == 'group-force', 'timeline': config.viewMode == 'group-timeline'}"></legend-panel>
-    <filters-panel class="panel collapsable collapsed" ng-class="{'collapsed' : filtersClosed, 'allGroupFilter': config.viewMode == 'all', 'individualFilter': config.viewMode == 'individual-force' || config.viewMode == 'individual-concentric' || config.viewMode == 'shared-network', 'singleGroupFilter': config.viewMode == 'single-group'}"></filters-panel>
+    <filters-panel class="panel collapsable collapsed filters" ng-class="{'collapsed' : filtersClosed, 'allGroupFilter': config.viewMode == 'all', 'individualFilter': config.viewMode == 'individual-force' || config.viewMode == 'individual-concentric' || config.viewMode == 'shared-network', 'singleGroupFilter': config.viewMode == 'single-group'}"></filters-panel>
 
     <people-finder class="panel collapsable collapsed" ng-class="{'collapsed' : peopleFinderClosed}"></people-finder>
 
