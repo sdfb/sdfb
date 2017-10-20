@@ -6,7 +6,7 @@ json.attributes do
   json.end_year group.end_year
   json.degree group.group_assignments.count
   json.people do
-    json.array! group.group_assignments do |assignment|
+    json.array! group.group_assignments.all_approved do |assignment|
      json.person_id assignment.person_id
      json.end_year assignment.end_year
      json.end_year_type assignment.end_date_type

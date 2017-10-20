@@ -279,9 +279,10 @@ class ApiController < ApplicationController
   def network
     begin
       ids = params[:ids].split(",").map(&:to_i).uniq.sort
+      @display_id = ids.join(",")
+
       first_degree_ids = []
       second_degree_ids = []
-      @display_id = ids.join(",")
 
       @people = Person.all_approved.includes(:groups).find(ids)
 
@@ -291,7 +292,7 @@ class ApiController < ApplicationController
         [r.person1_index, r.person2_index]
       end.flatten.uniq - ids
 
-      @sources = Person.includes(:groups).find(first_degree_ids)
+      @sources = Person.includes(:groups).all_approved.find(first_degree_ids)
       first_degree_relationships = @sources.map(&:relationships).reduce(:+)&.uniq || []
       @relationships = @relationships | first_degree_relationships
 
@@ -299,14 +300,16 @@ class ApiController < ApplicationController
         second_degree_ids = first_degree_relationships.collect do |r| 
           [r.person1_index, r.person2_index]
         end.flatten.uniq - (ids + first_degree_ids)
+
         second_degree_people = Person.includes(:groups).find(second_degree_ids)
         second_degree_relationships = second_degree_people.map(&:relationships).reduce(:+)&.uniq || []
+
         @relationships = @relationships | second_degree_relationships
         @sources = @sources | second_degree_people
       end
 
       all_ids = ids | first_degree_ids | second_degree_ids
-      @relationships = @relationships.find_all{ |r| all_ids.include?(r.person1_index) && all_ids.include?(r.person2_index)   }
+      @relationships = @relationships.find_all{ |r| all_ids.include?(r.person1_index) && all_ids.include?(r.person2_index)  }
 
     rescue ActiveRecord::RecordNotFound => e
       @errors = []
@@ -316,25 +319,21 @@ class ApiController < ApplicationController
 
 
   def group_network
-
     begin
-
       ids = params[:ids].split(",").map(&:to_i).uniq.sort
       @display_id = ids.join(",")
 
       @groups = Group.all_approved.find(ids)
 
-      @primary_people = @groups.map(&:people).reduce(:+).uniq
-      @primary_people.reject! { |e| !e.is_approved }
-
+      @primary_people = @groups.map(&:approved_people).reduce(:+).uniq
+      
       @relationships = @primary_people.map(&:relationships).flatten
 
       first_degree_ids = @relationships.collect do |r|
         [r.person1_index, r.person2_index]
       end.flatten.uniq - ids
 
-      secondary_people = Person.includes(:groups).find(first_degree_ids)
-      secondary_people.reject! { |e| !e.is_approved }
+      secondary_people = Person.includes(:groups).all_approved.find(first_degree_ids)
 
       @people = secondary_people | @primary_people 
     rescue ActiveRecord::RecordNotFound => e
@@ -342,5 +341,4 @@ class ApiController < ApplicationController
       @errors << {title: "invalid person ID(s)"}
     end
   end
-
 end
