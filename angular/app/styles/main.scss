@@ -1037,8 +1037,31 @@ input[type="radio"]:checked + label span {
   }
 }
 
+.btn.contribute {
+  background-color: $contribution-mode-fill;
+  border-color: $contribution-mode-stroke;
+  color: $light-color;
+
+  i {
+    color: $light-color;
+    opacity: 1;
+  }
+}
+
+.btn.submit-data {
+  height: 30px;
+  width: 180px;
+  margin-bottom: 10px;
+  padding-top: 5px;
+  padding-bottom: 5px;
+}
 label.btn-primary:first-of-type {
   border-right: none;
+}
+
+.filters.collapsed {
+  border-color: #29d;
+  // border-width: 2px;
 }
 /* form styles*/
 .form-control {
@@ -1271,6 +1294,12 @@ contextual-info-panel > section {
 
   small-timeline .label.domain {
     display: none;
+  }
+
+  .btn.go {
+    width: 100px;
+    float: right;
+    margin-top: 12px
   }
 }
 

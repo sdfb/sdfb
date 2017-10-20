@@ -28,8 +28,11 @@ angular.module('redesign2017App').component('visualization', {
             user: 'Elizabeth',
           },
           contributionMode: $scope.$parent.config.contributionMode,
-          dateTypes : ['IN', 'CIRCA', 'BEFORE', 'BEFORE/IN','AFTER', 'AFTER/IN'],
-          onlyMembers: false
+          dateTypes : [{'name':'IN', 'abbr': 'IN'}, {'name': 'CIRCA', 'abbr': 'CA'}, {'name': 'BEFORE', 'abbr': 'BF'}, {'name': 'BEFORE/IN', 'abbr': 'BF/IN'},{'name': 'AFTER', 'abbr': 'AF'}, {'name': 'AFTER/IN', 'abbr': 'AF/IN'}],
+          genderTypes : ['male', 'female', 'gender_nonconforming'],
+          userId : 11,
+          onlyMembers: false,
+          added: false
         }
     // console.log(initialConfig,initialData);
     $scope.config = initialConfig;
@@ -46,10 +49,6 @@ angular.module('redesign2017App').component('visualization', {
     $scope.newLink = {};
     $scope.newGroup = {};
     $scope.groupAssign = {person: {}, group: {}};
-
-    $scope.$watch('$parent.config.contributionMode', function(newValue, oldValue) {
-      $scope.config.contributionMode = newValue;
-    });
 
     this.$onChanges = function() {
       $scope.data = this.networkData;
@@ -73,7 +72,6 @@ angular.module('redesign2017App').component('visualization', {
         // $scope.$parent.personTypeahead.selected = this.networkData.included[0].attributes.name;
         // $scope.$parent.sharedTypeahead.selected = this.networkData.included[1].attributes.name;
       } else if ($stateParams.ids.length < 8) {
-        console.log($scope.data);
         $scope.config.viewMode = 'group-force';
         var groupName;
         $scope.data.included.forEach( function(item) {
@@ -154,6 +152,53 @@ angular.module('redesign2017App').component('visualization', {
       });
       modalInstance.result.then(function(selectedItem) {
         $scope.selected = selectedItem;
+      }, function() {
+        $log.info('Modal dismissed at: ' + new Date());
+      });
+    };
+
+    $scope.sendData = function() {
+      console.log($scope.addToDB);
+      $scope.addToDB = {nodes: [], links: [], groups: []};
+      $scope.newNode = {};
+      $scope.newLink = {};
+      $scope.newGroup = {};
+      $scope.groupAssign = {person: {}, group: {}};
+      $scope.addedNodeId = 0;
+      // $window.alert("Updates Submitted! They'll show up on the website once they've been approved by a curator.")
+    }
+
+    $scope.openReview = function(size, parentSelector) {
+      var parentElem = parentSelector ?
+        angular.element($document[0].querySelector('.modal-demo ' + parentSelector)) : undefined;
+      var modalInstance = $uibModal.open({
+        animation: $scope.modalAnimationsEnabled,
+        ariaLabelledBy: 'modal-review',
+        ariaDescribedBy: 'modal-review-body',
+        templateUrl: './views/modal-review.html',
+        controller: 'ModalReviewCtrl',
+        controllerAs: '$ctrl',
+        size: size,
+        appendTo: parentElem,
+        resolve: {
+          addToDB: function() {
+            return $scope.addToDB;
+          }
+        }
+      });
+      modalInstance.result.then(function(result) {
+        apiService.writeData(result);
+        $scope.addToDB = {nodes: [], links: [], groups: [], group_assignments: []};
+        $scope.addedNodes = [];
+        $scope.addedLinks = [];
+        $scope.addedGroups = [];
+        $scope.newNode = {};
+        $scope.addedNodeId = 0;
+        $scope.newLink = {source:{}, target: {}};
+        $scope.newGroup = {};
+        $scope.groupAssign = {person: {}, group: {}};
+        $scope.config.added = false;
+        $scope.updateNetwork($scope.data);
       }, function() {
         $log.info('Modal dismissed at: ' + new Date());
       });
@@ -241,19 +286,9 @@ angular.module('redesign2017App').component('visualization', {
       }
     }
 
-    $scope.sendData = function() {
-      console.log($scope.addToDB);
-      $scope.addToDB = {nodes: [], links: [], groups: []};
-      $scope.newNode = {};
-      $scope.newLink = {};
-      $scope.newGroup = {};
-      $scope.groupAssign = {person: {}, group: {}};
-      $scope.addedNodeId = 0;
-      $window.alert("Updates Submitted! They'll show up on the website once they've been approved by a curator.")
-    }
-
 
     $scope.$watch('$parent.config.contributionMode', function(newValue, oldValue) {
+      $scope.config.contributionMode = newValue;
       // var emptyDB = {nodes: [], links: [], groups: []}
       if (newValue !== oldValue && !newValue) {
         if ($scope.addToDB.nodes.length !== 0 || $scope.addToDB.links.length !== 0 || $scope.addToDB.groups.length !== 0) {

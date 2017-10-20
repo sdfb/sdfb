@@ -7,6 +7,7 @@
   <p><button ng-show="config.viewMode !== 'group-force'" type="button" class="btn btn-primary" ng-click="openTable()">See Table View</button></p>
 </section>
 <section ng-if="currentSelection.type == 'person' " id="XXXcurrent-selection-person1">
+    <button type="button" class="btn btn-primary go" ui-sref="home.visualization({ ids: currentSelection.id })">Visualize</button>
   <h2>{{currentSelection.attributes.name }}</h2>
   <p ng-if="currentSelection.attributes.historical_significance != ''">{{currentSelection.attributes.historical_significance}}</p>
   <p ng-if="currentSelection.attributes.historical_significance == ''"> &empty; </p>
@@ -32,6 +33,7 @@
   <span ng-if="config.contributionMode" class="edit-btn person" ng-click="editData(currentSelection.target.id)">Edit data</span>
 </section>
 <section ng-if="currentSelection.type == 'group'">
+  <button type="button" class="btn btn-primary go" ui-sref="home.visualization({ ids: currentSelection.data[0].id })">Visualize</button>
   <h2>{{currentSelection.data[0].attributes.name}}</h2>
   <p ng-if="currentSelection.attributes.description != ''">{{currentSelection.data[0].attributes.description}}</p>
   <!-- <p ng-if="currentSelection.attributes.historical_significance == ''"> &empty; </p> -->
@@ -59,6 +61,7 @@
     <button type="button" class="btn btn-primary" ng-click="searchODNB(currentSelection.attributes.odnb_id,currentSelection.attributes.name)">ODNB</button>
     <button type="button" class="btn btn-primary" ng-click="searchJstor(currentSelection.attributes.name.replace(' ','+'))">J Stor</button>
     <button type="button" class="btn btn-primary" ng-click="searchGoogle(currentSelection.attributes.name.replace(' ','+'))">Google</button>
+    <button ng-show="currentSelection.type !== 'group'" type="button" class="btn btn-primary" ng-click="selectedShared(currentSelection)">Shared Network</button>
   </p>
   <!-- <p><a ng-click="scope.openTable()">Further info&hellip;</a></p> -->
 </section>

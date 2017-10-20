@@ -1,0 +1,124 @@
+<!-- <div class="modal-header">
+    <h3 class="modal-title" id="modal-title">List of Minor Groups</h3>
+</div> -->
+<div class="modal-body review" id="modal-review-body">
+    <h3 class="modal-title">Review Your Submissions</h3>
+    <i class="fa fa-times close-btn" aria-hidden="true" type="button" ng-click="$ctrl.cancel()" aria-label="Close"></i>
+    <h4 class="modal-title">New People</h4>
+    <table class="table table-hover">
+      <thead>
+          <tr>
+              <td class="name-column">Name</td>
+              <td class="prefix-column">Prefix</td>
+              <td class="title-column">Title</td>
+              <td class="suffix-column">Suffix</td>
+              <td class="sig-column">Historical Significance</td>
+              <td class="start-column">Birth Date</td>
+              <td class="end-column">Death Date</td>
+              <td class="gender-column">Gender</td>
+              <td class="alternates-column">Alternate Names</td>
+              <td class="action-column">Remove</td>
+          </tr>
+      </thead>
+        <tbody>
+            <tr class="person {{'p'+person.id}}" ng-class="{ 'active': group.active }" ng-repeat="person in $ctrl.addToDB.nodes">
+                <td>{{ person.name }}</td>
+                <td>{{ person.prefix }}</td>
+                <td>{{ person.title }}</td>
+                <td>{{ person.suffix }}</td>
+                <td>{{ person.historical_significance }}</td>
+                <td>{{ person.birthDateType }} {{ person.birthDate }}</td>
+                <td>{{ person.deathDateType }} {{ person.deathDate }}</td>
+                <td>{{ person.gender }}</td>
+                <td>{{ person.alternates }}</td>
+                <td>
+                    <i class="fa fa-times" aria-hidden="true" type="button" ng-click="$ctrl.remove($index, $ctrl.addToDB.nodes)" aria-label="Remove"></i>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <h4 class="modal-title">New Relationships</h4>
+    <table class="table table-hover">
+        <thead>
+            <tr>
+              <td class="source-column">Source Name</td>
+              <td class="target-column">Target Name</td>
+              <td class="start-column">Start Date</td>
+              <td class="end-column">End Date</td>
+              <td class="conf-column">Confidence</td>
+              <td class="action-column">Remove</td>
+            </tr>
+        </thead>
+        <tbody>
+            <tr class="rel {{'r'+rel.id}}" ng-class="{ 'active': group.active }" ng-repeat="rel in $ctrl.addToDB.links">
+                <td>{{ rel.source.name }}</td>
+                <td>{{ rel.target.name }}</td>
+                <td>{{ rel.startDateType }} {{ rel.startDate }}</td>
+                <td>{{ rel.endDateType }} {{ rel.endDate }}</td>
+                <td>{{ rel.confidence }}</td>
+                <td>
+                    <i class="fa fa-times" aria-hidden="true" type="button" ng-click="$ctrl.remove($index, $ctrl.addToDB.links)" aria-label="Remove"></i>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <h4 class="modal-title">New Groups</h4>
+    <table class="table table-hover">
+        <thead>
+            <tr>
+              <td class="name-column">Group Name</td>
+              <td class="desc-column">Description</td>
+              <td class="start-column">Start Date</td>
+              <td class="end-column">End Date</td>
+              <td class="action-column">Remove</td>
+            </tr>
+        </thead>
+        <tbody>
+            <tr class="group {{'g'+group.id}}" ng-class="{ 'active': group.active }" ng-repeat="group in $ctrl.addToDB.groups">
+                <td>{{ group.name }}</td>
+                <td>{{ group.description }}</td>
+                <td>{{ group.startDateType }} {{ group.startDate }}</td>
+                <td>{{ group.endDateType }} {{ group.endDate }}</td>
+                <td>
+                    <i class="fa fa-times" aria-hidden="true" type="button" ng-click="$ctrl.remove($index, $ctrl.addToDB.groups)" aria-label="Remove"></i>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <h4 class="modal-title">New Group Assignments</h4>
+    <table class="table table-hover">
+        <thead>
+            <tr>
+              <td class="person-column">Person Name</td>
+              <td class="group-column">Group Name</td>
+              <td class="start-column">Start Date</td>
+              <td class="end-column">End Date</td>
+              <td class="action-column">Remove</td>
+            </tr>
+        </thead>
+        <tbody>
+            <tr class="rel {{'r'+rel.id}}" ng-class="{ 'active': group.active }" ng-repeat="rel in $ctrl.addToDB.group_assignments">
+                <td>{{ rel.person.name }}</td>
+                <td>{{ rel.group.name }}</td>
+                <td>{{ rel.startDateType }} {{ rel.startDate }}</td>
+                <td>{{ rel.endDateType }} {{ rel.endDate }}</td>
+                <td>
+                    <i class="fa fa-times" aria-hidden="true" type="button" ng-click="$ctrl.remove($index, $ctrl.addToDB.group_assignments)" aria-label="Remove"></i>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <button ng-click="$ctrl.close()" type="button" class="btn btn-primary contribute">
+        Submit & Close
+    </button>
+    <!-- <ul>
+        <li class="group {{'g'+group.groupId}}" ng-class="{ 'active': group.active }" ng-repeat="group in $ctrl.groups">
+            <a href="#" ng-click="$event.preventDefault(); $ctrl.selected.group = group">Group ID: {{ group.groupId }} - Number of people: {{ group.value }}</a>
+        </li>
+    </ul>
+    Selected: <b>{{ $ctrl.selected.group }}</b> -->
+</div>
+<!-- <div class="modal-footer">
+    <button class="btn btn-primary" type="button" ng-click="$ctrl.ok()">OK</button>
+    <button class="btn btn-warning" type="button" ng-click="$ctrl.cancel()">Close</button>
+</div> -->

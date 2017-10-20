@@ -121,6 +121,9 @@ angular.module('redesign2017App')
           console.log("node submitted");
           // var newNode = {attributes: {name: scope.person.added, birthdate: d3.select('#birthDate').node().value, deathdate: d3.select('#deathDate').node().value, title: d3.select('#title').node().value, suffix: d3.select('#suffix').node().value, alternate_names: d3.select('#alternates').node().value},  notes: d3.select('#alternates').node().value, id: addedNodeID}
           var newGroupAssign = angular.copy(scope.groupAssign);
+          newGroupAssign.startDateType = newGroupAssign.startDateType.abbr;
+          newGroupAssign.endDateType = newGroupAssign.endDateType.abbr;
+          newGroupAssign.created_by = scope.config.userId;
           scope.addToDB.group_assignments.push(newGroupAssign);
           console.log(scope.addToDB);
 
@@ -135,6 +138,7 @@ angular.module('redesign2017App')
           d3.select('.g'+scope.groupAssign.group.id).classed('active', false);
           scope.groupAssignClosed = true;
           scope.updateNetwork(scope.data);
+          scope.config.added = true;
 
         }
 
