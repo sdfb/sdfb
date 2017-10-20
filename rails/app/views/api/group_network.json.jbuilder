@@ -25,7 +25,7 @@ if @groups
       # end
     end
   end
-  if @people
+  if @people || @groups
     json.included do
       json.partial! 'people/include', collection: @people, as: :person
       json.partial! 'groups/include', collection: @groups, as: :group

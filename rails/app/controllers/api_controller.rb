@@ -316,21 +316,27 @@ class ApiController < ApplicationController
 
 
   def group_network
+
     begin
+
       ids = params[:ids].split(",").map(&:to_i).uniq.sort
       @display_id = ids.join(",")
 
       @groups = Group.all_approved.find(ids)
 
       @primary_people = @groups.map(&:people).reduce(:+).uniq
-      @primary_people.reject { |e| !e.is_approved }
+      @primary_people.reject! { |e| !e.is_approved }
 
       @relationships = @primary_people.map(&:relationships).flatten
+
       first_degree_ids = @relationships.collect do |r|
         [r.person1_index, r.person2_index]
       end.flatten.uniq - ids
 
-      @people = @primary_people | Person.all_approved.includes(:groups).find(first_degree_ids)
+      secondary_people = Person.includes(:groups).find(first_degree_ids)
+      secondary_people.reject! { |e| !e.is_approved }
+
+      @people = secondary_people | @primary_people 
     rescue ActiveRecord::RecordNotFound => e
       @errors = []
       @errors << {title: "invalid person ID(s)"}
