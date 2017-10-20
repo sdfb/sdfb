@@ -160,6 +160,17 @@ angular.module('redesign2017App').component('visualization', {
       });
     };
 
+    $scope.sendData = function() {
+      console.log($scope.addToDB);
+      $scope.addToDB = {nodes: [], links: [], groups: []};
+      $scope.newNode = {};
+      $scope.newLink = {};
+      $scope.newGroup = {};
+      $scope.groupAssign = {person: {}, group: {}};
+      $scope.addedNodeId = 0;
+      // $window.alert("Updates Submitted! They'll show up on the website once they've been approved by a curator.")
+    }
+
     $scope.openReview = function(size, parentSelector) {
       var parentElem = parentSelector ?
         angular.element($document[0].querySelector('.modal-demo ' + parentSelector)) : undefined;
@@ -175,7 +186,10 @@ angular.module('redesign2017App').component('visualization', {
         resolve: {
           addToDB: function() {
             return $scope.addToDB;
-          }
+          }//,
+          // sendData: function() {
+          //   return $scope.sendData();
+          // }
         }
       });
       modalInstance.result.then(function(selectedItem) {
@@ -265,17 +279,6 @@ angular.module('redesign2017App').component('visualization', {
       } else {
         $scope.singleSvg.transition().duration(500).call($scope.singleZoom.scaleBy, $scope.singleZoomfactor - .25); // Scale by adjusted $scope.zoomfactor
       }
-    }
-
-    $scope.sendData = function() {
-      console.log($scope.addToDB);
-      $scope.addToDB = {nodes: [], links: [], groups: []};
-      $scope.newNode = {};
-      $scope.newLink = {};
-      $scope.newGroup = {};
-      $scope.groupAssign = {person: {}, group: {}};
-      $scope.addedNodeId = 0;
-      $window.alert("Updates Submitted! They'll show up on the website once they've been approved by a curator.")
     }
 
 

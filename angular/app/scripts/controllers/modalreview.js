@@ -8,59 +8,15 @@
  * Controller of the redesign2017App
  */
 angular.module('redesign2017App')
-  .controller('ModalReviewCtrl', ['$scope', '$uibModalInstance', '$timeout', 'addToDB', function($scope, $uibModalInstance, $timeout, addToDB) {
+  .controller('ModalReviewCtrl', ['$scope', '$uibModalInstance', '$timeout', 'addToDB', '$window', 'apiService', function($scope, $uibModalInstance, $timeout, addToDB, $window, apiService) {
 
     var $ctrl = this;
     $ctrl.addToDB = addToDB;
-    console.log($ctrl.addToDB);
-    // $ctrl.data = data;
-    // $ctrl.viewMode = viewMode;
-    //
-    // if ($ctrl.viewMode === 'individual-force' || $ctrl.viewMode === 'individual-concentric') {
-    //   $ctrl.personData = [$ctrl.data.included[0].attributes];
-    //
-    //   var sourceId = $ctrl.data.data.attributes.primary_people[0];
-    //
-    //   var searchIds = [];
-    //
-    //   $ctrl.data.data.attributes.connections.forEach(function(l) {
-    //     if (l.attributes.source.id === sourceId) {
-    //       searchIds.push(l.attributes.target.id);
-    //     } else if (l.attributes.target.id === sourceId) {
-    //       searchIds.push(l.attributes.source.id);
-    //     }
-    //   });
-    //   searchIds = searchIds.join();
-    //
-    //   apiService.getPeople(searchIds).then(function (result) {
-    //
-    //     var all_people = result.data;
-    //     $timeout(function(){
-    //       $ctrl.peopleList = all_people;
-    //     });
-    //   });
-    // } else if ($ctrl.viewMode === 'shared-network') {
-    //   $ctrl.personData = []
-    //   $ctrl.data.included.slice(0,2).forEach( function(i) { $ctrl.personData.push(i.attributes); });
-    //   var sources = $ctrl.data.data.attributes.primary_people[0];
-    //
-    //   var searchIds = [];
-    //
-    //   $ctrl.data.included.forEach(function(i) { if (sources.indexOf(i.id) === -1) { searchIds.push(i.id); } });
-    //
-    //   searchIds = searchIds.join();
-    //
-    //   apiService.getPeople(searchIds).then(function (result) {
-    //
-    //     var all_people = result.data;
-    //     $timeout(function(){
-    //       $ctrl.peopleList = all_people;
-    //     });
-    //   });
-    //
-    // } else if ($ctrl.viewMode === 'all') {
-    //   $ctrl.groupList = $ctrl.data.included;
-    // }
+    // $ctrl.sendData = sendData;
+
+    $ctrl.remove = function(index, list) {
+      list.splice(index,1);
+    };
 
     $ctrl.ok = function() {
       $uibModalInstance.close($ctrl.selected.group);
@@ -70,5 +26,23 @@ angular.module('redesign2017App')
       console.log('dismiss')
       $uibModalInstance.dismiss('cancel');
     };
+
+    console.log($scope.$parent.data);
+
+    $ctrl.sendData = function() {
+      console.log($ctrl.addToDB);
+      apiService.writeData($ctrl.addToDB);
+    }
+
+    // $ctrl.sendData = function() {
+    //   console.log($ctrl.addToDB);
+    //   addToDB = {nodes: [], links: [], groups: []};
+    //   $scope.newNode = {};
+    //   $scope.$parent.newLink = {};
+    //   $scope.$parent.newGroup = {};
+    //   $scope.$parent.groupAssign = {person: {}, group: {}};
+    //   $scope.$parent.addedNodeId = 0;
+    //   $window.alert("Updates Submitted! They'll show up on the website once they've been approved by a curator.")
+    // }
 
   }]);
