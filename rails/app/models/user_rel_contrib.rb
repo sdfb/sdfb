@@ -21,12 +21,12 @@ class UserRelContrib < ActiveRecord::Base
 
   # Validations
   # -----------------------------
-  validates_presence_of :annotation
+  # validates_presence_of :annotation
   validates_presence_of :certainty
   validates_presence_of :created_by
   validates_presence_of :relationship_id
   validates_presence_of :relationship_type_id
-  validates_length_of   :annotation, minimum: 10
+  # validates_length_of   :annotation, minimum: 10
   validates_length_of   :bibliography, minimum: 10, allow_blank: true
   validates :start_year, numericality: { greater_than_or_equal_to: SDFB::EARLIEST_BIRTH_YEAR, less_than_or_equal_to: SDFB::LATEST_DEATH_YEAR }, allow_nil: true
   validates :end_year,   numericality: { greater_than_or_equal_to: SDFB::EARLIEST_BIRTH_YEAR, less_than_or_equal_to: SDFB::LATEST_DEATH_YEAR }, allow_nil: true

@@ -80,7 +80,7 @@ class Relationship < ActiveRecord::Base
   # -----------------------------
 
   def altered
-    !(approved_by.nil? || approved_by == 2)
+    was_altered = (created_by && created_by != 2) || user_rel_contribs.length > 0
   end
 
 

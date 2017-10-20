@@ -119,7 +119,7 @@ class Person < ActiveRecord::Base
   end
 
   def relationships(certainty=SDFB::DEFAULT_CONFIDENCE)
-    Relationship.where("person1_index = ? OR person2_index = ?", self.id, self.id).where(max_certainty: (certainty..100))
+    Relationship.all_approved.where("person1_index = ? OR person2_index = ?", self.id, self.id).where(max_certainty: (certainty..100))
   end
 
 

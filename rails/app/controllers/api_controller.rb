@@ -90,20 +90,23 @@ class ApiController < ApplicationController
         
         rel = Relationship.where("person1_index = ? AND person2_index = ?", source_id, target_id).first
         rel ||= Relationship.where("person1_index = ? AND person2_index = ?", target_id, source_id).first
-        puts rel
+
         if rel.nil?
           new_record = {
             person1_index: source_id,
             person2_index: target_id,
             created_by: link["created_by"],
+            bibliography: link["citation"],
             original_certainty: link["confidence"],
           }
           rel = Relationship.create!(new_record)
+        else
+          update_dates(rel,link)
         end
+
 
         new_rel_asssign = {
           relationship_id: rel.id,
-
           start_date_type: link["startDateType"],
           end_date_type: link["endDateType"],
           created_by: link["created_by"],
@@ -111,7 +114,6 @@ class ApiController < ApplicationController
           end_year: link["endDate"],
           certainty: link["confidence"],
           bibliography: link["citation"],
-          annotation: link["annotation"],
           relationship_type_id: link["relType"]
         }
         UserRelContrib.create!(new_rel_asssign)
@@ -124,19 +126,22 @@ class ApiController < ApplicationController
         group_id  = assignment["group"]["id"].to_i
         person_id = person_lookup[person_id] if person_id < 1_000_000
         group_id  = group_lookup[group_id]   if group_id  < 0
-        new_record = {
-          person_id: person_id,
-          group_id: group_id,
-          start_year: assignment["startDate"],
-          end_year: assignment["endDate"],
-          created_by: assignment["created_by"],
-          start_date_type: assignment["startDateType"],
-          end_date_type: assignment["endDateType"],
-          annotation: assignment["annotation"],
-          bibliography: assignment["citation"]
-        }
-
-        record = GroupAssignment.create!(new_record)
+        current_group = GroupAssignment.where("group_id = ? AND person_id = ?", group_id, person_id).first
+        if current_group
+          update_dates(current_group,assignment)
+        else
+          new_record = {
+            person_id: person_id,
+            group_id: group_id,
+            start_year: assignment["startDate"],
+            end_year: assignment["endDate"],
+            created_by: assignment["created_by"],
+            start_date_type: assignment["startDateType"],
+            end_date_type: assignment["endDateType"],
+            bibliography: assignment["citation"]
+          }
+          GroupAssignment.create!(new_record)
+        end
       end
     end
 
@@ -279,9 +284,10 @@ class ApiController < ApplicationController
   def network
     begin
       ids = params[:ids].split(",").map(&:to_i).uniq.sort
+      @display_id = ids.join(",")
+
       first_degree_ids = []
       second_degree_ids = []
-      @display_id = ids.join(",")
 
       @people = Person.all_approved.includes(:groups).find(ids)
 
@@ -291,7 +297,7 @@ class ApiController < ApplicationController
         [r.person1_index, r.person2_index]
       end.flatten.uniq - ids
 
-      @sources = Person.includes(:groups).find(first_degree_ids)
+      @sources = Person.includes(:groups).all_approved.find(first_degree_ids)
       first_degree_relationships = @sources.map(&:relationships).reduce(:+)&.uniq || []
       @relationships = @relationships | first_degree_relationships
 
@@ -299,14 +305,16 @@ class ApiController < ApplicationController
         second_degree_ids = first_degree_relationships.collect do |r| 
           [r.person1_index, r.person2_index]
         end.flatten.uniq - (ids + first_degree_ids)
+
         second_degree_people = Person.includes(:groups).find(second_degree_ids)
         second_degree_relationships = second_degree_people.map(&:relationships).reduce(:+)&.uniq || []
+
         @relationships = @relationships | second_degree_relationships
         @sources = @sources | second_degree_people
       end
 
       all_ids = ids | first_degree_ids | second_degree_ids
-      @relationships = @relationships.find_all{ |r| all_ids.include?(r.person1_index) && all_ids.include?(r.person2_index)   }
+      @relationships = @relationships.find_all{ |r| all_ids.include?(r.person1_index) && all_ids.include?(r.person2_index)  }
 
     rescue ActiveRecord::RecordNotFound => e
       @errors = []
@@ -322,19 +330,94 @@ class ApiController < ApplicationController
 
       @groups = Group.all_approved.find(ids)
 
-      @primary_people = @groups.map(&:people).reduce(:+).uniq
-      @primary_people.reject { |e| !e.is_approved }
-
+      @primary_people = @groups.map(&:approved_people).reduce(:+).uniq
+      
       @relationships = @primary_people.map(&:relationships).flatten
+
       first_degree_ids = @relationships.collect do |r|
         [r.person1_index, r.person2_index]
       end.flatten.uniq - ids
 
-      @people = @primary_people | Person.all_approved.includes(:groups).find(first_degree_ids)
+      secondary_people = Person.includes(:groups).all_approved.find(first_degree_ids)
+
+      @people = secondary_people | @primary_people 
     rescue ActiveRecord::RecordNotFound => e
       @errors = []
       @errors << {title: "invalid person ID(s)"}
     end
   end
 
+
+  def date_math(current_type, new_type, current_date, new_date)
+    output_type = nil
+    output_date = nil
+    case current_type
+    when "AF", "AF/IN"
+      if current_date <= new_date
+        case new_type
+        when "IN", "CA"
+          output_type = new_type
+          output_date = new_date
+        when "AF/IN", "AF"
+          output_type = "AF/IN"
+          output_date = new_date
+        when "BF/IN"
+          if current_type == "AF"
+            output_type = new_type
+            output_date = new_date
+          end            
+        end
+      end
+    when "BF", "BF/IN"
+      if new_date <= current_date
+        case new_type
+        when "IN", "CA"
+          output_type = new_type
+          output_date = new_date
+        when "BF", "BF/IN"
+          output_type = "BF/IN"
+          output_date = new_date
+        when "AF/IN"
+          if current_type == "BF"
+            output_type = new_type
+            output_date = new_date
+          end  
+        end
+      end
+    when "CA"
+      if (new_date - current_date).abs <= 10
+        if new_type == "CA"
+          new_date = (new_date + current_date)/2 
+        end
+        output_type = new_type
+        output_date = new_date
+      end
+    when "IN"
+      if new_type == "CA" && (new_date - current_date).abs <= 4
+        output_type = "CA"
+        output_date = (new_date + current_date)/2 
+      end
+    end
+    return [output_type, output_date]
+  end
+
+  def update_dates(current_object, new_data)
+    current_type = current_object.start_date_type
+    new_type = new_data["startDateType"]
+    current_date = current_object.start_year
+    new_date = current_object["startDate"].to_i
+    start_type, start_year = date_math(current_type, new_type, current_date, new_date)
+    current_object.start_year = start_year if start_year
+    current_object.start_year_type = start_type if start_type
+
+    current_type = current_object.end_date_type
+    new_type = new_data["endDateType"]
+    current_date = current_object.end_year
+    new_date = current_object["endDate"].to_i
+    end_type, end_year = date_math(current_type, new_type, current_date, new_date)
+    current_object.end_year = end_year if end_year
+    current_object.end_year_type = end_type if end_type
+
+    current_object.save!
+  end
 end
