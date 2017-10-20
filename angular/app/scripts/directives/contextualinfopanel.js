@@ -35,7 +35,7 @@ angular.module('redesign2017App')
           var url = 'http://www.google.com/search?q={{name}}';
           window.open(url.replace('{{name}}', name.toLowerCase()), '_blank');
         }
-
+        
         scope.$watch('currentSelection', function(newValue, oldValue) {
           if (scope.currentSelection.type == 'group') {
             // var groupMembers = [];
