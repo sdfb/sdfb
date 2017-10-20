@@ -264,12 +264,14 @@ shared-network {
   align-items: center;
   .group {
     background-color: #C6CACF;
+    width: 100%;
+    font-size: 12px;
     border-radius: 2px;
     -webkit-box-sizing: border-box;
     box-sizing: border-box;
     display: -webkit-box;
     display: -ms-flexbox;
-    display: flex;
+    display: block;
     -webkit-box-align: center;
     -ms-flex-align: center;
     align-items: center;
@@ -277,8 +279,11 @@ shared-network {
     -ms-flex-pack: start;
     justify-content: flex-start;
     height: 30px;
+    text-overflow: ellipsis;
+    text-align: left;
+    white-space: nowrap;
     overflow: hidden;
-    padding: 0 0 0 5px;
+    padding: 5px 0 0 5px;
     -webkit-transition: all 0.5s;
     transition: all 0.5s;
     &:last-of-type {

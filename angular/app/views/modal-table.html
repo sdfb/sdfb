@@ -19,7 +19,6 @@
                 <td class="sig-column">Historical Significance</td>
                 <td class="birth-column">Birth Date</td>
                 <td class="death-column">Death Date</td>
-                <td class="connections-column">Degree</td>
                 <td class="action-column">Action</td>
             </tr>
         </thead>
@@ -30,7 +29,6 @@
                 <td>{{ person.attributes.historical_significance }}</td>
                 <td>{{ person.attributes.birth_year_type }} {{ person.attributes.birth_year }}</td>
                 <td>{{ person.attributes.death_year_type }} {{ person.attributes.death_year }}</td>
-                <td>{{ person.attributes.degree }}</td>
                 <td>
                     <button ng-click="$ctrl.cancel()" ui-sref="home.visualization({ ids: person.id })" type="button" class="btn btn-primary">
                         Visualize
