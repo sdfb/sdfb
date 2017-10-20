@@ -1295,6 +1295,12 @@ contextual-info-panel > section {
   small-timeline .label.domain {
     display: none;
   }
+
+  .btn.go {
+    width: 100px;
+    float: right;
+    margin-top: 12px
+  }
 }
 
 contextual-info-panel > section:first-child {
