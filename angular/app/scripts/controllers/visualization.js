@@ -49,10 +49,6 @@ angular.module('redesign2017App').component('visualization', {
     $scope.newGroup = {};
     $scope.groupAssign = {person: {}, group: {}};
 
-    $scope.$watch('$parent.config.contributionMode', function(newValue, oldValue) {
-      $scope.config.contributionMode = newValue;
-    });
-
     this.$onChanges = function() {
       $scope.data = this.networkData;
       if ($stateParams.type === 'all-groups') {
@@ -192,8 +188,18 @@ angular.module('redesign2017App').component('visualization', {
           // }
         }
       });
-      modalInstance.result.then(function(selectedItem) {
-        $scope.selected = selectedItem;
+      modalInstance.result.then(function(result) {
+        apiService.writeData(result);
+        $scope.addToDB = {nodes: [], links: [], groups: [], group_assignments: []};
+        $scope.addedNodes = [];
+        $scope.addedLinks = [];
+        $scope.addedGroups = [];
+        $scope.newNode = {};
+        $scope.addedNodeId = 0;
+        $scope.newLink = {source:{}, target: {}};
+        $scope.newGroup = {};
+        $scope.groupAssign = {person: {}, group: {}};
+        $scope.updateNetwork($scope.data);
       }, function() {
         $log.info('Modal dismissed at: ' + new Date());
       });
@@ -283,6 +289,7 @@ angular.module('redesign2017App').component('visualization', {
 
 
     $scope.$watch('$parent.config.contributionMode', function(newValue, oldValue) {
+      $scope.config.contributionMode = newValue;
       // var emptyDB = {nodes: [], links: [], groups: []}
       if (newValue !== oldValue && !newValue) {
         if ($scope.addToDB.nodes.length !== 0 || $scope.addToDB.links.length !== 0 || $scope.addToDB.groups.length !== 0) {

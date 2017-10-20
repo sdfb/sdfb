@@ -27,22 +27,8 @@ angular.module('redesign2017App')
       $uibModalInstance.dismiss('cancel');
     };
 
-    console.log($scope.$parent.data);
-
-    $ctrl.sendData = function() {
-      console.log($ctrl.addToDB);
-      apiService.writeData($ctrl.addToDB);
+    $ctrl.close = function() {
+      $uibModalInstance.close($ctrl.addToDB);
     }
-
-    // $ctrl.sendData = function() {
-    //   console.log($ctrl.addToDB);
-    //   addToDB = {nodes: [], links: [], groups: []};
-    //   $scope.newNode = {};
-    //   $scope.$parent.newLink = {};
-    //   $scope.$parent.newGroup = {};
-    //   $scope.$parent.groupAssign = {person: {}, group: {}};
-    //   $scope.$parent.addedNodeId = 0;
-    //   $window.alert("Updates Submitted! They'll show up on the website once they've been approved by a curator.")
-    // }
 
   }]);

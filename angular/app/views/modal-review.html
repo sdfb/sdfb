@@ -57,7 +57,7 @@
                 <td>{{ rel.endDateType }} {{ rel.endDate }}</td>
                 <td>{{ rel.confidence }}</td>
                 <td>
-                    <i class="fa fa-times" aria-hidden="true" type="button" ng-click="$ctrl.cancel()" aria-label="Remove"></i>
+                    <i class="fa fa-times" aria-hidden="true" type="button" ng-click="$ctrl.remove($index, $ctrl.addToDB.links)" aria-label="Remove"></i>
                 </td>
             </tr>
         </tbody>
@@ -80,7 +80,7 @@
                 <td>{{ group.startDateType }} {{ group.startDate }}</td>
                 <td>{{ group.endDateType }} {{ group.endDate }}</td>
                 <td>
-                    <i class="fa fa-times" aria-hidden="true" type="button" ng-click="$ctrl.cancel()" aria-label="Remove"></i>
+                    <i class="fa fa-times" aria-hidden="true" type="button" ng-click="$ctrl.remove($index, $ctrl.addToDB.groups)" aria-label="Remove"></i>
                 </td>
             </tr>
         </tbody>
@@ -103,12 +103,12 @@
                 <td>{{ rel.startDateType }} {{ rel.startDate }}</td>
                 <td>{{ rel.endDateType }} {{ rel.endDate }}</td>
                 <td>
-                    <i class="fa fa-times" aria-hidden="true" type="button" ng-click="$ctrl.cancel()" aria-label="Remove"></i>
+                    <i class="fa fa-times" aria-hidden="true" type="button" ng-click="$ctrl.remove($index, $ctrl.addToDB.group_assignments)" aria-label="Remove"></i>
                 </td>
             </tr>
         </tbody>
     </table>
-    <button ng-click="$ctrl.sendData()" type="button" class="btn btn-primary">
+    <button ng-click="$ctrl.close()" type="button" class="btn btn-primary">
         Submit & Close
     </button>
     <!-- <ul>
