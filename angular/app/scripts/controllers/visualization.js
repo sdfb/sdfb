@@ -62,6 +62,7 @@ angular.module('redesign2017App').component('visualization', {
         var personName = this.networkData.included[0].attributes.name;
         $scope.config.viewMode = 'individual-force';
         $scope.$parent.config.person1 = $stateParams.ids;
+        $scope.config.person1 = $stateParams.ids;
         $scope.networkName = "Hooke Network of " + personName;
         $scope.$parent.personTypeahead.selected = personName;
         $scope.$parent.sharedTypeahead.selected = '';
