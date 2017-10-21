@@ -46,9 +46,15 @@ angular.module('redesign2017App')
 
         scope.callPersonTypeahead = function(val) {
           console.log(val)
-          var result = apiService.personTypeahead(val);
-          console.log(result["$$state"]);
-          return result;
+          return apiService.personTypeahead(val).then(function(result){
+            var allIDs = [];
+            result.forEach(function(r) {
+              allIDs.push(r.id);
+            })
+            return apiService.getPeople(allIDs).then(function(peopleResult) {
+              return peopleResult.data;
+            })
+          });
         };
 
         scope.groupSelected = function($item, $model, $label, $event) {
