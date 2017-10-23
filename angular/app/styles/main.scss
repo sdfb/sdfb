@@ -110,6 +110,11 @@ path.danger {
   .log-in a {}
 }
 
+#formLogin {
+  input, h3 {
+    margin-top: 10px;
+  }
+}
 .contribution-mode-on .header .navbar .log-in {
   background-color: $contribution-mode-fill;
 }

@@ -32,7 +32,9 @@
             </a>
             <div ng-show="!config.login.status" uib-dropdown-menu class="dropdown-menu" style="padding:17px;">
               <form class="form" id="formLogin">
+                <h3>Username</h3>
                 <input class="form-control" name="username" id="username" placeholder="Username" type="text">
+                <h3>Password</h3>
                 <input class="form-control" name="password" id="password" placeholder="Password" type="password"><br>
                 <button type="button" id="btnLogin" class="btn btn-primary" ng-click="config.login.status = true;">Login</button>
               </form>
