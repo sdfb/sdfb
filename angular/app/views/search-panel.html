@@ -26,17 +26,13 @@
     <h4>Search a group</h4>
 
     <!-- <pre>Model: {{groupTypeahead | json}}</pre> -->
-    <input type="text" ng-model="groupTypeahead.selected" placeholder="Type here group names" uib-typeahead="group as group.name for group in callGroupsTypeahead($viewValue)" typeahead-loading="loadingGroups" typeahead-no-results="noResultsGroups" class="form-control" typeahead-template-url="./views/groupsTypeaheadTemplate.html" class="form-control" typeahead-show-hint="true" typeahead-min-length="3" typeahead-on-select="groupSelected($item, $model, $label, $event)">
+    <input type="text" ng-model="groupTypeahead.selected" placeholder="Type here group names" uib-typeahead="group as group.name for group in callGroupsTypeahead($viewValue)" typeahead-loading="loadingGroups" typeahead-no-results="noResultsGroups" class="form-control" class="form-control" typeahead-show-hint="true" typeahead-min-length="3" typeahead-on-select="groupSelected($item, $model, $label, $event)">
     <i ng-show="loadingGroups" class="glyphicon glyphicon-refresh"></i>
     <div ng-show="noResultsGroups">
       <i class="glyphicon glyphicon-remove"></i> No Results Found
     </div>
 
     <h5>Search here or double click on a node</h5>
-    <h4>Visualization layout</h4>
-    <div class="btn-group btn-group-justified">
-      <label class="btn btn-primary" ng-click="groupView('network')">Hooke</label>
-      <label class="btn btn-primary" ng-click="groupView('timeline')">Timeline</label>
-    </div>
+
   </uib-tab>
 </uib-tabset>

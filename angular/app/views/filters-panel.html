@@ -50,9 +50,15 @@
     </div>
   </div>
   <div ng-show=" config.viewMode == 'group-force'">
+    <h4>Visual density</h4>
     <div class="btn-group btn-group-justified">
       <label class="btn btn-primary" ng-model="config.onlyMembers" uib-btn-radio="true">Only Members</label>
       <label class="btn btn-primary" ng-model="config.onlyMembers" uib-btn-radio="false">One Degree</label>
+    </div>
+    <h4>Visualization layout</h4>
+    <div class="btn-group btn-group-justified">
+      <label class="btn btn-primary" ng-click="$parent.groupView('network')">Hooke</label>
+      <label class="btn btn-primary" ng-click="$parent.groupView('timeline')">Timeline</label>
     </div>
   </div>
 </section>
