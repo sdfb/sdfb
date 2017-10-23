@@ -23,25 +23,25 @@
 
         <ul class="nav navbar-nav navbar-right">
           <li><a ui-sref="browse">Browse</a></li>
-          <li ng-show="loggedIn"><a>Curate</a></li>
+          <li ng-show="config.login.status"><a>Curate</a></li>
           <li><a>About</a></li>
-          <li class="log-in">
-            <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" style="display: inline-block;">
-              <span ng-show="!loggedIn">Login</span>
-              <span ng-show="loggedIn">Elizabeth</span>
+          <li class="log-in" uib-dropdown>
+            <a class="nav-link dropdown-toggle"  uib-dropdown-toggle style="display: inline-block; cursor: pointer;">
+              <span ng-show="!config.login.status">Login</span>
+              <span ng-show="config.login.status">{{config.login.user}}</span>
             </a>
-            <div ng-show="!loggedIn" class="dropdown-menu" style="padding:17px;">
+            <div ng-show="!config.login.status" uib-dropdown-menu class="dropdown-menu" style="padding:17px;">
               <form class="form" id="formLogin">
                 <input class="form-control" name="username" id="username" placeholder="Username" type="text">
                 <input class="form-control" name="password" id="password" placeholder="Password" type="password"><br>
-                <button type="button" id="btnLogin" class="btn btn-primary" ng-click="loggedIn = true;">Login</button>
+                <button type="button" id="btnLogin" class="btn btn-primary" ng-click="config.login.status = true;">Login</button>
               </form>
             </div>
-            <div ng-show="loggedIn" class="dropdown-menu" style="padding:17px;">
+            <div ng-show="config.login.status" uib-dropdown-menu class="dropdown-menu" style="padding:17px;">
               <div>User information here</div>
-              <button type="button" id="btnLogin" class="btn btn-primary" ng-click="loggedIn = false; config.contributionMode = false;">Log Out</button>
+              <button type="button" id="btnLogin" class="btn btn-primary" ng-click="config.login.status = false; config.contributionMode = false;">Log Out</button>
             </div>
-            <span ng-show="loggedIn" class=" contribution-mode-switch"><span>Contribute: <span ng-if="config.contributionMode">ON</span><span ng-if="!config.contributionMode">OFF</span> </span><i class="fa" ng-class="{ 'fa-toggle-off': config.contributionMode == false, 'fa-toggle-on': config.contributionMode == true }" aria-hidden="true" ng-click="toggleContribute()"></i></span>
+            <span class=" contribution-mode-switch"><span>Contribute: <span ng-if="config.contributionMode">ON</span><span ng-if="!config.contributionMode">OFF</span> </span><i class="fa" ng-class="{ 'fa-toggle-off': config.contributionMode == false, 'fa-toggle-on': config.contributionMode == true }" aria-hidden="true" ng-click="toggleContribute()"></i></span>
           </li>
         </ul>
       </div>

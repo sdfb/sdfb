@@ -14,10 +14,16 @@ angular.module('redesign2017App')
       link: function postLink(scope, element, attrs) {
 
         scope.toggleContribute = function() {
-          scope.config.contributionMode = !scope.config.contributionMode;
-          if (scope.config.contributionMode) {
-            scope.cursorStyle = {'cursor': 'copy'};
-          } else {
+          if (scope.config.login.status === true) {
+            scope.config.contributionMode = !scope.config.contributionMode;
+            if (scope.config.contributionMode) {
+              scope.cursorStyle = {'cursor': 'copy'};
+            } else {
+              scope.cursorStyle = {'cursor': 'auto'};
+            }
+          }
+          else {
+            $('.dropdown-toggle').dropdown('toggle');
             scope.cursorStyle = {'cursor': 'auto'};
           }
         }
