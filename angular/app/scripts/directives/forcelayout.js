@@ -384,19 +384,19 @@ angular.module('redesign2017App').directive('forceLayout', ['apiService', '$time
               .attr('class', function(d) { // Class by degree of distance
                 if (scope.config.viewMode == 'shared-network') {
                   if (d.distance === 0) {
-                    return 'node degree' + 3
+                    return 'node shared degree' + 3
                   }
                   else if (d.distance === 1) {
-                    return 'node degree' + 4
+                    return 'node shared degree' + 4
                   }
                   else if (d.distance === 2) {
-                    return 'node degree' + 1
+                    return 'node shared degree' + 1
                   }
                   else if (d.distance === 3) {
-                    return 'node degree' + 0
+                    return 'node shared degree' + 0
                   }
                   else if (d.distance === 7) {
-                    return 'node degree' + 7
+                    return 'node shared degree' + 7
                   }
                 } else if (scope.config.viewMode === 'group-force') {
                   if (members.indexOf(d.id) === -1) {
@@ -656,24 +656,25 @@ angular.module('redesign2017App').directive('forceLayout', ['apiService', '$time
 
           var sourceId1 = sources[0]
           var sourceId2 = sources[1]
+          console.log(sourceId1, sourceId2);
           var oneDegreeNodes = [];
           thresholdLinks.forEach( function (l) {
-            if (l.source.id == sourceId1 || l.source.id == sourceId2 || l.target.id == sourceId1 || l.target.id == sourceId2) {
+            // if (l.source.id == sourceId1 || l.source.id == sourceId2 || l.target.id == sourceId1 || l.target.id == sourceId2) {
               oneDegreeNodes.push(l.target); oneDegreeNodes.push(l.source);
-            }
+            // }
           })
           oneDegreeNodes = Array.from(new Set(oneDegreeNodes));
 
-          var newLinks = thresholdLinks.filter(function(l) { if (oneDegreeNodes.indexOf(l.target) != -1 && oneDegreeNodes.indexOf(l.source) != -1) {return l; }; });
+          var newLinks = thresholdLinks;//.filter(function(l) { if (oneDegreeNodes.indexOf(l.target) != -1 && oneDegreeNodes.indexOf(l.source) != -1) {return l; }; });
 
           var sourceOneNeighbors = [];
           var sourceTwoNeighbors = [];
           newLinks.forEach(function(l){
-            if (l.source.id == sourceId1) {sourceOneNeighbors.push(l.target);}
-            else if (l.target.id == sourceId1) {sourceOneNeighbors.push(l.source);}
-            else if (l.source.id == sourceId2) {sourceTwoNeighbors.push(l.target);}
-            else if (l.target.id == sourceId2) {sourceTwoNeighbors.push(l.source);}
-          })
+            if (l.source.id == sourceId1 && l.target.id !== sourceId2) {sourceOneNeighbors.push(l.target);}
+            else if (l.target.id == sourceId1 && l.source.id !== sourceId2) {sourceOneNeighbors.push(l.source);}
+            else if (l.source.id == sourceId2 && l.target.id !== sourceId1) {sourceTwoNeighbors.push(l.target);}
+            else if (l.target.id == sourceId2 && l.source.id !== sourceId1) {sourceTwoNeighbors.push(l.source);}
+          });
           oneDegreeNodes.forEach(function(d){
             d.distance = null;
             if (d.id == sourceId1 || d.id == sourceId2) { d.distance = 0; }
