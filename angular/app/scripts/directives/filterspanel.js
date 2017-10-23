@@ -113,6 +113,8 @@ angular.module('redesign2017App')
 
         function createDensityButtons() {
           // Radio buttons for network complexity.
+          var complexity = '2';
+          
           var complexityForm = d3.select('.density-container').append('form'); // Create form
 
           var complexityBox = complexityForm.selectAll('input') // Data join with 5-number scale

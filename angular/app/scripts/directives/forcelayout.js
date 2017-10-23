@@ -826,6 +826,9 @@ angular.module('redesign2017App').directive('forceLayout', ['apiService', '$time
                 return l;
               }
             });
+            newLinks = newLinks.filter(function(l) {
+              return oneDegreeNodes.indexOf(l.source) !== -1 || oneDegreeNodes.indexOf(l.target) !== -1;
+            })
             return [newNodes, newLinks];
           }
 
