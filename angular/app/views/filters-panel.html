@@ -26,13 +26,18 @@
     </div>
     <div ng-show=" config.viewMode == 'shared-network'" >
       <h4>Visual density</h4>
-      <div class="legend-line"></div>
+      <div class="btn-group btn-group-justified">
+        <label class="btn btn-primary" ng-model="config.networkComplexity" uib-btn-radio="'direct_connections'">Only Direct</label>
+        <label class="btn btn-primary" ng-model="config.networkComplexity" uib-btn-radio="'all_connections'">All</label>
+      </div>
+      <h5>Toggle to see only direct relationships</h5>
+      <!-- <div class="legend-line"></div>
       <div class="connection-container"></div>
       <div class="flex-container">
         <div class="flex-item legend-text">Direct Connections</div>
         <div class="flex-item legend-text">All Connections</div>
       </div>
-      <h5 class="interaction-info">Hover on a value to learn more</h5>
+      <h5 class="interaction-info">Hover on a value to learn more</h5> -->
     </div>
     <!-- <span ng-show=" config.viewMode == 'individual-force' || config.viewMode == 'individual-concentric'">
       <h4>Visualization layout</h4>

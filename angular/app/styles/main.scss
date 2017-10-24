@@ -999,6 +999,10 @@ input[type="radio"]:checked + label span {
   padding: 2px;
 }
 
+.btn-group {
+  margin-bottom: 10px;
+}
+
 .btn-primary.active.focus,
 .btn-primary.focus:active,
 .btn-primary:active:focus,
