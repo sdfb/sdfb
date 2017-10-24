@@ -35,14 +35,9 @@ angular.module('redesign2017App')
           var url = 'http://www.google.com/search?q={{name}}';
           window.open(url.replace('{{name}}', name.toLowerCase()), '_blank');
         }
-        
+
         scope.$watch('currentSelection', function(newValue, oldValue) {
           if (scope.currentSelection.type == 'group') {
-            // var groupMembers = [];
-            // scope.currentSelection.includes.forEach(function(p) {
-            //   console.log(p);
-            // });
-            console.log(scope.currentSelection.data[0].attributes.people);
             scope.currentSelection.includes.forEach(function(p, i) {
               p.start_year = scope.currentSelection.data[0].attributes.people[i].start_year;
               p.start_year_type = scope.currentSelection.data[0].attributes.people[i].start_year_type;

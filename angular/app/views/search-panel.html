@@ -2,20 +2,25 @@
   <uib-tab index="0" heading="People">
     <h4>Individual Network<span class="remove-btn" ng-click=" personTypeahead.selected = '' ">clear</span></h4>
     <!-- <input placeholder="Search for a person" type="text" ng-model="person.selected" uib-typeahead="person for person in peopleToSelect | filter:$viewValue | limitTo:8" class="form-control" typeahead-on-select="selectedPerson(person.selected)"> -->
-    <input type="text" ng-model="personTypeahead.selected" placeholder="Search for a person" uib-typeahead="person as person.name for person in callPersonTypeahead($viewValue)" typeahead-loading="loadingPerson" typeahead-no-results="noResultsPerson" class="form-control" class="form-control" typeahead-show-hint="true" typeahead-min-length="5" typeahead-on-select="selectedPerson($item)" typeahead-wait-ms='500'>
+    <input type="text" ng-model="personTypeahead.selected" placeholder="Search for a person" typeahead-template-url="views/groupsTypeaheadTemplate.html" uib-typeahead="person as person.attributes.name for person in callPersonTypeahead($viewValue)" typeahead-loading="loadingPerson" typeahead-no-results="noResultsPerson" class="form-control" class="form-control" typeahead-show-hint="true" typeahead-min-length="5" typeahead-on-select="selectedPerson($item)" typeahead-append-to-body="true" typeahead-wait-ms='500'>
     <i ng-show="loadingPerson" class="glyphicon glyphicon-refresh"></i>
     <div ng-show="noResultsPerson">
-      <i class="glyphicon glyphicon-remove"></i> No Results Found
+      <i class="glyphicon glyphicon-remove"></i> None Found or Too Many Results
     </div>
     <h5>Search here<span ng-if="config.viewMode!='all'"> or double click on a node</span><span ng-if="config.viewMode=='all'"> for a person</span></h5>
     <h4>Shared Network<span class="remove-btn" ng-click=" sharedTypeahead.selected = '' ">clear</span></h4>
     <!-- <input placeholder="Search for a person" type="text" ng-model="shared.selected" uib-typeahead="person for person in sharedToSelect | filter:$viewValue | limitTo:8" class="form-control" typeahead-on-select="selectedShared(shared.selected, person.selected)"> -->
-    <input type="text" ng-model="sharedTypeahead.selected" placeholder="Search for a person" uib-typeahead="person as person.name for person in callPersonTypeahead($viewValue)" typeahead-loading="loadingShared" typeahead-no-results="noResultsShared" class="form-control" class="form-control" typeahead-show-hint="true" typeahead-min-length="5" typeahead-on-select="selectedShared($item)" typeahead-wait-ms='500'>
+    <input type="text" ng-model="sharedTypeahead.selected" placeholder="Search for a person" typeahead-template-url="views/groupsTypeaheadTemplate.html" uib-typeahead="person as person.attributes.name for person in callPersonTypeahead($viewValue)" typeahead-loading="loadingShared" typeahead-no-results="noResultsShared" class="form-control" class="form-control" typeahead-show-hint="true" typeahead-min-length="5" typeahead-on-select="selectedShared($item)" typeahead-append-to-body="true" typeahead-wait-ms='500'>
     <i ng-show="loadingShared" class="glyphicon glyphicon-refresh"></i>
     <div ng-show="noResultsShared">
       <i class="glyphicon glyphicon-remove"></i> No Results Found
     </div>
     <h5>Add a person to visualize a shared network</h5>
+    <h4>Visualization layout</h4>
+    <div class="btn-group btn-group-justified">
+      <label class="btn btn-primary" ng-model="config.layout" uib-btn-radio="'individual-force'">Hooke</label>
+      <label class="btn btn-primary" ng-model="config.layout" uib-btn-radio="'individual-concentric'">Concentric</label>
+    </div>
   </uib-tab>
   <uib-tab index="1" heading="Groups">
     <h4>All Groups</h4>
@@ -26,17 +31,19 @@
     <h4>Search a group</h4>
 
     <!-- <pre>Model: {{groupTypeahead | json}}</pre> -->
-    <input type="text" ng-model="groupTypeahead.selected" placeholder="Type here group names" uib-typeahead="group as group.name for group in callGroupsTypeahead($viewValue)" typeahead-loading="loadingGroups" typeahead-no-results="noResultsGroups" class="form-control" typeahead-template-url="./views/groupsTypeaheadTemplate.html" class="form-control" typeahead-show-hint="true" typeahead-min-length="3" typeahead-on-select="groupSelected($item, $model, $label, $event)">
+    <input type="text" ng-model="groupTypeahead.selected" placeholder="Type here group names" uib-typeahead="group as group.name for group in callGroupsTypeahead($viewValue)" typeahead-loading="loadingGroups" typeahead-no-results="noResultsGroups" class="form-control" class="form-control" typeahead-show-hint="true" typeahead-min-length="3" typeahead-on-select="groupSelected($item, $model, $label, $event)" typeahead-append-to-body="true">
     <i ng-show="loadingGroups" class="glyphicon glyphicon-refresh"></i>
     <div ng-show="noResultsGroups">
       <i class="glyphicon glyphicon-remove"></i> No Results Found
     </div>
-
     <h5>Search here or double click on a node</h5>
+
     <h4>Visualization layout</h4>
     <div class="btn-group btn-group-justified">
       <label class="btn btn-primary" ng-click="groupView('network')">Hooke</label>
       <label class="btn btn-primary" ng-click="groupView('timeline')">Timeline</label>
     </div>
+
+
   </uib-tab>
 </uib-tabset>

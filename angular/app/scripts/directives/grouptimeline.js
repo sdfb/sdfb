@@ -120,6 +120,7 @@ angular.module('redesign2017App')
                   .duration(500) // apply it over 2000 milliseconds
                   .attr("transform", "translate(0, " + (y(e.id) + y.bandwidth() / 2) + ")")
               })
+              svg.attr("height", numLines * 20 + margin.top + margin.bottom);
               // update selction and trigger event for other directives
               // scope.currentSelection = {};
               // scope.$apply(); // no need to trigger events, just apply
@@ -192,7 +193,9 @@ angular.module('redesign2017App')
                 .classed('selected', true)
                 .transition() // apply a transition
                 .duration(500) // apply it over 2000 milliseconds
-                .attr("transform", "translate(0, " + (y(d.id) + 20 + y.bandwidth() / 2) + ")")
+                .attr("transform", "translate(0, " + (y(d.id) + 20 + y.bandwidth() / 2) + ")");
+
+              svg.attr("height", numLines * 20 + margin.top + margin.bottom + 200); //Make svg big enough for expanded item
             })
 
           person.append("rect")
@@ -298,41 +301,28 @@ angular.module('redesign2017App')
             .attr('d', function(d) { return terminators('birth', d.attributes.death_year_type, x(d.attributes.death_year), 0) });
 
           // Will not work until API is updated.
-          // person.append('path')
-          //   .attr('class', 'membership')
-          //   .attr('d', function(d) {
-          //     return 'M' + x(d.attributes.start_year) + ',' + 0 + ' L' + (x(d.attributes.end_year)) + ',' + 0;
-          //   });
-
-          // Change name of the viz
-          scope.config.title = ""
+          person.append('path')
+            .attr('class', 'membership')
+            .attr('d', function(d) {
+              return 'M' + x(d.attributes.start_year) + ',' + 0 + ' L' + (x(d.attributes.end_year)) + ',' + 0;
+            });
         }
 
         // action triggered from the controller
         scope.$watch('data', function(newValue, oldValue) {
-          // console.log(event, json);
           if (scope.config.viewMode === 'group-timeline') {
-            var json = newValue;
-            groupInfo = {};
-            json.included.forEach( function(item) {
-              if (item.id === json.data.id) {
-                groupInfo["description"] = item.attributes["description"];
-                groupInfo["end_date_type"] = item.attributes["end_date_type"];
-                groupInfo["end_year"] = item.attributes["end_year"];
-                groupInfo["id"] = item.attributes["id"];
-                groupInfo["name"] = item.attributes["name"];
-                groupInfo["start_date_type"] = item.attributes["start_date_type"];
-                groupInfo["start_year"] = item.attributes["start_year"];
-                groupInfo["type"] = item.attributes["type"];
-              }
-            });
+            var json = newValue.data;
+            console.log(json);
+            groupInfo = json.data[0].attributes;
+            groupInfo.id = json.data[0].id;
 
-
-            primary_people = json.data.attributes.primary_people;
-            members = [];
-            members = _.intersectionWith(json.included, primary_people, function(a, b) {
-              return a.id == b;
-            });
+            members = json.includes;
+            members.forEach(function(m, i) {
+              m.attributes.start_year = groupInfo.people[i].start_year;
+              m.attributes.start_year_type = groupInfo.people[i].start_year_type;
+              m.attributes.end_year = groupInfo.people[i].end_year;
+              m.attributes.end_year_type = groupInfo.people[i].end_year_type;
+            })
 
             update(members);
           }

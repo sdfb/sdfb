@@ -45,7 +45,7 @@ angular.module('redesign2017App')
 
             startYear = Math.min(birthYear1, birthYear2);
             endYear = Math.max(deathYear1, deathYear2);
-            createConnectionButtons();
+            // createConnectionButtons();
           }
 
           confidenceMin = scope.config.confidenceMin,
@@ -99,10 +99,6 @@ angular.module('redesign2017App')
               return 'All people; relationships between 1-degree and 2-degree people only';
             } else if (d == 2.5){
               return 'All 1- and 2-degree people and relationships';
-            } else if (d == 'direct_connections') {
-              return 'People on a direct path between the two searched people'
-            } else if (d === 'all_connections') {
-              return 'All people within one degree of either searched person'
             }
           });
         }
@@ -113,6 +109,8 @@ angular.module('redesign2017App')
 
         function createDensityButtons() {
           // Radio buttons for network complexity.
+          var complexity = '2';
+
           var complexityForm = d3.select('.density-container').append('form'); // Create form
 
           var complexityBox = complexityForm.selectAll('input') // Data join with 5-number scale
@@ -146,53 +144,10 @@ angular.module('redesign2017App')
             // On change update value of networkComplexity config variable
             complexity = this.value;
             console.log(complexity);
-            scope.$evalAsync(function() {
+            scope.$apply(function() {
               scope.config.networkComplexity = complexity;
               // Trigger force layout update
-              scope.updateNetwork(args);
-            });
-          });
-        }
-
-        function createConnectionButtons() {
-          // Radio buttons for network complexity.
-          var complexityForm = d3.select('.connection-container').append('form'); // Create form
-
-          var complexityBox = complexityForm.selectAll('input') // Data join with 5-number scale
-            .data(['direct_connections', 'all_connections'])
-            .enter().append('div');
-
-          var complexityButtons = complexityBox.append('input')
-            .attr('type', 'radio')
-            .attr('name', 'complexity')
-            .attr('id', function(d) {
-              return 'radio-' + d;
-            })
-            .attr('checked', function(d) {
-              if (d == complexity) {
-                return 'checked';
-              }
-            })
-            .attr('value', function(d) {
-              return d;
-            });
-          complexityBox.append('label')
-            .attr('for', function(d) {
-              return 'radio-' + d;
-            })
-            .append('span')
-            .on("mouseover", showTooltip)
-            .on("mouseout", resetTooltip);
-
-          complexityButtons.on('change', function() {
-
-            // On change update value of networkComplexity config variable
-            complexity = this.value;
-            console.log(complexity);
-            scope.$evalAsync(function() {
-              scope.config.networkComplexity = complexity;
-              // Trigger force layout update
-              scope.updateNetwork(args);
+              // scope.updateNetwork(args);
             });
           });
         }
@@ -648,6 +603,12 @@ angular.module('redesign2017App')
         scope.$watch('$stateParams.ids', function(newValue, oldValue) {
           if (scope.config.viewMode !== 'group-force' && scope.config.viewMode !== 'all' && scope.config.viewMode !== 'group-timeline') {
             scope.reloadFilters(scope.data);
+          }
+        }, true);
+
+        scope.$watch('config.networkComplexity', function(newValue, oldValue) {
+          if (scope.config.viewMode !== 'group-force' && scope.config.viewMode !== 'all' && scope.config.viewMode !== 'group-timeline') {
+            scope.updateNetwork(scope.data);
           }
         }, true);
 

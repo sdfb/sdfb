@@ -11,6 +11,13 @@ angular.module('redesign2017App').component('home', {
   // bindings: { networkData: '<' },
   templateUrl: 'views/home.html',
   controller: ['$scope', '$stateParams', function($scope, $stateParams) {
-    $scope.config = {contributionMode: false};
+    $scope.config = {
+      contributionMode: false,
+      layout: 'individual-force',
+      login: {
+        status: false,
+        user: 'Elizabeth',
+      }
+    };
 	}]
 });

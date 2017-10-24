@@ -115,6 +115,11 @@ shared-network {
     fill: $degree1;
   }
 
+  .node.shared.degree1 {
+    fill: $indirect-acquaintance-fill;
+    stroke: $degree0;
+  }
+
   .node.degree2 {
     fill: $degree3;
     stroke: $degree0;
@@ -667,7 +672,7 @@ group-timeline {
 
   .membership {
     stroke: #78729F;
-    stroke-width: 2px;
+    stroke-width: 3px;
     cursor: pointer;
   }
 

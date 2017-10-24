@@ -110,6 +110,11 @@ path.danger {
   .log-in a {}
 }
 
+#formLogin {
+  input, h3 {
+    margin-top: 10px;
+  }
+}
 .contribution-mode-on .header .navbar .log-in {
   background-color: $contribution-mode-fill;
 }
@@ -148,6 +153,11 @@ path.danger {
     height: 100%;
   }
 }
+
+#typeahead-sig, #typeahead-dates {
+  font-size: 10px;
+}
+
 /* panels general styles*/
 .panels-container {
   width: 100vw;
@@ -775,7 +785,7 @@ group-timeline {
 
 .timeline-legend {
   height: 35vh;
-  margin-top: 345px;
+  margin-top: 365px;
   overflow-y: auto;
 
   .legend-line {
@@ -987,6 +997,10 @@ input[type="radio"]:checked + label span {
   letter-spacing: 1px;
   font-weight: bold;
   padding: 2px;
+}
+
+.btn-group {
+  margin-bottom: 10px;
 }
 
 .btn-primary.active.focus,
@@ -1269,7 +1283,7 @@ add-link.panel section {
 /* Contextual Info Panel*/
 contextual-info-panel.panel {
   background-color: $light-color;
-  margin-top: 345px;
+  margin-top: 365px;
 }
 
 .groupBar .group {
@@ -1437,6 +1451,7 @@ small-timeline .label.relationship {
 
   button {
     padding: 2px 8px;
+    margin-top: 5px;
     width: auto;
   }
 }

@@ -181,7 +181,7 @@ angular.module('redesign2017App').directive('forceLayout', ['apiService', '$time
             };
           });
 
-          if (scope.config.viewMode === 'individual-force' || scope.config.viewMode === 'individual-concentric') {
+          if (scope.config.viewMode === 'individual-force') {
             var newData = parseIndComplexity(thresholdLinks, complexity); // Use links in complexity function, which return nodes and links.
           } else if (scope.config.viewMode === 'shared-network') {
             var sources = json.data.attributes.primary_people;
@@ -213,7 +213,7 @@ angular.module('redesign2017App').directive('forceLayout', ['apiService', '$time
           }
           scope.addedLinks.forEach(function(a) { newLinks.push(a); });
 
-          if (scope.config.viewMode == 'individual-concentric') {
+          if (scope.config.viewMode === 'individual-force' && scope.$parent.config.layout == 'individual-concentric') {
             // For concentric layout, set fixed positions according to degree
             newNodes.forEach(function(d) {
               if (d.distance == 0) { // Set source node to center of view
@@ -230,11 +230,11 @@ angular.module('redesign2017App').directive('forceLayout', ['apiService', '$time
           } else if (scope.config.viewMode === 'shared-network') {
             newNodes.forEach( function(d) {
               if (d.id == sources[0]) {
-                d.fx = scope.singleWidth/8;
+                d.fx = scope.singleWidth/4;
                 d.fy = scope.singleHeight/2;
               }
               if (d.id == sources[1]) {
-                d.fx = scope.singleWidth * (7/8)
+                d.fx = scope.singleWidth * (3/4)
                 d.fy = scope.singleHeight/2
               }
             })
@@ -384,19 +384,19 @@ angular.module('redesign2017App').directive('forceLayout', ['apiService', '$time
               .attr('class', function(d) { // Class by degree of distance
                 if (scope.config.viewMode == 'shared-network') {
                   if (d.distance === 0) {
-                    return 'node degree' + 3
+                    return 'node shared degree' + 3
                   }
                   else if (d.distance === 1) {
-                    return 'node degree' + 4
+                    return 'node shared degree' + 4
                   }
                   else if (d.distance === 2) {
-                    return 'node degree' + 1
+                    return 'node shared degree' + 1
                   }
                   else if (d.distance === 3) {
-                    return 'node degree' + 0
+                    return 'node shared degree' + 0
                   }
                   else if (d.distance === 7) {
-                    return 'node degree' + 7
+                    return 'node shared degree' + 7
                   }
                 } else if (scope.config.viewMode === 'group-force') {
                   if (members.indexOf(d.id) === -1) {
@@ -658,22 +658,22 @@ angular.module('redesign2017App').directive('forceLayout', ['apiService', '$time
           var sourceId2 = sources[1]
           var oneDegreeNodes = [];
           thresholdLinks.forEach( function (l) {
-            if (l.source.id == sourceId1 || l.source.id == sourceId2 || l.target.id == sourceId1 || l.target.id == sourceId2) {
               oneDegreeNodes.push(l.target); oneDegreeNodes.push(l.source);
-            }
           })
+          sources = scope.data.included.filter(function(d) {return d.id === sourceId1 || d.id === sourceId2; });
+          oneDegreeNodes = oneDegreeNodes.concat(sources);
           oneDegreeNodes = Array.from(new Set(oneDegreeNodes));
 
-          var newLinks = thresholdLinks.filter(function(l) { if (oneDegreeNodes.indexOf(l.target) != -1 && oneDegreeNodes.indexOf(l.source) != -1) {return l; }; });
-
+          var newLinks = thresholdLinks;
           var sourceOneNeighbors = [];
           var sourceTwoNeighbors = [];
           newLinks.forEach(function(l){
-            if (l.source.id == sourceId1) {sourceOneNeighbors.push(l.target);}
-            else if (l.target.id == sourceId1) {sourceOneNeighbors.push(l.source);}
-            else if (l.source.id == sourceId2) {sourceTwoNeighbors.push(l.target);}
-            else if (l.target.id == sourceId2) {sourceTwoNeighbors.push(l.source);}
-          })
+            if (l.source.id == sourceId1 && l.target.id !== sourceId2) {sourceOneNeighbors.push(l.target);}
+            else if (l.target.id == sourceId1 && l.source.id !== sourceId2) {sourceOneNeighbors.push(l.source);}
+            else if (l.source.id == sourceId2 && l.target.id !== sourceId1) {sourceTwoNeighbors.push(l.target);}
+            else if (l.target.id == sourceId2 && l.source.id !== sourceId1) {sourceTwoNeighbors.push(l.source);}
+          });
+
           oneDegreeNodes.forEach(function(d){
             d.distance = null;
             if (d.id == sourceId1 || d.id == sourceId2) { d.distance = 0; }
@@ -741,114 +741,123 @@ angular.module('redesign2017App').directive('forceLayout', ['apiService', '$time
           range, return nodes and links according to given complexity (visual density)
           measure. */
 
-          // Find current 1-degree nodes
-          var oneDegreeNodes = [];
-          thresholdLinks.forEach(function(l) {
-            if (l.source.id == sourceId || l.target.id == sourceId) {
-              oneDegreeNodes.push(l.source);
-              oneDegreeNodes.push(l.target);
-            };
-          });
-          oneDegreeNodes = Array.from(new Set(oneDegreeNodes));
+          if (thresholdLinks.length === 0) {
+            var source = scope.data.included.filter(function(d) {return d.id === sourceId[0]});
+            source[0].distance = 0;
+            return [source, thresholdLinks];
+          } else {
+            // Find current 1-degree nodes
+            var oneDegreeNodes = [];
+            thresholdLinks.forEach(function(l) {
+              if (l.source.id == sourceId || l.target.id == sourceId) {
+                oneDegreeNodes.push(l.source);
+                oneDegreeNodes.push(l.target);
+              };
+            });
+            oneDegreeNodes = Array.from(new Set(oneDegreeNodes));
 
-          // Find current 2-degree nodes (anything not in 1-degree list and not source)
-          var twoDegreeNodes = [];
-          thresholdLinks.forEach(function(l) {
-            if (oneDegreeNodes.indexOf(l.source) != -1 && oneDegreeNodes.indexOf(l.target) == -1) {
-              twoDegreeNodes.push(l.target);
-            } else if (oneDegreeNodes.indexOf(l.target) != -1 && oneDegreeNodes.indexOf(l.source) == -1) {
-              twoDegreeNodes.push(l.source);
-            };
-          });
-          twoDegreeNodes = Array.from(new Set(twoDegreeNodes));
+            // Find current 2-degree nodes (anything not in 1-degree list and not source)
+            var twoDegreeNodes = [];
+            thresholdLinks.forEach(function(l) {
+              if (oneDegreeNodes.indexOf(l.source) != -1 && oneDegreeNodes.indexOf(l.target) == -1) {
+                twoDegreeNodes.push(l.target);
+              } else if (oneDegreeNodes.indexOf(l.target) != -1 && oneDegreeNodes.indexOf(l.source) == -1) {
+                twoDegreeNodes.push(l.source);
+              };
+            });
+            twoDegreeNodes = Array.from(new Set(twoDegreeNodes));
 
-          var allNodes = oneDegreeNodes.concat(twoDegreeNodes); // Get full list of nodes at threshold
+            var allNodes = oneDegreeNodes.concat(twoDegreeNodes); // Get full list of nodes at threshold
 
-          // Assign appropriate distance variable for source, 1-, and 2-degree nodes
-          allNodes.forEach(function(d) {
-            if (d.id == sourceId) {
-              d.distance = 0;
-            } else if (oneDegreeNodes.indexOf(d) != -1) {
-              d.distance = 1;
-            } else {
-              d.distance = 2;
-            }
-          });
-
-          // For Visual Density of 1, get only source and 1-degree nodes
-          // Only links from source to other nodes
-          if (complexity == '1') {
-            var newLinks = thresholdLinks.filter(function(l) {
-              if (l.source.id == sourceId || l.target.id == sourceId) { //Link must have sourceId as source or target
-                return l;
-              }
-            })
-            return [oneDegreeNodes, newLinks];
-          }
-
-          // For Visual Density of 1.5, get source and 1-degree nodes
-          // All links among these nodes
-          if (complexity == '1.5') {
-            var newLinks = thresholdLinks.filter(function(l) {
-              if (oneDegreeNodes.indexOf(l.source) != -1 && oneDegreeNodes.indexOf(l.target) != -1) { //Link must have 1-degree node as source and target
-                return l;
+            // Assign appropriate distance variable for source, 1-, and 2-degree nodes
+            allNodes.forEach(function(d) {
+              if (d.id == sourceId) {
+                d.distance = 0;
+              } else if (oneDegreeNodes.indexOf(d) != -1) {
+                d.distance = 1;
+              } else {
+                d.distance = 2;
               }
             });
-            return [oneDegreeNodes, newLinks];
-          }
 
-          /* For Visual Density of 1.5, get source, 1-degree, and
-          all 2-degree nodes that have links to **at least two** 1-degree
-          nodes. Plus all links among these nodes. */
-          if (complexity == '1.75') {
-            var newNodes = [];
-            twoDegreeNodes.forEach(function(d) {
-              var count = 0;
-              thresholdLinks.forEach(function(l) {
-                // Count links with a source or target in 1-degree node array
-                if (l.source == d && oneDegreeNodes.indexOf(l.target) != -1) {
-                  count += 1;
-                } else if (l.target == d && oneDegreeNodes.indexOf(l.source) != -1) {
-                  count += 1;
+            // For Visual Density of 1, get only source and 1-degree nodes
+            // Only links from source to other nodes
+            if (complexity == '1') {
+              var newLinks = thresholdLinks.filter(function(l) {
+                if (l.source.id == sourceId || l.target.id == sourceId) { //Link must have sourceId as source or target
+                  return l;
+                }
+              })
+              return [oneDegreeNodes, newLinks];
+            }
+
+            // For Visual Density of 1.5, get source and 1-degree nodes
+            // All links among these nodes
+            if (complexity == '1.5') {
+              var newLinks = thresholdLinks.filter(function(l) {
+                if (oneDegreeNodes.indexOf(l.source) != -1 && oneDegreeNodes.indexOf(l.target) != -1) { //Link must have 1-degree node as source and target
+                  return l;
+                }
+              });
+              return [oneDegreeNodes, newLinks];
+            }
+
+            /* For Visual Density of 1.5, get source, 1-degree, and
+            all 2-degree nodes that have links to **at least two** 1-degree
+            nodes. Plus all links among these nodes. */
+            if (complexity == '1.75') {
+              var newNodes = [];
+              twoDegreeNodes.forEach(function(d) {
+                var count = 0;
+                thresholdLinks.forEach(function(l) {
+                  // Count links with a source or target in 1-degree node array
+                  if (l.source == d && oneDegreeNodes.indexOf(l.target) != -1) {
+                    count += 1;
+                  } else if (l.target == d && oneDegreeNodes.indexOf(l.source) != -1) {
+                    count += 1;
+                  }
+                });
+
+                // Return only 2-degree nodes with count greater than 2
+                if (count >= 2) {
+                  newNodes.push(d);
                 }
               });
 
-              // Return only 2-degree nodes with count greater than 2
-              if (count >= 2) {
-                newNodes.push(d);
-              }
-            });
+              // Get 1-degree nodes, add to array, and get all links
+              newNodes = oneDegreeNodes.concat(newNodes);
+              newLinks = thresholdLinks.filter(function(l) {
+                if (newNodes.indexOf(l.source) != -1 && newNodes.indexOf(l.target) != -1) { //Link must have node in array as source and target
+                  return l;
+                }
+              });
+              newLinks = newLinks.filter(function(l) {
+                return oneDegreeNodes.indexOf(l.source) !== -1 || oneDegreeNodes.indexOf(l.target) !== -1;
+              })
+              return [newNodes, newLinks];
+            }
 
-            // Get 1-degree nodes, add to array, and get all links
-            newNodes = oneDegreeNodes.concat(newNodes);
-            newLinks = thresholdLinks.filter(function(l) {
-              if (newNodes.indexOf(l.source) != -1 && newNodes.indexOf(l.target) != -1) { //Link must have node in array as source and target
-                return l;
-              }
-            });
-            return [newNodes, newLinks];
-          }
+            /* For Visual Density of 2, get all nodes, plus all links among
+            1-degree nodes and any links from 2-degree nodes to 1-degree nodes.
+            (But NOT links between 2-degree nodes.) */
+            if (complexity == '2') {
+              newLinks = thresholdLinks.filter(function(l) {
+                if (oneDegreeNodes.indexOf(l.source) != -1 || oneDegreeNodes.indexOf(l.target) != -1) { //Link must have 1-degree node as source or target
+                  return l;
+                }
+              });
+              return [allNodes, newLinks];
+            }
 
-          /* For Visual Density of 2, get all nodes, plus all links among
-          1-degree nodes and any links from 2-degree nodes to 1-degree nodes.
-          (But NOT links between 2-degree nodes.) */
-          if (complexity == '2') {
-            newLinks = thresholdLinks.filter(function(l) {
-              if (oneDegreeNodes.indexOf(l.source) != -1 || oneDegreeNodes.indexOf(l.target) != -1) { //Link must have 1-degree node as source or target
-                return l;
-              }
-            });
-            return [allNodes, newLinks];
-          }
-
-          // For Visual Density of 2.5, get all available nodes and links.
-          if (complexity == '2.5') {
-            var newLinks = thresholdLinks.filter(function(l) {
-              if (allNodes.indexOf(l.source) != -1 && allNodes.indexOf(l.target) != -1) {
-                return l;
-              }
-            });
-            return [allNodes, newLinks];
+            // For Visual Density of 2.5, get all available nodes and links.
+            if (complexity == '2.5') {
+              var newLinks = thresholdLinks.filter(function(l) {
+                if (allNodes.indexOf(l.source) != -1 && allNodes.indexOf(l.target) != -1) {
+                  return l;
+                }
+              });
+              return [allNodes, newLinks];
+            }
           }
         }
 
@@ -1116,8 +1125,8 @@ angular.module('redesign2017App').directive('forceLayout', ['apiService', '$time
           }
         }, true);
 
-        scope.$watch('config.viewMode', function(newValue, oldValue) {
-          if (scope.config.viewMode !== 'group-timeline') {
+        scope.$watch('$parent.config.layout', function(newValue, oldValue) {
+          if (scope.config.viewMode === 'individual-force') {
             scope.updateNetwork(scope.data);
             simulation.alpha(1);
           }

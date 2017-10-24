@@ -62,15 +62,17 @@ angular.module('redesign2017App').component('visualization', {
         var personName = this.networkData.included[0].attributes.name;
         $scope.config.viewMode = 'individual-force';
         $scope.$parent.config.person1 = $stateParams.ids;
+        $scope.config.person1 = $stateParams.ids;
         $scope.networkName = "Hooke Network of " + personName;
         $scope.$parent.personTypeahead.selected = personName;
         $scope.$parent.sharedTypeahead.selected = '';
         $scope.$parent.config.viewObject = 0;
       } else if ($stateParams.ids.length > 8 && this.networkData.data.attributes.primary_people.length === 2) {
         $scope.config.viewMode = 'shared-network';
+        $scope.config.networkComplexity = 'all_connections';
         $scope.networkName = "Hooke Network of " + this.networkData.included[0].attributes.name + " & " + this.networkData.included[1].attributes.name;
-        // $scope.$parent.personTypeahead.selected = this.networkData.included[0].attributes.name;
-        // $scope.$parent.sharedTypeahead.selected = this.networkData.included[1].attributes.name;
+        $scope.$parent.personTypeahead.selected = this.networkData.included[0].attributes.name;
+        $scope.$parent.sharedTypeahead.selected = this.networkData.included[1].attributes.name;
       } else if ($stateParams.ids.length < 8) {
         $scope.config.viewMode = 'group-force';
         var groupName;
@@ -218,40 +220,42 @@ angular.module('redesign2017App').component('visualization', {
         }
       });
 
-      apiService.getGroups(listGroups.toString()).then(function (r) {
+      if (listGroups.length > 0) {
+        apiService.getGroups(listGroups.toString()).then(function (r) {
 
-        listGroups = _.countBy(listGroups);
+          listGroups = _.countBy(listGroups);
 
-        //Transform that dictionary into an array of objects (eg {'groupId': '81', 'value': 17})
-        var arr = [];
-        r.data.data.forEach(function (d) {
-            var obj = {
-              'name': d.attributes.name,
-              'groupId': d.id,
-              'value': listGroups[d.id]
-            }
-            arr.push(obj);
+          //Transform that dictionary into an array of objects (eg {'groupId': '81', 'value': 17})
+          var arr = [];
+          r.data.data.forEach(function (d) {
+              var obj = {
+                'name': d.attributes.name,
+                'groupId': d.id,
+                'value': listGroups[d.id]
+              }
+              arr.push(obj);
+          });
+
+          //Sort the array in descending order
+          arr.sort(function(a, b) {
+            return d3.descending(a.value, b.value);
+          })
+          var cutAt = 20;
+          var groupsBar = _.slice(arr, 0, cutAt);
+          var otherGroups = _.slice(arr, cutAt);
+          var othersValue = 0;
+          otherGroups.forEach(function(d) {
+            othersValue += d.value;
+          });
+          groupsBar.push({ 'groupId': 'others', 'value': othersValue, 'amount': otherGroups.length });
+
+          $scope.groups.groupsBar = groupsBar;
+          $scope.groups.otherGroups = otherGroups;
+          $scope.updateGroupBar($scope.groups);
+
+          // $scope.$emit('Update the groups bar', $scope.groups)
         });
-
-        //Sort the array in descending order
-        arr.sort(function(a, b) {
-          return d3.descending(a.value, b.value);
-        })
-        var cutAt = 20;
-        var groupsBar = _.slice(arr, 0, cutAt);
-        var otherGroups = _.slice(arr, cutAt);
-        var othersValue = 0;
-        otherGroups.forEach(function(d) {
-          othersValue += d.value;
-        });
-        groupsBar.push({ 'groupId': 'others', 'value': othersValue, 'amount': otherGroups.length });
-
-        $scope.groups.groupsBar = groupsBar;
-        $scope.groups.otherGroups = otherGroups;
-        $scope.updateGroupBar($scope.groups);
-
-        // $scope.$emit('Update the groups bar', $scope.groups)
-      });
+      }
     }
 
     //Functions for zoom and recenter buttons

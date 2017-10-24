@@ -61,7 +61,7 @@
     <button type="button" class="btn btn-primary" ng-click="searchODNB(currentSelection.attributes.odnb_id,currentSelection.attributes.name)">ODNB</button>
     <button type="button" class="btn btn-primary" ng-click="searchJstor(currentSelection.attributes.name.replace(' ','+'))">J Stor</button>
     <button type="button" class="btn btn-primary" ng-click="searchGoogle(currentSelection.attributes.name.replace(' ','+'))">Google</button>
-    <button ng-show="currentSelection.type !== 'group'" type="button" class="btn btn-primary" ng-click="selectedShared(currentSelection)">Shared Network</button>
+    <button ng-show="currentSelection.type === 'person' && (config.viewMode === 'individual-force' || config.viewMode === 'individual-concentric')" type="button" class="btn btn-primary" ui-sref="home.visualization({ ids: config.person1 + ',' + currentSelection.id })">Shared Network</button>
   </p>
   <!-- <p><a ng-click="scope.openTable()">Further info&hellip;</a></p> -->
 </section>
