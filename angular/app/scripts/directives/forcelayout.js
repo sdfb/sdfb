@@ -656,17 +656,13 @@ angular.module('redesign2017App').directive('forceLayout', ['apiService', '$time
 
           var sourceId1 = sources[0]
           var sourceId2 = sources[1]
-          console.log(sourceId1, sourceId2);
           var oneDegreeNodes = [];
           thresholdLinks.forEach( function (l) {
-            // if (l.source.id == sourceId1 || l.source.id == sourceId2 || l.target.id == sourceId1 || l.target.id == sourceId2) {
               oneDegreeNodes.push(l.target); oneDegreeNodes.push(l.source);
-            // }
           })
           oneDegreeNodes = Array.from(new Set(oneDegreeNodes));
 
-          var newLinks = thresholdLinks;//.filter(function(l) { if (oneDegreeNodes.indexOf(l.target) != -1 && oneDegreeNodes.indexOf(l.source) != -1) {return l; }; });
-
+          var newLinks = thresholdLinks;
           var sourceOneNeighbors = [];
           var sourceTwoNeighbors = [];
           newLinks.forEach(function(l){
