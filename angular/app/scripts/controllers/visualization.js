@@ -69,6 +69,7 @@ angular.module('redesign2017App').component('visualization', {
         $scope.$parent.config.viewObject = 0;
       } else if ($stateParams.ids.length > 8 && this.networkData.data.attributes.primary_people.length === 2) {
         $scope.config.viewMode = 'shared-network';
+        $scope.config.networkComplexity = 'all_connections';
         $scope.networkName = "Hooke Network of " + this.networkData.included[0].attributes.name + " & " + this.networkData.included[1].attributes.name;
         $scope.$parent.personTypeahead.selected = this.networkData.included[0].attributes.name;
         $scope.$parent.sharedTypeahead.selected = this.networkData.included[1].attributes.name;
