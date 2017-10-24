@@ -660,6 +660,8 @@ angular.module('redesign2017App').directive('forceLayout', ['apiService', '$time
           thresholdLinks.forEach( function (l) {
               oneDegreeNodes.push(l.target); oneDegreeNodes.push(l.source);
           })
+          sources = scope.data.included.filter(function(d) {return d.id === sourceId1 || d.id === sourceId2; });
+          oneDegreeNodes = oneDegreeNodes.concat(sources);
           oneDegreeNodes = Array.from(new Set(oneDegreeNodes));
 
           var newLinks = thresholdLinks;
@@ -671,6 +673,7 @@ angular.module('redesign2017App').directive('forceLayout', ['apiService', '$time
             else if (l.source.id == sourceId2 && l.target.id !== sourceId1) {sourceTwoNeighbors.push(l.target);}
             else if (l.target.id == sourceId2 && l.source.id !== sourceId1) {sourceTwoNeighbors.push(l.source);}
           });
+
           oneDegreeNodes.forEach(function(d){
             d.distance = null;
             if (d.id == sourceId1 || d.id == sourceId2) { d.distance = 0; }
