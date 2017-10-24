@@ -85,20 +85,23 @@ redesign2017App.config(function($stateProvider, $locationProvider) {
     url: '?ids&type',
     resolve: {
       networkData: ['apiService', '$stateParams', function(apiService, $stateParams) {
-        if ($stateParams.type === 'network' || $stateParams.type === 'timeline') {
-          if ($stateParams.ids.length < 8) {
-            return apiService.getGroupNetwork($stateParams.ids).then(function(result){
-              apiService.result = result;
-              return apiService.result;
-            });
-          } else {
-            return apiService.getNetwork($stateParams.ids).then(function(result){
-              apiService.result = result;
-              return apiService.result;
-            });
-          }
+        if ($stateParams.ids.length < 8 && $stateParams.type === 'network') {
+          return apiService.getGroupNetwork($stateParams.ids).then(function(result){
+            apiService.result = result;
+            return apiService.result;
+          });
+        } else if ($stateParams.ids.length < 8 && $stateParams.type === 'timeline') {
+          return apiService.getGroups($stateParams.ids).then(function(result){
+            apiService.result = result;
+            return apiService.result;
+          });
         } else if ($stateParams.type === 'all-groups') {
           return apiService.getAllGroups().then(function(result){
+            apiService.result = result;
+            return apiService.result;
+          });
+        } else {
+          return apiService.getNetwork($stateParams.ids).then(function(result){
             apiService.result = result;
             return apiService.result;
           });
