@@ -306,14 +306,10 @@ angular.module('redesign2017App')
             .attr('d', function(d) {
               return 'M' + x(d.attributes.start_year) + ',' + 0 + ' L' + (x(d.attributes.end_year)) + ',' + 0;
             });
-
-          // Change name of the viz
-          scope.config.title = ""
         }
 
         // action triggered from the controller
         scope.$watch('data', function(newValue, oldValue) {
-          // console.log(event, json);
           if (scope.config.viewMode === 'group-timeline') {
             var json = newValue.data;
             console.log(json);

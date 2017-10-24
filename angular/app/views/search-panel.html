@@ -16,6 +16,11 @@
       <i class="glyphicon glyphicon-remove"></i> No Results Found
     </div>
     <h5>Add a person to visualize a shared network</h5>
+    <h4>Visualization layout</h4>
+    <div class="btn-group btn-group-justified">
+      <label class="btn btn-primary" ng-model="config.layout" uib-btn-radio="'individual-force'">Hooke</label>
+      <label class="btn btn-primary" ng-model="config.layout" uib-btn-radio="'individual-concentric'">Concentric</label>
+    </div>
   </uib-tab>
   <uib-tab index="1" heading="Groups">
     <h4>All Groups</h4>
@@ -31,8 +36,14 @@
     <div ng-show="noResultsGroups">
       <i class="glyphicon glyphicon-remove"></i> No Results Found
     </div>
-
     <h5>Search here or double click on a node</h5>
+
+    <h4>Visualization layout</h4>
+    <div class="btn-group btn-group-justified">
+      <label class="btn btn-primary" ng-click="groupView('network')">Hooke</label>
+      <label class="btn btn-primary" ng-click="groupView('timeline')">Timeline</label>
+    </div>
+
 
   </uib-tab>
 </uib-tabset>

@@ -181,7 +181,7 @@ angular.module('redesign2017App').directive('forceLayout', ['apiService', '$time
             };
           });
 
-          if (scope.config.viewMode === 'individual-force' || scope.config.viewMode === 'individual-concentric') {
+          if (scope.config.viewMode === 'individual-force') {
             var newData = parseIndComplexity(thresholdLinks, complexity); // Use links in complexity function, which return nodes and links.
           } else if (scope.config.viewMode === 'shared-network') {
             var sources = json.data.attributes.primary_people;
@@ -213,7 +213,7 @@ angular.module('redesign2017App').directive('forceLayout', ['apiService', '$time
           }
           scope.addedLinks.forEach(function(a) { newLinks.push(a); });
 
-          if (scope.config.viewMode == 'individual-concentric') {
+          if (scope.config.viewMode === 'individual-force' && scope.$parent.config.layout == 'individual-concentric') {
             // For concentric layout, set fixed positions according to degree
             newNodes.forEach(function(d) {
               if (d.distance == 0) { // Set source node to center of view
@@ -1116,8 +1116,8 @@ angular.module('redesign2017App').directive('forceLayout', ['apiService', '$time
           }
         }, true);
 
-        scope.$watch('config.viewMode', function(newValue, oldValue) {
-          if (scope.config.viewMode !== 'group-timeline') {
+        scope.$watch('$parent.config.layout', function(newValue, oldValue) {
+          if (scope.config.viewMode === 'individual-force') {
             scope.updateNetwork(scope.data);
             simulation.alpha(1);
           }
