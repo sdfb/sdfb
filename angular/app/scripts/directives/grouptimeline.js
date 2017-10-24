@@ -120,6 +120,7 @@ angular.module('redesign2017App')
                   .duration(500) // apply it over 2000 milliseconds
                   .attr("transform", "translate(0, " + (y(e.id) + y.bandwidth() / 2) + ")")
               })
+              svg.attr("height", numLines * 20 + margin.top + margin.bottom);
               // update selction and trigger event for other directives
               // scope.currentSelection = {};
               // scope.$apply(); // no need to trigger events, just apply
@@ -192,7 +193,9 @@ angular.module('redesign2017App')
                 .classed('selected', true)
                 .transition() // apply a transition
                 .duration(500) // apply it over 2000 milliseconds
-                .attr("transform", "translate(0, " + (y(d.id) + 20 + y.bandwidth() / 2) + ")")
+                .attr("transform", "translate(0, " + (y(d.id) + 20 + y.bandwidth() / 2) + ")");
+
+              svg.attr("height", numLines * 20 + margin.top + margin.bottom + 200); //Make svg big enough for expanded item
             })
 
           person.append("rect")
