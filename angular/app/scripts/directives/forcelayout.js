@@ -738,117 +738,123 @@ angular.module('redesign2017App').directive('forceLayout', ['apiService', '$time
           range, return nodes and links according to given complexity (visual density)
           measure. */
 
-          // Find current 1-degree nodes
-          var oneDegreeNodes = [];
-          thresholdLinks.forEach(function(l) {
-            if (l.source.id == sourceId || l.target.id == sourceId) {
-              oneDegreeNodes.push(l.source);
-              oneDegreeNodes.push(l.target);
-            };
-          });
-          oneDegreeNodes = Array.from(new Set(oneDegreeNodes));
+          if (thresholdLinks.length === 0) {
+            var source = scope.data.included.filter(function(d) {return d.id === sourceId[0]});
+            source[0].distance = 0;
+            return [source, thresholdLinks];
+          } else {
+            // Find current 1-degree nodes
+            var oneDegreeNodes = [];
+            thresholdLinks.forEach(function(l) {
+              if (l.source.id == sourceId || l.target.id == sourceId) {
+                oneDegreeNodes.push(l.source);
+                oneDegreeNodes.push(l.target);
+              };
+            });
+            oneDegreeNodes = Array.from(new Set(oneDegreeNodes));
 
-          // Find current 2-degree nodes (anything not in 1-degree list and not source)
-          var twoDegreeNodes = [];
-          thresholdLinks.forEach(function(l) {
-            if (oneDegreeNodes.indexOf(l.source) != -1 && oneDegreeNodes.indexOf(l.target) == -1) {
-              twoDegreeNodes.push(l.target);
-            } else if (oneDegreeNodes.indexOf(l.target) != -1 && oneDegreeNodes.indexOf(l.source) == -1) {
-              twoDegreeNodes.push(l.source);
-            };
-          });
-          twoDegreeNodes = Array.from(new Set(twoDegreeNodes));
+            // Find current 2-degree nodes (anything not in 1-degree list and not source)
+            var twoDegreeNodes = [];
+            thresholdLinks.forEach(function(l) {
+              if (oneDegreeNodes.indexOf(l.source) != -1 && oneDegreeNodes.indexOf(l.target) == -1) {
+                twoDegreeNodes.push(l.target);
+              } else if (oneDegreeNodes.indexOf(l.target) != -1 && oneDegreeNodes.indexOf(l.source) == -1) {
+                twoDegreeNodes.push(l.source);
+              };
+            });
+            twoDegreeNodes = Array.from(new Set(twoDegreeNodes));
 
-          var allNodes = oneDegreeNodes.concat(twoDegreeNodes); // Get full list of nodes at threshold
+            var allNodes = oneDegreeNodes.concat(twoDegreeNodes); // Get full list of nodes at threshold
 
-          // Assign appropriate distance variable for source, 1-, and 2-degree nodes
-          allNodes.forEach(function(d) {
-            if (d.id == sourceId) {
-              d.distance = 0;
-            } else if (oneDegreeNodes.indexOf(d) != -1) {
-              d.distance = 1;
-            } else {
-              d.distance = 2;
-            }
-          });
-
-          // For Visual Density of 1, get only source and 1-degree nodes
-          // Only links from source to other nodes
-          if (complexity == '1') {
-            var newLinks = thresholdLinks.filter(function(l) {
-              if (l.source.id == sourceId || l.target.id == sourceId) { //Link must have sourceId as source or target
-                return l;
-              }
-            })
-            return [oneDegreeNodes, newLinks];
-          }
-
-          // For Visual Density of 1.5, get source and 1-degree nodes
-          // All links among these nodes
-          if (complexity == '1.5') {
-            var newLinks = thresholdLinks.filter(function(l) {
-              if (oneDegreeNodes.indexOf(l.source) != -1 && oneDegreeNodes.indexOf(l.target) != -1) { //Link must have 1-degree node as source and target
-                return l;
+            // Assign appropriate distance variable for source, 1-, and 2-degree nodes
+            allNodes.forEach(function(d) {
+              if (d.id == sourceId) {
+                d.distance = 0;
+              } else if (oneDegreeNodes.indexOf(d) != -1) {
+                d.distance = 1;
+              } else {
+                d.distance = 2;
               }
             });
-            return [oneDegreeNodes, newLinks];
-          }
 
-          /* For Visual Density of 1.5, get source, 1-degree, and
-          all 2-degree nodes that have links to **at least two** 1-degree
-          nodes. Plus all links among these nodes. */
-          if (complexity == '1.75') {
-            var newNodes = [];
-            twoDegreeNodes.forEach(function(d) {
-              var count = 0;
-              thresholdLinks.forEach(function(l) {
-                // Count links with a source or target in 1-degree node array
-                if (l.source == d && oneDegreeNodes.indexOf(l.target) != -1) {
-                  count += 1;
-                } else if (l.target == d && oneDegreeNodes.indexOf(l.source) != -1) {
-                  count += 1;
+            // For Visual Density of 1, get only source and 1-degree nodes
+            // Only links from source to other nodes
+            if (complexity == '1') {
+              var newLinks = thresholdLinks.filter(function(l) {
+                if (l.source.id == sourceId || l.target.id == sourceId) { //Link must have sourceId as source or target
+                  return l;
+                }
+              })
+              return [oneDegreeNodes, newLinks];
+            }
+
+            // For Visual Density of 1.5, get source and 1-degree nodes
+            // All links among these nodes
+            if (complexity == '1.5') {
+              var newLinks = thresholdLinks.filter(function(l) {
+                if (oneDegreeNodes.indexOf(l.source) != -1 && oneDegreeNodes.indexOf(l.target) != -1) { //Link must have 1-degree node as source and target
+                  return l;
+                }
+              });
+              return [oneDegreeNodes, newLinks];
+            }
+
+            /* For Visual Density of 1.5, get source, 1-degree, and
+            all 2-degree nodes that have links to **at least two** 1-degree
+            nodes. Plus all links among these nodes. */
+            if (complexity == '1.75') {
+              var newNodes = [];
+              twoDegreeNodes.forEach(function(d) {
+                var count = 0;
+                thresholdLinks.forEach(function(l) {
+                  // Count links with a source or target in 1-degree node array
+                  if (l.source == d && oneDegreeNodes.indexOf(l.target) != -1) {
+                    count += 1;
+                  } else if (l.target == d && oneDegreeNodes.indexOf(l.source) != -1) {
+                    count += 1;
+                  }
+                });
+
+                // Return only 2-degree nodes with count greater than 2
+                if (count >= 2) {
+                  newNodes.push(d);
                 }
               });
 
-              // Return only 2-degree nodes with count greater than 2
-              if (count >= 2) {
-                newNodes.push(d);
-              }
-            });
+              // Get 1-degree nodes, add to array, and get all links
+              newNodes = oneDegreeNodes.concat(newNodes);
+              newLinks = thresholdLinks.filter(function(l) {
+                if (newNodes.indexOf(l.source) != -1 && newNodes.indexOf(l.target) != -1) { //Link must have node in array as source and target
+                  return l;
+                }
+              });
+              newLinks = newLinks.filter(function(l) {
+                return oneDegreeNodes.indexOf(l.source) !== -1 || oneDegreeNodes.indexOf(l.target) !== -1;
+              })
+              return [newNodes, newLinks];
+            }
 
-            // Get 1-degree nodes, add to array, and get all links
-            newNodes = oneDegreeNodes.concat(newNodes);
-            newLinks = thresholdLinks.filter(function(l) {
-              if (newNodes.indexOf(l.source) != -1 && newNodes.indexOf(l.target) != -1) { //Link must have node in array as source and target
-                return l;
-              }
-            });
-            newLinks = newLinks.filter(function(l) {
-              return oneDegreeNodes.indexOf(l.source) !== -1 || oneDegreeNodes.indexOf(l.target) !== -1;
-            })
-            return [newNodes, newLinks];
-          }
+            /* For Visual Density of 2, get all nodes, plus all links among
+            1-degree nodes and any links from 2-degree nodes to 1-degree nodes.
+            (But NOT links between 2-degree nodes.) */
+            if (complexity == '2') {
+              newLinks = thresholdLinks.filter(function(l) {
+                if (oneDegreeNodes.indexOf(l.source) != -1 || oneDegreeNodes.indexOf(l.target) != -1) { //Link must have 1-degree node as source or target
+                  return l;
+                }
+              });
+              return [allNodes, newLinks];
+            }
 
-          /* For Visual Density of 2, get all nodes, plus all links among
-          1-degree nodes and any links from 2-degree nodes to 1-degree nodes.
-          (But NOT links between 2-degree nodes.) */
-          if (complexity == '2') {
-            newLinks = thresholdLinks.filter(function(l) {
-              if (oneDegreeNodes.indexOf(l.source) != -1 || oneDegreeNodes.indexOf(l.target) != -1) { //Link must have 1-degree node as source or target
-                return l;
-              }
-            });
-            return [allNodes, newLinks];
-          }
-
-          // For Visual Density of 2.5, get all available nodes and links.
-          if (complexity == '2.5') {
-            var newLinks = thresholdLinks.filter(function(l) {
-              if (allNodes.indexOf(l.source) != -1 && allNodes.indexOf(l.target) != -1) {
-                return l;
-              }
-            });
-            return [allNodes, newLinks];
+            // For Visual Density of 2.5, get all available nodes and links.
+            if (complexity == '2.5') {
+              var newLinks = thresholdLinks.filter(function(l) {
+                if (allNodes.indexOf(l.source) != -1 && allNodes.indexOf(l.target) != -1) {
+                  return l;
+                }
+              });
+              return [allNodes, newLinks];
+            }
           }
         }
 

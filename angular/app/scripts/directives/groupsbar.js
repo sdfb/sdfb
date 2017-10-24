@@ -115,7 +115,6 @@ angular.module('redesign2017App')
                 d3.selectAll('.link').classed('not-in-group', true);
                 apiService.getGroups(d.groupId).then(function (result) {
                   scope.currentSelection = result.data;
-                  console.log(scope.currentSelection);
                   scope.currentSelection.type = 'group';
                   $timeout(function(){
                     scope.$broadcast('selectionUpdated', scope.currentSelection);
