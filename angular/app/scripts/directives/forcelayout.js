@@ -230,11 +230,11 @@ angular.module('redesign2017App').directive('forceLayout', ['apiService', '$time
           } else if (scope.config.viewMode === 'shared-network') {
             newNodes.forEach( function(d) {
               if (d.id == sources[0]) {
-                d.fx = scope.singleWidth/8;
+                d.fx = scope.singleWidth/4;
                 d.fy = scope.singleHeight/2;
               }
               if (d.id == sources[1]) {
-                d.fx = scope.singleWidth * (7/8)
+                d.fx = scope.singleWidth * (3/4)
                 d.fy = scope.singleHeight/2
               }
             })
