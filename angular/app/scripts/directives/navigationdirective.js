@@ -28,6 +28,10 @@ angular.module('redesign2017App')
           }
         }
 
+        var now = new Date()
+        console.log(now);
+        scope.today = now.getFullYear() + '_' + (now.getMonth()+1) + '_' + now.getDate();
+
       }
     };
   });
