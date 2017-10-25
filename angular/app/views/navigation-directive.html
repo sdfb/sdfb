@@ -23,7 +23,7 @@
 
         <ul class="nav navbar-nav navbar-right">
           <li><a ui-sref="browse">Browse</a></li>
-          <li ng-show="config.login.status"><a href ng-click="openCurate()">Curate</a></li>
+
           <li uib-dropdown>
             <a class="nav-link dropdown-toggle"  uib-dropdown-toggle style="display: inline-block; cursor: pointer;">
               Download
@@ -34,6 +34,7 @@
             </ul>
           </li>
           <li><a>About</a></li>
+          <li class="log-in" ng-show="config.login.status"><a href ng-click="openCurate()">Curate</a></li>
           <li class="log-in" uib-dropdown>
             <a class="nav-link dropdown-toggle login-toggle"  uib-dropdown-toggle style="display: inline-block; cursor: pointer;">
               <span ng-show="!config.login.status">Login</span>
