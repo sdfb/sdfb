@@ -49,6 +49,7 @@ angular.module('redesign2017App').component('visualization', {
     $scope.newLink = {};
     $scope.newGroup = {};
     $scope.groupAssign = {person: {}, group: {}};
+    $scope.citation = 'hello';
 
     this.$onChanges = function() {
       $scope.data = this.networkData;

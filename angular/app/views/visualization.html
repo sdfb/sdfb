@@ -2,6 +2,7 @@
   <section class="on-the-left">
     <contextual-info-panel class="panel" ng-show=" config.viewMode != 'group-timeline' "></contextual-info-panel>
     <legend-panel class="panel timeline-legend" ng-if=" config.viewMode == 'group-timeline' "></legend-panel>
+    <input readonly onClick="this.select()" ng-value="citation"/>
   </section>
   <div id="viz-title" ng-show="config.viewMode !== 'group-timeline'">{{ networkName }}</div>
   <section class="on-the-right" ng-show=" config.viewMode != 'group-timeline' ">
