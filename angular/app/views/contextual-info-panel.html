@@ -58,9 +58,9 @@
 <section id="more-info" ng-if="currentSelection.type">
   <p>
 
-    <button type="button" class="btn btn-primary" ng-click="searchODNB(currentSelection.attributes.odnb_id,currentSelection.attributes.name)">ODNB</button>
-    <button type="button" class="btn btn-primary" ng-click="searchJstor(currentSelection.attributes.name.replace(' ','+'))">J Stor</button>
-    <button type="button" class="btn btn-primary" ng-click="searchGoogle(currentSelection.attributes.name.replace(' ','+'))">Google</button>
+    <img src='/images/odnb.gif' ng-click="searchODNB(currentSelection.attributes.odnb_id,currentSelection.attributes.name)"/>
+    <img src='/images/jstor.png' ng-click="searchJstor(currentSelection.attributes.name.replace(' ','+'))"/>
+    <i class="fa fa-google" ng-click="searchGoogle(currentSelection.attributes.name.replace(' ','+'))"></i>
     <button ng-show="currentSelection.type === 'person' && (config.viewMode === 'individual-force' || config.viewMode === 'individual-concentric')" type="button" class="btn btn-primary" ui-sref="home.visualization({ ids: config.person1 + ',' + currentSelection.id })">Shared Network</button>
   </p>
   <!-- <p><a ng-click="scope.openTable()">Further info&hellip;</a></p> -->

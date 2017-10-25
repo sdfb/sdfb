@@ -1466,11 +1466,20 @@ small-timeline .label.relationship {
 
 #more-info img {
   width: auto;
-  height: 25px;
+  height: 35px;
+
+  cursor: pointer;
 }
 
 #more-info i {
-  font-size: 27px;
+  font-size: 35px;
+  // margin-top: 5px;
+  cursor: pointer;
+  vertical-align: middle;
+}
+
+#more-info button {
+  margin-left: 20px;
 }
 /* people finder */
 people-finder {
