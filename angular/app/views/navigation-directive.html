@@ -29,13 +29,13 @@
               Download
             </a>
             <ul uib-dropdown-menu class="dropdown-menu" style="padding:17px;">
-              <li><a>People</a></li>
-              <li><a>Relationships</a></li>
+              <li><a target="_self" href="/data/SDFB_people_2017_10_13.csv" download="SDFB_people_2017_10_13.csv">People</a></li>
+              <li><a target="_self" href="/data/SDFB_relationships_2017_10_13.csv" download="SDFB_relationships_2017_10_13.csv">Relationships</a></li>
             </ul>
           </li>
           <li><a>About</a></li>
           <li class="log-in" uib-dropdown>
-            <a class="nav-link dropdown-toggle"  uib-dropdown-toggle style="display: inline-block; cursor: pointer;">
+            <a class="nav-link dropdown-toggle login-toggle"  uib-dropdown-toggle style="display: inline-block; cursor: pointer;">
               <span ng-show="!config.login.status">Login</span>
               <span ng-show="config.login.status">{{config.login.user}}</span>
             </a>

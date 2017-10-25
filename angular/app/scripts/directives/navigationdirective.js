@@ -23,7 +23,7 @@ angular.module('redesign2017App')
             }
           }
           else {
-            $('.dropdown-toggle').dropdown('toggle');
+            $('.login-toggle').dropdown('toggle');
             scope.cursorStyle = {'cursor': 'auto'};
           }
         }
