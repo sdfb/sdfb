@@ -36,6 +36,10 @@ angular.module('redesign2017App')
           window.open(url.replace('{{name}}', name.toLowerCase()), '_blank');
         }
 
+        scope.download = 'data:text/json;charset=utf-8,' +  encodeURIComponent(JSON.stringify(scope.data));
+
+        console.log(scope.download);
+
         scope.$watch('currentSelection', function(newValue, oldValue) {
           if (scope.currentSelection.type == 'group') {
             scope.currentSelection.includes.forEach(function(p, i) {
