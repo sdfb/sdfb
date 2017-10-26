@@ -49,29 +49,31 @@ angular.module('redesign2017App').component('visualization', {
     $scope.newLink = {};
     $scope.newGroup = {};
     $scope.groupAssign = {person: {}, group: {}};
-    $scope.citation = 'hello';
+
 
     this.$onChanges = function() {
       $scope.data = this.networkData;
       if ($stateParams.type === 'all-groups') {
         $scope.config.viewMode = 'all';
-        $scope.networkName = "Co-membership of All Groups"
+        $scope.config.networkName = "Co-membership of All Groups"
         $scope.$parent.groupTypeahead.selected = '';
       } else if ($stateParams.ids.length < 8 && $stateParams.type === 'timeline') {
         $scope.config.viewMode = 'group-timeline';
+        var groupName = $scope.data.data.data[0].attributes.name;
+        $scope.config.networkName = "Group Timeline of " + groupName;
       } else if ($stateParams.ids.length >= 8 && this.networkData.data.attributes.primary_people.length === 1) {
         var personName = this.networkData.included[0].attributes.name;
         $scope.config.viewMode = 'individual-force';
         $scope.$parent.config.person1 = $stateParams.ids;
         $scope.config.person1 = $stateParams.ids;
-        $scope.networkName = "Hooke Network of " + personName;
+        $scope.config.networkName = "Hooke Network of " + personName;
         $scope.$parent.personTypeahead.selected = personName;
         $scope.$parent.sharedTypeahead.selected = '';
         $scope.$parent.config.viewObject = 0;
       } else if ($stateParams.ids.length > 8 && this.networkData.data.attributes.primary_people.length === 2) {
         $scope.config.viewMode = 'shared-network';
         $scope.config.networkComplexity = 'all_connections';
-        $scope.networkName = "Hooke Network of " + this.networkData.included[0].attributes.name + " & " + this.networkData.included[1].attributes.name;
+        $scope.config.networkName = "Hooke Network of " + this.networkData.included[0].attributes.name + " & " + this.networkData.included[1].attributes.name;
         $scope.$parent.personTypeahead.selected = this.networkData.included[0].attributes.name;
         $scope.$parent.sharedTypeahead.selected = this.networkData.included[1].attributes.name;
       } else if ($stateParams.ids.length < 8) {
@@ -84,11 +86,29 @@ angular.module('redesign2017App').component('visualization', {
         });
         $scope.groupName = groupName;
         $scope.data.included = $scope.data.included.filter(function(n) { return n.id !== $scope.data.data.id; });
-        $scope.networkName = "Hooke Network of " + groupName;
+        $scope.config.networkName = "Hooke Network of " + groupName;
         $scope.$parent.groupTypeahead.selected = groupName;
         $scope.$parent.config.viewObject = 1;
       }
     };
+
+    $scope.citation = function() {
+      var now = new Date()
+      if ($scope.config.confidenceMax > 100) {
+        $scope.config.confidenceMax = 100;
+      }
+      if ($scope.config.viewMode !== 'group-timeline' && $scope.config.viewMode !== 'group-force' && $scope.config.viewMode !== 'all') {
+        return $scope.config.networkName + ", ("+$scope.config.networkComplexity+", "+$scope.config.dateMin+"-"+$scope.config.dateMax+", "+$scope.config.confidenceMin+"-"+$scope.config.confidenceMax+"%). Six Degrees of Francis Bacon. "+$location.$$absUrl+", "+(now.getMonth()+1)+"/"+now.getDate()+"/"+now.getFullYear() + '.';
+      } else {
+        return $scope.config.networkName + ", (1500-1700). Six Degrees of Francis Bacon. "+$location.$$absUrl+", "+(now.getMonth()+1)+"/"+now.getDate()+"/"+now.getFullYear() + '.';
+      }
+    }
+    // $scope.watch('config', function(newValue, oldValue) {
+    //   // if (newValue !== oldValue) {
+    //
+    //     console.log($scope.citation);
+    //   // }
+    // }, true);
 
     // Container for data related to groups
     $scope.groups = {};

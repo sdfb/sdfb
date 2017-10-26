@@ -312,7 +312,6 @@ angular.module('redesign2017App')
         scope.$watch('data', function(newValue, oldValue) {
           if (scope.config.viewMode === 'group-timeline') {
             var json = newValue.data;
-            console.log(json);
             groupInfo = json.data[0].attributes;
             groupInfo.id = json.data[0].id;
 
