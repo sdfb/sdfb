@@ -7,7 +7,7 @@
  * # navigationDirective
  */
 angular.module('redesign2017App')
-  .directive('navigationDirective', function () {
+  .directive('navigationDirective', ['$window', function ($window) {
     return {
       templateUrl: './views/navigation-directive.html',
       restrict: 'E',
@@ -23,7 +23,8 @@ angular.module('redesign2017App')
             }
           }
           else {
-            $('.login-toggle').dropdown('toggle');
+            // $('.login-toggle').dropdown('toggle');
+            $window.alert("You must log in before you can contribute.")
             scope.cursorStyle = {'cursor': 'auto'};
           }
         }
@@ -33,4 +34,4 @@ angular.module('redesign2017App')
 
       }
     };
-  });
+  }]);
