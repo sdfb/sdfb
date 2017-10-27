@@ -7,9 +7,9 @@
       <input readonly class="form-control" onClick="this.select()" ng-model="citation" ng-model-options="{ getterSetter: true }"/>
     </div>
   </section>
-  <div id="viz-title" ng-show="config.viewMode !== 'group-timeline'">
+  <div id="viz-title">
     <div>{{ config.networkName }}</div>
-    <p>{{ config.networkDesc }} and dates</p>
+    <p>{{ config.networkDesc }}</p>
   </div>
   <section class="on-the-right" ng-show=" config.viewMode != 'group-timeline' ">
     <button ng-show="config.contributionMode && config.added" class="btn btn-primary contribute submit-data" ng-click="openReview()">Review & Submit<i class="fa fa-paper-plane-o" aria-hidden="true"></i></button>
