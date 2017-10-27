@@ -36,7 +36,8 @@ angular.module('redesign2017App')
           window.open(url.replace('{{name}}', name.toLowerCase()), '_blank');
         }
 
-        scope.download = 'data:text/json;charset=utf-8,' +  encodeURIComponent(JSON.stringify(scope.data));
+
+        scope.download = 'data:attachment/json;charset=utf-8,' +  encodeURIComponent(JSON.stringify(scope.data));
 
         console.log(scope.download);
 
