@@ -86,15 +86,18 @@ angular.module('redesign2017App').component('visualization', {
         $scope.$parent.groupTypeahead.selected = '';
       } else if ($stateParams.ids.length < 8) {
         $scope.config.viewMode = 'group-force';
-        var groupName;
+        var groupName,
+            groupDescription;
         $scope.data.included.forEach( function(item) {
           if (item.id === $scope.data.data.id) {
             groupName = item.attributes.name;
+            groupDescription = item.attributes.description;
           }
         });
         $scope.groupName = groupName;
         $scope.data.included = $scope.data.included.filter(function(n) { return n.id !== $scope.data.data.id; });
         $scope.config.networkName = "Hooke Network of " + groupName;
+        $scope.config.networkDesc = groupDescription;
         $scope.$parent.groupTypeahead.selected = groupName;
         $scope.$parent.personTypeahead.selected = '';
         $scope.$parent.sharedTypeahead.selected = '';
