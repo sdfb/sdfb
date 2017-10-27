@@ -3,11 +3,14 @@
     <contextual-info-panel class="panel" ng-show=" config.viewMode != 'group-timeline' "></contextual-info-panel>
     <legend-panel class="panel timeline-legend" ng-if=" config.viewMode == 'group-timeline' "></legend-panel>
     <div class="panel collapsable">
-      <h4>Cite this:</h4> 
+      <h4>Cite this:</h4>
       <input readonly class="form-control" onClick="this.select()" ng-model="citation" ng-model-options="{ getterSetter: true }"/>
     </div>
   </section>
-  <div id="viz-title" ng-show="config.viewMode !== 'group-timeline'">{{ config.networkName }}</div>
+  <div id="viz-title" ng-show="config.viewMode !== 'group-timeline'">
+    <div>{{ config.networkName }}</div>
+    <p>{{ config.networkDesc }} and dates</p>
+  </div>
   <section class="on-the-right" ng-show=" config.viewMode != 'group-timeline' ">
     <button ng-show="config.contributionMode && config.added" class="btn btn-primary contribute submit-data" ng-click="openReview()">Review & Submit<i class="fa fa-paper-plane-o" aria-hidden="true"></i></button>
     <add-node ng-show="config.contributionMode && config.viewMode !== 'all'" class="panel collapsable collapsed orange-panel add-node" ng-class="{'collapsed' : addNodeClosed}"></add-node>

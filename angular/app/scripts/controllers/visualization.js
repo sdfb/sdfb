@@ -57,18 +57,25 @@ angular.module('redesign2017App').component('visualization', {
         $scope.config.viewMode = 'all';
         $scope.config.networkName = "Co-membership of All Groups"
         $scope.$parent.groupTypeahead.selected = '';
+        $scope.$parent.personTypeahead.selected = '';
+        $scope.$parent.sharedTypeahead.selected = '';
       } else if ($stateParams.ids.length < 8 && $stateParams.type === 'timeline') {
         $scope.config.viewMode = 'group-timeline';
         var groupName = $scope.data.data.data[0].attributes.name;
         $scope.config.networkName = "Group Timeline of " + groupName;
+        $scope.config.networkDesc = $scope.data.data.data[0].attributes.description;
+        $scope.$parent.personTypeahead.selected = '';
+        $scope.$parent.sharedTypeahead.selected = '';
       } else if ($stateParams.ids.length >= 8 && this.networkData.data.attributes.primary_people.length === 1) {
         var personName = this.networkData.included[0].attributes.name;
         $scope.config.viewMode = 'individual-force';
         $scope.$parent.config.person1 = $stateParams.ids;
         $scope.config.person1 = $stateParams.ids;
         $scope.config.networkName = "Hooke Network of " + personName;
+        $scope.config.networkDesc = this.networkData.included[0].attributes.historical_significance;
         $scope.$parent.personTypeahead.selected = personName;
         $scope.$parent.sharedTypeahead.selected = '';
+        $scope.$parent.groupTypeahead.selected = '';
         $scope.$parent.config.viewObject = 0;
       } else if ($stateParams.ids.length > 8 && this.networkData.data.attributes.primary_people.length === 2) {
         $scope.config.viewMode = 'shared-network';
@@ -76,6 +83,7 @@ angular.module('redesign2017App').component('visualization', {
         $scope.config.networkName = "Hooke Network of " + this.networkData.included[0].attributes.name + " & " + this.networkData.included[1].attributes.name;
         $scope.$parent.personTypeahead.selected = this.networkData.included[0].attributes.name;
         $scope.$parent.sharedTypeahead.selected = this.networkData.included[1].attributes.name;
+        $scope.$parent.groupTypeahead.selected = '';
       } else if ($stateParams.ids.length < 8) {
         $scope.config.viewMode = 'group-force';
         var groupName;
@@ -88,6 +96,8 @@ angular.module('redesign2017App').component('visualization', {
         $scope.data.included = $scope.data.included.filter(function(n) { return n.id !== $scope.data.data.id; });
         $scope.config.networkName = "Hooke Network of " + groupName;
         $scope.$parent.groupTypeahead.selected = groupName;
+        $scope.$parent.personTypeahead.selected = '';
+        $scope.$parent.sharedTypeahead.selected = '';
         $scope.$parent.config.viewObject = 1;
       }
     };
