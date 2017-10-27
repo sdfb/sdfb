@@ -37,9 +37,7 @@ angular.module('redesign2017App')
         }
 
 
-        scope.download = 'data:attachment/json;charset=utf-8,' +  encodeURIComponent(JSON.stringify(scope.data));
-
-        console.log(scope.download);
+        scope.download = 'data:attachment/json;charset=utf-8,' +  encodeURIComponent(JSON.stringify(scope.data, null, 2));
 
         scope.$watch('currentSelection', function(newValue, oldValue) {
           if (scope.currentSelection.type == 'group') {
