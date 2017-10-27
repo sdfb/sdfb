@@ -167,7 +167,7 @@ path.danger {
   position: fixed;
   pointer-events: none;
   z-index: 100;
-  text-align: center;
+  // text-align: center;
 }
 
 .panels-container * {
@@ -191,9 +191,9 @@ path.danger {
 
 .on-the-left,
 .on-the-right {
-  min-width: 270px;
-  width: 25%;
-  max-width: 320px;
+  // min-width: 20vw;
+  width: 25vw;
+  // max-width: 25vw;
   pointer-events: none;
   position: relative;
 }
@@ -355,7 +355,11 @@ path.danger {
   box-sizing: border-box;
 }
 
-.panel.collapsable > section {
+.panel.collapsable.search {
+  padding: 0;
+}
+
+.panel.collapsable > section, .panel.collapsable > div {
   opacity: 1;
   -webkit-transition: opacity 0.5s 0.3s;
   transition: opacity 0.5s 0.3s;
@@ -363,7 +367,7 @@ path.danger {
   transition-timing-function: ease-in-out;
 }
 
-.panel.collapsable.collapsed > section {
+.panel.collapsable.collapsed > section, .panel.collapsable.collapsed > div {
   opacity: 0;
   -webkit-transition: opacity 0.5s ease;
   transition: opacity 0.5s ease;
@@ -376,6 +380,19 @@ path.danger {
   padding-right: 3px;
   position: absolute;
   right: 10px;
+  text-align: center;
+  top: 12px;
+  width: 15px;
+  text-shadow: none;
+}
+
+.panel.collapsable > .close-left {
+  display: block;
+  font-size: 14px;
+  opacity: 1;
+  padding-left: 3px;
+  position: absolute;
+  left: 10px;
   text-align: center;
   top: 12px;
   width: 15px;
@@ -395,6 +412,12 @@ path.danger {
   top: 7px;
 }
 
+.panel.collapsable.collapsed > .close-left {
+  color: $mainTextColor;
+  left: 6px;
+  top: 7px;
+}
+
 .remove-btn {
   position: absolute;
   right: 0;
@@ -410,10 +433,10 @@ path.danger {
 }
 
 #viz-title {
-  // position: absolute;
-  display: inline-block;
+  position: absolute;
+  // display: inline-block;
   // top: 10px;
-  // left: calc(100% + 10px);
+  left: 37%;//calc(40% + 10px);
   font-size: 18px;
   color: #434055;
   letter-spacing: 0.75px;
@@ -423,6 +446,7 @@ path.danger {
   border: 1px solid $panels-stroke;
   border-radius: 4px;
   padding: 2.5px;
+  text-align: center;
 }
 /* search panel styles*/
 search-panel.panel {

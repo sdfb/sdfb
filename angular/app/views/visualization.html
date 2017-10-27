@@ -1,8 +1,8 @@
 <div class="panels-container">
   <section class="on-the-left">
-    <contextual-info-panel class="panel" ng-show=" config.viewMode != 'group-timeline' "></contextual-info-panel>
-    <legend-panel class="panel timeline-legend" ng-if=" config.viewMode == 'group-timeline' "></legend-panel>
-    <div class="panel collapsable">
+    <contextual-info-panel class="panel" ng-show=" config.viewMode != 'group-timeline' && !$parent.searchClosed "></contextual-info-panel>
+    <legend-panel class="panel timeline-legend" ng-if=" config.viewMode == 'group-timeline' && !$parent.searchClosed "></legend-panel>
+    <div class="panel collapsable" ng-show="!$parent.searchClosed">
       <h4>Cite this:</h4>
       <input readonly class="form-control" onClick="this.select()" ng-model="citation" ng-model-options="{ getterSetter: true }"/>
     </div>
