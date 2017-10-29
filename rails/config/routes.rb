@@ -16,7 +16,9 @@ Sdfb::Application.routes.draw do
     post 'api/write'
     post 'api/sign_in', action: :create, controller: :sessions
     post 'api/sign_out', action: :destroy, controller: :sessions
-    post 'api/password_reset', action: :create, controller: :password_resets
+    post 'api/request_password_reset', action: :create, controller: :password_resets
+    post 'api/password_reset', action: :update, controller: :password_resets
+
   end
 
   # Static Pages
