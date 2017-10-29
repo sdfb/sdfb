@@ -81,7 +81,7 @@ class User < ActiveRecord::Base
   # -----------------------------
   def as_json(options={})
     options[:except] ||= [:password, :password_digest, :password_confirmation, :password_hash, :password_salt, :password_reset_sent_at, :password_reset_token]
-    options[:methods] ||= [:points]
+    options[:methods] ||= [:points, :contributions]
       super(options)
   end
 
@@ -114,6 +114,48 @@ class User < ActiveRecord::Base
         points += UserRelContrib.approved_user(self.id).to_a.count()
     end
     return points
+  end
+
+  def contributions
+    obj = {}
+    obj[:people] = Person.for_user(self.id).collect do |g| 
+      {
+        id: g.id, 
+        name: g.display_name, 
+        is_approved: g.is_approved
+      }
+    end
+    obj[:relationships] = Relationship.for_user(self.id).collect do |g| 
+      {
+        id: g.id, 
+        people: g.get_both_names, 
+        is_approved: g.is_approved
+      }
+    end
+    obj[:relationship_types] = UserRelContrib.for_user(self.id).collect do |g| 
+      {
+        id: g.id, 
+        people: g.get_both_names, 
+        type: g.relationship_type.name,
+        is_approved: g.is_approved
+      }
+    end
+    obj[:groups] = Group.for_user(self.id).collect do |g| 
+      {
+        id: g.id, 
+        name: g.name, 
+        is_approved: g.is_approved
+      }
+    end
+    obj[:group_assignments] = GroupAssignment.for_user(self.id).collect do |g|
+      {
+        id: g.id, 
+        person_name: g.person.display_name, 
+        group_name: g.group.name, 
+        is_approved: g.is_approved
+      }
+    end
+    obj
   end
 
   def first_name_present?

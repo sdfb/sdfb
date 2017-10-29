@@ -1,6 +1,28 @@
 class ApiController < ApplicationController
   skip_before_filter :verify_authenticity_token
 
+  def users
+    return head(:forbidden) unless current_user
+    user_id = params[:id]
+    return head(:bad_request) unless user_id
+
+    # you can only get your own ID unless you're an admin
+    unless current_user.user_type == "Admin"
+      return head(:forbidden) unless user_id == current_user.id.to_s
+    end
+
+    respond_to do |format|
+      begin
+        user = User.find(user_id)
+        format.json { render json: user.as_json}
+        format.html { render :json}
+      rescue ActiveRecord::RecordNotFound => e
+        format.json { render json: {}, status: :unprocessable_entity }
+        format.html { render :json}
+      end
+    end
+  end
+
   def write
 
     person_lookup = {}
@@ -170,7 +192,6 @@ class ApiController < ApplicationController
     ids = params[:ids].split(",")
     begin
       @relationships = Relationship.includes(:user_rel_contribs).find(ids)
-      puts @relationships.inspect
     rescue ActiveRecord::RecordNotFound => e
       @errors = []
       @errors << {title: "Invalid relationship ID(s)"}
