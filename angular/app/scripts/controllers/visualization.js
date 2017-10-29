@@ -300,7 +300,13 @@ angular.module('redesign2017App').component('visualization', {
         var sourceId = $scope.data.data.attributes.primary_people;
         var sourceNode = nodes.filter(function(d) { return (d.id == sourceId) })[0]; // Get source node element by its ID
         // Transition source node to center of rect
-        $scope.singleSvg.transition().duration(750).call($scope.singleZoom.transform, d3.zoomIdentity.translate($scope.singleWidth / 2 - sourceNode.x, $scope.singleHeight / 2 - sourceNode.y));
+        // console.log(sourceNode.x, sourceNode.y)
+        // if (sourceNode.x === 0 && sourceNode.y === 0) {
+        //   console.log('first recenter');
+        //   $scope.singleSvg.transition().duration(750).call($scope.singleZoom.transform, d3.zoomIdentity.translate($scope.singleWidth / 16, $scope.singleHeight / 16));
+        // } else {
+          $scope.singleSvg.transition().duration(750).call($scope.singleZoom.transform, d3.zoomIdentity.translate($scope.singleWidth / 2 - sourceNode.x, $scope.singleHeight / 2 - sourceNode.y));
+        // }
       } else {
         $scope.singleSvg.transition().duration(750).call($scope.singleZoom.transform, d3.zoomIdentity);
       }
