@@ -38,20 +38,51 @@
           <li class="log-in" uib-dropdown>
             <a class="nav-link dropdown-toggle login-toggle"  uib-dropdown-toggle style="display: inline-block; cursor: pointer;">
               <span ng-show="!config.login.status">Login</span>
-              <span ng-show="config.login.status">{{config.login.user}}</span>
+              <span ng-show="config.login.status">{{user.username}}</span>
             </a>
             <div ng-show="!config.login.status" uib-dropdown-menu class="dropdown-menu" style="padding:17px;">
               <form class="form" id="formLogin">
-                <h3>Username</h3>
-                <input class="form-control" name="username" id="username" placeholder="Username" type="text">
+                <h3>Email</h3>
+                <input class="form-control" ng-model="user.email" name="email" id="email" placeholder="Email" type="text">
                 <h3>Password</h3>
-                <input class="form-control" name="password" id="password" placeholder="Password" type="password"><br>
-                <button type="button" id="btnLogin" class="btn btn-primary" ng-click="config.login.status = true;">Login</button>
+                <input class="form-control" ng-model="user.password" name="password" id="password" placeholder="Password" type="password"><br>
+                <button type="button" id="btnLogin" class="btn btn-primary" ng-click="logIn()">Login</button>
               </form>
             </div>
-            <div ng-show="config.login.status" uib-dropdown-menu class="dropdown-menu" style="padding:17px;">
-              <div>User information here</div>
-              <button type="button" id="btnLogin" class="btn btn-primary" ng-click="config.login.status = false; config.contributionMode = false;">Log Out</button>
+            <div ng-show="config.login.status" uib-dropdown-menu class="dropdown-menu user-info" style="padding:17px;">
+              <h5>{{user.first_name}} {{user.last_name}} ({{user.id}})</h5>
+              <a>edit profile</a>
+              <a>log out</a>
+              <p>{{user.user_type}} User</p>
+
+              <p>Affiliation: {{user.affiliation}}</p>
+              <p>ORCID: {{user.orcid}}</p>
+              <p>Email: {{user.email}}</p>
+              <div>You've made {{user.points}} contributions!</div>
+              <div class="user-contributions">
+                <h5>People</h5>
+                <div ng-repeat="person in user.contributions.people">
+                  <a ui-sref="home.visualization({ ids: person.id })">{{person.name}}</a>
+                </div>
+                <h5>Relationships</h5>
+                <div ng-repeat="rel in user.contributions.relationships">
+                  {{rel.people}}
+                </div>
+                <h5>Relationship Type Assignments</h5>
+                <div ng-repeat="relType in user.contributions.relationship_types">
+                  {{relType.people}}: {{relType.type}}
+                </div>
+                <h5>Groups</h5>
+                <div ng-repeat="group in user.contributions.groups">
+                  <a ui-sref="home.visualization({ ids: group.id })">{{group.name}}</a>
+                </div>
+                <h5>Group Assignments</h5>
+                <div ng-repeat="groupAssign in user.contributions.group_assignments">
+                  {{groupAssign.person_name}} in {{groupAssign.group_name}}
+                </div>
+              </div>
+
+              <!-- <button type="button" id="btnLogin" class="btn btn-primary" ng-click="config.login.status = false; config.contributionMode = false;">Log Out</button> -->
             </div>
             <span class=" contribution-mode-switch"><span>Contribute: <span ng-if="config.contributionMode">ON</span><span ng-if="!config.contributionMode">OFF</span> </span><i class="fa" ng-class="{ 'fa-toggle-off': config.contributionMode == false, 'fa-toggle-on': config.contributionMode == true }" aria-hidden="true" ng-click="toggleContribute()"></i></span>
           </li>
