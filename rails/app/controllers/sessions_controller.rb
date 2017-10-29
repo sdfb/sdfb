@@ -12,6 +12,11 @@ class SessionsController < ApplicationController
       else  
         cookies[:auth_token] = user.auth_token  
       end 
+      
+      if !user.is_curator && user.points >= 100
+        user.update_attribute(:is_curator, true) 
+      end
+
       respond_to do |format|   
         format.html { redirect_to root_url, notice: 'Logged in!' }
         format.json { render json: user.as_json, status: :created }
