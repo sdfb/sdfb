@@ -42,6 +42,13 @@ angular.module('redesign2017App')
           });
         }
 
+        scope.logOut = function() {
+          var logOut = {'auth_token': scope.user.auth_token}
+          apiService.logOut(logOut).then(function(result) {
+            scope.config.login.status = false;
+          });
+        }
+
       }
     };
   }]);
