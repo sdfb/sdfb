@@ -23,6 +23,26 @@ class ApiController < ApplicationController
     end
   end
 
+  def edit_user
+    return head(:forbidden) unless current_user
+    return head(:forbidden) unless params["id"] == current_user.id.to_s || current_user.user_type == "Admin"
+    fields = %w{about_description affiliation email first_name is_active last_name user_type username prefix orcid}
+    new_record = fields.collect{|field| [field, params[field]] if params[field]}.compact.to_h
+    respond_to do |format|
+      begin
+        user = User.find(params["id"])
+        user.update(new_record)
+        user.save!
+        format.json { render json: user.as_json}
+        format.html { render :json}
+      rescue ActiveRecord::RecordNotFound, ActiveRecord::RecordInvalid => e
+        format.json { render json: {}, status: :unprocessable_entity }
+        format.html { render :json}
+      end
+
+    end
+  end
+
   def write
 
     person_lookup = {}
