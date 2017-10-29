@@ -11,6 +11,9 @@ Sdfb::Application.routes.draw do
     get 'api/network'
     get 'api/groups/network', action: :group_network, controller: :api
     get 'api/typeahead'
+    post 'api/sign_in', action: :create, controller: :sessions
+    post 'api/sign_out', action: :destroy, controller: :sessions
+    post 'api/password_reset', action: :create, controller: :password_resets
     post 'api/write'
   end
 
@@ -35,6 +38,7 @@ Sdfb::Application.routes.draw do
   # Session management
   resources :sessions
   get "sign_in" => "sessions#new", :as => "sign_in"
+  
   get "sign_out" => "sessions#destroy", :as => "sign_out"
 
   get "new_person_form" => "people#new_2", :as => "new_person_form"

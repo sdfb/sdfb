@@ -1,6 +1,8 @@
 class User < ActiveRecord::Base
-  attr_accessible :about_description, :affiliation, :email, :first_name, :is_active, :last_name, :password,
-  :password_confirmation, :user_type, :password_hash, :password_salt, :prefix, :orcid, :curator_revoked, :username, :created_at
+  attr_accessible :about_description, :affiliation, :email, :first_name, 
+                  :is_active, :last_name, :password, :password_confirmation, 
+                  :user_type, :password_hash, :password_salt, :prefix, :orcid, 
+                  :curator_revoked, :username, :created_at
   attr_accessor :password
 
   # Callbacks
@@ -25,7 +27,7 @@ class User < ActiveRecord::Base
 
   # Misc Constants
   # -----------------------------
-  USER_TYPES_LIST = ["Standard", "Curator","Admin"]
+  USER_TYPES_LIST = ["Standard", "Curator", "Admin"]
 
   # Validations
   # -----------------------------
@@ -77,6 +79,10 @@ class User < ActiveRecord::Base
 
   # Custom methods
   # -----------------------------
+  def as_json(options={})
+    options[:except] ||= [:password, :password_digest, :password_confirmation, :password_hash, :password_salt, :password_reset_sent_at, :password_reset_token]
+    super(options)
+  end
 
   def calculate_points
     points = 0
@@ -128,6 +134,7 @@ class User < ActiveRecord::Base
   def self.authenticate(email, password)
     user = find_by_email(email)
     if user && BCrypt::Password.new(user.password_digest) == password
+      user.update_attribute(:auth_token, SecureRandom.urlsafe_base64)
       user
     else
       nil

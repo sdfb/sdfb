@@ -1,6 +1,5 @@
 class SessionsController < ApplicationController
-	def new
-   
+	def new  
     @last_page = params[:prev]
   end
   
@@ -12,23 +11,29 @@ class SessionsController < ApplicationController
         cookies.permanent[:auth_token] = user.auth_token 
       else  
         cookies[:auth_token] = user.auth_token  
-      end  
-      flash[:success] = "Logged in!"
-      redirect_to session[:previous_url]  #This redirects to nil?
-      cookies[:skiplanding] = "yes"  
+      end 
+      respond_to do |format|   
+        format.html { redirect_to root_url, notice: 'Logged in!' }
+        format.json { render json: user.as_json, status: :created }
+      end
     else
-      flash[:alert] = "Invalid email or password"
-      redirect_to sign_in_path
+      respond_to do |format|   
+        format.html { redirect_to sign_in_path, notice: "Invalid email or password"}
+        format.json { render json: {}, status: :unprocessable_entity }
+      end
     end
   end
 
   def destroy
-    session[:user_id] = nil
-    cookies.delete(:auth_token) 
-    flash[:error] = "Logged out!"
-    redirect_to params[:prev]
+    if current_user
+      current_user.update_attribute(:auth_token, nil)
+      session[:user_id] = nil
+      cookies.delete(:auth_token) 
+      flash[:error] = "Logged out!"
+    end
+    respond_to do |format|   
+      format.html { redirect_to params[:prev]}
+      format.json { render json: {}, status: :ok }
+    end
   end
 end
-
-# <li><%= link_to "Sign Out", sign_out_path(prev: (root_url << controller_name << "/" << action_name)).chomp("index") %></li>
-# <li><%= link_to "Sign In / Sign Up", sign_in_path(prev: (root_url << controller_name << "/" << action_name)).chomp("index") %></li>

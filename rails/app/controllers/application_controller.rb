@@ -30,23 +30,24 @@ class ApplicationController < ActionController::Base
 
 	def expire_hsts
     	response.headers["Strict-Transport-Security"] = 'max-age=0'
+  end
 
-  	end
-  	def allow_iframe_requests
+	def allow_iframe_requests
 	  response.headers.delete('X-Frame-Options')
 	end
+
 	def current_user
-		@current_user ||= User.find_by_auth_token( cookies[:auth_token]) if cookies[:auth_token]  
-		if (! @current_user)
-			return false
-		end
-                @current_user
+		token = cookies[:auth_token] || params[:auth_token]
+		@current_user ||= User.find_by_auth_token(token) if token
+		@current_user 
 	end
+
 	helper_method :current_user
 
 	def logged_in?
 		current_user
 	end
+
 	helper_method :logged_in?
 
 	def check_login
