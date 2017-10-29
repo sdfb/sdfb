@@ -94,6 +94,7 @@ class User < ActiveRecord::Base
   end
 
   def calculate_points
+    return 0 unless self.id
     points = 0
     Group.for_user(self.id).where('is_approved = ?', true).to_a.each do |contrib|
       points += 1
@@ -122,6 +123,7 @@ class User < ActiveRecord::Base
 
   def contributions
     obj = {}
+    return obj unless self.id 
     obj[:people] = Person.for_user(self.id).collect do |g| 
       {
         id: g.id, 
