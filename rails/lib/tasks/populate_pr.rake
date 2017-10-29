@@ -62,7 +62,6 @@ namespace :db do
     admin.user_type = "Admin"
     admin.is_active = true
     admin.username = "KatAdmin"
-    admin.curator_revoked = false
     admin.save!
 
     odnb_admin = User.new
@@ -74,7 +73,6 @@ namespace :db do
     odnb_admin.user_type = "Admin"
     odnb_admin.is_active = true
     odnb_admin.username = "ODNB_Admin"
-    odnb_admin.curator_revoked = false
     odnb_admin.save!
 
     sdfb_admin = User.new
@@ -86,7 +84,6 @@ namespace :db do
     sdfb_admin.user_type = "Admin"
     sdfb_admin.is_active = true
     sdfb_admin.username = "SDFB_Admin"
-    sdfb_admin.curator_revoked = false
     sdfb_admin.save!
 
     puts admin

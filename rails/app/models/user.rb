@@ -2,7 +2,7 @@ class User < ActiveRecord::Base
   attr_accessible :about_description, :affiliation, :email, :first_name, 
                   :is_active, :last_name, :password, :password_confirmation, 
                   :user_type, :password_hash, :password_salt, :prefix, :orcid, 
-                  :curator_revoked, :username, :created_at
+                  :username, :created_at
   attr_accessor :password
 
   # Callbacks
@@ -36,7 +36,6 @@ class User < ActiveRecord::Base
   validates_presence_of :last_name
   validates_presence_of :password_confirmation, :on => :create
   validates_presence_of :user_type
-  validates :curator_revoked, :inclusion => {:in => [true, false]}
   validates_presence_of :username
   validates_uniqueness_of :username
   # username must be at least 6 characters long
