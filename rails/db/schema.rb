@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171020200526) do
+ActiveRecord::Schema.define(version: 20171029194045) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -319,7 +319,6 @@ ActiveRecord::Schema.define(version: 20171020200526) do
     t.string   "prefix"
     t.string   "orcid"
     t.integer  "created_by"
-    t.boolean  "is_curator",             default: false
     t.boolean  "curator_revoked",        default: false
     t.string   "username"
     t.datetime "created_at",                             null: false

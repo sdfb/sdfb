@@ -13,8 +13,8 @@ class SessionsController < ApplicationController
         cookies[:auth_token] = user.auth_token  
       end 
       
-      if !user.is_curator && user.points >= 100
-        user.update_attribute(:is_curator, true) 
+      if user.user_type == "Standard" && user.points >= 100
+        user.update_attribute(:user_type, "Curator") 
       end
 
       respond_to do |format|   
