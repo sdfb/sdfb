@@ -25,8 +25,9 @@ class ApiController < ApplicationController
 
   def edit_user
     return head(:forbidden) unless current_user
-    return head(:forbidden) unless params["id"] == current_user.id.to_s || current_user.user_type == "Admin"
-    fields = %w{about_description affiliation email first_name is_active last_name user_type username prefix orcid}
+    return head(:forbidden) unless params["id"].to_s == current_user.id.to_s || current_user.user_type == "Admin"
+    fields = %w{about_description affiliation email first_name last_name username prefix orcid}
+    fields += %w{is_active, user_type} if current_user.user_type == "Admin"
     new_record = fields.collect{|field| [field, params[field]] if params[field]}.compact.to_h
     respond_to do |format|
       begin
