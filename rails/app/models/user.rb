@@ -78,6 +78,7 @@ class User < ActiveRecord::Base
   # Callbacks
   # -----------------------------
   before_save :encrypt_password
+  after_save :refresh_token
   before_create { generate_token(:auth_token) }  
 
   # Custom methods
@@ -194,6 +195,12 @@ class User < ActiveRecord::Base
   def encrypt_password
     if password.present?
       self.password_digest = BCrypt::Password.create(password)
+    end
+  end
+
+  def refresh_token
+    if password.present?
+      self.update_column :auth_token, SecureRandom.urlsafe_base64
     end
   end
 

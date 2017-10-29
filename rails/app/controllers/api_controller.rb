@@ -27,7 +27,8 @@ class ApiController < ApplicationController
     return head(:forbidden) unless current_user
     return head(:forbidden) unless params["id"].to_s == current_user.id.to_s || current_user.user_type == "Admin"
     fields = %w{about_description affiliation email first_name last_name username prefix orcid}
-    fields += %w{is_active, user_type} if current_user.user_type == "Admin"
+    fields += %w{is_active user_type} if current_user.user_type == "Admin"
+    fields += %w{password password_confirmation} if params["id"].to_s == current_user.id.to_s
     new_record = fields.collect{|field| [field, params[field]] if params[field]}.compact.to_h
     respond_to do |format|
       begin
