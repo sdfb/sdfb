@@ -1296,12 +1296,8 @@ contextual-info-panel.panel {
   cursor: pointer;
 }
 
-.contribution-mode-on contextual-info-panel.panel {
+contextual-info-panel.panel.contribution-mode-on {
   border-color: $contribution-mode-fill;
-}
-
-contextual-info-panel .contribution {
-  color: $contribution-mode-fill;
 }
 
 contextual-info-panel > section {

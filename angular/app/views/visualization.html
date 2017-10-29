@@ -1,6 +1,6 @@
 <div class="panels-container">
   <section class="on-the-left">
-    <contextual-info-panel class="panel" ng-show=" config.viewMode != 'group-timeline' && !$parent.searchClosed "></contextual-info-panel>
+    <contextual-info-panel class="panel" ng-show=" config.viewMode != 'group-timeline' && !$parent.searchClosed " ng-class="{'contribution-mode-on': $parent.config.contributionMode}"></contextual-info-panel>
     <legend-panel class="panel timeline-legend" ng-if=" config.viewMode == 'group-timeline' && !$parent.searchClosed "></legend-panel>
     <div class="panel collapsable" ng-show="!$parent.searchClosed">
       <h4>Cite this:</h4>
