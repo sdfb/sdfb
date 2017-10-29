@@ -247,23 +247,6 @@ path.danger {
   transition-timing-function: ease-in-out;
   width: 100%;
 
-
-  &.individual {
-    height: 352px;
-  }
-
-  &.shared {
-    height: 376px;
-  }
-
-  &.group {
-    height: 256px;
-  }
-
-  &.single-group {
-    height: 396px;
-  }
-
   &.add-node {
     height: 45vh;
     background-color: $light-color;
@@ -888,9 +871,6 @@ group-timeline {
 }
 /* filters styles */
 filters-panel {
-  &.individualFilter {
-    height: 525px;
-  }
 
   svg .bar {
     fill: $filter-color;
