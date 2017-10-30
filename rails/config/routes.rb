@@ -31,14 +31,12 @@ Sdfb::Application.routes.draw do
   get "guide" => "static_pages#guide", :as => "guide"
   get "tutorial" => "static_pages#tutorial", :as => "tutorial"
   get "new_form_menu" => "static_pages#new_form_menu", :as => "new_form_menu"
-
-  resources :comments
+  
   resources :relationship_types
   resources :rel_cat_assigns
   resources :relationship_categories
   resources :group_cat_assigns
   resources :group_categories
-  resources :flags
   resources :password_resets  
 
   # Session management
