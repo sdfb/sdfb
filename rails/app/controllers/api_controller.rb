@@ -128,7 +128,7 @@ class ApiController < ApplicationController
           node["death_year_type"] = node["deathDateType"]
           node.delete("deathDateType")
         end
-        if current_user.user_role != "Admin"
+        if ["Admin", "Curator"].include?(current_user.user_type)
           node.delete("is_approved")
           node.delete("is_active")
         end
@@ -164,9 +164,9 @@ class ApiController < ApplicationController
           justification: group["justification"],
           bibliography: group["citation"]
         }
-        if current_user.user_role == "Admin"
-          new_record["is_approved"] == group["is_approved"] if group["is_approved"]
-          new_record["is_active"]   == group["is_active"]   if group["is_active"]
+        if ["Admin", "Curator"].include?(current_user.user_type)
+          new_record["is_approved"] = group["is_approved"] if group["is_approved"]
+          new_record["is_active"]   = group["is_active"]   if group["is_active"]
         end
     
         if group["id"]
@@ -227,7 +227,7 @@ class ApiController < ApplicationController
         current_group = GroupAssignment.where("group_id = ? AND person_id = ?", group_id, person_id).first
         if current_group
           update_dates(current_group,assignment)
-          if current_user.user_role == "Admin"
+          if ["Admin", "Curator"].include?(current_user.user_type)
             current_group.is_approved = assignment["is_approved"] if assignment["is_approved"]
             current_group.is_active   = assignment["is_active"]   if assignment["is_active"]
             current_group.save!
