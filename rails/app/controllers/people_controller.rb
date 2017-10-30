@@ -2,9 +2,6 @@ class PeopleController < ApplicationController
   # GET /people
   # GET /people.json
 
-  # before_filter :check_login
-  # before_filter :check_login
-  # authorize_resource
   require 'will_paginate'
   require 'will_paginate/array'
   autocomplete :person, :search_names_all, full: true, :extra_data => [:display_name, :ext_birth_year], :display_value => :autocomplete_name
