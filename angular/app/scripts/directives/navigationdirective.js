@@ -14,7 +14,7 @@ angular.module('redesign2017App')
       link: function postLink(scope, element, attrs) {
 
         scope.toggleContribute = function() {
-          if (scope.config.login.status === true) {
+          if (scope.user && scope.user.is_active) {
             scope.config.contributionMode = !scope.config.contributionMode;
             if (scope.config.contributionMode) {
               scope.cursorStyle = {'cursor': 'copy'};
@@ -35,15 +35,12 @@ angular.module('redesign2017App')
         scope.logIn = function() {
           apiService.logIn(scope.user).then(function successCallback(result) {
             scope.user = result.data;
-            console.log(scope.user);
-            // scope.config.login.status = true;
           });
         }
 
         scope.logOut = function() {
           var logOut = {'auth_token': scope.user.auth_token}
           apiService.logOut(logOut).then(function(result) {
-            scope.config.login.status = false;
             scope.user = {};
           });
         }
