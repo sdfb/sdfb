@@ -104,13 +104,6 @@
         <% if (! current_user.blank?) && ((current_user.user_type == "Admin") || (current_user.user_type == "Curator")) %>
           <dt><strong>Created:</strong></dt>
           <dd><%= @relationship.created_at.strftime("%m/%d/%Y") %> by <%= link_to User.find(@relationship.created_by).username,  user_path(@relationship.created_by) %></dd>
-          <% @last_edit = @relationship.last_edit %>
-          <% if @last_edit[0] != 0 %>
-          <% if ! @last_edit[0].nil? %>  
-              <dt><strong>Last Edit:</strong></dt>
-              <dd><%= @last_edit[1].strftime("%m/%d/%Y")%> by <%= link_to User.find(@last_edit[0]).username,  user_path(@last_edit[0]) %></dd>
-            <% end %>
-          <% end %>
           <dt><strong>Is Approved?:</strong></dt>
           <dd><%= @relationship.is_approved %></dd>
           <% if ! @relationship.approved_by.blank? %>

@@ -1,6 +1,6 @@
 class GroupCategory < ActiveRecord::Base
 
-  include TrackLastEdit
+  
   include Approvable
 
   attr_accessible :description, :name, :created_by, :created_at

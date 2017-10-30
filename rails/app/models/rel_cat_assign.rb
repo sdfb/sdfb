@@ -1,6 +1,6 @@
 class RelCatAssign < ActiveRecord::Base
 
-  include TrackLastEdit
+  
   include Approvable
 
   attr_accessible :relationship_category_id, :relationship_type_id, :created_at, :created_by

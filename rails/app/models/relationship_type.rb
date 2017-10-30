@@ -1,6 +1,6 @@
 class RelationshipType < ActiveRecord::Base
 
-  include TrackLastEdit
+  
   include Approvable
 
   attr_accessible :description, :name, :relationship_type_inverse, :created_at, :created_by,

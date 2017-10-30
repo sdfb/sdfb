@@ -1,7 +1,7 @@
 class UserGroupContrib < ActiveRecord::Base
   # this class is known as "Group Notes" to the user
 
-  include TrackLastEdit
+  
   include WhitespaceStripper
   include Approvable
 

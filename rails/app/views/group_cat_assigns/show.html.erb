@@ -26,11 +26,6 @@
         <% if (! current_user.blank?) && ((current_user.user_type == "Admin")) %>
           <dt><strong>Created:</strong></dt>
           <dd><%= @group_cat_assign.created_at.strftime("%m/%d/%Y") %> by <%= link_to User.find(@group_cat_assign.created_by).username,  user_path(@group_cat_assign.created_by) %></dd>
-          <% @last_edit = @group_cat_assign.last_edit %>
-          <% if ! @last_edit.blank? %>
-            <dt><strong>Last Edit:</strong></dt>
-            <dd><%= @last_edit[1].strftime("%m/%d/%Y")%> by <%= link_to User.find(@last_edit[0]).username,  user_path(@last_edit[0]) %></dd>
-          <% end %>
           <dt><strong>Is Approved?:</strong></dt>
           <dd><%= @group_cat_assign.is_approved %></dd>
           <% if ! @group_cat_assign.approved_by.blank? %>

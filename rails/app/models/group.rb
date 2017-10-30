@@ -1,6 +1,6 @@
 class Group < ActiveRecord::Base
 
-  include TrackLastEdit
+  
   include Approvable
 
   attr_accessible  :description, :name, :justification, :bibliography,

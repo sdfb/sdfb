@@ -1,6 +1,6 @@
 class RelationshipCategory < ActiveRecord::Base
 
-  include TrackLastEdit
+  
   include Approvable
 
   attr_accessible :description, :name, :created_at, :created_by

@@ -1,6 +1,6 @@
 class GroupAssignment < ActiveRecord::Base
 
-  include TrackLastEdit
+  
   include Approvable
 
   attr_accessible :created_by, :group_id, :person_id, :start_date, :end_date, :created_at,

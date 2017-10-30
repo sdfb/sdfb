@@ -29,11 +29,6 @@
         <% if (! current_user.blank?) && (current_user.user_type == "Admin") %>
           <dt><strong>Created:</strong></dt>
           <dd><%= @relationship_category.created_at.strftime("%m/%d/%Y") %> by <%= link_to User.find(@relationship_category.created_by).username,  user_path(@relationship_category.created_by) %></dd>
-          <% @last_edit = @relationship_category.last_edit %>
-          <% if ! @last_edit.blank? %>
-            <dt><strong>Last Edit:</strong></dt>
-            <dd><%= @last_edit[1].strftime("%m/%d/%Y")%> by <%= link_to User.find(@last_edit[0]).username,  user_path(@last_edit[0]) %></dd>
-          <% end %>
           <dt><strong>Is Approved?:</strong></dt>
           <dd><%= @relationship_category.is_approved %></dd>
           <% if ! @relationship_category.approved_by.blank? %>
