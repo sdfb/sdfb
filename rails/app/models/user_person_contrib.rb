@@ -1,7 +1,7 @@
 class UserPersonContrib < ActiveRecord::Base
   # this class is known as "Person Notes" to the user
 
-  include TrackLastEdit
+  
   include WhitespaceStripper
   include Approvable
 

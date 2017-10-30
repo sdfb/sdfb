@@ -1,6 +1,6 @@
 class GroupCatAssign < ActiveRecord::Base
 
-  include TrackLastEdit
+  
   include Approvable
 
   attr_accessible :group_category_id, :group_id, :created_by, :created_at
