@@ -53,9 +53,9 @@ angular.module('redesign2017App')
             var person = result.data[0];
             scope.newNode.name = person.attributes.name;
             scope.newNode.birthDate = person.attributes.birth_year;
-            scope.newNode.birthDateType = person.attributes.birth_year_type;
+            scope.newNode.birthDateType = scope.config.dateTypes.filter(function(d) { return person.attributes.birth_year_type === d.abbr; })[0];
             scope.newNode.deathDate = person.attributes.death_year;
-            scope.newNode.deathDateType = person.attributes.death_year_type;
+            scope.newNode.deathDateType = scope.config.dateTypes.filter(function(d) { return person.attributes.death_year_type === d.abbr; })[0];
             scope.newNode.historical_significance = person.attributes.historical_significance;
             scope.newNode.id = person.id;
           });
@@ -106,6 +106,7 @@ angular.module('redesign2017App')
           if (!scope.newNode.exists) { scope.addToDB.nodes.push(newNode); }
           scope.addNodeClosed = true;
           scope.newNode = {};
+          scope.newNode.birthDateType = scope.newNode.deathDateType = scope.config.dateTypes[1];
           console.log(scope.addToDB);
           scope.addedNodeId += 1;
           scope.config.added = true;

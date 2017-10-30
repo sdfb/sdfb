@@ -136,7 +136,7 @@ angular.module('redesign2017App').directive('forceLayout', ['apiService', '$time
 
         simulation = d3.forceSimulation(nodes)
           .force("center", d3.forceCenter(scope.singleWidth / 2, scope.singleHeight / 2)) // Keep graph from floating off-screen
-          .force("charge", d3.forceManyBody().strength(-100)) // Charge force works as gravity
+          .force("charge", d3.forceManyBody().strength(-100).distanceMax(350)) // Charge force works as gravity
           .force("link", d3.forceLink(links).id(function(d) { return d.id; }).iterations(2)) //Link force accounts for link distance
           .force("collide", d3.forceCollide().iterations(0)) // in the tick function will be evaluated the moment in which turn on the anticollision (iterations > 1)
           // general force settings
@@ -189,7 +189,9 @@ angular.module('redesign2017App').directive('forceLayout', ['apiService', '$time
           } else if (scope.config.viewMode === 'group-force') {
             var members = json.data.attributes.primary_people;
             var newData = parseGroupComplexity(json, scope.config.onlyMembers);
+            simulation.force("charge", d3.forceManyBody().strength(-100).distanceMax(200));
           } else {
+            simulation.force("charge", d3.forceManyBody().strength(-100).distanceMax(200));
             var nodes = json.included;
             var links = [];
             json.data.attributes.connections.forEach(function(l) {
@@ -553,7 +555,6 @@ angular.module('redesign2017App').directive('forceLayout', ['apiService', '$time
           simulation.alphaTarget(0).restart();
 
           oldLayout = layout;
-
         }
 
         // Code for adding links adapted from: https://bl.ocks.org/emeeks/f2f6883ac7c965d09b90
@@ -1106,6 +1107,7 @@ angular.module('redesign2017App').directive('forceLayout', ['apiService', '$time
         scope.$watch('$stateParams.ids', function(newValue, oldValue) {
           if (scope.config.viewMode !== 'group-timeline') {
             generateNetwork(scope.data);
+            scope.updateNetwork(scope.data);
             if (scope.config.viewMode !== 'all' && scope.config.viewMode !== 'group-force') {
               scope.data4groups(scope.data);
             }
@@ -1113,11 +1115,12 @@ angular.module('redesign2017App').directive('forceLayout', ['apiService', '$time
           }
         }, true);
 
-        scope.$watchCollection('data', function(newValue, oldValue) {
-          if (scope.config.viewMode !== 'group-timeline') {
-            scope.updateNetwork(newValue);
-          }
-        }, true);
+        // scope.$watchCollection('data', function(newValue, oldValue) {
+        //   if (scope.config.viewMode !== 'group-timeline') {
+        //     scope.updateNetwork(newValue);
+        //     // $.when(scope.updateNetwork(newValue)).then(scope.centerNetwork());
+        //   }
+        // }, true);
 
         scope.$watch('config.onlyMembers', function(newValue, oldValue) {
           if (scope.config.viewMode === 'group-force') {

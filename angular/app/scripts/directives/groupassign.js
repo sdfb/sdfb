@@ -22,27 +22,29 @@ angular.module('redesign2017App')
         }
 
         scope.showGroupAssign = function(d) {
-          d3.selectAll(".group").on('mouseenter', function(g) {
-            d3.select(this).classed('active', true);
-            scope.$apply(function() {
-              scope.groupAssign.person.name = d.attributes.name;
-              scope.groupAssign.person.id = d.id;
-              scope.groupAssign.group.name = g.name;
-              scope.groupAssign.group.id = g.groupId;
-              scope.groupAssignClosed = false;
-              scope.addLinkClosed = true;
-              scope.legendClosed = true;
-              scope.filtersClosed = true;
-              scope.peopleFinderClosed = true;
-              scope.populateGroupDates(d.id, g.groupId);
+          if (scope.config.contributionMode) {
+            d3.selectAll(".group").on('mouseenter', function(g) {
+              d3.select(this).classed('active', true);
+              scope.$apply(function() {
+                scope.groupAssign.person.name = d.attributes.name;
+                scope.groupAssign.person.id = d.id;
+                scope.groupAssign.group.name = g.name;
+                scope.groupAssign.group.id = g.groupId;
+                scope.groupAssignClosed = false;
+                scope.addLinkClosed = true;
+                scope.legendClosed = true;
+                scope.filtersClosed = true;
+                scope.peopleFinderClosed = true;
+                scope.populateGroupDates(d.id, g.groupId);
+              });
+            })
+            .on('mouseleave', function(g) {
+              scope.$apply(function() {
+                scope.groupAssignClosed = true;
+              });
+              d3.select(this).classed('active', false);
             });
-          })
-          .on('mouseleave', function(g) {
-            scope.$apply(function() {
-              scope.groupAssignClosed = true;
-            });
-            d3.select(this).classed('active', false);
-          });
+          }
         }
 
         scope.endGroupEvents = function() {
@@ -148,8 +150,8 @@ angular.module('redesign2017App')
             var personDeathYear = parseInt(result.data[0].attributes.death_year);
             $timeout(function(){
               apiService.getGroups(groupId).then(function (result) {
-                var groupStartYear = result.data[0].attributes.start_year;
-                var groupEndYear = result.data[0].attributes.end_year;
+                var groupStartYear = result.data.data[0].attributes.start_year;
+                var groupEndYear = result.data.data[0].attributes.end_year;
                 $timeout(function(){
                   if (personBirthYear >= groupStartYear) {
                     scope.groupAssign.startDate = personBirthYear;

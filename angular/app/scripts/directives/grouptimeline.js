@@ -162,7 +162,7 @@ angular.module('redesign2017App')
               return x(groupInfo.start_year + (groupInfo.end_year - groupInfo.start_year) / 2)
             })
             .attr('y', -20)
-            .text(groupInfo.name)
+            // .text(groupInfo.name)
 
           person = person.data(data, function(d) { return d.id; });
           person.exit().remove();
@@ -312,7 +312,6 @@ angular.module('redesign2017App')
         scope.$watch('data', function(newValue, oldValue) {
           if (scope.config.viewMode === 'group-timeline') {
             var json = newValue.data;
-            console.log(json);
             groupInfo = json.data[0].attributes;
             groupInfo.id = json.data[0].id;
 

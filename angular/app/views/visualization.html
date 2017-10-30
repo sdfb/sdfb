@@ -1,9 +1,16 @@
 <div class="panels-container">
   <section class="on-the-left">
-    <contextual-info-panel class="panel" ng-show=" config.viewMode != 'group-timeline' "></contextual-info-panel>
-    <legend-panel class="panel timeline-legend" ng-if=" config.viewMode == 'group-timeline' "></legend-panel>
+    <contextual-info-panel class="panel" ng-show=" config.viewMode != 'group-timeline' && !$parent.searchClosed " ng-class="{'contribution-mode-on': $parent.config.contributionMode}"></contextual-info-panel>
+    <legend-panel class="panel timeline-legend" ng-if=" config.viewMode == 'group-timeline' && !$parent.searchClosed "></legend-panel>
+    <div class="panel collapsable" ng-show="!$parent.searchClosed">
+      <h4>Cite this:</h4>
+      <input readonly class="form-control" onClick="this.select()" ng-model="citation" ng-model-options="{ getterSetter: true }"/>
+    </div>
   </section>
-  <div id="viz-title" ng-show="config.viewMode !== 'group-timeline'">{{ networkName }}</div>
+  <div id="viz-title">
+    <div>{{ config.networkName }}</div>
+    <p>{{ config.networkDesc }}</p>
+  </div>
   <section class="on-the-right" ng-show=" config.viewMode != 'group-timeline' ">
     <button ng-show="config.contributionMode && config.added" class="btn btn-primary contribute submit-data" ng-click="openReview()">Review & Submit<i class="fa fa-paper-plane-o" aria-hidden="true"></i></button>
     <add-node ng-show="config.contributionMode && config.viewMode !== 'all'" class="panel collapsable collapsed orange-panel add-node" ng-class="{'collapsed' : addNodeClosed}"></add-node>
@@ -19,7 +26,7 @@
 
 
     <div class="panel smallest controls">
-      <span ng-click="centerNetwork()"><i class="fa fa-arrows-alt" aria-hidden="true"></i></span>
+      <span ng-click="centerNetwork()"><i class="fa fa-compress" aria-hidden="true"></i></span>
       <span ng-click="zoomIn()"><i class="fa fa-search-plus" aria-hidden="true"></i></span>
       <span ng-click="zoomOut()"><i class="fa fa-search-minus" aria-hidden="true"></i></span>
     </div>

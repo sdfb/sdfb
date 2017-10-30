@@ -1,7 +1,7 @@
 <navigation-directive ng-class="{'contribution-mode-on': config.contributionMode == true}"></navigation-directive>
 <div class="panels-container">
   <section class="on-the-left">
-    <search-panel class="panel left"></search-panel>
+    <search-panel class="panel collapsable left search" ng-class="{'collapsed' : searchClosed}"></search-panel>
   </section>
 </div>
 <ui-view></ui-view>

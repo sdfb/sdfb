@@ -4,7 +4,12 @@
   <p ng-if="config.contributionMode" class="contribution">Click anywhere on the canvas to add a node.</p>
   <p ng-if="config.contributionMode" class="contribution">Drag a node onto any other node to add a link.</p>
   <p ng-if="config.contributionMode" class="contribution">Drag a node onto the groups bar to add a node to a group.</p>
-  <p><button ng-show="config.viewMode !== 'group-force'" type="button" class="btn btn-primary" ng-click="openTable()">See Table View</button></p>
+  <!-- <p><button ng-show="config.viewMode !== 'group-force'" type="button" class="btn btn-primary" ng-click="openTable()">See Table View</button></p>
+  <p><button type="button" class="btn btn-primary">Export</button></p> -->
+  <div class="btn-group btn-group-justified">
+    <label class="btn btn-primary" ng-click="openTable()">See Table View</label>
+    <a class="btn btn-primary" target="_blank" download="{{config.networkName}}.json" ng-href="{{download}}">Export this</a>
+  </div>
 </section>
 <section ng-if="currentSelection.type == 'person' " id="XXXcurrent-selection-person1">
     <button type="button" class="btn btn-primary go" ui-sref="home.visualization({ ids: currentSelection.id })">Visualize</button>
@@ -58,9 +63,9 @@
 <section id="more-info" ng-if="currentSelection.type">
   <p>
 
-    <button type="button" class="btn btn-primary" ng-click="searchODNB(currentSelection.attributes.odnb_id,currentSelection.attributes.name)">ODNB</button>
-    <button type="button" class="btn btn-primary" ng-click="searchJstor(currentSelection.attributes.name.replace(' ','+'))">J Stor</button>
-    <button type="button" class="btn btn-primary" ng-click="searchGoogle(currentSelection.attributes.name.replace(' ','+'))">Google</button>
+    <img src='/images/odnb.gif' ng-click="searchODNB(currentSelection.attributes.odnb_id,currentSelection.attributes.name)"/>
+    <img src='/images/jstor.png' ng-click="searchJstor(currentSelection.attributes.name.replace(' ','+'))"/>
+    <i class="fa fa-google" ng-click="searchGoogle(currentSelection.attributes.name.replace(' ','+'))"></i>
     <button ng-show="currentSelection.type === 'person' && (config.viewMode === 'individual-force' || config.viewMode === 'individual-concentric')" type="button" class="btn btn-primary" ui-sref="home.visualization({ ids: config.person1 + ',' + currentSelection.id })">Shared Network</button>
   </p>
   <!-- <p><a ng-click="scope.openTable()">Further info&hellip;</a></p> -->

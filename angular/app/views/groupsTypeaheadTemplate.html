@@ -1,6 +1,6 @@
 <a>
     <span ng-bind-html="match.label | uibTypeaheadHighlight:query"></span>
     <div id="typeahead-sig">{{match.model.attributes.historical_significance}}</div>
-    <span id="typeahead-dates">{{match.model.attributes.birth_year}}-{{match.model.attributes.death_year}}</span>
+    <span id="typeahead-dates">Born {{match.model.attributes.birth_year_type}} {{match.model.attributes.birth_year}}, Died {{match.model.attributes.death_year_type}} {{match.model.attributes.death_year}}</span>
 
 </a>

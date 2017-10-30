@@ -201,7 +201,7 @@ angular.module('redesign2017App')
           var confidenceData = countConfidenceFrequency(); // Get array of counts
 
           // Create svg for bar graph
-          var confidenceGraph = d3.select('.confidence-container').append('svg').attr('width', 284).attr('height', 70),
+          var confidenceGraph = d3.select('.confidence-container').append('svg').attr('width', 230).attr('height', 70),
             confidenceMargin = {
               top: 0,
               right: 0,
@@ -404,7 +404,7 @@ angular.module('redesign2017App')
           // Same as above, for date range
 
           var dateData = countDateFrequency();
-          var dateGraph = d3.select('.date-container').append('svg').attr('width', 284).attr('height', 70),
+          var dateGraph = d3.select('.date-container').append('svg').attr('width', 230).attr('height', 70),
             dateMargin = {
               top: 0,
               right: 0,

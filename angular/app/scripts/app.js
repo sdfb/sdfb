@@ -73,7 +73,7 @@ var redesign2017App = angular
   //     });
   // });
 
-redesign2017App.config(function($stateProvider, $locationProvider) {
+redesign2017App.config(function($stateProvider, $locationProvider, $compileProvider) {
   var homeState = {
     name: 'home',
     url: '/',
@@ -127,4 +127,5 @@ redesign2017App.config(function($stateProvider, $locationProvider) {
   $stateProvider.state(vizState);
   $stateProvider.state(tableState);
   $locationProvider.html5Mode(true);
+  $compileProvider.aHrefSanitizationWhitelist(/^\s*(https?|ftp|mailto|data):/);
 })
