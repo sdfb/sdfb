@@ -452,6 +452,7 @@ all-groups-graph {
 
 .group-members {
   font-size: 11px;
+  // max-height: 25vh;
   position: relative;
   overflow-y: scroll;
   .flex-boxed {
@@ -472,7 +473,7 @@ all-groups-graph {
   }
 
   &>div:nth-child(2) {
-    max-height: 280px;
+    max-height: 20vh;
     // overflow-y: scroll;
   }
 }

@@ -36,7 +36,7 @@ angular.module('redesign2017App')
           apiService.logIn(scope.user).then(function successCallback(result) {
             scope.user = result.data;
             console.log(scope.user);
-            scope.config.login.status = true;
+            // scope.config.login.status = true;
           });
         }
 

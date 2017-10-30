@@ -34,13 +34,13 @@
             </ul>
           </li>
           <li><a>About</a></li>
-          <li class="log-in" ng-show="config.login.status"><a href ng-click="openCurate()">Curate</a></li>
+          <li class="log-in" ng-show="user.is_active"><a href ng-click="openCurate()">Curate</a></li>
           <li class="log-in" uib-dropdown>
             <a class="nav-link dropdown-toggle login-toggle"  uib-dropdown-toggle style="display: inline-block; cursor: pointer;">
-              <span ng-show="!config.login.status">Login</span>
-              <span ng-show="config.login.status">{{user.username}}</span>
+              <span ng-show="!user.is_active">Login</span>
+              <span ng-show="user.is_active">{{user.username}}</span>
             </a>
-            <div ng-show="!config.login.status" uib-dropdown-menu class="dropdown-menu" style="padding:17px;">
+            <div ng-show="!user.is_active" uib-dropdown-menu class="dropdown-menu" style="padding:17px;">
               <form class="form" id="formLogin">
                 <h3>Email</h3>
                 <input class="form-control" ng-model="user.email" name="email" id="email" placeholder="Email" type="text">
@@ -49,7 +49,7 @@
                 <button type="button" id="btnLogin" class="btn btn-primary" ng-click="logIn()">Login</button>
               </form>
             </div>
-            <div ng-show="config.login.status" uib-dropdown-menu class="dropdown-menu user-info" style="padding:17px;">
+            <div ng-show="user.is_active" uib-dropdown-menu class="dropdown-menu user-info" style="padding:17px;">
               <h5>{{user.first_name}} {{user.last_name}} ({{user.id}})</h5>
               <a>edit profile</a>
               <a href ng-click="logOut()">log out</a>
