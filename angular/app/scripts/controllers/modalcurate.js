@@ -8,9 +8,14 @@
  * Controller of the redesign2017App
  */
 angular.module('redesign2017App')
-  .controller('ModalCurateCtrl', ['$scope', '$uibModalInstance', '$timeout', '$window', 'apiService', function($scope, $uibModalInstance, $timeout, $window, apiService) {
+  .controller('ModalCurateCtrl', ['$scope', '$uibModalInstance', '$timeout', '$window', 'apiService', 'people', 'relationships', 'relTypes', 'groups', function($scope, $uibModalInstance, $timeout, $window, apiService, people, relationships, relTypes, groups) {
 
     var $ctrl = this;
+    console.log(groups);
+    $ctrl.people = people.data;
+    $ctrl.relationships = relationships.data;
+    $ctrl.relTypes = relTypes.data;
+    $ctrl.groups = groups.data;
     // $ctrl.addToDB = addToDB;
     // $ctrl.sendData = sendData;
 
@@ -27,8 +32,12 @@ angular.module('redesign2017App')
       $uibModalInstance.dismiss('cancel');
     };
 
-    // $ctrl.close = function() {
-    //   $uibModalInstance.close($ctrl.addToDB);
-    // }
+    $ctrl.close = function() {
+      $ctrl.addToDB = {}
+      $ctrl.addToDB.nodes = $ctrl.people;
+      $ctrl.addToDB.links = $ctrl.relationships;
+      $ctrl.addToDB.groups = $ctrl.groups;
+      $uibModalInstance.close($ctrl.addToDB);
+    }
 
   }]);
