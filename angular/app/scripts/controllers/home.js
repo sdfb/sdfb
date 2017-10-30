@@ -10,7 +10,7 @@
 angular.module('redesign2017App').component('home', {
   // bindings: { networkData: '<' },
   templateUrl: 'views/home.html',
-  controller: ['$scope', '$stateParams', '$uibModal', '$log', function($scope, $stateParams, $uibModal, $log) {
+  controller: ['$scope', '$stateParams', '$uibModal', '$log', '$cookieStore', function($scope, $stateParams, $uibModal, $log, $cookieStore) {
     $scope.config = {
       contributionMode: false,
       layout: 'individual-force',
@@ -19,6 +19,15 @@ angular.module('redesign2017App').component('home', {
         user: 'Elizabeth',
       }
     };
+
+    function init() {
+      var session = $cookieStore.get('session');
+      if (session) {
+        $scope.user = session;
+      }
+    }
+
+    init();
 
     $scope.openCurate = function(size, parentSelector) {
       var parentElem = parentSelector ?

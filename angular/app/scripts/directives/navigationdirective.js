@@ -7,7 +7,7 @@
  * # navigationDirective
  */
 angular.module('redesign2017App')
-  .directive('navigationDirective', ['$window', 'apiService', function ($window, apiService) {
+  .directive('navigationDirective', ['$window', 'apiService', '$cookieStore', function ($window, apiService, $cookieStore) {
     return {
       templateUrl: './views/navigation-directive.html',
       restrict: 'E',
@@ -35,6 +35,10 @@ angular.module('redesign2017App')
         scope.logIn = function() {
           apiService.logIn(scope.user).then(function successCallback(result) {
             scope.user = result.data;
+            var session = angular.copy(scope.user);
+            delete session.contributions;
+
+            $cookieStore.put('session', session);
           });
         }
 
@@ -42,6 +46,7 @@ angular.module('redesign2017App')
           var logOut = {'auth_token': scope.user.auth_token}
           apiService.logOut(logOut).then(function(result) {
             scope.user = {};
+            $cookieStore.put('session', null);
           });
         }
 
