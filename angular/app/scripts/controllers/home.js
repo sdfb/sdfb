@@ -10,7 +10,7 @@
 angular.module('redesign2017App').component('home', {
   // bindings: { networkData: '<' },
   templateUrl: 'views/home.html',
-  controller: ['$scope', '$stateParams', '$uibModal', '$log', '$cookieStore', function($scope, $stateParams, $uibModal, $log, $cookieStore) {
+  controller: ['$scope', '$stateParams', '$uibModal', '$log', '$cookieStore', 'apiService', function($scope, $stateParams, $uibModal, $log, $cookieStore, apiService) {
     $scope.config = {
       contributionMode: false,
       layout: 'individual-force',
@@ -42,12 +42,31 @@ angular.module('redesign2017App').component('home', {
         size: size,
         appendTo: parentElem,
         resolve: {
-          addToDB: function() {
-            return $scope.addToDB;
+          people: function() {
+            return apiService.curatePeople($scope.user.auth_token).then(function(result) {
+              return result;
+            });
+          },
+          relationships: function() {
+            return apiService.curateRelationships($scope.user.auth_token).then(function(result) {
+              return result;
+            });
+          },
+          relTypes: function() {
+            return apiService.curateRelTypes($scope.user.auth_token).then(function(result) {
+              return result;
+            });
+          },
+          groups: function() {
+            return apiService.curateGroups($scope.user.auth_token).then(function(result) {
+              return result;
+            });
           }
         }
       });
       modalInstance.result.then(function(result) {
+        console.log(result);
+        // apiService.writeData(result);
       }, function() {
         $log.info('Modal dismissed at: ' + new Date());
       });

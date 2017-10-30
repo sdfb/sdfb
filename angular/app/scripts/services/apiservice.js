@@ -14,7 +14,7 @@ angular.module('redesign2017App')
     // var apiUrl = 'http://sixdegrees-api.herokuapp.com';
     // var apiUrl = "http://ec2-54-242-188-143.compute-1.amazonaws.com/tools"
 
-    
+
     var apiUrl = "http://sixdegr-dev.library.cmu.edu/tools"
     // var baseUrl = CORSproxy + apiUrl;
     var baseUrl = apiUrl;
@@ -204,6 +204,74 @@ angular.module('redesign2017App')
           data: JSON.stringify(data)
         }).then(function successCallback(response){
           return response;
+        },function errorCallback(response){
+          console.error("An error occured while fetching file",response);
+          console.warn("If the issue is related to CORS Origin, try install this extention on Chrome: https://chrome.google.com/webstore/detail/allow-control-allow-origi/nlfbmbojpeacfghkpbjhddihlkkiljbi")
+          return response;
+        });
+      },
+      curatePeople : function(token){
+
+        var url = baseUrl + '/api/curate/people';
+        return $http({
+          method: 'GET',
+          url: url,
+          params: {
+              auth_token: token
+            }
+        }).then(function successCallback(response){
+          return response.data;
+        },function errorCallback(response){
+          console.error("An error occured while fetching file",response);
+          console.warn("If the issue is related to CORS Origin, try install this extention on Chrome: https://chrome.google.com/webstore/detail/allow-control-allow-origi/nlfbmbojpeacfghkpbjhddihlkkiljbi")
+          return response;
+        });
+      },
+      curateRelationships : function(token){
+
+        var url = baseUrl + '/api/curate/relationships';
+        return $http({
+          method: 'GET',
+          url: url,
+          params: {
+              auth_token: token
+            }
+        }).then(function successCallback(response){
+          return response.data;
+        },function errorCallback(response){
+          console.error("An error occured while fetching file",response);
+          console.warn("If the issue is related to CORS Origin, try install this extention on Chrome: https://chrome.google.com/webstore/detail/allow-control-allow-origi/nlfbmbojpeacfghkpbjhddihlkkiljbi")
+          return response;
+        });
+      },
+      curateRelTypes : function(token){
+
+        var url = baseUrl + '/api/curate/links';
+        return $http({
+          method: 'GET',
+          url: url,
+          params: {
+              auth_token: token
+            }
+        }).then(function successCallback(response){
+          return response.data;
+        },function errorCallback(response){
+          console.error("An error occured while fetching file",response);
+          console.warn("If the issue is related to CORS Origin, try install this extention on Chrome: https://chrome.google.com/webstore/detail/allow-control-allow-origi/nlfbmbojpeacfghkpbjhddihlkkiljbi")
+          return response;
+        });
+      },
+      curateGroups : function(token){
+
+        var url = baseUrl + '/api/curate/groups';
+        return $http({
+          method: 'GET',
+          url: url,
+          params: {
+              auth_token: token
+            }
+        }).then(function successCallback(response){
+          return response.data;
         },function errorCallback(response){
           console.error("An error occured while fetching file",response);
           console.warn("If the issue is related to CORS Origin, try install this extention on Chrome: https://chrome.google.com/webstore/detail/allow-control-allow-origi/nlfbmbojpeacfghkpbjhddihlkkiljbi")
