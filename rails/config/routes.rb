@@ -195,22 +195,4 @@ Sdfb::Application.routes.draw do
   match '/relationships_100160001_100180000' => 'relationships#export_rels_for_rels_100160001_100180000', :via => [:get]
   match '/relationships_greater_than_100180000' => 'relationships#export_rels_for_rels_greater_than_100180000', :via => [:get]
 
-    # Routing for mass upload
-  match '/large_data' => 'large_data#new', :via => [:get]
-
-  match '/large_data/edit' => 'large_data#edit', :via => [:get]
-
-  match '/large_data/edit' => 'large_data#edit', :via => [:post]
-
-  match '/large_data/show' => 'large_data#show', :via => [:post]
-
-  match '/large_data/confirm_people' => 'large_data#confirm_people', :via => [:post]
-
-  match '/large_data/show' => 'large_data#show', :via => [:get]
-
-  get 'large_data/download_csv'
-
-
-    # get "top_contributors" => "home#top_contributors", :as => "top_contributors"
-
 end
