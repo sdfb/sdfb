@@ -92,9 +92,7 @@ class Person < ActiveRecord::Base
   # Callbacks
   # ----------------------------- 
   before_create  :init_rel_sum_and_group_list
-  before_create  :check_if_approved
   before_create  :populate_search_names
-  before_update  :check_if_approved_and_update_edit
   before_save    :check_birth_death_years
   before_save    :add_display_name_if_blank
   before_destroy :delete_associated_relationships
