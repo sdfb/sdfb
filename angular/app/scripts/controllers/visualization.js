@@ -197,6 +197,7 @@ angular.module('redesign2017App').component('visualization', {
       console.log($scope.addToDB);
       $scope.addToDB = {nodes: [], links: [], groups: []};
       $scope.newNode = {};
+      $scope.newNode.birthDateType = $scope.newNode.deathDateType = $scope.config.dateTypes[1];
       $scope.newLink = {};
       $scope.newGroup = {};
       $scope.groupAssign = {person: {}, group: {}};

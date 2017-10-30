@@ -33,8 +33,6 @@ angular.module('redesign2017App')
         scope.today = now.getFullYear() + '_' + (now.getMonth()+1) + '_' + now.getDate();
 
         scope.logIn = function() {
-          // console.log(scope.user.email, scope.user.password);
-          console.log(scope.user);
           apiService.logIn(scope.user).then(function successCallback(result) {
             scope.user = result.data;
             console.log(scope.user);
@@ -46,6 +44,7 @@ angular.module('redesign2017App')
           var logOut = {'auth_token': scope.user.auth_token}
           apiService.logOut(logOut).then(function(result) {
             scope.config.login.status = false;
+            scope.user = {};
           });
         }
 

@@ -52,7 +52,7 @@
             <div ng-show="config.login.status" uib-dropdown-menu class="dropdown-menu user-info" style="padding:17px;">
               <h5>{{user.first_name}} {{user.last_name}} ({{user.id}})</h5>
               <a>edit profile</a>
-              <a ng-click="logOut()">log out</a>
+              <a href ng-click="logOut()">log out</a>
               <p>{{user.user_type}} User</p>
 
               <p>Affiliation: {{user.affiliation}}</p>
