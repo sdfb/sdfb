@@ -2,10 +2,6 @@ class UsersController < ApplicationController
   # GET /users
   # GET /users.json
 
-  # before_filter :check_login
-  # before_filter :check_login, :only => [:index, :show, :edit]
-  # authorize_resource
-  
   load_and_authorize_resource
 
   def index

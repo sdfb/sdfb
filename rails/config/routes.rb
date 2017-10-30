@@ -12,6 +12,7 @@ Sdfb::Application.routes.draw do
     get  'api/network'
     get  'api/groups/network', action: :group_network, controller: :api
     get  'api/typeahead'
+    get  'api/curate/:type', action: :curate, controller: :api
     post 'api/edit_user'
     post 'api/new_user'
     post 'api/write'

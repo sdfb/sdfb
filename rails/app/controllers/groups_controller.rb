@@ -2,10 +2,6 @@ class GroupsController < ApplicationController
   # GET /groups
   # GET /groups.json
 
-  # before_filter :check_login
-  # before_filter :check_login, :only => [:new, :edit]
-  # authorize_resource
-
   autocomplete :group, :name, full: true, display_value: :name, scopes: [:all_approved]
   load_and_authorize_resource
   
