@@ -1,6 +1,31 @@
 class ApiController < ApplicationController
   skip_before_filter :verify_authenticity_token
 
+  def curate
+    return head(:forbidden) unless current_user && ["Admin", "Curator"].include?(current_user.user_type)
+    offset = params["offset"] || 0
+    size = params["size"] || 20
+    case params["type"]
+    when "people"
+      @people = Person.all_unapproved.limit(size).offset(offset)
+      render "people"      
+    when "groups"
+      @groups = Group.all_unapproved.limit(size).offset(offset)
+      render "groups"      
+    when "relationships"
+      @relationships = Relationship.all_unapproved.limit(size).offset(offset)
+      render "relationships"
+    when "links"
+      @links = UserRelContrib.all_unapproved.limit(size).offset(offset)
+      person_ids = @links.collect{|l| [l.relationship.person1_index,l.relationship.person2_index]}.flatten.uniq
+      @people = Person.find(person_ids)
+      render "links"      
+    else
+      return head(:bad_request)
+    end
+  end
+
+
   def users
     return head(:forbidden) unless current_user
     user_id = params[:id]
@@ -65,7 +90,7 @@ class ApiController < ApplicationController
   end
 
   def write
-
+    return head(:forbidden) unless current_user
     person_lookup = {}
     group_lookup = {}
     if nodes = params[:nodes]
@@ -103,10 +128,17 @@ class ApiController < ApplicationController
           node["death_year_type"] = node["deathDateType"]
           node.delete("deathDateType")
         end
+        if ["Admin", "Curator"].include?(current_user.user_type)
+          node.delete("is_approved")
+          node.delete("is_active")
+        end
+        node.delete("created_by")
+
         if node["id"]
           Person.find_by(node["id"]).update(node)
           Person.save!
         else
+          node["created_by"] == current_user.id
           new_person = Person.create!(node)
           puts new_person.inspect
           person_lookup[placeholder_id] = new_person.id
@@ -125,20 +157,23 @@ class ApiController < ApplicationController
           name: group["name"],
           start_year: group["startDate"],
           end_year: group["endDate"],
-          created_by: group["created_by"],
+          created_by: current_user.id,
           start_date_type: group["startDateType"],
           end_date_type: group["endDateType"],
           description: group["description"],
           justification: group["justification"],
           bibliography: group["citation"]
         }
-
+        if ["Admin", "Curator"].include?(current_user.user_type)
+          new_record["is_approved"] = group["is_approved"] if group["is_approved"]
+          new_record["is_active"]   = group["is_active"]   if group["is_active"]
+        end
+    
         if group["id"]
           Group.find_by(group["id"]).update(new_record)
           Group.save!
         else
           new_group = Group.create!(new_record)
-          puts new_group.inspect
           group_lookup[placeholder_id] = new_group.id
         end
       end
@@ -158,7 +193,7 @@ class ApiController < ApplicationController
           new_record = {
             person1_index: source_id,
             person2_index: target_id,
-            created_by: link["created_by"],
+            created_by: current_user.id,
             bibliography: link["citation"],
             original_certainty: link["confidence"],
           }
@@ -172,7 +207,7 @@ class ApiController < ApplicationController
           relationship_id: rel.id,
           start_date_type: link["startDateType"],
           end_date_type: link["endDateType"],
-          created_by: link["created_by"],
+          created_by: current_user.id,
           start_year: link["startDate"],
           end_year: link["endDate"],
           certainty: link["confidence"],
@@ -192,13 +227,18 @@ class ApiController < ApplicationController
         current_group = GroupAssignment.where("group_id = ? AND person_id = ?", group_id, person_id).first
         if current_group
           update_dates(current_group,assignment)
+          if ["Admin", "Curator"].include?(current_user.user_type)
+            current_group.is_approved = assignment["is_approved"] if assignment["is_approved"]
+            current_group.is_active   = assignment["is_active"]   if assignment["is_active"]
+            current_group.save!
+          end
         else
           new_record = {
             person_id: person_id,
             group_id: group_id,
             start_year: assignment["startDate"],
             end_year: assignment["endDate"],
-            created_by: assignment["created_by"],
+            created_by: current_user.id,
             start_date_type: assignment["startDateType"],
             end_date_type: assignment["endDateType"],
             bibliography: assignment["citation"]

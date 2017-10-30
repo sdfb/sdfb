@@ -4,10 +4,6 @@ class UserGroupContribsController < ApplicationController
   # GET /user_group_contribs
   # GET /user_group_contribs.json
 
-  # before_filter :check_login
-  # before_filter :check_login, :only => [:index, :new, :edit]
-  # authorize_resource
-
   load_and_authorize_resource
 
   def index
