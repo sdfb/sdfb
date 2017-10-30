@@ -33,7 +33,7 @@ class GroupsController < ApplicationController
   # GET /groups/1
   # GET /groups/1.json
   def show
-    @group = Group.select("id, name, description, start_date_type, start_year, end_date_type, end_year, justification, created_at, created_by, is_approved, is_active, approved_by, approved_on, is_rejected, last_edit").find(params[:id])
+    @group = Group.select("id, name, description, start_date_type, start_year, end_date_type, end_year, justification, created_at, created_by, is_approved, is_active, approved_by, approved_on, is_rejected").find(params[:id])
     @user_group_contribs = UserGroupContrib.all_for_group(params[:id]).all_approved.order_by_sdfb_id.paginate(:page => params[:user_group_contribs_page]).per_page(100)
     @people = GroupAssignment.all_for_group(params[:id]).all_approved.order_by_sdfb_id.paginate(:page => params[:people_page]).per_page(100)
     @group_cat_assigns_approved = GroupCatAssign.for_group(params[:id]).all_approved.order_by_sdfb_id.paginate(:page => params[:group_cat_assigns_approved_page]).per_page(100)

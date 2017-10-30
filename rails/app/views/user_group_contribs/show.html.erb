@@ -29,11 +29,6 @@
         <% end %>
         <dt><strong>Created:</strong></dt>
         <dd><%= @user_group_contrib.created_at.strftime("%m/%d/%Y") %> by <%= link_to User.find(@user_group_contrib.created_by).username,  user_path(@user_group_contrib.created_by) %></dd>
-        <% @last_edit = @user_group_contrib.last_edit %>
-        <% if ! @last_edit.blank? %>
-          <dt><strong>Last Edit:</strong></dt>
-          <dd><%= @last_edit[1].strftime("%m/%d/%Y")%> by <%= link_to User.find(@last_edit[0]).username,  user_path(@last_edit[0]) %></dd>
-        <% end %>
         <% if (! current_user.blank?) && ((current_user.user_type == "Admin") || (current_user.user_type == "Curator")) %>
           <dt><strong>Is Approved?:</strong></dt>
           <dd><%= @user_group_contrib.is_approved %></dd>

@@ -1,7 +1,7 @@
 class UserRelContrib < ActiveRecord::Base
   # this class is known as "Relationship Type Assignment" to the user
   
-  include TrackLastEdit
+  
   include WhitespaceStripper
   include Approvable
 

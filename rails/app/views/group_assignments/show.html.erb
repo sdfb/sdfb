@@ -102,11 +102,6 @@
         <% if (! current_user.blank?) && (current_user.user_type == "Admin") %>
           <dt><strong>Created:</strong></dt>
           <dd><%= @group_assignment.created_at.strftime("%m/%d/%Y") %> by <%= link_to User.find(@group_assignment.created_by).username,  user_path(@group_assignment.created_by) %></dd>
-          <% @last_edit = @group_assignment.last_edit %>
-          <% if ! @last_edit.blank? %>
-            <dt><strong>Last Edit:</strong></dt>
-            <dd><%= @last_edit[1].strftime("%m/%d/%Y")%> by <%= link_to User.find(@last_edit[0]).username,  user_path(@last_edit[0]) %></dd>
-          <% end %>
           <% if ! @group_assignment.approved_by.blank? %>
             <dt><strong>Approved By:</strong></dt>
             <dd><%= link_to User.find(@group_assignment.approved_by).username,  user_path(@group_assignment.approved_by) %></dd>

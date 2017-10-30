@@ -1,17 +1,17 @@
 class Relationship < ActiveRecord::Base
 
   include Approvable
+  
 
 
   attr_accessible :max_certainty, :created_by, :original_certainty, :person1_index, :person2_index,
   :justification, :created_at, :edge_birthdate_certainty, :bibliography,
    :start_year, :start_month, :start_day, :end_year, :end_month, :end_day,
   :person1_autocomplete, :person2_autocomplete,
-  :start_date_type, :end_date_type, :type_certainty_list, :last_edit
+  :start_date_type, :end_date_type, :type_certainty_list
   # The type certainty list is a 2d array that includes the relationship type id in the 0 index, 
   #  ...the average certainty of all relationship assignments with that relationship type, and the relationship type name
   serialize :type_certainty_list,Array
-  serialize :last_edit,Array
 
   # Relationships
   # -----------------------------
@@ -62,15 +62,12 @@ class Relationship < ActiveRecord::Base
 
   # Callbacks
   # -----------------------------
-  before_create :init_array 
   before_create :create_check_start_and_end_date
-  before_create :check_if_approved
   before_create :create_max_certainty_type_list
 
   before_update :update_type_list_max_certainty_on_rel
   before_update :create_check_start_and_end_date
   before_update :update_peoples_rel_sum
-  before_update :check_if_approved_and_update_edit
 
   after_create :create_peoples_rel_sum
   after_destroy :delete_from_rel_sum
@@ -106,9 +103,6 @@ class Relationship < ActiveRecord::Base
     Person.update(self.person2_index, rel_sum: rel_sum_person_2)
   end
 
-  def init_array
-    self.last_edit = nil
-  end
 
   def update_met_record
     met_record = UserRelContrib.where(relationship_type_id: 4,
@@ -416,33 +410,6 @@ class Relationship < ActiveRecord::Base
       return User.find(created_by).first_name + " " + User.find(created_by).last_name
     else
       return "ODNB"
-    end
-  end
-
-
-  def check_if_approved
-    if (self.is_approved != true)
-      self.approved_by = nil
-      self.approved_on = nil
-    end  
-  end
-
-  def check_if_approved_and_update_edit
-    #only update the approved and edit status if it is not a system callback
-    #a system callback can be detected because it's self.approved_by is 0 or nil
-    if (self.approved_by.to_i != 0)
-      new_last_edit = []
-      new_last_edit.push(self.approved_by.to_i)
-      new_last_edit.push(Time.now)
-      self.last_edit = new_last_edit
-
-      # update approval
-      if (self.is_approved == true)
-        self.approved_on = Time.now
-      else
-        self.approved_by = nil
-        self.approved_on = nil
-      end
     end
   end
 
