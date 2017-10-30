@@ -38,7 +38,26 @@ class ApiController < ApplicationController
         format.json { render json: user.as_json}
         format.html { render :json}
       rescue ActiveRecord::RecordNotFound, ActiveRecord::RecordInvalid => e
-        format.json { render json: {}, status: :unprocessable_entity }
+        errors = e.record ?  e.record.errors : {}
+        format.json { render json: errors, status: :unprocessable_entity }
+        format.html { render :json}
+      end
+
+    end
+  end
+
+  def new_user
+    return head(:forbidden) if current_user
+    return head(:bad_request) if params["id"]
+    fields = %w{about_description affiliation email first_name last_name username prefix orcid is_public password password_confirmation}
+    new_record = fields.collect{|field| [field, params[field]] if params[field]}.compact.to_h
+    respond_to do |format|
+      begin
+        user = User.create!(new_record)
+        format.json { render json: user.as_json}
+        format.html { render :json}
+      rescue ActiveRecord::RecordInvalid => e
+        format.json { render json: e.record.errors, status: :unprocessable_entity }
         format.html { render :json}
       end
 

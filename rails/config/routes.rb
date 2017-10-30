@@ -13,6 +13,7 @@ Sdfb::Application.routes.draw do
     get  'api/groups/network', action: :group_network, controller: :api
     get  'api/typeahead'
     post 'api/edit_user'
+    post 'api/new_user'
     post 'api/write'
     post 'api/sign_in', action: :create, controller: :sessions
     post 'api/sign_out', action: :destroy, controller: :sessions
