@@ -11,9 +11,16 @@ class ApiController < ApplicationController
       render "people"      
     when "groups"
       @groups = Group.all_unapproved.limit(size).offset(offset)
-      render "groups"      
+      render "groups"    
+    when "group_assignments"
+      @assignments = GroupAssignment.all_unapproved.limit(size).offset(offset)
+      person_ids = @assignments.collect{|l| l.person_id}.uniq
+      @people = Person.find(person_ids)
+      render "group_assignments"      
     when "relationships"
       @relationships = Relationship.all_unapproved.limit(size).offset(offset)
+      person_ids = @relationships.collect{|l| [l.person1_index,l.person2_index]}.flatten.uniq
+      @people = Person.find(person_ids)
       render "relationships"
     when "links"
       @links = UserRelContrib.all_unapproved.limit(size).offset(offset)
