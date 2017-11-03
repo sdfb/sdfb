@@ -85,8 +85,8 @@ class User < ActiveRecord::Base
   # -----------------------------
   def as_json(options={})
     options[:except] ||= [:password_digest, :password_reset_sent_at, :password_reset_token]
-    options[:methods] ||= [:points, :contributions]
-      super(options)
+    options[:methods] ||= [:points, :contributions] unless options[:minimal]
+    super(options)
   end
 
   def points
