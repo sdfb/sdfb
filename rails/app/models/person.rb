@@ -92,7 +92,6 @@ class Person < ActiveRecord::Base
   # Callbacks
   # ----------------------------- 
   before_create  :init_rel_sum_and_group_list
-  before_create  :check_if_approved
   before_create  :populate_search_names
   before_save    :check_birth_death_years
   before_save    :add_display_name_if_blank

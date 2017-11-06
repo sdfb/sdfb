@@ -3,10 +3,6 @@ class UserPersonContribsController < ApplicationController
 
   # GET /user_person_contribs
   # GET /user_person_contribs.json
-
-  # before_filter :check_login
-  # before_filter :check_login, :only => [:index, :new, :edit]
-  # authorize_resource
   
   autocomplete :person, :search_names_all, full: true, :extra_data => [:display_name, :ext_birth_year], :display_value => :autocomplete_name
   load_and_authorize_resource

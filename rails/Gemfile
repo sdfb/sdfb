@@ -2,9 +2,9 @@ source 'https://rubygems.org'
 ruby '2.3.5'
 
 # Native Rails gems — (These are required).
-gem 'rails', '4.1.8'
-gem 'railties', '4.1.8'
-gem 'activemodel', '4.1.8'
+gem 'rails', '4.2.10'
+gem 'railties', '4.2.10'
+gem 'activemodel', '4.2.10'
 gem 'rails-observers'
 gem 'actionpack-page_caching'
 gem 'actionpack-action_caching'

@@ -15,3 +15,4 @@ angular/.tmp
 angular/.sass-cache
 angular/bower_components
 .DS_Store
+rails/config/secrets.yaml

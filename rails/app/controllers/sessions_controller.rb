@@ -18,12 +18,10 @@ class SessionsController < ApplicationController
       end
 
       respond_to do |format|   
-        format.html { redirect_to root_url, notice: 'Logged in!' }
         format.json { render json: user.as_json, status: :created }
       end
     else
       respond_to do |format|   
-        format.html { redirect_to sign_in_path, notice: "Invalid email or password"}
         format.json { render json: {}, status: :unprocessable_entity }
       end
     end
@@ -37,7 +35,6 @@ class SessionsController < ApplicationController
       flash[:error] = "Logged out!"
     end
     respond_to do |format|   
-      format.html { redirect_to params[:prev]}
       format.json { render json: {}, status: :ok }
     end
   end
