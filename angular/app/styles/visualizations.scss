@@ -256,7 +256,7 @@ shared-network {
   height: 45px;
   width: 100%;
   bottom: 0;
-  background-color: #EFF1F4;
+  background-color: #DFE1E4;
   padding: 0 10px;
   display: -webkit-box !important;
   display: -ms-flexbox !important;
@@ -267,8 +267,13 @@ shared-network {
   -webkit-box-align: center;
   -ms-flex-align: center;
   align-items: center;
+  .group:nth-child(even) {
+    background-color: #A0A0A0;
+  }
+  .group:nth-child(odd) {
+    background-color: #b6bAbF;
+  }
   .group {
-    background-color: #C6CACF;
     width: 100%;
     font-size: 12px;
     border-radius: 2px;
@@ -315,9 +320,9 @@ shared-network {
 //   -webkit-transition: opacity 0.5s;
 //   transition: opacity 0.5s;
 // }
-groups-bar:hover::after {
-  opacity: 1;
-}
+// groups-bar:hover::after {
+//   opacity: 1;
+// }
 
 .other-groups-list li.active {
   color: red;
