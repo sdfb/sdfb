@@ -26,7 +26,7 @@
     </tr>
   </thead>
   <tbody>
-    <% @relationships_for_person do |relationship| %>
+    <% @relationships_for_person.each do |relationship| %>
       <tr>
         <td><%= link_to relationship.get_person1_name, person_path(relationship.person1_index) %></td>
         <td><%= link_to relationship.get_person2_name, person_path(relationship.person2_index) %></td>

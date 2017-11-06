@@ -40,7 +40,7 @@ Sdfb::Application.configure do
   config.assets.js_compressor = :uglifier
   config.assets.compress = true
   config.serve_static_files = true
-  config.serve_static_assets = true
+  config.serve_static_files = true
   config.assets.compile = true
   config.assets.digest = true
   # Expands the lines which load the assets
