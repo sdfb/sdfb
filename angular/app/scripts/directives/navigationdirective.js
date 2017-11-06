@@ -37,6 +37,8 @@ angular.module('redesign2017App')
             scope.user = result.data;
             var session = angular.copy(scope.user);
             delete session.contributions;
+            delete session.status;
+            delete session.error;
 
             $cookieStore.put('session', session);
           });

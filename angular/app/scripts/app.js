@@ -112,7 +112,7 @@ redesign2017App.config(function($stateProvider, $locationProvider, $compileProvi
   }
   var tableState = {
     name: 'browse',
-    url: 'browse',
+    url: '/browse',
     resolve: {
       tableData: ['$http', function($http) {
         return $http.get("/data/SDFB_people_2017_10_13.csv").then(function(result){
@@ -122,10 +122,44 @@ redesign2017App.config(function($stateProvider, $locationProvider, $compileProvi
     },
     component: 'browse'
   }
+  var userState = {
+    name: "home.user",
+    url: "user/{userId}",
+    onEnter: ['$stateParams', '$state', '$uibModal', '$resource', function($stateParams, $state, $uibModal, $resource) {
+        $uibModal.open({
+            templateUrl: './views/modal-user.html',
+            resolve: {
+              user: ['$cookieStore', 'apiService', function($cookieStore, apiService) {
+                var session = $cookieStore.get('session');
+                var token = session.auth_token;
+                var userId = $stateParams.userId;
+                return apiService.getUser(userId,token).then(function(result){
+                  return result;
+                })
+              }]
+            },
+            controller: ['$scope', 'user', function($scope, user) {
+              console.log(user);
+              $scope.dismiss = function() {
+                $scope.$dismiss();
+              };
+
+              $scope.save = function() {
+                item.update().then(function() {
+                  $scope.$close(true);
+                });
+              };
+            }]
+        }).result.finally(function() {
+            $state.go('^');
+        });
+    }]
+  }
 
   $stateProvider.state(homeState);
   $stateProvider.state(vizState);
   $stateProvider.state(tableState);
-  $locationProvider.html5Mode(true);
+  $stateProvider.state(userState);
+  // $locationProvider.html5Mode(true);
   $compileProvider.aHrefSanitizationWhitelist(/^\s*(https?|ftp|mailto|data):/);
 })
