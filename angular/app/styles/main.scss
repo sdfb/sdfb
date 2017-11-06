@@ -1515,6 +1515,10 @@ people-finder {
     background-color: $panels-bg;
   }
 
+  .reset form input {
+    width: 300px;
+  }
+
   .close-btn {
     cursor: pointer;
     position: absolute;

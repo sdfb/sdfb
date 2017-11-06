@@ -155,11 +155,44 @@ redesign2017App.config(function($stateProvider, $locationProvider, $compileProvi
         });
     }]
   }
+  var resetState = {
+    name: "home.reset",
+    url: "password_reset",
+    onEnter: ['$stateParams', '$state', '$uibModal', '$resource', function($stateParams, $state, $uibModal, $resource) {
+        $uibModal.open({
+            templateUrl: './views/modal-reset.html',
+            // resolve: {
+            //   user: ['$cookieStore', 'apiService', function($cookieStore, apiService) {
+            //     var session = $cookieStore.get('session');
+            //     var token = session.auth_token;
+            //     var userId = $stateParams.userId;
+            //     return apiService.getUser(userId,token).then(function(result){
+            //       return result;
+            //     })
+            //   }]
+            // },
+            controller: ['$scope', 'apiService', function($scope, apiService) {
+              $scope.dismiss = function() {
+                $scope.$dismiss();
+              };
+
+              $scope.save = function() {
+                apiService.resetPassword($scope.new).then(function() {
+                  $scope.$close(true);
+                });
+              };
+            }]
+        }).result.finally(function() {
+            $state.go('^');
+        });
+    }]
+  }
 
   $stateProvider.state(homeState);
   $stateProvider.state(vizState);
   $stateProvider.state(tableState);
   $stateProvider.state(userState);
+  $stateProvider.state(resetState);
   // $locationProvider.html5Mode(true);
   $compileProvider.aHrefSanitizationWhitelist(/^\s*(https?|ftp|mailto|data):/);
 })
