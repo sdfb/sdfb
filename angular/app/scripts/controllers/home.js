@@ -72,5 +72,48 @@ angular.module('redesign2017App').component('home', {
       });
     };
 
+    $scope.openSignup = function(size, parentSelector) {
+      var parentElem = parentSelector ?
+        angular.element($document[0].querySelector('.modal-demo ' + parentSelector)) : undefined;
+      var modalInstance = $uibModal.open({
+        animation: $scope.modalAnimationsEnabled,
+        ariaLabelledBy: 'modal-signup',
+        ariaDescribedBy: 'modal-signup-body',
+        templateUrl: './views/modal-signup.html',
+        controller: 'ModalSignupCtrl',
+        controllerAs: '$ctrl',
+        size: size,
+        appendTo: parentElem
+        // resolve: {
+        //   people: function() {
+        //     return apiService.curatePeople($scope.user.auth_token).then(function(result) {
+        //       return result;
+        //     });
+        //   },
+        //   relationships: function() {
+        //     return apiService.curateRelationships($scope.user.auth_token).then(function(result) {
+        //       return result;
+        //     });
+        //   },
+        //   relTypes: function() {
+        //     return apiService.curateRelTypes($scope.user.auth_token).then(function(result) {
+        //       return result;
+        //     });
+        //   },
+        //   groups: function() {
+        //     return apiService.curateGroups($scope.user.auth_token).then(function(result) {
+        //       return result;
+        //     });
+        //   }
+        // }
+      });
+      modalInstance.result.then(function(result) {
+        console.log(result);
+        apiService.newUser(result);
+      }, function() {
+        $log.info('Modal dismissed at: ' + new Date());
+      });
+    };
+
 	}]
 });
