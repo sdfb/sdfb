@@ -7,8 +7,8 @@
   <!-- <p><button ng-show="config.viewMode !== 'group-force'" type="button" class="btn btn-primary" ng-click="openTable()">See Table View</button></p>
   <p><button type="button" class="btn btn-primary">Export</button></p> -->
   <div class="btn-group btn-group-justified">
-    <label class="btn btn-primary" ng-click="openTable()">See Table View</label>
-    <a class="btn btn-primary" target="_blank" download="{{config.networkName}}.json" ng-href="{{download}}">Export this</a>
+    <label class="btn btn-primary" ng-click="openTable()">Table <i class="fa fa-table" aria-hidden="true"></i></label>
+    <a class="btn btn-primary" target="_blank" download="{{config.networkName}}.json" ng-href="{{download}}">Export <i class="fa fa-download" aria-hidden="true"></i></a>
   </div>
 </section>
 <section ng-if="currentSelection.type == 'person' " id="XXXcurrent-selection-person1">
