@@ -1300,7 +1300,11 @@ contextual-info-panel.panel.contribution-mode-on {
   border-color: $contribution-mode-fill;
 }
 
-contextual-info-panel > section {
+.all-types {
+  max-height: 20vh;
+  overflow-y: auto;
+}
+contextual-info-panel > section, contextual-info-panel > div > section {
   padding: 5px 15px 0;
   // text-align: center;
 
@@ -1325,7 +1329,7 @@ contextual-info-panel > section:first-child {
   }
 }
 
-contextual-info-panel > section.rel-type {
+contextual-info-panel > div > section.rel-type {
   background-color: $panels-bg;
   border-top: 1px solid $panels-stroke;
   border-bottom: 1px solid $panels-stroke;
@@ -1333,7 +1337,7 @@ contextual-info-panel > section.rel-type {
   padding-bottom: 12px;
 }
 
-.contribution-mode-on contextual-info-panel > section.rel-type {
+.contribution-mode-on contextual-info-panel > div > section.rel-type {
   padding-bottom: 0;
   border-color: $contribution-mode-fill;
 }
