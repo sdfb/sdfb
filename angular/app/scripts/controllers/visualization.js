@@ -111,9 +111,9 @@ angular.module('redesign2017App').component('visualization', {
         $scope.config.confidenceMax = 100;
       }
       if ($scope.config.viewMode !== 'group-timeline' && $scope.config.viewMode !== 'group-force' && $scope.config.viewMode !== 'all') {
-        return $scope.config.networkName + ", ("+$scope.config.networkComplexity+", "+$scope.config.dateMin+"-"+$scope.config.dateMax+", "+$scope.config.confidenceMin+"-"+$scope.config.confidenceMax+"%). Six Degrees of Francis Bacon. "+$location.$$absUrl+", "+(now.getMonth()+1)+"/"+now.getDate()+"/"+now.getFullYear() + '.';
+        return '"' + $scope.config.networkName + " ["+$scope.config.networkComplexity+", "+$scope.config.dateMin+"-"+$scope.config.dateMax+", "+$scope.config.confidenceMin+"-"+$scope.config.confidenceMax+'%]." Six Degrees of Francis Bacon. '+$location.$$absUrl+", "+(now.getMonth()+1)+"/"+now.getDate()+"/"+now.getFullYear() + '.';
       } else {
-        return $scope.config.networkName + ", (1500-1700). Six Degrees of Francis Bacon. "+$location.$$absUrl+", "+(now.getMonth()+1)+"/"+now.getDate()+"/"+now.getFullYear() + '.';
+        return '"' + $scope.config.networkName + ' [1500-1700]." Six Degrees of Francis Bacon. '+$location.$$absUrl+", "+(now.getMonth()+1)+"/"+now.getDate()+"/"+now.getFullYear() + '.';
       }
     }
     // $scope.watch('config', function(newValue, oldValue) {
