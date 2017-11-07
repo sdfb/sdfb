@@ -31,6 +31,8 @@
       <h4>Citation</h4>
       <textarea type="text" ng-model="newLink.citation" class="form-control"></textarea>
 
+      <br><input ng-show="$root.user.user_type !== 'Standard'" ng-model="newGroup.is_approved" type="checkbox"/> Approved?</input>
+
   		<button ng-disabled="newGroup.exists" class="btn btn-primary" type="submit">Add & Continue</button>
     </div>
 

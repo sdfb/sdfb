@@ -25,6 +25,8 @@
       <h4>Citation</h4>
       <textarea type="text" ng-model="groupAssign.citation" class="form-control"></textarea>
 
+      <br><input ng-show="$root.user.user_type !== 'Standard'" ng-model="groupAssign.is_approved" type="checkbox"/> Approved?</input>
+
       <p>Your submission needs to be validated by SDFB curators. You will see it as unapproved contribution in the meantime.</p>
       <button type="submit" class="btn btn-primary">Add & Continue</button>
     </div>

@@ -47,7 +47,9 @@
 			<input class="form-control" ng-model="newNode.alternates" ng-disabled="newNode.exists" placeholder="Alternate Names (comma-separated)">
 
 			<h4>Citation</h4>
-	    <textarea ng-disabled="newNode.exists" type="text" ng-model="newLink.citation" class="form-control"></textarea>
+	    <textarea ng-disabled="newNode.exists" type="text" ng-model="newNode.citation" class="form-control"></textarea>
+
+			<br><input ng-show="$root.user.user_type !== 'Standard'" ng-model="newNode.is_approved" type="checkbox"/> Approved?</input>
 
 			<!-- <h4>Notes</h4>
 			<input class="form-control" ng-model="newNode.notes" ng-disabled="newNode.exists" placeholder="Notes"> -->

@@ -7,14 +7,14 @@
  * # navigationDirective
  */
 angular.module('redesign2017App')
-  .directive('navigationDirective', ['$window', 'apiService', '$cookieStore', function ($window, apiService, $cookieStore) {
+  .directive('navigationDirective', ['$window', 'apiService', '$cookieStore', '$rootScope', function ($window, apiService, $cookieStore, $rootScope) {
     return {
       templateUrl: './views/navigation-directive.html',
       restrict: 'E',
       link: function postLink(scope, element, attrs) {
 
         scope.toggleContribute = function() {
-          // if (scope.user && scope.user.is_active) {
+          // if ($rootScope.user && $rootScope.user.is_active) {
             scope.config.contributionMode = !scope.config.contributionMode;
             scope.filtersClosed = false;
             if (scope.config.contributionMode) {
@@ -34,9 +34,9 @@ angular.module('redesign2017App')
         scope.today = now.getFullYear() + '_' + (now.getMonth()+1) + '_' + now.getDate();
 
         scope.logIn = function() {
-          apiService.logIn(scope.user).then(function successCallback(result) {
-            scope.user = result.data;
-            var session = angular.copy(scope.user);
+          apiService.logIn($rootScope.user).then(function successCallback(result) {
+            $rootScope.user = result.data;
+            var session = angular.copy($rootScope.user);
             delete session.contributions;
             delete session.status;
             delete session.error;
@@ -46,9 +46,9 @@ angular.module('redesign2017App')
         }
 
         scope.logOut = function() {
-          var logOut = {'auth_token': scope.user.auth_token}
+          var logOut = {'auth_token': $rootScope.user.auth_token}
           apiService.logOut(logOut).then(function(result) {
-            scope.user = {};
+            $rootScope.user = {};
             $cookieStore.put('session', null);
           });
         }

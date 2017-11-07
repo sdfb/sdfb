@@ -397,8 +397,8 @@ path.danger {
 
 .panel.collapsable.collapsed > .close-left {
   color: $mainTextColor;
-  left: 6px;
-  top: 7px;
+  left: 5px;
+  top: 4px;
 }
 
 .remove-btn {
@@ -434,6 +434,10 @@ path.danger {
 /* search panel styles*/
 search-panel.panel {
   border: none;
+}
+
+search-panel.panel.collapsed {
+  border: 1px solid $panels-stroke;
 }
 
 search-panel .nav-tabs.nav-justified > li > a {
