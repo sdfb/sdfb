@@ -104,6 +104,8 @@ angular.module('redesign2017App')
             console.log(realNewNode);
             realNewNode.vx = null;
             realNewNode.vy = null;
+            newNode.fx = x;
+            newNode.fy = y;
             scope.addedNodes.push(realNewNode);
           }
           newNode.created_by = scope.config.userId;

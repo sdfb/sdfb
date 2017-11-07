@@ -265,7 +265,6 @@ path.danger {
 
   &.add-link {
     height: 45vh;
-    overflow-y: auto;
     background-color: $light-color;
     border: 1px solid $contribution-mode-fill;
 
@@ -281,7 +280,6 @@ path.danger {
   }
   &.group-assign {
     height: 45vh;
-    overflow-y: auto;
     background-color: $light-color;
     border: 1px solid $contribution-mode-fill;
 
@@ -297,7 +295,6 @@ path.danger {
   }
   &.add-group {
     height: 45vh;
-    overflow-y: auto;
     background-color: $light-color;
     border: 1px solid $contribution-mode-fill;
 
