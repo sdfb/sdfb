@@ -14,19 +14,20 @@ angular.module('redesign2017App')
       link: function postLink(scope, element, attrs) {
 
         scope.toggleContribute = function() {
-          if (scope.user && scope.user.is_active) {
+          // if (scope.user && scope.user.is_active) {
             scope.config.contributionMode = !scope.config.contributionMode;
+            scope.filtersClosed = false;
             if (scope.config.contributionMode) {
               scope.cursorStyle = {'cursor': 'copy'};
             } else {
               scope.cursorStyle = {'cursor': 'auto'};
             }
-          }
-          else {
-            // $('.login-toggle').dropdown('toggle');
-            $window.alert("You must log in before you can contribute.")
-            scope.cursorStyle = {'cursor': 'auto'};
-          }
+          // }
+          // else {
+          //   // $('.login-toggle').dropdown('toggle');
+          //   $window.alert("You must log in before you can contribute.")
+          //   scope.cursorStyle = {'cursor': 'auto'};
+          // }
         }
 
         var now = new Date()
