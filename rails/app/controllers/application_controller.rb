@@ -1,5 +1,5 @@
 class ApplicationController < ActionController::Base
-  	protect_from_forgery
+  	protect_from_forgery with: :exception
   	before_filter :expire_hsts, :allow_iframe_requests
   	before_action :store_location
 	
