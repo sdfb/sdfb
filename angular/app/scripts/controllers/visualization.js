@@ -10,7 +10,7 @@
 angular.module('redesign2017App').component('visualization', {
   bindings: { networkData: '<' },
   templateUrl: 'views/visualization.html',
-  controller: ['$scope', '$uibModal', '$http', '$log', '$document', '$location', '$window', 'apiService', '$stateParams', '$transitions', function($scope, $uibModal, $http, $log, $document, $location, $window, apiService, $stateParams, $transitions) {
+  controller: ['$scope', '$uibModal', '$http', '$log', '$document', '$location', '$window', 'apiService', '$stateParams', '$transitions', '$rootScope', function($scope, $uibModal, $http, $log, $document, $location, $window, apiService, $stateParams, $transitions, $rootScope) {
     // console.log(this);
     var initialConfig = {
           viewObject:0, //0 = people, 1 = groups
@@ -34,8 +34,12 @@ angular.module('redesign2017App').component('visualization', {
           onlyMembers: false,
           added: false
         }
+
+    $rootScope.config = {};
+
     // console.log(initialConfig,initialData);
     $scope.config = initialConfig;
+    $rootScope.config.viewMode = $scope.config.viewMode;
     // $scope.data = initialData;
     $scope.legendClosed = false;
     $scope.filtersClosed = true;
@@ -55,12 +59,14 @@ angular.module('redesign2017App').component('visualization', {
       $scope.data = this.networkData;
       if ($stateParams.type === 'all-groups') {
         $scope.config.viewMode = 'all';
+        $rootScope.config.viewMode = 'all';
         $scope.config.networkName = "Co-membership Network of All Groups"
         $scope.$parent.groupTypeahead.selected = '';
         $scope.$parent.personTypeahead.selected = '';
         $scope.$parent.sharedTypeahead.selected = '';
       } else if ($stateParams.ids.length < 8 && $stateParams.type === 'timeline') {
         $scope.config.viewMode = 'group-timeline';
+        $rootScope.config.viewMode = 'group-timeline';
         var groupName = $scope.data.data.data[0].attributes.name;
         $scope.config.networkName = groupName + " Timeline";
         $scope.config.networkDesc = $scope.data.data.data[0].attributes.description;
@@ -69,6 +75,7 @@ angular.module('redesign2017App').component('visualization', {
       } else if ($stateParams.ids.length >= 8 && this.networkData.data.attributes.primary_people.length === 1) {
         var personName = this.networkData.included[0].attributes.name;
         $scope.config.viewMode = 'individual-force';
+        $rootScope.config.viewMode = 'individual-force';
         $scope.$parent.config.person1 = $stateParams.ids;
         $scope.config.person1 = $stateParams.ids;
         $scope.config.networkName = personName + " Network";
@@ -79,6 +86,7 @@ angular.module('redesign2017App').component('visualization', {
         $scope.$parent.config.viewObject = 0;
       } else if ($stateParams.ids.length > 8 && this.networkData.data.attributes.primary_people.length === 2) {
         $scope.config.viewMode = 'shared-network';
+        $rootScope.config.viewMode = 'shared-network';
         $scope.config.networkComplexity = 'all_connections';
         $scope.config.networkName = this.networkData.included[0].attributes.name + " & " + this.networkData.included[1].attributes.name + " Network";
         $scope.$parent.personTypeahead.selected = this.networkData.included[0].attributes.name;
@@ -86,6 +94,7 @@ angular.module('redesign2017App').component('visualization', {
         $scope.$parent.groupTypeahead.selected = '';
       } else if ($stateParams.ids.length < 8) {
         $scope.config.viewMode = 'group-force';
+        $rootScope.config.viewMode = 'group-force';
         var groupName,
             groupDescription;
         $scope.data.included.forEach( function(item) {
@@ -370,6 +379,8 @@ angular.module('redesign2017App').component('visualization', {
         }
       }
     });
+
+    console.log($rootScope.config.viewMode);
 
 
   }]
