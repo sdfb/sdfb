@@ -58,14 +58,14 @@ angular.module('redesign2017App').directive('forceLayout', ['apiService', '$time
               d3.selectAll('g.label')
                 .classed('hidden', function(d) {
                   if (scope.config.viewMode === 'shared-network') {
-                    return (d.distance === 0 || d.distance === 3) ? false : true;
+                    return (d.distance === 0 || d.distance === 3 || d.distance === 7) ? false : true;
                   } else if (scope.config.viewMode === 'group-force') {
                     var members = scope.data.data.attributes.primary_people;
-                    return (members.indexOf(d.id) === -1) ? true : false;
+                    return (members.indexOf(d.id) === -1 || d.distance !== 7) ? true : false;
                   } else if (scope.config.viewMode === 'all') {
                     return false;
                   } else {
-                    return (d.distance < 2) ? false : true;
+                    return (d.distance < 2 || d.distance === 7) ? false : true;
                   }
                 });
 
@@ -417,18 +417,18 @@ angular.module('redesign2017App').directive('forceLayout', ['apiService', '$time
                 if (scope.config.viewMode == 'shared-network') {
                   if (d.distance === 0 || d.distance === 3) {
                     return 25;
-                  } else if (d.distance === 2) {
+                  } else if (d.distance === 2 || d.distance == 7) {
                     return 12.5;
                   } else {
                     return 6.25;
                   }
                 } else if (scope.config.viewMode === 'group-force') {
                   if (members.indexOf(d.id) === -1) { return 6.25; }
-                  else { return 12.5; };
+                  else if (members.indexOf(d.id) !== -1 || d.distance == 7) { return 12.5; };
                 } else {
                   if (d.distance == 0) {
                     return 25;
-                  } else if (d.distance == 1) {
+                  } else if (d.distance == 1 || d.distance == 7) {
                     return 12.5;
                   } else {
                     return 6.25;
@@ -502,13 +502,13 @@ angular.module('redesign2017App').directive('forceLayout', ['apiService', '$time
           var labelEnter = label.enter().append('g')
             .attr("class", function(d) {
               if (scope.config.viewMode === 'shared-network') {
-                return (d.distance === 0 || d.distance === 3) ? 'label' : 'label hidden';
+                return (d.distance === 0 || d.distance === 3 || d.distance === 7) ? 'label' : 'label hidden';
               } else if (scope.config.viewMode === 'group-force') {
-                return (members.indexOf(d.id) === -1) ? 'label hidden' : 'label';
+                return (members.indexOf(d.id) === -1 && d.distance !== 7) ? 'label hidden' : 'label';
               } else if (scope.config.viewMode === 'all') {
                 return 'label';
               }{
-                return (d.distance < 2) ? 'label' : 'label hidden';
+                return (d.distance < 2 || d.distance === 7) ? 'label' : 'label hidden';
               }
             })
             .attr('id', function(d) { // Assign ID number

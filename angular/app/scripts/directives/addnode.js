@@ -31,15 +31,21 @@ angular.module('redesign2017App')
 
           scope.newNode.exists = false;
 
-          var newNode = { attributes: { name: scope.newNode.name, degree: 1 }, id: scope.addedNodeId, distance: 7, x: point[0], y: point[1]};
+          var x = scope.singleWidth*(3/4)+scope.addedNodeId*20;
+          var y = scope.singleHeight*(3/4)+scope.addedNodeId*20;
+
+          var newNode = { attributes: { name: scope.newNode.name, degree: 1 }, id: scope.addedNodeId, distance: 7, x: x, y: y};
           newNode.vx = null;
           newNode.vy = null;
+          newNode.fx = x;
+          newNode.fy = y;
           console.log(newNode);
           addedNodes.push(newNode);
           scope.$apply(function() {
             scope.addNodeClosed = false;
             scope.legendClosed = true;
             scope.newNode.id = scope.addedNodeId;
+            scope.addedNodeId += 1;
           });
           update(scope.data);
 
@@ -91,7 +97,9 @@ angular.module('redesign2017App')
           }
           else if (scope.notInView === true && (scope.addedNodes.length === 0 || !checkForNameless(scope.addedNodes))) {
             scope.newNode.id = scope.addedNodeId;
-            var realNewNode = { attributes: { name: scope.newNode.name, degree: 1 }, id: scope.newNode.id, distance: 7, x: scope.singleWidth/2, y: scope.singleHeight/2};
+            var x = scope.singleWidth*(3/4)+scope.addedNodeId*20;
+            var y = scope.singleHeight*(3/4)+scope.addedNodeId*20;
+            var realNewNode = { attributes: { name: scope.newNode.name, degree: 1 }, id: scope.newNode.id, distance: 7, x: x, y: y};
             newNode = angular.copy(scope.newNode);
             console.log(realNewNode);
             realNewNode.vx = null;
@@ -108,7 +116,6 @@ angular.module('redesign2017App')
           scope.newNode = {};
           scope.newNode.birthDateType = scope.newNode.deathDateType = scope.config.dateTypes[1];
           console.log(scope.addToDB);
-          scope.addedNodeId += 1;
           scope.config.added = true;
 
         }

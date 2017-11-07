@@ -6,7 +6,7 @@
  * # addLink
  */
 angular.module('redesign2017App')
-  .directive('addLink', ['apiService', '$timeout', function(apiService, $timeout) {
+  .directive('addLink', ['apiService', '$timeout', '$rootScope', function(apiService, $timeout, $rootScope) {
     return {
       templateUrl: './views/add-link.html',
       restrict: 'E',
@@ -129,7 +129,7 @@ angular.module('redesign2017App')
                 scope.$apply(function() {
                   scope.addLinkClosed = false;
                   scope.legendClosed = true;
-                  scope.filtersClosed = true;
+                  $rootScope.filtersClosed = true;
                   scope.peopleFinderClosed = true;
                 });
                 if (d.id && otherNode.id) {
@@ -160,19 +160,18 @@ angular.module('redesign2017App')
                     if (scope.config.viewMode == 'shared-network') {
                       if (d.distance === 0 || d.distance === 3) {
                         return 25;
-                      } else if (d.distance === 2) {
+                      } else if (d.distance === 2 || d.distance == 7) {
                         return 12.5;
                       } else {
                         return 6.25;
                       }
                     } else if (scope.config.viewMode === 'group-force') {
-                      var members = scope.data.data.attributes.primary_people;
                       if (members.indexOf(d.id) === -1) { return 6.25; }
-                      else { return 12.5; };
+                      else if (members.indexOf(d.id) !== -1 || d.distance == 7) { return 12.5; };
                     } else {
                       if (d.distance == 0) {
                         return 25;
-                      } else if (d.distance == 1) {
+                      } else if (d.distance == 1 || d.distance == 7) {
                         return 12.5;
                       } else {
                         return 6.25;
