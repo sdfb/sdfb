@@ -18,7 +18,8 @@ class SessionsController < ApplicationController
       end
 
       respond_to do |format|   
-        format.json { render json: user.as_json, status: :created }
+        format.json { render json: user.as_json(minimal: true), status: :created }
+
       end
     else
       respond_to do |format|   

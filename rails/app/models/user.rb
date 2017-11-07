@@ -85,8 +85,8 @@ class User < ActiveRecord::Base
   # -----------------------------
   def as_json(options={})
     options[:except] ||= [:password_digest, :password_reset_sent_at, :password_reset_token]
-    options[:methods] ||= [:points, :contributions]
-      super(options)
+    options[:methods] ||= [:points, :contributions] unless options[:minimal]
+    super(options)
   end
 
   def points
@@ -124,21 +124,21 @@ class User < ActiveRecord::Base
   def contributions
     obj = {}
     return obj unless self.id 
-    obj[:people] = Person.for_user(self.id).collect do |g| 
+    obj[:people] = Person.approved_user(self.id).collect do |g| 
       {
         id: g.id, 
         name: g.display_name, 
         is_approved: g.is_approved
       }
     end
-    obj[:relationships] = Relationship.for_user(self.id).collect do |g| 
+    obj[:relationships] = Relationship.approved_user(self.id).collect do |g| 
       {
         id: g.id, 
         people: g.get_both_names, 
         is_approved: g.is_approved
       }
     end
-    obj[:relationship_types] = UserRelContrib.for_user(self.id).collect do |g| 
+    obj[:relationship_types] = UserRelContrib.approved_user(self.id).collect do |g| 
       {
         id: g.id, 
         people: g.get_both_names, 
@@ -146,14 +146,14 @@ class User < ActiveRecord::Base
         is_approved: g.is_approved
       }
     end
-    obj[:groups] = Group.for_user(self.id).collect do |g| 
+    obj[:groups] = Group.approved_user(self.id).collect do |g| 
       {
         id: g.id, 
         name: g.name, 
         is_approved: g.is_approved
       }
     end
-    obj[:group_assignments] = GroupAssignment.for_user(self.id).collect do |g|
+    obj[:group_assignments] = GroupAssignment.approved_user(self.id).collect do |g|
       {
         id: g.id, 
         person_name: g.person.display_name, 

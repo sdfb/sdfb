@@ -11,9 +11,16 @@ class ApiController < ApplicationController
       render "people"      
     when "groups"
       @groups = Group.all_unapproved.limit(size).offset(offset)
-      render "groups"      
+      render "groups"    
+    when "group_assignments"
+      @assignments = GroupAssignment.all_unapproved.limit(size).offset(offset)
+      person_ids = @assignments.collect{|l| l.person_id}.uniq
+      @people = Person.find(person_ids)
+      render "group_assignments"      
     when "relationships"
       @relationships = Relationship.all_unapproved.limit(size).offset(offset)
+      person_ids = @relationships.collect{|l| [l.person1_index,l.person2_index]}.flatten.uniq
+      @people = Person.find(person_ids)
       render "relationships"
     when "links"
       @links = UserRelContrib.all_unapproved.limit(size).offset(offset)
@@ -157,7 +164,6 @@ class ApiController < ApplicationController
           name: group["name"],
           start_year: group["startDate"],
           end_year: group["endDate"],
-          created_by: current_user.id,
           start_date_type: group["startDateType"],
           end_date_type: group["endDateType"],
           description: group["description"],
@@ -173,11 +179,14 @@ class ApiController < ApplicationController
           Group.find_by(group["id"]).update(new_record)
           Group.save!
         else
+          group[:created_by] = current_user.id
           new_group = Group.create!(new_record)
           group_lookup[placeholder_id] = new_group.id
         end
       end
     end
+
+ 
 
     if links = params[:links]
       links.each do |link|
@@ -224,25 +233,28 @@ class ApiController < ApplicationController
         group_id  = assignment["group"]["id"].to_i
         person_id = person_lookup[person_id] if person_id < 1_000_000
         group_id  = group_lookup[group_id]   if group_id  < 0
-        current_group = GroupAssignment.where("group_id = ? AND person_id = ?", group_id, person_id).first
-        if current_group
-          update_dates(current_group,assignment)
-          if ["Admin", "Curator"].include?(current_user.user_type)
-            current_group.is_approved = assignment["is_approved"] if assignment["is_approved"]
-            current_group.is_active   = assignment["is_active"]   if assignment["is_active"]
-            current_group.save!
-          end
+       
+        update_dates(Group.find(group_id),assignment)
+
+        new_record = {
+          person_id: person_id,
+          group_id: group_id,
+          start_year: assignment["startDate"],
+          end_year: assignment["endDate"],
+          created_by: current_user.id,
+          start_date_type: assignment["startDateType"],
+          end_date_type: assignment["endDateType"],
+          bibliography: assignment["citation"]
+        }
+        if ["Admin", "Curator"].include?(current_user.user_type)
+          new_record["is_approved"] = group_assignments["is_approved"] if group_assignments["is_approved"]
+          new_record["is_active"]   = group_assignments["is_active"]   if group_assignments["is_active"]
+        end
+        if group_assignments["id"]
+          GroupAssignment.find_by(group_assignments["id"]).update(new_record)
+          GroupAssignment.save!
         else
-          new_record = {
-            person_id: person_id,
-            group_id: group_id,
-            start_year: assignment["startDate"],
-            end_year: assignment["endDate"],
-            created_by: current_user.id,
-            start_date_type: assignment["startDateType"],
-            end_date_type: assignment["endDateType"],
-            bibliography: assignment["citation"]
-          }
+          new_record[:created_by] = current_user.id
           GroupAssignment.create!(new_record)
         end
       end
