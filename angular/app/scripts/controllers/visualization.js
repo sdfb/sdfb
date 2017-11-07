@@ -42,7 +42,7 @@ angular.module('redesign2017App').component('visualization', {
     $rootScope.config.viewMode = $scope.config.viewMode;
     // $scope.data = initialData;
     $scope.legendClosed = false;
-    $scope.filtersClosed = true;
+    $rootScope.filtersClosed = true;
     $scope.peopleFinderClosed = true;
     $scope.addNodeClosed = true;
     $scope.addLinkClosed = true;

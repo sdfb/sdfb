@@ -16,9 +16,10 @@ angular.module('redesign2017App')
         scope.toggleContribute = function() {
           // if ($rootScope.user && $rootScope.user.is_active) {
             scope.config.contributionMode = !scope.config.contributionMode;
-            scope.filtersClosed = false;
+
             if (scope.config.contributionMode) {
               scope.cursorStyle = {'cursor': 'copy'};
+              $rootScope.filtersClosed = false;
             } else {
               scope.cursorStyle = {'cursor': 'auto'};
             }
