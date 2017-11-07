@@ -112,7 +112,7 @@ redesign2017App.config(function($stateProvider, $locationProvider, $compileProvi
   }
   var tableState = {
     name: 'browse',
-    url: '/browse',
+    url: 'browse',
     resolve: {
       tableData: ['$http', function($http) {
         return $http.get("/data/SDFB_people_2017_10_13.csv").then(function(result){
@@ -196,3 +196,7 @@ redesign2017App.config(function($stateProvider, $locationProvider, $compileProvi
   // $locationProvider.html5Mode(true);
   $compileProvider.aHrefSanitizationWhitelist(/^\s*(https?|ftp|mailto|data):/);
 })
+
+redesign2017App.run(function($rootScope) {
+  $rootScope.$on("$stateChangeError", console.log.bind(console));
+});

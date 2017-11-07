@@ -115,5 +115,26 @@ angular.module('redesign2017App').component('home', {
       });
     };
 
+    $scope.openResetRequest = function(size, parentSelector) {
+      var parentElem = parentSelector ?
+        angular.element($document[0].querySelector('.modal-demo ' + parentSelector)) : undefined;
+      var modalInstance = $uibModal.open({
+        animation: $scope.modalAnimationsEnabled,
+        ariaLabelledBy: 'modal-request',
+        ariaDescribedBy: 'modal-request-body',
+        templateUrl: './views/modal-request.html',
+        controller: 'ModalRequestCtrl',
+        controllerAs: '$ctrl',
+        size: size,
+        appendTo: parentElem
+      });
+      modalInstance.result.then(function(result) {
+        console.log(result);
+        apiService.requestReset(result);
+      }, function() {
+        $log.info('Modal dismissed at: ' + new Date());
+      });
+    };
+
 	}]
 });

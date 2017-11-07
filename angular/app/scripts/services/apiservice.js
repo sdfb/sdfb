@@ -258,13 +258,13 @@ angular.module('redesign2017App')
           return response;
         });
       },
-      requestReset : function(email){
+      requestReset : function(data){
 
         var url = baseUrl + '/api/request_password_reset';
         return $http({
           method: 'POST',
           url: url,
-          data: JSON.stringify({'email': email})
+          data: JSON.stringify(data)
         }).then(function successCallback(response){
           return response;
         },function errorCallback(response){

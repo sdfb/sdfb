@@ -48,7 +48,7 @@
                 <input class="form-control" ng-model="user.password" name="password" id="password" placeholder="Password" type="password"><br>
                 <button type="button" id="btnLogin" class="btn btn-primary" ng-click="logIn()">Login</button>
               </form>
-              <a href ng-click="openSignup()">Sign Up</a>
+              <a href ng-click="openSignup()">Sign Up</a> | <a href ng-click="openResetRequest()">Forgot Password?</a>
             </div>
             <div ng-show="user.is_active" uib-dropdown-menu class="dropdown-menu user-info" style="padding:17px;">
               <h5>{{user.first_name}} {{user.last_name}} ({{user.id}})</h5>
