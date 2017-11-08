@@ -61,7 +61,7 @@ angular.module('redesign2017App').directive('forceLayout', ['apiService', '$time
                     return (d.distance === 0 || d.distance === 3 || d.distance === 7) ? false : true;
                   } else if (scope.config.viewMode === 'group-force') {
                     var members = scope.data.data.attributes.primary_people;
-                    return (members.indexOf(d.id) === -1 || d.distance !== 7) ? true : false;
+                    return (members.indexOf(d.id) !== -1 || d.distance === 7) ? false : true;
                   } else if (scope.config.viewMode === 'all') {
                     return false;
                   } else {
@@ -189,7 +189,7 @@ angular.module('redesign2017App').directive('forceLayout', ['apiService', '$time
           } else if (scope.config.viewMode === 'group-force') {
             var members = json.data.attributes.primary_people;
             var newData = parseGroupComplexity(json, scope.config.onlyMembers);
-            simulation.force("charge", d3.forceManyBody().strength(-100).distanceMax(200));
+            simulation.force("charge", d3.forceManyBody().strength(-50).distanceMax(200));
           } else {
             simulation.force("charge", d3.forceManyBody().strength(-100).distanceMax(200));
             var nodes = json.included;
@@ -240,7 +240,7 @@ angular.module('redesign2017App').directive('forceLayout', ['apiService', '$time
                 d.fy = scope.singleHeight/2
               }
             })
-          } else {
+          } else if (scope.config.viewMode === 'individual-force' && scope.$parent.config.layout == 'individual-force') {
             // For force layout, set fixed positions to null (undoes circle positioning)
             newNodes.forEach(function(d) {
               d.fx = null;
@@ -333,7 +333,7 @@ angular.module('redesign2017App').directive('forceLayout', ['apiService', '$time
                 toggleClick(d, newLinks, this);
               })
               .on('dblclick', function(d){
-                if (d.id !== 0) {
+                if (d.id < 100000) {
                   $state.go('home.visualization', {ids: d.id, type: 'network'});
                 } else {
                   console.log('new node');
@@ -423,7 +423,7 @@ angular.module('redesign2017App').directive('forceLayout', ['apiService', '$time
                     return 6.25;
                   }
                 } else if (scope.config.viewMode === 'group-force') {
-                  if (members.indexOf(d.id) === -1) { return 6.25; }
+                  if (members.indexOf(d.id) === -1 && d.distance !== 7) { return 6.25; }
                   else if (members.indexOf(d.id) !== -1 || d.distance == 7) { return 12.5; };
                 } else {
                   if (d.distance == 0) {
@@ -552,7 +552,6 @@ angular.module('redesign2017App').directive('forceLayout', ['apiService', '$time
               return d.labelBBox.height + paddingTopBottom;
             });
 
-          // simulation.alphaTarget(0).restart();
           simulation.alphaTarget(0).restart();
 
 
@@ -566,6 +565,8 @@ angular.module('redesign2017App').directive('forceLayout', ['apiService', '$time
             console.log('newNode drag');
             d.x = d3.event.x;
             d.y = d3.event.y;
+            d.fx = d3.event.x;
+            d.fy = d3.event.y;
           }
           else {
             d.fx = d3.event.x;
@@ -608,28 +609,38 @@ angular.module('redesign2017App').directive('forceLayout', ['apiService', '$time
 
         function dragstarted(d) {
 
-          // scope.dragNodes.forEach(function(n) {
-          //   n.fx = n.x;
-          //   n.fy = n.y;
-          // });
+          scope.dragNodes.forEach(function(n) {
+            n.fx = n.x;
+            n.fy = n.y;
+          });
           if (!d3.event.active) simulation.alphaTarget(0.3).restart();
         }
 
         function dragended(d) {
 
           // var nodes = scope.data.included;
-          simulation.alphaTarget(0).restart();
+
           if (scope.$parent.config.contributionMode) {
-            scope.createNewLink(d, scope.dragNodes, scope.addedLinks);
+            if (scope.config.viewMode !== 'all') {
+              scope.createNewLink(d, scope.dragNodes, scope.addedLinks);
+            }
             if (d.distance === 7) {
+              d.x = scope.singleWidth*(3/4)+d.id*20;
+              d.y = scope.singleHeight*(3/4)+d.id*20;
               d.fx = scope.singleWidth*(3/4)+d.id*20;
-              d.fy = scope.singleWidth*(3/4)+d.id*20;
+              d.fy = scope.singleHeight*(3/4)+d.id*20;
+            } else if (scope.config.viewMode !== 'all') {
+              d.fx = null;
+              d.fy = null;
             }
 
             scope.endGroupEvents();
             scope.updateNetwork(scope.data);
 
           }
+          // d.fx = null;
+          // d.fy = null;
+          simulation.alphaTarget(0).restart();
         }
 
         // Move the circle with the mouse, until the the user clicks
@@ -724,6 +735,7 @@ angular.module('redesign2017App').directive('forceLayout', ['apiService', '$time
 
         function parseGroupComplexity(json, onlyMembers) {
           var members = json.data.attributes.primary_people;
+          scope.members = members;
           if (onlyMembers === false) {
             var links = [];
             json.data.attributes.connections.forEach(function (l) {
@@ -1088,6 +1100,8 @@ angular.module('redesign2017App').directive('forceLayout', ['apiService', '$time
                 } else {
                   return 12.5 / 2 + 1;
                 }
+              } else if (scope.config.viewMode === 'group-force') {
+                return (scope.members.indexOf(d.id) !== -1 || d.distance === 7) ? 25 / 2 + 1 : 12.5 / 2 + 1;
               } else {
                 if (d.distance == 0) { // Account for larger source node
                   return 50 / 2 + 1;

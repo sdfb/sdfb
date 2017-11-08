@@ -166,8 +166,8 @@ angular.module('redesign2017App')
                         return 6.25;
                       }
                     } else if (scope.config.viewMode === 'group-force') {
-                      if (members.indexOf(d.id) === -1) { return 6.25; }
-                      else if (members.indexOf(d.id) !== -1 || d.distance == 7) { return 12.5; };
+                      if (scope.members.indexOf(d.id) === -1 && d.distance !== 7) { return 6.25; }
+                      else if (scope.members.indexOf(d.id) !== -1 || d.distance == 7) { return 12.5; };
                     } else {
                       if (d.distance == 0) {
                         return 25;

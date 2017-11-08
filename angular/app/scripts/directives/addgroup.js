@@ -15,6 +15,8 @@ angular.module('redesign2017App')
         // element.text('this is the addNode directive');
         scope.newGroup.startDateType = scope.newGroup.endDateType = scope.config.dateTypes[1];
 
+        scope.addedGroupId = 100000;
+
         scope.$watch('noResultsPersonAdd', function(newValue, oldValue) {
           // scope.noResults = newValue;
           if (newValue) {
@@ -26,14 +28,22 @@ angular.module('redesign2017App')
         // When canvas is clicked, add a new circle with dummy data
         scope.addGroupNode = function(addedGroups, point, update) {
           scope.newGroup.exists = false;
+          scope.newGroup.id = scope.addedGroupId;
 
-          var newGroup = { attributes: { name: scope.newGroup.name, degree: 1 }, id: 0, distance: 7, x: point[0], y: point[1]};
+          var x = scope.singleWidth*(3/4)+(scope.addedGroupId-100000)*20;
+          var y = scope.singleHeight*(3/4)+(scope.addedGroupId-100000)*20;
+
+          var newGroup = { attributes: { name: scope.newGroup.name, degree: 5 }, id: 0, distance: 7, x: x, y: y};
           newGroup.vx = null;
           newGroup.vy = null;
+          newGroup.fx = x;
+          newGroup.fy = y;
           addedGroups.push(newGroup);
           scope.$apply(function() {
             scope.addGroupClosed = false;
             scope.legendClosed = true;
+            scope.newGroup.id = scope.addedGroupId;
+            scope.addedGroupId += 1;
           });
 
           update(scope.data);
@@ -73,7 +83,13 @@ angular.module('redesign2017App')
             scope.addedGroups[scope.addedGroups.length-1].attributes.name = newGroup.name;
           }
           else if (scope.addedGroups.length === 0 || !checkForNameless(scope.addedGroups)) {
-            var realNewGroup = { attributes: { name: scope.newGroup.name, degree: 1 }, id: 0, distance: 7, x: scope.singleWidth/2, y: scope.singleHeight/2};
+            var x = scope.singleWidth*(3/4)+(scope.addedGroupId-100000)*20;
+            var y = scope.singleHeight*(3/4)+(scope.addedGroupId-100000)*20;
+            var realNewGroup = { attributes: { name: scope.newGroup.name, degree: 5 }, id: 0, distance: 7, x: x, y: y};
+            realnewGroup.vx = null;
+            realnewGroup.vy = null;
+            realnewGroup.fx = x;
+            realnewGroup.fy = y;
             scope.addedGroups.push(realNewGroup);
           }
           newGroup.startDateType = newGroup.startDateType.abbr;
