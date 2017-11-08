@@ -119,9 +119,7 @@ angular.module('redesign2017App')
                 otherNode.radius = true;
 
                 d3.select("#n"+otherNode.id).transition()
-                  .attr('r', 25)
-                  .attr('stroke', 'orange')
-                  .attr('stroke-dasharray', 5,5);
+                  .attr('r', 25);
                 scope.newLink.source.name = d.attributes.name;
                 scope.newLink.source.id = d.id;
                 scope.newLink.target.name = otherNode.attributes.name;
@@ -179,8 +177,7 @@ angular.module('redesign2017App')
                         return 6.25;
                       }
                     }
-                })
-                .attr('stroke-dasharray', null);
+                });
               }
             }
           });
