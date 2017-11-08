@@ -191,7 +191,7 @@ angular.module('redesign2017App').directive('forceLayout', ['apiService', '$time
             var newData = parseGroupComplexity(json, scope.config.onlyMembers);
             simulation.force("charge", d3.forceManyBody().strength(-50).distanceMax(200));
           } else {
-            simulation.force("charge", d3.forceManyBody().strength(-100).distanceMax(200));
+            simulation.force("charge", d3.forceManyBody().strength(-500).distanceMax(200));
             var nodes = json.included;
             var links = [];
             json.data.attributes.connections.forEach(function(l) {

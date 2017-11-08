@@ -99,7 +99,7 @@
     <h5>Color of edges indicates relationship certainty</h5>
   </div>
 
-  <div ng-if=" config.viewMode == 'all' ">
+  <div ng-show=" config.viewMode == 'all' ">
     <div class="legend-box legend-size-squares">
     </div>
     <h5>Size indicates amount of group members</h5>
@@ -108,7 +108,7 @@
     <h5>Thickness indicates the amount of shared people</h5>
   </div>
 
-  <div ng-if=" config.viewMode == 'group-force' ">
+  <div ng-show=" config.viewMode == 'group-force' ">
     <div class="legend-box">
       <div class="legend-line"></div>
       <div class="flex-container group-network">
