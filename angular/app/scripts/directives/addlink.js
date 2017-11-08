@@ -230,6 +230,8 @@ angular.module('redesign2017App')
           d3.select('#startDate').attr('placeholder', null);
           d3.select('#endDate').attr('placeholder', null);
           scope.config.added = true;
+          scope.newLink.startDateType = scope.newLink.endDateType = scope.config.dateTypes[1];
+          scope.newLink.relType = scope.config.relTypes[3];
 
         }
 

@@ -72,6 +72,10 @@ angular.module('redesign2017App').directive('forceLayout', ['apiService', '$time
               // reset group bar
               d3.selectAll('.group').classed('active', false);
               d3.selectAll('.group').classed('unactive', false);
+
+              // update selction and trigger event for other directives
+              scope.currentSelection = {};
+              scope.$apply(); // no need to trigger events, just apply
             })
             .on('dblclick', function () {
 
@@ -83,9 +87,7 @@ angular.module('redesign2017App').directive('forceLayout', ['apiService', '$time
                   scope.addNode(scope.addedNodes, point, scope.updateNetwork);
                 }
               }
-              // update selction and trigger event for other directives
-              scope.currentSelection = {};
-              scope.$apply(); // no need to trigger events, just apply
+
             });
 
           var container = scope.singleSvg.append('g'); // Create container for nodes and edges
@@ -630,10 +632,10 @@ angular.module('redesign2017App').directive('forceLayout', ['apiService', '$time
               scope.createNewLink(d, scope.dragNodes, scope.addedLinks);
             }
             if (d.distance === 7) {
-              d.x = scope.singleWidth*(3/4)+d.id*20;
-              d.y = scope.singleHeight*(3/4)+d.id*20;
-              d.fx = scope.singleWidth*(3/4)+d.id*20;
-              d.fy = scope.singleHeight*(3/4)+d.id*20;
+              d.x = scope.singleWidth*(3/4)+d.order*20;
+              d.y = scope.singleHeight*(3/4)+d.order*20;
+              d.fx = scope.singleWidth*(3/4)+d.order*20;
+              d.fy = scope.singleHeight*(3/4)+d.order*20;
             } else if (scope.config.viewMode !== 'all') {
               d.fx = null;
               d.fy = null;
@@ -1040,6 +1042,7 @@ angular.module('redesign2017App').directive('forceLayout', ['apiService', '$time
               scope.currentSelection = result.data[0];
               scope.currentSelection.source = d.source;
               scope.currentSelection.target = d.target;
+              console.log(scope.currentSelection);
               $timeout(function(){
                 scope.$broadcast('selectionUpdated', scope.currentSelection);
               });
