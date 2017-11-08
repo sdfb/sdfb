@@ -7,7 +7,7 @@
  * # addNode
  */
 angular.module('redesign2017App')
-  .directive('addNode', ['apiService', function (apiService) {
+  .directive('addNode', ['apiService', '$rootScope', function (apiService, $rootScope) {
     return {
       templateUrl: './views/add-node.html',
       restrict: 'E',
@@ -44,6 +44,9 @@ angular.module('redesign2017App')
           scope.$apply(function() {
             scope.addNodeClosed = false;
             scope.legendClosed = true;
+            scope.addLinkClosed = true;
+            scope.groupAssignClosed = true;
+            $rootScope.filtersClosed = true;
             scope.newNode.id = scope.addedNodeId;
             scope.addedNodeId += 1;
           });

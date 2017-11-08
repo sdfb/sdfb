@@ -330,22 +330,25 @@ angular.module('redesign2017App').directive('forceLayout', ['apiService', '$time
               .on("click", function(d) {
                 // console.log(d, d.attributes.name)
                 // Toggle ego networks on click of node
-                toggleClick(d, newLinks, this);
+                if (d.id <= 100000) {
+                  toggleClick(d, newLinks, this);
+                }
               })
               .on('dblclick', function(d){
-                if (d.id < 100000) {
+                if (d.id <= 100000) {
                   $state.go('home.visualization', {ids: d.id, type: 'network'});
                 } else {
                   console.log('new node');
-                  scope.$apply(function() {
-                    scope.config.viewMode = 'group-force';
-                    scope.data = {};
-                    scope.data.included = [];
-                    scope.data.data = {};
-                    scope.data.data.attributes = {};
-                    scope.data.data.attributes.primary_people = [];
-                    scope.data.data.attributes.connections = [];
-                  });
+                  $state.go('home.visualization', {ids: d.id, type: 'network'});
+                  // scope.$apply(function() {
+                  //   scope.config.viewMode = 'group-force';
+                  //   scope.data = {};
+                  //   scope.data.included = [];
+                  //   scope.data.data = {};
+                  //   scope.data.data.attributes = {};
+                  //   scope.data.data.attributes.primary_people = [];
+                  //   scope.data.data.attributes.connections = [];
+                  // });
 
                 }
               })

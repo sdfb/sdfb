@@ -33,7 +33,7 @@ angular.module('redesign2017App')
           var x = scope.singleWidth*(3/4)+(scope.addedGroupId-100000)*20;
           var y = scope.singleHeight*(3/4)+(scope.addedGroupId-100000)*20;
 
-          var newGroup = { attributes: { name: scope.newGroup.name, degree: 5 }, id: 0, distance: 7, x: x, y: y};
+          var newGroup = { attributes: { name: scope.newGroup.name, degree: 5 }, id: scope.addedGroupId, distance: 7, x: x, y: y};
           newGroup.vx = null;
           newGroup.vy = null;
           newGroup.fx = x;
@@ -85,7 +85,7 @@ angular.module('redesign2017App')
           else if (scope.addedGroups.length === 0 || !checkForNameless(scope.addedGroups)) {
             var x = scope.singleWidth*(3/4)+(scope.addedGroupId-100000)*20;
             var y = scope.singleHeight*(3/4)+(scope.addedGroupId-100000)*20;
-            var realNewGroup = { attributes: { name: scope.newGroup.name, degree: 5 }, id: 0, distance: 7, x: x, y: y};
+            var realNewGroup = { attributes: { name: scope.newGroup.name, degree: 5 }, id: scope.addedGroupId, distance: 7, x: x, y: y};
             realnewGroup.vx = null;
             realnewGroup.vy = null;
             realnewGroup.fx = x;

@@ -131,6 +131,8 @@ angular.module('redesign2017App')
                   scope.legendClosed = true;
                   $rootScope.filtersClosed = true;
                   scope.peopleFinderClosed = true;
+                  scope.groupAssignClosed = true;
+                  scope.addNodeClosed = true;
                 });
                 if (d.id && otherNode.id) {
                   apiService.getPeople(d.id.toString()+','+otherNode.id.toString()).then(function (result) {
