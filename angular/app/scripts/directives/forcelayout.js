@@ -72,6 +72,8 @@ angular.module('redesign2017App').directive('forceLayout', ['apiService', '$time
               // reset group bar
               d3.selectAll('.group').classed('active', false);
               d3.selectAll('.group').classed('unactive', false);
+            })
+            .on('dblclick', function () {
 
               if (scope.$parent.config.contributionMode) {
                 var point = d3.mouse(container.node());
