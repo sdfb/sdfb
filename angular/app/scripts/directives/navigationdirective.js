@@ -14,7 +14,7 @@ angular.module('redesign2017App')
       link: function postLink(scope, element, attrs) {
 
         scope.toggleContribute = function() {
-          // if ($rootScope.user && $rootScope.user.is_active) {
+          if ($rootScope.user && $rootScope.user.is_active) {
             scope.config.contributionMode = !scope.config.contributionMode;
 
             if (scope.config.contributionMode) {
@@ -23,12 +23,12 @@ angular.module('redesign2017App')
             } else {
               scope.cursorStyle = {'cursor': 'auto'};
             }
-          // }
-          // else {
-          //   // $('.login-toggle').dropdown('toggle');
-          //   $window.alert("You must log in before you can contribute.")
-          //   scope.cursorStyle = {'cursor': 'auto'};
-          // }
+          }
+          else {
+            // $('.login-toggle').dropdown('toggle');
+            $window.alert("You must log in before you can contribute.")
+            scope.cursorStyle = {'cursor': 'auto'};
+          }
         }
 
         var now = new Date()
@@ -38,7 +38,6 @@ angular.module('redesign2017App')
           apiService.logIn($rootScope.user).then(function successCallback(result) {
             $rootScope.user = result.data;
             var session = angular.copy($rootScope.user);
-            delete session.contributions;
             delete session.status;
             delete session.error;
 

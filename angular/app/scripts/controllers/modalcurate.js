@@ -8,14 +8,15 @@
  * Controller of the redesign2017App
  */
 angular.module('redesign2017App')
-  .controller('ModalCurateCtrl', ['$scope', '$uibModalInstance', '$timeout', '$window', 'apiService', 'people', 'relationships', 'relTypes', 'groups', function($scope, $uibModalInstance, $timeout, $window, apiService, people, relationships, relTypes, groups) {
+  .controller('ModalCurateCtrl', ['$scope', '$uibModalInstance', '$timeout', '$window', 'apiService', 'people', 'relationships', 'relTypes', 'groups', 'group_assignments', function($scope, $uibModalInstance, $timeout, $window, apiService, people, relationships, relTypes, groups, group_assignments) {
 
     var $ctrl = this;
-    console.log(groups);
+    console.log(relationships);
     $ctrl.people = people.data;
     $ctrl.relationships = relationships.data;
     $ctrl.relTypes = relTypes.data;
     $ctrl.groups = groups.data;
+    $ctrl.group_assignments = group_assignments.data;
     // $ctrl.addToDB = addToDB;
     // $ctrl.sendData = sendData;
 

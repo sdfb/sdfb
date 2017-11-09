@@ -23,7 +23,7 @@ angular.module('redesign2017App').component('home', {
     function init() {
       var session = $cookieStore.get('session');
       if (session) {
-        $scope.user = session;
+        $rootScope.user = session;
       }
     }
 
@@ -46,22 +46,27 @@ angular.module('redesign2017App').component('home', {
         appendTo: parentElem,
         resolve: {
           people: function() {
-            return apiService.curatePeople($scope.user.auth_token).then(function(result) {
+            return apiService.curatePeople($rootScope.user.auth_token).then(function(result) {
               return result;
             });
           },
           relationships: function() {
-            return apiService.curateRelationships($scope.user.auth_token).then(function(result) {
+            return apiService.curateRelationships($rootScope.user.auth_token).then(function(result) {
               return result;
             });
           },
           relTypes: function() {
-            return apiService.curateRelTypes($scope.user.auth_token).then(function(result) {
+            return apiService.curateRelTypes($rootScope.user.auth_token).then(function(result) {
               return result;
             });
           },
           groups: function() {
-            return apiService.curateGroups($scope.user.auth_token).then(function(result) {
+            return apiService.curateGroups($rootScope.user.auth_token).then(function(result) {
+              return result;
+            });
+          },
+          group_assignments: function() {
+            return apiService.curateGroupAssignments($rootScope.user.auth_token).then(function(result) {
               return result;
             });
           }
@@ -69,7 +74,7 @@ angular.module('redesign2017App').component('home', {
       });
       modalInstance.result.then(function(result) {
         console.log(result);
-        // apiService.writeData(result);
+        apiService.writeData(result);
       }, function() {
         $log.info('Modal dismissed at: ' + new Date());
       });

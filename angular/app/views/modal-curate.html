@@ -145,11 +145,11 @@
             </tr>
         </thead>
         <tbody>
-            <tr class="rel {{'r'+rel.id}}" ng-class="{ 'active': group.active }" ng-repeat="rel in $ctrl.addToDB.group_assignments">
-                <td>{{ rel.person.name }}</td>
+            <tr class="rel {{'r'+rel.id}}" ng-class="{ 'active': group.active }" ng-repeat="rel in $ctrl.group_assignments">
+                <td>{{ rel.attributes.person_id }}</td>
                 <td>{{ rel.group.name }}</td>
-                <td>{{ rel.startDateType }} {{ rel.startDate }}</td>
-                <td>{{ rel.endDateType }} {{ rel.endDate }}</td>
+                <td>{{ rel.attributes.start_year_type }} {{ rel.attributes.start_year }}</td>
+                <td>{{ rel.attributes.end_year_type }} {{ rel.attributes.end_year }}</td>
                 <td>
                   <input type="checkbox"/>
                     <!-- <i class="fa fa-times" aria-hidden="true" type="button" ng-click="$ctrl.remove($index, $ctrl.addToDB.group_assignments)" aria-label="Remove"></i> -->

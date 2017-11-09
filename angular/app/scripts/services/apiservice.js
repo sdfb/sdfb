@@ -355,6 +355,23 @@ angular.module('redesign2017App')
           console.warn("If the issue is related to CORS Origin, try install this extention on Chrome: https://chrome.google.com/webstore/detail/allow-control-allow-origi/nlfbmbojpeacfghkpbjhddihlkkiljbi")
           return response;
         });
+      },
+      curateGroupAssignments : function(token){
+
+        var url = baseUrl + '/api/curate/group_assignments';
+        return $http({
+          method: 'GET',
+          url: url,
+          params: {
+              auth_token: token
+            }
+        }).then(function successCallback(response){
+          return response.data;
+        },function errorCallback(response){
+          console.error("An error occured while fetching file",response);
+          console.warn("If the issue is related to CORS Origin, try install this extention on Chrome: https://chrome.google.com/webstore/detail/allow-control-allow-origi/nlfbmbojpeacfghkpbjhddihlkkiljbi")
+          return response;
+        });
       }
     }
   });
