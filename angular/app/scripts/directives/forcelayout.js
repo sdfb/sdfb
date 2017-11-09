@@ -219,7 +219,7 @@ angular.module('redesign2017App').directive('forceLayout', ['apiService', '$time
           }
           scope.addedLinks.forEach(function(a) { newLinks.push(a); });
 
-          if (scope.config.viewMode === 'individual-force' && scope.$parent.config.layout == 'individual-concentric') {
+          if (scope.config.viewMode === 'individual-force' && scope.config.layout == 'individual-concentric') {
             // For concentric layout, set fixed positions according to degree
             newNodes.forEach(function(d) {
               if (d.distance == 0) { // Set source node to center of view
@@ -244,7 +244,7 @@ angular.module('redesign2017App').directive('forceLayout', ['apiService', '$time
                 d.fy = scope.singleHeight/2
               }
             })
-          } else if (scope.config.viewMode === 'individual-force' && scope.$parent.config.layout == 'individual-force') {
+          } else if (scope.config.viewMode === 'individual-force' && scope.config.layout == 'individual-force') {
             // For force layout, set fixed positions to null (undoes circle positioning)
             newNodes.forEach(function(d) {
               d.fx = null;
@@ -1159,7 +1159,7 @@ angular.module('redesign2017App').directive('forceLayout', ['apiService', '$time
           }
         }, true);
 
-        scope.$watch('$parent.config.layout', function(newValue, oldValue) {
+        scope.$watch('config.layout', function(newValue, oldValue) {
           if (scope.config.viewMode === 'individual-force') {
             scope.updateNetwork(scope.data);
             simulation.alpha(1);

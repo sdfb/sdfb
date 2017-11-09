@@ -79,6 +79,7 @@ redesign2017App.config(function($stateProvider, $locationProvider, $compileProvi
     url: '/',
     component: 'home',
     redirectTo: { state: 'home.visualization', params: { ids: '10000473', type: 'network' } }
+    // abstract: true
   }
   var vizState = {
     name: 'home.visualization',
@@ -111,7 +112,7 @@ redesign2017App.config(function($stateProvider, $locationProvider, $compileProvi
     component: 'visualization'
   }
   var tableState = {
-    name: 'browse',
+    name: 'home.browse',
     url: 'browse',
     resolve: {
       tableData: ['$http', function($http) {
@@ -193,7 +194,7 @@ redesign2017App.config(function($stateProvider, $locationProvider, $compileProvi
   $stateProvider.state(tableState);
   $stateProvider.state(userState);
   $stateProvider.state(resetState);
-  // $locationProvider.html5Mode(true);
+  $locationProvider.html5Mode(true);
   $compileProvider.aHrefSanitizationWhitelist(/^\s*(https?|ftp|mailto|data):/);
 })
 

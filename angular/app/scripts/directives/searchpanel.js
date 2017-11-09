@@ -24,9 +24,6 @@ angular.module('redesign2017App')
           scope.config.viewMode = 'individual-force';
         }
 
-        scope.personTypeahead = { 'selected': undefined }
-        scope.sharedTypeahead = { 'selected': undefined }
-
         scope.selectedPerson = function($person1) {
           scope.config.person1 = $person1.id
           $state.go('home.visualization', {ids: $person1.id, type:'network'});
@@ -36,8 +33,6 @@ angular.module('redesign2017App')
           var ids = [scope.config.person1, $person2.id].join()
           $state.go('home.visualization', {ids: ids, type:'network'});
         };
-
-        scope.groupTypeahead = { 'selected': undefined }
 
         scope.callGroupsTypeahead = function(val) {
           console.log(val)
@@ -70,6 +65,8 @@ angular.module('redesign2017App')
             $state.go('home.visualization', {type: view});
           }
         }
+
+        console.log('from search: ', scope.config.viewObject);
 
       }
     };

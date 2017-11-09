@@ -39,6 +39,9 @@ angular.module('redesign2017App').component('visualization', {
 
     // console.log(initialConfig,initialData);
     $scope.config = initialConfig;
+    $scope.personTypeahead = {selected: ''};
+    $scope.sharedTypeahead = {selected: ''};
+    $scope.groupTypeahead = {selected: ''};
     $rootScope.config.viewMode = $scope.config.viewMode;
     // $scope.data = initialData;
     $scope.legendClosed = false;
@@ -61,37 +64,36 @@ angular.module('redesign2017App').component('visualization', {
         $scope.config.viewMode = 'all';
         $rootScope.config.viewMode = 'all';
         $scope.config.networkName = "Co-membership Network of All Groups"
-        $scope.$parent.groupTypeahead.selected = '';
-        $scope.$parent.personTypeahead.selected = '';
-        $scope.$parent.sharedTypeahead.selected = '';
+        $scope.groupTypeahead.selected = '';
+        $scope.personTypeahead.selected = '';
+        $scope.sharedTypeahead.selected = '';
       } else if ($stateParams.ids.length < 8 && $stateParams.type === 'timeline') {
         $scope.config.viewMode = 'group-timeline';
         $rootScope.config.viewMode = 'group-timeline';
         var groupName = $scope.data.data.data[0].attributes.name;
         $scope.config.networkName = groupName + " Timeline";
         $scope.config.networkDesc = $scope.data.data.data[0].attributes.description;
-        $scope.$parent.personTypeahead.selected = '';
-        $scope.$parent.sharedTypeahead.selected = '';
+        $scope.personTypeahead.selected = '';
+        $scope.sharedTypeahead.selected = '';
       } else if ($stateParams.ids.length >= 8 && this.networkData.data.attributes.primary_people.length === 1) {
         var personName = this.networkData.included[0].attributes.name;
         $scope.config.viewMode = 'individual-force';
         $rootScope.config.viewMode = 'individual-force';
-        $scope.$parent.config.person1 = $stateParams.ids;
         $scope.config.person1 = $stateParams.ids;
         $scope.config.networkName = personName + " Network";
         $scope.config.networkDesc = this.networkData.included[0].attributes.historical_significance;
-        $scope.$parent.personTypeahead.selected = personName;
-        $scope.$parent.sharedTypeahead.selected = '';
-        $scope.$parent.groupTypeahead.selected = '';
-        $scope.$parent.config.viewObject = 0;
+        $scope.personTypeahead.selected = personName;
+        $scope.sharedTypeahead.selected = '';
+        $scope.groupTypeahead.selected = '';
+        $scope.config.viewObject = 0;
       } else if ($stateParams.ids.length > 8 && this.networkData.data.attributes.primary_people.length === 2) {
         $scope.config.viewMode = 'shared-network';
         $rootScope.config.viewMode = 'shared-network';
         $scope.config.networkComplexity = 'all_connections';
         $scope.config.networkName = this.networkData.included[0].attributes.name + " & " + this.networkData.included[1].attributes.name + " Network";
-        $scope.$parent.personTypeahead.selected = this.networkData.included[0].attributes.name;
-        $scope.$parent.sharedTypeahead.selected = this.networkData.included[1].attributes.name;
-        $scope.$parent.groupTypeahead.selected = '';
+        $scope.personTypeahead.selected = this.networkData.included[0].attributes.name;
+        $scope.sharedTypeahead.selected = this.networkData.included[1].attributes.name;
+        $scope.groupTypeahead.selected = '';
       } else if ($stateParams.ids.length < 8) {
         $scope.config.viewMode = 'group-force';
         $rootScope.config.viewMode = 'group-force';
@@ -107,12 +109,15 @@ angular.module('redesign2017App').component('visualization', {
         $scope.data.included = $scope.data.included.filter(function(n) { return n.id !== $scope.data.data.id; });
         $scope.config.networkName = groupName + " Network";
         $scope.config.networkDesc = groupDescription;
-        $scope.$parent.groupTypeahead.selected = groupName;
-        $scope.$parent.personTypeahead.selected = '';
-        $scope.$parent.sharedTypeahead.selected = '';
-        $scope.$parent.config.viewObject = 1;
+        $scope.groupTypeahead.selected = groupName;
+        $scope.personTypeahead.selected = '';
+        $scope.sharedTypeahead.selected = '';
+        $scope.config.viewObject = 1;
+        console.log('hello');
       }
     };
+
+    console.log('from viz: ', $scope.config.viewObject);
 
     $scope.citation = function() {
       var now = new Date()
