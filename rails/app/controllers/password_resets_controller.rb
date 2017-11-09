@@ -1,4 +1,5 @@
 class PasswordResetsController < ApplicationController
+  skip_before_action :verify_authenticity_token
 
   def create  
     user = User.find_by_email(params[:email])  
@@ -15,6 +16,7 @@ class PasswordResetsController < ApplicationController
       password: params[:password], 
       password_confirmation: params[:password_confirmation],
     }
+    user.update(record)
     if user && user.password_reset_sent_at > 2.hours.ago  && user.update(record)
       user.update_column(:password_reset_token, SecureRandom.urlsafe_base64)
       respond_to do |format|   
