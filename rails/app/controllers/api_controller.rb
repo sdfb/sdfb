@@ -18,7 +18,7 @@ class ApiController < ApplicationController
       @people = Person.find(person_ids)
       render "group_assignments"      
     when "relationships"
-      @relationships = Relationship.limit(size).offset(offset)
+      @relationships = Relationship.all_unapproved.limit(size).offset(offset)
       person_ids = @relationships.collect{|l| [l.person1_index,l.person2_index]}.flatten.uniq
       @people = Person.find(person_ids)
       render "curation_relationships"
