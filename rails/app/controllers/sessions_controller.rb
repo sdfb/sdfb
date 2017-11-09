@@ -1,11 +1,13 @@
 class SessionsController < ApplicationController
-	def new  
+	skip_before_action :verify_authenticity_token
+  def new  
     @last_page = params[:prev]
   end
   
   def create
 
     user = User.authenticate(params[:email], params[:password])
+    puts user
     if user
       if params[:remember_me]
         cookies.permanent[:auth_token] = user.auth_token 
