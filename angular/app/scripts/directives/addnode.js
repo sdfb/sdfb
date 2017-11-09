@@ -31,8 +31,8 @@ angular.module('redesign2017App')
 
           scope.newNode.exists = false;
 
-          var x = scope.singleWidth*(3/4)+scope.addedNodeId*20;
-          var y = scope.singleHeight*(3/4)+scope.addedNodeId*20;
+          var x = point[0];
+          var y = point[1];
 
           var newNode = { attributes: { name: scope.newNode.name, degree: 1 }, id: scope.addedNodeId, order: scope.addedNodeId, distance: 7, x: x, y: y};
           newNode.vx = null;
