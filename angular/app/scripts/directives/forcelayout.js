@@ -446,6 +446,14 @@ angular.module('redesign2017App').directive('forceLayout', ['apiService', '$time
                 // Toggle ego networks on click of node
 
                 toggleClick(d, newLinks, this);
+
+                if (d.distance === 7 && scope.config.contributionMode) {
+                  scope.$apply(function() {
+                    scope.newNode = d.attributes;
+                    scope.addNodeClosed = false;
+                  });
+                }
+
               })
               .on('dblclick', function(d){
                 $state.go('home.visualization', {ids: d.id});
