@@ -8,7 +8,7 @@
  * Controller of the redesign2017App
  */
 angular.module('redesign2017App')
-  .controller('ModalReviewCtrl', ['$scope', '$uibModalInstance', '$timeout', 'addToDB', '$window', 'apiService', function($scope, $uibModalInstance, $timeout, addToDB, $window, apiService) {
+  .controller('ModalReviewCtrl', ['$scope', '$uibModalInstance', '$timeout', 'addToDB', '$window', 'apiService', '$rootScope', function($scope, $uibModalInstance, $timeout, addToDB, $window, apiService, $rootScope) {
 
     var $ctrl = this;
     $ctrl.addToDB = addToDB;
@@ -28,6 +28,7 @@ angular.module('redesign2017App')
     };
 
     $ctrl.close = function() {
+      $ctrl.addToDB.auth_token = $rootScope.user.auth_token;
       $uibModalInstance.close($ctrl.addToDB);
     }
 

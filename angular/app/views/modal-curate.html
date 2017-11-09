@@ -50,18 +50,16 @@
               <td class="target-column">Target Name</td>
               <td class="start-column">Start Date</td>
               <td class="end-column">End Date</td>
-              <td class="conf-column">Confidence</td>
               <td class="action-column">Approved?</td>
               <td class="action-column">Active?</td>
             </tr>
         </thead>
         <tbody>
             <tr class="rel {{'r'+rel.id}}" ng-class="{ 'active': group.active }" ng-repeat="rel in $ctrl.relationships">
-                <td>{{ rel.id }}</td>
-                <td>{{ rel.target.name }}</td>
-                <td>{{ rel.startDateType }} {{ rel.startDate }}</td>
-                <td>{{ rel.endDateType }} {{ rel.endDate }}</td>
-                <td>{{ rel.confidence }}</td>
+                <td>{{ rel.attributes.person_1_name }}</td>
+                <td>{{ rel.attributes.person_2_name }}</td>
+                <td>{{ rel.attributes.start_year_type }} {{ rel.attributes.start_year }}</td>
+                <td>{{ rel.attributes.end_year_type }} {{ rel.attributes.end_year }}</td>
                 <td>
                   <input ng-model="rel.is_approved" type="checkbox"/>
                     <!-- <i class="fa fa-times" aria-hidden="true" type="button" ng-click="$ctrl.remove($index, $ctrl.addToDB.links)" aria-label="Remove"></i> -->
@@ -88,8 +86,8 @@
         </thead>
         <tbody>
             <tr class="rel {{'r'+rel.id}}" ng-class="{ 'active': group.active }" ng-repeat="rel in $ctrl.relTypes">
-                <td>{{ rel.attributes.relationship.attributes.person_1 }}</td>
-                <td>{{ rel.attributes.relationship.attributes.person_2 }}</td>
+                <td>{{ rel.attributes.relationship.attributes.person_1_name }}</td>
+                <td>{{ rel.attributes.relationship.attributes.person_2_name }}</td>
                 <td>{{ rel.attributes.start_year_type }} {{ rel.attributes.start_year }}</td>
                 <td>{{ rel.attributes.end_year_type }} {{ rel.attributes.end_year }}</td>
                 <td>{{ rel.attributes.confidence }}</td>
@@ -146,7 +144,7 @@
         </thead>
         <tbody>
             <tr class="rel {{'r'+rel.id}}" ng-class="{ 'active': group.active }" ng-repeat="rel in $ctrl.group_assignments">
-                <td>{{ rel.attributes.person_id }}</td>
+                <td>{{ rel.attributes.person_name }}</td>
                 <td>{{ rel.group.name }}</td>
                 <td>{{ rel.attributes.start_year_type }} {{ rel.attributes.start_year }}</td>
                 <td>{{ rel.attributes.end_year_type }} {{ rel.attributes.end_year }}</td>
