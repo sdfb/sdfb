@@ -11,7 +11,6 @@ angular.module('redesign2017App').component('visualization', {
   bindings: { networkData: '<' },
   templateUrl: 'views/visualization.html',
   controller: ['$scope', '$uibModal', '$http', '$log', '$document', '$location', '$window', 'apiService', '$stateParams', '$transitions', '$rootScope', function($scope, $uibModal, $http, $log, $document, $location, $window, apiService, $stateParams, $transitions, $rootScope) {
-    // console.log(this);
     var initialConfig = {
           viewObject:0, //0 = people, 1 = groups
           viewMode:'individual-force',
@@ -37,7 +36,6 @@ angular.module('redesign2017App').component('visualization', {
 
     $rootScope.config = {};
 
-    // console.log(initialConfig,initialData);
     $scope.config = initialConfig;
     $scope.personTypeahead = {selected: ''};
     $scope.sharedTypeahead = {selected: ''};
@@ -113,11 +111,8 @@ angular.module('redesign2017App').component('visualization', {
         $scope.personTypeahead.selected = '';
         $scope.sharedTypeahead.selected = '';
         $scope.config.viewObject = 1;
-        console.log('hello');
       }
     };
-
-    console.log('from viz: ', $scope.config.viewObject);
 
     $scope.citation = function() {
       var now = new Date()
@@ -130,12 +125,6 @@ angular.module('redesign2017App').component('visualization', {
         return '"' + $scope.config.networkName + ' [1500-1700]." Six Degrees of Francis Bacon. '+$location.$$absUrl+", "+(now.getMonth()+1)+"/"+now.getDate()+"/"+now.getFullYear() + '.';
       }
     }
-    // $scope.watch('config', function(newValue, oldValue) {
-    //   // if (newValue !== oldValue) {
-    //
-    //     console.log($scope.citation);
-    //   // }
-    // }, true);
 
     // Container for data related to groups
     $scope.groups = {};
@@ -314,12 +303,6 @@ angular.module('redesign2017App').component('visualization', {
         var nodes = $scope.data.included;
         var sourceId = $scope.data.data.attributes.primary_people;
         var sourceNode = nodes.filter(function(d) { return (d.id == sourceId) })[0]; // Get source node element by its ID
-        // Transition source node to center of rect
-        // console.log(sourceNode.x, sourceNode.y)
-        // if (sourceNode.x === 0 && sourceNode.y === 0) {
-        //   console.log('first recenter');
-        //   $scope.singleSvg.transition().duration(750).call($scope.singleZoom.transform, d3.zoomIdentity.translate($scope.singleWidth / 16, $scope.singleHeight / 16));
-        // } else {
           $scope.singleSvg.transition().duration(750).call($scope.singleZoom.transform, d3.zoomIdentity.translate($scope.singleWidth / 2 - sourceNode.x, $scope.singleHeight / 2 - sourceNode.y));
         // }
       } else {
@@ -384,8 +367,6 @@ angular.module('redesign2017App').component('visualization', {
         }
       }
     });
-
-    console.log($rootScope.config.viewMode);
 
 
   }]

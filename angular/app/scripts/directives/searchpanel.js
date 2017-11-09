@@ -35,12 +35,10 @@ angular.module('redesign2017App')
         };
 
         scope.callGroupsTypeahead = function(val) {
-          console.log(val)
           return apiService.groupsTypeahead(val);
         };
 
         scope.callPersonTypeahead = function(val) {
-          console.log(val)
           return apiService.personTypeahead(val).then(function(result){
             var allIDs = [];
             result.forEach(function(r) {
@@ -58,15 +56,12 @@ angular.module('redesign2017App')
         }
 
         scope.groupView = function(view) {
-          console.log($stateParams.ids);
           if ($stateParams.ids.length >= 8) {
             $state.go('home.visualization', {ids: 81, type: view});
           } else {
             $state.go('home.visualization', {type: view});
           }
         }
-
-        console.log('from search: ', scope.config.viewObject);
 
       }
     };
