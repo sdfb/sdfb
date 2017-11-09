@@ -18,10 +18,10 @@ class ApiController < ApplicationController
       @people = Person.find(person_ids)
       render "group_assignments"      
     when "relationships"
-      @relationships = Relationship.all_unapproved.limit(size).offset(offset)
+      @relationships = Relationship.limit(size).offset(offset)
       person_ids = @relationships.collect{|l| [l.person1_index,l.person2_index]}.flatten.uniq
       @people = Person.find(person_ids)
-      render "relationships"
+      render "curation_relationships"
     when "links"
       @links = UserRelContrib.all_unapproved.limit(size).offset(offset)
       person_ids = @links.collect{|l| [l.relationship.person1_index,l.relationship.person2_index]}.flatten.uniq
@@ -285,6 +285,12 @@ class ApiController < ApplicationController
     ids = params[:ids].split(",")
     begin
       @relationships = Relationship.includes(:user_rel_contribs).find(ids)
+
+      first_degree_ids = @relationships.collect do |r| 
+        [r.person1_index, r.person2_index]
+      end.flatten.uniq - ids
+      @people = Person.includes(:groups).all_approved.find(first_degree_ids)
+
     rescue ActiveRecord::RecordNotFound => e
       @errors = []
       @errors << {title: "Invalid relationship ID(s)"}
