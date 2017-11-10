@@ -33,11 +33,6 @@ Sdfb::Application.routes.draw do
   resources :user_person_contribs
   resources :user_rel_contribs
   resources :user_group_contribs
-
-  # Session management
-  resources :sessions
-  get "sign_in" => "sessions#new", :as => "sign_in"
-  get "sign_out" => "sessions#destroy", :as => "sign_out"
-
   resources :users
+
 end
