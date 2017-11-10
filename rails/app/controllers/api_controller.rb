@@ -158,7 +158,7 @@ class ApiController < ApplicationController
       groups.each do |group|
         placeholder_id = nil
         if group["id"] && group["id"]< 0 
-             = group["id"]
+          placeholder_id = group["id"]
           group.delete("id")
         end
         new_record = {
