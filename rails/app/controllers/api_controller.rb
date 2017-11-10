@@ -146,7 +146,7 @@ class ApiController < ApplicationController
         if node["id"]
           Person.find(node["id"].to_i).update(node)
         else
-          node["created_by"] == current_user.id
+          node["created_by"] = current_user.id
           new_person = Person.create!(node)
           puts new_person.inspect
           person_lookup[placeholder_id] = new_person.id
