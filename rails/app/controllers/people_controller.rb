@@ -114,22 +114,4 @@ class PeopleController < ApplicationController
       format.json { head :no_content }
     end
   end
-
-  def search 
-    # allows for the admin to search from their dashboard
-    @query = params[:query]
-    if @query != ""
-      @all_results = Group.search_approved(@query)
-      if (logged_in? == true)
-        if ((current_user.user_type == "Admin") || (current_user.user_type == "Curator"))
-          @all_results1 = Person.search_all(@query)
-        else
-          @all_results1 = Person.search_approved(@query)
-        end
-      else
-          @all_results1 = Person.search_approved(@query)
-      end
-      @all_results = @all_results1.order_by_sdfb_id.paginate(:page => params[:all_results_page], :per_page => 20)
-    end
-  end
 end

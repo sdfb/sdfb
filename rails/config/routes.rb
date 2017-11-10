@@ -29,30 +29,19 @@ Sdfb::Application.routes.draw do
   resources :group_cat_assigns
   resources :group_categories
   resources :password_resets  
-
-  # Session management
-  resources :sessions
-  get "sign_in" => "sessions#new", :as => "sign_in"
-  
-  get "sign_out" => "sessions#destroy", :as => "sign_out"
-  
-
-  resources :home
-
-  match '/people_search', :to => 'people#search', :via => [:get]
-  match '/group_search', :to => 'groups#search', :via => [:get]
-  match '/relationship_search', :to => 'relationships#search', :via => [:get]
-
   resources :relationships
   resources :groups
   resources :group_assignments
   resources :people
-
   resources :user_person_contribs
-
   resources :user_rel_contribs
+  resources :home
+  resources :user_group_contribs
 
-
+  # Session management
+  resources :sessions
+  get "sign_in" => "sessions#new", :as => "sign_in"
+  get "sign_out" => "sessions#destroy", :as => "sign_out"
 
   match '/people_membership', :to => 'people#membership', :via => [:get]
   match '/people_relationships', :to => 'people#relationships', :via => [:get]
@@ -69,8 +58,4 @@ Sdfb::Application.routes.draw do
   get "all_unapproved" => "users#all_unapproved", :as => "all_unapproved"
   get "all_rejected" => "users#all_rejected", :as => "all_rejected"
   get "all_recent" => "users#all_recent", :as => "all_recent"
-
-  
-  resources :user_group_contribs
-
 end

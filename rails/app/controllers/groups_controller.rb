@@ -89,15 +89,4 @@ class GroupsController < ApplicationController
       format.json { head :no_content }
     end
   end
-
-  def search
-    @query = params[:query]
-    unless @query.blank?
-      if logged_in? == true && (current_user.user_type == "Admin" || current_user.user_type == "Curator")
-        @all_results = Group.search_all(@query)
-      else
-        @all_results = Group.search_approved(@query)
-      end
-    end
-  end
 end

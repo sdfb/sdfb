@@ -91,22 +91,7 @@ class RelationshipsController < ApplicationController
     end
   end
 
-  def search
-    @person1Query = params[:person1Query]
-    @person2Query = params[:person2Query]
-    if ((@person1Query != "") && (@person2Query != ""))
-      if (logged_in? == true)
-        if ((current_user.user_type == "Admin") || (current_user.user_type == "Curator"))
-          @all_results1 = Relationship.search_all(@person1Query, @person2Query)
-        else
-          @all_results1 = Relationship.search_approved(@person1Query, @person2Query)
-        end
-      else
-        @all_results1 = Relationship.search_approved(@person1Query, @person2Query)
-      end
-      @all_results = @all_results1.paginate(:page => params[:all_results_page], :per_page => 30)
-    end
-  end
+
   # DELETE /relationships/1
   # DELETE /relationships/1.json
   def destroy
