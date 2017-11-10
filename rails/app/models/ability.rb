@@ -13,7 +13,7 @@ class Ability
 			can :manage, :all
 		elsif (user.user_type == "Curator")
 			# Curators can create users, groups, group assignments, people, relationships, user group contributions, user person contributions, user relationship contributions, group category assignments
-			can :create, [User, Group, GroupAssignment, Person, Relationship, UserGroupContrib, UserPersonContrib, UserRelContrib, GroupCatAssign, GroupCategory]
+			can :create, [Group, GroupAssignment, Person, Relationship, UserGroupContrib, UserPersonContrib, UserRelContrib, GroupCatAssign, GroupCategory]
 
 			# Curators can view all elements regardless of whether they are approved
 			can :show, :all
@@ -49,10 +49,9 @@ class Ability
 
 		elsif (user.user_type == "Standard") 
 			#  A user can create users, groups, group assignments, people, relationships, user group contributions, user person contributions, and user relationship contributions
-			can [:new, :create], [User, Group, GroupAssignment, Person, Relationship, UserGroupContrib, UserPersonContrib, UserRelContrib]
+			can [:new, :create], [Group, GroupAssignment, Person, Relationship, UserGroupContrib, UserPersonContrib, UserRelContrib]
 
 			# A user can view all elements that are approved
-			can :show, User
 			can :show, [Group, GroupAssignment, Person, Relationship, UserGroupContrib, UserPersonContrib, UserRelContrib, RelationshipType, RelationshipCategory, GroupCategory, RelCatAssign, GroupCatAssign], :is_approved => true
 			
 			# A user can see the group that they created even if it was not approved
@@ -105,11 +104,6 @@ class Ability
 				x.created_by == user.id 
 			end
 
-			# A user can only edit their own information
-			can [:show, :edit, :update], User do |x|  
-				x.id == user.id
-			end
-
 			# A user can list all groups, people, relationships, relationship types
 			can :index, [Group, Person, Relationship, RelationshipType]
 
@@ -130,8 +124,6 @@ class Ability
 			can :reroute_relationship_form, Relationship
 
 		else
-			# Anyone can sign up
-			can [:new, :create], User
 			
 			# Anyone can list all groups, people, relationships, relationship types
 			can :index, [Group, Person, Relationship, RelationshipType]
