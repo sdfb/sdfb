@@ -158,7 +158,7 @@ class ApiController < ApplicationController
       groups.each do |group|
         placeholder_id = nil
         if group["id"] && group["id"]< 0 
-          placeholder_id = group["id"]
+             = group["id"]
           group.delete("id")
         end
         new_record = {
@@ -241,17 +241,16 @@ class ApiController < ApplicationController
           group_id: group_id,
           start_year: assignment["startDate"],
           end_year: assignment["endDate"],
-          created_by: current_user.id,
           start_date_type: assignment["startDateType"],
           end_date_type: assignment["endDateType"],
           bibliography: assignment["citation"]
         }
         if ["Admin", "Curator"].include?(current_user.user_type)
-          new_record["is_approved"] = group_assignments["is_approved"] if group_assignments["is_approved"]
-          new_record["is_active"]   = group_assignments["is_active"]   if group_assignments["is_active"]
+          new_record["is_approved"] = assignment["is_approved"] if assignment["is_approved"]
+          new_record["is_active"]   = assignment["is_active"]   if assignment["is_active"]
         end
-        if group_assignments["id"]
-          GroupAssignment.find(group_assignments["id"]).update(new_record)
+        if assignment["id"]
+          GroupAssignment.find(assignment["id"]).update(new_record)
         else
           new_record[:created_by] = current_user.id
           GroupAssignment.create!(new_record)
