@@ -47,16 +47,6 @@ class Relationship < ActiveRecord::Base
   scope :for_2_people, -> (person1ID, person2ID) {
     select('relationships.*')
     .where('((person1_index = ?) or (person2_index = ?)) and ((person1_index = ?) or (person2_index = ?))', person1ID, person1ID, person2ID, person2ID)}
-  scope :for_rels_100000000_100020000, -> { where("id between 100000000 and 100020000") }
-  scope :for_rels_100020001_100040000, -> { where("id between 100020001 and 100040000") }
-  scope :for_rels_100040001_100060000, -> { where("id between 100040001 and 100060000") }
-  scope :for_rels_100060001_100080000, -> { where("id between 100060001 and 100080000") }
-  scope :for_rels_100080001_100100000, -> { where("id between 100080001 and 100100000") }
-  scope :for_rels_100100001_100120000, -> { where("id between 100100001 and 100120000") }
-  scope :for_rels_100120001_100140000, -> { where("id between 100120001 and 100140000") }
-  scope :for_rels_100140001_100160000, -> { where("id between 100140001 and 100160000") }
-  scope :for_rels_100160001_100180000, -> { where("id between 100160001 and 100180000") }
-  scope :for_rels_greater_than_100180000, -> { where("id > 100180000") }
   scope :all_recent, -> { order(updated_at: :desc) }
   scope :order_by_sdfb_id, -> { order(id: :asc) }
 

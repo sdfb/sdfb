@@ -35,24 +35,7 @@ Sdfb::Application.routes.draw do
   get "sign_in" => "sessions#new", :as => "sign_in"
   
   get "sign_out" => "sessions#destroy", :as => "sign_out"
-
-  get "new_person_form" => "people#new_2", :as => "new_person_form"
-  post "create_new_person_form" => "people#create_2", :as => "create_new_person_form"
   
-  get "new_relationship_form" => "relationships#new_2", :as => "new_relationship_form"
-  get "reroute_relationship_form" => "relationships#reroute_relationship_form", :as => "reroute_relationship_form"
-  get "new_existing_relationship_form" => "user_rel_contribs#new_2"
-  get "new_new_relationship_form" => "relationships#new_new_relationship_form"
-  get "new_group_form" => "groups#new_2", :as => "new_group_form"
-  get "new_new_group_form" => "groups#new_3"
-  get "reroute_group_form" => "groups#reroute_group_form", :as => "reroute_group_form"
-  get "group_create_2" => "groups#create_2"
-  get "group_add_person" => "group_assignments#new_2"
-  post "group_add_person_create" => "group_assignments#create_2"
-  post "relationship_create_2" => "relationships#create_2", :as => "relationship_create_2"
-  post "user_rel_contribs_create_2" => "user_rel_contribs#create_2"
-
-
 
   resources :home do
     get :autocomplete_person_search_names_all, on: :collection

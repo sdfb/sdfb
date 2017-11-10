@@ -46,19 +46,6 @@ class UserRelContribsController < ApplicationController
     end
   end
 
-  def new_2
-    @user_rel_contrib = UserRelContrib.new
-    @relOptions = Relationship.all_approved
-    @relationship_id = params[:relationship_id]
-    @relType = RelationshipType.all_approved.alphabetical
-    
-
-    respond_to do |format|
-      format.html # new.html.erb
-      format.json { render json: @user_rel_contrib }
-    end
-  end
-
   # GET /user_rel_contribs/1/edit
   def edit
     @user_rel_contrib = UserRelContrib.find(params[:id])
@@ -88,24 +75,7 @@ class UserRelContribsController < ApplicationController
     end
   end
 
-    # POST /user_rel_contribs
-  # POST /user_rel_contribs.json
-  def create_2
-    @user_rel_contrib = UserRelContrib.new(params[:user_rel_contrib])
-    @relOptions = Relationship.all_approved
-    @relationship_id = params[:relationship_id]
-    @relType = RelationshipType.all_approved.alphabetical
 
-    respond_to do |format|
-      if @user_rel_contrib.save
-        format.html { redirect_to @user_rel_contrib, notice: 'User rel contrib was successfully created.' }
-        format.json { render json: @user_rel_contrib, status: :created, location: @user_rel_contrib }
-      else
-        format.html { render action: "new_2" }
-        format.json { render json: @user_rel_contrib.errors, status: :unprocessable_entity }
-      end
-    end
-  end
 
   # PUT /user_rel_contribs/1
   # PUT /user_rel_contribs/1.json

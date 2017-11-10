@@ -49,18 +49,6 @@ class GroupAssignmentsController < ApplicationController
     end
   end
 
-  def new_2
-    @group_assignment = GroupAssignment.new
-    @personOptions = Person.all_approved.alphabetical
-    @groupOptions = Group.all_approved.alphabetical
-    @group_id = params[:group_id]
-
-    respond_to do |format|
-      format.html # new.html.erb
-      format.json { render json: @group_assignment }
-    end
-  end
-
   # GET /group_assignments/1/edit
   def edit
     @group_assignment = GroupAssignment.find(params[:id])
@@ -88,21 +76,6 @@ class GroupAssignmentsController < ApplicationController
     end
   end
 
-  def create_2
-    @group_assignment = GroupAssignment.new(params[:group_assignment])
-    @personOptions = Person.all_approved.alphabetical
-    @groupOptions = Group.all_approved.alphabetical
-
-    respond_to do |format|
-      if @group_assignment.save
-        format.html { redirect_to @group_assignment, notice: 'Group assignment was successfully created.' }
-        format.json { render json: @group_assignment, status: :created, location: @group_assignment }
-      else
-        format.html { render action: "new_2" }
-        format.json { render json: @group_assignment.errors, status: :unprocessable_entity }
-      end
-    end
-  end
 
   # PUT /group_assignments/1
   # PUT /group_assignments/1.json

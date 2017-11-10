@@ -48,17 +48,7 @@ class UserRelContrib < ActiveRecord::Base
       select(:relationship_type_id, "AVG(certainty) as avg_certainty")
       .where('relationship_id = ?', relID)
       .group('relationship_type_id')}
-  ## all of these scopes are used to export specific relationship types based on the ids
-  scope :for_rel_type_assigns_00000_20000, -> { where("id between 1 and 20000") }
-  scope :for_rel_type_assigns_20001_40000, -> { where("id between 20001 and 40000") }
-  scope :for_rel_type_assigns_40001_60000, -> { where("id between 40001 and 60000") }
-  scope :for_rel_type_assigns_60001_80000, -> { where("id between 60001 and 80000") }
-  scope :for_rel_type_assigns_80001_100000, -> { where("id between 80001 and 100000") }
-  scope :for_rel_type_assigns_100001_120000, -> { where("id between 100001 and 120000") }
-  scope :for_rel_type_assigns_120001_140000, -> { where("id between 120001 and 140000") }
-  scope :for_rel_type_assigns_140001_160000, -> { where("id between 140001 and 160000") }
-  scope :for_rel_type_assigns_160001_180000, -> { where("id between 160001 and 180000") }
-  scope :for_rel_type_assigns_greater_than_180000, -> { where("id > 180000") }
+
 
   # Callbacks
   # ----------------------------- 

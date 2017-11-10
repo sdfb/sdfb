@@ -41,67 +41,6 @@ class Ability
 			# Curators can view search results
 			can :search, Relationship
 
-			# A user can download groups data
-			can :export_groups, Group
-
-			# A user can download people data
-			can :export_people, Person
-
-			# A user can download group assginment data
-			can :export_group_assignments, GroupAssignment
-
-			# A user can download relationship type assignment data
-			can :export_rel_type_assigns, UserRelContrib
-			can :export_rel_type_assigns_00000_20000, UserRelContrib
-			can :export_rel_type_assigns_20001_40000, UserRelContrib
-			can :export_rel_type_assigns_40001_60000, UserRelContrib
-			can :export_rel_type_assigns_60001_80000, UserRelContrib
-			can :export_rel_type_assigns_80001_100000, UserRelContrib
-			can :export_rel_type_assigns_100001_120000, UserRelContrib
-			can :export_rel_type_assigns_120001_140000, UserRelContrib
-			can :export_rel_type_assigns_140001_160000, UserRelContrib
-			can :export_rel_type_assigns_160001_180000, UserRelContrib
-			can :export_rel_type_assigns_greater_than_180000, UserRelContrib
-
-			# A user can download relationship data
-			can :export_relationships, Relationship
-			can :export_rels_for_rels_100000000_100020000, Relationship
-			can :export_rels_for_rels_100020001_100040000, Relationship
-			can :export_rels_for_rels_100040001_100060000, Relationship
-			can :export_rels_for_rels_100060001_100080000, Relationship
-			can :export_rels_for_rels_100080001_100100000, Relationship
-			can :export_rels_for_rels_100100001_100120000, Relationship
-			can :export_rels_for_rels_100120001_100140000, Relationship
-			can :export_rels_for_rels_100140001_100160000, Relationship
-			can :export_rels_for_rels_100160001_100180000, Relationship
-			can :export_rels_for_rels_greater_than_100180000, Relationship
-
-			# A user can export category assignment records
-			can :export_group_cat_assigns, GroupCatAssign
-
-			# A user can export relationship category assignment records
-			can :export_rel_cat_assigns, RelCatAssign
-
-			# A user can export user group contributions records
-			can :export_group_notes, UserGroupContrib
-
-			# A user can export user person contributions records
-			can :export_people_notes, UserPersonContrib
-
-			# A user can export group category records
-			can :export_group_categories, GroupCategory
-
-			# A user can export relationship category records
-			can :export_rel_cats, RelationshipCategory
-
-			# A user can export relationship type records
-			can :export_rel_types, RelationshipType
-
-			# A user can export all relevant records to the relationship category assignments
-			can :export_rel_cat_assign_list, RelCatAssign
-
-			# A user can export all relevant records to the group category assignments
-			can :export_group_cat_assign_list, GroupCatAssign
 
 			# A user can view their dashboard
 			can :my_contributions, User
@@ -196,27 +135,6 @@ class Ability
 			# Curators can view search results
 			can :search, Relationship
 
-			# A user can download groups data
-			can :export_groups, Group
-
-			# A user can download people data
-			can :export_people, Person
-
-			# A user can download relationship data
-			can :export_relationships, Relationship
-			can :export_rels_for_rels_100000000_100020000, Relationship
-			can :export_rels_for_rels_100020001_100040000, Relationship
-			can :export_rels_for_rels_100040001_100060000, Relationship
-			can :export_rels_for_rels_100060001_100080000, Relationship
-			can :export_rels_for_rels_100080001_100100000, Relationship
-			can :export_rels_for_rels_100100001_100120000, Relationship
-			can :export_rels_for_rels_100120001_100140000, Relationship
-			can :export_rels_for_rels_100140001_100160000, Relationship
-			can :export_rels_for_rels_100160001_100180000, Relationship
-			can :export_rels_for_rels_greater_than_100180000, Relationship
-			
-			# A user can export relationship type records
-			can :export_rel_types, RelationshipType
 
 			# A user can view their dashboard
 			can :my_contributions, User
@@ -234,11 +152,6 @@ class Ability
 			can :membership, Person
 			can :relationships, Person
 			can :notes, Person
-			can :new_2, [Person, Relationship, Group, UserRelContrib, GroupAssignment]
-			can :new_3, Group
-			can :reroute_group_form, Group
-			can :new_new_relationship_form, Relationship
-			can :create_2, [Relationship, Person, UserRelContrib, Group, GroupAssignment]
 			can :reroute_relationship_form, Relationship
 
 		else

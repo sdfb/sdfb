@@ -51,38 +51,6 @@ class GroupsController < ApplicationController
     end
   end
 
-  def new_2
-    @group = Group.new
-    @groupOptions = Group.all_approved.alphabetical
-
-    respond_to do |format|
-      format.html # new.html.erb
-      format.json { render json: @group }
-    end
-  end
-
-  def new_3
-    @group = Group.new
-    @groupOptions = Group.all_approved.alphabetical
-
-
-    respond_to do |format|
-      format.html # new.html.erb
-      format.json { render json: @group }
-    end
-  end
-
-  def reroute_group_form
-    group_id = params[:group][:id]
-    #user chose'Create New Group' option
-    if group_id == ""
-      redirect_to new_new_group_form_path
-    #user chose an existing group
-    else
-      redirect_to group_add_person_path(group_id: group_id)
-    end
-  end
-
   # GET /groups/1/edit
   def edit
     @group = Group.find(params[:id])
@@ -101,20 +69,6 @@ class GroupsController < ApplicationController
         format.json { render json: @group, status: :created, location: @group }
       else
         format.html { render action: "new" }
-        format.json { render json: @group.errors, status: :unprocessable_entity }
-      end
-    end
-  end
-
-  def create_2
-    @group = Group.new(params[:group])
-
-    respond_to do |format|
-      if @group.save
-        format.html { redirect_to @group, notice: 'Group was successfully created.' }
-        format.json { render json: @group, status: :created, location: @group }
-      else
-        format.html { render action: "new_3" }
         format.json { render json: @group.errors, status: :unprocessable_entity }
       end
     end
