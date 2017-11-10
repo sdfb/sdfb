@@ -22,15 +22,6 @@ Sdfb::Application.routes.draw do
     post 'api/password_reset', action: :update, controller: :password_resets
 
   end
-
-  # Static Pages
-  get "about" => "static_pages#about", :as => "about"
-  get "team" => "static_pages#team", :as => "team"
-  get "help" => "static_pages#help", :as => "help"
-  get "tos" => "static_pages#tos", :as => "tos"
-  get "guide" => "static_pages#guide", :as => "guide"
-  get "tutorial" => "static_pages#tutorial", :as => "tutorial"
-  get "new_form_menu" => "static_pages#new_form_menu", :as => "new_form_menu"
   
   resources :relationship_types
   resources :rel_cat_assigns
