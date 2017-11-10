@@ -75,30 +75,6 @@ class RelationshipCategoriesController < ApplicationController
     end
   end
 
-  def export_rel_cats
-    @all_relationship_categories_approved = RelationshipCategory.all_approved
-    @all_relationship_categories = RelationshipCategory.all_active_unrejected
-    if (current_user.user_type == "Admin")
-      relationship_categories_csv = CSV.generate do |csv|
-        csv << ["SDFB Relationship Category ID", "Relationship Category Name", "Description", "Created By", "Created At", "Is Approved?", "Approved By ID", "Approved On"]
-        @all_relationship_categories.each do |relationship_category|
-          csv << [relationship_category.id, relationship_category.name,
-          relationship_category.description, relationship_category.created_by, relationship_category.created_at,
-          relationship_category.is_approved, relationship_category.approved_by, relationship_category.approved_on]
-        end
-      end
-    else
-      relationship_categories_csv = CSV.generate do |csv|
-        csv << ["SDFB Relationship Category ID", "Relationship Category Name", "Description", "Created By", "Created At"]
-        @all_relationship_categories_approved.each do |relationship_category|
-          csv << [relationship_category.id, relationship_category.name,
-          relationship_category.description, relationship_category.created_by, relationship_category.created_at]
-        end
-      end
-    end
-    send_data(relationship_categories_csv, :type => 'text/csv', :filename => 'SDFB_RelationshipCategories.csv')
-  end
-
   # DELETE /relationship_categories/1
   # DELETE /relationship_categories/1.json
   def destroy

@@ -158,25 +158,4 @@ class GroupsController < ApplicationController
       end
     end
   end
-
-  def export_groups
-    if (current_user.user_type == "Admin")
-      group_csv = CSV.generate do |csv|
-        csv << ["SDFB Group ID", "Name", "Description", "Start Year Type", "Start Year", "End Year Type", "End Year", "Members List (Name with SDFB Person ID)", "Justification", "Created By ID", "Created At", "Is approved?",
-          "Approved By ID", "Approved On"]
-        Group.all_active_unrejected.each do |group|
-          csv << [group.id, group.name, group.description, group.start_date_type, group.start_year, group.end_date_type, group.end_year, group.person_list, group.justification, group.created_by, group.created_at,
-            group.is_approved, group.approved_by, group.approved_on]
-        end
-      end
-    else
-      group_csv = CSV.generate do |csv|
-        csv << ["SDFB Group ID", "Name", "Description", "Start Year Type", "Start Year", "End Year Type", "End Year", "Members List (Name with SDFB Person ID)"]
-        Group.all_approved.each do |group|
-          csv << [group.id, group.name, group.description, group.start_date_type, group.start_year, group.end_date_type, group.end_year, group.person_list]
-        end
-      end
-    end
-    send_data(group_csv, :type => 'text/csv', :filename => 'SDFB_groups.csv')
-  end
 end

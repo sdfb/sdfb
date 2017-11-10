@@ -85,30 +85,6 @@ class UserPersonContribsController < ApplicationController
     end
   end
 
-  def export_people_notes
-    @all_user_person_contribs_approved = UserPersonContrib.all_approved
-    @all_user_person_contribs = UserPersonContrib.all_active_unrejected
-    if (current_user.user_type == "Admin")
-      user_person_contribs_csv = CSV.generate do |csv|
-        csv << ["SDFB Contribution ID", "Person ID", "Note", "Citation", "Created By", "Created At", "Is approved?", "Approved By ID", "Approved On"]
-        @all_user_person_contribs.each do |user_person_contrib|
-          csv << [user_person_contrib.id, user_person_contrib.person_id,
-          user_person_contrib.annotation, user_person_contrib.bibliography, user_person_contrib.created_by, user_person_contrib.created_at,
-          user_person_contrib.is_approved, user_person_contrib.approved_by, user_person_contrib.approved_on]
-        end
-      end
-    else
-      user_person_contribs_csv = CSV.generate do |csv|
-        csv << ["SDFB Contribution ID", "Person ID", "Note", "Citation", "Created By", "Created At"]
-        @all_user_person_contribs_approved.each do |user_person_contrib|
-          csv << [user_person_contrib.id, user_person_contrib.person_id,
-          user_person_contrib.annotation, user_person_contrib.bibliography, user_person_contrib.created_by, user_person_contrib.created_at]
-        end
-      end
-    end
-    send_data(user_person_contribs_csv, :type => 'text/csv', :filename => 'SDFB_PersonNotes.csv')
-  end
-
   # DELETE /user_person_contribs/1
   # DELETE /user_person_contribs/1.json
   def destroy

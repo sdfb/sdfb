@@ -122,37 +122,6 @@ class GroupAssignmentsController < ApplicationController
     end
   end
 
-  def export_group_assignments
-    @all_group_assigns_approved =GroupAssignment.all_approved
-    @all_group_assigns = GroupAssignment.all_active_unrejected
-    if (current_user.user_type == "Admin")
-      group_assigns_csv = CSV.generate do |csv|
-          csv << ["SDFB Group Assignment ID", "Group ID", "Person ID", "Start Date Type", "Start Month", "Start Day", "Start Year", "End Date Type", "End Month", "End Day", "End Year", "Created By ID", "Created At", "Is approved?", "Approved By ID", "Approved On"]
-          @all_group_assigns.each do |group_assign|
-              csv << [group_assign.id, group_assign.group_id,
-              group_assign.person_id, 
-              group_assign.start_date_type, group_assign.start_month, group_assign.start_day,
-              group_assign.start_year, group_assign.end_date_type,  group_assign.end_month,
-              group_assign.end_day, group_assign.end_year,
-              group_assign.created_by, group_assign.created_at,
-              group_assign.is_approved, group_assign.approved_by, group_assign.approved_on]
-          end
-      end
-    else
-      group_assigns_csv = CSV.generate do |csv|
-        csv << ["SDFB Group Assignment ID", "Group ID", "Person ID", "Start Year Type", "Start Month", "Start Day", "Start Year", "End Date Type", "End Month", "End Day", "End Year"]
-        @all_group_assigns_approved.each do |group_assign|
-            csv << [group_assign.id, group_assign.group_id,
-            group_assign.person_id, 
-            group_assign.start_date_type, group_assign.start_month, group_assign.start_day,
-            group_assign.start_year, group_assign.end_date_type,  group_assign.end_month,
-            group_assign.end_day, group_assign.end_year]
-        end
-      end
-    end
-    send_data(group_assigns_csv, :type => 'text/csv', :filename => 'SDFB_GroupAssignments.csv')
-  end
-
   # DELETE /group_assignments/1
   # DELETE /group_assignments/1.json
   def destroy

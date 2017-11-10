@@ -79,30 +79,6 @@ class RelationshipTypesController < ApplicationController
     end
   end
 
-  def export_rel_types
-    @all_relationship_types_approved = RelationshipType.all_approved
-    @all_relationship_types = RelationshipType.all_active_unrejected
-    if (current_user.user_type == "Admin")
-      relationship_types_csv = CSV.generate do |csv|
-          csv << ["SDFB Relationship Type ID", "Relationship Type Name", "Description", "Relationship Type Inverse", "Created By", "Created At", "Is Approved?", "Approved By ID", "Approved On"]
-          @all_relationship_types.each do |relationship_type|
-              csv << [relationship_type.id, relationship_type.name,
-              relationship_type.description, relationship_type.relationship_type_inverse, relationship_type.created_by, relationship_type.created_at,
-              relationship_type.is_approved, relationship_type.approved_by, relationship_type.approved_on]
-          end
-      end
-    else
-      relationship_types_csv = CSV.generate do |csv|
-          csv << ["SDFB Relationship Type ID", "Relationship Type Name", "Description", "Relationship Type Inverse", "Created By", "Created At"]
-          @all_relationship_types_approved.each do |relationship_type|
-              csv << [relationship_type.id, relationship_type.name,
-              relationship_type.description, relationship_type.relationship_type_inverse, relationship_type.created_by, relationship_type.created_at]
-          end
-      end
-    end
-    send_data(relationship_types_csv, :type => 'text/csv', :filename => 'SDFB_RelationshipTypes.csv')
-  end
-
   # DELETE /relationship_types/1
   # DELETE /relationship_types/1.json
   def destroy

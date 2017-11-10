@@ -179,19 +179,6 @@ class UsersController < ApplicationController
     @recent_rel_types = RelationshipType.all_recent.all_approved.paginate(:page => params[:recent_rel_types_page]).per_page(5)
   end
 
-  def export_users
-    @all_users = User.active
-    if (current_user.user_type == "Admin")
-      users_csv = CSV.generate do |csv|
-        csv << ["SDFB User ID", "Prefix", "First Name", "Last Name", "User Type", "Username", "Email", "Orcid", "Affiliation", "About", "Created At"]
-        @all_users.each do |user|
-          csv << [user.id, user.prefix, user.first_name, user.last_name, user.user_type, user.username, user.email, user.orcid, user.affiliation, user.about_description, user.created_at]
-        end
-      end
-    end
-    send_data(users_csv, :type => 'text/csv', :filename => 'SDFB_Users.csv')
-  end
-
   # DELETE /users/1
   # DELETE /users/1.json
   def destroy

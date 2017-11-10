@@ -160,37 +160,4 @@ class PeopleController < ApplicationController
       @all_results = @all_results1.order_by_sdfb_id.paginate(:page => params[:all_results_page], :per_page => 20)
     end
   end
-
-  def export_people
-    @all_people_approved = Person.all_approved
-    @all_people = Person.all_active_unrejected
-    if (current_user.user_type == "Admin")
-      people_csv = CSV.generate do |csv|
-        csv << ["SDFB Person ID", "ODNB ID", "Display Name", "Prefix", "First Name", "Last Name", "Suffix", "Title", "All Search Names", "Gender",
-          "Historical Significance", "Birth Year Type", "Extant Birth Year", "Alternate Birth Year", "Death Year Type",
-          "Extant Death Year", "Alternate Death Year", "Group List", "Justification", "Created By ID", "Created At", "Is approved?",
-          "Approved By ID", "Approved On"]
-        @all_people.each do |person|
-          csv << [person.id, person.odnb_id, person.display_name, person.prefix, person.first_name, person.last_name, person.suffix,
-            person.title, person.search_names_all, person.gender, person.historical_significance, person.birth_year_type,
-            person.ext_birth_year, person.alt_birth_year, person.death_year_type, person.ext_death_year, person.alt_death_year,
-            person.group_list, person.justification, person.created_by, person.created_at,
-            person.is_approved, person.approved_by, person.approved_on]
-        end
-      end
-    else
-    people_csv = CSV.generate do |csv|
-        csv << ["SDFB Person ID", "ODNB ID", "Display Name", "Prefix", "First Name", "Last Name", "Suffix", "Title", "All Search Names", "Gender",
-          "Historical Significance", "Birth Year Type", "Extant Birth Year", "Alternate Birth Year", "Death Year Type",
-          "Extant Death Year", "Alternate Death Year", "Group List"]
-        @all_people_approved.each do |person|
-          csv << [person.id, person.odnb_id, person.display_name, person.prefix, person.first_name, person.last_name, person.suffix,
-            person.title, person.search_names_all, person.gender, person.historical_significance, person.birth_year_type,
-            person.ext_birth_year, person.alt_birth_year, person.death_year_type, person.ext_death_year, person.alt_death_year,
-            person.group_list]
-        end
-      end
-    end
-    send_data(people_csv, :type => 'text/csv', :filename => 'SDFB_people.csv')
-  end
 end

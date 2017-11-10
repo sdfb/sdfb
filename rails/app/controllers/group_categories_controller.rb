@@ -75,29 +75,6 @@ class GroupCategoriesController < ApplicationController
     end
   end
 
-  def export_group_categories
-    @all_group_categories_approved = GroupCategory.all_approved
-    @all_group_categories = GroupCategory.all_active_unrejected
-    if (current_user.user_type == "Admin")
-      group_categories_csv = CSV.generate do |csv|
-        csv << ["SDFB Group Category ID", "Group Category Name", "Description", "Created By", "Created At", "Is Approved?", "Approved By ID", "Approved On"]
-        @all_group_categories.each do |group_category|
-           csv << [group_category.id, group_category.name,
-           group_category.description, group_category.created_by, group_category.created_at,
-           group_category.is_approved, group_category.approved_by, group_category.approved_on]
-        end
-      end
-    else
-      group_categories_csv = CSV.generate do |csv|
-        csv << ["SDFB Group Category ID", "Group Category Name", "Description", "Created By", "Created At"]
-        @all_group_categories_approved.each do |group_category|
-          csv << [group_category.id, group_category.name,
-          group_category.description, group_category.created_by, group_category.created_at]
-        end
-      end
-    end
-    send_data(group_categories_csv, :type => 'text/csv', :filename => 'SDFB_GroupCategories.csv')
-  end
 
   # DELETE /group_categories/1
   # DELETE /group_categories/1.json
