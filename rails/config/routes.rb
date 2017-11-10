@@ -46,9 +46,4 @@ Sdfb::Application.routes.draw do
   resources :users
   get 'password_resets/new'
   get "sign_up" => "users#new", :as => "sign_up"
-  get "my_contributions" => "users#my_contributions", :as => "my_contributions"
-  get "all_inactive" => "users#all_inactive", :as => "all_inactive"
-  get "all_unapproved" => "users#all_unapproved", :as => "all_unapproved"
-  get "all_rejected" => "users#all_rejected", :as => "all_rejected"
-  get "all_recent" => "users#all_recent", :as => "all_recent"
 end

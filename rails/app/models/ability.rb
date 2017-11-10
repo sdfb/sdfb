@@ -42,13 +42,6 @@ class Ability
 			can :search, Relationship
 
 
-			# A user can view their dashboard
-			can :my_contributions, User
-			can :all_unapproved, User
-
-			# A user can see recent contributions
-			can :all_recent, User
-
 			# Make sure that all users can use the tabs on the people show page
 			can :membership, Person
 			can :relationships, Person
@@ -130,12 +123,6 @@ class Ability
 			can :search, Relationship
 
 
-			# A user can view their dashboard
-			can :my_contributions, User
-
-			# A user can see recent contributions
-			can :all_recent, User
-
 			# Make sure that all users can use the tabs on the people show page
 			can :membership, Person
 			can :relationships, Person
@@ -160,9 +147,6 @@ class Ability
 
 			# Anyone can view the details of a groups, people, relationships, relationship types
 			can :show, [Group, Person, Relationship, RelationshipType], :is_approved => true
-
-			# A user can see recent contributions
-			# can :all_recent, User
 
 			# Make sure that all users can use the tabs on the people show page
 			can :membership, Person
