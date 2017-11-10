@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171110154911) do
+ActiveRecord::Schema.define(version: 20171110223740) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -153,7 +153,6 @@ ActiveRecord::Schema.define(version: 20171110154911) do
 
   create_table "relationship_types", force: :cascade do |t|
     t.integer  "relationship_type_inverse"
-    t.integer  "default_rel_category"
     t.string   "name",                      limit: 255
     t.text     "description"
     t.boolean  "is_active",                             default: true

@@ -30,7 +30,7 @@ class Ability
 			can :destroy, [UserRelContrib, GroupAssignment]
 
 			# Curators can list all groups, people, and relationships
-			can :index, [Group, GroupAssignment, Person, Relationship, RelationshipType, UserGroupContrib, UserPersonContrib, UserRelContrib, GroupCatAssign, RelCatAssign]
+			can :index, [Group, GroupAssignment, Person, Relationship, UserGroupContrib, UserPersonContrib, UserRelContrib, GroupCatAssign, RelCatAssign]
 
 			# A user can view search results
 			can :search, Group
@@ -52,7 +52,7 @@ class Ability
 			can [:new, :create], [Group, GroupAssignment, Person, Relationship, UserGroupContrib, UserPersonContrib, UserRelContrib]
 
 			# A user can view all elements that are approved
-			can :show, [Group, GroupAssignment, Person, Relationship, UserGroupContrib, UserPersonContrib, UserRelContrib, RelationshipType, RelationshipCategory, GroupCategory, RelCatAssign, GroupCatAssign], :is_approved => true
+			can :show, [Group, GroupAssignment, Person, Relationship, UserGroupContrib, UserPersonContrib, UserRelContrib, RelationshipCategory, GroupCategory, RelCatAssign, GroupCatAssign], :is_approved => true
 			
 			# A user can see the group that they created even if it was not approved
 			can :show, Group do |x|
@@ -105,7 +105,7 @@ class Ability
 			end
 
 			# A user can list all groups, people, relationships, relationship types
-			can :index, [Group, Person, Relationship, RelationshipType]
+			can :index, [Group, Person, Relationship]
 
 			# A user can view search results
 			can :search, Group
@@ -126,7 +126,7 @@ class Ability
 		else
 			
 			# Anyone can list all groups, people, relationships, relationship types
-			can :index, [Group, Person, Relationship, RelationshipType]
+			can :index, [Group, Person, Relationship]
 
 			# Anyone can view search results
 			can :search, Group
@@ -138,7 +138,7 @@ class Ability
 			can :search, Relationship
 
 			# Anyone can view the details of a groups, people, relationships, relationship types
-			can :show, [Group, Person, Relationship, RelationshipType], :is_approved => true
+			can :show, [Group, Person, Relationship], :is_approved => true
 
 			# Make sure that all users can use the tabs on the people show page
 			can :membership, Person

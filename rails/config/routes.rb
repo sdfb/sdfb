@@ -20,7 +20,6 @@ Sdfb::Application.routes.draw do
 
   end
   
-  resources :relationship_types
   resources :rel_cat_assigns
   resources :relationship_categories
   resources :group_cat_assigns
