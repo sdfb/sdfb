@@ -145,7 +145,7 @@
         <tbody>
             <tr class="rel {{'r'+rel.id}}" ng-class="{ 'active': group.active }" ng-repeat="rel in $ctrl.group_assignments">
                 <td>{{ rel.attributes.person_name }}</td>
-                <td>{{ rel.group.name }}</td>
+                <td>{{ rel.attributes.group_name }}</td>
                 <td>{{ rel.attributes.start_year_type }} {{ rel.attributes.start_year }}</td>
                 <td>{{ rel.attributes.end_year_type }} {{ rel.attributes.end_year }}</td>
                 <td>

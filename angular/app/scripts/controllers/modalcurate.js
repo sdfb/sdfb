@@ -11,7 +11,7 @@ angular.module('redesign2017App')
   .controller('ModalCurateCtrl', ['$scope', '$uibModalInstance', '$timeout', '$window', 'apiService', 'people', 'relationships', 'relTypes', 'groups', 'group_assignments', '$rootScope', function($scope, $uibModalInstance, $timeout, $window, apiService, people, relationships, relTypes, groups, group_assignments, $rootScope) {
 
     var $ctrl = this;
-    console.log(relationships);
+    console.log(group_assignments);
     $ctrl.people = people.data;
 
     relationships.data.forEach(function(d) {
@@ -44,6 +44,9 @@ angular.module('redesign2017App')
       group_assignments.includes.forEach(function(i) {
         if (i.id === d.attributes.person_id.toString()) {
           d.attributes.person_name = i.attributes.name;
+        }
+        if (i.id === d.attributes.group_id.toString()) {
+          d.attributes.group_name = i.attributes.name;
         }
       })
     });
