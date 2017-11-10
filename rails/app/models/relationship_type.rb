@@ -3,8 +3,7 @@ class RelationshipType < ActiveRecord::Base
   
   include Approvable
 
-  attr_accessible :description, :name, :relationship_type_inverse, :created_at, :created_by,
-    :default_rel_category # default_rel_category is never used and should be removed from the table.
+  attr_accessible :description, :name, :relationship_type_inverse, :created_at, :created_by
   
   # Relationships
   # -----------------------------

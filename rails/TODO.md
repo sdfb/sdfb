@@ -4,7 +4,6 @@ TODOs
 * [ ] Add group_cat_assignments.tsv to the seed data.
 * [ f] Move repeated constants to somewhere logical.
 * [ ] Look into making approved into an integer
-* [ ] remove :default_rel_category from the RelationshipType model
 * [ ] remove Comment from everything
 * [ ] remove Flag from everything
 
@@ -39,7 +38,7 @@ group.json  (n number of IDs)
 
 All of the groups
 
-60% confidence and above.  Put a constant in the code 
+60% confidence and above.  Put a constant in the code
 
 search_lookup.json (one for groups, one for people)
   - names (all, permutations)
