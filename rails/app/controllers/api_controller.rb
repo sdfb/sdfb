@@ -13,9 +13,11 @@ class ApiController < ApplicationController
       @groups = Group.all_unapproved.limit(size).offset(offset)
       render "groups"    
     when "group_assignments"
-      @assignments = GroupAssignment.all_unapproved.limit(size).offset(offset)
+      @assignments = GroupAssignment.limit(size).offset(offset)
       person_ids = @assignments.collect{|l| l.person_id}.uniq
+      group_ids = @assignments.collect{|l| l.group_id}.uniq
       @people = Person.find(person_ids)
+      @groups = Group.find(group_ids)
       render "group_assignments"      
     when "relationships"
       @relationships = Relationship.all_unapproved.limit(size).offset(offset)
@@ -103,7 +105,7 @@ class ApiController < ApplicationController
     if nodes = params[:nodes]
       nodes.each do |node|
         placeholder_id = nil
-        if node["id"] && node["id"]< 1_000_000 
+        if node["id"] && node["id"].to_i < 1_000_000 
           placeholder_id = node["id"]
           node.delete("id")
         end
@@ -142,8 +144,7 @@ class ApiController < ApplicationController
         node.delete("created_by")
 
         if node["id"]
-          Person.find_by(node["id"]).update(node)
-          Person.save!
+          Person.find(node["id"].to_i).update(node)
         else
           node["created_by"] == current_user.id
           new_person = Person.create!(node)
@@ -176,8 +177,7 @@ class ApiController < ApplicationController
         end
     
         if group["id"]
-          Group.find_by(group["id"]).update(new_record)
-          Group.save!
+          Group.find(group["id"]).update(new_record)
         else
           group[:created_by] = current_user.id
           new_group = Group.create!(new_record)
@@ -251,8 +251,7 @@ class ApiController < ApplicationController
           new_record["is_active"]   = group_assignments["is_active"]   if group_assignments["is_active"]
         end
         if group_assignments["id"]
-          GroupAssignment.find_by(group_assignments["id"]).update(new_record)
-          GroupAssignment.save!
+          GroupAssignment.find(group_assignments["id"]).update(new_record)
         else
           new_record[:created_by] = current_user.id
           GroupAssignment.create!(new_record)

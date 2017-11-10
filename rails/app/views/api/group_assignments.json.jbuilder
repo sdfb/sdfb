@@ -4,6 +4,7 @@ if @assignments
   end
   json.includes do
     json.partial! 'people/minimal', collection: @people, as: :person
+    json.partial! 'groups/minimal', collection: @groups, as: :group
   end
 else
   json.errors { json.array! @errors }
