@@ -43,9 +43,6 @@ Sdfb::Application.routes.draw do
   get "sign_in" => "sessions#new", :as => "sign_in"
   get "sign_out" => "sessions#destroy", :as => "sign_out"
 
-  match '/node_info', :to => 'home#update_node_info', :via => [:get]
-  match '/network_info', :to => 'home#update_network_info', :via => [:get]
-
   resources :users
   get 'password_resets/new'
   get "sign_up" => "users#new", :as => "sign_up"

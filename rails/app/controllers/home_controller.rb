@@ -96,63 +96,6 @@ class HomeController < ApplicationController
   helper_method :get_username
 
 
-  def update_node_info
-    @node_id = params[:node_id]
-    @node_info = Person.select("display_name, first_name, last_name, ext_birth_year, ext_death_year, birth_year_type, death_year_type, group_list, historical_significance, odnb_id, prefix, suffix, title").where("id = ?", @node_id)
-    @node_info_display_name = @node_info[0][:display_name]
-    @node_info_first_name = @node_info[0][:first_name]
-    @node_info_last_name = @node_info[0][:last_name]
-    @node_info_birth = @node_info[0][:ext_birth_year]
-    @node_info_birth_year_type = @node_info[0][:birth_year_type]
-    @node_info_death = @node_info[0][:ext_death_year]
-    @node_info_death_year_type = @node_info[0][:death_year_type]
-    @node_info_group_list = @node_info[0][:group_list]
-    @node_info_historical_significance = @node_info[0][:historical_significance]
-    @node_info_odnb_id = @node_info[0][:odnb_id]
-    @node_info_prefix = @node_info[0][:prefix]
-    @node_info_suffix = @node_info[0][:suffix]
-    @node_info_title = @node_info[0][:title]
-    respond_to do |format|
-      format.js
-    end
-  end
-
-  def update_network_info
-    @source_id = params[:source_id]
-    @target_id = params[:target_id]
-    @source_info = Person.select("display_name, first_name, last_name").where("id = ?", @source_id)
-    @target_info = Person.select("display_name, first_name, last_name").where("id = ?", @target_id)
-    @source_name = @source_info[0][:display_name]
-    @target_name = @target_info[0][:display_name]
-    @source_first_name = @source_info[0][:first_name]
-    @source_last_name = @source_info[0][:last_name]
-    @target_first_name = @target_info[0][:first_name]
-    @target_last_name = @target_info[0][:last_name]
-    @network_info = Relationship.select("id, max_certainty, type_certainty_list, start_date_type, start_year, end_date_type, end_year").where("person1_index = ? AND person2_index = ? OR person1_index = ? AND person2_index = ? ", @source_id, @target_id, @target_id, @source_id)
-    @network_info_id = @network_info[0][:id]
-    @network_info_confidence = @network_info[0][:max_certainty]
-    @network_info_start_date_type = @network_info[0][:start_date_type]
-    @network_info_start_year = @network_info[0][:start_year]
-    @network_info_end_date_type = @network_info[0][:end_date_type]
-    @network_info_end_year = @network_info[0][:end_year]
-    @network_info_types_list = @network_info[0][:type_certainty_list]
-    @network_dates = UserRelContrib.select("start_date_type, start_year, end_date_type, end_year").where("relationship_id = ?", @network_info_id)
-
-    @network_info_dates = Array.new
-
-    @network_dates.each do |i|
-      @temp_date = Array.new
-      @temp_date.push i[:start_date_type]
-      @temp_date.push i[:start_year]
-      @temp_date.push i[:end_date_type]
-      @temp_date.push i[:end_year]
-      @network_info_dates.push @temp_date
-    end
-    
-    respond_to do |format|
-      format.js
-    end
-  end
 
   def update_group_info
     @group_id = params[:group]
