@@ -33,20 +33,4 @@ class UserGroupContrib < ActiveRecord::Base
   # ----------------------------- 
   before_save { remove_trailing_spaces(:annotation, :bibliography)}
 
-  # Custom Methods
-  # -----------------------------
-
-  ### The two methods below are never called.  Confirm they can be removed.  -DGN 2017-3-17
-
-  # def get_group_name
-  #   return Group.find(group_id)
-  # end
-
-  # def get_users_name
-  #   if (created_by != nil)
-  #     return User.find(created_by).first_name + " " + User.find(created_by).last_name
-  #   else
-  #     return "ODNB"
-  #   end
-  # end
 end
