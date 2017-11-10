@@ -60,29 +60,7 @@
               <p>Affiliation: {{$root.user.affiliation}}</p>
               <p>ORCID: {{$root.user.orcid}}</p>
               <p>Email: {{$root.user.email}}</p>
-              <div>You've made {{$root.user.points}} contributions!</div>
-              <div class="user-contributions">
-                <h5>People</h5>
-                <div ng-repeat="person in $root.user.contributions.people">
-                  <a ui-sref="home.visualization({ ids: person.id })">{{person.name}}</a>
-                </div>
-                <h5>Relationships</h5>
-                <div ng-repeat="rel in $root.user.contributions.relationships">
-                  {{rel.people}}
-                </div>
-                <h5>Relationship Type Assignments</h5>
-                <div ng-repeat="relType in $root.user.contributions.relationship_types">
-                  {{relType.people}}: {{relType.type}}
-                </div>
-                <h5>Groups</h5>
-                <div ng-repeat="group in $root.user.contributions.groups">
-                  <a ui-sref="home.visualization({ ids: group.id })">{{group.name}}</a>
-                </div>
-                <h5>Group Assignments</h5>
-                <div ng-repeat="groupAssign in $root.user.contributions.group_assignments">
-                  {{groupAssign.person_name}} in {{groupAssign.group_name}}
-                </div>
-              </div>
+              <a ui-sref="home.user({ userId: $root.user.id })">See more</a>
 
               <!-- <button type="button" id="btnLogin" class="btn btn-primary" ng-click="config.login.status = false; config.contributionMode = false;">Log Out</button> -->
             </div>

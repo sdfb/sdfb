@@ -3,72 +3,43 @@
 </div> -->
 <div class="modal-body curate" id="modal-curate-body">
     <h3 class="modal-title">Curate Recent Submissions</h3>
-    <i class="fa fa-times close-btn" aria-hidden="true" type="button" ng-click="$ctrl.cancel()" aria-label="Close"></i>
+    <i class="fa fa-times close-btn" aria-hidden="true" type="button" ng-click="dismiss()" aria-label="Close"></i>
+    <!-- <div>You've made {{$root.user.points}} contributions!</div>
+    <div class="user-contributions">
+      <h5>People</h5>
+      <div ng-repeat="person in $root.user.contributions.people">
+        <a ui-sref="home.visualization({ ids: person.id })">{{person.name}}</a>
+      </div>
+      <h5>Relationships</h5>
+      <div ng-repeat="rel in $root.user.contributions.relationships">
+        {{rel.people}}
+      </div>
+      <h5>Relationship Type Assignments</h5>
+      <div ng-repeat="relType in $root.user.contributions.relationship_types">
+        {{relType.people}}: {{relType.type}}
+      </div>
+      <h5>Groups</h5>
+      <div ng-repeat="group in $root.user.contributions.groups">
+        <a ui-sref="home.visualization({ ids: group.id })">{{group.name}}</a>
+      </div>
+      <h5>Group Assignments</h5>
+      <div ng-repeat="groupAssign in $root.user.contributions.group_assignments">
+        {{groupAssign.person_name}} in {{groupAssign.group_name}}
+      </div>
+    </div> -->
     <h4 class="modal-title">New People</h4>
     <table class="table table-hover">
-      <thead>
-          <tr>
-              <td class="name-column">Name</td>
-              <td class="prefix-column">Prefix</td>
-              <td class="title-column">Title</td>
-              <td class="suffix-column">Suffix</td>
-              <td class="sig-column">Historical Significance</td>
-              <td class="start-column">Birth Date</td>
-              <td class="end-column">Death Date</td>
-              <td class="gender-column">Gender</td>
-              <td class="alternates-column">Alternate Names</td>
-              <td class="action-column">Approved?</td>
-              <td class="action-column">Active?</td>
-          </tr>
-      </thead>
         <tbody>
-            <tr class="person {{'p'+person.id}}" ng-class="{ 'active': group.active }" ng-repeat="person in $ctrl.people">
-                <td>{{ person.attributes.name }}</td>
-                <td>{{ person.attributes.prefix }}</td>
-                <td>{{ person.attributes.title }}</td>
-                <td>{{ person.attributes.suffix }}</td>
-                <td>{{ person.attributes.historical_significance }}</td>
-                <td>{{ person.attributes.birth_year_type }} {{ person.attributes.birth_year }}</td>
-                <td>{{ person.attributes.death_year_type }} {{ person.attributes.death_year }}</td>
-                <td>{{ person.attributes.gender }}</td>
-                <td>{{ person.attributes.alternates }}</td>
-                <td>
-                  <input ng-model="person.is_approved" type="checkbox"/>
-                    <!-- <i class="fa fa-times" aria-hidden="true" type="button" ng-click="$ctrl.remove($index, $ctrl.addToDB.nodes)" aria-label="Remove"></i> -->
-                </td>
-                <td>
-                  <input type="checkbox" checked/>
-                </td>
+            <tr class="person {{'p'+person.id}}" ng-class="{ 'active': group.active }" ng-repeat="person in user.contributions.people">
+                <td><a ng-click="dismiss()" ui-sref="home.visualization({ ids: person.id })">{{person.name}}</a></td>
             </tr>
         </tbody>
     </table>
     <h4 class="modal-title">New Relationships</h4>
     <table class="table table-hover">
-        <thead>
-            <tr>
-              <td class="source-column">Source Name</td>
-              <td class="target-column">Target Name</td>
-              <td class="start-column">Start Date</td>
-              <td class="end-column">End Date</td>
-              <td class="conf-column">Confidence</td>
-              <td class="action-column">Approved?</td>
-              <td class="action-column">Active?</td>
-            </tr>
-        </thead>
         <tbody>
-            <tr class="rel {{'r'+rel.id}}" ng-class="{ 'active': group.active }" ng-repeat="rel in $ctrl.relationships">
-                <td>{{ rel.id }}</td>
-                <td>{{ rel.target.name }}</td>
-                <td>{{ rel.startDateType }} {{ rel.startDate }}</td>
-                <td>{{ rel.endDateType }} {{ rel.endDate }}</td>
-                <td>{{ rel.confidence }}</td>
-                <td>
-                  <input ng-model="rel.is_approved" type="checkbox"/>
-                    <!-- <i class="fa fa-times" aria-hidden="true" type="button" ng-click="$ctrl.remove($index, $ctrl.addToDB.links)" aria-label="Remove"></i> -->
-                </td>
-                <td>
-                  <input type="checkbox" checked/>
-                </td>
+            <tr class="rel {{'r'+rel.id}}" ng-class="{ 'active': group.active }" ng-repeat="rel in user.contributions.relationships">
+                <td>{{ rel.people }}</td>
             </tr>
         </tbody>
     </table>
@@ -76,59 +47,22 @@
     <table class="table table-hover">
         <thead>
             <tr>
-              <td class="source-column">Source Name</td>
-              <td class="target-column">Target Name</td>
-              <td class="start-column">Start Date</td>
-              <td class="end-column">End Date</td>
-              <td class="conf-column">Confidence</td>
-              <td class="type-column">Type</td>
-              <td class="action-column">Approved?</td>
-              <td class="action-column">Active?</td>
+              <td class="source-column">People</td>
+              <td class="target-column">Type</td>
             </tr>
         </thead>
         <tbody>
-            <tr class="rel {{'r'+rel.id}}" ng-class="{ 'active': group.active }" ng-repeat="rel in $ctrl.relTypes">
-                <td>{{ rel.attributes.relationship.attributes.person_1 }}</td>
-                <td>{{ rel.attributes.relationship.attributes.person_2 }}</td>
-                <td>{{ rel.attributes.start_year_type }} {{ rel.attributes.start_year }}</td>
-                <td>{{ rel.attributes.end_year_type }} {{ rel.attributes.end_year }}</td>
-                <td>{{ rel.attributes.confidence }}</td>
-                <td>{{ rel.attributes.type }}</td>
-                <td>
-                  <input ng-model="relType.is_approved" type="checkbox"/>
-                    <!-- <i class="fa fa-times" aria-hidden="true" type="button" ng-click="$ctrl.remove($index, $ctrl.addToDB.links)" aria-label="Remove"></i> -->
-                </td>
-                <td>
-                  <input type="checkbox" checked/>
-                </td>
+            <tr class="rel {{'r'+rel.id}}" ng-class="{ 'active': group.active }" ng-repeat="rel in user.contributions.relationship_types">
+                <td>{{ rel.people }}</td>
+                <td>{{ rel.type }}</td>
             </tr>
         </tbody>
     </table>
     <h4 class="modal-title">New Groups</h4>
     <table class="table table-hover">
-        <thead>
-            <tr>
-              <td class="name-column">Group Name</td>
-              <td class="desc-column">Description</td>
-              <td class="start-column">Start Date</td>
-              <td class="end-column">End Date</td>
-              <td class="action-column">Approved?</td>
-              <td class="action-column">Active?</td>
-            </tr>
-        </thead>
         <tbody>
-            <tr class="group {{'g'+group.id}}" ng-class="{ 'active': group.active }" ng-repeat="group in $ctrl.groups">
-                <td>{{ group.attributes.name }}</td>
-                <td>{{ group.attributes.description }}</td>
-                <td>{{ group.start_year }}</td>
-                <td>{{ group.end_year }}</td>
-                <td>
-                  <input ng-model="group.is_approved" type="checkbox"/>
-                    <!-- <i class="fa fa-times" aria-hidden="true" type="button" ng-click="$ctrl.remove($index, $ctrl.addToDB.groups)" aria-label="Remove"></i> -->
-                </td>
-                <td>
-                  <input type="checkbox" checked/>
-                </td>
+            <tr class="group {{'g'+group.id}}" ng-class="{ 'active': group.active }" ng-repeat="group in user.contributions.groups">
+                <td><a ng-click="dismiss()" ui-sref="home.visualization({ ids: group.id })">{{group.name}}</a></td>
             </tr>
         </tbody>
     </table>
@@ -138,30 +72,17 @@
             <tr>
               <td class="person-column">Person Name</td>
               <td class="group-column">Group Name</td>
-              <td class="start-column">Start Date</td>
-              <td class="end-column">End Date</td>
-              <td class="action-column">Approved?</td>
-              <td class="action-column">Active?</td>
             </tr>
         </thead>
         <tbody>
-            <tr class="rel {{'r'+rel.id}}" ng-class="{ 'active': group.active }" ng-repeat="rel in $ctrl.addToDB.group_assignments">
-                <td>{{ rel.person.name }}</td>
-                <td>{{ rel.group.name }}</td>
-                <td>{{ rel.startDateType }} {{ rel.startDate }}</td>
-                <td>{{ rel.endDateType }} {{ rel.endDate }}</td>
-                <td>
-                  <input type="checkbox"/>
-                    <!-- <i class="fa fa-times" aria-hidden="true" type="button" ng-click="$ctrl.remove($index, $ctrl.addToDB.group_assignments)" aria-label="Remove"></i> -->
-                </td>
-                <td>
-                  <input type="checkbox" checked/>
-                </td>
+            <tr class="rel {{'r'+rel.id}}" ng-class="{ 'active': group.active }" ng-repeat="rel in user.contributions.group_assignments">
+                <td>{{ rel.person_name }}</td>
+                <td>{{ rel.group_name }}</td>
             </tr>
         </tbody>
     </table>
-    <button ng-click="$ctrl.close()" type="button" class="btn btn-primary">
-        Submit & Close
+    <button ng-click="close()" type="button" class="btn btn-primary">
+        Close
     </button>
     <!-- <ul>
         <li class="group {{'g'+group.groupId}}" ng-class="{ 'active': group.active }" ng-repeat="group in $ctrl.groups">

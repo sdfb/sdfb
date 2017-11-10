@@ -120,7 +120,7 @@ angular.module('redesign2017App')
             scope.addedNodes.push(realNewNode);
             scope.addedNodeId += 1;
           }
-          newNode.created_by = scope.config.userId;
+          // newNode.auth_token = $rootScope.user.auth_token;
           newNode.birthDateType = newNode.birthDateType.abbr;
           newNode.deathDateType = newNode.deathDateType.abbr;
           scope.updateNetwork(scope.data);

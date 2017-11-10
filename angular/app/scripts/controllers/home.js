@@ -92,28 +92,6 @@ angular.module('redesign2017App').component('home', {
         controllerAs: '$ctrl',
         size: size,
         appendTo: parentElem
-        // resolve: {
-        //   people: function() {
-        //     return apiService.curatePeople($scope.user.auth_token).then(function(result) {
-        //       return result;
-        //     });
-        //   },
-        //   relationships: function() {
-        //     return apiService.curateRelationships($scope.user.auth_token).then(function(result) {
-        //       return result;
-        //     });
-        //   },
-        //   relTypes: function() {
-        //     return apiService.curateRelTypes($scope.user.auth_token).then(function(result) {
-        //       return result;
-        //     });
-        //   },
-        //   groups: function() {
-        //     return apiService.curateGroups($scope.user.auth_token).then(function(result) {
-        //       return result;
-        //     });
-        //   }
-        // }
       });
       modalInstance.result.then(function(result) {
         console.log(result);

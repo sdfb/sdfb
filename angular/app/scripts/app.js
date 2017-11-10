@@ -140,15 +140,16 @@ redesign2017App.config(function($stateProvider, $locationProvider, $compileProvi
               }]
             },
             controller: ['$scope', 'user', function($scope, user) {
-              console.log(user);
+
+              // var $ctrl = this;
+              $scope.user = user.data;
+              console.log($scope.user.contributions);
               $scope.dismiss = function() {
                 $scope.$dismiss();
               };
 
-              $scope.save = function() {
-                item.update().then(function() {
-                  $scope.$close(true);
-                });
+              $scope.close = function() {
+                $scope.$close();
               };
             }]
         }).result.finally(function() {
@@ -158,20 +159,16 @@ redesign2017App.config(function($stateProvider, $locationProvider, $compileProvi
   }
   var resetState = {
     name: "home.reset",
-    url: "password_reset",
+    url: "password_reset?token",
     onEnter: ['$stateParams', '$state', '$uibModal', '$resource', function($stateParams, $state, $uibModal, $resource) {
         $uibModal.open({
             templateUrl: './views/modal-reset.html',
-            // resolve: {
-            //   user: ['$cookieStore', 'apiService', function($cookieStore, apiService) {
-            //     var session = $cookieStore.get('session');
-            //     var token = session.auth_token;
-            //     var userId = $stateParams.userId;
-            //     return apiService.getUser(userId,token).then(function(result){
-            //       return result;
-            //     })
-            //   }]
-            // },
+            resolve: {
+              token: ['$stateParams', 'apiService', function($stateParams, apiService) {
+                console.log($stateParams.token);
+                return $stateParams.token;
+              }]
+            },
             controller: ['$scope', 'apiService', function($scope, apiService) {
               $scope.dismiss = function() {
                 $scope.$dismiss();
