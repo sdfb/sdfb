@@ -1,14 +1,14 @@
 class UserRelContrib < ActiveRecord::Base
   # this class is known as "Relationship Type Assignment" to the user
   
-  
   include WhitespaceStripper
   include Approvable
 
-  attr_accessible :annotation, :bibliography, :certainty, :created_by, :relationship_id, :relationship_type_id, 
-  :created_at,  :start_year, :start_month, 
-  :start_day, :end_year, :end_month, :end_day, 
-  :start_date_type, :end_date_type, :is_locked
+  attr_accessible :relationship_id, :relationship_type_id, 
+  :created_by, :created_at, :is_locked,
+  :start_year, :start_month, :start_day, :start_date_type,
+  :end_year, :end_month, :end_day, :end_date_type,
+  :annotation, :bibliography, :certainty
 
   # Relationships
   # -----------------------------
@@ -21,12 +21,10 @@ class UserRelContrib < ActiveRecord::Base
 
   # Validations
   # -----------------------------
-  # validates_presence_of :annotation
   validates_presence_of :certainty
   validates_presence_of :created_by
   validates_presence_of :relationship_id
   validates_presence_of :relationship_type_id
-  # validates_length_of   :annotation, minimum: 10
   validates_length_of   :bibliography, minimum: 10, allow_blank: true
   validates :start_year, numericality: { greater_than_or_equal_to: SDFB::EARLIEST_BIRTH_YEAR, less_than_or_equal_to: SDFB::LATEST_DEATH_YEAR }, allow_nil: true
   validates :end_year,   numericality: { greater_than_or_equal_to: SDFB::EARLIEST_BIRTH_YEAR, less_than_or_equal_to: SDFB::LATEST_DEATH_YEAR }, allow_nil: true
@@ -60,8 +58,6 @@ class UserRelContrib < ActiveRecord::Base
 
   # Custom Methods
   # -----------------------------
-
- 
   def set_approval_metadata
     if (self.is_approved == true)
       self.approved_by = "Admin"
@@ -69,7 +65,10 @@ class UserRelContrib < ActiveRecord::Base
     end
   end
 
-  ##if a user submits a new relationship but does not include a start and end date it defaults to a start and end date based on the birth years of the people in the relationship
+  ## if a user submits a new relationship but does not 
+  ## include a start and end date it defaults to a start and end date 
+  ## based on the birth years of the people in the relationship
+  # -----------------------------
   def create_start_and_end_date
     person1_index = Relationship.find(relationship_id).person1_index
     person2_index = Relationship.find(relationship_id).person2_index
@@ -141,7 +140,8 @@ class UserRelContrib < ActiveRecord::Base
   end
 
 
-  # update the relationship type list and the maximum certainty when the relationship type assignment is destroyed
+  # update the relationship type list and the maximum certainty 
+  # when the relationship type assignment is destroyed
   def type_list_max_cert_on_rel_on_destroy
     if self.is_locked != true
       # find averages by relationship type
@@ -231,26 +231,6 @@ class UserRelContrib < ActiveRecord::Base
         end
         Person.update(person2_id, rel_sum: rel_sum_person_2)
       end
-    end
-  end
-
-  def get_person1_name
-    Person.find(Relationship.find(relationship_id).person1_index).display_name
-  end
-
-  def get_person2_name
-    Person.find(Relationship.find(relationship_id).person2_index).display_name
-  end
-
-  def get_both_names
-    get_person1_name + " & " + get_person2_name
-  end
-
-  def get_users_name
-    if (created_by != nil)
-      return User.find(created_by).first_name + " " + User.find(created_by).last_name
-    else
-      return "ODNB"
     end
   end
 
