@@ -4,8 +4,8 @@ class GroupAssignment < ActiveRecord::Base
   include Approvable
 
   attr_accessible :created_by, :group_id, :person_id, :start_date, :end_date, :created_at,
-   :start_year, :start_month, :start_day, :end_year, :end_month, :end_day, :annotation, :bibliography,
-  :person_autocomplete, :start_date_type, :end_date_type
+    :start_year, :start_month, :start_day, :end_year, :end_month, :end_day, :annotation, :bibliography,
+    :start_date_type, :end_date_type
   
   # Relationships
   # -----------------------------

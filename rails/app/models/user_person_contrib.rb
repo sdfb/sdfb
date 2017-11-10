@@ -5,7 +5,7 @@ class UserPersonContrib < ActiveRecord::Base
   include WhitespaceStripper
   include Approvable
 
-  attr_accessible :annotation, :bibliography, :created_by, :person_id, :created_at, :person_autocomplete
+  attr_accessible :annotation, :bibliography, :created_by, :person_id, :created_at
 
   # Relationships
   # -----------------------------

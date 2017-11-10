@@ -1,6 +1,4 @@
 class HomeController < ApplicationController
-  autocomplete :group, :name, full: true, :display_value => :name
-  autocomplete :person, :search_names_all, full: true, :extra_data => [:display_name, :ext_birth_year], :display_value => :autocomplete_name
   layout "layouts/index_layout"
   def index
     #If there are no relationships, only return the person node
@@ -160,7 +158,4 @@ class HomeController < ApplicationController
     @group_id = params[:group]
   end
   
-  def get_autocomplete_items(parameters)
-    active_record_get_autocomplete_items(parameters).where("approved_by is not null and is_active is true and is_rejected is false")
-  end
 end

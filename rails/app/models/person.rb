@@ -505,11 +505,6 @@ class Person < ActiveRecord::Base
   end
 
   #-----------------------------------------------------------------------------
-  def autocomplete_name
-    "#{self.display_name} (#{self.ext_birth_year})"
-  end
-
-  #-----------------------------------------------------------------------------
   def get_person_name
     # TODO: Validate that this is semantically identical to the code below.
     #return  [prefix, first_name, last_name, suffix, title].compact.join(" ")

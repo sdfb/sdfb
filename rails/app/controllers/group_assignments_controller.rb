@@ -3,7 +3,6 @@ class GroupAssignmentsController < ApplicationController
   # GET /group_assignments.json
 
 
-  autocomplete :person, :search_names_all, full: true, :extra_data => [:display_name, :ext_birth_year], :display_value => :autocomplete_name
   load_and_authorize_resource
   
   def index
@@ -15,13 +14,6 @@ class GroupAssignmentsController < ApplicationController
     end
   end
 
-  def get_autocomplete_items(parameters)
-    if ((current_user.user_type == "Admin") || (current_user.user_type == "Curator"))
-      active_record_get_autocomplete_items(parameters).where("is_rejected is false")
-    else
-      active_record_get_autocomplete_items(parameters).where("approved_by is not null and is_active is true and is_rejected is false")
-    end
-  end
 
   # GET /group_assignments/1
   # GET /group_assignments/1.json

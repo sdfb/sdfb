@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171030040915) do
+ActiveRecord::Schema.define(version: 20171110154911) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -21,21 +21,20 @@ ActiveRecord::Schema.define(version: 20171030040915) do
     t.integer  "group_id"
     t.integer  "person_id"
     t.integer  "start_year"
-    t.string   "start_month",         limit: 255
+    t.string   "start_month",     limit: 255
     t.integer  "start_day"
     t.integer  "end_year"
-    t.string   "end_month",           limit: 255
+    t.string   "end_month",       limit: 255
     t.integer  "end_day"
     t.integer  "approved_by"
     t.datetime "approved_on"
     t.boolean  "is_approved"
-    t.boolean  "is_active",                       default: true
-    t.boolean  "is_rejected",                     default: false
-    t.datetime "created_at",                                      null: false
-    t.datetime "updated_at",                                      null: false
-    t.string   "person_autocomplete", limit: 255
-    t.string   "start_date_type",     limit: 255
-    t.string   "end_date_type",       limit: 255
+    t.boolean  "is_active",                   default: true
+    t.boolean  "is_rejected",                 default: false
+    t.datetime "created_at",                                  null: false
+    t.datetime "updated_at",                                  null: false
+    t.string   "start_date_type", limit: 255
+    t.string   "end_date_type",   limit: 255
     t.text     "annotation"
     t.text     "bibliography"
   end
@@ -191,8 +190,6 @@ ActiveRecord::Schema.define(version: 20171030040915) do
     t.boolean  "is_rejected",                          default: false
     t.datetime "created_at",                                                null: false
     t.datetime "updated_at",                                                null: false
-    t.string   "person1_autocomplete",     limit: 255
-    t.string   "person2_autocomplete",     limit: 255
     t.string   "start_date_type",          limit: 255
     t.string   "end_date_type",            limit: 255
     t.text     "type_certainty_list",                  default: "--- []\n"
@@ -223,12 +220,11 @@ ActiveRecord::Schema.define(version: 20171030040915) do
     t.text     "bibliography"
     t.integer  "approved_by"
     t.date     "approved_on"
-    t.boolean  "is_approved",                     default: true
-    t.boolean  "is_active",                       default: true
-    t.boolean  "is_rejected",                     default: false
-    t.datetime "created_at",                                      null: false
-    t.datetime "updated_at",                                      null: false
-    t.string   "person_autocomplete", limit: 255
+    t.boolean  "is_approved",  default: true
+    t.boolean  "is_active",    default: true
+    t.boolean  "is_rejected",  default: false
+    t.datetime "created_at",                   null: false
+    t.datetime "updated_at",                   null: false
   end
 
   create_table "user_rel_contribs", force: :cascade do |t|
@@ -251,10 +247,6 @@ ActiveRecord::Schema.define(version: 20171030040915) do
     t.boolean  "is_rejected",                      default: false
     t.datetime "created_at",                                       null: false
     t.datetime "updated_at",                                       null: false
-    t.string   "person1_autocomplete", limit: 255
-    t.string   "person2_autocomplete", limit: 255
-    t.string   "person1_selection",    limit: 255
-    t.string   "person2_selection",    limit: 255
     t.string   "start_date_type",      limit: 255
     t.string   "end_date_type",        limit: 255
     t.boolean  "is_locked",                        default: false

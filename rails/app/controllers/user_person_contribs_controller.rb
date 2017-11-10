@@ -4,7 +4,6 @@ class UserPersonContribsController < ApplicationController
   # GET /user_person_contribs
   # GET /user_person_contribs.json
   
-  autocomplete :person, :search_names_all, full: true, :extra_data => [:display_name, :ext_birth_year], :display_value => :autocomplete_name
   load_and_authorize_resource
 
   def index
@@ -14,10 +13,6 @@ class UserPersonContribsController < ApplicationController
       format.html # index.html.erb
       format.json { render json: @user_person_contribs }
     end
-  end
-
-  def get_autocomplete_items(parameters)
-    active_record_get_autocomplete_items(parameters).where("approved_by is not null and is_active is true and is_rejected is false")
   end
 
   # GET /user_person_contribs/1

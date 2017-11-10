@@ -7,8 +7,8 @@ class UserRelContrib < ActiveRecord::Base
 
   attr_accessible :annotation, :bibliography, :certainty, :created_by, :relationship_id, :relationship_type_id, 
   :created_at,  :start_year, :start_month, 
-  :start_day, :end_year, :end_month, :end_day, :person1_autocomplete,
-  :person2_autocomplete, :person1_selection, :person2_selection, :start_date_type, :end_date_type, :is_locked
+  :start_day, :end_year, :end_month, :end_day, 
+  :start_date_type, :end_date_type, :is_locked
 
   # Relationships
   # -----------------------------
@@ -52,7 +52,6 @@ class UserRelContrib < ActiveRecord::Base
 
   # Callbacks
   # ----------------------------- 
-  before_create :autocomplete_to_rel
   before_save :create_start_and_end_date
   before_save { remove_trailing_spaces(:annotation, :bibliography)}
   after_save :update_type_list_max_certainty_on_rel
@@ -62,29 +61,7 @@ class UserRelContrib < ActiveRecord::Base
   # Custom Methods
   # -----------------------------
 
-  #This converts the person1_selected and the person2_selected into the relationship_id foreign key
-  def autocomplete_to_rel
-    #find the relationship_id given the two people
-    if (self.relationship_id == 0)
-      if ((! self.person1_selection.blank?) && (! self.person2_selection.blank?))
-        found_rel_id = Relationship.for_2_people(self.person1_selection, self.person2_selection)[0]
-        if (found_rel_id.nil?)
-        #if the relationship does not exist, then through an error
-        errors.add(:person2_autocomplete, "This relationship does not exist.")
-        else
-          self.relationship_id = found_rel_id.id
-        end
-      else
-        if (self.person1_selection.blank?) 
-          errors.add(:person1_autocomplete, "Please select people from the autocomplete dropdown menus.")
-        end
-        if (self.person2_selection.blank?) 
-          errors.add(:person2_autocomplete, "Please select people from the autocomplete dropdown menus.")
-        end
-      end
-    end
-  end
-
+ 
   def set_approval_metadata
     if (self.is_approved == true)
       self.approved_by = "Admin"

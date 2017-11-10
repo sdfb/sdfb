@@ -37,35 +37,20 @@ Sdfb::Application.routes.draw do
   get "sign_out" => "sessions#destroy", :as => "sign_out"
   
 
-  resources :home do
-    get :autocomplete_person_search_names_all, on: :collection
-    get :autocomplete_group_name, on: :collection
-  end
+  resources :home
+
   match '/people_search', :to => 'people#search', :via => [:get]
   match '/group_search', :to => 'groups#search', :via => [:get]
   match '/relationship_search', :to => 'relationships#search', :via => [:get]
 
-  resources :relationships do
-    get :autocomplete_person_search_names_all, on: :collection
-  end
+  resources :relationships
+  resources :groups
+  resources :group_assignments
+  resources :people
 
-  resources :groups do
-    get :autocomplete_group_name, on: :collection
-  end
-  resources :group_assignments do
-    get :autocomplete_person_search_names_all, on: :collection
-  end
-  resources :people do
-    get :autocomplete_person_search_names_all, on: :collection
-  end
+  resources :user_person_contribs
 
-  resources :user_person_contribs do
-    get :autocomplete_person_search_names_all, on: :collection
-  end
-
-  resources :user_rel_contribs do
-    get :autocomplete_person_search_names_all, on: :collection
-  end
+  resources :user_rel_contribs
 
 
 

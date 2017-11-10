@@ -7,7 +7,6 @@ class Relationship < ActiveRecord::Base
   attr_accessible :max_certainty, :created_by, :original_certainty, :person1_index, :person2_index,
   :justification, :created_at, :edge_birthdate_certainty, :bibliography,
    :start_year, :start_month, :start_day, :end_year, :end_month, :end_day,
-  :person1_autocomplete, :person2_autocomplete,
   :start_date_type, :end_date_type, :type_certainty_list
   # The type certainty list is a 2d array that includes the relationship type id in the 0 index, 
   #  ...the average certainty of all relationship assignments with that relationship type, and the relationship type name

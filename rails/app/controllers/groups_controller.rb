@@ -2,7 +2,6 @@ class GroupsController < ApplicationController
   # GET /groups
   # GET /groups.json
 
-  autocomplete :group, :name, full: true, display_value: :name, scopes: [:all_approved]
   load_and_authorize_resource
   
   def index
@@ -14,17 +13,6 @@ class GroupsController < ApplicationController
     end
   end
 
-  def get_autocomplete_items(parameters)
-    if (! current_user.blank?)
-      if ((current_user.user_type == "Admin") || (current_user.user_type == "Curator"))
-        active_record_get_autocomplete_items(parameters).where("is_rejected is false")
-      else
-        active_record_get_autocomplete_items(parameters).where("approved_by is not null and is_active is true and is_rejected is false")
-      end
-    else
-      active_record_get_autocomplete_items(parameters).where("approved_by is not null and is_active is true and is_rejected is false")
-    end
-  end
 
   # GET /groups/1
   # GET /groups/1.json
