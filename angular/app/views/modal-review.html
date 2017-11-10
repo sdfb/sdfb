@@ -74,7 +74,7 @@
             </tr>
         </thead>
         <tbody>
-            <tr class="group {{'g'+group.id}}" ng-class="{ 'active': group.active }" ng-repeat="group in $ctrl.addToDB.groups">
+            <tr class="group {{'g'+group.id}}" ng-class="{ 'active': group.active }" ng-repeat="group in $ctrl.addToDB.group">
                 <td>{{ group.name }}</td>
                 <td>{{ group.description }}</td>
                 <td>{{ group.startDateType }} {{ group.startDate }}</td>
