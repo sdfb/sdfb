@@ -1,8 +1,5 @@
 Sdfb::Application.routes.draw do
 
-  # set the root
-  root :to => "home#index"
-
   # API Routes
   defaults format: :json, via: [:get] do
     get  'api/people'
@@ -35,7 +32,6 @@ Sdfb::Application.routes.draw do
   resources :people
   resources :user_person_contribs
   resources :user_rel_contribs
-  resources :home
   resources :user_group_contribs
 
   # Session management
