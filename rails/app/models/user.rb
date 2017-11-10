@@ -2,14 +2,10 @@ class User < ActiveRecord::Base
   attr_accessible :about_description, :affiliation, :email, :first_name, 
                   :is_active, :last_name, 
                   :user_type, :prefix, :orcid, 
-                  :username, :created_at,
-                  :password, :password_confirmation
+                  :username, :created_at
 
   attr_accessor :password, :password_confirmation
 
-  # Callbacks
-  # -----------------------------
-  before_save :encrypt_password
 
   # Relationships
   # -----------------------------
@@ -38,16 +34,16 @@ class User < ActiveRecord::Base
   # username must be at least 6 characters long
   validates_presence_of :username
   validates_uniqueness_of :username
-  validates_length_of :username, :minimum => 6, :if => :username_present?
+  validates_length_of :username, :minimum => 6, :allow_blank => true
   validates_format_of :username, :with => /\A[-\w\._@]+\z/i, :message => "Your username should only contain letters, numbers, or .-_@"
 
   ## first_name must be at least 1 character
   validates_presence_of :first_name
-  validates_length_of :first_name, :minimum => 1, :if => :first_name_present?
+  validates_length_of :first_name, :minimum => 1, :allow_blank => true
 
   ## last_name must be at least 1 character
   validates_presence_of :last_name
-  validates_length_of :last_name, :minimum => 1, :if => :last_name_present?
+  validates_length_of :last_name, :minimum => 1, :allow_blank => true
 
   #user must be one of three types: standard, curator, admin
   validates_presence_of :user_type
@@ -70,7 +66,6 @@ class User < ActiveRecord::Base
   # ----------------------------- 
   scope :active, -> { where(is_active: true) }
   scope :all_inactive, -> { where(is_active: false) }
-  scope :for_email, -> (email_input) { where('email like ?', "%#{email_input}%") }
   scope :all_recent, -> { order(created_at: :desc) }
   scope :all_rejected, -> { where(is_rejected: true, is_active: true) }
   scope :order_by_sdfb_id, -> { order(id: :asc) }
@@ -79,7 +74,6 @@ class User < ActiveRecord::Base
   # -----------------------------
   before_save :encrypt_password
   after_save :refresh_token
-  before_create { generate_token(:auth_token) }  
 
   # Custom methods
   # -----------------------------
@@ -89,10 +83,12 @@ class User < ActiveRecord::Base
     super(options)
   end
 
+  # -----------------------------
   def points
     calculate_points
   end
 
+  # -----------------------------
   def calculate_points
     return 0 unless self.id
     points = 0
@@ -121,6 +117,7 @@ class User < ActiveRecord::Base
     return points
   end
 
+  # -----------------------------
   def contributions
     obj = {}
     return obj unless self.id 
@@ -164,26 +161,13 @@ class User < ActiveRecord::Base
     obj
   end
 
-  def first_name_present?
-    !first_name.nil?
-  end
-
-  def last_name_present?
-    !last_name.nil?
-  end
-
+  # -----------------------------
   def password_present?
     !self.password.blank?
   end
 
-  def username_present?
-    !username.nil?
-  end
-
-  def get_person_name
-    return first_name + " " + last_name 
-  end
-
+  # Class-level method for logging in a person 
+  # -----------------------------
   def self.authenticate(email, password)
     user = find_by_email(email)
     if user && BCrypt::Password.new(user.password_digest) == password
@@ -194,24 +178,28 @@ class User < ActiveRecord::Base
     end
   end
 
+  # -----------------------------
   def encrypt_password
     if password.present?
       self.password_digest = BCrypt::Password.create(password)
     end
   end
 
+  # -----------------------------
   def refresh_token
     if password.present?
       self.update_column :auth_token, SecureRandom.urlsafe_base64
     end
   end
 
+  # -----------------------------
   def generate_token(column)  
     begin  
       self[column] = SecureRandom.urlsafe_base64  
     end while User.exists?(column => self[column])  
   end  
   
+  # -----------------------------
   def send_password_reset  
     generate_token(:password_reset_token)  
     self.password_reset_sent_at = Time.zone.now  
