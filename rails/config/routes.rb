@@ -43,10 +43,6 @@ Sdfb::Application.routes.draw do
   get "sign_in" => "sessions#new", :as => "sign_in"
   get "sign_out" => "sessions#destroy", :as => "sign_out"
 
-  match '/people_membership', :to => 'people#membership', :via => [:get]
-  match '/people_relationships', :to => 'people#relationships', :via => [:get]
-  match '/people_notes', :to => 'people#notes', :via => [:get]
-
   match '/node_info', :to => 'home#update_node_info', :via => [:get]
   match '/network_info', :to => 'home#update_network_info', :via => [:get]
 

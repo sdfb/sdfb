@@ -25,34 +25,7 @@ class PeopleController < ApplicationController
       format.json
     end
   end
-
-  def membership
-    @groups = GroupAssignment.all_for_person(params[:id]).all_approved.order_by_sdfb_id.paginate(:page => params[:groups_page]).per_page(100)
-
-    respond_to do |format|
-      format.html # show.html.erb
-      format.json { render json: @person }
-    end
-  end
-
-  def relationships
-    @approved_relationships = Relationship.all_for_person(params[:id]).highest_certainty.all_approved.order_by_sdfb_id.paginate(:page => params[:approved_relationships_page]).per_page(100)
-
-    respond_to do |format|
-      format.html # show.html.erb
-      format.json { render json: @person }
-    end
-  end
-
-  def notes
-    @user_person_contribs = UserPersonContrib.all_for_person(params[:id]).all_approved.order_by_sdfb_id.paginate(:page => params[:user_person_contribs_page]).per_page(100)
-
-    respond_to do |format|
-      format.html # show.html.erb
-      format.json { render json: @person }
-    end
-  end
-
+  
   # GET /people/new
   # GET /people/new.json
   def new
