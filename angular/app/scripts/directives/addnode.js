@@ -39,6 +39,8 @@ angular.module('redesign2017App')
           newNode.vy = null;
           newNode.fx = x;
           newNode.fy = y;
+          newNode.absx = x;
+          newNode.absy = y;
           console.log(newNode);
           addedNodes.push(newNode);
           scope.$apply(function() {
@@ -117,6 +119,8 @@ angular.module('redesign2017App')
             realNewNode.vy = null;
             realNewNode.fx = x;
             realNewNode.fy = y;
+            realNewNode.absx = x;
+            realNewNode.absy = y
             scope.addedNodes.push(realNewNode);
             scope.addedNodeId += 1;
           }

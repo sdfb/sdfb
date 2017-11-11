@@ -131,8 +131,10 @@ angular.module('redesign2017App')
 
           scope.dragNodes.forEach(function(d) {
             if (d.distance === 7 && d.id === scope.groupAssign.person.id) {
-              d.x = scope.singleWidth/2;
-              d.y = scope.singleHeight/2;
+              d.x = d.absx;
+              d.y = d.absy;
+              d.fx = d.absx;
+              d.fy = d.absy;
               d.vx = null;
               d.vy = null;
             }

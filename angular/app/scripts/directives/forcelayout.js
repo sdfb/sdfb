@@ -640,10 +640,10 @@ angular.module('redesign2017App').directive('forceLayout', ['apiService', '$time
               scope.createNewLink(d, scope.dragNodes, scope.addedLinks);
             }
             if (d.distance === 7) {
-              d.x = scope.singleWidth*(3/4)+d.order*20;
-              d.y = scope.singleHeight*(3/4)+d.order*20;
-              d.fx = scope.singleWidth*(3/4)+d.order*20;
-              d.fy = scope.singleHeight*(3/4)+d.order*20;
+              d.x = d.absx
+              d.y = d.absy
+              d.fx = d.absx
+              d.fy = d.absy
             } else if (scope.config.viewMode !== 'all') {
               d.fx = null;
               d.fy = null;
