@@ -137,13 +137,14 @@ class ApiController < ApplicationController
           node["death_year_type"] = node["deathDateType"]
           node.delete("deathDateType")
         end
-        if ["Admin", "Curator"].include?(current_user.user_type)
+        unless ["Admin", "Curator"].include?(current_user.user_type)
           node.delete("is_approved")
           node.delete("is_active")
         end
         node.delete("created_by")
 
         if node["id"]
+          node.delete("id")
           Person.find(node["id"].to_i).update(node)
         else
           node["created_by"] = current_user.id
