@@ -40,14 +40,8 @@ class Relationship < ActiveRecord::Base
 
   # Callbacks
   # -----------------------------
-  before_create :create_check_start_and_end_date
-
-  before_update :update_type_list_max_certainty_on_rel
-  before_update :create_check_start_and_end_date
-  before_update :update_peoples_rel_sum
-
-  after_create :create_peoples_rel_sum
-  after_destroy :delete_from_rel_sum
+  before_save :create_check_start_and_end_date
+  before_update :update_max_certainty
   after_save    :update_met_record
 
 	# Custom Methods
@@ -56,30 +50,6 @@ class Relationship < ActiveRecord::Base
   def altered
     was_altered = (created_by && created_by != 2) || user_rel_contribs.where("created_by != ?",3).count > 0
   end
-
-
-  # delete the relationships from the rel sums of people 1 and people 2
-  def delete_from_rel_sum
-    rel_sum_person_1 = Person.find(self.person1_index).rel_sum
-    rel_sum_person_2 = Person.find(self.person2_index).rel_sum
-
-    # locate the record for the specific relationship for person 1
-    rel_sum_person_1.each_with_index do |rel, i|
-      # if you find the record then delete it
-      if rel[2] == self.id
-        rel_sum_person_1.delete_at(i)
-      end
-    end
-    Person.update(self.person1_index, rel_sum: rel_sum_person_1)
-    rel_sum_person_2.each_with_index do |rel, i|
-      # if you find the record then delete it
-      if rel[2] == self.id
-        rel_sum_person_2.delete_at(i)
-      end
-    end
-    Person.update(self.person2_index, rel_sum: rel_sum_person_2)
-  end
-
 
   def update_met_record
     met_record = UserRelContrib.where(relationship_type_id: 4,
@@ -246,7 +216,7 @@ class Relationship < ActiveRecord::Base
   end
 
 
-  def update_type_list_max_certainty_on_rel
+  def update_max_certainty
     #only update the approved and edit status if it is not a system callback
     #a system callback can be detected because it's self.approved_by is 0 or nil
     if (self.approved_by.to_i != 0)
@@ -271,34 +241,11 @@ class Relationship < ActiveRecord::Base
         averages_by_rel_type = UserRelContrib.all_approved.all_averages_for_relationship(self.id)
       end
 
-
       # calculate the relationship's maximum certainty
       new_max_certainty = averages_by_rel_type.map { |e| e.avg_certainty.to_f }.max 
       
-      # update the relationships certainty list and max certainty
+      # update the max certainty
       self.max_certainty = new_max_certainty
-      
-      # update the max certainty of the relationship in the people's rel_sum
-      # find the existing rel_sums for person 1 and person 2
-      person1_id = self.person1_index
-      rel_sum_person_1 = Person.find(person1_id).rel_sum
-
-      person2_id = self.person2_index
-      rel_sum_person_2 = Person.find(person2_id).rel_sum
-
-      # locate the record for the specific relationship for person 1
-      rel_sum_person_1.each do |rel|
-        if rel[2] == self.id
-          rel[1] = new_max_certainty
-        end
-      end
-      Person.update(person1_id, rel_sum: rel_sum_person_1)
-      rel_sum_person_2.each do |rel|
-        if rel[2] == self.id
-          rel[1] = new_max_certainty
-        end
-      end
-      Person.update(person2_id, rel_sum: rel_sum_person_2)
     end
   end
   
@@ -330,117 +277,4 @@ class Relationship < ActiveRecord::Base
     errors.add(:person2_index, "This relationship already exists") if (! Relationship.for_2_people(self.person1_index, self.person2_index).empty?)
   end
 
-  # Whenever a relationship is created, the relationship summary (rel_sum) must be updated in both people's records
-  def create_peoples_rel_sum
-    if (self.is_approved == true)
-      # update people rel sum
-      person1_index_in = self.person1_index
-      person2_index_in = self.person2_index
-      max_certainty_in = self.original_certainty
-      start_date_in = self.start_year
-      end_date_in = self.end_year
-      id_in = self.id
-
-      new_rel_record = []
-      new_rel_record.push(person2_index)
-      new_rel_record.push(max_certainty)
-      new_rel_record.push(id_in)
-      new_rel_record.push(start_date_in)
-      new_rel_record.push(end_date_in)
-      person1_current_rel_sum = Person.find(person1_index_in).rel_sum
-      person1_current_rel_sum.push(new_rel_record)
-      Person.update(person1_index, rel_sum: person1_current_rel_sum)
-
-      new_rel_record[0] = person1_index
-      person2_current_rel_sum = Person.find(person2_index_in).rel_sum
-      person2_current_rel_sum.push(new_rel_record)
-      Person.update(person2_index, rel_sum: person2_current_rel_sum)
-    end
-  end
-
-  # Whenever a relationship is updated, the relationship summary (rel_sum) must be updated in both people's records
-  def update_peoples_rel_sum
-    #only update the approved and edit status if it is not a system callback
-    #a system callback can be detected because it's self.approved_by is 0 or nil
-    if (self.approved_by.to_i != 0)
-      # update people_rel_sum
-      person1_index_in = self.person1_index
-      person2_index_in = self.person2_index
-      max_certainty_in = self.max_certainty
-      start_date_in = self.start_year
-      end_date_in = self.end_year
-      id_in = self.id
-
-      # For person1, find the existing rel_sum record and update it
-      person1_current_rel_sum = Person.find(person1_index_in).rel_sum
-      # Checks to see if the original rel_sum record existed
-      person1_updated_flag = false
-      person1_current_rel_sum.each_with_index do |rel_record_1, i|
-        #if the rel_sum record exists, then check if approved
-        if rel_record_1[0] == person2_index_in
-          if self.is_approved == true     
-            # if approved update record
-            rel_record_1[1] = max_certainty_in
-            rel_record_1[2] = id_in
-            rel_record_1[3] = start_date_in
-            rel_record_1[4] = end_date_in
-            person1_updated_flag = true
-          else
-            # if not approved delete the rel_sum record
-            person1_current_rel_sum.delete_at(i)
-            person1_updated_flag = true
-          end
-        end
-      end
-
-      # if the original rel_sum record didn't exist, then make it
-      if person1_updated_flag == false
-        if self.is_approved == true
-          new_rel_record = []
-          new_rel_record.push(person2_index_in)
-          new_rel_record.push(max_certainty_in)
-          new_rel_record.push(id_in)
-          new_rel_record.push(start_date_in)
-          new_rel_record.push(end_date_in)
-          person1_current_rel_sum.push(new_rel_record)
-        end
-      end
-      Person.update(person1_index, rel_sum: person1_current_rel_sum)
-
-      # For person2, find the existing rel_sum record and update it
-      person2_current_rel_sum = Person.find(person2_index_in).rel_sum
-
-      # Checks to see if the original rel_sum record existed
-      person2_updated_flag = false
-      person2_current_rel_sum.each_with_index do |rel_record_2, i|
-        if rel_record_2[0] == person1_index_in
-          if self.is_approved == true  
-            rel_record_2[1] = max_certainty_in
-            rel_record_2[2] = id_in
-            rel_record_2[3] = start_date_in
-            rel_record_2[4] = end_date_in
-            person2_updated_flag = true
-          else
-            # delete the record
-            person2_current_rel_sum.delete_at(i)
-            person2_updated_flag = true
-          end
-        end
-      end
-
-      # if the original rel_sum record didn't exist, them make it
-      if person2_updated_flag == false
-        if self.is_approved == true
-          new_rel_record = []
-          new_rel_record.push(person1_index_in)
-          new_rel_record.push(max_certainty_in)
-          new_rel_record.push(id_in)
-          new_rel_record.push(start_date_in)
-          new_rel_record.push(end_date_in)
-          person2_current_rel_sum.push(new_rel_record)
-        end
-      end
-      Person.update(person2_index, rel_sum: person2_current_rel_sum)
-    end
-  end
 end

@@ -50,9 +50,9 @@ class UserRelContrib < ActiveRecord::Base
   # ----------------------------- 
   before_save :create_start_and_end_date
   before_save { remove_trailing_spaces(:annotation, :bibliography)}
-  after_save :update_type_list_max_certainty_on_rel
+  after_save :update_max_certainty
   after_create :set_approval_metadata
-  after_destroy :type_list_max_cert_on_rel_on_destroy
+  after_destroy :update_max_certainty
 
   # Custom Methods
   # -----------------------------
@@ -138,9 +138,10 @@ class UserRelContrib < ActiveRecord::Base
   end
 
 
-  # update the relationship type list and the maximum certainty 
-  # when the relationship type assignment is destroyed
-  def type_list_max_cert_on_rel_on_destroy
+
+
+  # update the maximum certainty
+  def update_max_certainty
     if self.is_locked != true
       # find averages by relationship type
       averages_by_rel_type = UserRelContrib.all_approved.all_averages_for_relationship(self.relationship_id)
@@ -154,74 +155,6 @@ class UserRelContrib < ActiveRecord::Base
         
         # update the relationships certainty list and max certainty
         Relationship.update(self.relationship_id, max_certainty: new_max_certainty)
-        
-        # update the max certainty of the relationship in the people's rel_sum
-        # find the existing rel_sums for person 1 and person 2
-        relationship_record = Relationship.find(self.relationship_id)
-        person1_id = relationship_record.person1_index
-        rel_sum_person_1 = Person.find(person1_id).rel_sum
-
-        person2_id = relationship_record.person2_index
-        rel_sum_person_2 = Person.find(person2_id).rel_sum
-
-        # locate the record for the specific relationship for person 1
-        rel_sum_person_1.each_with_index do |rel, i|
-          # if you find the record then delete it
-          if rel[2] == relationship_record.id
-            rel[1] = new_max_certainty
-          end
-        end
-        Person.update(person1_id, rel_sum: rel_sum_person_1)
-        rel_sum_person_2.each_with_index do |rel, i|
-          # if you find the record then delete it
-          if rel[2] == relationship_record.id
-            rel[1] = new_max_certainty
-          end
-        end
-        Person.update(person2_id, rel_sum: rel_sum_person_2)
-      end
-    end
-  end
-
-
-  # update the relationship type list and the maximum certainty
-  def update_type_list_max_certainty_on_rel
-    if self.is_locked != true
-      # find averages by relationship type
-      averages_by_rel_type = UserRelContrib.all_approved.all_averages_for_relationship(self.relationship_id)
-
-      ###If there are no rel_types that are approved, then do nothing because this is taken care of in the relationship callback
-
-      if ! averages_by_rel_type.nil? 
-
-        # calculate the relationship's maximum certainty
-        new_max_certainty = averages_by_rel_type.map { |e| e.avg_certainty.to_f }.max 
-        
-        # update the relationships certainty list and max certainty
-        Relationship.update(self.relationship_id, max_certainty: new_max_certainty)
-        
-        # update the max certainty of the relationship in the people's rel_sum
-        # find the existing rel_sums for person 1 and person 2
-        relationship_record = Relationship.find(self.relationship_id)
-        person1_id = relationship_record.person1_index
-        rel_sum_person_1 = Person.find(person1_id).rel_sum
-
-        person2_id = relationship_record.person2_index
-        rel_sum_person_2 = Person.find(person2_id).rel_sum
-
-        # locate the record for the specific relationship for person 1
-        rel_sum_person_1.each do |rel|
-          if rel[2] == relationship_record.id
-            rel[1] = new_max_certainty
-          end
-        end
-        Person.update(person1_id, rel_sum: rel_sum_person_1)
-        rel_sum_person_2.each do |rel|
-          if rel[2] == relationship_record.id
-            rel[1] = new_max_certainty
-          end
-        end
-        Person.update(person2_id, rel_sum: rel_sum_person_2)
       end
     end
   end

@@ -7,7 +7,6 @@ class Person < ActiveRecord::Base
   include WhitespaceStripper
   include Approvable
 
-  # TODO: Figure out if :group_list is actually used anywhere.
   # TODO: Figure out how many of these actually need to be writable.
 
   attr_accessible :odnb_id, 
@@ -15,16 +14,8 @@ class Person < ActiveRecord::Base
                   :historical_significance, :justification,  :gender,                
                   :birth_year_type, :ext_birth_year, :alt_birth_year,       
                   :death_year_type, :ext_death_year, :alt_death_year,
-                  :rel_sum, :group_list, :bibliography,
+                  :bibliography,
                   :created_by, :created_at
-
-  serialize :rel_sum,    Array
-  serialize :group_list, Array
-
-  # rel_sum is the relationship summary that is updated whenever a relationship 
-  # is created or updated. rel_sum includes the person the indvidual has a 
-  # relationship with, the updated max certainty, whether it has been approved, 
-  # and the relationship id
 
   # Relationships
   # -----------------------------
@@ -71,7 +62,6 @@ class Person < ActiveRecord::Base
 
   # Callbacks
   # ----------------------------- 
-  before_create  :init_rel_sum_and_group_list
   before_create  :populate_search_names
   before_save    :check_birth_death_years
   before_save    :add_display_name_if_blank
@@ -264,11 +254,6 @@ class Person < ActiveRecord::Base
     self.search_names_all = search_names_all_input
   end
 
-  #-----------------------------------------------------------------------------
-  def init_rel_sum_and_group_list
-    self.rel_sum = nil
-    self.group_list = nil
-  end
 
   #-----------------------------------------------------------------------------
   def get_person_name

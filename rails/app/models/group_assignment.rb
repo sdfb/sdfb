@@ -42,21 +42,10 @@ class GroupAssignment < ActiveRecord::Base
   before_create     :check_if_already_exists
   before_update     :check_if_duplicate
   before_validation :sanitize_dates
-  after_save        :create_group_person_list
-  after_destroy     :create_group_person_list
+
 
   # Custom Methods
   # -----------------------------
-
-  def create_group_person_list
-    if (self.is_approved == true)
-      #adds the group to the person
-        #find all approved group_assignments for that person
-        #map by group name
-        updated_person_groups_list = GroupAssignment.all_approved.all_for_person(self.person_id).map{|ga| Group.find(ga.group_id).name }
-        Person.update(self.person_id, group_list: updated_person_groups_list)
-    end
-  end
 
   def start_year_present?
     ! self.start_year.nil?

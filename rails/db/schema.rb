@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171111192109) do
+ActiveRecord::Schema.define(version: 20171111195532) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -93,7 +93,6 @@ ActiveRecord::Schema.define(version: 20171111192109) do
     t.string   "last_name",               limit: 255
     t.integer  "created_by"
     t.text     "historical_significance"
-    t.text     "rel_sum",                             default: "--- []\n"
     t.string   "prefix",                  limit: 255
     t.string   "suffix",                  limit: 255
     t.string   "title",                   limit: 255
@@ -109,11 +108,10 @@ ActiveRecord::Schema.define(version: 20171111192109) do
     t.datetime "approved_on"
     t.integer  "odnb_id"
     t.boolean  "is_approved",                         default: false
-    t.text     "group_list",                          default: "--- []\n"
     t.boolean  "is_active",                           default: true
     t.boolean  "is_rejected",                         default: false
-    t.datetime "created_at",                                               null: false
-    t.datetime "updated_at",                                               null: false
+    t.datetime "created_at",                                          null: false
+    t.datetime "updated_at",                                          null: false
     t.string   "display_name",            limit: 255
     t.text     "search_names_all"
     t.text     "bibliography"
