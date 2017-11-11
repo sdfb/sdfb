@@ -4,7 +4,6 @@ Given(/^there is unapproved relationship of type "([^"]*)"$/) do |rel_type_name|
   UserRelContrib.where(
     relationship_id:       @relationship.id,
     relationship_type_id:  RelationshipType.where(name: rel_type_name).first.id,
-    annotation:            "Somebody was very, very hungry.",
     certainty:             100,
     is_approved:           false,
     created_by:            @sdfbadmin.id

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171111195532) do
+ActiveRecord::Schema.define(version: 20171111201026) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -35,7 +35,6 @@ ActiveRecord::Schema.define(version: 20171111195532) do
     t.datetime "updated_at",                                  null: false
     t.string   "start_date_type", limit: 255
     t.string   "end_date_type",   limit: 255
-    t.text     "annotation"
     t.text     "bibliography"
   end
 
@@ -50,7 +49,6 @@ ActiveRecord::Schema.define(version: 20171111195532) do
     t.boolean  "is_rejected",                   default: false
     t.datetime "created_at",                                    null: false
     t.datetime "updated_at",                                    null: false
-    t.text     "annotation"
     t.text     "bibliography"
   end
 
@@ -65,7 +63,6 @@ ActiveRecord::Schema.define(version: 20171111195532) do
     t.boolean  "is_rejected",              default: false
     t.datetime "created_at",                               null: false
     t.datetime "updated_at",                               null: false
-    t.text     "annotation"
     t.text     "bibliography"
   end
 
@@ -129,7 +126,6 @@ ActiveRecord::Schema.define(version: 20171111195532) do
     t.boolean  "is_rejected",                          default: false
     t.datetime "created_at",                                           null: false
     t.datetime "updated_at",                                           null: false
-    t.text     "annotation"
     t.text     "bibliography"
   end
 
@@ -144,7 +140,6 @@ ActiveRecord::Schema.define(version: 20171111195532) do
     t.boolean  "is_rejected",              default: false
     t.datetime "created_at",                               null: false
     t.datetime "updated_at",                               null: false
-    t.text     "annotation"
     t.text     "bibliography"
   end
 
@@ -160,7 +155,6 @@ ActiveRecord::Schema.define(version: 20171111195532) do
     t.boolean  "is_rejected",                           default: false
     t.datetime "created_at",                                            null: false
     t.datetime "updated_at",                                            null: false
-    t.text     "annotation"
     t.text     "bibliography"
   end
 
@@ -195,7 +189,6 @@ ActiveRecord::Schema.define(version: 20171111195532) do
   create_table "user_group_contribs", force: :cascade do |t|
     t.integer  "group_id"
     t.integer  "created_by"
-    t.text     "annotation"
     t.text     "bibliography"
     t.integer  "approved_by"
     t.datetime "approved_on"
@@ -209,7 +202,6 @@ ActiveRecord::Schema.define(version: 20171111195532) do
   create_table "user_person_contribs", force: :cascade do |t|
     t.integer  "person_id"
     t.integer  "created_by"
-    t.text     "annotation"
     t.text     "bibliography"
     t.integer  "approved_by"
     t.date     "approved_on"
@@ -224,7 +216,6 @@ ActiveRecord::Schema.define(version: 20171111195532) do
     t.integer  "relationship_id"
     t.integer  "created_by"
     t.integer  "certainty"
-    t.text     "annotation"
     t.text     "bibliography"
     t.integer  "relationship_type_id"
     t.integer  "start_year"

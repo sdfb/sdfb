@@ -5,7 +5,7 @@ class UserGroupContrib < ActiveRecord::Base
   include WhitespaceStripper
   include Approvable
 
-  attr_accessible :annotation, :bibliography, :group_id, :created_by, :created_at
+  attr_accessible :bibliography, :group_id, :created_by, :created_at
 
   # Relationships
   # -----------------------------
@@ -16,8 +16,6 @@ class UserGroupContrib < ActiveRecord::Base
   # -----------------------------
   validates_presence_of :created_by
   validates_presence_of :group_id
-  validates_presence_of :annotation
-  validates_length_of   :annotation,   :minimum => 10
   validates_length_of   :bibliography, :minimum => 10, allow_blank: true
 
   # Scope
@@ -29,6 +27,6 @@ class UserGroupContrib < ActiveRecord::Base
 
   # Callbacks
   # ----------------------------- 
-  before_save { remove_trailing_spaces(:annotation, :bibliography)}
+  before_save { remove_trailing_spaces(:bibliography)}
 
 end

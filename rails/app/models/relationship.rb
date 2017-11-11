@@ -62,7 +62,6 @@ class Relationship < ActiveRecord::Base
                                    is_locked: true,
                                    relationship_type_id: 4,
                                    created_by: 3,
-                                   annotation: "This record was automatically generated when the relationship was created.",
                                    certainty: self.original_certainty
                               )
 
@@ -233,7 +232,6 @@ class Relationship < ActiveRecord::Base
           u.relationship_type_id = 4
           u.certainty = self.original_certainty
           u.created_by = 3
-          u.annotation = "This record was automatically generated when the relationship was created."
           u.approved_by = 3
           u.approved_on = Time.now
           u.save!

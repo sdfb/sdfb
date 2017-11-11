@@ -4,7 +4,7 @@ class UserPersonContrib < ActiveRecord::Base
   include WhitespaceStripper
   include Approvable
 
-  attr_accessible :annotation, :bibliography, :created_by, :person_id, :created_at
+  attr_accessible :bibliography, :created_by, :person_id, :created_at
 
   # Relationships
   # -----------------------------
@@ -15,8 +15,6 @@ class UserPersonContrib < ActiveRecord::Base
   # -----------------------------
   validates_presence_of :created_by
   validates_presence_of :person_id
-  validates_presence_of :annotation
-  validates_length_of   :annotation, :minimum => 10
   validates_length_of   :bibliography, :minimum => 10, allow_blank: true
 
   # Scope
@@ -28,6 +26,6 @@ class UserPersonContrib < ActiveRecord::Base
 
   # Callbacks
   # ----------------------------- 
-  before_save { remove_trailing_spaces(:annotation, :bibliography) }
+  before_save { remove_trailing_spaces(:bibliography) }
 
 end

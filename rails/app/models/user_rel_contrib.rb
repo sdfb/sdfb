@@ -8,7 +8,7 @@ class UserRelContrib < ActiveRecord::Base
   :created_by, :created_at, :is_locked,
   :start_year, :start_month, :start_day, :start_date_type,
   :end_year, :end_month, :end_day, :end_date_type,
-  :annotation, :bibliography, :certainty
+ :bibliography, :certainty
 
   # Relationships
   # -----------------------------
@@ -49,7 +49,7 @@ class UserRelContrib < ActiveRecord::Base
   # Callbacks
   # ----------------------------- 
   before_save :create_start_and_end_date
-  before_save { remove_trailing_spaces(:annotation, :bibliography)}
+  before_save { remove_trailing_spaces(:bibliography)}
   after_save :update_max_certainty
   after_create :set_approval_metadata
   after_destroy :update_max_certainty
