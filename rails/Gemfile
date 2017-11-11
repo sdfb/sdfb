@@ -1,5 +1,5 @@
 source 'https://rubygems.org'
-ruby '2.3.5'
+ruby '2.4.2'
 
 # Native Rails gems — (These are required).
 gem 'rails', '4.2.10'
@@ -18,11 +18,10 @@ gem 'puma'
 gem 'newrelic_rpm'
 gem 'rails_12factor'
 gem 'rack-cors'
+gem "passenger", ">= 5.0.25", require: "phusion_passenger/rack_handler"
 
 # Presentation Helper Libraries
-gem 'will_paginate'
 gem 'sass-rails'
-gem 'simple_form'
 
 # Front-end helpers
 gem 'jquery-rails'
@@ -37,14 +36,9 @@ gem "jbuilder"
 gem "yajl-ruby"
 
 # Backend Helpers
-gem 'cancan'
 gem "carrierwave"
 gem 'bcrypt', :require => "bcrypt"
 gem 'nokogiri'
-
-# Passenger
-gem "passenger", ">= 5.0.25", require: "phusion_passenger/rack_handler"
-
 
 group :production do
   gem 'rack-timeout'
