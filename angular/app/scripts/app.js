@@ -151,6 +151,8 @@ redesign2017App.config(function($stateProvider, $locationProvider, $compileProvi
               $scope.close = function() {
                 $scope.$close();
               };
+
+              $scope.user_download = 'data:attachment/json;charset=utf-8,' +  encodeURIComponent(JSON.stringify($scope.user, null, 2));
             }]
         }).result.finally(function() {
             $state.go('^');

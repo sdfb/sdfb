@@ -1666,28 +1666,9 @@ people-finder {
 
 /*User information*/
 
-.user-info {
-  height: 45vh;
-
-  div {
-    font-size: 12px;
-  }
-
-  a {
-    font-size: 10px;
-  }
-}
-
-.user-contributions {
-  overflow-y: scroll;
-  height: 18vh;
-  background-color: $panels-bg;
-  border: 1px solid $panels-stroke;
-  border-radius: 4px;
-  padding: 5px;
-
-  div {
-    font-size: 10px;
+.user {
+  .btn {
+    margin-bottom: 15px;
   }
 }
 /*MEDIA QUERIES*/

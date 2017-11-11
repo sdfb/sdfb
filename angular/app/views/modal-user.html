@@ -1,33 +1,22 @@
 <!-- <div class="modal-header">
     <h3 class="modal-title" id="modal-title">List of Minor Groups</h3>
 </div> -->
-<div class="modal-body curate" id="modal-curate-body">
-    <h3 class="modal-title">Curate Recent Submissions</h3>
+<div class="modal-body user" id="modal-user-body">
+    <h3 class="modal-title">User Information</h3>
     <i class="fa fa-times close-btn" aria-hidden="true" type="button" ng-click="dismiss()" aria-label="Close"></i>
-    <!-- <div>You've made {{$root.user.points}} contributions!</div>
-    <div class="user-contributions">
-      <h5>People</h5>
-      <div ng-repeat="person in $root.user.contributions.people">
-        <a ui-sref="home.visualization({ ids: person.id })">{{person.name}}</a>
-      </div>
-      <h5>Relationships</h5>
-      <div ng-repeat="rel in $root.user.contributions.relationships">
-        {{rel.people}}
-      </div>
-      <h5>Relationship Type Assignments</h5>
-      <div ng-repeat="relType in $root.user.contributions.relationship_types">
-        {{relType.people}}: {{relType.type}}
-      </div>
-      <h5>Groups</h5>
-      <div ng-repeat="group in $root.user.contributions.groups">
-        <a ui-sref="home.visualization({ ids: group.id })">{{group.name}}</a>
-      </div>
-      <h5>Group Assignments</h5>
-      <div ng-repeat="groupAssign in $root.user.contributions.group_assignments">
-        {{groupAssign.person_name}} in {{groupAssign.group_name}}
-      </div>
-    </div> -->
-    <h4 class="modal-title">New People</h4>
+    <div class="panel collapsable">
+      <div>{{user.first_name}} {{user.last_name}}</div>
+      <div>Username: {{user.username}}</div>
+      <div>User ID: {{user.id}}</div>
+      <div>User Type: {{user.user_type}}</div>
+      <div>Affiliation: {{user.affiliation}}</div>
+      <div>ORCID: {{user.orcid}}</div>
+      <div>Email: {{user.email}}</div>
+      <a>edit profile</a>
+    </div>
+    <a type="button" class="btn btn-primary" target="_blank" download="{{user.username}}.json" ng-href="{{user_download}}">Export all user info <i class="fa fa-download" aria-hidden="true"></i></a>
+    <h3>You've made {{user.points}} contributions:</h3>
+    <h4 class="modal-title">People</h4>
     <table class="table table-hover">
         <tbody>
             <tr class="person {{'p'+person.id}}" ng-class="{ 'active': group.active }" ng-repeat="person in user.contributions.people">
@@ -35,7 +24,7 @@
             </tr>
         </tbody>
     </table>
-    <h4 class="modal-title">New Relationships</h4>
+    <h4 class="modal-title">Relationships</h4>
     <table class="table table-hover">
         <tbody>
             <tr class="rel {{'r'+rel.id}}" ng-class="{ 'active': group.active }" ng-repeat="rel in user.contributions.relationships">
@@ -43,7 +32,7 @@
             </tr>
         </tbody>
     </table>
-    <h4 class="modal-title">New Relationship Types</h4>
+    <h4 class="modal-title">Relationship Types</h4>
     <table class="table table-hover">
         <thead>
             <tr>
@@ -58,7 +47,7 @@
             </tr>
         </tbody>
     </table>
-    <h4 class="modal-title">New Groups</h4>
+    <h4 class="modal-title">Groups</h4>
     <table class="table table-hover">
         <tbody>
             <tr class="group {{'g'+group.id}}" ng-class="{ 'active': group.active }" ng-repeat="group in user.contributions.groups">
@@ -66,7 +55,7 @@
             </tr>
         </tbody>
     </table>
-    <h4 class="modal-title">New Group Assignments</h4>
+    <h4 class="modal-title">Group Assignments</h4>
     <table class="table table-hover">
         <thead>
             <tr>
