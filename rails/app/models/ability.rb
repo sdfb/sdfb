@@ -13,24 +13,23 @@ class Ability
 			can :manage, :all
 		elsif (user.user_type == "Curator")
 			# Curators can create users, groups, group assignments, people, relationships, user group contributions, user person contributions, user relationship contributions, group category assignments
-			can :create, [Group, GroupAssignment,  Relationship,  GroupCatAssign, GroupCategory]
+			can :create, [Group,  Relationship,  GroupCatAssign, GroupCategory]
 
 			# Curators can view all elements regardless of whether they are approved
 			can :show, :all
 			
 			# Curators can edit everything except other users.
 			# Curators can edit and approve groups, relationships, people, and group assignments, user group contributions, user person contributions, and user relationship contributions, group category assignments
-			can [:edit, :update], [Group, GroupAssignment,  Relationship,   GroupCatAssign, RelCatAssign]
+			can [:edit, :update], [Group, Relationship,   GroupCatAssign, RelCatAssign]
 
 			# Curators can only edit their own information
 			can [:edit, :update], User do |x|  
 				x.id == user.id
 			end
 
-			can :destroy, [ GroupAssignment]
 
 			# Curators can list all groups, people, and relationships
-			can :index, [Group, GroupAssignment,  Relationship,   GroupCatAssign, RelCatAssign]
+			can :index, [Group, Relationship,   GroupCatAssign, RelCatAssign]
 
 			# A user can view search results
 			can :search, Group
@@ -40,21 +39,15 @@ class Ability
 			
 		elsif (user.user_type == "Standard") 
 			#  A user can create users, groups, group assignments, people, relationships, user group contributions, user person contributions, and user relationship contributions
-			can [:new, :create], [Group, GroupAssignment,  Relationship, ]
+			can [:new, :create], [Group, Relationship, ]
 
 			# A user can view all elements that are approved
-			can :show, [Group, GroupAssignment,  Relationship,   RelationshipCategory, GroupCategory, RelCatAssign, GroupCatAssign], :is_approved => true
+			can :show, [Group, Relationship,   RelationshipCategory, GroupCategory, RelCatAssign, GroupCatAssign], :is_approved => true
 			
 			# A user can see the group that they created even if it was not approved
 			can :show, Group do |x|
 				x.created_by == user.id 
 			end
-
-			# A user can see the GroupAssignment that they created even if it was not approved
-			can :show, GroupAssignment do |x|
-				x.created_by == user.id 
-			end
-
 
 			# A user can see the Relationship that they created even if it was not approved
 			can :show, Relationship do |x|

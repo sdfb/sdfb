@@ -25,5 +25,4 @@ Sdfb::Application.routes.draw do
   resources :group_categories
   resources :relationships
   resources :groups
-  resources :group_assignments
 end
