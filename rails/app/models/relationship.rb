@@ -45,6 +45,7 @@ class Relationship < ActiveRecord::Base
 	# Custom Methods
   # -----------------------------
 
+  # TODO:  This is one of the biggest performance bottlenecks.  Can it be cached or saved? 
   def altered
     was_altered = (created_by && created_by != 2) || user_rel_contribs.where("created_by != ?",3).count > 0
   end

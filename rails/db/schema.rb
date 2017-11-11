@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171111201026) do
+ActiveRecord::Schema.define(version: 20171111215046) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -37,6 +37,9 @@ ActiveRecord::Schema.define(version: 20171111201026) do
     t.string   "end_date_type",   limit: 255
     t.text     "bibliography"
   end
+
+  add_index "group_assignments", ["group_id"], name: "index_group_assignments_on_group_id", using: :btree
+  add_index "group_assignments", ["person_id"], name: "index_group_assignments_on_person_id", using: :btree
 
   create_table "group_cat_assigns", force: :cascade do |t|
     t.integer  "group_id"
