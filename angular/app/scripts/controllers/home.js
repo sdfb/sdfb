@@ -73,7 +73,7 @@ angular.module('redesign2017App').component('home', {
         }
       });
       modalInstance.result.then(function(result) {
-        console.log(result);
+        console.log(JSON.stringify(result));
         apiService.writeData(result);
       }, function() {
         $log.info('Modal dismissed at: ' + new Date());

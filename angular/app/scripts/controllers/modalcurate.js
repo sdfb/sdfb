@@ -77,9 +77,9 @@ angular.module('redesign2017App')
           $ctrl.addToDB.nodes.push(newPerson);
         }
       });
-      // $ctrl.addToDB.links = $ctrl.relationships;
-      // $ctrl.addToDB.groups = $ctrl.groups;
-      // $ctrl.addToDB.group_assignments = $ctrl.group_assignments;
+      $ctrl.addToDB.links = [];
+      $ctrl.addToDB.group = [];
+      $ctrl.addToDB.group_assignments = [];
       $ctrl.addToDB.auth_token = $rootScope.user.auth_token;
       $uibModalInstance.close($ctrl.addToDB);
     }
