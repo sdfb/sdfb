@@ -17,8 +17,6 @@ angular.module('redesign2017App')
           width = 300,
           height = 30;
 
-        console.log(height);
-
         var x = d3.scaleLinear()
           .rangeRound([0, width])
           .domain([0, 100]);
@@ -36,7 +34,7 @@ angular.module('redesign2017App')
             if (scope.user.points >= 100) {
               scope.endpoint = 100;
             } else {
-              scope.endpoint = 100 - points;
+              scope.endpoint = scope.user.points;
             }
 
             svg.selectAll('*').remove();
