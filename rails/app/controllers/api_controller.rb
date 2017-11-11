@@ -237,12 +237,13 @@ class ApiController < ApplicationController
 
     if group_assignments = params[:group_assignments]
       group_assignments.each do |assignment|
-        person_id = assignment["person"]["id"].to_i
-        group_id  = assignment["group"]["id"].to_i
-        person_id = person_lookup[person_id] if person_id < 1_000_000
-        group_id  = group_lookup[group_id]   if group_id  < 0
+      
+        person_id = assignment.dig("person","id")
+        group_id  = assignment.dig("group","id")
+        person_id = person_lookup[person_id] if person_id && person_id.to_i < 1_000_000
+        group_id  = group_lookup[group_id]   if group_id && group_id.to_i  < 0
        
-        update_dates(Group.find(group_id),assignment)
+        update_dates(Group.find(group_id),assignment) if group_id
 
         new_record = {
           person_id: person_id,
