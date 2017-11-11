@@ -189,7 +189,7 @@ class ApiController < ApplicationController
           new_record.reject! {|_,v| v.nil?}
           Group.find(group["id"]).update!(new_record)
         else
-          group[:created_by] = current_user.id
+        new_record[:created_by] = current_user.id
           new_group = Group.create!(new_record)
           group_lookup[placeholder_id] = new_group.id
         end
