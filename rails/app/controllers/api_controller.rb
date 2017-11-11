@@ -13,7 +13,7 @@ class ApiController < ApplicationController
       @groups = Group.all_unapproved.limit(size).offset(offset)
       render "groups"    
     when "group_assignments"
-      @assignments = GroupAssignment.limit(size).offset(offset)
+      @assignments = GroupAssignment.all_unapproved.limit(size).offset(offset)
       person_ids = @assignments.collect{|l| l.person_id}.uniq
       group_ids = @assignments.collect{|l| l.group_id}.uniq
       @people = Person.find(person_ids)
