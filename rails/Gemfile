@@ -14,31 +14,17 @@ gem 'protected_attributes'
 gem 'pg', '0.18.4'
 
 # Webserver Gems
-gem 'puma'
 gem 'newrelic_rpm'
 gem 'rails_12factor'
 gem 'rack-cors'
 gem "passenger", ">= 5.0.25", require: "phusion_passenger/rack_handler"
-
-# Presentation Helper Libraries
-gem 'sass-rails'
-
-# Front-end helpers
-gem 'jquery-rails'
-gem 'therubyracer', :platforms => :ruby
-gem 'uglifier', '>= 1.0.3'
-gem 'rails3-jquery-autocomplete'
-gem 'jquery-turbolinks'
-gem "twitter-bootstrap-rails", '2.1.7'
 
 # API helpers
 gem "jbuilder"
 gem "yajl-ruby"
 
 # Backend Helpers
-gem "carrierwave"
 gem 'bcrypt', :require => "bcrypt"
-gem 'nokogiri'
 
 group :production do
   gem 'rack-timeout'
@@ -47,16 +33,11 @@ end
 group :development do
   gem 'binding_of_caller'
   gem 'better_errors'
-  gem 'foreman'
   gem "brakeman", :require => false
 end
 
 group :test do
-  gem 'cucumber-rails', require: false
   gem 'rspec'
-  gem 'database_cleaner'
-  gem 'cucumber-api', require: false
-  gem "json-schema"
 end
 
 group :development, :test do

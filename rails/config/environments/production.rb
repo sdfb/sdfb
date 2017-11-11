@@ -6,8 +6,6 @@ Sdfb::Application.configure do
   # since you don't have to restart the web server when you make code changes.
 
   config.eager_load = true 
-  config.assets.js_compressor = :uglifier
-  config.assets.css_compressor = :sass
 
 
   config.cache_classes = false
@@ -37,7 +35,6 @@ Sdfb::Application.configure do
 
   # Do compress assets
   config.assets.enabled = true
-  config.assets.js_compressor = :uglifier
   config.assets.compress = true
   config.serve_static_files = true
   config.serve_static_files = true

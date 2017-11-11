@@ -1,5 +1,4 @@
 class RelationshipCategory < ActiveRecord::Base
-
   
   include Approvable
 
