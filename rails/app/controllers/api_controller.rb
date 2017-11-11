@@ -137,11 +137,17 @@ class ApiController < ApplicationController
           node["death_year_type"] = node["deathDateType"]
           node.delete("deathDateType")
         end
-        unless ["Admin", "Curator"].include?(current_user.user_type)
+        if ["Admin", "Curator"].include?(current_user.user_type)
+          if node.keys.include?("is_approved")
+            node["approved_by"] = current_user.id if node["is_approved"]
+          end
+        else
           node.delete("is_approved")
           node.delete("is_active")
         end
         node.delete("created_by")
+
+
 
         if node["id"]
           node.delete("id")
@@ -149,7 +155,6 @@ class ApiController < ApplicationController
         else
           node["created_by"] = current_user.id
           new_person = Person.create!(node)
-          puts new_person.inspect
           person_lookup[placeholder_id] = new_person.id
         end
       end
@@ -173,12 +178,16 @@ class ApiController < ApplicationController
           bibliography: group["citation"]
         }
         if ["Admin", "Curator"].include?(current_user.user_type)
-          new_record["is_approved"] = group["is_approved"] if group["is_approved"]
-          new_record["is_active"]   = group["is_active"]   if group["is_active"]
+          if group.keys.include?("is_approved")
+            new_record[:is_approved] = group["is_approved"]
+            new_record[:approved_by] = current_user.id if group["is_approved"]
+          end
+          new_record[:is_active]   = group["is_active"]   if group["is_active"]
         end
     
         if group["id"]
-          Group.find(group["id"]).update(new_record)
+          new_record.reject! {|_,v| v.nil?}
+          Group.find(group["id"]).update!(new_record)
         else
           group[:created_by] = current_user.id
           new_group = Group.create!(new_record)
@@ -186,8 +195,6 @@ class ApiController < ApplicationController
         end
       end
     end
-
- 
 
     if links = params[:links]
       links.each do |link|
@@ -247,11 +254,15 @@ class ApiController < ApplicationController
           bibliography: assignment["citation"]
         }
         if ["Admin", "Curator"].include?(current_user.user_type)
-          new_record["is_approved"] = assignment["is_approved"] if assignment["is_approved"]
-          new_record["is_active"]   = assignment["is_active"]   if assignment["is_active"]
+          if assignment.keys.include?("is_approved")
+            new_record[:is_approved] = assignment["is_approved"]
+            new_record[:approved_by] = current_user.id if assignment["is_approved"]
+          end
+          new_record["is_active"] = assignment["is_active"]   if assignment["is_active"]
         end
         if assignment["id"]
-          GroupAssignment.find(assignment["id"]).update(new_record)
+          new_record.reject! {|_,v| v.nil?}
+          GroupAssignment.find(assignment["id"]).update!(new_record)
         else
           new_record[:created_by] = current_user.id
           GroupAssignment.create!(new_record)
