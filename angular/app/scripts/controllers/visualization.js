@@ -22,6 +22,7 @@ angular.module('redesign2017App').component('visualization', {
           dateMax:1700,
           confidenceMin:60,
           confidenceMax:100,
+          layout: 'individual-force',
           login: {
             status: true,
             user: 'Elizabeth',

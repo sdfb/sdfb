@@ -9,8 +9,8 @@ $strokeDanger: red;
 $mainTextColor: #434055;
 $panels-bg: #E6EAF0;
 $panels-stroke: #AEB1B5;
-$highlight-color: #F7F35D;
-$active-color: #DDD95F;
+$highlight-color: #4CF49D;
+$active-color: #40CC83;
 $highlight-stroke: #C2BF5B;
 $panels-bg-secondary: #C6CACF;
 $light-color: white;
@@ -1080,7 +1080,7 @@ label.btn-primary:first-of-type {
 }
 
 .filters.collapsed {
-  border-color: #29d;
+  border-color: $active-color;
   // border-width: 2px;
 }
 /* form styles*/
