@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171110223740) do
+ActiveRecord::Schema.define(version: 20171111192109) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -28,7 +28,7 @@ ActiveRecord::Schema.define(version: 20171110223740) do
     t.integer  "end_day"
     t.integer  "approved_by"
     t.datetime "approved_on"
-    t.boolean  "is_approved"
+    t.boolean  "is_approved",                 default: false
     t.boolean  "is_active",                   default: true
     t.boolean  "is_rejected",                 default: false
     t.datetime "created_at",                                  null: false
@@ -79,11 +79,10 @@ ActiveRecord::Schema.define(version: 20171110223740) do
     t.string   "approved_by",     limit: 255
     t.string   "approved_on",     limit: 255
     t.boolean  "is_approved",                 default: false
-    t.text     "person_list",                 default: "--- []\n"
     t.boolean  "is_active",                   default: true
     t.boolean  "is_rejected",                 default: false
-    t.datetime "created_at",                                       null: false
-    t.datetime "updated_at",                                       null: false
+    t.datetime "created_at",                                  null: false
+    t.datetime "updated_at",                                  null: false
     t.string   "start_date_type", limit: 255
     t.string   "end_date_type",   limit: 255
     t.text     "bibliography"
@@ -174,24 +173,21 @@ ActiveRecord::Schema.define(version: 20171110223740) do
     t.integer  "created_by"
     t.integer  "max_certainty"
     t.integer  "start_year"
-    t.string   "start_month",              limit: 255
+    t.string   "start_month",        limit: 255
     t.integer  "start_day"
     t.integer  "end_year"
-    t.string   "end_month",                limit: 255
+    t.string   "end_month",          limit: 255
     t.integer  "end_day"
     t.text     "justification"
     t.integer  "approved_by"
     t.datetime "approved_on"
-    t.text     "types_list",                           default: "--- []\n"
-    t.integer  "edge_birthdate_certainty"
-    t.boolean  "is_approved",                          default: false
-    t.boolean  "is_active",                            default: true
-    t.boolean  "is_rejected",                          default: false
-    t.datetime "created_at",                                                null: false
-    t.datetime "updated_at",                                                null: false
-    t.string   "start_date_type",          limit: 255
-    t.string   "end_date_type",            limit: 255
-    t.text     "type_certainty_list",                  default: "--- []\n"
+    t.boolean  "is_approved",                    default: false
+    t.boolean  "is_active",                      default: true
+    t.boolean  "is_rejected",                    default: false
+    t.datetime "created_at",                                     null: false
+    t.datetime "updated_at",                                     null: false
+    t.string   "start_date_type",    limit: 255
+    t.string   "end_date_type",      limit: 255
     t.text     "bibliography"
   end
 

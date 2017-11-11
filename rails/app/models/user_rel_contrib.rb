@@ -150,15 +150,12 @@ class UserRelContrib < ActiveRecord::Base
       ###If there are no rel_types that are approved, then do nothing because this is taken care of in the relationship callback
 
       if ! averages_by_rel_type.nil? 
-        # update the certainty list with the new array of all averages by relationship type
-        # create the array includes the relationship type id, the average certainty for that relationship type, and the relationship type name
-        averages_by_rel_type_array = averages_by_rel_type.map { |e| [e.relationship_type_id, e.avg_certainty.to_f, RelationshipType.find(e.relationship_type_id).name] }
 
         # calculate the relationship's maximum certainty
         new_max_certainty = averages_by_rel_type.map { |e| e.avg_certainty.to_f }.max 
         
         # update the relationships certainty list and max certainty
-        Relationship.update(self.relationship_id, type_certainty_list: averages_by_rel_type_array, max_certainty: new_max_certainty)
+        Relationship.update(self.relationship_id, max_certainty: new_max_certainty)
         
         # update the max certainty of the relationship in the people's rel_sum
         # find the existing rel_sums for person 1 and person 2
@@ -198,15 +195,12 @@ class UserRelContrib < ActiveRecord::Base
       ###If there are no rel_types that are approved, then do nothing because this is taken care of in the relationship callback
 
       if ! averages_by_rel_type.nil? 
-        # update the certainty list with the new array of all averages by relationship type
-        # create the array includes the relationship type id, the average certainty for that relationship type, and the relationship type name
-        averages_by_rel_type_array = averages_by_rel_type.map { |e| [e.relationship_type_id, e.avg_certainty.to_f, RelationshipType.find(e.relationship_type_id).name] }
 
         # calculate the relationship's maximum certainty
         new_max_certainty = averages_by_rel_type.map { |e| e.avg_certainty.to_f }.max 
         
         # update the relationships certainty list and max certainty
-        Relationship.update(self.relationship_id, type_certainty_list: averages_by_rel_type_array, max_certainty: new_max_certainty)
+        Relationship.update(self.relationship_id, max_certainty: new_max_certainty)
         
         # update the max certainty of the relationship in the people's rel_sum
         # find the existing rel_sums for person 1 and person 2

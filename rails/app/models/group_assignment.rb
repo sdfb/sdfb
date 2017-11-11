@@ -52,16 +52,6 @@ class GroupAssignment < ActiveRecord::Base
 
   def create_group_person_list
     if (self.is_approved == true)
-      #adds the person's id to the Group
-        #find all approved group_assignments for that group
-        #map by first name last name (birth year)
-        updated_group_person_list = GroupAssignment.all_approved.all_for_group(self.group_id).map do |ga| 
-          str  = Person.find(ga.person_id).first_name + " " 
-          str += Person.find(ga.person_id).last_name 
-          str += " (" + Person.find(ga.person_id).ext_birth_year + ")"
-        end
-        Group.update(self.group_id, person_list: updated_group_person_list)
-
       #adds the group to the person
         #find all approved group_assignments for that person
         #map by group name
