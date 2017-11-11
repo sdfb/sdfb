@@ -47,18 +47,7 @@ Sdfb::Application.configure do
   config.assets.debug = false
 
   # Precompile additional assets (application.js, application.css, and all non-JS/CSS are already added)
-  config.assets.precompile += [
-      'components.css',
-      'user_partial.css',
-      'new_form.css',
-      'normalize.css',
-  ]
-  config.assets.precompile += [
-      'script.js',
-      'user_partial.js',
-      'vendor/webflow.js',
-      'vendor/modernizr.js',
-  ]
+
 
   # # Don't fallback to assets pipeline if a precompiled asset is missed
   # config.assets.compile = false
