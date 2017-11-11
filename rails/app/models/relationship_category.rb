@@ -17,6 +17,6 @@ class RelationshipCategory < ActiveRecord::Base
 
   # Scope
   # ----------------------------- 
-  scope :for_user,         -> (user_input) { where('created_by = ?', "#{user_input}") }
+  scope :for_user, -> (user_input) { where('created_by = ?', "#{user_input}") }
 
 end

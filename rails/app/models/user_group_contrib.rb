@@ -1,7 +1,6 @@
 class UserGroupContrib < ActiveRecord::Base
   # this class is known as "Group Notes" to the user
 
-  
   include WhitespaceStripper
   include Approvable
 
@@ -21,9 +20,6 @@ class UserGroupContrib < ActiveRecord::Base
   # Scope
   # ----------------------------- 
   scope :for_user,         -> ( user_input) { where('created_by = ?', "#{user_input}") }
-  scope :all_for_group,    -> (groupID) {
-                                        select('user_group_contribs.*')
-                                        .where('group_id = ?', groupID)}
 
   # Callbacks
   # ----------------------------- 

@@ -5,7 +5,6 @@ class Group < ActiveRecord::Base
   attr_accessible  :description, :name, :justification, :bibliography,
                    :start_year, :end_year, :start_date_type, :end_date_type,
                    :created_by, :created_at
-
   
   # Relationships
   # -----------------------------

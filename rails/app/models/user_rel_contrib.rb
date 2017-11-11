@@ -16,9 +16,6 @@ class UserRelContrib < ActiveRecord::Base
   belongs_to :relationship_type
   belongs_to :user
 
-  # Misc Constants
-  # -----------------------------
-
   # Validations
   # -----------------------------
   validates_presence_of :certainty
@@ -34,17 +31,11 @@ class UserRelContrib < ActiveRecord::Base
   # Scope
   # ----------------------------- 
   scope :for_user, -> (user_input) { where('created_by = ?', "#{user_input}") }
-  scope :all_for_relationship, -> (relID) {
-      select('user_rel_contribs.*')
-      .where('relationship_id = ?', relID)}
-  scope :highest_certainty, -> { order(certainty: :desc) }
   scope :is_locked, -> { where(is_locked: true) } 
-  scope :all_active_unrejected, -> { where(is_active: true, is_rejected: false) }
   scope :all_averages_for_relationship, -> (relID) {
       select(:relationship_type_id, "AVG(certainty) as avg_certainty")
       .where('relationship_id = ?', relID)
       .group('relationship_type_id')}
-
 
   # Callbacks
   # ----------------------------- 
@@ -137,10 +128,8 @@ class UserRelContrib < ActiveRecord::Base
     end
   end
 
-
-
-
   # update the maximum certainty
+  # -----------------------------
   def update_max_certainty
     if self.is_locked != true
       # find averages by relationship type

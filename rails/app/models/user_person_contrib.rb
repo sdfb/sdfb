@@ -20,9 +20,6 @@ class UserPersonContrib < ActiveRecord::Base
   # Scope
   # ----------------------------- 
   scope :for_user,         -> (user_input) { where('created_by = ?', "#{user_input}") }
-  scope :all_for_person,   -> (personID) {
-                                          select('user_person_contribs.*')
-                                          .where('person_id = ?', personID)}
 
   # Callbacks
   # ----------------------------- 

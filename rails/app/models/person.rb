@@ -1,20 +1,13 @@
 class Person < ActiveRecord::Base
-  # Misc Constants
-  # -----------------------------
-  GENDER_LIST    = ["female", "male", "gender_nonconforming"]
-
   
   include WhitespaceStripper
   include Approvable
 
-  # TODO: Figure out how many of these actually need to be writable.
-
-  attr_accessible :odnb_id, 
-                  :prefix, :title, :first_name, :last_name, :suffix, :display_name, :aliases, :search_names_all,
-                  :historical_significance, :justification,  :gender,                
+  attr_accessible :prefix, :title, :first_name, :last_name, :suffix, :display_name, 
+                  :aliases, :search_names_all, :odnb_id, :bibliography,
+                  :historical_significance, :justification,  :gender, 
                   :birth_year_type, :ext_birth_year, :alt_birth_year,       
                   :death_year_type, :ext_death_year, :alt_death_year,
-                  :bibliography,
                   :created_by, :created_at
 
   # Relationships
@@ -28,7 +21,6 @@ class Person < ActiveRecord::Base
   # ----------------------------- 
   scope :for_user, -> (user_input) { where('created_by = ?', "#{user_input}") }
 
-
   # Validations
   # -----------------------------
   validates_presence_of :created_by
@@ -41,8 +33,6 @@ class Person < ActiveRecord::Base
   validates_length_of :first_name, :minimum => 1, :allow_blank => true
   ## last_name must be at least 1 character
   validates_length_of :last_name, :minimum => 1, :allow_blank => true
-  ## historical_significance must be at least 4 characters
-  # validates_length_of :historical_significance, :minimum => 4, :allow_blank => true
   ## prefix must be at least 2 characters
   validates_length_of :prefix, :minimum => 2, :allow_blank => true
   ## suffix must be at least 1 character
@@ -56,7 +46,7 @@ class Person < ActiveRecord::Base
   ## birth year type is one included in the list
   validates_inclusion_of :death_year_type, :in => SDFB::DATE_TYPES
   ## gender must be included in the gender list
-  validates_inclusion_of :gender, :in => GENDER_LIST
+  validates_inclusion_of :gender, :in => SDFB::GENDER_LIST
   # custom validation that checks the birth and death dates
   validate :check_birth_death_years
 
@@ -78,6 +68,7 @@ class Person < ActiveRecord::Base
   end
 
   # if the display name is blank then add one
+  # -----------------------------
   def add_display_name_if_blank
     if self.display_name.blank?
       new_display_name = self.get_person_name
@@ -85,6 +76,7 @@ class Person < ActiveRecord::Base
     end
   end
 
+  # -----------------------------
   def relationships(certainty=SDFB::DEFAULT_CONFIDENCE)
     Relationship.all_approved.where("person1_index = ? OR person2_index = ?", self.id, self.id).where(max_certainty: (certainty..100))
   end

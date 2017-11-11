@@ -1,6 +1,5 @@
 class GroupCatAssign < ActiveRecord::Base
 
-  
   include Approvable
 
   attr_accessible :group_category_id, :group_id, :created_by, :created_at
@@ -29,13 +28,13 @@ class GroupCatAssign < ActiveRecord::Base
 
   # Custom Methods
   # -----------------------------
-
   def check_if_already_exists
     if (! GroupCatAssign.find_if_exists(self.group_category_id, self.group_id).empty?)
       errors.add(:group_id, "This group already has this group category.") 
     end
   end
 
+  # -----------------------------
   def check_if_duplicate
     search_results_for_duplicate = GroupCatAssign.find_if_exists(self.group_category_id, self.group_id)
     if ! search_results_for_duplicate.empty?
@@ -44,5 +43,4 @@ class GroupCatAssign < ActiveRecord::Base
       end
     end
   end
-  
 end

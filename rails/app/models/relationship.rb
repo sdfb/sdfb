@@ -13,8 +13,6 @@ class Relationship < ActiveRecord::Base
   has_many :user_rel_contribs, dependent: :destroy
   belongs_to :person
 
-  # Misc Constants
-
 	# Validations
 	# -----------------------------
  	validate :check_if_valid, on: :create
@@ -51,6 +49,7 @@ class Relationship < ActiveRecord::Base
     was_altered = (created_by && created_by != 2) || user_rel_contribs.where("created_by != ?",3).count > 0
   end
 
+  # -----------------------------
   def update_met_record
     met_record = UserRelContrib.where(relationship_type_id: 4,
                                       relationship_id: self.id)
@@ -81,6 +80,7 @@ class Relationship < ActiveRecord::Base
   ## if a user submits a new relationship but does not include a start and end date it defaults to a start and end date based on the birth years of the people in the relationship
   ## This method also checks if the start and end date are within the defined min or max years 
   ## If the relationship is not within the min and max years, the record will only be accepted if the people in the relationship are alive at that time
+  # -----------------------------
   def create_check_start_and_end_date
 
     # stores whether the there are local variables for the people birth and death years
@@ -215,6 +215,7 @@ class Relationship < ActiveRecord::Base
   end
 
 
+  # -----------------------------
   def update_max_certainty
     #only update the approved and edit status if it is not a system callback
     #a system callback can be detected because it's self.approved_by is 0 or nil
@@ -247,29 +248,14 @@ class Relationship < ActiveRecord::Base
     end
   end
   
-
+  # -----------------------------
   def get_both_names
     return Person.find(person1_index).display_name + " & " + Person.find(person2_index).display_name 
   end
 
-  def get_person1_name
-    return Person.find(person1_index).display_name 
-  end
-
-  def get_person2_name
-    return Person.find(person2_index).display_name 
-  end
-
-  def get_users_name
-    if (created_by != nil)
-      return User.find(created_by).first_name + " " + User.find(created_by).last_name
-    else
-      return "ODNB"
-    end
-  end
-
   # Validation method to check that one person is not in a relationship with themselves
   # Validation to check if the relationship already exists
+  # -----------------------------
   def check_if_valid
     errors.add(:person2_index, "A person cannot have a relationship with his or herself.") if person1_index == person2_index
     errors.add(:person2_index, "This relationship already exists") if (! Relationship.for_2_people(self.person1_index, self.person2_index).empty?)

@@ -1,6 +1,5 @@
 class RelationshipType < ActiveRecord::Base
 
-  
   include Approvable
 
   attr_accessible :description, :name, :relationship_type_inverse, :created_at, :created_by
@@ -28,7 +27,6 @@ class RelationshipType < ActiveRecord::Base
 
   # Custom Methods
   # -----------------------------
-
   # This record goes through all of the records where  
   # the relationship type is used as an inverse and makes that inverse null.
   def make_null_if_used_for_inverse
