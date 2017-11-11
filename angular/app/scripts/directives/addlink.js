@@ -6,7 +6,7 @@
  * # addLink
  */
 angular.module('redesign2017App')
-  .directive('addLink', ['apiService', '$timeout', '$rootScope', function(apiService, $timeout, $rootScope) {
+  .directive('addLink', ['apiService', '$timeout', '$rootScope', '$window', function(apiService, $timeout, $rootScope, $window) {
     return {
       templateUrl: './views/add-link.html',
       restrict: 'E',
@@ -106,6 +106,14 @@ angular.module('redesign2017App')
             scope.$broadcast('rzSliderForceRender');
           }, 500);
         };
+
+        scope.linkAlert = function() {
+          if (scope.addLinkClosed) {
+            $window.alert('To add a relationship, drag a node onto any other. If the node you need is not in this view, add it by double-clicking.');
+          } else {
+            scope.addLinkClosed = true;
+          }
+        }
 
         scope.showNewLink = function(d, nodes) {
           // var nodes = scope.data.included;

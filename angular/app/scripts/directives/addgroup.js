@@ -7,7 +7,7 @@
  * # addNode
  */
 angular.module('redesign2017App')
-  .directive('addGroup', ['apiService', function (apiService) {
+  .directive('addGroup', ['apiService', '$window', function (apiService, $window) {
     return {
       templateUrl: './views/add-group.html',
       restrict: 'E',
@@ -16,6 +16,14 @@ angular.module('redesign2017App')
         scope.newGroup.startDateType = scope.newGroup.endDateType = scope.config.dateTypes[1];
 
         scope.addedGroupId = -1;
+
+        scope.groupAlert = function() {
+          if (scope.addGroupClosed) {
+            $window.alert('To add a group, double-click anywhere on the canvas. To edit a new group, click on the node.');
+          } else {
+            scope.addGroupClosed = true;
+          }
+        }
 
         scope.$watch('noResultsPersonAdd', function(newValue, oldValue) {
           // scope.noResults = newValue;

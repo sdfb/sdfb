@@ -7,7 +7,7 @@
  * # addNode
  */
 angular.module('redesign2017App')
-  .directive('addNode', ['apiService', '$rootScope', function (apiService, $rootScope) {
+  .directive('addNode', ['apiService', '$rootScope', '$window', function (apiService, $rootScope, $window) {
     return {
       templateUrl: './views/add-node.html',
       restrict: 'E',
@@ -16,6 +16,14 @@ angular.module('redesign2017App')
         scope.newNode.birthDateType = scope.newNode.deathDateType = scope.config.dateTypes[1];
 
         scope.addedNodeId = 0;
+
+        scope.nodeAlert = function() {
+          if (scope.addNodeClosed) {
+            $window.alert('To add a person, double-click anywhere on the canvas. To edit a new person, click on the node.');
+          } else {
+            scope.addNodeClosed = true;
+          }
+        }
 
         scope.$watch('noResultsPersonAdd', function(newValue, oldValue) {
           // scope.noResults = newValue;

@@ -7,7 +7,7 @@
  * # addNode
  */
 angular.module('redesign2017App')
-  .directive('groupAssign', ['apiService', '$timeout', function (apiService, $timeout) {
+  .directive('groupAssign', ['apiService', '$timeout', '$window', function (apiService, $timeout, $window) {
     return {
       templateUrl: './views/group-assign.html',
       restrict: 'E',
@@ -19,6 +19,14 @@ angular.module('redesign2017App')
         scope.groupAssignSelected = function($item, $model, $label, $event) {
           scope.groupAssign.group = $item;
           scope.populateGroupDates(scope.groupAssign.person.id, $item.id);
+        }
+
+        scope.groupAssignAlert = function() {
+          if (scope.groupAssignClosed) {
+            $window.alert('To add a person to a group, drag any node to the groups bar.');
+          } else {
+            scope.groupAssignClosed = true;
+          }
         }
 
         scope.showGroupAssign = function(d) {
