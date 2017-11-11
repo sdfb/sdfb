@@ -50,6 +50,7 @@ angular.module('redesign2017App')
             scope.groupAssignClosed = true;
             $rootScope.filtersClosed = true;
             scope.newNode.id = scope.addedNodeId;
+            scope.origId = newNode.order;
             scope.addedNodeId += 1;
           });
           update(scope.data);
@@ -97,6 +98,11 @@ angular.module('redesign2017App')
               scope.addedNodes.splice(i,1);
             }
           })
+          scope.addToDB.nodes.forEach(function(a, i) {
+            if (a.id === id) {
+              scope.addToDB.nodes.splice(i,1);
+            }
+          })
           scope.updateNetwork(scope.data);
           scope.newNode = {};
           scope.newNode.birthDateType = scope.newNode.deathDateType = scope.config.dateTypes[1];
@@ -113,12 +119,21 @@ angular.module('redesign2017App')
         }
         scope.submitNode = function() {
           console.log("node submitted");
+          console.log(scope.newNode.id);
           var newNode = angular.copy(scope.newNode);
 
-          if (scope.notInView === true && scope.addedNodes.length > 0 && !scope.addedNodes[scope.addedNodes.length-1].attributes.name) {
-            scope.addedNodes[scope.addedNodes.length-1].attributes = scope.newNode;
-            console.log(scope.addedNodes[scope.addedNodes.length-1])
-            scope.addedNodes[scope.addedNodes.length-1].id = scope.newNode.id;
+          if (scope.notInView === true) {
+            var addedNodeIDs = [];
+            scope.addedNodes.forEach(function (a,i) {
+              console.log(a.id, scope.newNode.id);
+              if (a.id === scope.origId) {
+                scope.addedNodes[i].attributes = scope.newNode;
+                scope.addedNodes[i].id = scope.newNode.id;
+              }
+            })
+            // scope.addedNodes[scope.addedNodes.length-1].attributes = scope.newNode;
+            // console.log(scope.addedNodes[scope.addedNodes.length-1])
+            // scope.addedNodes[scope.addedNodes.length-1].id = scope.newNode.id;
             // scope.addedNodes[scope.addedNodes.length-1].order = scope.addedNodeId;
             newNode = angular.copy(scope.newNode);
           }

@@ -29,7 +29,7 @@ angular.module('redesign2017App')
 
     $ctrl.close = function() {
       $ctrl.addToDB.auth_token = $rootScope.user.auth_token;
-      console.log($ctrl.addToDB);
+      console.log(JSON.stringify($ctrl.addToDB));
       $uibModalInstance.close($ctrl.addToDB);
     }
 

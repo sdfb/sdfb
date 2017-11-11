@@ -448,8 +448,11 @@ angular.module('redesign2017App').directive('forceLayout', ['apiService', '$time
                 toggleClick(d, newLinks, this);
 
                 if (d.distance === 7 && scope.config.contributionMode) {
+                  console.log(d.id);
                   scope.$apply(function() {
+                    scope.origId = d.order;
                     scope.newNode = d.attributes;
+                    scope.newNode.id = d.id;
                     scope.addNodeClosed = false;
                   });
                 }
