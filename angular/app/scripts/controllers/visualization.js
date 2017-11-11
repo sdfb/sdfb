@@ -224,6 +224,9 @@ angular.module('redesign2017App').component('visualization', {
         resolve: {
           addToDB: function() {
             return $scope.addToDB;
+          },
+          addedNodes: function() {
+            return $scope.addedNodes;
           }
         }
       });
@@ -240,7 +243,9 @@ angular.module('redesign2017App').component('visualization', {
         $scope.groupAssign = {person: {}, group: {}};
         $scope.config.added = false;
         $scope.updateNetwork($scope.data);
-      }, function() {
+      }, function(reason) {
+        console.log(reason);
+        $scope.updateNetwork($scope.data);
         $log.info('Modal dismissed at: ' + new Date());
       });
     };

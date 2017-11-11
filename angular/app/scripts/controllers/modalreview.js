@@ -8,14 +8,16 @@
  * Controller of the redesign2017App
  */
 angular.module('redesign2017App')
-  .controller('ModalReviewCtrl', ['$scope', '$uibModalInstance', '$timeout', 'addToDB', '$window', 'apiService', '$rootScope', function($scope, $uibModalInstance, $timeout, addToDB, $window, apiService, $rootScope) {
+  .controller('ModalReviewCtrl', ['$scope', '$uibModalInstance', '$timeout', 'addToDB', '$window', 'apiService', '$rootScope', 'addedNodes', function($scope, $uibModalInstance, $timeout, addToDB, $window, apiService, $rootScope, addedNodes) {
 
     var $ctrl = this;
     $ctrl.addToDB = addToDB;
+    $ctrl.addedNodes = addedNodes;
     // $ctrl.sendData = sendData;
 
-    $ctrl.remove = function(index, list) {
-      list.splice(index,1);
+    $ctrl.remove = function(index, list1, list2) {
+      list1.splice(index,1);
+      list2.splice(index,1);
     };
 
     $ctrl.ok = function() {
@@ -23,8 +25,8 @@ angular.module('redesign2017App')
     };
 
     $ctrl.cancel = function() {
-      console.log('dismiss')
-      $uibModalInstance.dismiss('cancel');
+      // console.log('dismiss')
+      $uibModalInstance.dismiss($ctrl.addToDB);
     };
 
     $ctrl.close = function() {
