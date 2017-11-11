@@ -462,7 +462,7 @@ class ApiController < ApplicationController
       @people = secondary_people | @primary_people 
     rescue ActiveRecord::RecordNotFound => e
       @errors = []
-      @errors << {title: "invalid person ID(s)"}
+      @errors << {title: "invalid group ID(s)"}
     end
   end
 

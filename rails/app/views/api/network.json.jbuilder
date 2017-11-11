@@ -7,21 +7,7 @@ else
     json.attributes do
       json.primary_people @people.map{|p| p["id"].to_s}
       json.connections do
-        json.array! @relationships do |relationship|
-          json.id relationship.id.to_s
-          json.type "relationship"
-          json.attributes do
-            json.altered relationship.altered
-            json.end_year relationship.end_year
-            json.source relationship.person2_index.to_s
-            json.start_year relationship.start_year
-            json.target relationship.person1_index.to_s
-            json.weight relationship.max_certainty
-          end
-        end
-      end
-      json.nodes do
-
+        json.partial! 'relationships/metadata', collection: @relationships, as: :relationship
       end
     end
   end
