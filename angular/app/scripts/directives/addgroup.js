@@ -2,17 +2,16 @@
 
 /**
  * @ngdoc directive
- * @name redesign2017App.directive:addNode
+ * @name redesign2017App.directive:addGroup
  * @description
- * # addNode
+ * # addGroup
  */
 angular.module('redesign2017App')
-  .directive('addGroup', ['apiService', '$window', function (apiService, $window) {
+  .directive('addGroup', ['apiService', '$window', '$rootScope', function (apiService, $window, $rootScope) {
     return {
       templateUrl: './views/add-group.html',
       restrict: 'E',
       link: function postLink(scope, element, attrs) {
-        // element.text('this is the addNode directive');
         scope.newGroup.startDateType = scope.newGroup.endDateType = scope.config.dateTypes[1];
 
         scope.addedGroupId = -1;
@@ -38,19 +37,22 @@ angular.module('redesign2017App')
           scope.newGroup.exists = false;
           scope.newGroup.id = scope.addedGroupId;
 
-          var x = scope.singleWidth*(3/4)+(scope.addedGroupId)*20;
-          var y = scope.singleHeight*(3/4)+(scope.addedGroupId)*20;
+          var x = point[0];
+          var y = point[1];
 
           var newGroup = { attributes: { name: scope.newGroup.name, degree: 5 }, id: scope.addedGroupId, distance: 7, x: x, y: y};
           newGroup.vx = null;
           newGroup.vy = null;
           newGroup.fx = x;
           newGroup.fy = y;
+          newGroup.absx = x;
+          newGroup.absy = y;
           addedGroups.push(newGroup);
           scope.$apply(function() {
             scope.addGroupClosed = false;
             scope.legendClosed = true;
             scope.newGroup.id = scope.addedGroupId;
+            $rootScope.filtersClosed = true;
             scope.addedGroupId -= 1;
           });
 
@@ -72,7 +74,27 @@ angular.module('redesign2017App')
             scope.newGroup.endDate = group.attributes.end_year;
             scope.newGroup.endDateType = group.attributes.end_year_type;
             scope.newGroup.description = group.attributes.description;
+            scope.newGroup.id = group.id;
           });
+        }
+
+        scope.removeGroup = function(id) {
+          console.log(id);
+          scope.addedGroups.forEach(function(a, i) {
+            if (a.id === id) {
+              scope.addedGroups.splice(i,1);
+            }
+          })
+          scope.addToDB.group.forEach(function(a, i) {
+            if (a.id === id) {
+              scope.addToDB.group.splice(i,1);
+            }
+          })
+          scope.updateNetwork(scope.data);
+          scope.newGroup = {};
+          scope.newGroup.startDateType = scope.newGroup.endDateType = scope.config.dateTypes[1];
+          scope.addGroupClosed = true;
+
         }
 
         function checkForNameless(arr) {
@@ -87,19 +109,15 @@ angular.module('redesign2017App')
           var newGroup = angular.copy(scope.newGroup);
 
 
-          if (scope.addedGroups.length > 0 && !scope.addedGroups[scope.addedGroups.length-1].attributes.name) {
-            scope.addedGroups[scope.addedGroups.length-1].attributes.name = newGroup.name;
-          }
-          else if (scope.addedGroups.length === 0 || !checkForNameless(scope.addedGroups)) {
-            var x = scope.singleWidth*(3/4)+(scope.addedGroupId)*20;
-            var y = scope.singleHeight*(3/4)+(scope.addedGroupId)*20;
-            var realNewGroup = { attributes: { name: scope.newGroup.name, degree: 5 }, id: scope.addedGroupId, distance: 7, x: x, y: y};
-            realnewGroup.vx = null;
-            realnewGroup.vy = null;
-            realnewGroup.fx = x;
-            realnewGroup.fy = y;
-            scope.addedGroups.push(realNewGroup);
-          }
+          scope.addedGroups.forEach(function (a,i) {
+            console.log(a.id, scope.newGroup.id);
+            if (a.id === scope.newGroup.id) {
+              scope.addedGroups[i].attributes = scope.newGroup;
+              scope.addedGroups[i].attributes.degree = 5;
+              scope.addedGroups[i].id = scope.newGroup.id;
+            }
+          })
+          newGroup = angular.copy(scope.newGroup);
           newGroup.startDateType = newGroup.startDateType.abbr;
           newGroup.endDateType = newGroup.endDateType.abbr;
           // newGroup.created_by = scope.config.userId;

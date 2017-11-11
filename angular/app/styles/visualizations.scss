@@ -163,6 +163,10 @@ shared-network {
     cursor: pointer;
   }
 
+  .node.all.new {
+    fill: orange;
+  }
+
   .node.all:hover {
     -webkit-transform: rotate(0deg);
     transform: rotate(0deg);

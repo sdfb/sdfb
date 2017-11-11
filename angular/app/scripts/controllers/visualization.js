@@ -339,7 +339,7 @@ angular.module('redesign2017App').component('visualization', {
       $scope.config.contributionMode = newValue;
       // var emptyDB = {nodes: [], links: [], groups: []}
       if (newValue !== oldValue && !newValue) {
-        if ($scope.addToDB.nodes.length !== 0 || $scope.addToDB.links.length !== 0 || $scope.addToDB.groups.length !== 0) {
+        if ($scope.addToDB.nodes.length !== 0 || $scope.addToDB.links.length !== 0 || $scope.addToDB.group.length !== 0) {
           if ($window.confirm("You are about to turn off contribution mode, but you still have unsaved changes. Click 'cancel' and then the 'submit' button to send your changes to the database before exiting contribution mode. Discard changes and continue anyway?") === true) {
             $scope.addedNodes = [];
             $scope.addedLinks = [];

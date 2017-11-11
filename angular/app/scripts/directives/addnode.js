@@ -127,11 +127,9 @@ angular.module('redesign2017App')
         }
         scope.submitNode = function() {
           console.log("node submitted");
-          console.log(scope.newNode.id);
           var newNode = angular.copy(scope.newNode);
 
           if (scope.notInView === true) {
-            var addedNodeIDs = [];
             scope.addedNodes.forEach(function (a,i) {
               console.log(a.id, scope.newNode.id);
               if (a.id === scope.origId) {
@@ -139,27 +137,7 @@ angular.module('redesign2017App')
                 scope.addedNodes[i].id = scope.newNode.id;
               }
             })
-            // scope.addedNodes[scope.addedNodes.length-1].attributes = scope.newNode;
-            // console.log(scope.addedNodes[scope.addedNodes.length-1])
-            // scope.addedNodes[scope.addedNodes.length-1].id = scope.newNode.id;
-            // scope.addedNodes[scope.addedNodes.length-1].order = scope.addedNodeId;
             newNode = angular.copy(scope.newNode);
-          }
-          else if (scope.notInView === true && (scope.addedNodes.length === 0 || !checkForNameless(scope.addedNodes))) {
-            // scope.newNode.id = scope.addedNodeId;
-            var x = scope.singleWidth*(3/4)+scope.addedNodeId*20;
-            var y = scope.singleHeight*(3/4)+scope.addedNodeId*20;
-            var realNewNode = { attributes: scope.newNode, id: scope.newNode.id, order: scope.addedNodeId, distance: 7, x: x, y: y};
-            newNode = angular.copy(scope.newNode);
-            console.log(realNewNode);
-            realNewNode.vx = null;
-            realNewNode.vy = null;
-            realNewNode.fx = x;
-            realNewNode.fy = y;
-            realNewNode.absx = x;
-            realNewNode.absy = y
-            scope.addedNodes.push(realNewNode);
-            scope.addedNodeId += 1;
           }
           // newNode.auth_token = $rootScope.user.auth_token;
           newNode.birthDateType = newNode.birthDateType.abbr;

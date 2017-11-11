@@ -194,9 +194,9 @@ angular.module('redesign2017App').directive('forceLayout', ['apiService', '$time
             var members = json.data.attributes.primary_people;
             var newData = parseGroupComplexity(json, scope.config.onlyMembers);
             simulation.force("charge", d3.forceManyBody().strength(-50).distanceMax(200));
-          } else {
+          } else if (scope.config.viewMode === 'all'){
             simulation.force("charge", d3.forceManyBody().strength(-500).distanceMax(200));
-            var nodes = json.included;
+            var nodes = json.included.slice(0);
             var links = [];
             json.data.attributes.connections.forEach(function(l) {
               links.push({
@@ -324,22 +324,31 @@ angular.module('redesign2017App').directive('forceLayout', ['apiService', '$time
             node.exit().remove();
             node = node.enter().append("rect")
               .merge(node)
-              .attr("class", "node")
+              .attr("class", "node all")
               .attr("width", function(d) { return (2 * sizeScale(d.attributes.degree)) / Math.sqrt(2); })
               .attr("height", function(d) { return (2 * sizeScale(d.attributes.degree)) / Math.sqrt(2); })
               .attr("rx", 2)
               .attr("ry", 2)
-              .classed("degree7", function(d) { return d.distance === 7; })
-              .classed("all", function (d) { return d.distance !== 7; })
+              .classed("new", function(d) { return d.distance === 7; })
               .on("click", function(d) {
                 // console.log(d, d.attributes.name)
                 // Toggle ego networks on click of node
-                if (d.id <= 100000) {
-                  toggleClick(d, newLinks, this);
-                }
+                // if (d.id < 0) {
+                  // toggleClick(d, newLinks, this);
+                  console.log(d.id);
+                  if (d.distance === 7 && scope.config.contributionMode) {
+
+                    scope.$apply(function() {
+                      // scope.origId = d.order;
+                      scope.newGroup = d.attributes;
+                      scope.newGroup.id = d.id;
+                      scope.addGroupClosed = false;
+                    });
+                  }
+                // }
               })
               .on('dblclick', function(d){
-                if (d.id <= 100000) {
+                if (d.id < 0) {
                   $state.go('home.visualization', {ids: d.id, type: 'network'});
                 } else {
                   console.log('new node');
