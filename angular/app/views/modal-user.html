@@ -15,7 +15,12 @@
       <a>edit profile</a>
     </div>
     <a type="button" class="btn btn-primary" target="_blank" download="{{user.username}}.json" ng-href="{{user_download}}">Export all user info <i class="fa fa-download" aria-hidden="true"></i></a>
-    <h3>You've made {{user.points}} contributions:</h3>
+    <h3>You've made {{user.points}} contributions!</h3>
+    <user-progress class="person"></user-progress>
+    <div ng-show="user.user_type === 'Standard'">{{user.remaining}} left to go for Curator status.</div>
+    <div ng-show="user.user_type === 'Standard' && user.remaining === 0">You made it! Sign out and back in to get Curator status.</div>
+    <div ng-show="user.user_type !== 'Standard'">You're already a Curator.</div>
+    <h3>Your contributions:</h3>
     <h4 class="modal-title">People</h4>
     <table class="table table-hover">
         <tbody>

@@ -143,7 +143,8 @@ redesign2017App.config(function($stateProvider, $locationProvider, $compileProvi
 
               // var $ctrl = this;
               $scope.user = user.data;
-              console.log($scope.user.contributions);
+
+              $scope.user.remaining = 100 - parseInt($scope.user.points);
               $scope.dismiss = function() {
                 $scope.$dismiss();
               };
