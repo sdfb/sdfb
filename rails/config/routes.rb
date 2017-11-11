@@ -18,6 +18,4 @@ Sdfb::Application.routes.draw do
     post 'api/request_password_reset', action: :create, controller: :password_resets
     post 'api/password_reset', action: :update, controller: :password_resets
   end
-  
-  resources :rel_cat_assigns
 end
