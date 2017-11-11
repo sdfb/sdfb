@@ -25,8 +25,6 @@ class UserPersonContrib < ActiveRecord::Base
   scope :all_for_person,   -> (personID) {
                                           select('user_person_contribs.*')
                                           .where('person_id = ?', personID)}
-  scope :all_recent,       -> { order(updated_at: :desc) }
-  scope :order_by_sdfb_id, -> { order(id: :asc) }
 
   # Callbacks
   # ----------------------------- 

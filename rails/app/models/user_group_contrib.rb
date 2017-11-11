@@ -26,8 +26,6 @@ class UserGroupContrib < ActiveRecord::Base
   scope :all_for_group,    -> (groupID) {
                                         select('user_group_contribs.*')
                                         .where('group_id = ?', groupID)}
-  scope :all_recent,       -> { order(updated_at: :desc) }
-  scope :order_by_sdfb_id, -> { order(id: :asc) }
 
   # Callbacks
   # ----------------------------- 

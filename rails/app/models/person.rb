@@ -36,7 +36,6 @@ class Person < ActiveRecord::Base
   # Scope
   # ----------------------------- 
   scope :for_user, -> (user_input) { where('created_by = ?', "#{user_input}") }
-  scope :alphabetical, -> { order(last_name: :asc, first_name: :asc) }
 
 
   # Validations

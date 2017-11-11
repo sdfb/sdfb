@@ -38,8 +38,6 @@ class UserRelContrib < ActiveRecord::Base
       select('user_rel_contribs.*')
       .where('relationship_id = ?', relID)}
   scope :highest_certainty, -> { order(certainty: :desc) }
-  scope :all_recent, -> { order(created_at: :desc) }
-  scope :order_by_sdfb_id, -> { order(id: :asc) }
   scope :is_locked, -> { where(is_locked: true) } 
   scope :all_active_unrejected, -> { where(is_active: true, is_rejected: false) }
   scope :all_averages_for_relationship, -> (relID) {

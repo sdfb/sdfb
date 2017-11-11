@@ -15,7 +15,6 @@ class GroupAssignment < ActiveRecord::Base
 
   # Scope
   # ----------------------------- 
-  scope :all_recent, -> { order(updated_at: :desc) }
   scope :all_for_person, -> (personID) {
       select('group_assignments.*')
       .where('(person_id = ?)', personID)}
@@ -24,7 +23,6 @@ class GroupAssignment < ActiveRecord::Base
       .where('(group_id = ?)', groupID)}
   scope :for_user, lambda {|user_input| where('created_by = ?', "#{user_input}") }
   scope :find_if_exists, lambda {|person_input, group_input| where('(person_id = ?) and (group_id = ?) and is_approved is true', person_input, group_input) }
-  scope :order_by_sdfb_id, -> { order(id: :asc) }
 
   # Validations
   # -----------------------------

@@ -18,6 +18,5 @@ class GroupCategory < ActiveRecord::Base
   # Scope
   # ----------------------------- 
   scope :for_user,         -> (user_input) { where('created_by = ?', "#{user_input}") }
-  scope :alphabetical,     -> { order(name: :asc) }
 
 end
