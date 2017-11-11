@@ -1,7 +1,6 @@
 class UserPersonContrib < ActiveRecord::Base
   # this class is known as "Person Notes" to the user
 
-  
   include WhitespaceStripper
   include Approvable
 
@@ -33,21 +32,4 @@ class UserPersonContrib < ActiveRecord::Base
   # ----------------------------- 
   before_save { remove_trailing_spaces(:annotation, :bibliography) }
 
-
-  # Custom Methods
-  # -----------------------------
-
-  ### The two methods below are never called.  Confirm they can be removed.  -DGN 2017-3-17
-
-  # def get_person_name
-  #   return Person.find(person_id).display_name 
-  # end
-
-  # def get_users_name
-  #   if (created_by != nil)
-  #     return User.find(created_by).first_name + " " + User.find(created_by).last_name
-  #   else
-  #     return "ODNB"
-  #   end
-  # end
 end

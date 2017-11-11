@@ -27,5 +27,4 @@ Sdfb::Application.routes.draw do
   resources :groups
   resources :group_assignments
   resources :people
-  resources :user_person_contribs
 end
