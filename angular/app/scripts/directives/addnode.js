@@ -90,6 +90,20 @@ angular.module('redesign2017App')
           }
         }
 
+        scope.removeNode = function(id) {
+          console.log(id);
+          scope.addedNodes.forEach(function(a, i) {
+            if (a.id === id) {
+              scope.addedNodes.splice(i,1);
+            }
+          })
+          scope.updateNetwork(scope.data);
+          scope.newNode = {};
+          scope.newNode.birthDateType = scope.newNode.deathDateType = scope.config.dateTypes[1];
+          scope.addNodeClosed = true;
+
+        }
+
         function checkForNameless(arr) {
           arr.forEach(function(a) {
             if (!a['name']) {
