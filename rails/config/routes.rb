@@ -17,14 +17,12 @@ Sdfb::Application.routes.draw do
     post 'api/sign_out', action: :destroy, controller: :sessions
     post 'api/request_password_reset', action: :create, controller: :password_resets
     post 'api/password_reset', action: :update, controller: :password_resets
-
   end
   
   resources :rel_cat_assigns
   resources :relationship_categories
   resources :group_cat_assigns
   resources :group_categories
-  resources :password_resets  
   resources :relationships
   resources :groups
   resources :group_assignments
