@@ -13,7 +13,7 @@ class ApiController < ApplicationController
       @groups = Group.all_unapproved.limit(size).offset(offset)
       render "groups"    
     when "group_assignments"
-      @assignments = GroupAssignment.limit(size).offset(offset)
+      @assignments = GroupAssignment.all_unapproved.limit(size).offset(offset)
       person_ids = @assignments.collect{|l| l.person_id}.uniq
       group_ids = @assignments.collect{|l| l.group_id}.uniq
       @people = Person.find(person_ids)
@@ -138,17 +138,23 @@ class ApiController < ApplicationController
           node.delete("deathDateType")
         end
         if ["Admin", "Curator"].include?(current_user.user_type)
+          if node.keys.include?("is_approved")
+            node["approved_by"] = current_user.id if node["is_approved"]
+          end
+        else
           node.delete("is_approved")
           node.delete("is_active")
         end
         node.delete("created_by")
 
+
+
         if node["id"]
+          node.delete("id")
           Person.find(node["id"].to_i).update(node)
         else
           node["created_by"] = current_user.id
           new_person = Person.create!(node)
-          puts new_person.inspect
           person_lookup[placeholder_id] = new_person.id
         end
       end
@@ -172,21 +178,23 @@ class ApiController < ApplicationController
           bibliography: group["citation"]
         }
         if ["Admin", "Curator"].include?(current_user.user_type)
-          new_record["is_approved"] = group["is_approved"] if group["is_approved"]
-          new_record["is_active"]   = group["is_active"]   if group["is_active"]
+          if group.keys.include?("is_approved")
+            new_record[:is_approved] = group["is_approved"]
+            new_record[:approved_by] = current_user.id if group["is_approved"]
+          end
+          new_record[:is_active]   = group["is_active"]   if group["is_active"]
         end
     
         if group["id"]
-          Group.find(group["id"]).update(new_record)
+          new_record.reject! {|_,v| v.nil?}
+          Group.find(group["id"]).update!(new_record)
         else
-          group[:created_by] = current_user.id
+        new_record[:created_by] = current_user.id
           new_group = Group.create!(new_record)
           group_lookup[placeholder_id] = new_group.id
         end
       end
     end
-
- 
 
     if links = params[:links]
       links.each do |link|
@@ -229,29 +237,33 @@ class ApiController < ApplicationController
 
     if group_assignments = params[:group_assignments]
       group_assignments.each do |assignment|
-        person_id = assignment["person"]["id"].to_i
-        group_id  = assignment["group"]["id"].to_i
-        person_id = person_lookup[person_id] if person_id < 1_000_000
-        group_id  = group_lookup[group_id]   if group_id  < 0
+      
+        person_id = assignment.dig("person","id")
+        group_id  = assignment.dig("group","id")
+        person_id = person_lookup[person_id] if person_id && person_id.to_i < 1_000_000
+        group_id  = group_lookup[group_id]   if group_id && group_id.to_i  < 0
        
-        update_dates(Group.find(group_id),assignment)
+        update_dates(Group.find(group_id),assignment) if group_id
 
         new_record = {
           person_id: person_id,
           group_id: group_id,
           start_year: assignment["startDate"],
           end_year: assignment["endDate"],
-          created_by: current_user.id,
           start_date_type: assignment["startDateType"],
           end_date_type: assignment["endDateType"],
           bibliography: assignment["citation"]
         }
         if ["Admin", "Curator"].include?(current_user.user_type)
-          new_record["is_approved"] = group_assignments["is_approved"] if group_assignments["is_approved"]
-          new_record["is_active"]   = group_assignments["is_active"]   if group_assignments["is_active"]
+          if assignment.keys.include?("is_approved")
+            new_record[:is_approved] = assignment["is_approved"]
+            new_record[:approved_by] = current_user.id if assignment["is_approved"]
+          end
+          new_record["is_active"] = assignment["is_active"]   if assignment["is_active"]
         end
-        if group_assignments["id"]
-          GroupAssignment.find(group_assignments["id"]).update(new_record)
+        if assignment["id"]
+          new_record.reject! {|_,v| v.nil?}
+          GroupAssignment.find(assignment["id"]).update!(new_record)
         else
           new_record[:created_by] = current_user.id
           GroupAssignment.create!(new_record)
