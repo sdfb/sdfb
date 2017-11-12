@@ -50,7 +50,7 @@ angular.module('redesign2017App').component('visualization', {
     $scope.addLinkClosed = true;
     $scope.groupAssignClosed = true;
     $scope.addGroupClosed = true;
-    $scope.addToDB = {nodes: [], links: [], group: [], group_assignments: []};
+    $scope.addToDB = {nodes: [], links: [], groups: [], group_assignments: []};
     $scope.newNode = {};
     $scope.newLink = {};
     $scope.newGroup = {};
@@ -199,7 +199,7 @@ angular.module('redesign2017App').component('visualization', {
 
     $scope.sendData = function() {
       console.log($scope.addToDB);
-      $scope.addToDB = {nodes: [], links: [], group: [], group_assignments: []};
+      $scope.addToDB = {nodes: [], links: [], groups: [], group_assignments: []};
       $scope.newNode = {};
       $scope.newNode.birthDateType = $scope.newNode.deathDateType = $scope.config.dateTypes[1];
       $scope.newLink = {};
@@ -232,7 +232,7 @@ angular.module('redesign2017App').component('visualization', {
       });
       modalInstance.result.then(function(result) {
         apiService.writeData(result);
-        $scope.addToDB = {nodes: [], links: [], group: [], group_assignments: []};
+        $scope.addToDB = {nodes: [], links: [], groups: [], group_assignments: []};
         $scope.addedNodes = [];
         $scope.addedLinks = [];
         $scope.addedGroups = [];
