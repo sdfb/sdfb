@@ -71,14 +71,14 @@ angular.module('redesign2017App')
       $ctrl.addToDB.nodes = [];
       $ctrl.people.forEach(function (p) {
         var newPerson = {};
-        newPerson.id = p.id;
+        newPerson.id = parseInt(p.id);
         newPerson.is_approved = p.is_approved;
         if (newPerson.is_approved) {
           $ctrl.addToDB.nodes.push(newPerson);
         }
       });
       $ctrl.addToDB.links = [];
-      $ctrl.addToDB.group = [];
+      $ctrl.addToDB.groups = [];
       $ctrl.addToDB.group_assignments = [];
       $ctrl.addToDB.auth_token = $rootScope.user.auth_token;
       $uibModalInstance.close($ctrl.addToDB);

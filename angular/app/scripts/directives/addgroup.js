@@ -85,9 +85,9 @@ angular.module('redesign2017App')
               scope.addedGroups.splice(i,1);
             }
           })
-          scope.addToDB.group.forEach(function(a, i) {
+          scope.addToDB.groups.forEach(function(a, i) {
             if (a.id === id) {
-              scope.addToDB.group.splice(i,1);
+              scope.addToDB.groups.splice(i,1);
             }
           })
           scope.updateNetwork(scope.data);
@@ -124,7 +124,7 @@ angular.module('redesign2017App')
           scope.updateNetwork(scope.data);
 
 
-          if (!scope.newGroup.exists) { scope.addToDB.group.push(newGroup); }
+          if (!scope.newGroup.exists) { scope.addToDB.groups.push(newGroup); }
           scope.addGroupClosed = true;
           scope.newGroup = {};
           console.log(scope.addToDB);
