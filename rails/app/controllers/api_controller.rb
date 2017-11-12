@@ -420,7 +420,7 @@ class ApiController < ApplicationController
       first_degree_ids = []
       second_degree_ids = []
 
-      @people = Person.all_approved.includes(:groups).find(ids)
+      @people = Person.includes(:groups, :group_assignments).all_approved.find(ids)
 
       @relationships = @people.map(&:relationships).reduce(:+).uniq
       
@@ -428,7 +428,8 @@ class ApiController < ApplicationController
         [r.person1_index, r.person2_index]
       end.flatten.uniq - ids
 
-      @sources = Person.includes(:groups).all_approved.find(first_degree_ids)
+
+      @sources = Person.includes(:groups, :group_assignments).all_approved.find(first_degree_ids)
       first_degree_relationships = @sources.map(&:relationships).reduce(:+)&.uniq || []
       @relationships = @relationships | first_degree_relationships
 
@@ -437,7 +438,7 @@ class ApiController < ApplicationController
           [r.person1_index, r.person2_index]
         end.flatten.uniq - (ids + first_degree_ids)
 
-        second_degree_people = Person.includes(:groups).find(second_degree_ids)
+        second_degree_people = Person.includes(:groups, :group_assignments).all_approved.find(second_degree_ids)
         second_degree_relationships = second_degree_people.map(&:relationships).reduce(:+)&.uniq || []
 
         @relationships = @relationships | second_degree_relationships
@@ -474,7 +475,7 @@ class ApiController < ApplicationController
       @people = secondary_people | @primary_people 
     rescue ActiveRecord::RecordNotFound => e
       @errors = []
-      @errors << {title: "invalid person ID(s)"}
+      @errors << {title: "invalid group ID(s)"}
     end
   end
 

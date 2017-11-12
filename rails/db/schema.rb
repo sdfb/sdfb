@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171111031617) do
+ActiveRecord::Schema.define(version: 20171111221437) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -35,9 +35,11 @@ ActiveRecord::Schema.define(version: 20171111031617) do
     t.datetime "updated_at",                                  null: false
     t.string   "start_date_type", limit: 255
     t.string   "end_date_type",   limit: 255
-    t.text     "annotation"
     t.text     "bibliography"
   end
+
+  add_index "group_assignments", ["group_id"], name: "index_group_assignments_on_group_id", using: :btree
+  add_index "group_assignments", ["person_id"], name: "index_group_assignments_on_person_id", using: :btree
 
   create_table "group_cat_assigns", force: :cascade do |t|
     t.integer  "group_id"
@@ -50,7 +52,6 @@ ActiveRecord::Schema.define(version: 20171111031617) do
     t.boolean  "is_rejected",                   default: false
     t.datetime "created_at",                                    null: false
     t.datetime "updated_at",                                    null: false
-    t.text     "annotation"
     t.text     "bibliography"
   end
 
@@ -65,7 +66,6 @@ ActiveRecord::Schema.define(version: 20171111031617) do
     t.boolean  "is_rejected",              default: false
     t.datetime "created_at",                               null: false
     t.datetime "updated_at",                               null: false
-    t.text     "annotation"
     t.text     "bibliography"
   end
 
@@ -79,11 +79,10 @@ ActiveRecord::Schema.define(version: 20171111031617) do
     t.string   "approved_by",     limit: 255
     t.string   "approved_on",     limit: 255
     t.boolean  "is_approved",                 default: false
-    t.text     "person_list",                 default: "--- []\n"
     t.boolean  "is_active",                   default: true
     t.boolean  "is_rejected",                 default: false
-    t.datetime "created_at",                                       null: false
-    t.datetime "updated_at",                                       null: false
+    t.datetime "created_at",                                  null: false
+    t.datetime "updated_at",                                  null: false
     t.string   "start_date_type", limit: 255
     t.string   "end_date_type",   limit: 255
     t.text     "bibliography"
@@ -94,7 +93,6 @@ ActiveRecord::Schema.define(version: 20171111031617) do
     t.string   "last_name",               limit: 255
     t.integer  "created_by"
     t.text     "historical_significance"
-    t.text     "rel_sum",                             default: "--- []\n"
     t.string   "prefix",                  limit: 255
     t.string   "suffix",                  limit: 255
     t.string   "title",                   limit: 255
@@ -110,11 +108,10 @@ ActiveRecord::Schema.define(version: 20171111031617) do
     t.datetime "approved_on"
     t.integer  "odnb_id"
     t.boolean  "is_approved",                         default: false
-    t.text     "group_list",                          default: "--- []\n"
     t.boolean  "is_active",                           default: true
     t.boolean  "is_rejected",                         default: false
-    t.datetime "created_at",                                               null: false
-    t.datetime "updated_at",                                               null: false
+    t.datetime "created_at",                                          null: false
+    t.datetime "updated_at",                                          null: false
     t.string   "display_name",            limit: 255
     t.text     "search_names_all"
     t.text     "bibliography"
@@ -132,7 +129,6 @@ ActiveRecord::Schema.define(version: 20171111031617) do
     t.boolean  "is_rejected",                          default: false
     t.datetime "created_at",                                           null: false
     t.datetime "updated_at",                                           null: false
-    t.text     "annotation"
     t.text     "bibliography"
   end
 
@@ -147,7 +143,6 @@ ActiveRecord::Schema.define(version: 20171111031617) do
     t.boolean  "is_rejected",              default: false
     t.datetime "created_at",                               null: false
     t.datetime "updated_at",                               null: false
-    t.text     "annotation"
     t.text     "bibliography"
   end
 
@@ -163,7 +158,6 @@ ActiveRecord::Schema.define(version: 20171111031617) do
     t.boolean  "is_rejected",                           default: false
     t.datetime "created_at",                                            null: false
     t.datetime "updated_at",                                            null: false
-    t.text     "annotation"
     t.text     "bibliography"
   end
 
@@ -174,25 +168,23 @@ ActiveRecord::Schema.define(version: 20171111031617) do
     t.integer  "created_by"
     t.integer  "max_certainty"
     t.integer  "start_year"
-    t.string   "start_month",              limit: 255
+    t.string   "start_month",        limit: 255
     t.integer  "start_day"
     t.integer  "end_year"
-    t.string   "end_month",                limit: 255
+    t.string   "end_month",          limit: 255
     t.integer  "end_day"
     t.text     "justification"
     t.integer  "approved_by"
     t.datetime "approved_on"
-    t.text     "types_list",                           default: "--- []\n"
-    t.integer  "edge_birthdate_certainty"
-    t.boolean  "is_approved",                          default: false
-    t.boolean  "is_active",                            default: true
-    t.boolean  "is_rejected",                          default: false
-    t.datetime "created_at",                                                null: false
-    t.datetime "updated_at",                                                null: false
-    t.string   "start_date_type",          limit: 255
-    t.string   "end_date_type",            limit: 255
-    t.text     "type_certainty_list",                  default: "--- []\n"
+    t.boolean  "is_approved",                    default: false
+    t.boolean  "is_active",                      default: true
+    t.boolean  "is_rejected",                    default: false
+    t.datetime "created_at",                                     null: false
+    t.datetime "updated_at",                                     null: false
+    t.string   "start_date_type",    limit: 255
+    t.string   "end_date_type",      limit: 255
     t.text     "bibliography"
+    t.boolean  "altered",                        default: false
   end
 
   add_index "relationships", ["person1_index"], name: "index_relationships_on_person1_index", using: :btree
@@ -201,7 +193,6 @@ ActiveRecord::Schema.define(version: 20171111031617) do
   create_table "user_group_contribs", force: :cascade do |t|
     t.integer  "group_id"
     t.integer  "created_by"
-    t.text     "annotation"
     t.text     "bibliography"
     t.integer  "approved_by"
     t.datetime "approved_on"
@@ -215,7 +206,6 @@ ActiveRecord::Schema.define(version: 20171111031617) do
   create_table "user_person_contribs", force: :cascade do |t|
     t.integer  "person_id"
     t.integer  "created_by"
-    t.text     "annotation"
     t.text     "bibliography"
     t.integer  "approved_by"
     t.date     "approved_on"
@@ -230,7 +220,6 @@ ActiveRecord::Schema.define(version: 20171111031617) do
     t.integer  "relationship_id"
     t.integer  "created_by"
     t.integer  "certainty"
-    t.text     "annotation"
     t.text     "bibliography"
     t.integer  "relationship_type_id"
     t.integer  "start_year"

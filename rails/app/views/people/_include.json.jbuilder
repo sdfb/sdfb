@@ -8,7 +8,7 @@ json.attributes do
   json.gender person.gender
   json.historical_significance person.historical_significance
   json.name person.display_name
-  json.groups person.approved_groups.map{|group| group.id.to_s}
+  json.groups person.approved_group_ids
 
 end
 json.type "person"

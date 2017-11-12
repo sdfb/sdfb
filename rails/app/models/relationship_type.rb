@@ -1,10 +1,8 @@
 class RelationshipType < ActiveRecord::Base
 
-  
   include Approvable
 
-  attr_accessible :description, :name, :relationship_type_inverse, :created_at, :created_by,
-    :default_rel_category # default_rel_category is never used and should be removed from the table.
+  attr_accessible :description, :name, :relationship_type_inverse, :created_at, :created_by
   
   # Relationships
   # -----------------------------
@@ -20,10 +18,7 @@ class RelationshipType < ActiveRecord::Base
 
   # Scope
   # ----------------------------- 
-  scope :all_recent,         -> { order(updated_at: :desc) }
   scope :for_user,           -> (user_input) { where('created_by = ?', "#{user_input}") }
-  scope :alphabetical,       -> { order(name: :asc) }
-  scope :order_by_sdfb_id,   -> { order(id: :asc) }
   scope :find_where_inverse, -> (relationship_type_input) { where('relationship_type_inverse = ?', "#{relationship_type_input}") }
 
   # Callbacks
@@ -32,7 +27,6 @@ class RelationshipType < ActiveRecord::Base
 
   # Custom Methods
   # -----------------------------
-
   # This record goes through all of the records where  
   # the relationship type is used as an inverse and makes that inverse null.
   def make_null_if_used_for_inverse

@@ -1,14 +1,10 @@
 class Group < ActiveRecord::Base
 
-  
   include Approvable
 
   attr_accessible  :description, :name, :justification, :bibliography,
                    :start_year, :end_year, :start_date_type, :end_date_type,
-                   :created_by, :created_at, 
-                   :person_list
-
-  serialize :person_list, Array #We're using group assignments instead
+                   :created_by, :created_at
   
   # Relationships
   # -----------------------------
@@ -29,15 +25,10 @@ class Group < ActiveRecord::Base
 
   # Scope
   # ----------------------------- 
-  scope :all_recent,            -> { order(updated_at: :desc) }
-  scope :for_id,                -> (id_input) { where('id = ?', "#{id_input}") }
   scope :for_user,              -> (user_input) { where('created_by = ?', "#{user_input}") }
-  scope :alphabetical,          -> { order(name: :asc) }
-  scope :order_by_sdfb_id,      -> { order(id: :asc) }
   
   # Callbacks
   # ----------------------------- 
-  before_create :init_person_list
   before_save   :create_check_start_and_end_date
 
   # Custom Methods
@@ -93,33 +84,6 @@ class Group < ActiveRecord::Base
     if (self.start_year.to_i > self.end_year.to_i)
       errors.add(:start_year, "The start year must be less than or equal to the end year")
       errors.add(:end_year, "The end year must be greater than or equal to the start year")
-    end
-  end
-
-  def init_person_list
-    self.person_list = nil
-  end
-
-  def get_users_name
-    if (created_by != nil)
-      return User.find(created_by).first_name + " " + User.find(created_by).last_name
-    else
-      return "ODNB"
-    end
-  end
-
-
-  # searches for people by name
-  def self.search_approved(search)
-    if search
-      return Group.all_approved.for_id(search.to_i)
-    end
-  end
-
-  # searches for people by name
-  def self.search_all(search)
-    if search
-      return Group.all.for_id(search.to_i)
     end
   end
 end

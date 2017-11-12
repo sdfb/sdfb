@@ -9,5 +9,8 @@ module SDFB
 
   PRIMARY_INVESTIGATORS = [ "Daniel Shore", "Chris Warren", "Jessica Otis"]
 
-  DEFAULT_CONFIDENCE = 60
+  DEFAULT_CONFIDENCE = 0
+
+  GENDER_LIST    = ["female", "male", "gender_nonconforming"]
+  USER_TYPES_LIST = ["Standard", "Curator", "Admin"]
 end

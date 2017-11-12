@@ -6,8 +6,6 @@ Sdfb::Application.configure do
   # since you don't have to restart the web server when you make code changes.
 
   config.eager_load = true 
-  config.assets.js_compressor = :uglifier
-  config.assets.css_compressor = :sass
 
 
   config.cache_classes = false
@@ -37,7 +35,6 @@ Sdfb::Application.configure do
 
   # Do compress assets
   config.assets.enabled = true
-  config.assets.js_compressor = :uglifier
   config.assets.compress = true
   config.serve_static_files = true
   config.serve_static_files = true
@@ -47,18 +44,7 @@ Sdfb::Application.configure do
   config.assets.debug = false
 
   # Precompile additional assets (application.js, application.css, and all non-JS/CSS are already added)
-  config.assets.precompile += [
-      'components.css',
-      'user_partial.css',
-      'new_form.css',
-      'normalize.css',
-  ]
-  config.assets.precompile += [
-      'script.js',
-      'user_partial.js',
-      'vendor/webflow.js',
-      'vendor/modernizr.js',
-  ]
+
 
   # # Don't fallback to assets pipeline if a precompiled asset is missed
   # config.assets.compile = false

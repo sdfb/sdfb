@@ -5,24 +5,8 @@ if @groups
     json.attributes do
       json.primary_people @primary_people.map{|p| p["id"].to_s}
       json.connections do
-        json.array! @relationships do |relationship|
-          json.id relationship.id.to_s
-          json.type "relationship"
-          json.attributes do
-            json.altered relationship.altered
-            json.end_year relationship.end_year
-            json.end_year_type relationship.end_date_type
-            json.source relationship.person2_index.to_s
-            json.start_year relationship.start_year
-            json.start_year_type relationship.start_date_type
-            json.target relationship.person1_index.to_s
-            json.weight relationship.max_certainty
-          end
-        end
+        json.partial! 'relationships/metadata', collection: @relationships, as: :relationship
       end
-      # json.nodes do
-
-      # end
     end
   end
   if @people || @groups
