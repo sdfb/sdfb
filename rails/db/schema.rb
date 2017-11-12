@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171111215046) do
+ActiveRecord::Schema.define(version: 20171111221437) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -184,6 +184,7 @@ ActiveRecord::Schema.define(version: 20171111215046) do
     t.string   "start_date_type",    limit: 255
     t.string   "end_date_type",      limit: 255
     t.text     "bibliography"
+    t.boolean  "altered",                        default: false
   end
 
   add_index "relationships", ["person1_index"], name: "index_relationships_on_person1_index", using: :btree

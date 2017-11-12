@@ -41,13 +41,13 @@ class Relationship < ActiveRecord::Base
   before_save :create_check_start_and_end_date
   before_update :update_max_certainty
   after_save    :update_met_record
+  after_save    :updated_altered_state!
 
 	# Custom Methods
   # -----------------------------
 
-  # TODO:  This is one of the biggest performance bottlenecks.  Can it be cached or saved? 
-  def altered
-    was_altered = (created_by && created_by != 2) || user_rel_contribs.where("created_by != ?",3).count > 0
+  def updated_altered_state!
+    self.altered = (created_by && created_by != 2) || user_rel_contribs.where("created_by != ?",3).count > 0
   end
 
   # -----------------------------

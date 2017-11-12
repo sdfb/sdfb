@@ -62,9 +62,11 @@ class Person < ActiveRecord::Base
   # Custom Methods
   # -----------------------------
 
-  def approved_groups
-    groups = self.group_assignments.where('group_assignments.is_approved = ?', true).map{|ga| ga.group_id}
-    Group.find(groups)
+  # TODO: This is now the performance bottlenext
+  def approved_group_ids
+    groups = self.group_assignments
+        .select(:group_id)
+        .where('group_assignments.is_approved = ?', true).map{|ga| ga.group_id}
   end
 
   # if the display name is blank then add one

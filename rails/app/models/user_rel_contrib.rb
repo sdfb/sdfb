@@ -42,6 +42,7 @@ class UserRelContrib < ActiveRecord::Base
   before_save :create_start_and_end_date
   before_save { remove_trailing_spaces(:bibliography)}
   after_save :update_max_certainty
+  after_save :updated_altered_state!
   after_create :set_approval_metadata
   after_destroy :update_max_certainty
 
@@ -52,6 +53,10 @@ class UserRelContrib < ActiveRecord::Base
       self.approved_by = "Admin"
       self.approved_on = Time.now
     end
+  end
+
+  def updated_altered_state!
+    relationship.updated_altered_state!
   end
 
   ## if a user submits a new relationship but does not 
