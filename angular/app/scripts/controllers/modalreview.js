@@ -19,7 +19,9 @@ angular.module('redesign2017App')
 
     $ctrl.remove = function(index, list1, list2) {
       list1.splice(index,1);
-      list2.splice(index,1);
+      if (list2 !== undefined) {
+        list2.splice(index,1);
+      }
     };
 
     $ctrl.ok = function() {
