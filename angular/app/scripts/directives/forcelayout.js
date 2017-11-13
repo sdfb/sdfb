@@ -354,8 +354,8 @@ angular.module('redesign2017App').directive('forceLayout', ['apiService', '$time
                 // console.log(d, d.attributes.name)
                 // Toggle ego networks on click of node
                 // if (d.id < 0) {
-                  // toggleClick(d, newLinks, this);
-                  console.log(d.id);
+                  toggleClick(d, newLinks, this);
+
                   if (d.distance === 7 && scope.config.contributionMode) {
 
                     scope.$apply(function() {
@@ -570,7 +570,15 @@ angular.module('redesign2017App').directive('forceLayout', ['apiService', '$time
 
           label.append('text')
             .text(function(d) {
-              return d.attributes.name;
+              if (scope.config.viewMode === 'all') {
+                if (d.attributes.name && d.attributes.name.length > 20) {
+                  return d.attributes.name.slice(0,20)+"..."
+                } else {
+                  return d.attributes.name;
+                }
+              } else {
+                return d.attributes.name;
+              }
             })
 
           // Get the Bounding Box of the text created
