@@ -8,11 +8,12 @@
  * Controller of the redesign2017App
  */
 angular.module('redesign2017App')
-  .controller('ModalReviewCtrl', ['$scope', '$uibModalInstance', '$timeout', 'addToDB', '$window', 'apiService', '$rootScope', 'addedNodes', function($scope, $uibModalInstance, $timeout, addToDB, $window, apiService, $rootScope, addedNodes) {
+  .controller('ModalReviewCtrl', ['$scope', '$uibModalInstance', '$timeout', 'addToDB', '$window', 'apiService', '$rootScope', 'addedNodes', 'addedGroups', function($scope, $uibModalInstance, $timeout, addToDB, $window, apiService, $rootScope, addedNodes, addedGroups) {
 
     var $ctrl = this;
     $ctrl.addToDB = addToDB;
     $ctrl.addedNodes = addedNodes;
+    $ctrl.addedGroups = addedGroups;
     // $ctrl.sendData = sendData;
 
     $ctrl.remove = function(index, list1, list2) {
