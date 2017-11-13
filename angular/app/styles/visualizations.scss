@@ -93,6 +93,11 @@ shared-network {
 
   .link.new {
     stroke: orange;
+    stroke-width: 2px;
+  }
+
+  .link.new:hover {
+    stroke-width: 4px;
   }
 
   .node {
