@@ -106,7 +106,7 @@ angular.module('redesign2017App')
         }
         scope.submitGroup = function() {
           console.log("group submitted");
-          var newGroup = angular.copy(scope.newGroup);
+          // var newGroup = angular.copy(scope.newGroup);
 
 
           scope.addedGroups.forEach(function (a,i) {
@@ -116,15 +116,28 @@ angular.module('redesign2017App')
               scope.addedGroups[i].attributes.degree = 5;
               scope.addedGroups[i].id = scope.newGroup.id;
             }
-          })
-          newGroup = angular.copy(scope.newGroup);
-          newGroup.startDateType = newGroup.startDateType.abbr;
-          newGroup.endDateType = newGroup.endDateType.abbr;
-          // newGroup.created_by = scope.config.userId;
+          });
+          var allIDs = {};
+          scope.addToDB.groups.forEach(function(n) { allIDs[n.id] = true; });
+          if (scope.newGroup.id in allIDs) {
+            console.log('not working');
+            scope.addToDB.groups.forEach(function (a,i) {
+              if (a.id === scope.newGroup.id) {
+                var newGroup = angular.copy(scope.newGroup);
+                scope.addToDB.groups[i] = newGroup;
+                scope.addToDB.groups[i].startDateType = newGroup.startDateType.abbr;
+                scope.addToDB.groups[i].endDateType = newGroup.endDateType.abbr;
+              }
+            })
+          } else {
+            console.log("working");
+            var newGroup = angular.copy(scope.newGroup);
+            newGroup.startDateType = newGroup.startDateType.abbr;
+            newGroup.endDateType = newGroup.endDateType.abbr;
+            scope.addToDB.groups.push(newGroup);
+          }
           scope.updateNetwork(scope.data);
 
-
-          if (!scope.newGroup.exists) { scope.addToDB.groups.push(newGroup); }
           scope.addGroupClosed = true;
           scope.newGroup = {};
           console.log(scope.addToDB);

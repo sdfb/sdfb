@@ -127,7 +127,6 @@ angular.module('redesign2017App')
         }
         scope.submitNode = function() {
           console.log("node submitted");
-          var newNode = angular.copy(scope.newNode);
 
           if (scope.notInView === true) {
             scope.addedNodes.forEach(function (a,i) {
@@ -136,15 +135,34 @@ angular.module('redesign2017App')
                 scope.addedNodes[i].attributes = scope.newNode;
                 scope.addedNodes[i].id = scope.newNode.id;
               }
-            })
-            newNode = angular.copy(scope.newNode);
+            });
+            var allIDs = {};
+            scope.addToDB.nodes.forEach(function(n) { allIDs[n.id] = true; });
+            if (!scope.newNode.exists) {
+              if (scope.origId in allIDs) {
+                console.log('not working');
+                scope.addToDB.nodes.forEach(function (a,i) {
+                  console.log(a.id, scope.newNode.id);
+                  if (a.id === scope.origId) {
+                    var newNode = angular.copy(scope.newNode);
+                    scope.addToDB.nodes[i] = newNode;
+                    scope.addToDB.nodes[i].birthDateType = newNode.birthDateType.abbr;
+                    scope.addToDB.nodes[i].deathDateType = newNode.deathDateType.abbr;
+                  }
+                })
+              } else {
+                console.log("working");
+                var newNode = angular.copy(scope.newNode);
+                newNode.birthDateType = newNode.birthDateType.abbr;
+                newNode.deathDateType = newNode.deathDateType.abbr;
+                scope.addToDB.nodes.push(newNode);
+              }
+            }
+
           }
-          // newNode.auth_token = $rootScope.user.auth_token;
-          newNode.birthDateType = newNode.birthDateType.abbr;
-          newNode.deathDateType = newNode.deathDateType.abbr;
+
           scope.updateNetwork(scope.data);
 
-          if (!scope.newNode.exists) { scope.addToDB.nodes.push(newNode); }
           scope.addNodeClosed = true;
           scope.newNode = {};
           scope.newNode.birthDateType = scope.newNode.deathDateType = scope.config.dateTypes[1];
