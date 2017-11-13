@@ -293,7 +293,22 @@ angular.module('redesign2017App').directive('forceLayout', ['apiService', '$time
               }
             })
             .on('click', function(d) { // Toggle link on click
-              toggleClick(d, newLinks);
+              toggleClick(d, newLinks, this);
+
+              if (d.new) {
+
+                console.log(d);
+                scope.$apply(function() {
+                  scope.newLink.source.name = d.source.attributes.name;
+                  scope.newLink.source.id = d.source.id;
+                  scope.newLink.target.name = d.target.attributes.name;
+                  scope.newLink.target.id = d.target.id;
+                  scope.newLink.confidence = d.weight;
+                  scope.newLink.startDate = d.start_year;
+                  scope.newLink.endDate = d.end_year;
+                  scope.addLinkClosed = false;
+                });
+              }
             });
 
 

@@ -65,7 +65,6 @@ angular.module('redesign2017App')
         scope.foundNewGroup = function($item) {
           scope.newGroup.exists = true;
           apiService.getGroups($item.id).then(function (result) {
-            console.log(result);
             var group = result.data[0];
 
             scope.newGroup.name = group.attributes.name;
@@ -79,7 +78,6 @@ angular.module('redesign2017App')
         }
 
         scope.removeGroup = function(id) {
-          console.log(id);
           scope.addedGroups.forEach(function(a, i) {
             if (a.id === id) {
               scope.addedGroups.splice(i,1);
@@ -106,11 +104,9 @@ angular.module('redesign2017App')
         }
         scope.submitGroup = function() {
           console.log("group submitted");
-          // var newGroup = angular.copy(scope.newGroup);
 
 
           scope.addedGroups.forEach(function (a,i) {
-            console.log(a.id, scope.newGroup.id);
             if (a.id === scope.newGroup.id) {
               scope.addedGroups[i].attributes = scope.newGroup;
               scope.addedGroups[i].attributes.degree = 5;
@@ -120,7 +116,6 @@ angular.module('redesign2017App')
           var allIDs = {};
           scope.addToDB.groups.forEach(function(n) { allIDs[n.id] = true; });
           if (scope.newGroup.id in allIDs) {
-            console.log('not working');
             scope.addToDB.groups.forEach(function (a,i) {
               if (a.id === scope.newGroup.id) {
                 var newGroup = angular.copy(scope.newGroup);
@@ -130,7 +125,6 @@ angular.module('redesign2017App')
               }
             })
           } else {
-            console.log("working");
             var newGroup = angular.copy(scope.newGroup);
             newGroup.startDateType = newGroup.startDateType.abbr;
             newGroup.endDateType = newGroup.endDateType.abbr;

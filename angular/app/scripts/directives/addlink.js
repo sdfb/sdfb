@@ -197,7 +197,7 @@ angular.module('redesign2017App')
             var nodeDistance = Math.sqrt(Math.pow(otherNode.x - d3.event.x, 2) + Math.pow(otherNode.y - d3.event.y, 2));
             if (otherNode != d && nodeDistance < 10) {
               console.log("new link added:", otherNode.attributes.name);
-              var newLink = {source: d, target: otherNode, weight: 100, start_year: 1500, end_year: 1700, new: true};
+              var newLink = {source: d, target: otherNode, weight: 60, start_year: 1500, end_year: 1700, new: true};
               addedLinks.push(newLink);
               scope.$apply(function() {
                 scope.legendClosed = true;
