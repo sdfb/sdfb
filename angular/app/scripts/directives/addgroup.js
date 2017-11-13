@@ -135,6 +135,7 @@ angular.module('redesign2017App')
           scope.addGroupClosed = true;
           scope.newGroup = {};
           console.log(scope.addToDB);
+          scope.newNode.startDateType = scope.newNode.endDateType = scope.config.dateTypes[1];
           scope.config.added = true;
 
         }

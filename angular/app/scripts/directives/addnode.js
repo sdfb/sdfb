@@ -128,7 +128,7 @@ angular.module('redesign2017App')
         scope.submitNode = function() {
           console.log("node submitted");
 
-          if (scope.notInView === true) {
+          if (scope.notInView === true || scope.notInView === undefined) {
             scope.addedNodes.forEach(function (a,i) {
               console.log(a.id, scope.newNode.id);
               if (a.id === scope.origId) {
@@ -138,7 +138,7 @@ angular.module('redesign2017App')
             });
             var allIDs = {};
             scope.addToDB.nodes.forEach(function(n) { allIDs[n.id] = true; });
-            if (!scope.newNode.exists) {
+            // if (!scope.newNode.exists) {
               if (scope.origId in allIDs) {
                 console.log('not working');
                 scope.addToDB.nodes.forEach(function (a,i) {
@@ -157,7 +157,7 @@ angular.module('redesign2017App')
                 newNode.deathDateType = newNode.deathDateType.abbr;
                 scope.addToDB.nodes.push(newNode);
               }
-            }
+            // }
 
           }
 

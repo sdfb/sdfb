@@ -170,7 +170,7 @@ angular.module('redesign2017App')
         return $http({
           method: 'POST',
           url: url,
-          data: JSON.stringify(data)
+          data: angular.toJson(data)
         }).then(function successCallback(response){
           return response;
         },function errorCallback(response){
