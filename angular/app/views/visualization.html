@@ -1,7 +1,7 @@
 <div class="panels-container">
   <section class="on-the-left">
     <search-panel class="panel collapsable left search" ng-class="{'collapsed' : searchClosed}"></search-panel>
-    <contextual-info-panel class="panel" ng-show=" config.viewMode != 'group-timeline' && !$parent.searchClosed " ng-class="{'contribution-mode-on': $parent.config.contributionMode}"></contextual-info-panel>
+    <contextual-info-panel class="panel context" ng-show=" config.viewMode != 'group-timeline' && !$parent.searchClosed " ng-class="{'contribution-mode-on': $parent.config.contributionMode}"></contextual-info-panel>
     <legend-panel class="panel timeline-legend" ng-if=" config.viewMode == 'group-timeline' && !$parent.searchClosed "></legend-panel>
     <div class="panel collapsable" ng-show="!$parent.searchClosed">
       <h4>Cite this:</h4>

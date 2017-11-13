@@ -1,9 +1,9 @@
 <section ng-if="!currentSelection.type">
   <p ng-if="!config.contributionMode" class="help-info">Select a person or a relation to display details.</p>
-  <h5 ng-if="config.contributionMode" class="contribution">In contribute mode you can edit people and relationships, or create new ones.</h5>
-  <h5 ng-if="config.contributionMode" class="contribution">Double-click anywhere on the canvas to add a person.</h5>
-  <h5 ng-if="config.contributionMode" class="contribution">Drag a node onto any other node to add a relationship.</h5>
-  <h5 ng-if="config.contributionMode" class="contribution">Drag a node onto the groups bar to add a person to a group.</h5>
+  <h4 ng-if="config.contributionMode" class="contribution">Contribute mode</h4>
+  <h5 ng-if="config.contributionMode" class="contribution"><i class="fa fa-plus-circle" aria-hidden="true"></i> To add a person: double-click anywhere on the canvas.</h5>
+  <h5 ng-if="config.contributionMode" class="contribution"><i class="faXX XXfa-plus-circle" aria-hidden="true" style="display: inline-block; width: 12.5px; height: 14px; background-image: url('/images/add-link-icon-black.svg'); background-repeat: no-repeat; background-size: cover;"></i> To add a relationship: drag a node onto any other node.</h5>
+  <h5 ng-if="config.contributionMode" class="contribution"><i class="fa fa-users" aria-hidden="true"></i> To add a person to a group: drag a node onto the groups bar at the bottom of the screen. </h5>
   <!-- <p><button ng-show="config.viewMode !== 'group-force'" type="button" class="btn btn-primary" ng-click="openTable()">See Table View</button></p>
   <p><button type="button" class="btn btn-primary">Export</button></p> -->
   <div class="btn-group btn-group-justified">
