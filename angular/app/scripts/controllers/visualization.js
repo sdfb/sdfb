@@ -96,17 +96,25 @@ angular.module('redesign2017App').component('visualization', {
       } else if ($stateParams.ids.length < 8) {
         $scope.config.viewMode = 'group-force';
         $rootScope.config.viewMode = 'group-force';
-        var groupName,
-            groupDescription;
-        $scope.data.included.forEach( function(item) {
-          if (item.id === $scope.data.data.id) {
-            groupName = item.attributes.name;
-            groupDescription = item.attributes.description;
-          }
-        });
-        $scope.groupName = groupName;
-        $scope.data.included = $scope.data.included.filter(function(n) { return n.id !== $scope.data.data.id; });
-        $scope.config.networkName = groupName + " Network";
+        var groupDescription;
+        if (!$scope.data.errors) {
+          $scope.data.included.forEach( function(item) {
+            if (item.id === $scope.data.data.id) {
+              $scope.groupName = item.attributes.name;
+              groupDescription = item.attributes.description;
+            }
+          });
+          $scope.data.included = $scope.data.included.filter(function(n) { return n.id !== $scope.data.data.id; });
+        } else {
+          console.log($rootScope.saveGroup);
+          $rootScope.saveGroup.attributes.startDateType = $rootScope.saveGroup.attributes.startDateType.abbr;
+          $rootScope.saveGroup.attributes.endDateType = $rootScope.saveGroup.attributes.endDateType.abbr;
+          $scope.addToDB.groups.push($rootScope.saveGroup.attributes);
+          $scope.groupName = $rootScope.saveGroup.attributes.name;
+          groupDescription = $rootScope.saveGroup.attributes.description;
+          $scope.data = {data: {id: $stateParams.ids, attributes: {primary_people: [], connections: []}, type: "network"}, included: []};
+        }
+        $scope.config.networkName = $scope.groupName + " Network";
         $scope.config.networkDesc = groupDescription;
         $scope.groupTypeahead.selected = groupName;
         $scope.personTypeahead.selected = '';

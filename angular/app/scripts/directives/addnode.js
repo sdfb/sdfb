@@ -7,7 +7,7 @@
  * # addNode
  */
 angular.module('redesign2017App')
-  .directive('addNode', ['apiService', '$rootScope', '$window', function (apiService, $rootScope, $window) {
+  .directive('addNode', ['apiService', '$rootScope', '$window', '$stateParams', function (apiService, $rootScope, $window, $stateParams) {
     return {
       templateUrl: './views/add-node.html',
       restrict: 'E',
@@ -150,7 +150,7 @@ angular.module('redesign2017App')
                     scope.addToDB.nodes[i].deathDateType = newNode.deathDateType.abbr;
                   }
                 })
-              } else {
+              } else if (!scope.newNode.exists) {
                 console.log("working");
                 var newNode = angular.copy(scope.newNode);
                 newNode.birthDateType = newNode.birthDateType.abbr;
@@ -158,6 +158,18 @@ angular.module('redesign2017App')
                 scope.addToDB.nodes.push(newNode);
               }
             // }
+            if (scope.alsoGroupAssign) {
+              var newGroupAssign = angular.copy(scope.newGroupAssign);
+              newGroupAssign.person = {};
+              newGroupAssign.group = {};
+              newGroupAssign.person.name = scope.newNode.name;
+              newGroupAssign.startDateType = newGroupAssign.startDateType.abbr;
+              newGroupAssign.endDateType = newGroupAssign.endDateType.abbr;
+              newGroupAssign.person.id = scope.newNode.id;
+              newGroupAssign.group.name = scope.groupName;
+              newGroupAssign.group.id = $stateParams.ids;
+              scope.addToDB.group_assignments.push(newGroupAssign);
+            }
 
           }
 
@@ -165,6 +177,7 @@ angular.module('redesign2017App')
 
           scope.addNodeClosed = true;
           scope.newNode = {};
+          scope.newGroupAssign = {};
           scope.newNode.birthDateType = scope.newNode.deathDateType = scope.config.dateTypes[1];
           console.log(scope.addToDB);
           scope.config.added = true;

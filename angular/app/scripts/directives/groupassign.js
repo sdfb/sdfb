@@ -133,7 +133,7 @@ angular.module('redesign2017App')
           var newGroupAssign = angular.copy(scope.groupAssign);
           newGroupAssign.startDateType = newGroupAssign.startDateType.abbr;
           newGroupAssign.endDateType = newGroupAssign.endDateType.abbr;
-          newGroupAssign.created_by = scope.config.userId;
+          // newGroupAssign.created_by = scope.config.userId;
           scope.addToDB.group_assignments.push(newGroupAssign);
           console.log(scope.addToDB);
 

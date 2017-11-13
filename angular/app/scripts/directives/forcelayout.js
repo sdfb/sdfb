@@ -6,7 +6,7 @@
  * @description
  * # forceLayout
  */
-angular.module('redesign2017App').directive('forceLayout', ['apiService', '$timeout', '$state', function(apiService, $timeout, $state) {
+angular.module('redesign2017App').directive('forceLayout', ['apiService', '$timeout', '$state', '$rootScope', function(apiService, $timeout, $state, $rootScope) {
     return {
       template: '<svg width="100%" height="100%"></svg>',
       restrict: 'E',
@@ -193,6 +193,7 @@ angular.module('redesign2017App').directive('forceLayout', ['apiService', '$time
           } else if (scope.config.viewMode === 'group-force') {
             var members = json.data.attributes.primary_people;
             var newData = parseGroupComplexity(json, scope.config.onlyMembers);
+            newData = [newData[0].slice(0), newData[1]];
             simulation.force("charge", d3.forceManyBody().strength(-50).distanceMax(200));
           } else if (scope.config.viewMode === 'all'){
             simulation.force("charge", d3.forceManyBody().strength(-500).distanceMax(200));
@@ -369,6 +370,7 @@ angular.module('redesign2017App').directive('forceLayout', ['apiService', '$time
               })
               .on('dblclick', function(d){
                 if (d.id < 0) {
+                  $rootScope.saveGroup = d;
                   $state.go('home.visualization', {ids: d.id, type: 'network'});
                 } else {
                   console.log('new node');
