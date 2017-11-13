@@ -306,6 +306,7 @@ angular.module('redesign2017App').directive('forceLayout', ['apiService', '$time
                   scope.newLink.confidence = d.weight;
                   scope.newLink.startDate = d.start_year;
                   scope.newLink.endDate = d.end_year;
+                  scope.newLink.id = d.id;
                   scope.addLinkClosed = false;
                 });
               }

@@ -60,6 +60,7 @@ angular.module('redesign2017App')
         scope.newLink.relType = scope.config.relTypes[3];
         scope.newLink.source = {};
         scope.newLink.target = {};
+        scope.addedLinkId = 0;
         scope.slider = {
           value: 60,
           options: {
@@ -197,10 +198,12 @@ angular.module('redesign2017App')
             var nodeDistance = Math.sqrt(Math.pow(otherNode.x - d3.event.x, 2) + Math.pow(otherNode.y - d3.event.y, 2));
             if (otherNode != d && nodeDistance < 10) {
               console.log("new link added:", otherNode.attributes.name);
-              var newLink = {source: d, target: otherNode, weight: 60, start_year: 1500, end_year: 1700, new: true};
+              var newLink = {id: scope.addedLinkId, source: d, target: otherNode, weight: 60, start_year: 1500, end_year: 1700, new: true};
               addedLinks.push(newLink);
               scope.$apply(function() {
                 scope.legendClosed = true;
+                scope.newLink.id = scope.addedLinkId;
+                scope.addedLinkId += 1;
               });
             }
           });
@@ -213,6 +216,24 @@ angular.module('redesign2017App')
               return 6.25;
             }
           });
+        }
+
+        scope.removeLink = function(id) {
+          scope.addedLinks.forEach(function(a, i) {
+            if (a.id === id) {
+              scope.addedLinks.splice(i,1);
+            }
+          })
+          scope.addToDB.links.forEach(function(a, i) {
+            if (a.id === id) {
+              scope.addToDB.links.splice(i,1);
+            }
+          })
+          scope.updateNetwork(scope.data);
+          scope.newLink = {source: {}, target: {}};
+          scope.newLink.startDateType = scope.newLink.endDateType = scope.config.dateTypes[1];
+          scope.addLinkClosed = true;
+
         }
 
         scope.submitLink = function() {
