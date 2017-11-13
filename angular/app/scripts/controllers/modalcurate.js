@@ -68,10 +68,18 @@ angular.module('redesign2017App')
 
     $ctrl.close = function() {
       $ctrl.addToDB = {}
+      $ctrl.addToDB.auth_token = $rootScope.user.auth_token;
       $ctrl.addToDB.nodes = [];
       $ctrl.people.forEach(function (p) {
         var newPerson = {};
         newPerson.id = parseInt(p.id);
+        newPerson.name = p.attributes.name;
+        newPerson.birthDate = p.attributes.birth_year;
+        newPerson.birthDateType = p.attributes.birth_year_type;
+        newPerson.deathDate = p.attributes.death_year;
+        newPerson.deathDateType = p.attributes.death_year_type;
+        newPerson.gender = p.attributes.gender;
+        newPerson.historical_significance = p.attributes.historical_significance;
         newPerson.is_approved = p.is_approved;
         if (newPerson.is_approved) {
           $ctrl.addToDB.nodes.push(newPerson);
@@ -80,7 +88,8 @@ angular.module('redesign2017App')
       $ctrl.addToDB.links = [];
       $ctrl.addToDB.groups = [];
       $ctrl.addToDB.group_assignments = [];
-      $ctrl.addToDB.auth_token = $rootScope.user.auth_token;
+
+      // apiService.writeData($ctrl.addToDB);
       $uibModalInstance.close($ctrl.addToDB);
     }
 

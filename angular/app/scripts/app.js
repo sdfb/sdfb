@@ -90,7 +90,7 @@ redesign2017App.config(function($stateProvider, $locationProvider, $compileProvi
             },
             controller: ['$scope', 'user', function($scope, user) {
 
-              // var $ctrl = this;
+              // var $scope = this;
               $scope.user = user.data;
               console.log($scope.user);
 

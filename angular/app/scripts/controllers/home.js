@@ -10,7 +10,7 @@
 angular.module('redesign2017App').component('home', {
   // bindings: { networkData: '<' },
   templateUrl: 'views/home.html',
-  controller: ['$scope', '$stateParams', '$uibModal', '$log', '$cookieStore', 'apiService', '$rootScope', function($scope, $stateParams, $uibModal, $log, $cookieStore, apiService, $rootScope) {
+  controller: ['$scope', '$stateParams', '$uibModal', '$log', '$cookieStore', 'apiService', '$rootScope', '$http', function($scope, $stateParams, $uibModal, $log, $cookieStore, apiService, $rootScope, $http) {
     $scope.config = {
       contributionMode: false,
       layout: 'individual-force',
@@ -72,9 +72,21 @@ angular.module('redesign2017App').component('home', {
           }
         }
       });
-      modalInstance.result.then(function(result) {
-        console.log(JSON.stringify(result));
-        apiService.writeData(result);
+      modalInstance.result.then(function(data) {
+        console.log(JSON.stringify(data));
+        apiService.writeData(data);
+        // var url = 'http://sixdegr-dev.library.cmu.edu/tools/api/write';
+        // return $http({
+        //   method: 'POST',
+        //   url: url,
+        //   data: angular.toJson(data)
+        // }).then(function successCallback(response){
+        //   return response;
+        // },function errorCallback(response){
+        //   console.error("An error occured while fetching file",response);
+        //   console.warn("If the issue is related to CORS Origin, try install this extention on Chrome: https://chrome.google.com/webstore/detail/allow-control-allow-origi/nlfbmbojpeacfghkpbjhddihlkkiljbi")
+        //   return response;
+        // });
       }, function() {
         $log.info('Modal dismissed at: ' + new Date());
       });
