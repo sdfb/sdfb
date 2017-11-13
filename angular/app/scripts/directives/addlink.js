@@ -245,11 +245,43 @@ angular.module('redesign2017App')
           if (!newLink.endDate) {
             newLink.endDate = d3.select('#endDate').attr('placeholder');
           }
-          newLink.startDateType = newLink.startDateType.abbr;
-          newLink.endDateType = newLink.endDateType.abbr;
-          newLink.relType = newLink.relType.id.toString();
-          newLink.created_by = scope.config.userId;
-          scope.addToDB.links.push(newLink);
+
+          scope.addedLinks.forEach(function (a,i) {
+            if (a.id === newLink.id) {
+              scope.addedLinks[i].source.attributes.name = newLink.source.name;
+              scope.addedLinks[i].source.id = newLink.source.id;
+              scope.addedLinks[i].target.attributes.name = newLink.target.name;
+              scope.addedLinks[i].target.id = newLink.target.id;
+              scope.addedLinks[i].weight = newLink.confidence;
+              scope.addedLinks[i].start_year = newLink.startDate;
+              scope.addedLinks[i].end_year = newLink.endDate;
+              scope.addedLinks[i].start_year_type = newLink.startDateType;
+              scope.addedLinks[i].end_year_type = newLink.endDateType;
+              scope.addedLinks[i].id = newLink.id;
+              scope.addedLinks[i].relType = newLink.relType;
+            }
+          });
+          var allIDs = {};
+          scope.addToDB.links.forEach(function(n) { allIDs[n.id] = true; });
+          if (scope.newLink.id in allIDs) {
+            scope.addToDB.links.forEach(function (a,i) {
+              if (a.id === newLink.id) {
+                scope.addToDB.links[i] = newLink;
+                scope.addToDB.links[i].startDateType = newLink.startDateType.abbr;
+                scope.addToDB.links[i].endDateType = newLink.endDateType.abbr;
+                newLink.relType = newLink.relType.id.toString();
+              }
+            })
+          } else {
+            newLink.startDateType = newLink.startDateType.abbr;
+            newLink.endDateType = newLink.endDateType.abbr;
+            newLink.relType = newLink.relType.id.toString();
+            scope.addToDB.links.push(newLink);
+          }
+          // newLink.startDateType = newLink.startDateType.abbr;
+          // newLink.endDateType = newLink.endDateType.abbr;
+          // newLink.relType = newLink.relType.id.toString();
+          // scope.addToDB.links.push(newLink);
           console.log(scope.addToDB);
           scope.addLinkClosed = true;
           scope.newLink = {source: {}, target: {}};

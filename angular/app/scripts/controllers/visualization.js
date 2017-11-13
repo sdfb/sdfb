@@ -230,6 +230,9 @@ angular.module('redesign2017App').component('visualization', {
           },
           addedGroups: function() {
             return $scope.addedGroups;
+          },
+          addedLinks: function() {
+            return $scope.addedLinks;
           }
         }
       });
