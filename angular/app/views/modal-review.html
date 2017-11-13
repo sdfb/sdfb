@@ -32,7 +32,7 @@
                 <td>{{ person.gender }}</td>
                 <td>{{ person.alternates }}</td>
                 <td>
-                    <i class="fa fa-times" aria-hidden="true" type="button" ng-click="$ctrl.remove($index, $ctrl.addToDB.nodes)" aria-label="Remove"></i>
+                    <i class="fa fa-times" aria-hidden="true" type="button" ng-click="$ctrl.remove($index, $ctrl.addToDB.nodes, $ctrl.addedNodes)" aria-label="Remove"></i>
                 </td>
             </tr>
         </tbody>
@@ -57,7 +57,7 @@
                 <td>{{ rel.endDateType }} {{ rel.endDate }}</td>
                 <td>{{ rel.confidence }}</td>
                 <td>
-                    <i class="fa fa-times" aria-hidden="true" type="button" ng-click="$ctrl.remove($index, $ctrl.addToDB.links)" aria-label="Remove"></i>
+                    <i class="fa fa-times" aria-hidden="true" type="button" ng-click="$ctrl.remove($index, $ctrl.addToDB.links, $ctrl.addedLinks)" aria-label="Remove"></i>
                 </td>
             </tr>
         </tbody>
@@ -80,7 +80,7 @@
                 <td>{{ group.startDateType }} {{ group.startDate }}</td>
                 <td>{{ group.endDateType }} {{ group.endDate }}</td>
                 <td>
-                    <i class="fa fa-times" aria-hidden="true" type="button" ng-click="$ctrl.remove($index, $ctrl.addToDB.groups)" aria-label="Remove"></i>
+                    <i class="fa fa-times" aria-hidden="true" type="button" ng-click="$ctrl.remove($index, $ctrl.addToDB.groups, $ctrl.addedGroups)" aria-label="Remove"></i>
                 </td>
             </tr>
         </tbody>

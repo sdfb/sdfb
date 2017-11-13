@@ -210,6 +210,84 @@ angular.module('redesign2017App')
           return response;
         });
       },
+      getUser : function(id, token){
+
+        var url = baseUrl + '/api/users';
+        return $http({
+          method: 'GET',
+          url: url,
+          params: {
+              id: id,
+              auth_token: token
+            }
+        }).then(function successCallback(response){
+          return response;
+        },function errorCallback(response){
+          console.error("An error occured while fetching file",response);
+          console.warn("If the issue is related to CORS Origin, try install this extention on Chrome: https://chrome.google.com/webstore/detail/allow-control-allow-origi/nlfbmbojpeacfghkpbjhddihlkkiljbi")
+          return response;
+        });
+      },
+      newUser : function(data){
+
+        var url = baseUrl + '/api/new_user';
+        return $http({
+          method: 'POST',
+          url: url,
+          data: JSON.stringify(data)
+        }).then(function successCallback(response){
+          return response;
+        },function errorCallback(response){
+          console.error("An error occured while fetching file",response);
+          console.warn("If the issue is related to CORS Origin, try install this extention on Chrome: https://chrome.google.com/webstore/detail/allow-control-allow-origi/nlfbmbojpeacfghkpbjhddihlkkiljbi")
+          return response;
+        });
+      },
+      editUser : function(data){
+
+        var url = baseUrl + '/api/edit_user';
+        return $http({
+          method: 'POST',
+          url: url,
+          data: JSON.stringify(data)
+        }).then(function successCallback(response){
+          return response;
+        },function errorCallback(response){
+          console.error("An error occured while fetching file",response);
+          console.warn("If the issue is related to CORS Origin, try install this extention on Chrome: https://chrome.google.com/webstore/detail/allow-control-allow-origi/nlfbmbojpeacfghkpbjhddihlkkiljbi")
+          return response;
+        });
+      },
+      requestReset : function(data){
+
+        var url = baseUrl + '/api/request_password_reset';
+        return $http({
+          method: 'POST',
+          url: url,
+          data: JSON.stringify(data)
+        }).then(function successCallback(response){
+          return response;
+        },function errorCallback(response){
+          console.error("An error occured while fetching file",response);
+          console.warn("If the issue is related to CORS Origin, try install this extention on Chrome: https://chrome.google.com/webstore/detail/allow-control-allow-origi/nlfbmbojpeacfghkpbjhddihlkkiljbi")
+          return response;
+        });
+      },
+      resetPassword : function(data){
+
+        var url = baseUrl + '/api/password_reset';
+        return $http({
+          method: 'POST',
+          url: url,
+          data: JSON.stringify(data)
+        }).then(function successCallback(response){
+          return response;
+        },function errorCallback(response){
+          console.error("An error occured while fetching file",response);
+          console.warn("If the issue is related to CORS Origin, try install this extention on Chrome: https://chrome.google.com/webstore/detail/allow-control-allow-origi/nlfbmbojpeacfghkpbjhddihlkkiljbi")
+          return response;
+        });
+      },
       curatePeople : function(token){
 
         var url = baseUrl + '/api/curate/people';
@@ -264,6 +342,23 @@ angular.module('redesign2017App')
       curateGroups : function(token){
 
         var url = baseUrl + '/api/curate/groups';
+        return $http({
+          method: 'GET',
+          url: url,
+          params: {
+              auth_token: token
+            }
+        }).then(function successCallback(response){
+          return response.data;
+        },function errorCallback(response){
+          console.error("An error occured while fetching file",response);
+          console.warn("If the issue is related to CORS Origin, try install this extention on Chrome: https://chrome.google.com/webstore/detail/allow-control-allow-origi/nlfbmbojpeacfghkpbjhddihlkkiljbi")
+          return response;
+        });
+      },
+      curateGroupAssignments : function(token){
+
+        var url = baseUrl + '/api/curate/group_assignments';
         return $http({
           method: 'GET',
           url: url,

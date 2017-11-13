@@ -8,7 +8,7 @@
       <input ng-disabled="true" type="text" ng-model="groupAssign.person.name" class="form-control">
 
       <h4>Group</h4>
-      <input type="text" ng-model="groupAssign.group.name" class="form-control" uib-typeahead="group as group.name for group in $parent.callGroupsTypeahead($viewValue)" typeahead-loading="loadingGroups" typeahead-no-results="noResultsGroups" typeahead-show-hint="true" typeahead-min-length="3" typeahead-on-select="groupAssignSelected($item, $model, $label, $event)">
+      <input type="text" ng-model="groupAssign.group.name" class="form-control" uib-typeahead="group as group.name for group in callGroupsTypeahead($viewValue)" typeahead-loading="loadingGroups" typeahead-no-results="noResultsGroups" typeahead-show-hint="true" typeahead-min-length="3" typeahead-on-select="groupAssignSelected($item, $model, $label, $event)">
 
       <h4>Start date</h4>
       <div class="input-group">
@@ -25,13 +25,15 @@
       <h4>Citation</h4>
       <textarea type="text" ng-model="groupAssign.citation" class="form-control"></textarea>
 
+      <br><input ng-show="$root.user.user_type !== 'Standard'" ng-model="groupAssign.is_approved" type="checkbox"/> Approved?</input>
+
       <p>Your submission needs to be validated by SDFB curators. You will see it as unapproved contribution in the meantime.</p>
       <button type="submit" class="btn btn-primary">Add & Continue</button>
     </div>
   </form>
 
 </section>
-<span class="close" ng-click="groupAssignClosed = !groupAssignClosed; peopleFinderClosed = true; legendClosed = true; filtersClosed = true;" style="color: white;">
+<span class="close" ng-click="groupAssignAlert()" style="color: white;">
 	<i ng-if="!groupAssignClosed" class="fa fa-times" aria-hidden="true"></i>
 	<i ng-if="groupAssignClosed" class="fa fa-users" aria-hidden="true"></i>
 </span>

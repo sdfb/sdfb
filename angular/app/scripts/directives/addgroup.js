@@ -2,18 +2,27 @@
 
 /**
  * @ngdoc directive
- * @name redesign2017App.directive:addNode
+ * @name redesign2017App.directive:addGroup
  * @description
- * # addNode
+ * # addGroup
  */
 angular.module('redesign2017App')
-  .directive('addGroup', ['apiService', function (apiService) {
+  .directive('addGroup', ['apiService', '$window', '$rootScope', function (apiService, $window, $rootScope) {
     return {
       templateUrl: './views/add-group.html',
       restrict: 'E',
       link: function postLink(scope, element, attrs) {
-        // element.text('this is the addNode directive');
         scope.newGroup.startDateType = scope.newGroup.endDateType = scope.config.dateTypes[1];
+
+        scope.addedGroupId = -1;
+
+        scope.groupAlert = function() {
+          if (scope.addGroupClosed) {
+            $window.alert('To add a group, double-click anywhere on the canvas. To edit a new group, click on the node.');
+          } else {
+            scope.addGroupClosed = true;
+          }
+        }
 
         scope.$watch('noResultsPersonAdd', function(newValue, oldValue) {
           // scope.noResults = newValue;
@@ -26,14 +35,25 @@ angular.module('redesign2017App')
         // When canvas is clicked, add a new circle with dummy data
         scope.addGroupNode = function(addedGroups, point, update) {
           scope.newGroup.exists = false;
+          scope.newGroup.id = scope.addedGroupId;
 
-          var newGroup = { attributes: { name: scope.newGroup.name, degree: 1 }, id: 0, distance: 7, x: point[0], y: point[1]};
+          var x = point[0];
+          var y = point[1];
+
+          var newGroup = { attributes: { name: scope.newGroup.name, degree: 5 }, id: scope.addedGroupId, distance: 7, x: x, y: y};
           newGroup.vx = null;
           newGroup.vy = null;
+          newGroup.fx = x;
+          newGroup.fy = y;
+          newGroup.absx = x;
+          newGroup.absy = y;
           addedGroups.push(newGroup);
           scope.$apply(function() {
             scope.addGroupClosed = false;
             scope.legendClosed = true;
+            scope.newGroup.id = scope.addedGroupId;
+            $rootScope.filtersClosed = true;
+            scope.addedGroupId -= 1;
           });
 
           update(scope.data);
@@ -45,7 +65,6 @@ angular.module('redesign2017App')
         scope.foundNewGroup = function($item) {
           scope.newGroup.exists = true;
           apiService.getGroups($item.id).then(function (result) {
-            console.log(result);
             var group = result.data[0];
 
             scope.newGroup.name = group.attributes.name;
@@ -54,7 +73,26 @@ angular.module('redesign2017App')
             scope.newGroup.endDate = group.attributes.end_year;
             scope.newGroup.endDateType = group.attributes.end_year_type;
             scope.newGroup.description = group.attributes.description;
+            scope.newGroup.id = group.id;
           });
+        }
+
+        scope.removeGroup = function(id) {
+          scope.addedGroups.forEach(function(a, i) {
+            if (a.id === id) {
+              scope.addedGroups.splice(i,1);
+            }
+          })
+          scope.addToDB.groups.forEach(function(a, i) {
+            if (a.id === id) {
+              scope.addToDB.groups.splice(i,1);
+            }
+          })
+          scope.updateNetwork(scope.data);
+          scope.newGroup = {};
+          scope.newGroup.startDateType = scope.newGroup.endDateType = scope.config.dateTypes[1];
+          scope.addGroupClosed = true;
+
         }
 
         function checkForNameless(arr) {
@@ -66,23 +104,34 @@ angular.module('redesign2017App')
         }
         scope.submitGroup = function() {
           console.log("group submitted");
-          var newGroup = angular.copy(scope.newGroup);
 
 
-          if (scope.addedGroups.length > 0 && !scope.addedGroups[scope.addedGroups.length-1].attributes.name) {
-            scope.addedGroups[scope.addedGroups.length-1].attributes.name = newGroup.name;
+          scope.addedGroups.forEach(function (a,i) {
+            if (a.id === scope.newGroup.id) {
+              scope.addedGroups[i].attributes = scope.newGroup;
+              scope.addedGroups[i].attributes.degree = 5;
+              scope.addedGroups[i].id = scope.newGroup.id;
+            }
+          });
+          var allIDs = {};
+          scope.addToDB.groups.forEach(function(n) { allIDs[n.id] = true; });
+          if (scope.newGroup.id in allIDs) {
+            scope.addToDB.groups.forEach(function (a,i) {
+              if (a.id === scope.newGroup.id) {
+                var newGroup = angular.copy(scope.newGroup);
+                scope.addToDB.groups[i] = newGroup;
+                scope.addToDB.groups[i].startDateType = newGroup.startDateType.abbr;
+                scope.addToDB.groups[i].endDateType = newGroup.endDateType.abbr;
+              }
+            })
+          } else {
+            var newGroup = angular.copy(scope.newGroup);
+            newGroup.startDateType = newGroup.startDateType.abbr;
+            newGroup.endDateType = newGroup.endDateType.abbr;
+            scope.addToDB.groups.push(newGroup);
           }
-          else if (scope.addedGroups.length === 0 || !checkForNameless(scope.addedGroups)) {
-            var realNewGroup = { attributes: { name: scope.newGroup.name, degree: 1 }, id: 0, distance: 7, x: scope.singleWidth/2, y: scope.singleHeight/2};
-            scope.addedGroups.push(realNewGroup);
-          }
-          newGroup.startDateType = newGroup.startDateType.abbr;
-          newGroup.endDateType = newGroup.endDateType.abbr;
-          newGroup.created_by = scope.config.userId;
           scope.updateNetwork(scope.data);
 
-
-          if (!scope.newGroup.exists) { scope.addToDB.groups.push(newGroup); }
           scope.addGroupClosed = true;
           scope.newGroup = {};
           console.log(scope.addToDB);

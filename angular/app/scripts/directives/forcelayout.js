@@ -58,20 +58,26 @@ angular.module('redesign2017App').directive('forceLayout', ['apiService', '$time
               d3.selectAll('g.label')
                 .classed('hidden', function(d) {
                   if (scope.config.viewMode === 'shared-network') {
-                    return (d.distance === 0 || d.distance === 3) ? false : true;
+                    return (d.distance === 0 || d.distance === 3 || d.distance === 7) ? false : true;
                   } else if (scope.config.viewMode === 'group-force') {
                     var members = scope.data.data.attributes.primary_people;
-                    return (members.indexOf(d.id) === -1) ? true : false;
+                    return (members.indexOf(d.id) !== -1 || d.distance === 7) ? false : true;
                   } else if (scope.config.viewMode === 'all') {
                     return false;
                   } else {
-                    return (d.distance < 2) ? false : true;
+                    return (d.distance < 2 || d.distance === 7) ? false : true;
                   }
                 });
 
               // reset group bar
               d3.selectAll('.group').classed('active', false);
               d3.selectAll('.group').classed('unactive', false);
+
+              // update selction and trigger event for other directives
+              scope.currentSelection = {};
+              scope.$apply(); // no need to trigger events, just apply
+            })
+            .on('dblclick', function () {
 
               if (scope.$parent.config.contributionMode) {
                 var point = d3.mouse(container.node());
@@ -81,9 +87,7 @@ angular.module('redesign2017App').directive('forceLayout', ['apiService', '$time
                   scope.addNode(scope.addedNodes, point, scope.updateNetwork);
                 }
               }
-              // update selction and trigger event for other directives
-              scope.currentSelection = {};
-              scope.$apply(); // no need to trigger events, just apply
+
             });
 
           var container = scope.singleSvg.append('g'); // Create container for nodes and edges
@@ -189,10 +193,10 @@ angular.module('redesign2017App').directive('forceLayout', ['apiService', '$time
           } else if (scope.config.viewMode === 'group-force') {
             var members = json.data.attributes.primary_people;
             var newData = parseGroupComplexity(json, scope.config.onlyMembers);
-            simulation.force("charge", d3.forceManyBody().strength(-100).distanceMax(200));
-          } else {
-            simulation.force("charge", d3.forceManyBody().strength(-100).distanceMax(200));
-            var nodes = json.included;
+            simulation.force("charge", d3.forceManyBody().strength(-50).distanceMax(200));
+          } else if (scope.config.viewMode === 'all'){
+            simulation.force("charge", d3.forceManyBody().strength(-500).distanceMax(200));
+            var nodes = json.included.slice(0);
             var links = [];
             json.data.attributes.connections.forEach(function(l) {
               links.push({
@@ -215,7 +219,7 @@ angular.module('redesign2017App').directive('forceLayout', ['apiService', '$time
           }
           scope.addedLinks.forEach(function(a) { newLinks.push(a); });
 
-          if (scope.config.viewMode === 'individual-force' && scope.$parent.config.layout == 'individual-concentric') {
+          if (scope.config.viewMode === 'individual-force' && scope.config.layout == 'individual-concentric') {
             // For concentric layout, set fixed positions according to degree
             newNodes.forEach(function(d) {
               if (d.distance == 0) { // Set source node to center of view
@@ -240,9 +244,9 @@ angular.module('redesign2017App').directive('forceLayout', ['apiService', '$time
                 d.fy = scope.singleHeight/2
               }
             })
-          } else {
+          } else if (scope.config.viewMode === 'individual-force' && scope.config.layout == 'individual-force') {
             // For force layout, set fixed positions to null (undoes circle positioning)
-            nodes.forEach(function(d) {
+            newNodes.forEach(function(d) {
               d.fx = null;
               d.fy = null;
             });
@@ -289,7 +293,27 @@ angular.module('redesign2017App').directive('forceLayout', ['apiService', '$time
               }
             })
             .on('click', function(d) { // Toggle link on click
-              toggleClick(d, newLinks);
+              toggleClick(d, newLinks, this);
+
+              if (d.new) {
+
+                console.log(d);
+                scope.$apply(function() {
+                  scope.newLink.source.name = d.source.attributes.name;
+                  scope.newLink.source.id = d.source.id;
+                  scope.newLink.target.name = d.target.attributes.name;
+                  scope.newLink.target.id = d.target.id;
+                  scope.newLink.confidence = d.weight;
+                  scope.newLink.startDate = d.start_year;
+                  scope.newLink.startDateType = d.start_year_type;
+                  scope.newLink.endDate = d.end_year;
+                  scope.newLink.endDateType = d.end_year_type;
+                  scope.newLink.relType = d.relType;
+                  scope.newLink.id = d.id;
+                  scope.addLinkClosed = false;
+                  console.log(scope.newLink);
+                });
+              }
             });
 
 
@@ -320,32 +344,44 @@ angular.module('redesign2017App').directive('forceLayout', ['apiService', '$time
             node.exit().remove();
             node = node.enter().append("rect")
               .merge(node)
-              .attr("class", "node")
+              .attr("class", "node all")
               .attr("width", function(d) { return (2 * sizeScale(d.attributes.degree)) / Math.sqrt(2); })
               .attr("height", function(d) { return (2 * sizeScale(d.attributes.degree)) / Math.sqrt(2); })
               .attr("rx", 2)
               .attr("ry", 2)
-              .classed("degree7", function(d) { return d.distance === 7; })
-              .classed("all", function (d) { return d.distance !== 7; })
+              .classed("new", function(d) { return d.distance === 7; })
               .on("click", function(d) {
                 // console.log(d, d.attributes.name)
                 // Toggle ego networks on click of node
-                toggleClick(d, newLinks, this);
+                // if (d.id < 0) {
+                  // toggleClick(d, newLinks, this);
+                  console.log(d.id);
+                  if (d.distance === 7 && scope.config.contributionMode) {
+
+                    scope.$apply(function() {
+                      // scope.origId = d.order;
+                      scope.newGroup = d.attributes;
+                      scope.newGroup.id = d.id;
+                      scope.addGroupClosed = false;
+                    });
+                  }
+                // }
               })
               .on('dblclick', function(d){
-                if (d.id !== 0) {
+                if (d.id < 0) {
                   $state.go('home.visualization', {ids: d.id, type: 'network'});
                 } else {
                   console.log('new node');
-                  scope.$apply(function() {
-                    scope.config.viewMode = 'group-force';
-                    scope.data = {};
-                    scope.data.included = [];
-                    scope.data.data = {};
-                    scope.data.data.attributes = {};
-                    scope.data.data.attributes.primary_people = [];
-                    scope.data.data.attributes.connections = [];
-                  });
+                  $state.go('home.visualization', {ids: d.id, type: 'network'});
+                  // scope.$apply(function() {
+                  //   scope.config.viewMode = 'group-force';
+                  //   scope.data = {};
+                  //   scope.data.included = [];
+                  //   scope.data.data = {};
+                  //   scope.data.data.attributes = {};
+                  //   scope.data.data.attributes.primary_people = [];
+                  //   scope.data.data.attributes.connections = [];
+                  // });
 
                 }
               })
@@ -417,18 +453,18 @@ angular.module('redesign2017App').directive('forceLayout', ['apiService', '$time
                 if (scope.config.viewMode == 'shared-network') {
                   if (d.distance === 0 || d.distance === 3) {
                     return 25;
-                  } else if (d.distance === 2) {
+                  } else if (d.distance === 2 || d.distance == 7) {
                     return 12.5;
                   } else {
                     return 6.25;
                   }
                 } else if (scope.config.viewMode === 'group-force') {
-                  if (members.indexOf(d.id) === -1) { return 6.25; }
-                  else { return 12.5; };
+                  if (members.indexOf(d.id) === -1 && d.distance !== 7) { return 6.25; }
+                  else if (members.indexOf(d.id) !== -1 || d.distance == 7) { return 12.5; };
                 } else {
                   if (d.distance == 0) {
                     return 25;
-                  } else if (d.distance == 1) {
+                  } else if (d.distance == 1 || d.distance == 7) {
                     return 12.5;
                   } else {
                     return 6.25;
@@ -439,6 +475,17 @@ angular.module('redesign2017App').directive('forceLayout', ['apiService', '$time
                 // Toggle ego networks on click of node
 
                 toggleClick(d, newLinks, this);
+
+                if (d.distance === 7 && scope.config.contributionMode) {
+                  console.log(d.id);
+                  scope.$apply(function() {
+                    scope.origId = d.order;
+                    scope.newNode = d.attributes;
+                    scope.newNode.id = d.id;
+                    scope.addNodeClosed = false;
+                  });
+                }
+
               })
               .on('dblclick', function(d){
                 $state.go('home.visualization', {ids: d.id});
@@ -502,13 +549,13 @@ angular.module('redesign2017App').directive('forceLayout', ['apiService', '$time
           var labelEnter = label.enter().append('g')
             .attr("class", function(d) {
               if (scope.config.viewMode === 'shared-network') {
-                return (d.distance === 0 || d.distance === 3) ? 'label' : 'label hidden';
+                return (d.distance === 0 || d.distance === 3 || d.distance === 7) ? 'label' : 'label hidden';
               } else if (scope.config.viewMode === 'group-force') {
-                return (members.indexOf(d.id) === -1) ? 'label hidden' : 'label';
+                return (members.indexOf(d.id) === -1 && d.distance !== 7) ? 'label hidden' : 'label';
               } else if (scope.config.viewMode === 'all') {
                 return 'label';
               }{
-                return (d.distance < 2) ? 'label' : 'label hidden';
+                return (d.distance < 2 || d.distance === 7) ? 'label' : 'label hidden';
               }
             })
             .attr('id', function(d) { // Assign ID number
@@ -554,6 +601,7 @@ angular.module('redesign2017App').directive('forceLayout', ['apiService', '$time
 
           simulation.alphaTarget(0).restart();
 
+
           oldLayout = layout;
         }
 
@@ -561,8 +609,11 @@ angular.module('redesign2017App').directive('forceLayout', ['apiService', '$time
 
         function dragged(d) {
           if (d.distance === 7) {
+            console.log('newNode drag');
             d.x = d3.event.x;
             d.y = d3.event.y;
+            d.fx = d3.event.x;
+            d.fy = d3.event.y;
           }
           else {
             d.fx = d3.event.x;
@@ -615,12 +666,28 @@ angular.module('redesign2017App').directive('forceLayout', ['apiService', '$time
         function dragended(d) {
 
           // var nodes = scope.data.included;
+
           if (scope.$parent.config.contributionMode) {
-            scope.createNewLink(d, scope.dragNodes, scope.addedLinks);
+            if (scope.config.viewMode !== 'all') {
+              scope.createNewLink(d, scope.dragNodes, scope.addedLinks);
+            }
+            if (d.distance === 7) {
+              d.x = d.absx
+              d.y = d.absy
+              d.fx = d.absx
+              d.fy = d.absy
+            } else if (scope.config.viewMode !== 'all') {
+              d.fx = null;
+              d.fy = null;
+            }
+
             scope.endGroupEvents();
             scope.updateNetwork(scope.data);
 
           }
+          // d.fx = null;
+          // d.fy = null;
+          simulation.alphaTarget(0).restart();
         }
 
         // Move the circle with the mouse, until the the user clicks
@@ -715,6 +782,7 @@ angular.module('redesign2017App').directive('forceLayout', ['apiService', '$time
 
         function parseGroupComplexity(json, onlyMembers) {
           var members = json.data.attributes.primary_people;
+          scope.members = members;
           if (onlyMembers === false) {
             var links = [];
             json.data.attributes.connections.forEach(function (l) {
@@ -1014,6 +1082,7 @@ angular.module('redesign2017App').directive('forceLayout', ['apiService', '$time
               scope.currentSelection = result.data[0];
               scope.currentSelection.source = d.source;
               scope.currentSelection.target = d.target;
+              console.log(scope.currentSelection);
               $timeout(function(){
                 scope.$broadcast('selectionUpdated', scope.currentSelection);
               });
@@ -1079,6 +1148,8 @@ angular.module('redesign2017App').directive('forceLayout', ['apiService', '$time
                 } else {
                   return 12.5 / 2 + 1;
                 }
+              } else if (scope.config.viewMode === 'group-force') {
+                return (scope.members.indexOf(d.id) !== -1 || d.distance === 7) ? 25 / 2 + 1 : 12.5 / 2 + 1;
               } else {
                 if (d.distance == 0) { // Account for larger source node
                   return 50 / 2 + 1;
@@ -1128,7 +1199,7 @@ angular.module('redesign2017App').directive('forceLayout', ['apiService', '$time
           }
         }, true);
 
-        scope.$watch('$parent.config.layout', function(newValue, oldValue) {
+        scope.$watch('config.layout', function(newValue, oldValue) {
           if (scope.config.viewMode === 'individual-force') {
             scope.updateNetwork(scope.data);
             simulation.alpha(1);

@@ -1,10 +1,10 @@
 <section>
 	<form ng-submit= "submitNode(addedNodes)">
-		<h3 class="">Add person to this view</h3><span class="remove-btn contribute" ng-click=" newNode = {}; newNode.birthDateType = newNode.deathDateType = config.dateTypes[1]; ">clear</span>
+		<h3 class="">Add person to this view</h3><span class="remove-btn contribute" ng-click="removeNode(newNode.id)">remove this node</span>
 		<div class="form-content">
 			<h4 class="paragraph-title">Person Name</h4>
 		  <!-- <input placeholder="Search for a person" type="text" ng-model="person.added" uib-typeahead="person for person in peopleToSelect | filter:$viewValue | limitTo:8" class="form-control"> -->
-			<input type="text" ng-model="newNode.name" placeholder="Search for a person" typeahead-template-url="views/groupsTypeaheadTemplate.html" uib-typeahead="person as person.attributes.name for person in $parent.callPersonTypeahead($viewValue)" typeahead-loading="loadingPersonAdd" typeahead-no-results="noResultsPersonAdd" class="form-control" typeahead-show-hint="true" typeahead-min-length="5" typeahead-on-select="foundPerson($item)" typeahead-wait-ms='500'>
+			<input type="text" ng-model="newNode.name" placeholder="Search for a person" typeahead-template-url="views/groupsTypeaheadTemplate.html" uib-typeahead="person as person.attributes.name for person in callPersonTypeahead($viewValue)" typeahead-loading="loadingPersonAdd" typeahead-no-results="noResultsPersonAdd" class="form-control" typeahead-show-hint="true" typeahead-min-length="5" typeahead-on-select="foundPerson($item)" typeahead-wait-ms='500'>
 			<i ng-show="loadingPersonAdd" class="glyphicon glyphicon-refresh"></i>
 			<!-- <div ng-show="noResultsPersonAdd">
 				<i class="glyphicon glyphicon-remove"></i> Person not found: click canvas to add
@@ -12,7 +12,7 @@
 			<div ng-show="newNode.exists">
 				<p>Person already in <i>Six Degrees</i></p>
 				<p ng-show="notInView">Click "add & continue" to add to this view.</p>
-				<p ng-show="!notInView">Click "clear" to try again.</p>
+				<p ng-show="!notInView">Try again.</p>
 			</div>
 			<h4>Birth date</h4>
 		  <div class="input-group">
@@ -47,7 +47,9 @@
 			<input class="form-control" ng-model="newNode.alternates" ng-disabled="newNode.exists" placeholder="Alternate Names (comma-separated)">
 
 			<h4>Citation</h4>
-	    <textarea ng-disabled="newNode.exists" type="text" ng-model="newLink.citation" class="form-control"></textarea>
+	    <textarea ng-disabled="newNode.exists" type="text" ng-model="newNode.citation" class="form-control"></textarea>
+
+			<br><input ng-show="$root.user.user_type !== 'Standard'" ng-model="newNode.is_approved" type="checkbox"/> Approved?</input>
 
 			<!-- <h4>Notes</h4>
 			<input class="form-control" ng-model="newNode.notes" ng-disabled="newNode.exists" placeholder="Notes"> -->
@@ -61,7 +63,8 @@
 
 	</form>
 </section>
-<span class="close" ng-click="addNodeClosed = !addNodeClosed; peopleFinderClosed = true; legendClosed = true; filtersClosed = true;" style="color: white;">
+<!-- <span class="close" ng-click="addNodeClosed = !addNodeClosed; peopleFinderClosed = true; legendClosed = true; $root.filtersClosed = true; addLinkClosed = true; groupAssignClosed = true;" style="color: white;"> -->
+<span class="close" ng-click="nodeAlert()" style="color: white;">
 	<i ng-if="!addNodeClosed" class="fa fa-times" aria-hidden="true"></i>
 	<i ng-if="addNodeClosed" class="fa fa-plus-circle" aria-hidden="true"></i>
 </span>

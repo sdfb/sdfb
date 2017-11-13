@@ -93,6 +93,11 @@ shared-network {
 
   .link.new {
     stroke: orange;
+    stroke-width: 2px;
+  }
+
+  .link.new:hover {
+    stroke-width: 4px;
   }
 
   .node {
@@ -161,6 +166,10 @@ shared-network {
     transition: transform 0.25s ease-in-out;
     transition: transform 0.25s ease-in-out, -webkit-transform 0.25s ease-in-out;
     cursor: pointer;
+  }
+
+  .node.all.new {
+    fill: orange;
   }
 
   .node.all:hover {
@@ -256,7 +265,7 @@ shared-network {
   height: 45px;
   width: 100%;
   bottom: 0;
-  background-color: #EFF1F4;
+  background-color: #DFE1E4;
   padding: 0 10px;
   display: -webkit-box !important;
   display: -ms-flexbox !important;
@@ -267,8 +276,13 @@ shared-network {
   -webkit-box-align: center;
   -ms-flex-align: center;
   align-items: center;
+  .group:nth-child(even) {
+    background-color: #A0A0A0;
+  }
+  .group:nth-child(odd) {
+    background-color: #b6bAbF;
+  }
   .group {
-    background-color: #C6CACF;
     width: 100%;
     font-size: 12px;
     border-radius: 2px;
@@ -288,7 +302,7 @@ shared-network {
     text-align: left;
     white-space: nowrap;
     overflow: hidden;
-    padding: 5px 0 0 5px;
+    padding: 6px 0 0 4px;
     -webkit-transition: all 0.5s;
     transition: all 0.5s;
     &:last-of-type {
@@ -315,9 +329,9 @@ shared-network {
 //   -webkit-transition: opacity 0.5s;
 //   transition: opacity 0.5s;
 // }
-groups-bar:hover::after {
-  opacity: 1;
-}
+// groups-bar:hover::after {
+//   opacity: 1;
+// }
 
 .other-groups-list li.active {
   color: red;

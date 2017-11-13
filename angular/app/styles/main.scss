@@ -9,8 +9,8 @@ $strokeDanger: red;
 $mainTextColor: #434055;
 $panels-bg: #E6EAF0;
 $panels-stroke: #AEB1B5;
-$highlight-color: #F7F35D;
-$active-color: #DDD95F;
+$highlight-color: #4CF49D;
+$active-color: #40CC83;
 $highlight-stroke: #C2BF5B;
 $panels-bg-secondary: #C6CACF;
 $light-color: white;
@@ -194,6 +194,7 @@ path.danger {
   // min-width: 20vw;
   width: 22vw;
   // max-width: 25vw;
+  max-width: 300px;
   pointer-events: none;
   position: relative;
 }
@@ -265,7 +266,6 @@ path.danger {
 
   &.add-link {
     height: 45vh;
-    overflow-y: auto;
     background-color: $light-color;
     border: 1px solid $contribution-mode-fill;
 
@@ -281,7 +281,6 @@ path.danger {
   }
   &.group-assign {
     height: 45vh;
-    overflow-y: auto;
     background-color: $light-color;
     border: 1px solid $contribution-mode-fill;
 
@@ -297,7 +296,6 @@ path.danger {
   }
   &.add-group {
     height: 45vh;
-    overflow-y: auto;
     background-color: $light-color;
     border: 1px solid $contribution-mode-fill;
 
@@ -397,8 +395,8 @@ path.danger {
 
 .panel.collapsable.collapsed > .close-left {
   color: $mainTextColor;
-  left: 6px;
-  top: 7px;
+  left: 5px;
+  top: 4px;
 }
 
 .remove-btn {
@@ -434,6 +432,10 @@ path.danger {
 /* search panel styles*/
 search-panel.panel {
   border: none;
+}
+
+search-panel.panel.collapsed {
+  border: 1px solid $panels-stroke;
 }
 
 search-panel .nav-tabs.nav-justified > li > a {
@@ -793,7 +795,6 @@ group-timeline {
 
 .timeline-legend {
   height: 35vh;
-  margin-top: 365px;
   overflow-y: auto;
 
   .legend-line {
@@ -1080,7 +1081,7 @@ label.btn-primary:first-of-type {
 }
 
 .filters.collapsed {
-  border-color: #29d;
+  border-color: $active-color;
   // border-width: 2px;
 }
 /* form styles*/
@@ -1289,7 +1290,6 @@ add-link.panel section {
 /* Contextual Info Panel*/
 contextual-info-panel.panel {
   background-color: $light-color;
-  margin-top: 365px;
 }
 
 .groupBar .group {
@@ -1300,7 +1300,11 @@ contextual-info-panel.panel.contribution-mode-on {
   border-color: $contribution-mode-fill;
 }
 
-contextual-info-panel > section {
+.all-types {
+  max-height: 20vh;
+  overflow-y: auto;
+}
+contextual-info-panel > section, contextual-info-panel > div > section {
   padding: 5px 15px 0;
   // text-align: center;
 
@@ -1325,7 +1329,7 @@ contextual-info-panel > section:first-child {
   }
 }
 
-contextual-info-panel > section.rel-type {
+contextual-info-panel > div > section.rel-type {
   background-color: $panels-bg;
   border-top: 1px solid $panels-stroke;
   border-bottom: 1px solid $panels-stroke;
@@ -1333,7 +1337,7 @@ contextual-info-panel > section.rel-type {
   padding-bottom: 12px;
 }
 
-.contribution-mode-on contextual-info-panel > section.rel-type {
+.contribution-mode-on contextual-info-panel > div > section.rel-type {
   padding-bottom: 0;
   border-color: $contribution-mode-fill;
 }
@@ -1377,44 +1381,48 @@ contextual-info-panel h2 {
   left: 50%;
 }
 
-small-timeline svg {
+small-timeline svg, user-progress svg {
   width: 100%;
   height: 30px;
   /* background-color: #fafafa;*/
 }
 
-small-timeline .background-line {
+user-progress .label.domain {
+  display: block;
+}
+
+small-timeline .background-line, user-progress .background-line {
   stroke: #9B9B9B;
   stroke-width: 1px;
 }
 
-small-timeline.person path.life {
+small-timeline.person path.life, user-progress.person path.life {
   stroke-width: 2.5px;
   stroke: $degree0;
 }
 
-small-timeline.relationship path.life {
+small-timeline.relationship path.life, user-progress.relationship path.life {
   stroke-width: 2.5px;
   stroke: $mainTextColor;
 }
 
-small-timeline path.terminator {
+small-timeline path.terminator, user-progress path.terminator {
   stroke-width: 2px;
   stroke: $degree0;
   fill: none;
 }
 
-small-timeline path.filled {
+small-timeline path.filled, user-progress path.filled {
   fill: $light-color;
 }
 
-small-timeline .label {
+small-timeline .label, user-progress .label {
   font-size: 9px;
   font-weight: 600;
   fill: #9B9B9B;
 }
 
-small-timeline .label.life {
+small-timeline .label.life, user-progress .label.life {
   text-anchor: middle;
   fill: $mainTextColor;
 
@@ -1511,6 +1519,10 @@ people-finder {
     background-color: $panels-bg;
   }
 
+  .reset form input {
+    width: 300px;
+  }
+
   .close-btn {
     cursor: pointer;
     position: absolute;
@@ -1528,7 +1540,7 @@ people-finder {
   .person-info p {
     font-size: 14px;
     // font-weight: bold;
-    text-align: right;
+    // text-align: right;
   }
 
   .person-info p:first-child {
@@ -1659,28 +1671,9 @@ people-finder {
 
 /*User information*/
 
-.user-info {
-  height: 45vh;
-
-  div {
-    font-size: 12px;
-  }
-
-  a {
-    font-size: 10px;
-  }
-}
-
-.user-contributions {
-  overflow-y: scroll;
-  height: 18vh;
-  background-color: $panels-bg;
-  border: 1px solid $panels-stroke;
-  border-radius: 4px;
-  padding: 5px;
-
-  div {
-    font-size: 10px;
+.user {
+  h3 {
+    margin-top: 15px;
   }
 }
 /*MEDIA QUERIES*/

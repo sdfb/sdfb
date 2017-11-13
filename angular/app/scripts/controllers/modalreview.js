@@ -8,14 +8,20 @@
  * Controller of the redesign2017App
  */
 angular.module('redesign2017App')
-  .controller('ModalReviewCtrl', ['$scope', '$uibModalInstance', '$timeout', 'addToDB', '$window', 'apiService', function($scope, $uibModalInstance, $timeout, addToDB, $window, apiService) {
+  .controller('ModalReviewCtrl', ['$scope', '$uibModalInstance', '$timeout', 'addToDB', '$window', 'apiService', '$rootScope', 'addedNodes', 'addedGroups', 'addedLinks', function($scope, $uibModalInstance, $timeout, addToDB, $window, apiService, $rootScope, addedNodes, addedGroups, addedLinks) {
 
     var $ctrl = this;
     $ctrl.addToDB = addToDB;
+    $ctrl.addedNodes = addedNodes;
+    $ctrl.addedGroups = addedGroups;
+    $ctrl.addedLinks = addedLinks;
     // $ctrl.sendData = sendData;
 
-    $ctrl.remove = function(index, list) {
-      list.splice(index,1);
+    $ctrl.remove = function(index, list1, list2) {
+      list1.splice(index,1);
+      if (list2 !== undefined) {
+        list2.splice(index,1);
+      }
     };
 
     $ctrl.ok = function() {
@@ -23,11 +29,13 @@ angular.module('redesign2017App')
     };
 
     $ctrl.cancel = function() {
-      console.log('dismiss')
-      $uibModalInstance.dismiss('cancel');
+      // console.log('dismiss')
+      $uibModalInstance.dismiss($ctrl.addToDB);
     };
 
     $ctrl.close = function() {
+      $ctrl.addToDB.auth_token = $rootScope.user.auth_token;
+      console.log(JSON.stringify($ctrl.addToDB));
       $uibModalInstance.close($ctrl.addToDB);
     }
 

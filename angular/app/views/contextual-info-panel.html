@@ -1,14 +1,14 @@
 <section ng-if="!currentSelection.type">
   <p ng-if="!config.contributionMode" class="help-info">Select a person or a relation to display details.</p>
-  <p ng-if="config.contributionMode" class="contribution">In contribution mode you can edit links and nodes, or create new ones.</p>
-  <p ng-if="config.contributionMode" class="contribution">Click anywhere on the canvas to add a node.</p>
-  <p ng-if="config.contributionMode" class="contribution">Drag a node onto any other node to add a link.</p>
-  <p ng-if="config.contributionMode" class="contribution">Drag a node onto the groups bar to add a node to a group.</p>
+  <h5 ng-if="config.contributionMode" class="contribution">In contribute mode you can edit people and relationships, or create new ones.</h5>
+  <h5 ng-if="config.contributionMode" class="contribution">Double-click anywhere on the canvas to add a person.</h5>
+  <h5 ng-if="config.contributionMode" class="contribution">Drag a node onto any other node to add a relationship.</h5>
+  <h5 ng-if="config.contributionMode" class="contribution">Drag a node onto the groups bar to add a person to a group.</h5>
   <!-- <p><button ng-show="config.viewMode !== 'group-force'" type="button" class="btn btn-primary" ng-click="openTable()">See Table View</button></p>
   <p><button type="button" class="btn btn-primary">Export</button></p> -->
   <div class="btn-group btn-group-justified">
-    <label class="btn btn-primary" ng-click="openTable()">See Table View</label>
-    <a class="btn btn-primary" target="_blank" download="{{config.networkName}}.json" ng-href="{{download}}">Export this</a>
+    <label class="btn btn-primary" ng-click="openTable()">Table <i class="fa fa-table" aria-hidden="true"></i></label>
+    <a class="btn btn-primary" target="_blank" download="{{config.networkName}}.json" ng-href="{{download}}">Export <i class="fa fa-download" aria-hidden="true"></i></a>
   </div>
 </section>
 <section ng-if="currentSelection.type == 'person' " id="XXXcurrent-selection-person1">
@@ -26,10 +26,12 @@
   <small-timeline class="person" details="currentSelection.source"></small-timeline>
   <span ng-if="config.contributionMode" class="edit-btn person" ng-click="editData(currentSelection.source.id)">Edit data</span>
 </section>
-<section class="rel-type" ng-if="currentSelection.type == 'relationship' " ng-repeat='n in currentSelection.types'>
-  <small-timeline class="relationship" details="currentSelection"></small-timeline>
-  <span ng-if="config.contributionMode" class="edit-btn relationship" ng-click="editData(currentSelection.id)">Edit data</span>
-</section>
+<div class="all-types" ng-if="currentSelection.type == 'relationship' ">
+  <section class="rel-type" ng-if="currentSelection.type == 'relationship' " ng-repeat='n in currentSelection.types'>
+    <small-timeline class="relationship" details="currentSelection"></small-timeline>
+    <span ng-if="config.contributionMode" class="edit-btn relationship" ng-click="editData(currentSelection.id)">Edit data</span>
+  </section>
+</div>
 <section ng-if="currentSelection.type == 'relationship' ">
   <h2>{{ currentSelection.target.attributes.name }}</h2>
   <p ng-if="currentSelection.attributes.historical_significance != ''">{{ currentSelection.target.attributes.historical_significance }}</p>
@@ -63,9 +65,9 @@
 <section id="more-info" ng-if="currentSelection.type">
   <p>
 
-    <img src='/images/odnb.gif' ng-click="searchODNB(currentSelection.attributes.odnb_id,currentSelection.attributes.name)"/>
-    <img src='/images/jstor.png' ng-click="searchJstor(currentSelection.attributes.name.replace(' ','+'))"/>
-    <i class="fa fa-google" ng-click="searchGoogle(currentSelection.attributes.name.replace(' ','+'))"></i>
+    <img src='/images/odnb.gif' ng-click="searchODNB()"/>
+    <img src='/images/jstor.png' ng-click="searchJstor()"/>
+    <i class="fa fa-google" ng-click="searchGoogle()"></i>
     <button ng-show="currentSelection.type === 'person' && (config.viewMode === 'individual-force' || config.viewMode === 'individual-concentric')" type="button" class="btn btn-primary" ui-sref="home.visualization({ ids: config.person1 + ',' + currentSelection.id })">Shared Network</button>
   </p>
   <!-- <p><a ng-click="scope.openTable()">Further info&hellip;</a></p> -->

@@ -1,5 +1,6 @@
 <div class="panels-container">
   <section class="on-the-left">
+    <search-panel class="panel collapsable left search" ng-class="{'collapsed' : searchClosed}"></search-panel>
     <contextual-info-panel class="panel" ng-show=" config.viewMode != 'group-timeline' && !$parent.searchClosed " ng-class="{'contribution-mode-on': $parent.config.contributionMode}"></contextual-info-panel>
     <legend-panel class="panel timeline-legend" ng-if=" config.viewMode == 'group-timeline' && !$parent.searchClosed "></legend-panel>
     <div class="panel collapsable" ng-show="!$parent.searchClosed">
@@ -19,7 +20,7 @@
     <add-group ng-show="config.contributionMode && config.viewMode === 'all'" class="panel collapsable collapsed orange-panel add-node" ng-class="{'collapsed' : addGroupClosed}"></add-group>
 
     <legend-panel class="panel collapsable" ng-class="{'collapsed' : legendClosed, 'group': config.viewMode == 'all', 'shared': config.viewMode == 'shared-network', 'individual': config.viewMode == 'individual-force' || config.viewMode == 'individual-concentric','single-group': config.viewMode == 'group-force', 'timeline': config.viewMode == 'group-timeline'}"></legend-panel>
-    <filters-panel class="panel collapsable collapsed filters" ng-class="{'collapsed' : filtersClosed, 'allGroupFilter': config.viewMode == 'all', 'individualFilter': config.viewMode == 'individual-force' || config.viewMode == 'individual-concentric' || config.viewMode == 'shared-network', 'singleGroupFilter': config.viewMode == 'single-group'}"></filters-panel>
+    <filters-panel class="panel collapsable collapsed filters" ng-class="{'collapsed' : $root.filtersClosed, 'allGroupFilter': config.viewMode == 'all', 'individualFilter': config.viewMode == 'individual-force' || config.viewMode == 'individual-concentric' || config.viewMode == 'shared-network', 'singleGroupFilter': config.viewMode == 'single-group'}"></filters-panel>
 
     <people-finder class="panel collapsable collapsed" ng-class="{'collapsed' : peopleFinderClosed}"></people-finder>
 

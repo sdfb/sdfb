@@ -34,7 +34,6 @@ angular.module('redesign2017App')
               'weight': l.attributes.weight
             })
           })
-          console.log(links);
           var minWeight = d3.min(links, function(d) { return d.weight });
           var maxWeight = d3.max(links, function(d) { return d.weight });
           sizeEdge.domain([minWeight, maxWeight]);
@@ -42,11 +41,9 @@ angular.module('redesign2017App')
           var extentNodes = d3.extent(nodes, function(d) { return d.attributes.degree; }),
               extentEdges = d3.extent(links, function(d) { return d.weight; });
 
-          var sizeLegend = d3.select(element[0])//.select('.legend-panel div .legend-size-squares')
+          var sizeLegend = d3.select('.legend-size-squares')
               .selectAll('.white-square')
               .data(extentNodes);
-
-          console.log(element[0]);
 
           var sizeLegendBox = sizeLegend.enter()
               .merge(sizeLegend);
@@ -67,7 +64,7 @@ angular.module('redesign2017App')
           sizeLegend.exit().remove();
 
 
-          var weightLegend = d3.select(element[0])//'.legend-size-edges')
+          var weightLegend = d3.select('.legend-size-edges')
               .selectAll('.edge-line')
               .data(extentEdges);
 

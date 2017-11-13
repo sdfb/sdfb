@@ -35,7 +35,7 @@
         <div class="flex-item legend-edge legend-text centered">Human<br/>Contribution</div>
       </div>
     </div>
-    <h5>Gray edges are statistically inferred; black edges were contributed by users.</h5>
+    <h5>Gray edges are statistically inferred. Black edges are user-contributed.</h5>
   </div>
 
   <div ng-if=" config.viewMode == 'shared-network' ">
@@ -99,7 +99,7 @@
     <h5>Color of edges indicates relationship certainty</h5>
   </div>
 
-  <div ng-if=" config.viewMode == 'all' ">
+  <div ng-show=" config.viewMode == 'all' ">
     <div class="legend-box legend-size-squares">
     </div>
     <h5>Size indicates amount of group members</h5>
@@ -108,7 +108,7 @@
     <h5>Thickness indicates the amount of shared people</h5>
   </div>
 
-  <div ng-if=" config.viewMode == 'group-force' ">
+  <div ng-show=" config.viewMode == 'group-force' ">
     <div class="legend-box">
       <div class="legend-line"></div>
       <div class="flex-container group-network">
@@ -237,7 +237,7 @@
   </div>
 
 </section>
-<span class="close" ng-click="legendClosed = !legendClosed; peopleFinderClosed = true; filtersClosed = true" ng-show=" config.viewMode != 'group-timeline' ">
+<span class="close" ng-click="legendClosed = !legendClosed; peopleFinderClosed = true; $root.filtersClosed = true" ng-show=" config.viewMode != 'group-timeline' ">
 	<i ng-if="!legendClosed" class="fa fa-times" aria-hidden="true"></i>
 	<i ng-if="legendClosed" class="fa fa-question" aria-hidden="true"></i>
 </span>

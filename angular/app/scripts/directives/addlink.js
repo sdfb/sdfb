@@ -6,7 +6,7 @@
  * # addLink
  */
 angular.module('redesign2017App')
-  .directive('addLink', ['apiService', '$timeout', function(apiService, $timeout) {
+  .directive('addLink', ['apiService', '$timeout', '$rootScope', '$window', function(apiService, $timeout, $rootScope, $window) {
     return {
       templateUrl: './views/add-link.html',
       restrict: 'E',
@@ -60,6 +60,7 @@ angular.module('redesign2017App')
         scope.newLink.relType = scope.config.relTypes[3];
         scope.newLink.source = {};
         scope.newLink.target = {};
+        scope.addedLinkId = 0;
         scope.slider = {
           value: 60,
           options: {
@@ -107,6 +108,14 @@ angular.module('redesign2017App')
           }, 500);
         };
 
+        scope.linkAlert = function() {
+          if (scope.addLinkClosed) {
+            $window.alert('To add a relationship, drag a node onto any other. If the node you need is not in this view, add it by double-clicking.');
+          } else {
+            scope.addLinkClosed = true;
+          }
+        }
+
         scope.showNewLink = function(d, nodes) {
           // var nodes = scope.data.included;
           nodes.forEach(function (otherNode) {
@@ -119,9 +128,7 @@ angular.module('redesign2017App')
                 otherNode.radius = true;
 
                 d3.select("#n"+otherNode.id).transition()
-                  .attr('r', 25)
-                  .attr('stroke', 'orange')
-                  .attr('stroke-dasharray', 5,5);
+                  .attr('r', 25);
                 scope.newLink.source.name = d.attributes.name;
                 scope.newLink.source.id = d.id;
                 scope.newLink.target.name = otherNode.attributes.name;
@@ -129,8 +136,10 @@ angular.module('redesign2017App')
                 scope.$apply(function() {
                   scope.addLinkClosed = false;
                   scope.legendClosed = true;
-                  scope.filtersClosed = true;
+                  $rootScope.filtersClosed = true;
                   scope.peopleFinderClosed = true;
+                  scope.groupAssignClosed = true;
+                  scope.addNodeClosed = true;
                 });
                 if (d.id && otherNode.id) {
                   apiService.getPeople(d.id.toString()+','+otherNode.id.toString()).then(function (result) {
@@ -160,26 +169,24 @@ angular.module('redesign2017App')
                     if (scope.config.viewMode == 'shared-network') {
                       if (d.distance === 0 || d.distance === 3) {
                         return 25;
-                      } else if (d.distance === 2) {
+                      } else if (d.distance === 2 || d.distance == 7) {
                         return 12.5;
                       } else {
                         return 6.25;
                       }
                     } else if (scope.config.viewMode === 'group-force') {
-                      var members = scope.data.data.attributes.primary_people;
-                      if (members.indexOf(d.id) === -1) { return 6.25; }
-                      else { return 12.5; };
+                      if (scope.members.indexOf(d.id) === -1 && d.distance !== 7) { return 6.25; }
+                      else if (scope.members.indexOf(d.id) !== -1 || d.distance == 7) { return 12.5; };
                     } else {
                       if (d.distance == 0) {
                         return 25;
-                      } else if (d.distance == 1) {
+                      } else if (d.distance == 1 || d.distance == 7) {
                         return 12.5;
                       } else {
                         return 6.25;
                       }
                     }
-                })
-                .attr('stroke-dasharray', null);
+                });
               }
             }
           });
@@ -191,10 +198,12 @@ angular.module('redesign2017App')
             var nodeDistance = Math.sqrt(Math.pow(otherNode.x - d3.event.x, 2) + Math.pow(otherNode.y - d3.event.y, 2));
             if (otherNode != d && nodeDistance < 10) {
               console.log("new link added:", otherNode.attributes.name);
-              var newLink = {source: d, target: otherNode, weight: 100, start_year: 1500, end_year: 1700, new: true};
+              var newLink = {id: scope.addedLinkId, source: d, target: otherNode, weight: 60, start_year: 1500, end_year: 1700, new: true};
               addedLinks.push(newLink);
               scope.$apply(function() {
                 scope.legendClosed = true;
+                scope.newLink.id = scope.addedLinkId;
+                scope.addedLinkId += 1;
               });
             }
           });
@@ -209,6 +218,24 @@ angular.module('redesign2017App')
           });
         }
 
+        scope.removeLink = function(id) {
+          scope.addedLinks.forEach(function(a, i) {
+            if (a.id === id) {
+              scope.addedLinks.splice(i,1);
+            }
+          })
+          scope.addToDB.links.forEach(function(a, i) {
+            if (a.id === id) {
+              scope.addToDB.links.splice(i,1);
+            }
+          })
+          scope.updateNetwork(scope.data);
+          scope.newLink = {source: {}, target: {}};
+          scope.newLink.startDateType = scope.newLink.endDateType = scope.config.dateTypes[1];
+          scope.addLinkClosed = true;
+
+        }
+
         scope.submitLink = function() {
           console.log("link submitted");
           var newLink = angular.copy(scope.newLink)
@@ -218,17 +245,51 @@ angular.module('redesign2017App')
           if (!newLink.endDate) {
             newLink.endDate = d3.select('#endDate').attr('placeholder');
           }
-          newLink.startDateType = newLink.startDateType.abbr;
-          newLink.endDateType = newLink.endDateType.abbr;
-          newLink.relType = newLink.relType.id.toString();
-          newLink.created_by = scope.config.userId;
-          scope.addToDB.links.push(newLink);
+
+          scope.addedLinks.forEach(function (a,i) {
+            if (a.id === newLink.id) {
+              scope.addedLinks[i].source.attributes.name = newLink.source.name;
+              scope.addedLinks[i].source.id = newLink.source.id;
+              scope.addedLinks[i].target.attributes.name = newLink.target.name;
+              scope.addedLinks[i].target.id = newLink.target.id;
+              scope.addedLinks[i].weight = newLink.confidence;
+              scope.addedLinks[i].start_year = newLink.startDate;
+              scope.addedLinks[i].end_year = newLink.endDate;
+              scope.addedLinks[i].start_year_type = newLink.startDateType;
+              scope.addedLinks[i].end_year_type = newLink.endDateType;
+              scope.addedLinks[i].id = newLink.id;
+              scope.addedLinks[i].relType = newLink.relType;
+            }
+          });
+          var allIDs = {};
+          scope.addToDB.links.forEach(function(n) { allIDs[n.id] = true; });
+          if (scope.newLink.id in allIDs) {
+            scope.addToDB.links.forEach(function (a,i) {
+              if (a.id === newLink.id) {
+                scope.addToDB.links[i] = newLink;
+                scope.addToDB.links[i].startDateType = newLink.startDateType.abbr;
+                scope.addToDB.links[i].endDateType = newLink.endDateType.abbr;
+                newLink.relType = newLink.relType.id.toString();
+              }
+            })
+          } else {
+            newLink.startDateType = newLink.startDateType.abbr;
+            newLink.endDateType = newLink.endDateType.abbr;
+            newLink.relType = newLink.relType.id.toString();
+            scope.addToDB.links.push(newLink);
+          }
+          // newLink.startDateType = newLink.startDateType.abbr;
+          // newLink.endDateType = newLink.endDateType.abbr;
+          // newLink.relType = newLink.relType.id.toString();
+          // scope.addToDB.links.push(newLink);
           console.log(scope.addToDB);
           scope.addLinkClosed = true;
           scope.newLink = {source: {}, target: {}};
           d3.select('#startDate').attr('placeholder', null);
           d3.select('#endDate').attr('placeholder', null);
           scope.config.added = true;
+          scope.newLink.startDateType = scope.newLink.endDateType = scope.config.dateTypes[1];
+          scope.newLink.relType = scope.config.relTypes[3];
 
         }
 
