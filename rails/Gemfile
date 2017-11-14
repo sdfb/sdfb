@@ -5,17 +5,13 @@ ruby '2.4.2'
 gem 'rails', '4.2.10'
 gem 'railties', '4.2.10'
 gem 'activemodel', '4.2.10'
-gem 'rails-observers'
-gem 'actionpack-page_caching'
-gem 'actionpack-action_caching'
-gem 'protected_attributes'
+gem 'protected_attributes' # Needed until we upgrade to strong parameters. (DGN 11/13/2017)
 
 # Database Gems
 gem 'pg', '0.18.4'
 
 # Webserver Gems
-gem 'newrelic_rpm'
-gem 'rails_12factor'
+gem 'newrelic_rpm' # I believe this is unused, but confirming. (DGN 11/13/2017)
 gem 'rack-cors'
 gem "passenger", ">= 5.0.25", require: "phusion_passenger/rack_handler"
 

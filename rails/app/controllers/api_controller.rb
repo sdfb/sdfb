@@ -1,5 +1,6 @@
 class ApiController < ApplicationController
   skip_before_filter :verify_authenticity_token
+  include ApiHelper
 
   def curate
     return head(:forbidden) unless current_user && ["Admin", "Curator"].include?(current_user.user_type)
@@ -150,8 +151,8 @@ class ApiController < ApplicationController
 
 
         if node["id"]
-          node.delete("id")
           Person.find(node["id"].to_i).update(node)
+          node.delete("id")
         else
           node["created_by"] = current_user.id
           new_person = Person.create!(node)
@@ -328,7 +329,7 @@ class ApiController < ApplicationController
       people.each do |data|
         keys, display_name, id = data
         name_words = keys.split(", ")
-        # name_words << display_name
+        name_words << display_name
         name_words.uniq!
         name_words.uniq.each do |typeahead_name|
           typeahead_parts = typeahead_name.downcase.split(/\W+/)
@@ -415,22 +416,23 @@ class ApiController < ApplicationController
   def network
     begin
       ids = params[:ids].split(",").map(&:to_i).uniq.sort
+      max_certainty = params[:certainty].to_i || SDFB::DEFAULT_CONFIDENCE
       @display_id = ids.join(",")
 
       first_degree_ids = []
       second_degree_ids = []
 
-      @people = Person.includes(:groups, :group_assignments).all_approved.find(ids)
+      @people = Person.includes(groups: :group_assignments).all_approved.find(ids)
 
-      @relationships = @people.map(&:relationships).reduce(:+).uniq
+      @relationships = @people.map{|p| p.relationships(max_certainty)}.reduce(:+).uniq
       
       first_degree_ids = @relationships.collect do |r| 
         [r.person1_index, r.person2_index]
       end.flatten.uniq - ids
 
 
-      @sources = Person.includes(:groups, :group_assignments).all_approved.find(first_degree_ids)
-      first_degree_relationships = @sources.map(&:relationships).reduce(:+)&.uniq || []
+      @sources = Person.includes(groups: :group_assignments).all_approved.find(first_degree_ids)
+      first_degree_relationships = @sources.map{|p| p.relationships(max_certainty)}.reduce(:+)&.uniq || []
       @relationships = @relationships | first_degree_relationships
 
       if ids.count == 1
@@ -438,8 +440,8 @@ class ApiController < ApplicationController
           [r.person1_index, r.person2_index]
         end.flatten.uniq - (ids + first_degree_ids)
 
-        second_degree_people = Person.includes(:groups, :group_assignments).all_approved.find(second_degree_ids)
-        second_degree_relationships = second_degree_people.map(&:relationships).reduce(:+)&.uniq || []
+        second_degree_people = Person.includes(groups: :group_assignments).all_approved.find(second_degree_ids)
+        second_degree_relationships = second_degree_people.map{|p| p.relationships(max_certainty)}.reduce(:+)&.uniq || []
 
         @relationships = @relationships | second_degree_relationships
         @sources = @sources | second_degree_people
@@ -447,24 +449,25 @@ class ApiController < ApplicationController
 
       all_ids = ids | first_degree_ids | second_degree_ids
       @relationships = @relationships.find_all{ |r| all_ids.include?(r.person1_index) && all_ids.include?(r.person2_index)  }
-
     rescue ActiveRecord::RecordNotFound => e
       @errors = []
       @errors << {title: "invalid person ID(s)"}
     end
+    render json: network_to_json
   end
 
 
   def group_network
     begin
       ids = params[:ids].split(",").map(&:to_i).uniq.sort
+      max_certainty = params[:certainty].to_i || SDFB::DEFAULT_CONFIDENCE
       @display_id = ids.join(",")
 
       @groups = Group.all_approved.find(ids)
 
       @primary_people = @groups.map(&:approved_people).reduce(:+).uniq
       
-      @relationships = @primary_people.map(&:relationships).flatten
+      @relationships = @primary_people.map{|p| p.relationships(max_certainty)}.flatten
 
       first_degree_ids = @relationships.collect do |r|
         [r.person1_index, r.person2_index]

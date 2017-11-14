@@ -14,10 +14,6 @@ GEM
       rack-test (~> 0.6.2)
       rails-dom-testing (~> 1.0, >= 1.0.5)
       rails-html-sanitizer (~> 1.0, >= 1.0.2)
-    actionpack-action_caching (1.2.0)
-      actionpack (>= 4.0.0, < 6)
-    actionpack-page_caching (1.1.0)
-      actionpack (>= 4.0.0, < 6)
     actionview (4.2.10)
       activesupport (= 4.2.10)
       builder (~> 3.1)
@@ -110,13 +106,6 @@ GEM
       rails-deprecated_sanitizer (>= 1.0.1)
     rails-html-sanitizer (1.0.3)
       loofah (~> 2.0)
-    rails-observers (0.1.5)
-      activemodel (>= 4.0)
-    rails_12factor (0.0.3)
-      rails_serve_static_assets
-      rails_stdout_logging
-    rails_serve_static_assets (0.0.5)
-    rails_stdout_logging (0.0.5)
     railties (4.2.10)
       actionpack (= 4.2.10)
       activesupport (= 4.2.10)
@@ -154,8 +143,6 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  actionpack-action_caching
-  actionpack-page_caching
   activemodel (= 4.2.10)
   bcrypt
   better_errors
@@ -170,8 +157,6 @@ DEPENDENCIES
   rack-cors
   rack-timeout
   rails (= 4.2.10)
-  rails-observers
-  rails_12factor
   railties (= 4.2.10)
   rspec
   yajl-ruby

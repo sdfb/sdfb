@@ -1,6 +1,5 @@
 require File.expand_path('../boot', __FILE__)
 
-require 'csv'
 require 'rails/all'
 require 'active_support/core_ext/numeric/bytes'
 
@@ -46,16 +45,12 @@ module Sdfb
     # This is necessary if your schema can't be completely dumped by the schema dumper,
     # like if you have constraints or database-specific column types
     # config.active_record.schema_format = :sql
-
-
+    
     # Enable the asset pipeline
-    config.assets.enabled = true
-    config.assets.paths << Rails.root.join("app", "assets", "documents")
+    config.assets.enabled = false
     config.assets.initialize_on_precompile = false
-    config.serve_static_files = true
+    config.serve_static_files = false
 
-    # Version of your assets, change this if you want to expire all your assets
-    config.assets.version = '1.0'
     config.cache_store = :memory_store, {:size => 2048.megabytes}
 
     config.middleware.insert_before 0, "Rack::Cors" do
@@ -64,8 +59,6 @@ module Sdfb
         resource '/api/**/*', :headers => :any, :methods => :any
       end
     end
-
+    config.middleware.insert_after Rack::Cors, Rack::Deflater
   end
-
-
 end

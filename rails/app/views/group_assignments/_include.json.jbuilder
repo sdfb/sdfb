@@ -7,5 +7,8 @@ json.attributes do
   json.end_year_type assignment.end_date_type
   json.start_year assignment.start_year
   json.start_year_type assignment.start_date_type
+  json.citations assignment.bibliography
+  json.created_by assignment.created_by
+
 end
 json.type "group_assignment"

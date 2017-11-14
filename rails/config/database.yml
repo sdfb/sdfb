@@ -33,7 +33,3 @@ production:
   #timeout: 5000
   #username: postgres
   #password: 6dfrannyb 
-
-
-cucumber:
-  <<: *test

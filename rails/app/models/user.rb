@@ -8,15 +8,11 @@ class User < ActiveRecord::Base
 
   # Relationships
   # -----------------------------
-  has_many :user_group_contribs
-  has_many :user_person_contribs
   has_many :user_rel_contribs
   has_many :people
   has_many :relationships
   has_many :groups
   has_many :group_assignments
-  has_many :group_cat_assigns
-  has_many :group_categories
   has_many :rel_cat_assigns
   has_many :relationship_categories
   has_many :relationship_types
@@ -123,7 +119,7 @@ class User < ActiveRecord::Base
     obj[:relationship_types] = (UserRelContrib.approved_user(self.id) + UserRelContrib.all_approved.for_user(self.id)).collect do |g| 
       {
         id: g.id, 
-        people: g.get_both_names, 
+        people: g.relationship.get_both_names, 
         type: g.relationship_type.name,
         is_approved: g.is_approved
       }
