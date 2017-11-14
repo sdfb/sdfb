@@ -1,0 +1,447 @@
+[
+    {
+        "category":"Affective",
+        "id":1,
+        "name":"Enemy of"
+    },
+    {
+        "category":"Affective",
+        "id":2,
+        "name":"Rival of"
+    },
+    {
+        "category":"Affective",
+        "id":3,
+        "name":"Acquaintance of"
+    },
+    {
+        "category":"Affective",
+        "id":5,
+        "name":"Knew in passing"
+    },
+    {
+        "category":"Affective",
+        "id":6,
+        "name":"Close friend of"
+    },
+    {
+        "category":"Affective",
+        "id":7,
+        "name":"Friend of"
+    },
+    {
+        "category":"Affective",
+        "id":8,
+        "name":"Attracted to"
+    },
+    {
+        "category":"Affective",
+        "id":59,
+        "name":"Admired by"
+    },
+    {
+        "category":"Affective",
+        "id":10,
+        "name":"Sexual partner of"
+    },
+    {
+        "category":"Affective",
+        "id":109,
+        "name":"Correspondent of "
+    },
+    {
+        "category":"Affective",
+        "id":4,
+        "name":"Met"
+    },
+    {
+        "category":"Educational/Intellectual",
+        "id":11,
+        "name":"Pupil/Student of"
+    },
+    {
+        "category":"Educational/Intellectual",
+        "id":12,
+        "name":"Mentor/Teacher of"
+    },
+    {
+        "category":"Educational/Intellectual",
+        "id":35,
+        "name":"Collaborated with"
+    },
+    {
+        "category":"Educational/Intellectual",
+        "id":108,
+        "name":"Schoolmate of"
+    },
+    {
+        "category":"Educational/Intellectual",
+        "id":109,
+        "name":"Correspondent of "
+    },
+    {
+        "category":"Kinship",
+        "id":13,
+        "name":"Aunt/Uncle of"
+    },
+    {
+        "category":"Kinship",
+        "id":14,
+        "name":"Cousin of"
+    },
+    {
+        "category":"Kinship",
+        "id":15,
+        "name":"Niece/Nephew of"
+    },
+    {
+        "category":"Kinship",
+        "id":16,
+        "name":"Child-in-law of"
+    },
+    {
+        "category":"Kinship",
+        "id":17,
+        "name":"Guardian of"
+    },
+    {
+        "category":"Kinship",
+        "id":18,
+        "name":"Heir(ess) of"
+    },
+    {
+        "category":"Kinship",
+        "id":19,
+        "name":"Other-in-law of"
+    },
+    {
+        "category":"Kinship",
+        "id":20,
+        "name":"Parent-in-law of"
+    },
+    {
+        "category":"Kinship",
+        "id":21,
+        "name":"Sibling-in-law of"
+    },
+    {
+        "category":"Kinship",
+        "id":23,
+        "name":"Ward of"
+    },
+    {
+        "category":"Kinship",
+        "id":24,
+        "name":"Great-grandparent of"
+    },
+    {
+        "category":"Kinship",
+        "id":25,
+        "name":"Child of"
+    },
+    {
+        "category":"Kinship",
+        "id":26,
+        "name":"Great-grandchild of"
+    },
+    {
+        "category":"Kinship",
+        "id":27,
+        "name":"Grandchild of"
+    },
+    {
+        "category":"Kinship",
+        "id":28,
+        "name":"Grandparent of"
+    },
+    {
+        "category":"Kinship",
+        "id":29,
+        "name":"Parent of"
+    },
+    {
+        "category":"Kinship",
+        "id":30,
+        "name":"Sibling of"
+    },
+    {
+        "category":"Kinship",
+        "id":31,
+        "name":"Godchild of"
+    },
+    {
+        "category":"Kinship",
+        "id":32,
+        "name":"Godparent of"
+    },
+    {
+        "category":"Kinship",
+        "id":33,
+        "name":"Godsibling of"
+    },
+    {
+        "category":"Kinship",
+        "id":46,
+        "name":"Spouse of"
+    },
+    {
+        "category":"Kinship",
+        "id":9,
+        "name":"Had child with"
+    },
+    {
+        "category":"Kinship",
+        "id":103,
+        "name":"Step-parent of"
+    },
+    {
+        "category":"Kinship",
+        "id":104,
+        "name":"Step-child of"
+    },
+    {
+        "category":"Kinship",
+        "id":105,
+        "name":"Step-sibling of"
+    },
+    {
+        "category":"Labor/Professional",
+        "id":34,
+        "name":"Client of"
+    },
+    {
+        "category":"Labor/Professional",
+        "id":35,
+        "name":"Collaborated with"
+    },
+    {
+        "category":"Labor/Professional",
+        "id":36,
+        "name":"Colleague of"
+    },
+    {
+        "category":"Labor/Professional",
+        "id":37,
+        "name":"Coworker of"
+    },
+    {
+        "category":"Labor/Professional",
+        "id":39,
+        "name":"Apprentice of"
+    },
+    {
+        "category":"Labor/Professional",
+        "id":40,
+        "name":"Employed by"
+    },
+    {
+        "category":"Labor/Professional",
+        "id":42,
+        "name":"Master of"
+    },
+    {
+        "category":"Labor/Professional",
+        "id":43,
+        "name":"Rented from"
+    },
+    {
+        "category":"Labor/Professional",
+        "id":44,
+        "name":"Rented to"
+    },
+    {
+        "category":"Labor/Professional",
+        "id":11,
+        "name":"Pupil/Student of"
+    },
+    {
+        "category":"Labor/Professional",
+        "id":12,
+        "name":"Mentor/Teacher of"
+    },
+    {
+        "category":"Labor/Professional",
+        "id":41,
+        "name":"Employer of"
+    },
+    {
+        "category":"Labor/Professional",
+        "id":110,
+        "name":"Midwife for"
+    },
+    {
+        "category":"Labor/Professional",
+        "id":112,
+        "name":"Attendant of"
+    },
+    {
+        "category":"Labor/Professional",
+        "id":113,
+        "name":"Attended by"
+    },
+    {
+        "category":"Labor/Professional",
+        "id":111,
+        "name":"Had as midwife"
+    },
+    {
+        "category":"Legal/Commercial",
+        "id":39,
+        "name":"Apprentice of"
+    },
+    {
+        "category":"Legal/Commercial",
+        "id":40,
+        "name":"Employed by"
+    },
+    {
+        "category":"Legal/Commercial",
+        "id":41,
+        "name":"Employer of"
+    },
+    {
+        "category":"Legal/Commercial",
+        "id":42,
+        "name":"Master of"
+    },
+    {
+        "category":"Legal/Commercial",
+        "id":43,
+        "name":"Rented from"
+    },
+    {
+        "category":"Legal/Commercial",
+        "id":44,
+        "name":"Rented to"
+    },
+    {
+        "category":"Legal/Commercial",
+        "id":45,
+        "name":"Engaged to"
+    },
+    {
+        "category":"Legal/Commercial",
+        "id":46,
+        "name":"Spouse of"
+    },
+    {
+        "category":"Legal/Commercial",
+        "id":16,
+        "name":"Child-in-law of"
+    },
+    {
+        "category":"Legal/Commercial",
+        "id":17,
+        "name":"Guardian of"
+    },
+    {
+        "category":"Legal/Commercial",
+        "id":18,
+        "name":"Heir(ess) of"
+    },
+    {
+        "category":"Legal/Commercial",
+        "id":19,
+        "name":"Other-in-law of"
+    },
+    {
+        "category":"Legal/Commercial",
+        "id":20,
+        "name":"Parent-in-law of"
+    },
+    {
+        "category":"Legal/Commercial",
+        "id":21,
+        "name":"Sibling-in-law of"
+    },
+    {
+        "category":"Legal/Commercial",
+        "id":22,
+        "name":"Testator to"
+    },
+    {
+        "category":"Legal/Commercial",
+        "id":23,
+        "name":"Ward of"
+    },
+    {
+        "category":"Legal/Commercial",
+        "id":103,
+        "name":"Step-parent of"
+    },
+    {
+        "category":"Legal/Commercial",
+        "id":104,
+        "name":"Step-child of"
+    },
+    {
+        "category":"Legal/Commercial",
+        "id":106,
+        "name":"Creditor of"
+    },
+    {
+        "category":"Legal/Commercial",
+        "id":107,
+        "name":"Debtor of"
+    },
+    {
+        "category":"Legal/Commercial",
+        "id":105,
+        "name":"Step-sibling of"
+    },
+    {
+        "category":"Political",
+        "id":34,
+        "name":"Client of"
+    },
+    {
+        "category":"Religious",
+        "id":47,
+        "name":"Parishoner of"
+    },
+    {
+        "category":"Religious",
+        "id":48,
+        "name":"Priest of"
+    },
+    {
+        "category":"Religious",
+        "id":31,
+        "name":"Godchild of"
+    },
+    {
+        "category":"Religious",
+        "id":32,
+        "name":"Godparent of"
+    },
+    {
+        "category":"Religious",
+        "id":33,
+        "name":"Godsibling of"
+    },
+    {
+        "category":"Religious",
+        "id":49,
+        "name":"Other religious relationship"
+    },
+    {
+        "category":"Spatial",
+        "id":50,
+        "name":"Lived with"
+    },
+    {
+        "category":"Spatial",
+        "id":51,
+        "name":"Neighbor of"
+    },
+    {
+        "category":"Spatial",
+        "id":113,
+        "name":"Attended by"
+    },
+    {
+        "category":"Spatial",
+        "id":112,
+        "name":"Attendant of"
+    }
+]
