@@ -151,8 +151,8 @@ class ApiController < ApplicationController
 
 
         if node["id"]
-          node.delete("id")
           Person.find(node["id"].to_i).update(node)
+          node.delete("id")
         else
           node["created_by"] = current_user.id
           new_person = Person.create!(node)
