@@ -32,7 +32,7 @@ redesign2017App.config(function($stateProvider, $locationProvider, $compileProvi
   }
   var vizState = {
     name: 'home.visualization',
-    url: '?ids&type&min_confidence',
+    url: '?ids&min_confidence&type',
     resolve: {
       networkData: ['apiService', '$stateParams', function(apiService, $stateParams) {
         if ($stateParams.ids.length < 8 && $stateParams.type === 'network') {

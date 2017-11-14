@@ -7,7 +7,7 @@
  * # filtersPanel
  */
 angular.module('redesign2017App')
-  .directive('filtersPanel', function() {
+  .directive('filtersPanel', ['$state', '$window', '$stateParams', function($state, $window, $stateParams) {
         return {
           templateUrl: './views/filters-panel.html',
           restrict: 'E',
@@ -22,6 +22,15 @@ angular.module('redesign2017App')
             args,
             startYear,
             endYear;
+
+        scope.minConf = $stateParams.min_confidence;
+        console.log(scope.minConf);
+
+        scope.loadFull = function() {
+          if ($window.confirm("Loading data at all confidence levels may significantly slow down your browser. Click 'okay' to continue.") === true) {
+            $state.go('home.visualization', {min_confidence: 0});
+          }
+        }
 
         scope.reloadFilters = function() {
           removeAll();
@@ -602,6 +611,8 @@ angular.module('redesign2017App')
 
         scope.$watch('$stateParams.ids', function(newValue, oldValue) {
           if (scope.config.viewMode !== 'group-force' && scope.config.viewMode !== 'all' && scope.config.viewMode !== 'group-timeline') {
+            scope.minConf = $stateParams.min_confidence;
+            console.log(scope.minConf);
             scope.reloadFilters(scope.data);
           }
         }, true);
@@ -615,4 +626,4 @@ angular.module('redesign2017App')
 
       }
     }
-  });
+  }]);

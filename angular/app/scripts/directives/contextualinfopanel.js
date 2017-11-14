@@ -7,7 +7,7 @@
  * # contextualInfoPanel
  */
 angular.module('redesign2017App')
-  .directive('contextualInfoPanel', ['apiService', function(apiService) {
+  .directive('contextualInfoPanel', ['apiService', '$stateParams', function(apiService, $stateParams) {
     return {
       templateUrl: './views/contextual-info-panel.html',
       restrict: 'E',
