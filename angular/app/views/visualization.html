@@ -20,7 +20,7 @@
     <add-group ng-show="config.contributionMode && config.viewMode === 'all'" class="panel collapsable collapsed orange-panel add-node" ng-class="{'collapsed' : addGroupClosed}"></add-group>
 
     <legend-panel class="panel collapsable" ng-class="{'collapsed' : legendClosed, 'group': config.viewMode == 'all', 'shared': config.viewMode == 'shared-network', 'individual': config.viewMode == 'individual-force' || config.viewMode == 'individual-concentric','single-group': config.viewMode == 'group-force', 'timeline': config.viewMode == 'group-timeline'}"></legend-panel>
-    <filters-panel class="panel collapsable collapsed filters" ng-class="{'collapsed' : $root.filtersClosed, 'allGroupFilter': config.viewMode == 'all', 'individualFilter': config.viewMode == 'individual-force' || config.viewMode == 'individual-concentric' || config.viewMode == 'shared-network', 'singleGroupFilter': config.viewMode == 'single-group'}"></filters-panel>
+    <filters-panel ng-show="config.viewMode !== 'all'" class="panel collapsable collapsed filters" ng-class="{'collapsed' : $root.filtersClosed, 'allGroupFilter': config.viewMode == 'all', 'individualFilter': config.viewMode == 'individual-force' || config.viewMode == 'individual-concentric' || config.viewMode == 'shared-network', 'singleGroupFilter': config.viewMode == 'single-group'}"></filters-panel>
 
     <people-finder class="panel collapsable collapsed" ng-class="{'collapsed' : peopleFinderClosed}"></people-finder>
 

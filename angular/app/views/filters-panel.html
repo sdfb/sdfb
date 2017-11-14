@@ -1,11 +1,12 @@
 <section class="force-layout">
-  <h3 class="">Filters</h3>
+  <h3 class="">Filters</h3><span ng-show=" minConf !== '0' " class="remove-btn load" ng-click="loadFull()">load all data</span>
   <div ng-show=" config.viewMode == 'individual-force' || config.viewMode == 'individual-concentric' || config.viewMode == 'shared-network'">
     <div>
       <h4>Avg. relationship confidence level</h4>
       <div class="confidence-container"></div>
       <h5>Likelihood that a particular relationship existed</h5>
     </div>
+    <!-- <button ng-view=" minConf !== 0 " class="btn btn-primary load" ng-click="loadFull()">Load all data</button> -->
     <div>
       <h4>Relationships date range</h4>
       <div class="date-container"></div>
@@ -47,14 +48,8 @@
       </div>
     </span> -->
   </div>
-  <div ng-show=" config.viewMode == 'all'">
-    <div>
-      <h4>No filters for All Groups visualization</h4>
-      <!-- <div class="date-container"></div>
-      <h5>Temporal window in which relationships existed</h5> -->
-    </div>
-  </div>
   <div ng-show=" config.viewMode == 'group-force'">
+    <!-- <button ng-show=" minConf !== 0 " class="btn btn-primary load" ng-click="loadFull()">Load all data</button> -->
     <h4>Visual density</h4>
     <div class="btn-group btn-group-justified">
       <label class="btn btn-primary" ng-model="config.onlyMembers" uib-btn-radio="true">Only Members</label>

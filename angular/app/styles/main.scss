@@ -412,9 +412,10 @@ path.danger {
   cursor: pointer;
 }
 
-.remove-btn.contribute {
+.remove-btn.contribute, .remove-btn.load {
   position: relative;
   font-size: 10px;
+  margin-bottom: 10px;
 }
 
 #viz-title {
@@ -932,7 +933,7 @@ filters-panel {
 }
 
 filters-panel.panel h3 {
-  margin-bottom: 16px;
+  // margin-bottom: 16px;
 }
 
 filters-panel.panel h4 {
@@ -1012,6 +1013,11 @@ input[type="radio"]:checked + label span {
 .btn-group {
   margin-bottom: 10px;
   width: 100%;
+}
+
+contextual-info-panel .btn {
+  margin-bottom: 10px;
+  width: 60%;
 }
 
 .btn-primary.active.focus,
