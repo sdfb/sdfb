@@ -6,6 +6,8 @@ json.attributes do
   json.start_year_type group.end_date_type
   json.end_year group.end_year
   json.end_year_type group.end_date_type
+  json.citations group.bibliography
+  json.created_by group.created_by
   json.degree group.group_assignments.to_a.count
 
   json.people do

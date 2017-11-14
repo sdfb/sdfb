@@ -6,7 +6,7 @@ json.attributes do
   json.end_year relationship.end_year
   json.start_year_type relationship.start_date_type
   json.end_year_type relationship.end_date_type
-
-
+  json.citations relationship.bibliography
+  json.created_by relationship.created_by
 end
 json.type "relationship"
