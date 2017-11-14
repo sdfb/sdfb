@@ -7,11 +7,11 @@ Sdfb::Application.configure do
 
   config.eager_load = true 
 
-
   config.cache_classes = false
 
   # Log error messages when you accidentally call methods on nil.
   config.whiny_nils = true
+  config.log_level = :info
 
   # Show full error reports and disable caching
   config.consider_all_requests_local       = false

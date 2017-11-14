@@ -3,8 +3,11 @@ json.attributes do
   json.name group.name
   json.description group.description
   json.start_year group.start_year
+  json.start_year_type group.end_date_type
   json.end_year group.end_year
-  json.degree group.group_assignments.count
+  json.end_year_type group.end_date_type
+  json.degree group.group_assignments.to_a.count
+
   json.people do
     json.array! group.group_assignments.all_approved do |assignment|
      json.person_id assignment.person_id

@@ -63,9 +63,8 @@ class Person < ActiveRecord::Base
 
   # TODO: This is now the performance bottlenext
   def approved_group_ids
-    groups = self.group_assignments
-        .select(:group_id)
-        .where('group_assignments.is_approved = ?', true).map{|ga| ga.group_id}
+    groups = self.group_assignments.to_a
+    groups.map{|obj| obj.group_id if obj.is_approved}.compact!
   end
 
   # if the display name is blank then add one
@@ -79,7 +78,9 @@ class Person < ActiveRecord::Base
 
   # -----------------------------
   def relationships(certainty=SDFB::DEFAULT_CONFIDENCE)
-    Relationship.all_approved.where("person1_index = ? OR person2_index = ?", self.id, self.id).where(max_certainty: (certainty..100))
+    results = Relationship.all_approved.where("person1_index = ? OR person2_index = ?", self.id, self.id)
+    results = results.where(max_certainty: (certainty..100)) if certainty > 0
+    results
   end
 
 

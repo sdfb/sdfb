@@ -1,5 +1,6 @@
 class ApiController < ApplicationController
   skip_before_filter :verify_authenticity_token
+  include ApiHelper
 
   def curate
     return head(:forbidden) unless current_user && ["Admin", "Curator"].include?(current_user.user_type)
@@ -420,7 +421,7 @@ class ApiController < ApplicationController
       first_degree_ids = []
       second_degree_ids = []
 
-      @people = Person.includes(:groups, :group_assignments).all_approved.find(ids)
+      @people = Person.includes(groups: :group_assignments).all_approved.find(ids)
 
       @relationships = @people.map(&:relationships).reduce(:+).uniq
       
@@ -429,7 +430,7 @@ class ApiController < ApplicationController
       end.flatten.uniq - ids
 
 
-      @sources = Person.includes(:groups, :group_assignments).all_approved.find(first_degree_ids)
+      @sources = Person.includes(groups: :group_assignments).all_approved.find(first_degree_ids)
       first_degree_relationships = @sources.map(&:relationships).reduce(:+)&.uniq || []
       @relationships = @relationships | first_degree_relationships
 
@@ -438,7 +439,7 @@ class ApiController < ApplicationController
           [r.person1_index, r.person2_index]
         end.flatten.uniq - (ids + first_degree_ids)
 
-        second_degree_people = Person.includes(:groups, :group_assignments).all_approved.find(second_degree_ids)
+        second_degree_people = Person.includes(groups: :group_assignments).all_approved.find(second_degree_ids)
         second_degree_relationships = second_degree_people.map(&:relationships).reduce(:+)&.uniq || []
 
         @relationships = @relationships | second_degree_relationships
@@ -447,11 +448,11 @@ class ApiController < ApplicationController
 
       all_ids = ids | first_degree_ids | second_degree_ids
       @relationships = @relationships.find_all{ |r| all_ids.include?(r.person1_index) && all_ids.include?(r.person2_index)  }
-
     rescue ActiveRecord::RecordNotFound => e
       @errors = []
       @errors << {title: "invalid person ID(s)"}
     end
+    render json: network_to_json
   end
 
 
