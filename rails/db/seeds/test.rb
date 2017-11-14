@@ -4,17 +4,6 @@ require "csv"
 tsv_options = { :col_sep => "\t" }
 sdfb_admin_id = User.first.id
 
-# Add all of the Group Category data from the dump
-CSV.foreach(Rails.root.join('lib', 'data', 'group_categories.tsv'), tsv_options) do |line|
-  GroupCategory.where(
-    id:              line[0],
-    name:            line[1],
-    is_approved:     true,
-    created_by:      sdfb_admin_id,
-    approved_by:     sdfb_admin_id.to_s
-  ).first_or_create!
-end
-ActiveRecord::Base.connection.reset_pk_sequence!("group_categories")
 
 # Add all of the Group data from the dump
 CSV.foreach(Rails.root.join('lib', 'data', 'groups.tsv'), tsv_options) do |line|
