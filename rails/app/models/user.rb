@@ -119,7 +119,7 @@ class User < ActiveRecord::Base
     obj[:relationship_types] = (UserRelContrib.approved_user(self.id) + UserRelContrib.all_approved.for_user(self.id)).collect do |g| 
       {
         id: g.id, 
-        people: g.get_both_names, 
+        people: g.relationship.get_both_names, 
         type: g.relationship_type.name,
         is_approved: g.is_approved
       }
