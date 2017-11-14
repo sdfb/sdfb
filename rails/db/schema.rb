@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171114031909) do
+ActiveRecord::Schema.define(version: 20171114032446) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -37,6 +37,8 @@ ActiveRecord::Schema.define(version: 20171114031909) do
     t.text     "bibliography"
   end
 
+  add_index "group_assignments", ["approved_by"], name: "index_group_assignments_on_approved_by", using: :btree
+  add_index "group_assignments", ["created_by"], name: "index_group_assignments_on_created_by", using: :btree
   add_index "group_assignments", ["group_id"], name: "index_group_assignments_on_group_id", using: :btree
   add_index "group_assignments", ["person_id"], name: "index_group_assignments_on_person_id", using: :btree
 
@@ -57,6 +59,9 @@ ActiveRecord::Schema.define(version: 20171114031909) do
     t.string   "end_date_type",   limit: 255
     t.text     "bibliography"
   end
+
+  add_index "groups", ["approved_by"], name: "index_groups_on_approved_by", using: :btree
+  add_index "groups", ["created_by"], name: "index_groups_on_created_by", using: :btree
 
   create_table "people", force: :cascade do |t|
     t.string   "first_name",              limit: 255
@@ -87,6 +92,9 @@ ActiveRecord::Schema.define(version: 20171114031909) do
     t.text     "aliases"
   end
 
+  add_index "people", ["approved_by"], name: "index_people_on_approved_by", using: :btree
+  add_index "people", ["created_by"], name: "index_people_on_created_by", using: :btree
+
   create_table "rel_cat_assigns", force: :cascade do |t|
     t.integer  "relationship_category_id"
     t.integer  "relationship_type_id"
@@ -99,6 +107,9 @@ ActiveRecord::Schema.define(version: 20171114031909) do
     t.datetime "updated_at",                                           null: false
     t.text     "bibliography"
   end
+
+  add_index "rel_cat_assigns", ["approved_by"], name: "index_rel_cat_assigns_on_approved_by", using: :btree
+  add_index "rel_cat_assigns", ["created_by"], name: "index_rel_cat_assigns_on_created_by", using: :btree
 
   create_table "relationship_categories", force: :cascade do |t|
     t.string   "name",         limit: 255
@@ -113,6 +124,9 @@ ActiveRecord::Schema.define(version: 20171114031909) do
     t.text     "bibliography"
   end
 
+  add_index "relationship_categories", ["approved_by"], name: "index_relationship_categories_on_approved_by", using: :btree
+  add_index "relationship_categories", ["created_by"], name: "index_relationship_categories_on_created_by", using: :btree
+
   create_table "relationship_types", force: :cascade do |t|
     t.integer  "relationship_type_inverse"
     t.string   "name",                      limit: 255
@@ -126,6 +140,9 @@ ActiveRecord::Schema.define(version: 20171114031909) do
     t.datetime "updated_at",                                            null: false
     t.text     "bibliography"
   end
+
+  add_index "relationship_types", ["approved_by"], name: "index_relationship_types_on_approved_by", using: :btree
+  add_index "relationship_types", ["created_by"], name: "index_relationship_types_on_created_by", using: :btree
 
   create_table "relationships", force: :cascade do |t|
     t.integer  "original_certainty"
@@ -152,6 +169,8 @@ ActiveRecord::Schema.define(version: 20171114031909) do
     t.boolean  "altered",                        default: false
   end
 
+  add_index "relationships", ["approved_by"], name: "index_relationships_on_approved_by", using: :btree
+  add_index "relationships", ["created_by"], name: "index_relationships_on_created_by", using: :btree
   add_index "relationships", ["person1_index"], name: "index_relationships_on_person1_index", using: :btree
   add_index "relationships", ["person2_index"], name: "index_relationships_on_person2_index", using: :btree
 
@@ -178,6 +197,8 @@ ActiveRecord::Schema.define(version: 20171114031909) do
     t.boolean  "is_locked",                        default: false
   end
 
+  add_index "user_rel_contribs", ["approved_by"], name: "index_user_rel_contribs_on_approved_by", using: :btree
+  add_index "user_rel_contribs", ["created_by"], name: "index_user_rel_contribs_on_created_by", using: :btree
   add_index "user_rel_contribs", ["relationship_id"], name: "index_user_rel_contribs_on_relationship_id", using: :btree
 
   create_table "users", force: :cascade do |t|
@@ -200,5 +221,7 @@ ActiveRecord::Schema.define(version: 20171114031909) do
     t.string   "password_reset_token",   limit: 255
     t.boolean  "is_public",                          default: false
   end
+
+  add_index "users", ["created_by"], name: "index_users_on_created_by", using: :btree
 
 end
