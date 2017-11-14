@@ -13,6 +13,8 @@ angular.module('redesign2017App')
     var $ctrl = this;
     $ctrl.people = people.data;
 
+    console.log($ctrl.people);
+
     relationships.data.forEach(function(d) {
       relationships.included.forEach(function(i) {
         if (i.id === d.attributes.person_1.toString()) {

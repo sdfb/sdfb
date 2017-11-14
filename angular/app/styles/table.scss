@@ -1,4 +1,4 @@
-table#people {
+table {
   font-size: 12px;
   table-layout: fixed;
   white-space: nowrap;
@@ -38,4 +38,121 @@ table#people {
   .action-column {
     width: 15%;
   }
+}
+
+table.curate-people {
+  // font-size: 12px;
+  // table-layout: fixed;
+  // white-space: nowrap;
+  //
+  td {
+    white-space: initial;
+    // overflow: scroll;
+    // overflow-x: scroll;
+    text-overflow: initial;
+  }
+
+  .name-column {
+    width: 20%;
+  }
+
+  .sig-column {
+    width: 20%;
+  }
+
+  .start-column {
+    width: 10%
+  }
+
+  .end-column {
+    width: 10%;
+  }
+
+  .gender-column {
+    width: 10%;
+  }
+
+  .created-column {
+    width: 8%;
+  }
+
+  .action-column {
+    width: 8%;
+  }
+}
+
+table.more-groups {
+  font-size: 12px;
+  table-layout: fixed;
+  white-space: nowrap;
+
+  td {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .id-column {
+    width: 15%;
+  }
+
+  .name-column {
+    width: 50%;
+  }
+
+  .members-column {
+    width: 20%;
+  }
+
+  .action-column {
+    width: 15%;
+  }
+}
+
+table.all-groups {
+  font-size: 12px;
+  table-layout: fixed;
+  white-space: nowrap;
+
+  td {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .id-column {
+    width: 10%;
+  }
+
+  .name-column {
+    width: 40%;
+  }
+
+  .start-column {
+    width: 20%;
+  }
+
+  .end-column {
+    width: 20%;
+  }
+
+  .action-column {
+    width: 10%;
+  }
+}
+
+thead {
+  td {
+    font-weight: 700;
+  }
+}
+
+.table > tbody > tr > td:first-of-type,
+.table > thead > tr > td:first-of-type {
+  padding-left: 0;
+}
+
+.table > tbody > tr > td:last-of-type,
+.table > thead > tr > td:last-of-type {
+  padding-right: 0;
 }
