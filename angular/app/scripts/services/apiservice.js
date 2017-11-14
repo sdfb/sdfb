@@ -83,13 +83,14 @@ angular.module('redesign2017App')
           return response;
         });
       },
-      getGroupNetwork : function(ids){
+      getGroupNetwork : function(ids, certainty){
         var url = baseUrl + '/api/groups/network';
         return $http({
           method: 'GET',
           url: url,
           params: {
-              ids: ids.toString()
+              ids: ids.toString(),
+              certainty: certainty
             }
         }).then(function successCallback(response){
           return response.data;
@@ -113,14 +114,15 @@ angular.module('redesign2017App')
           return response;
         });
       },
-      getNetwork : function(ids){
+      getNetwork : function(ids, certainty){
 
         var url = baseUrl + '/api/network';
         return $http({
           method: 'GET',
           url: url,
           params: {
-              ids: ids.toString()
+              ids: ids.toString(),
+              certainty: certainty
             }
         }).then(function successCallback(response){
           return response.data;

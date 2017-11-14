@@ -27,16 +27,16 @@ redesign2017App.config(function($stateProvider, $locationProvider, $compileProvi
     name: 'home',
     url: '/',
     component: 'home',
-    redirectTo: { state: 'home.visualization', params: { ids: '10000473', type: 'network' } }
+    redirectTo: { state: 'home.visualization', params: { ids: '10000473', type: 'network', min_confidence: 60 } }
     // abstract: true
   }
   var vizState = {
     name: 'home.visualization',
-    url: '?ids&type',
+    url: '?ids&type&min_confidence',
     resolve: {
       networkData: ['apiService', '$stateParams', function(apiService, $stateParams) {
         if ($stateParams.ids.length < 8 && $stateParams.type === 'network') {
-          return apiService.getGroupNetwork($stateParams.ids).then(function(result){
+          return apiService.getGroupNetwork($stateParams.ids, $stateParams.min_confidence).then(function(result){
             apiService.result = result;
             return apiService.result;
           });
@@ -51,7 +51,7 @@ redesign2017App.config(function($stateProvider, $locationProvider, $compileProvi
             return apiService.result;
           });
         } else {
-          return apiService.getNetwork($stateParams.ids).then(function(result){
+          return apiService.getNetwork($stateParams.ids, $stateParams.min_confidence).then(function(result){
             apiService.result = result;
             return apiService.result;
           });
