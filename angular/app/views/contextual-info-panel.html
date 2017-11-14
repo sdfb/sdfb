@@ -13,7 +13,10 @@
   <a ng-show="config.viewMode === 'group-force'" class="btn btn-primary" target="_blank" download="{{config.networkName}}.json" ng-href="{{download}}">Export <i class="fa fa-download" aria-hidden="true"></i></a>
 </section>
 <section ng-if="currentSelection.type == 'person' " id="XXXcurrent-selection-person1">
-    <button type="button" class="btn btn-primary go" ui-sref="home.visualization({ ids: currentSelection.id })">Visualize</button>
+  <div class="person-right">
+    <p ng-show="currentSelection.attributes.created_by !== 2" class="person-created">created by: <a href ui-sref="home.user({userId: currentSelection.attributes.created_by})">{{currentSelection.attributes.created_by}}</a></p>
+    <button ng-class="{'no-user' : currentSelection.attributes.created_by === 2}" type="button" class="btn btn-primary go" ui-sref="home.visualization({ ids: currentSelection.id })">Visualize</button>
+  </div>
   <h2>{{currentSelection.attributes.name }}</h2>
   <p ng-if="currentSelection.attributes.historical_significance != ''">{{currentSelection.attributes.historical_significance}}</p>
   <p ng-if="currentSelection.attributes.historical_significance == ''"> &empty; </p>
