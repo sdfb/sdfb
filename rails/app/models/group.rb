@@ -9,8 +9,6 @@ class Group < ActiveRecord::Base
   # Relationships
   # -----------------------------
   has_many :people, through: :group_assignments
-  has_many :group_cat_assigns,   dependent: :destroy
-  has_many :user_group_contribs, dependent: :destroy
   has_many :group_assignments,   dependent: :destroy
   belongs_to :user
 
