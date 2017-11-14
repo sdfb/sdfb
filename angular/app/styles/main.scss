@@ -1332,10 +1332,22 @@ contextual-info-panel > section, contextual-info-panel > div > section {
     display: none;
   }
 
+  .person-right {
+    float: right;
+  }
+
   .btn.go {
     width: 100px;
-    float: right;
-    margin-top: 12px
+    // float: right;
+    // margin-top: 12px
+  }
+
+  .btn.go.no-user {
+    margin-top: 12px;
+  }
+
+  .person-created {
+    margin: 0;
   }
 }
 
