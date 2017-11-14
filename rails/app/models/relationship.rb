@@ -57,7 +57,6 @@ class Relationship < ActiveRecord::Base
                                .first_or_create!(
                                    relationship_id: self.id,
                                    is_approved: self.is_approved,
-                                   is_rejected: false,
                                    is_active: true,
                                    is_locked: true,
                                    relationship_type_id: 4,
@@ -228,7 +227,6 @@ class Relationship < ActiveRecord::Base
         new_met_record = UserRelContrib.new do |u| 
           u.relationship_id = self.id
           u.is_approved = true
-          u.is_rejected = false
           u.is_active = true
           u.is_locked = true
           u.relationship_type_id = 4
