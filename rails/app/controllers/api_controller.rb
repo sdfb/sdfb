@@ -416,6 +416,7 @@ class ApiController < ApplicationController
   def network
     begin
       ids = params[:ids].split(",").map(&:to_i).uniq.sort
+      max_certainty = params[:certainty].to_i || SDFB::DEFAULT_CONFIDENCE
       @display_id = ids.join(",")
 
       first_degree_ids = []
@@ -423,7 +424,7 @@ class ApiController < ApplicationController
 
       @people = Person.includes(groups: :group_assignments).all_approved.find(ids)
 
-      @relationships = @people.map(&:relationships).reduce(:+).uniq
+      @relationships = @people.map{|p| p.relationships(max_certainty)}.reduce(:+).uniq
       
       first_degree_ids = @relationships.collect do |r| 
         [r.person1_index, r.person2_index]
@@ -431,7 +432,7 @@ class ApiController < ApplicationController
 
 
       @sources = Person.includes(groups: :group_assignments).all_approved.find(first_degree_ids)
-      first_degree_relationships = @sources.map(&:relationships).reduce(:+)&.uniq || []
+      first_degree_relationships = @sources.map{|p| p.relationships(max_certainty)}.reduce(:+)&.uniq || []
       @relationships = @relationships | first_degree_relationships
 
       if ids.count == 1
@@ -440,7 +441,7 @@ class ApiController < ApplicationController
         end.flatten.uniq - (ids + first_degree_ids)
 
         second_degree_people = Person.includes(groups: :group_assignments).all_approved.find(second_degree_ids)
-        second_degree_relationships = second_degree_people.map(&:relationships).reduce(:+)&.uniq || []
+        second_degree_relationships = second_degree_people.map{|p| p.relationships(max_certainty)}.reduce(:+)&.uniq || []
 
         @relationships = @relationships | second_degree_relationships
         @sources = @sources | second_degree_people
@@ -459,13 +460,14 @@ class ApiController < ApplicationController
   def group_network
     begin
       ids = params[:ids].split(",").map(&:to_i).uniq.sort
+      max_certainty = params[:certainty].to_i || SDFB::DEFAULT_CONFIDENCE
       @display_id = ids.join(",")
 
       @groups = Group.all_approved.find(ids)
 
       @primary_people = @groups.map(&:approved_people).reduce(:+).uniq
       
-      @relationships = @primary_people.map(&:relationships).flatten
+      @relationships = @primary_people.map{|p| p.relationships(max_certainty)}.flatten
 
       first_degree_ids = @relationships.collect do |r|
         [r.person1_index, r.person2_index]
