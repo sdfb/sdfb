@@ -183,7 +183,7 @@ class ApiController < ApplicationController
             new_record[:is_approved] = group["is_approved"]
             new_record[:approved_by] = current_user.id if group["is_approved"]
           end
-          new_record[:is_active]   = group["is_active"]   if group["is_active"]
+          new_record[:is_active]   = group["is_active"] unless group["is_active"].nil?
         end
     
         if group["id"]
@@ -199,13 +199,31 @@ class ApiController < ApplicationController
 
     if links = params[:links]
       links.each do |link|
-        source_id = link["source"]["id"].to_i
-        target_id  = link["target"]["id"].to_i
-        source_id = person_lookup[source_id]  if source_id  < 1_000_000
-        target_id  = person_lookup[target_id] if target_id  < 1_000_000
-        
-        rel = Relationship.where("person1_index = ? AND person2_index = ?", source_id, target_id).first
-        rel ||= Relationship.where("person1_index = ? AND person2_index = ?", target_id, source_id).first
+
+        if link["id"]
+          rel = Relationship.find(link["id"])
+          puts rel
+        else
+          begin        
+            source_id = link["source"]["id"].to_i 
+            source_id = person_lookup[source_id]  if source_id  < 1_000_000
+          rescue Exception => e
+            source_id = nil
+          end
+          begin
+            target_id  = link["target"]["id"].to_i
+            target_id  = person_lookup[target_id] if target_id  < 1_000_000          
+          rescue Exception => e
+            target_id = nil
+          end
+          
+          if source_id && target_id
+            rel = Relationship.where("person1_index = ? AND person2_index = ?", source_id, target_id).first
+            rel ||= Relationship.where("person1_index = ? AND person2_index = ?", target_id, source_id).first
+          else
+            rel = nil
+          end
+        end
 
         if rel.nil?
           new_record = {
@@ -260,7 +278,7 @@ class ApiController < ApplicationController
             new_record[:is_approved] = assignment["is_approved"]
             new_record[:approved_by] = current_user.id if assignment["is_approved"]
           end
-          new_record["is_active"] = assignment["is_active"]   if assignment["is_active"]
+          new_record["is_active"] = assignment["is_active"]   unless assignment["is_active"].nil?
         end
         if assignment["id"]
           new_record.reject! {|_,v| v.nil?}
