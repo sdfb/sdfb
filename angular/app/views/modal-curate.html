@@ -125,7 +125,7 @@
                     <!-- <i class="fa fa-times" aria-hidden="true" type="button" ng-click="$ctrl.remove($index, $ctrl.addToDB.groups)" aria-label="Remove"></i> -->
                 </td>
                 <td>
-                  <input type="checkbox"/>
+                  <input ng-model="group.is_dismissed" type="checkbox"/>
                 </td>
             </tr>
         </tbody>
@@ -149,11 +149,11 @@
                 <td>{{ rel.attributes.start_year_type }} {{ rel.attributes.start_year }}</td>
                 <td>{{ rel.attributes.end_year_type }} {{ rel.attributes.end_year }}</td>
                 <td>
-                  <input type="checkbox"/>
+                  <input ng-model="rel.is_approved" type="checkbox"/>
                     <!-- <i class="fa fa-times" aria-hidden="true" type="button" ng-click="$ctrl.remove($index, $ctrl.addToDB.group_assignments)" aria-label="Remove"></i> -->
                 </td>
                 <td>
-                  <input type="checkbox"/>
+                  <input ng-model="rel.is_dismissed" type="checkbox"/>
                 </td>
             </tr>
         </tbody>

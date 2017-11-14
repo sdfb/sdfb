@@ -96,7 +96,39 @@ angular.module('redesign2017App')
       //   }
       // })
       $ctrl.addToDB.groups = [];
+      $ctrl.groups.forEach(function (g) {
+        var newGroup = {};
+        newGroup.id = parseInt(g.id);
+        // newPerson.name = p.attributes.name;
+        // newPerson.birthDate = p.attributes.birth_year;
+        // newPerson.birthDateType = p.attributes.birth_year_type;
+        // newPerson.deathDate = p.attributes.death_year;
+        // newPerson.deathDateType = p.attributes.death_year_type;
+        // newPerson.gender = p.attributes.gender;
+        // newPerson.historical_significance = p.attributes.historical_significance;
+        newGroup.is_approved = g.is_approved;
+        newGroup.is_active = !g.is_dismissed;
+        if (newGroup.is_approved || newGroup.is_active === false) {
+          $ctrl.addToDB.groups.push(newGroup);
+        }
+      });
       $ctrl.addToDB.group_assignments = [];
+      $ctrl.group_assignments.forEach(function (g) {
+        var newGroupAssign = {};
+        newGroupAssign.id = parseInt(g.id);
+        // newPerson.name = p.attributes.name;
+        // newPerson.birthDate = p.attributes.birth_year;
+        // newPerson.birthDateType = p.attributes.birth_year_type;
+        // newPerson.deathDate = p.attributes.death_year;
+        // newPerson.deathDateType = p.attributes.death_year_type;
+        // newPerson.gender = p.attributes.gender;
+        // newPerson.historical_significance = p.attributes.historical_significance;
+        newGroupAssign.is_approved = g.is_approved;
+        newGroupAssign.is_active = !g.is_dismissed;
+        if (newGroupAssign.is_approved || newGroupAssign.is_active === false) {
+          $ctrl.addToDB.group_assignments.push(newGroupAssign);
+        }
+      });
 
       // apiService.writeData($ctrl.addToDB);
       $uibModalInstance.close($ctrl.addToDB);
