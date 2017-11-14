@@ -329,7 +329,7 @@ class ApiController < ApplicationController
       people.each do |data|
         keys, display_name, id = data
         name_words = keys.split(", ")
-        # name_words << display_name
+        name_words << display_name
         name_words.uniq!
         name_words.uniq.each do |typeahead_name|
           typeahead_parts = typeahead_name.downcase.split(/\W+/)
