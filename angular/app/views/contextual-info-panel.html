@@ -6,10 +6,11 @@
   <h5 ng-if="config.contributionMode" class="contribution"><i class="fa fa-users" aria-hidden="true"></i> To add a person to a group: drag a node onto the groups bar at the bottom of the screen. </h5>
   <!-- <p><button ng-show="config.viewMode !== 'group-force'" type="button" class="btn btn-primary" ng-click="openTable()">See Table View</button></p>
   <p><button type="button" class="btn btn-primary">Export</button></p> -->
-  <div class="btn-group btn-group-justified">
+  <div ng-show = "config.viewMode !== 'group-force'" class="btn-group btn-group-justified">
     <label class="btn btn-primary" ng-click="openTable()">Table <i class="fa fa-table" aria-hidden="true"></i></label>
     <a class="btn btn-primary" target="_blank" download="{{config.networkName}}.json" ng-href="{{download}}">Export <i class="fa fa-download" aria-hidden="true"></i></a>
   </div>
+  <a ng-show="config.viewMode === 'group-force'" class="btn btn-primary" target="_blank" download="{{config.networkName}}.json" ng-href="{{download}}">Export <i class="fa fa-download" aria-hidden="true"></i></a>
 </section>
 <section ng-if="currentSelection.type == 'person' " id="XXXcurrent-selection-person1">
     <button type="button" class="btn btn-primary go" ui-sref="home.visualization({ ids: currentSelection.id })">Visualize</button>
