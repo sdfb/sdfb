@@ -1155,16 +1155,22 @@ group-assign section {
       background-color: $contribution-mode-fill;
       border: 1px solid $contribution-mode-stroke;
       color: $light-color;
+      text-transform: capitalize !important;
       cursor: pointer;
       font-size: 13px;
       height: 30px;
-      padding: 6px;
+      padding: 4px 6px 6px 6px;
       text-align: left;
       float: left;
       text-transform: uppercase;
       -moz-appearance: none;
       appearance: none;
       -webkit-appearance: none;
+
+      optgroup {
+        background-color: $light-color;
+        color: $contribution-mode-fill;
+      }
 
       option {
         background-color: $light-color;
