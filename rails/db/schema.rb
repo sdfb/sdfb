@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171114032446) do
+ActiveRecord::Schema.define(version: 20171114032905) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -110,6 +110,8 @@ ActiveRecord::Schema.define(version: 20171114032446) do
 
   add_index "rel_cat_assigns", ["approved_by"], name: "index_rel_cat_assigns_on_approved_by", using: :btree
   add_index "rel_cat_assigns", ["created_by"], name: "index_rel_cat_assigns_on_created_by", using: :btree
+  add_index "rel_cat_assigns", ["relationship_category_id"], name: "index_rel_cat_assigns_on_relationship_category_id", using: :btree
+  add_index "rel_cat_assigns", ["relationship_type_id"], name: "index_rel_cat_assigns_on_relationship_type_id", using: :btree
 
   create_table "relationship_categories", force: :cascade do |t|
     t.string   "name",         limit: 255
@@ -143,6 +145,7 @@ ActiveRecord::Schema.define(version: 20171114032446) do
 
   add_index "relationship_types", ["approved_by"], name: "index_relationship_types_on_approved_by", using: :btree
   add_index "relationship_types", ["created_by"], name: "index_relationship_types_on_created_by", using: :btree
+  add_index "relationship_types", ["relationship_type_inverse"], name: "index_relationship_types_on_relationship_type_inverse", using: :btree
 
   create_table "relationships", force: :cascade do |t|
     t.integer  "original_certainty"
@@ -200,6 +203,7 @@ ActiveRecord::Schema.define(version: 20171114032446) do
   add_index "user_rel_contribs", ["approved_by"], name: "index_user_rel_contribs_on_approved_by", using: :btree
   add_index "user_rel_contribs", ["created_by"], name: "index_user_rel_contribs_on_created_by", using: :btree
   add_index "user_rel_contribs", ["relationship_id"], name: "index_user_rel_contribs_on_relationship_id", using: :btree
+  add_index "user_rel_contribs", ["relationship_type_id"], name: "index_user_rel_contribs_on_relationship_type_id", using: :btree
 
   create_table "users", force: :cascade do |t|
     t.text     "about_description"
