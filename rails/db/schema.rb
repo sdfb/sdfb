@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171114030519) do
+ActiveRecord::Schema.define(version: 20171114031258) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -180,18 +180,6 @@ ActiveRecord::Schema.define(version: 20171114030519) do
 
   add_index "relationships", ["person1_index"], name: "index_relationships_on_person1_index", using: :btree
   add_index "relationships", ["person2_index"], name: "index_relationships_on_person2_index", using: :btree
-
-  create_table "user_group_contribs", force: :cascade do |t|
-    t.integer  "group_id"
-    t.integer  "created_by"
-    t.text     "bibliography"
-    t.integer  "approved_by"
-    t.datetime "approved_on"
-    t.boolean  "is_approved",  default: true
-    t.boolean  "is_active",    default: true
-    t.datetime "created_at",                  null: false
-    t.datetime "updated_at",                  null: false
-  end
 
   create_table "user_person_contribs", force: :cascade do |t|
     t.integer  "person_id"
