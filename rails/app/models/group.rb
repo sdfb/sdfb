@@ -33,7 +33,7 @@ class Group < ActiveRecord::Base
   # -----------------------------
   def approved_people
     people = self.group_assignments.where('group_assignments.is_approved = ?', true).map{|ga| ga.person_id}
-    Person.all_approved.find(people)
+    Person.all_approved.where(id: people)
   end
 
   # checks that end year is on or after start year and that start 
