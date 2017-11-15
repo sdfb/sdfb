@@ -37,23 +37,32 @@ class ApiController < ApplicationController
 
 
   def users
-    return head(:forbidden) unless current_user
     user_id = params[:id]
     return head(:bad_request) unless user_id
 
     # you can only get your own ID unless you're an admin
-    unless current_user.user_type == "Admin"
-      return head(:forbidden) unless user_id == current_user.id.to_s
-    end
-
-    respond_to do |format|
-      begin
-        user = User.find(user_id)
-        format.json { render json: user.as_json}
-        format.html { render :json}
-      rescue ActiveRecord::RecordNotFound => e
-        format.json { render json: {}, status: :unprocessable_entity }
-        format.html { render :json}
+    if current_user && (current_user.user_type == "Admin" || current_user.id = user_id)
+      respond_to do |format|
+        begin
+          user = User.find(user_id)
+          format.json { render json: user.as_json}
+          format.html { render :json}
+        rescue ActiveRecord::RecordNotFound => e
+          format.json { render json: {}, status: :unprocessable_entity }
+          format.html { render :json}
+        end
+      end
+    else
+      respond_to do |format|
+        begin
+          user = User.find(user_id)
+          minimal_user = {id: user.id, username: user.username}
+          format.json { render json: minimal_user}
+          format.html { render :json}
+        rescue ActiveRecord::RecordNotFound => e
+          format.json { render json: {}, status: :unprocessable_entity }
+          format.html { render :json}
+        end
       end
     end
   end
