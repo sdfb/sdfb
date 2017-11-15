@@ -6,7 +6,7 @@
  * @description
  * # forceLayout
  */
-angular.module('redesign2017App').directive('forceLayout', ['apiService', '$timeout', '$state', '$rootScope', function(apiService, $timeout, $state, $rootScope) {
+angular.module('redesign2017App').directive('forceLayout', ['apiService', '$timeout', '$state', '$rootScope', '$stateParams', function(apiService, $timeout, $state, $rootScope, $stateParams) {
     return {
       template: '<svg width="100%" height="100%"></svg>',
       restrict: 'E',
@@ -1049,6 +1049,10 @@ angular.module('redesign2017App').directive('forceLayout', ['apiService', '$time
                 scope.$apply(function() {
                   scope.groupAssign.person.name = d.attributes.name;
                   scope.groupAssign.person.id = d.id;
+                  if (scope.config.viewMode === 'group-force') {
+                    scope.groupAssign.group.id = $stateParams.ids;
+                    scope.groupAssign.group.name = scope.groupName;
+                  }
                   scope.groupAssignClosed = false;
                   scope.addLinkClosed = true;
                   scope.legendClosed = true;

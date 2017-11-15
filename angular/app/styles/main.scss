@@ -214,6 +214,11 @@ path.danger {
   transition: all 0.5s ease;
 }
 
+.panel.citation input {
+  display: inline;
+  width: auto;
+}
+
 .panel.smallest {
   width: 32px;
   -webkit-box-sizing: border-box;
@@ -1334,16 +1339,20 @@ contextual-info-panel > section, contextual-info-panel > div > section {
 
   .person-right {
     float: right;
+    text-align: center;
+  }
+
+  p.person-right {
+    float: none;
+    font-size: 9px;
+    text-align: center;
+    margin-bottom: 0;
   }
 
   .btn.go {
     width: 100px;
     // float: right;
-    // margin-top: 12px
-  }
-
-  .btn.go.no-user {
-    margin-top: 12px;
+    margin: 9px 0 0 0;
   }
 
   .person-created {
@@ -1431,7 +1440,7 @@ small-timeline.person path.life, user-progress.person path.life {
 
 small-timeline.relationship path.life, user-progress.relationship path.life {
   stroke-width: 2.5px;
-  stroke: $mainTextColor;
+  stroke: $degree0;
 }
 
 small-timeline path.terminator, user-progress path.terminator {

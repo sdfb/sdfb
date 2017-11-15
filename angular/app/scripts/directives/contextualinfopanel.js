@@ -17,6 +17,7 @@ angular.module('redesign2017App')
           console.log(id);
         }
 
+
         scope.searchODNB = function() {
           if (scope.currentSelection.type === 'person') {
             var id = scope.currentSelection.attributes.odnb_id;
@@ -89,6 +90,21 @@ angular.module('redesign2017App')
               p.start_year = scope.currentSelection.data[0].attributes.people[i].start_year;
               p.start_year_type = scope.currentSelection.data[0].attributes.people[i].start_year_type;
             })
+          };
+
+          if (scope.currentSelection.type === 'person') {
+            apiService.getUserName(scope.currentSelection.attributes.created_by).then(function(result) {
+              scope.currentSelection.attributes.created_by_name = result.data.username;
+            });
+          } else if (scope.currentSelection.type === 'group') {
+            apiService.getUserName(scope.currentSelection.data[0].attributes.created_by).then(function(result) {
+              scope.currentSelection.data[0].attributes.created_by_name = result.data.username;
+            });
+          } else if (scope.currentSelection.type === 'relationship') {
+            console.log(scope.currentSelection.created_by);
+            apiService.getUserName(scope.currentSelection.created_by).then(function(result) {
+              scope.currentSelection.created_by_name = result.data.username;
+            });
           }
         })
 

@@ -29,7 +29,7 @@
   	  </div>
 
       <h4>Citation</h4>
-      <textarea type="text" ng-model="newLink.citation" class="form-control"></textarea>
+      <textarea type="text" ng-model="newLink.citation" placeholder="{{ sampleCitation }}" class="form-control"></textarea>
 
       <br><input ng-show="$root.user.user_type !== 'Standard'" ng-model="newGroup.is_approved" type="checkbox"/> Approved?</input>
 

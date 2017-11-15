@@ -230,6 +230,23 @@ angular.module('redesign2017App')
           return response;
         });
       },
+      getUserName : function(id){
+
+        var url = baseUrl + '/api/users';
+        return $http({
+          method: 'GET',
+          url: url,
+          params: {
+              id: id
+            }
+        }).then(function successCallback(response){
+          return response;
+        },function errorCallback(response){
+          console.error("An error occured while fetching file",response);
+          console.warn("If the issue is related to CORS Origin, try install this extention on Chrome: https://chrome.google.com/webstore/detail/allow-control-allow-origi/nlfbmbojpeacfghkpbjhddihlkkiljbi")
+          return response;
+        });
+      },
       newUser : function(data){
 
         var url = baseUrl + '/api/new_user';

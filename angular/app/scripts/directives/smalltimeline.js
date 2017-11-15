@@ -69,9 +69,21 @@ angular.module('redesign2017App')
                 scope.currentSelection.attributes.death_year_type = 'IN'
               }
 
-	          	scope.currentSelection.attributes.relationshipKind = scope.currentSelection.types[i].type
-              scope.currentSelection.attributes.confidence = scope.currentSelection.types[i].confidence
+	          	scope.currentSelection.attributes.relationshipKind = scope.currentSelection.types[i].type;
+              scope.currentSelection.attributes.confidence = scope.currentSelection.types[i].confidence;
               makeTimeline();
+              apiService.getUserName(scope.currentSelection.types[i].created_by).then(function(result) {
+                scope.currentSelection.types[i].created_by_name = result.data.username;
+                scope.thisType = {}
+                scope.thisType.created_by = scope.currentSelection.types[i].created_by;
+                var created = d3.select(element[0]).append('p')
+                  .attr('class', 'person-right');
+                  // .text('created by: ');
+                created.append('a')
+                  .attr('href', "/user/"+scope.thisType.created_by)
+                  // .attr('ui-sref', "home.user({userId: thisType.created_by})")
+                  .text(scope.currentSelection.types[i].created_by_name);
+              });
             }
           } else {
             makeTimeline();

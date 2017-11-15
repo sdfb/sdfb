@@ -5,7 +5,7 @@
     <h3 class="modal-title">Curate Recent Submissions</h3>
     <i class="fa fa-times close-btn" aria-hidden="true" type="button" ng-click="$ctrl.cancel()" aria-label="Close"></i>
     <h4 class="modal-title">New People</h4>
-    <table class="table table-hover curate-people">
+    <table class="table table-hover curate people">
       <thead>
           <tr>
               <td class="name-column">Name</td>
@@ -13,25 +13,29 @@
               <td class="title-column">Title</td>
               <td class="suffix-column">Suffix</td> -->
               <td class="sig-column">Historical Significance</td>
-              <td class="start-column">Birth Date</td>
-              <td class="end-column">Death Date</td>
+
+              <td class="start-column">Birth</td>
+              <td class="end-column">Death</td>
               <td class="gender-column">Gender</td>
               <td class="created-column">Created By</td>
+              <td class="cite-column">Citation</td>
               <td class="action-column">Approve?</td>
               <td class="action-column">Discard?</td>
           </tr>
       </thead>
         <tbody>
             <tr class="person {{'p'+person.id}}" ng-class="{ 'active': group.active }" ng-repeat="person in $ctrl.people">
-                <td>{{ person.attributes.name }}</td>
+                <td><input class="form-control" ng-model="person.attributes.name"/></td>
                 <!-- <td>{{ person.attributes.prefix }}</td>
                 <td>{{ person.attributes.title }}</td>
                 <td>{{ person.attributes.suffix }}</td> -->
-                <td>{{ person.attributes.historical_significance }}</td>
+                <td><textarea class="form-control" ng-model="person.attributes.historical_significance"></textarea></td>
+
                 <td>{{ person.attributes.birth_year_type }} {{ person.attributes.birth_year }}</td>
                 <td>{{ person.attributes.death_year_type }} {{ person.attributes.death_year }}</td>
                 <td>{{ person.attributes.gender }}</td>
-                <td><a href ui-sref="home.user({userId: person.attributes.created_by})">{{person.attributes.created_by}}</a></td>
+                <td><a href ui-sref="home.user({userId: person.attributes.created_by})">{{person.attributes.created_by_name}}</a></td>
+                <td><textarea class="form-control" ng-model="person.attributes.citations"></textarea></td>
                 <td>
                   <input ng-model="person.is_approved" type="checkbox"/>
                     <!-- <i class="fa fa-times" aria-hidden="true" type="button" ng-click="$ctrl.remove($index, $ctrl.addToDB.nodes)" aria-label="Remove"></i> -->
@@ -43,13 +47,15 @@
         </tbody>
     </table>
     <h4 class="modal-title">New Relationships</h4>
-    <table class="table table-hover">
+    <table class="table table-hover curate">
         <thead>
             <tr>
               <td class="source-column">Source Name</td>
               <td class="target-column">Target Name</td>
               <td class="start-column">Start Date</td>
               <td class="end-column">End Date</td>
+              <td class="created-column">Created By</td>
+              <td class="cite-column">Citation</td>
               <td class="action-column">Approve?</td>
               <td class="action-column">Discard?</td>
             </tr>
@@ -60,6 +66,8 @@
                 <td>{{ rel.attributes.person_2_name }}</td>
                 <td>{{ rel.attributes.start_year_type }} {{ rel.attributes.start_year }}</td>
                 <td>{{ rel.attributes.end_year_type }} {{ rel.attributes.end_year }}</td>
+                <td><a href ui-sref="home.user({userId: rel.attributes.created_by})">{{rel.attributes.created_by_name}}</a></td>
+                <td><textarea class="form-control" ng-model="rel.attributes.citations"></textarea></td>
                 <td>
                   <input ng-model="rel.is_approved" type="checkbox"/>
                     <!-- <i class="fa fa-times" aria-hidden="true" type="button" ng-click="$ctrl.remove($index, $ctrl.addToDB.links)" aria-label="Remove"></i> -->
@@ -71,7 +79,7 @@
         </tbody>
     </table>
     <h4 class="modal-title">New Relationship Types</h4>
-    <table class="table table-hover">
+    <table class="table table-hover curate rel-type">
         <thead>
             <tr>
               <td class="source-column">Source Name</td>
@@ -80,6 +88,8 @@
               <td class="end-column">End Date</td>
               <td class="conf-column">Confidence</td>
               <td class="type-column">Type</td>
+              <td class="created-column">Created By</td>
+              <td class="cite-column">Citation</td>
               <td class="action-column">Approve?</td>
               <td class="action-column">Discard?</td>
             </tr>
@@ -92,6 +102,8 @@
                 <td>{{ rel.attributes.end_year_type }} {{ rel.attributes.end_year }}</td>
                 <td>{{ rel.attributes.confidence }}</td>
                 <td>{{ rel.attributes.type }}</td>
+                <td><a href ui-sref="home.user({userId: rel.attributes.created_by})">{{rel.attributes.created_by_name}}</a></td>
+                <td><textarea class="form-control" ng-model="rel.attributes.citations"></textarea></td>
                 <td>
                   <input ng-model="relType.is_approved" type="checkbox"/>
                     <!-- <i class="fa fa-times" aria-hidden="true" type="button" ng-click="$ctrl.remove($index, $ctrl.addToDB.links)" aria-label="Remove"></i> -->
@@ -103,23 +115,27 @@
         </tbody>
     </table>
     <h4 class="modal-title">New Groups</h4>
-    <table class="table table-hover">
+    <table class="table table-hover curate">
         <thead>
             <tr>
               <td class="name-column">Group Name</td>
               <td class="desc-column">Description</td>
               <td class="start-column">Start Date</td>
               <td class="end-column">End Date</td>
+              <td class="created-column">Created By</td>
+              <td class="cite-column">Citation</td>
               <td class="action-column">Approve?</td>
               <td class="action-column">Discard?</td>
             </tr>
         </thead>
         <tbody>
             <tr class="group {{'g'+group.id}}" ng-class="{ 'active': group.active }" ng-repeat="group in $ctrl.groups">
-                <td>{{ group.attributes.name }}</td>
-                <td>{{ group.attributes.description }}</td>
-                <td>{{ group.start_year }}</td>
-                <td>{{ group.end_year }}</td>
+                <td><input class="form-control" ng-model="group.attributes.name"/></td>
+                <td><textarea class="form-control" ng-model="group.attributes.description"></textarea></td>
+                <td>{{ group.attributes.start_year_type }} {{ group.attributes.start_year }}</td>
+                <td>{{ group.attributes.end_year_type }} {{ group.attributes.end_year }}</td>
+                <td><a href ui-sref="home.user({userId: group.attributes.created_by})">{{group.attributes.created_by_name}}</a></td>
+                <td><textarea class="form-control" ng-model="group.attributes.citations"></textarea></td>
                 <td>
                   <input ng-model="group.is_approved" type="checkbox"/>
                     <!-- <i class="fa fa-times" aria-hidden="true" type="button" ng-click="$ctrl.remove($index, $ctrl.addToDB.groups)" aria-label="Remove"></i> -->
@@ -131,13 +147,15 @@
         </tbody>
     </table>
     <h4 class="modal-title">New Group Assignments</h4>
-    <table class="table table-hover">
+    <table class="table table-hover curate">
         <thead>
             <tr>
               <td class="person-column">Person Name</td>
               <td class="group-column">Group Name</td>
               <td class="start-column">Start Date</td>
               <td class="end-column">End Date</td>
+              <td class="created-column">Created By</td>
+              <td class="cite-column">Citation</td>
               <td class="action-column">Approve?</td>
               <td class="action-column">Discard?</td>
             </tr>
@@ -148,6 +166,8 @@
                 <td>{{ rel.attributes.group_name }}</td>
                 <td>{{ rel.attributes.start_year_type }} {{ rel.attributes.start_year }}</td>
                 <td>{{ rel.attributes.end_year_type }} {{ rel.attributes.end_year }}</td>
+                <td><a href ui-sref="home.user({userId: rel.attributes.created_by})">{{rel.attributes.created_by_name}}</a></td>
+                <td><textarea class="form-control" ng-model="rel.attributes.citations"></textarea></td>
                 <td>
                   <input ng-model="rel.is_approved" type="checkbox"/>
                     <!-- <i class="fa fa-times" aria-hidden="true" type="button" ng-click="$ctrl.remove($index, $ctrl.addToDB.group_assignments)" aria-label="Remove"></i> -->
@@ -161,14 +181,4 @@
     <button ng-click="$ctrl.close()" type="button" class="btn btn-primary">
         Submit & Close
     </button>
-    <!-- <ul>
-        <li class="group {{'g'+group.groupId}}" ng-class="{ 'active': group.active }" ng-repeat="group in $ctrl.groups">
-            <a href="#" ng-click="$event.preventDefault(); $ctrl.selected.group = group">Group ID: {{ group.groupId }} - Number of people: {{ group.value }}</a>
-        </li>
-    </ul>
-    Selected: <b>{{ $ctrl.selected.group }}</b> -->
 </div>
-<!-- <div class="modal-footer">
-    <button class="btn btn-primary" type="button" ng-click="$ctrl.ok()">OK</button>
-    <button class="btn btn-warning" type="button" ng-click="$ctrl.cancel()">Close</button>
-</div> -->

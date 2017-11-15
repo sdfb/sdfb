@@ -43,7 +43,7 @@
       <rzslider rz-slider-model="newLink.confidence" rz-slider-options="slider.options" class="with-legend" ng-model="newLink.confidence"></rzslider>
 
       <h4>Citation</h4>
-      <textarea type="text" ng-model="newLink.citation" class="form-control"></textarea>
+      <textarea type="text" ng-model="newLink.citation" placeholder="{{ sampleCitation }}" class="form-control"></textarea>
 
       <br><input ng-show="$root.user.user_type !== 'Standard'" ng-model="newLink.is_approved" type="checkbox"/> Approved?</input>
 
