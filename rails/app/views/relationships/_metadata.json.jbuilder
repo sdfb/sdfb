@@ -9,4 +9,5 @@ json.attributes do
   json.start_year_type relationship.start_date_type
   json.target relationship.person1_index.to_s
   json.weight relationship.max_certainty
+  json.created_by relationship.created_by
 end
