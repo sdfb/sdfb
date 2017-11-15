@@ -214,6 +214,11 @@ path.danger {
   transition: all 0.5s ease;
 }
 
+.panel.citation input {
+  display: inline;
+  width: auto;
+}
+
 .panel.smallest {
   width: 32px;
   -webkit-box-sizing: border-box;
@@ -1334,7 +1339,7 @@ contextual-info-panel > section, contextual-info-panel > div > section {
 
   .person-right {
     float: right;
-    text-align: right;
+    text-align: center;
   }
 
   p.person-right {
