@@ -56,6 +56,8 @@ angular.module('redesign2017App').component('visualization', {
     $scope.newGroup = {};
     $scope.groupAssign = {person: {}, group: {}};
 
+    $scope.sampleCitation = "e.g., Gordon Campbell, ‘Milton, John (1608–1674)’, Oxford Dictionary of National Biography, Oxford University Press, 2004; online edn, Jan 2009 [http://www.oxforddnb.com.proxy.library.cmu.edu/view/article/18800, accessed 15 Nov 2017]"
+
 
     this.$onChanges = function() {
       $scope.data = this.networkData;

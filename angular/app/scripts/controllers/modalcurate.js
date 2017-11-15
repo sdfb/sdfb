@@ -22,6 +22,9 @@ angular.module('redesign2017App')
     console.log($ctrl.people);
 
     relationships.data.forEach(function(d) {
+      apiService.getUserName(d.attributes.created_by).then(function(result) {
+        d.attributes.created_by_name = result.data.username;
+      });
       relationships.included.forEach(function(i) {
         if (i.id === d.attributes.person_1.toString()) {
           d.attributes.person_1_name = i.attributes.name;
@@ -34,6 +37,9 @@ angular.module('redesign2017App')
     $ctrl.relationships = relationships.data;
 
     relTypes.data.forEach(function(d) {
+      apiService.getUserName(d.attributes.created_by).then(function(result) {
+        d.attributes.created_by_name = result.data.username;
+      });
       relTypes.included.forEach(function(i) {
         if (i.id === d.attributes.relationship.attributes.person_1.toString()) {
           d.attributes.relationship.attributes.person_1_name = i.attributes.name;
@@ -46,8 +52,16 @@ angular.module('redesign2017App')
     $ctrl.relTypes = relTypes.data;
 
     $ctrl.groups = groups.data;
+    $ctrl.groups.forEach(function(g) {
+      apiService.getUserName(g.attributes.created_by).then(function(result) {
+        g.attributes.created_by_name = result.data.username;
+      });
+    })
 
     group_assignments.data.forEach(function(d) {
+      apiService.getUserName(d.attributes.created_by).then(function(result) {
+        d.attributes.created_by_name = result.data.username;
+      });
       group_assignments.includes.forEach(function(i) {
         if (i.id === d.attributes.person_id.toString()) {
           d.attributes.person_name = i.attributes.name;

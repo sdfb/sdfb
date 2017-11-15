@@ -40,44 +40,59 @@ table {
   }
 }
 
-table.curate-people {
-  // font-size: 12px;
-  // table-layout: fixed;
-  // white-space: nowrap;
-  //
+table.curate {
   td {
     white-space: initial;
     // overflow: scroll;
     // overflow-x: scroll;
     text-overflow: initial;
   }
+  .cite-column {
+    width: 20%;
+  }
+  .created-column {
+    width: 8%;
+  }
+  .action-column {
+    width: 8%;
+  }
+}
+table.curate.people {
+  // font-size: 12px;
+  // table-layout: fixed;
+  // white-space: nowrap;
+  //
+
 
   .name-column {
-    width: 20%;
+    width: 15%;
   }
 
   .sig-column {
     width: 20%;
   }
 
+
+
   .start-column {
-    width: 10%
+    width: 8%
   }
 
   .end-column {
-    width: 10%;
+    width: 8%;
   }
 
   .gender-column {
+    width: 8%;
+  }
+}
+
+table.curate.rel-type {
+  .source-column, .target-column {
+    width: 15%;
+  }
+  .conf-column {
     width: 10%;
-  }
-
-  .created-column {
-    width: 8%;
-  }
-
-  .action-column {
-    width: 8%;
   }
 }
 
