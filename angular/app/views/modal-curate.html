@@ -31,7 +31,7 @@
                 <td>{{ person.attributes.birth_year_type }} {{ person.attributes.birth_year }}</td>
                 <td>{{ person.attributes.death_year_type }} {{ person.attributes.death_year }}</td>
                 <td>{{ person.attributes.gender }}</td>
-                <td><a href ui-sref="home.user({userId: person.attributes.created_by})">{{person.attributes.created_by}}</a></td>
+                <td><a href ui-sref="home.user({userId: person.attributes.created_by})">{{person.attributes.created_by_name}}</a></td>
                 <td>
                   <input ng-model="person.is_approved" type="checkbox"/>
                     <!-- <i class="fa fa-times" aria-hidden="true" type="button" ng-click="$ctrl.remove($index, $ctrl.addToDB.nodes)" aria-label="Remove"></i> -->

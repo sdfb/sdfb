@@ -94,7 +94,7 @@ angular.module('redesign2017App')
 
           if (scope.currentSelection.type === 'person') {
             apiService.getUserName(scope.currentSelection.attributes.created_by).then(function(result) {
-              scope.currentSelection.attributes.created_by_name = result.username;
+              scope.currentSelection.attributes.created_by_name = result.data.username;
             });
           } else if (scope.currentSelection.type === 'group') {
             apiService.getUserName(scope.currentSelection.data[0].attributes.created_by).then(function(result) {

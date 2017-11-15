@@ -13,6 +13,12 @@ angular.module('redesign2017App')
     var $ctrl = this;
     $ctrl.people = people.data;
 
+    $ctrl.people.forEach(function(p) {
+      apiService.getUserName(p.attributes.created_by).then(function(result) {
+        p.attributes.created_by_name = result.data.username;
+      });
+    })
+
     console.log($ctrl.people);
 
     relationships.data.forEach(function(d) {
