@@ -1336,6 +1336,10 @@ contextual-info-panel > section, contextual-info-panel > div > section {
     float: right;
   }
 
+  p.person-right {
+    font-size: 9px;
+  }
+
   .btn.go {
     width: 100px;
     // float: right;
@@ -1431,7 +1435,7 @@ small-timeline.person path.life, user-progress.person path.life {
 
 small-timeline.relationship path.life, user-progress.relationship path.life {
   stroke-width: 2.5px;
-  stroke: $mainTextColor;
+  stroke: $degree0;
 }
 
 small-timeline path.terminator, user-progress path.terminator {

@@ -21,27 +21,28 @@
   <p ng-if="currentSelection.attributes.historical_significance != ''">{{currentSelection.attributes.historical_significance}}</p>
   <p ng-if="currentSelection.attributes.historical_significance == ''"> &empty; </p>
   <small-timeline class="person" details="currentSelection"></small-timeline>
-  <span ng-if="config.contributionMode" class="edit-btn person" ng-click="editData(currentSelection.id)">Edit data</span>
+  <!-- <span ng-if="config.contributionMode" class="edit-btn person" ng-click="editData(currentSelection.id)">Edit data</span> -->
 </section>
 <section ng-if="currentSelection.type == 'relationship' ">
   <h2>{{ currentSelection.source.attributes.name }}</h2>
   <p ng-if="currentSelection.source.attributes.historical_significance != ''">{{ currentSelection.source.attributes.historical_significance }}</p>
   <p ng-if="currentSelection.source.attributes.historical_significance == ''"> &empty; </p>
   <small-timeline class="person" details="currentSelection.source"></small-timeline>
-  <span ng-if="config.contributionMode" class="edit-btn person" ng-click="editData(currentSelection.source.id)">Edit data</span>
+  <!-- <span ng-if="config.contributionMode" class="edit-btn person" ng-click="editData(currentSelection.source.id)">Edit data</span> -->
 </section>
 <div class="all-types" ng-if="currentSelection.type == 'relationship' ">
   <section class="rel-type" ng-if="currentSelection.type == 'relationship' " ng-repeat='n in currentSelection.types'>
     <small-timeline class="relationship" details="currentSelection"></small-timeline>
-    <span ng-if="config.contributionMode" class="edit-btn relationship" ng-click="editData(currentSelection.id)">Edit data</span>
+    <!-- <span ng-if="config.contributionMode" class="edit-btn relationship" ng-click="editData(currentSelection.id)">Edit data</span> -->
   </section>
 </div>
 <section ng-if="currentSelection.type == 'relationship' ">
+  <p ng-show="currentSelection.created_by !== 2" class="person-right">relationship created by: <a href ui-sref="home.user({userId: currentSelection.created_by})">{{currentSelection.created_by_name}}</a></p>
   <h2>{{ currentSelection.target.attributes.name }}</h2>
   <p ng-if="currentSelection.attributes.historical_significance != ''">{{ currentSelection.target.attributes.historical_significance }}</p>
   <p ng-if="currentSelection.attributes.historical_significance == ''"> &empty; </p>
   <small-timeline class="person" details="currentSelection.target"></small-timeline>
-  <span ng-if="config.contributionMode" class="edit-btn person" ng-click="editData(currentSelection.target.id)">Edit data</span>
+  <!-- <span ng-if="config.contributionMode" class="edit-btn person" ng-click="editData(currentSelection.target.id)">Edit data</span> -->
 </section>
 <section ng-if="currentSelection.type == 'group'">
   <div class="person-right">
@@ -68,7 +69,7 @@
   <div ng-if="currentSelection.attributes.people.length < 1">
       No members
   </div>
-  <span ng-if="config.contributionMode" class="edit-btn person" ng-click="editData(currentSelection.id)">Edit data</span>
+  <!-- <span ng-if="config.contributionMode" class="edit-btn person" ng-click="editData(currentSelection.id)">Edit data</span> -->
 </section>
 <section id="more-info" ng-if="currentSelection.type">
   <p>

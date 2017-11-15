@@ -100,6 +100,11 @@ angular.module('redesign2017App')
             apiService.getUserName(scope.currentSelection.data[0].attributes.created_by).then(function(result) {
               scope.currentSelection.data[0].attributes.created_by_name = result.data.username;
             });
+          } else if (scope.currentSelection.type === 'relationship') {
+            console.log(scope.currentSelection.created_by);
+            apiService.getUserName(scope.currentSelection.created_by).then(function(result) {
+              scope.currentSelection.created_by_name = result.data.username;
+            });
           }
         })
 
