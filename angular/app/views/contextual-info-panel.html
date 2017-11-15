@@ -14,8 +14,8 @@
 </section>
 <section ng-if="currentSelection.type == 'person' " id="XXXcurrent-selection-person1">
   <div class="person-right">
-    <p ng-show="currentSelection.attributes.created_by !== 2" class="person-created">created by: <a href ui-sref="home.user({userId: currentSelection.attributes.created_by})">{{currentSelection.attributes.created_by_name}}</a></p>
     <button ng-class="{'no-user' : currentSelection.attributes.created_by === 2}" type="button" class="btn btn-primary go" ui-sref="home.visualization({ ids: currentSelection.id })">Visualize</button>
+    <p ng-show="currentSelection.attributes.created_by !== 2" class="person-created"><a href ui-sref="home.user({userId: currentSelection.attributes.created_by})">{{currentSelection.attributes.created_by_name}}</a></p>
   </div>
   <h2>{{currentSelection.attributes.name }}</h2>
   <p ng-if="currentSelection.attributes.historical_significance != ''">{{currentSelection.attributes.historical_significance}}</p>
@@ -37,7 +37,7 @@
   </section>
 </div>
 <section ng-if="currentSelection.type == 'relationship' ">
-  <p ng-show="currentSelection.created_by !== 2" class="person-right">relationship created by: <a href ui-sref="home.user({userId: currentSelection.created_by})">{{currentSelection.created_by_name}}</a></p>
+  <!-- <p ng-show="currentSelection.created_by !== 2" class="person-right">relationship created by: <a href ui-sref="home.user({userId: currentSelection.created_by})">{{currentSelection.created_by_name}}</a></p> -->
   <h2>{{ currentSelection.target.attributes.name }}</h2>
   <p ng-if="currentSelection.attributes.historical_significance != ''">{{ currentSelection.target.attributes.historical_significance }}</p>
   <p ng-if="currentSelection.attributes.historical_significance == ''"> &empty; </p>
@@ -46,12 +46,14 @@
 </section>
 <section ng-if="currentSelection.type == 'group'">
   <div class="person-right">
-    <p ng-show="currentSelection.data[0].attributes.created_by !== 2" class="person-created">created by: <a href ui-sref="home.user({userId: currentSelection.data[0].attributes.created_by})">{{currentSelection.data[0].attributes.created_by_name}}</a></p>
+
     <button ng-class="{'no-user' : currentSelection.attributes.created_by === 2}" type="button" class="btn btn-primary go" ui-sref="home.visualization({ ids: currentSelection.data[0].id })">Visualize</button>
+    <p ng-show="currentSelection.data[0].attributes.created_by !== 2" class="person-created"><a href ui-sref="home.user({userId: currentSelection.data[0].attributes.created_by})">{{currentSelection.data[0].attributes.created_by_name}}</a></p>
   </div>
   <!-- <button type="button" class="btn btn-primary go" ui-sref="home.visualization({ ids: currentSelection.data[0].id })">Visualize</button> -->
   <h2>{{currentSelection.data[0].attributes.name}}</h2>
   <p ng-if="currentSelection.attributes.description != ''">{{currentSelection.data[0].attributes.description}}</p>
+
   <!-- <p ng-if="currentSelection.attributes.historical_significance == ''"> &empty; </p> -->
   <!-- <small-timeline class="person" details="currentSelection"></small-timeline> -->
   <div ng-if="currentSelection.includes.length > 0" class="group-members">

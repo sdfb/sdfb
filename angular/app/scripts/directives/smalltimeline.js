@@ -77,8 +77,8 @@ angular.module('redesign2017App')
                 scope.thisType = {}
                 scope.thisType.created_by = scope.currentSelection.types[i].created_by;
                 var created = d3.select(element[0]).append('p')
-                  .attr('class', 'person-right')
-                  .text('created by: ');
+                  .attr('class', 'person-right');
+                  // .text('created by: ');
                 created.append('a')
                   .attr('href', "/user/"+scope.thisType.created_by)
                   // .attr('ui-sref', "home.user({userId: thisType.created_by})")
