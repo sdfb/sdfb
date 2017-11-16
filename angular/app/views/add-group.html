@@ -1,10 +1,10 @@
 <section>
-  <form ng-submit= "submitGroup()">
+  <form name="groupForm" novalidate ng-submit= "submitGroup()">
 		<h3 class="">Create new Group</h3><span class="remove-btn contribute" ng-click="removeGroup(newGroup.id)">remove this node</span>
     <div class="form-content">
-  		<h4 class="paragraph-title">Group Name</h4>
+  		<h4 class="paragraph-title">Group Name <i class="fa fa-asterisk" aria-hidden="true"></i></h4>
   	  <!-- <input placeholder="Search for a person" type="text" ng-model="person.added" uib-typeahead="person for person in peopleToSelect | filter:$viewValue | limitTo:8" class="form-control"> -->
-  		<input type="text" ng-model="newGroup.name" placeholder="Search for a group" uib-typeahead="group as group.name for group in callGroupsTypeahead($viewValue)" typeahead-loading="loadingNewGroups" typeahead-no-results="noResultsNewGroups" class="form-control" typeahead-template-url="./views/groupsTypeaheadTemplate.html" class="form-control" typeahead-show-hint="true" typeahead-min-length="3" typeahead-on-select="foundNewGroup($item)">
+  		<input required type="text" ng-model="newGroup.name" placeholder="Search for a group" uib-typeahead="group as group.name for group in callGroupsTypeahead($viewValue)" typeahead-loading="loadingNewGroups" typeahead-no-results="noResultsNewGroups" class="form-control" typeahead-template-url="./views/groupsTypeaheadTemplate.html" class="form-control" typeahead-show-hint="true" typeahead-min-length="3" typeahead-on-select="foundNewGroup($item)">
       <i ng-show="loadingNewGroups" class="glyphicon glyphicon-refresh"></i>
       <div ng-show="noResultsNewGroups">
         <i class="glyphicon glyphicon-remove"></i> No Results Found: Add this group
@@ -16,16 +16,16 @@
       <h4>Description</h4>
       <input class="form-control" ng-model="newGroup.description" ng-disabled="newGroup.exists" placeholder="Description">
 
-  		<h4>Start date</h4>
+  		<h4>Start date <i class="fa fa-asterisk" aria-hidden="true"></i></h4>
   	  <div class="input-group">
-  			<select class="input-group-addon" ng-model="newGroup.startDateType" ng-disabled="newGroup.exists" ng-options="type.name for type in config.dateTypes"></select><i class="fa fa-caret-down" aria-hidden="true"></i>
-  	    <input ng-disabled="newGroup.exists" class="form-control" ng-model="newGroup.startDate">
+  			<select required class="input-group-addon" ng-model="newGroup.startDateType" ng-disabled="newGroup.exists" ng-options="type.name for type in config.dateTypes"></select><i class="fa fa-caret-down" aria-hidden="true"></i>
+  	    <input required ng-disabled="newGroup.exists" class="form-control" ng-model="newGroup.startDate">
   	  </div>
 
-  	  <h4>End date</h4>
+  	  <h4>End date <i class="fa fa-asterisk" aria-hidden="true"></i></h4>
   	  <div class="input-group">
-  			<select class="input-group-addon" ng-model="newGroup.endDateType" ng-disabled="newGroup.exists" ng-options="type.name for type in config.dateTypes"></select><i class="fa fa-caret-down" aria-hidden="true"></i>
-  	    <input class="form-control" ng-disabled="newGroup.exists" ng-model="newGroup.endDate">
+  			<select required class="input-group-addon" ng-model="newGroup.endDateType" ng-disabled="newGroup.exists" ng-options="type.name for type in config.dateTypes"></select><i class="fa fa-caret-down" aria-hidden="true"></i>
+  	    <input required class="form-control" ng-disabled="newGroup.exists" ng-model="newGroup.endDate">
   	  </div>
 
       <h4>Citation</h4>
@@ -33,7 +33,10 @@
 
       <br><input ng-show="$root.user.user_type !== 'Standard'" ng-model="newGroup.is_approved" type="checkbox"/> Approved?</input>
 
-  		<button ng-disabled="newGroup.exists" class="btn btn-primary" type="submit">Add & Continue</button>
+  		<button ng-disabled="newGroup.exists || groupForm.$invalid" class="btn btn-primary" type="submit">Add & Continue</button>
+      <div class="invalid-form" ng-show="groupForm.$invalid">
+        You are missing required fields.
+      </div>
     </div>
 
 

@@ -408,6 +408,10 @@ path.danger {
   top: 4px;
 }
 
+.fa-asterisk {
+  float: right;
+  color: orange;
+}
 .remove-btn {
   position: absolute;
   right: 0;
@@ -1140,6 +1144,10 @@ group-assign section {
     color: $contribution-mode-fill;
   }
 
+  .invalid-form {
+    color: $degree0;
+    text-align: center;
+  }
   h4.paragraph-title {
     margin-top: 20px;
   }

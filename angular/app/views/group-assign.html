@@ -1,5 +1,5 @@
 <section>
-  <form ng-submit= "submitGroupAssign()">
+  <form name="groupAssignForm" novalidate ng-submit= "submitGroupAssign()">
     <h3 class="">Add group assignment</h3><span class="remove-btn contribute" ng-click=" groupAssign = {person: {}, group: {}}; ">clear</span>
     <div class="form-content">
       <p>To add a person to a group, drag a node onto a group in the Groups Bar (below), and these fields will auto-populate. If you need a node that's not in the current view, click the canvas or add it with the form above. If you need a group that's not in the view, drag the node into the "minor groups" section.</p>
@@ -7,19 +7,19 @@
       <h4 class="paragraph-title">Person</h4>
       <input ng-disabled="true" type="text" ng-model="groupAssign.person.name" class="form-control">
 
-      <h4>Group</h4>
-      <input type="text" ng-model="groupAssign.group.name" class="form-control" uib-typeahead="group as group.name for group in callGroupsTypeahead($viewValue)" typeahead-loading="loadingGroups" typeahead-no-results="noResultsGroups" typeahead-show-hint="true" typeahead-min-length="3" typeahead-on-select="groupAssignSelected($item, $model, $label, $event)">
+      <h4>Group <i class="fa fa-asterisk" aria-hidden="true"></i></h4>
+      <input required type="text" ng-model="groupAssign.group.name" class="form-control" uib-typeahead="group as group.name for group in callGroupsTypeahead($viewValue)" typeahead-loading="loadingGroups" typeahead-no-results="noResultsGroups" typeahead-show-hint="true" typeahead-min-length="3" typeahead-on-select="groupAssignSelected($item, $model, $label, $event)">
 
-      <h4>Start date</h4>
+      <h4>Start date <i class="fa fa-asterisk" aria-hidden="true"></i></h4>
       <div class="input-group">
-        <select class="input-group-addon" ng-model="groupAssign.startDateType" ng-options="type.name for type in config.dateTypes"></select><i class="fa fa-caret-down" aria-hidden="true"></i>
-        <input class="form-control" ng-model="groupAssign.startDate" ng-model-options="{ getterSetter: true }">
+        <select required class="input-group-addon" ng-model="groupAssign.startDateType" ng-options="type.name for type in config.dateTypes"></select><i class="fa fa-caret-down" aria-hidden="true"></i>
+        <input required class="form-control" ng-model="groupAssign.startDate" ng-model-options="{ getterSetter: true }">
       </div>
 
-      <h4>End date</h4>
+      <h4>End date <i class="fa fa-asterisk" aria-hidden="true"></i></h4>
       <div class="input-group">
-        <select class="input-group-addon" ng-model="groupAssign.endDateType" ng-options="type.name for type in config.dateTypes"></select><i class="fa fa-caret-down" aria-hidden="true"></i>
-        <input class="form-control" ng-model="groupAssign.endDate">
+        <select required class="input-group-addon" ng-model="groupAssign.endDateType" ng-options="type.name for type in config.dateTypes"></select><i class="fa fa-caret-down" aria-hidden="true"></i>
+        <input required class="form-control" ng-model="groupAssign.endDate">
       </div>
 
       <h4>Citation</h4>
@@ -27,8 +27,13 @@
 
       <br><input ng-show="$root.user.user_type !== 'Standard'" ng-model="groupAssign.is_approved" type="checkbox"/> Approved?</input>
 
+
+      <button ng-disabled="groupAssignForm.$invalid" type="submit" class="btn btn-primary">Add & Continue</button>
+      <div class="invalid-form" ng-show="groupAssignForm.$invalid">
+        You are missing required fields.
+      </div>
       <p>Your submission needs to be validated by SDFB curators. You will see it as unapproved contribution in the meantime.</p>
-      <button type="submit" class="btn btn-primary">Add & Continue</button>
+
     </div>
   </form>
 
