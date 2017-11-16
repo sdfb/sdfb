@@ -14,7 +14,7 @@ angular.module('redesign2017App')
       link: function postLink(scope, element, attrs) {
 
         var svg = d3.select(element[0]).select('svg'),
-          margin = { top: 90, right: 20, bottom: 30, left: 200 },
+          margin = { top: 30, right: 20, bottom: 30, left: 200 },
 
           // width = +svg.node().getBoundingClientRect().width - margin.left - margin.right,
 
