@@ -116,18 +116,21 @@ redesign2017App.config(function($stateProvider, $locationProvider, $compileProvi
     onEnter: ['$stateParams', '$state', '$uibModal', '$resource', function($stateParams, $state, $uibModal, $resource) {
         $uibModal.open({
             templateUrl: './views/modal-reset.html',
-            resolve: {
-              token: ['$stateParams', 'apiService', function($stateParams, apiService) {
-                console.log($stateParams.token);
-                return $stateParams.token;
-              }]
-            },
-            controller: ['$scope', 'apiService', function($scope, apiService) {
+            // resolve: {
+            //   token: ['$stateParams', 'apiService', function($stateParams, apiService) {
+            //     console.log($stateParams.token);
+            //     return $stateParams.token;
+            //   }]
+            // },
+            controller: ['$scope', 'apiService', '$stateParams', function($scope, apiService, $stateParams) {
               $scope.dismiss = function() {
                 $scope.$dismiss();
               };
 
+
+
               $scope.save = function() {
+                $scope.new.reset_token = $stateParams.token;
                 apiService.resetPassword($scope.new).then(function() {
                   $scope.$close(true);
                 });
