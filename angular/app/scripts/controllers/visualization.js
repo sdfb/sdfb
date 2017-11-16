@@ -207,17 +207,17 @@ angular.module('redesign2017App').component('visualization', {
       });
     };
 
-    $scope.sendData = function() {
-      console.log($scope.addToDB);
-      $scope.addToDB = {nodes: [], links: [], groups: [], group_assignments: []};
-      $scope.newNode = {};
-      $scope.newNode.birthDateType = $scope.newNode.deathDateType = $scope.config.dateTypes[1];
-      $scope.newLink = {};
-      $scope.newGroup = {};
-      $scope.groupAssign = {person: {}, group: {}};
-      $scope.addedNodeId = 0;
-      // $window.alert("Updates Submitted! They'll show up on the website once they've been approved by a curator.")
-    }
+    // $scope.sendData = function() {
+    //   console.log($scope.addToDB);
+    //   $scope.addToDB = {nodes: [], links: [], groups: [], group_assignments: []};
+    //   $scope.newNode = {};
+    //   $scope.newNode.birthDateType = $scope.newNode.deathDateType = $scope.config.dateTypes[1];
+    //   $scope.newLink = {};
+    //   $scope.newGroup = {};
+    //   $scope.groupAssign = {person: {}, group: {}};
+    //   $scope.addedNodeId = 0;
+    //   // $window.alert("Updates Submitted! They'll show up on the website once they've been approved by a curator.")
+    // }
 
     $scope.openReview = function(size, parentSelector) {
       var parentElem = parentSelector ?
@@ -247,6 +247,10 @@ angular.module('redesign2017App').component('visualization', {
         }
       });
       modalInstance.result.then(function(result) {
+        result.links.forEach (function(l) {
+          delete l.id;
+        })
+        console.log(result);
         apiService.writeData(result);
         $scope.addToDB = {nodes: [], links: [], groups: [], group_assignments: []};
         $scope.addedNodes = [];
