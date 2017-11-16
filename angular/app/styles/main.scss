@@ -77,7 +77,16 @@ path.danger {
   color: $degree0;
 }
 
-.about img {
+.about div {
+  margin-bottom: 10px;
+}
+
+.modal-dialog .about h3 {
+  font-weight: normal;
+  margin-top: 25px;
+}
+
+.bio-img {
 	max-height: 150px;
 	max-width: 200px;
 	float: left;
@@ -85,7 +94,21 @@ path.danger {
 	border-radius: 15px;
 }
 
-.bio {margin-bottom: 60px;}
+.bio-img.last {
+  margin-bottom: 30px;
+}
+
+div.bio {margin-bottom: 60px;}
+
+.logo {
+  max-width: 300px;
+  max-height: 150px;
+  margin: 5px;
+}
+
+.about h4 {
+  margin-top: 30px;
+}
 
 .center {
   text-align: center;
