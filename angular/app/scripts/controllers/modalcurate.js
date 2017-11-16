@@ -19,8 +19,6 @@ angular.module('redesign2017App')
       });
     })
 
-    console.log($ctrl.people);
-
     relationships.data.forEach(function(d) {
       apiService.getUserName(d.attributes.created_by).then(function(result) {
         d.attributes.created_by_name = result.data.username;
