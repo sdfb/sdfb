@@ -141,12 +141,29 @@ redesign2017App.config(function($stateProvider, $locationProvider, $compileProvi
         });
     }]
   }
+  var aboutState = {
+    name: "home.about",
+    url: "about",
+    onEnter: ['$stateParams', '$state', '$uibModal', '$resource', function($stateParams, $state, $uibModal, $resource) {
+        $uibModal.open({
+            templateUrl: './views/modal-about.html',
+            controller: ['$scope', function($scope) {
+              $scope.dismiss = function() {
+                $scope.$dismiss();
+              };
+            }]
+        }).result.finally(function() {
+            $state.go('^');
+        });
+    }]
+  }
 
   $stateProvider.state(homeState);
   $stateProvider.state(vizState);
   $stateProvider.state(tableState);
   $stateProvider.state(userState);
   $stateProvider.state(resetState);
+  $stateProvider.state(aboutState);
   $locationProvider.html5Mode(true);
   $compileProvider.aHrefSanitizationWhitelist(/^\s*(https?|ftp|mailto|data):/);
 })
