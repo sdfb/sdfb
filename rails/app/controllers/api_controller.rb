@@ -160,8 +160,13 @@ class ApiController < ApplicationController
 
 
         if node["id"]
-          Person.find(node["id"].to_i).update(node)
+          person = Person.find(node["id"].to_i)
           node.delete("id")
+          if node.keys.count == 1 && node.keys.first == "is_active"
+            person.update_column(:is_active, node["is_active"])
+          else
+            person.update!(node)
+          end
         else
           node["created_by"] = current_user.id
           new_person = Person.create!(node)
@@ -209,7 +214,7 @@ class ApiController < ApplicationController
     if links = params[:links]
       links.each do |link|
 
-        if link["id"]
+        if link["id"] 
           rel = Relationship.find(link["id"])
           puts rel
         else
