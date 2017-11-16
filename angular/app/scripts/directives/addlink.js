@@ -92,9 +92,9 @@ angular.module('redesign2017App')
                 d3.select("#n"+otherNode.id).transition()
                   .attr('r', 25);
                 scope.newLink.source.name = d.attributes.name;
-                scope.newLink.source.id = d.id;
+                scope.newLink.source.id = parseInt(d.id);
                 scope.newLink.target.name = otherNode.attributes.name;
-                scope.newLink.target.id = otherNode.id;
+                scope.newLink.target.id = parseInt(otherNode.id);
                 scope.$apply(function() {
                   scope.addLinkClosed = false;
                   scope.legendClosed = true;
@@ -233,13 +233,13 @@ angular.module('redesign2017App')
                 scope.addToDB.links[i] = newLink;
                 scope.addToDB.links[i].startDateType = newLink.startDateType.abbr;
                 scope.addToDB.links[i].endDateType = newLink.endDateType.abbr;
-                newLink.relType = newLink.relType.id.toString();
+                newLink.relType = newLink.relType.id;
               }
             })
           } else {
             newLink.startDateType = newLink.startDateType.abbr;
             newLink.endDateType = newLink.endDateType.abbr;
-            newLink.relType = newLink.relType.id.toString();
+            newLink.relType = newLink.relType.id;
             scope.addToDB.links.push(newLink);
           }
           // newLink.startDateType = newLink.startDateType.abbr;

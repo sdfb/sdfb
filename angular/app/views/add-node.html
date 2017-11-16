@@ -54,7 +54,7 @@
 			<!-- <h4>Notes</h4>
 			<input class="form-control" ng-model="newNode.notes" ng-disabled="newNode.exists" placeholder="Notes"> -->
 			<br>
-			<input ng-show="config.viewMode == 'group-force'" type="checkbox" ng-model="alsoGroupAssign" aria-label="Toggle ngShow"> Also add to {{groupName}}</input>
+			<input ng-show="config.viewMode == 'group-force'" type="checkbox" ng-model="alsoGroupAssign" aria-label="Toggle ngShow"> <span ng-show="config.viewMode == 'group-force'">Also add to {{groupName}}</span></input>
 			<!-- <h4 style="display:inline;" ng-show="config.viewMode == 'group-force'"></h4> -->
 
 			<h4 ng-show="alsoGroupAssign">Start date</h4>
