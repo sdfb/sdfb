@@ -108,15 +108,28 @@ angular.module('redesign2017App')
           $ctrl.addToDB.nodes.push(newPerson);
         }
       });
-      $ctrl.addToDB.links = [];
-      // $ctrl.relationships.forEach(function(r) {
-      //   var newRelationship = {};
-      //   newRelationship.id = parseInt(r.id);
-      //   newRelationship.is_approved = r.is_approved;
-      //   if (newRelationship.is_approved) {
-      //     $ctrl.addToDB.links.push(newRelationship);
-      //   }
-      // })
+      $ctrl.addToDB.relationships = [];
+      $ctrl.relationships.forEach(function(r) {
+        var newRelationship = {};
+        newRelationship.id = parseInt(r.id);
+        newRelationship.is_approved = r.is_approved;
+        newRelationship.is_active = !r.is_dismissed;
+        if (newRelationship.is_approved || newRelationship.is_active === false) {
+          $ctrl.addToDB.relationships.push(newRelationship);
+        }
+      });
+      $ctrl.addToDB.relationshipAssignments = [];
+      $ctrl.relTypes.forEach(function(r) {
+        var newRelType = {};
+        newRelType.id = parseInt(r.id);
+        newRelType.is_approved = r.is_approved;
+        newRelType.is_active = !r.is_dismissed;
+        console.log(newRelType.is_approved, newRelType.is_active);
+        if (newRelType.is_approved || newRelType.is_active === false) {
+          console.log('gotcha')
+          $ctrl.addToDB.relationshipAssignments.push(newRelType);
+        }
+      })
       $ctrl.addToDB.groups = [];
       $ctrl.groups.forEach(function (g) {
         var newGroup = {};
