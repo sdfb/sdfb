@@ -73,6 +73,10 @@ path.danger {
   stroke: $strokeDanger;
 }
 
+.invalid-form {
+  color: $degree0;
+}
+
 .center {
   text-align: center;
 }
@@ -1145,7 +1149,6 @@ group-assign section {
   }
 
   .invalid-form {
-    color: $degree0;
     text-align: center;
   }
   h4.paragraph-title {
