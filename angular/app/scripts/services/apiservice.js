@@ -84,6 +84,9 @@ angular.module('redesign2017App')
         });
       },
       getGroupNetwork : function(ids, certainty){
+        if (certainty === undefined) {
+          certainty = 60;
+        };
         var url = baseUrl + '/api/groups/network';
         return $http({
           method: 'GET',
@@ -115,6 +118,10 @@ angular.module('redesign2017App')
         });
       },
       getNetwork : function(ids, certainty){
+
+        if (certainty === undefined) {
+          certainty = 60;
+        };
 
         var url = baseUrl + '/api/network';
         return $http({
