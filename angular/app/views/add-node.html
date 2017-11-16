@@ -48,7 +48,7 @@
 			<h4>Citation</h4>
 	    <textarea ng-disabled="newNode.exists" type="text" placeholder="{{ sampleCitation }}" ng-model="newNode.citation" class="form-control"></textarea>
 
-			<br><input ng-show="$root.user.user_type !== 'Standard'" ng-model="newNode.is_approved" type="checkbox"/> Approved?</input>
+			<br><input ng-show="$root.user.user_type !== 'Standard'" ng-model="newNode.is_approved" type="checkbox"/> <span ng-show="$root.user.user_type !== 'Standard'">Approved?</span></input>
 
 			<!-- <h4>Notes</h4>
 			<input class="form-control" ng-model="newNode.notes" ng-disabled="newNode.exists" placeholder="Notes"> -->
