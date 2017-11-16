@@ -16,9 +16,10 @@ class PasswordResetsController < ApplicationController
       password: params[:password], 
       password_confirmation: params[:password_confirmation],
     }
-    user.update(record)
-    if user && user.password_reset_sent_at > 2.hours.ago  && user.update(record)
-      user.update_column(:password_reset_token, SecureRandom.urlsafe_base64)
+    if user && user.password_reset_sent_at > 2.hours.ago
+      user.password = params[:password]
+      user.password_confirmation = params[:password_confirmation]
+      user.save!
       respond_to do |format|   
         format.json { render json: user.as_json }
      end 
