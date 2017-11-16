@@ -40,7 +40,6 @@ module ApiHelper
           id: person.id.to_s,
           type: "person",
           attributes: {
-
             name: person.display_name,
             groups: person.approved_group_ids
           }

@@ -64,7 +64,7 @@ class Person < ActiveRecord::Base
   # TODO: This is now the performance bottlenext
   def approved_group_ids
     groups = self.group_assignments.to_a
-    groups.map{|obj| obj.group_id if obj.is_approved}.compact!
+    groups.map{|obj| obj.group_id if obj.is_approved}.compact
   end
 
   # if the display name is blank then add one
