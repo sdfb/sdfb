@@ -31,7 +31,7 @@
     <h4>Search a group</h4>
 
     <!-- <pre>Model: {{groupTypeahead | json}}</pre> -->
-    <input type="text" ng-model="groupTypeahead.selected" placeholder="Type here group names" uib-typeahead="group as group.name for group in callGroupsTypeahead($viewValue)" typeahead-loading="loadingGroups" typeahead-no-results="noResultsGroups" class="form-control" class="form-control" typeahead-show-hint="true" typeahead-min-length="3" typeahead-on-select="groupSelected($item, $model, $label, $event)" typeahead-append-to-body="true">
+    <input type="text" ng-model="groupTypeahead.selected" placeholder="Type group name here" uib-typeahead="group as group.name for group in callGroupsTypeahead($viewValue)" typeahead-loading="loadingGroups" typeahead-no-results="noResultsGroups" class="form-control" class="form-control" typeahead-show-hint="true" typeahead-min-length="3" typeahead-on-select="groupSelected($item, $model, $label, $event)" typeahead-append-to-body="true">
     <i ng-show="loadingGroups" class="glyphicon glyphicon-refresh"></i>
     <div ng-show="noResultsGroups">
       <i class="glyphicon glyphicon-remove"></i> No Results Found
