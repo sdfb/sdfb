@@ -158,6 +158,7 @@ class User < ActiveRecord::Base
   def encrypt_password
     if password.present?
       self.password_digest = BCrypt::Password.create(password)
+      self.save!
     end
   end
 
@@ -172,6 +173,7 @@ class User < ActiveRecord::Base
   def send_password_reset  
     self.password_reset_token = SecureRandom.urlsafe_base64
     self.password_reset_sent_at = Time.zone.now  
+    self.save!
     UserMailer.password_reset(self).deliver  
   end  
 end
