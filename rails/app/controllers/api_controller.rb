@@ -311,9 +311,9 @@ class ApiController < ApplicationController
           person1_index: relationship.dig("source","id"),
           person2_index: relationship.dig("target","id"),
           start_date_type: relationship["startDateType"],
-          start_year: relationship["startYear"],
+          start_year: relationship["startDate"],
           end_date_type: relationship["endDateType"],
-          end_year: relationship["endYear"],
+          end_year: relationship["endDate"],
           justification: relationship["justification"],
           bibliography: relationship["citation"]
         }
