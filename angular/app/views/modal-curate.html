@@ -73,7 +73,7 @@
                     <!-- <i class="fa fa-times" aria-hidden="true" type="button" ng-click="$ctrl.remove($index, $ctrl.addToDB.links)" aria-label="Remove"></i> -->
                 </td>
                 <td>
-                  <input type="checkbox"/>
+                  <input ng-model="rel.is_dismissed" type="checkbox"/>
                 </td>
             </tr>
         </tbody>
@@ -105,11 +105,11 @@
                 <td><a href ui-sref="home.user({userId: rel.attributes.created_by})">{{rel.attributes.created_by_name}}</a></td>
                 <td><textarea class="form-control" ng-model="rel.attributes.citations"></textarea></td>
                 <td>
-                  <input ng-model="relType.is_approved" type="checkbox"/>
+                  <input ng-model="rel.is_approved" type="checkbox"/>
                     <!-- <i class="fa fa-times" aria-hidden="true" type="button" ng-click="$ctrl.remove($index, $ctrl.addToDB.links)" aria-label="Remove"></i> -->
                 </td>
                 <td>
-                  <input type="checkbox"/>
+                  <input ng-model="rel.is_dismissed" type="checkbox"/>
                 </td>
             </tr>
         </tbody>
