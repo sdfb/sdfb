@@ -33,7 +33,7 @@
               <li><a target="_self" href="/data/SDFB_relationships_2017_10_13.csv" download="SDFB_relationships_{{today}}.csv">Relationships</a></li>
             </ul>
           </li>
-          <li><a>About</a></li>
+          <li><a href ui-sref="home.about">About</a></li>
           <li class="log-in" ng-show="$root.user.is_active && $root.user.user_type !== 'Standard'"><a href ng-click="openCurate()">Curate</a></li>
           <!-- <li class="log-in"><a href ng-click="openCurate()">Curate</a></li> -->
           <li class="log-in" uib-dropdown>
