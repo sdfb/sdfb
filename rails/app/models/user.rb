@@ -157,8 +157,7 @@ class User < ActiveRecord::Base
   # -----------------------------
   def encrypt_password
     if password.present?
-      self.password_digest = BCrypt::Password.create(password)
-      self.save!
+      self.update_column(:password_digest, BCrypt::Password.create(password))
     end
   end
 
@@ -166,6 +165,7 @@ class User < ActiveRecord::Base
   def refresh_token
     if password.present?
       self.update_column :auth_token, SecureRandom.urlsafe_base64
+      self.update_column :password_reset_token, SecureRandom.urlsafe_base64
     end
   end 
   
