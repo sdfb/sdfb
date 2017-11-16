@@ -25,7 +25,7 @@
       <h4>Citation</h4>
       <textarea type="text" ng-model="groupAssign.citation" placeholder="{{ sampleCitation }}" class="form-control"></textarea>
 
-      <br><input ng-show="$root.user.user_type !== 'Standard'" ng-model="groupAssign.is_approved" type="checkbox"/> Approved?</input>
+      <br><input ng-show="$root.user.user_type !== 'Standard'" ng-model="groupAssign.is_approved" type="checkbox"/> <span ng-show="$root.user.user_type !== 'Standard'">Approved?</span></input>
 
 
       <button ng-disabled="groupAssignForm.$invalid" type="submit" class="btn btn-primary">Add & Continue</button>
