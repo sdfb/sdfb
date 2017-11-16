@@ -160,8 +160,13 @@ class ApiController < ApplicationController
 
 
         if node["id"]
-          Person.find(node["id"].to_i).update(node)
+          person = Person.find(node["id"].to_i)
           node.delete("id")
+          if node.keys.count == 1 && node.keys.first == "is_active"
+            person.update_column(:is_active, node["is_active"])
+          else
+            person.update!(node)
+          end
         else
           node["created_by"] = current_user.id
           new_person = Person.create!(node)
@@ -209,7 +214,7 @@ class ApiController < ApplicationController
     if links = params[:links]
       links.each do |link|
 
-        if link["id"]
+        if link["id"] 
           rel = Relationship.find(link["id"])
           puts rel
         else
@@ -295,6 +300,67 @@ class ApiController < ApplicationController
         else
           new_record[:created_by] = current_user.id
           GroupAssignment.create!(new_record)
+        end
+      end
+    end
+
+    if relationships = params[:relationships] 
+      relationships.each do |relationship|
+        new_record = {
+          original_certainty: relationship["confidence"],
+          person1_index: relationship.dig("source","id"),
+          person2_index: relationship.dig("target","id"),
+          start_date_type: relationship["startDateType"],
+          start_year: relationship["startDate"],
+          end_date_type: relationship["endDateType"],
+          end_year: relationship["endDate"],
+          justification: relationship["justification"],
+          bibliography: relationship["citation"]
+        }
+        if ["Admin", "Curator"].include?(current_user.user_type)
+          if relationship.keys.include?("is_approved")
+            new_record[:is_approved] = relationship["is_approved"]
+            new_record[:approved_by] = current_user.id if relationship["is_approved"]
+          end
+          new_record[:is_active]   = relationship["is_active"] unless relationship["is_active"].nil?
+        end
+      
+        if relationship["id"]
+          new_record.reject! {|_,v| v.nil?}
+          Relationship.find(relationship["id"]).update!(new_record)
+        else
+        new_record[:created_by] = current_user.id
+          Relationship.create!(new_record)
+        end
+      end
+    end
+
+    if relationship_assignments = params[:relationshipAssignments] 
+      relationship_assignments.each do |link|
+        new_record = {
+          relationship_id: link["relationshipId"],
+          start_date_type: link["startDateType"],
+          end_date_type: link["endDateType"],
+          start_year: link["startDate"],
+          end_year: link["endDate"],
+          certainty: link["confidence"],
+          bibliography: link["citation"],
+          relationship_type_id: link["relType"]
+        }
+        if ["Admin", "Curator"].include?(current_user.user_type)
+          if link.keys.include?("is_approved")
+            new_record[:is_approved] = link["is_approved"]
+            new_record[:approved_by] = current_user.id if link["is_approved"]
+          end
+          new_record[:is_active]   = link["is_active"] unless link["is_active"].nil?
+        end
+      
+        if link["id"]
+          new_record.reject! {|_,v| v.nil?}
+          UserRelContrib.find(link["id"]).update!(new_record)
+        else
+        new_record[:created_by] = current_user.id
+          UserRelContrib.create!(new_record)
         end
       end
     end

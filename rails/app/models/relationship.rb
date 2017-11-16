@@ -47,7 +47,8 @@ class Relationship < ActiveRecord::Base
   # -----------------------------
 
   def updated_altered_state!
-    self.altered = (created_by && created_by != 2) || user_rel_contribs.where("created_by != ?",3).count > 0
+    value = (created_by && created_by != 2) || user_rel_contribs.where("created_by != ?",3).count > 0
+    update_column(:altered, value)
   end
 
   # -----------------------------
