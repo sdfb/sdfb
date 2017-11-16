@@ -1,24 +1,65 @@
-<!-- <div class="modal-header">
-    <h3 class="modal-title" id="modal-title">List of Minor Groups</h3>
-</div> -->
-<div class="modal-body reset" id="modal-reset-body">
-    <h3 class="modal-title">Reset Password</h3>
+<div class="modal-body about" id="modal-reset-body">
+    <h3 class="modal-title">About</h3>
     <i class="fa fa-times close-btn" aria-hidden="true" type="button" ng-click="dismiss()" aria-label="Close"></i>
 
-    <form name="resetForm" class="form" id="formLogin" ng-submit="save()">
-      <h3>New Password <i class="fa fa-asterisk" aria-hidden="true"></i></h3>
-      <input required class="form-control" ng-model="new.password" type="password">
-      <h3>Confirm Password <i class="fa fa-asterisk" aria-hidden="true"></i></h3>
-      <input required class="form-control" ng-model="new.password_confirmation" type="password"><br>
-      <button ng-disabled="resetForm.$invalid" type="submit" id="btnLogin" class="btn btn-primary">Change password</button>
-      <div class="invalid-form" ng-show="resetForm.$invalid">
-				You are missing required fields.
-			</div>
-    </form>
-    <!-- <ul>
-        <li class="group {{'g'+group.groupId}}" ng-class="{ 'active': group.active }" ng-repeat="group in $ctrl.groups">
-            <a href="#" ng-click="$event.preventDefault(); $ctrl.selected.group = group">Group ID: {{ group.groupId }} - Number of people: {{ group.value }}</a>
-        </li>
-    </ul>
-    Selected: <b>{{ $ctrl.selected.group }}</b> -->
-</div>
+    <h4>Overview</h4>
+    <div>
+      Six Degrees of Francis Bacon is a digital reconstruction of the early modern social network (EMSN) that scholars and students from all over the world will be able to collaboratively expand, revise, curate, and critique. Historians and literary critics have long studied the way that early modern people associated with each other and participated in various kinds of formal and informal groups. By data-mining existing scholarship that describes relationships between early modern persons, documents, and institutions, we have created a unified, systematized representation of the way people in early modern England were connected. Unlike published prose, Six Degrees is extensible, collaborative, and interoperable: extensible in that actors and associations can always be added, modified, developed, or, removed; collaborative in that it synthesizes the work of many scholars; interoperable in that new work on the network is put into immediate relation to previously mapped relationships.
+    </div>
+
+    <h4>Team</h4>
+
+    <div class='bio'>
+      <img ng-src='/images/warren.jpg' />
+			<a href="http://www.cmu.edu/hss/english/people/faculty/bios/warren-christopher.html" target="_blank">Christopher Warren</a>, Project Director, and Co-PI, is Associate Professor of English at Carnegie Mellon, associated with programs in Literary and Cultural Studies and Global Studies. He is interested in historical approaches to literary analysis, the literature and culture of early modern Britain, and diplomatic, legal, and commercial networks in early modern Europe. His book, <em>Literature and the Law of Nations, 1580-1680</em> (Oxford University Press, 2015), is a literary history of international law in early modern Britain. His articles have appeared in <em>English Literary Renaissance</em>, <em>The Seventeenth Century</em>, and the <em>European Journal of International Law</em>. Warren directs the Pittsburgh Consortium of Medieval and Renaissance Studies.</div>
+			<div class='bio'>
+			<img src='/images/shore.jpg' />
+			<a href="http://georgetown.academia.edu/DanielShore" target="_blank">Daniel Shore</a>, Co-PI, is Associate Professor of English at Georgetown University. He is currently completing his second book, <em>Cyberformalism</em>, which argues that full-text searchable archives make possible new objects of philological inquiry. His first book was <em>Milton and the Art of Rhetoric</em> (Cambridge, 2012), and he has published articles on early modern literature and on digital humanities research in <em>PMLA</em>, <em>Critical Inquiry</em>,<em>Modern Philology</em>, <em> Milton Studies</em>, <em>Milton Quarterly</em>, and <em>Early Modern Literary Studies</em>.</div>
+			<div class='bio'>
+			<img src='/images/otis.jpg' />
+			<a href="http://www.jessicaotis.com" target="_blank">Jessica Otis</a>, Co-PI, is Carnegie Mellon's Digital Specialist in the University Libraries and a former CLIR/DLF Postdoctoral Fellow in Data Curation for Early Modern Studies.  She received both her MS in Mathematics and her PhD in History from the University of Virginia.  Her research focuses on the cultural history of mathematics and cryptography in early modern England.  She has presented her work at the annual meetings of the North American Conference of British Studies, the History of Science Society, and the Renaissance Society of America.</div>
+			<div class='bio'>
+			<img src='/images/weingart.jpg' />
+			<a href="http://www.scottbot.net/HIAL/?page_id=172" target="_blank">Scott Weingart</a>, Co-PI, is Carnegie Mellon’s Digital Humanities Specialist in Dietrich College of Humanities and Social Sciences. His research focuses on early modern scholarly networks, and he has been a member of research teams at Oxford, Stanford, and Huygens ING in their pursuit of Republic of Letters digital projects. Weingart is a co-author of <em>The Historian’s Macroscope</em> (Imperial College Press), and his research has appeared in journals spanning history, philosophy, folklore, archaeology, digital humanities, informatics, and scientometrics.</div>
+			<div class='bio'>
+			<img src='/images/ladd.png' />
+      <a href="http://www.jrladd.com" target="_blank">John Ladd</a> is the postdoctoral research fellow for Six Degrees at Carnegie Mellon and PhD Candidate in English Literature at Washington University in St. Louis. His research explores the many kinds of literary collaboration in seventeenth-century England, using social network analysis and actor-network theory. He has presented at conferences concerning book history, the digital humanities, and early modern studies, and he’s worked on a number of digital projects spanning scholarly editing, network analysis, topic modeling, and machine learning.</div>
+
+    <h4>Grants and Support</h4>
+
+    <h4>Code</h4>
+
+    <div>
+      The entire codebase for the site, which uses Angular, Ruby on Rails, and D3, is available in our <a href="https://github.com/sdfb/sdfb" target="_blank">Github repo</a>. You can also check out the <a>SDFB Network repo</a> for the R code used for data mining the <i>Oxford Dictionary of National Biography</i>.
+    </div>
+
+    <h4>Data and Permissions</h4>
+    <div>
+      Six Degrees of Francis Bacon is pleased to share exploratory visualizations and data free of charge for use by other researchers for non-commercial purposes. Exploratory visualizations, however, should only be considered our best effort at the time of sharing. Data may contain errors and results will be continuously updated. Our process is rigorously iterative. Use as you see fit, but at your own peril and without warranty.
+    </div>
+
+    <div>
+      If you make use of Six of Degrees of Francis Bacon material, please cite using the box on the main page. Please also tweet about any uses to <a href="http://twitter.com/6Bacon" target="_blank">@6Bacon</a> so we can be aware of how the material is used and so we can help promote your work. Six Degrees is licensed under a <a href="http://creativecommons.org/licenses/by-nc-sa/4.0/deed.en_US" target="_blank">Creative Commons Attribution-NonCommercial-<wbr>ShareAlike 4.0 Unported License.</a>.
+    </div>
+
+    <div>
+      To download the current data, first sign in to your account. Click the View Records link in the header to see a drop-down menu of the different data sets. Click to bring up the data set you're interested in, which you can then either browse online or click the Export button to download the data to your computer.
+    </div>
+
+    <h4>Publications</h4>
+
+    <div>
+      Warren, Christopher, Daniel Shore, Jessica Otis, Lawrence Wang, Mike Finegold, and Cosma Shalizi, "Six Degrees of Francis Bacon: A Statistical Method for Reconstructing Large Historical Social Networks", Digital Humanities Quarterly 10.3, URL: <a href="http://digitalhumanities.org/dhq/vol/10/3/000244/000244.html" target="_blank">http://digitalhumanities.org/dhq/vol/10/3/000244/000244.html</a>
+    </div>
+
+    <div>
+      Langmead, Alison, Jessica M. Otis, Christopher N. Warren, Scott B. Weingart, and Lisa D. Zilinski, "Towards Interoperable Network Ontologies for the Digital Humanities", International Journal of Humanities and Arts Computing Vol. 10, Issue 1 (Mar 2016): 22-35, DOI: <a href="https://mla.hcommons.org/deposits/item/mla:1009/" target="_blank"> http://dx.doi.org/10.3366/ijhac.2016.0157</a>
+    </div>
+
+    <div>
+      Project participants have also presented on Six Degrees in numerous scholarly and public venues, including the annual meetings of the American Historical Association, Modern Language Association, and History of Science Society; (Re)Building Medieval and Early Modern Networks at the University of Maryland; and the Pittsburgh Humanities Festival.
+    </div>
+
+    <h4>In the News</h4>
+
+    <h4>Advisory Board</h4>

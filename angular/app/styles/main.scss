@@ -77,6 +77,16 @@ path.danger {
   color: $degree0;
 }
 
+.about img {
+	max-height: 150px;
+	max-width: 200px;
+	float: left;
+	margin-right: 10px;
+	border-radius: 15px;
+}
+
+.bio {margin-bottom: 60px;}
+
 .center {
   text-align: center;
 }
