@@ -157,6 +157,22 @@ redesign2017App.config(function($stateProvider, $locationProvider, $compileProvi
         });
     }]
   }
+  var helpState = {
+    name: "home.help",
+    url: "help",
+    onEnter: ['$stateParams', '$state', '$uibModal', '$resource', function($stateParams, $state, $uibModal, $resource) {
+        $uibModal.open({
+            templateUrl: './views/modal-help.html',
+            controller: ['$scope', function($scope) {
+              $scope.dismiss = function() {
+                $scope.$dismiss();
+              };
+            }]
+        }).result.finally(function() {
+            $state.go('^');
+        });
+    }]
+  }
 
   $stateProvider.state(homeState);
   $stateProvider.state(vizState);
@@ -164,6 +180,7 @@ redesign2017App.config(function($stateProvider, $locationProvider, $compileProvi
   $stateProvider.state(userState);
   $stateProvider.state(resetState);
   $stateProvider.state(aboutState);
+  $stateProvider.state(helpState);
   $locationProvider.html5Mode(true);
   $compileProvider.aHrefSanitizationWhitelist(/^\s*(https?|ftp|mailto|data):/);
 })
