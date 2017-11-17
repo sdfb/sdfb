@@ -2,7 +2,8 @@ class User < ActiveRecord::Base
   attr_accessible :about_description, :affiliation, :email, :first_name, 
                   :is_active, :last_name, 
                   :user_type, :prefix, :orcid, 
-                  :username, :created_at
+                  :username, :created_at, 
+                  :password, :password_confirmation
 
   attr_accessor :password, :password_confirmation
 
@@ -58,7 +59,7 @@ class User < ActiveRecord::Base
 
   # Callbacks
   # -----------------------------
-  before_save :encrypt_password
+  after_save :encrypt_password
   after_save :refresh_token
 
   # Custom methods
@@ -157,7 +158,7 @@ class User < ActiveRecord::Base
   # -----------------------------
   def encrypt_password
     if password.present?
-      self.password_digest = BCrypt::Password.create(password)
+      self.update_column(:password_digest, BCrypt::Password.create(password))
     end
   end
 
@@ -165,6 +166,7 @@ class User < ActiveRecord::Base
   def refresh_token
     if password.present?
       self.update_column :auth_token, SecureRandom.urlsafe_base64
+      self.update_column :password_reset_token, SecureRandom.urlsafe_base64
     end
   end 
   
@@ -172,6 +174,7 @@ class User < ActiveRecord::Base
   def send_password_reset  
     self.password_reset_token = SecureRandom.urlsafe_base64
     self.password_reset_sent_at = Time.zone.now  
+    self.save!
     UserMailer.password_reset(self).deliver  
   end  
 end
