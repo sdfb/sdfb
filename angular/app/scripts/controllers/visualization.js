@@ -68,6 +68,7 @@ angular.module('redesign2017App').component('visualization', {
         $scope.groupTypeahead.selected = '';
         $scope.personTypeahead.selected = '';
         $scope.sharedTypeahead.selected = '';
+        $scope.config.viewObject = 1;
       } else if ($stateParams.ids.length < 8 && $stateParams.type === 'timeline') {
         $scope.config.viewMode = 'group-timeline';
         $rootScope.config.viewMode = 'group-timeline';
@@ -76,6 +77,7 @@ angular.module('redesign2017App').component('visualization', {
         $scope.config.networkDesc = $scope.data.data.data[0].attributes.description;
         $scope.personTypeahead.selected = '';
         $scope.sharedTypeahead.selected = '';
+        $scope.config.viewObject = 1;
       } else if ($stateParams.ids.length >= 8 && this.networkData.data.attributes.primary_people.length === 1) {
         var personName = this.networkData.included[0].attributes.name;
         $scope.config.viewMode = 'individual-force';
@@ -95,6 +97,7 @@ angular.module('redesign2017App').component('visualization', {
         $scope.personTypeahead.selected = this.networkData.included[0].attributes.name;
         $scope.sharedTypeahead.selected = this.networkData.included[1].attributes.name;
         $scope.groupTypeahead.selected = '';
+        $scope.config.viewObject = 0;
       } else if ($stateParams.ids.length < 8) {
         $scope.config.viewMode = 'group-force';
         $rootScope.config.viewMode = 'group-force';

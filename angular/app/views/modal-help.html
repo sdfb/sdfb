@@ -1,0 +1,95 @@
+<div class="modal-body help" id="modal-reset-body">
+    <h3 class="modal-title">Help</h3>
+    <i class="fa fa-times close-btn" aria-hidden="true" type="button" ng-click="dismiss()" aria-label="Close"></i>
+
+    <h4>Welcome to Six Degrees of Francis Bacon!</h4>
+    <div>
+      There are two main ways to use the site. You can <b>explore</b> the network visualizations or <b>contribute</b> by adding people, relationships, and groups.
+    </div>
+
+    <div class="btn-group btn-group-justified">
+      <label class="btn btn-primary" ng-model="tutorial" uib-btn-radio="'explore'">Explore</label>
+      <label class="btn btn-primary" ng-model="tutorial" uib-btn-radio="'contribute'">Contribute</label>
+    </div>
+
+    <div ng-show="tutorial === 'explore'">
+      <h4>Explore</h4>
+
+      <img class="tutorial" ng-src='/images/tutorial/search.gif' />
+      <div>
+        Use the search box to explore <b>people</b> in both Individual and Shared Networks, and <b>groups</b> through Individual Group Networks or the All Groups visualization.
+      </div>
+
+      <h3>People</h3>
+
+      <img class="tutorial" ng-src='/images/tutorial/person.gif' />
+      <div>
+        In an individual person's graph, you can click on any person, relationship, or group (in the bar at the bottom), to get information about it. Double click on people or groups to switch to another graph, or use the search box.
+      </div>
+
+      <img class="tutorial" ng-src='/images/tutorial/filters.gif' />
+      <div>
+        You can switch between the Hooke view—named for 17th-century scientist <a href="http://6dfb.tumblr.com/post/159420498411/ut-tensio-sic-vis-introducing-the-hooke-graph" target="_blank">Robert Hooke</a>—and the Concentric view. You can also use date, confidence and visual density filters to control how much of the graph you see.
+      </div>
+
+      <div>
+        Visual density is a new paradigm we've developed to help you control which nodes are in the graph without relying on degree or edge weight:
+      </div>
+
+      <img class="tutorial" ng-src='/images/tutorial/density.gif' />
+
+      <div>
+        And all of these functions (except the concentric view) are also available in the Shared Network visualization, which allows you to see the relationships two people have in common.
+      </div>
+
+      <img class="tutorial" ng-src='/images/tutorial/shared.png' />
+
+      <h3>Groups</h3>
+
+      <img class="tutorial" ng-src='/images/tutorial/singlegroup.png' />
+
+      <div>
+        Search groups to see an Individual Group Network. It works just like the people networks, and allows you to toggle between just the group's members (in purple) and all their one-degree connections (in white).
+      </div>
+
+      <img class="tutorial" ng-src='/images/tutorial/timeline.png' />
+
+      <div>
+        Every group also has a Timeline View, so you can see how long each person was a member of the group.
+      </div>
+
+      <img class="tutorial" ng-src='/images/tutorial/allgroups.png' />
+
+      <div>
+        Clicking "Show All" will bring up a network of All Groups in the Six Degrees dataset. Each square is a group, sized by how many members it has, and each line represents the number of members that two groups share.
+      </div>
+
+    </div>
+
+    <div ng-show="tutorial === 'contribute'">
+
+      <div>You must be logged in to contribute. Just sign in or sign up at the top right of the screen, then turn on contribute mode. Instructions will come up on the left side of the screen, underneath the search box.</div>
+
+      <img class="tutorial" ng-src='/images/tutorial/contribute.gif' />
+
+      <div>To add a person, double-click anywhere on the canvas:</div>
+
+      <img class="tutorial" ng-src='/images/tutorial/addperson.gif' />
+
+      <div>You can someone totally new to Six Degrees (so long as they're historically accurate!), or add someone who's already in Six Degrees to the network you're currently viewing. Click on any person you've added to edit it. Don't forget to Review & Submit to send your updates to us!</div>
+
+      <img class="tutorial" ng-src='/images/tutorial/addrelation.gif' />
+
+      <div>To add a relationship (from any view except the All Groups Network), simply drag a new or existing person onto any other. You'll get a chance to set dates for the relationship, decide what type of relationship it is, and add your confidence that the relationship existed. You can also edit existing relationships by clicking them.</div>
+
+      <img class="tutorial" ng-src='/images/tutorial/assigngroup.gif' />
+
+      <div>To add a person to a group (again, from any standard network view), simply drag a new or existing person onto part of the groups bar at the bottom of the screen. You can accomplish the same thing by clicking on any node while in contribute mode.</div>
+
+      <img class="tutorial" ng-src='/images/tutorial/addgroup.gif' />
+
+      <div>You can add a new group from the All Groups view just like adding a person, by double-clicking. Once a new group is added, you can double double-click on it to get a blank canvas and start adding people to your group!</div>
+
+      <div>And that's it! Remember to Review & Submit your changes at the end of every contribution session to make sure they get to us. Thanks for contributing to Six Degrees of Francis Bacon.</div>
+
+    </div>
