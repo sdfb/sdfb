@@ -1,5 +1,17 @@
 class RemoveRejectedFromCode < ActiveRecord::Migration
   def change
+    GroupAssignment.find_by_sql("SELECT * FROM group_assignments WHERE is_rejected").each {|r| r.update_column(:is_approved, false)}
+    # GroupCatAssign.find_by_sql("SELECT * FROM group_cat_assigns WHERE is_rejected").each {|r| r.update_column(:is_approved, false)}
+    # GroupCategory.find_by_sql("SELECT * FROM group_categories WHERE is_rejected").each {|r| r.update_column(:is_approved, false)}
+    Group.find_by_sql("SELECT * FROM groups WHERE is_rejected").each {|r| r.update_column(:is_approved, false)}
+    Person.find_by_sql("SELECT * FROM people WHERE is_rejected").each {|r| r.update_column(:is_approved, false)}
+    RelCatAssign.find_by_sql("SELECT * FROM rel_cat_assigns WHERE is_rejected").each {|r| r.update_column(:is_approved, false)}
+    RelationshipCategory.find_by_sql("SELECT * FROM relationship_categories WHERE is_rejected").each {|r| r.update_column(:is_approved, false)}
+    RelationshipType.find_by_sql("SELECT * FROM relationship_types WHERE is_rejected").each {|r| r.update_column(:is_approved, false)}
+    Relationship.find_by_sql("SELECT * FROM relationships WHERE is_rejected").each {|r| r.update_column(:is_approved, false)}
+    # UserGroupContrib.find_by_sql("SELECT * FROM user_group_contribs WHERE is_rejected").each {|r| r.update_column(:is_approved, false)}
+    # UserPersonContrib.find_by_sql("SELECT * FROM user_person_contribs WHERE is_rejected").each {|r| r.update_column(:is_approved, false)}
+    UserRelContrib.find_by_sql("SELECT * FROM user_rel_contribs WHERE is_rejected").each {|r| r.update_column(:is_approved, false)}
     remove_column :group_assignments, :is_rejected, :boolean, default: false
     remove_column :group_cat_assigns, :is_rejected, :boolean, default: false
     remove_column :group_categories, :is_rejected, :boolean, default: false
