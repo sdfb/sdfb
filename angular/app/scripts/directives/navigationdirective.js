@@ -35,13 +35,16 @@ angular.module('redesign2017App')
         scope.today = now.getFullYear() + '_' + (now.getMonth()+1) + '_' + now.getDate();
 
         scope.logIn = function() {
-          apiService.logIn($rootScope.user).then(function successCallback(result) {
+          apiService.logIn($rootScope.user).then(function(result) {
             $rootScope.user = result.data;
             var session = angular.copy($rootScope.user);
             delete session.status;
             delete session.error;
 
             $cookieStore.put('session', session);
+          }, function(error) {
+            scope.logInFailed = true;
+            console.log(error);
           });
         }
 

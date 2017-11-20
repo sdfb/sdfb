@@ -48,6 +48,7 @@
                 <input class="form-control" ng-model="$root.user.email" name="email" id="email" placeholder="Email" type="text">
                 <h3>Password</h3>
                 <input class="form-control" ng-model="$root.user.password" name="password" id="password" placeholder="Password" type="password"><br>
+                <div class="invalid-form" ng-show="logInFailed">Incorrect Username or Password</div>
                 <button type="button" id="btnLogin" class="btn btn-primary" ng-click="logIn()">Login</button>
               </form>
               <a href ng-click="openSignup()">Sign Up</a> | <a href ng-click="openResetRequest()">Forgot Password?</a>

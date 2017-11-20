@@ -75,6 +75,7 @@ path.danger {
 
 .invalid-form {
   color: $degree0;
+  text-transform: none;
 }
 
 .about div, .help div {
@@ -215,7 +216,7 @@ div.bio {margin-bottom: 60px;}
   position: fixed;
   pointer-events: none;
   z-index: 100;
-  // text-align: center;
+  // overflow-y: auto;
 }
 
 .panels-container * {
