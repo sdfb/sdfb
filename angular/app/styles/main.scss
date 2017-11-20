@@ -262,10 +262,6 @@ div.bio {margin-bottom: 60px;}
   transition: all 0.5s ease;
 }
 
-.panel.citation input {
-  display: inline;
-  width: auto;
-}
 
 .panel.smallest {
   width: 32px;
@@ -395,6 +391,17 @@ div.bio {margin-bottom: 60px;}
 
 .panel.collapsable.search {
   padding: 0;
+}
+
+.panel.collapsable.citation {
+  font-size: 10px;
+  padding: 6px 8px;
+}
+
+.panel.citation input {
+  font-size: 10px;
+  display: inline;
+  width: 80%;
 }
 
 .panel.collapsable > section, .panel.collapsable > div {
@@ -1366,6 +1373,7 @@ add-link.panel section {
 /* Contextual Info Panel*/
 contextual-info-panel.panel {
   background-color: $light-color;
+  margin-bottom: 5px;
 }
 
 .groupBar .group {
@@ -1377,7 +1385,7 @@ contextual-info-panel.panel.contribution-mode-on {
 }
 
 .all-types {
-  max-height: 20vh;
+  max-height: 10vh;
   overflow-y: auto;
 }
 contextual-info-panel > section, contextual-info-panel > div > section {
@@ -1395,6 +1403,7 @@ contextual-info-panel > section, contextual-info-panel > div > section {
   .person-right {
     float: right;
     text-align: center;
+    margin-top: 10px;
   }
 
   p.person-right {
@@ -1544,19 +1553,39 @@ small-timeline .label.relationship {
   // -webkit-box-pack: center;
   // -ms-flex-pack: center;
   // justify-content: center;
-  padding: 10px 15px;
+  // padding: 10px 15px;
   // -webkit-box-align: center;
   // -ms-flex-align: center;
   // align-items: center;
   border-radius: 0 0 3px 3px;
   border-bottom: 0;
 
-  button {
-    padding: 2px 8px;
-    margin-top: 5px;
-    width: auto;
+  span {
+    float: right;
+    border-left: 2px solid darkgray;
+    padding-left: 15px;
+
+    button {
+      padding: 2px 8px;
+      // margin: 0 0 0 20px;
+      margin-bottom: 0px;
+      // @include float-right;
+      vertical-align: middle;
+      width: auto;
+    }
   }
+
+
 }
+
+// contextual-info-panel p {
+//   float: right;
+//   width: 25%;
+// }
+//
+// contextual-info-panel h2 {
+//   float: left;
+// }
 
 #more-info a {
   margin-left: 10px;
@@ -1568,21 +1597,19 @@ small-timeline .label.relationship {
 
 #more-info img {
   width: auto;
-  height: 35px;
+  height: 20px;
 
   cursor: pointer;
 }
 
 #more-info i {
-  font-size: 35px;
-  // margin-top: 5px;
+  font-size: 20px;
+  margin-right: 15px;
   cursor: pointer;
   vertical-align: middle;
 }
 
-#more-info button {
-  margin-left: 20px;
-}
+
 /* people finder */
 people-finder {
   height: 100px;
