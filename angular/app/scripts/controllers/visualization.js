@@ -246,6 +246,9 @@ angular.module('redesign2017App').component('visualization', {
           },
           addedLinks: function() {
             return $scope.addedLinks;
+          },
+          relTypeCats: function() {
+            return $scope.relTypeCats;
           }
         }
       });
