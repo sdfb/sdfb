@@ -72,7 +72,7 @@ angular.module('redesign2017App')
 
         scope.linkAlert = function() {
           if (scope.addLinkClosed) {
-            $window.alert('To add a relationship, drag a node onto any other. If the node you need is not in this view, add it by double-clicking.');
+            $window.alert('To add a relationship, drag a node onto any other. If the node you need is not in this view, add it by double-clicking. You can search within this view by clicking the magnifying glass on the right.');
           } else {
             scope.addLinkClosed = true;
           }
