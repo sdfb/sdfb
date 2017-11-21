@@ -73,8 +73,8 @@ angular.module('redesign2017App').component('home', {
         }
       });
       modalInstance.result.then(function(data) {
-        console.log(JSON.stringify(data));
-        apiService.writeData(data);
+        // console.log(JSON.stringify(data));
+        // apiService.writeData(data);
         // var url = 'http://sixdegr-dev.library.cmu.edu/tools/api/write';
         // return $http({
         //   method: 'POST',

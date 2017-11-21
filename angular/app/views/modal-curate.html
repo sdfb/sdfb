@@ -178,7 +178,13 @@
             </tr>
         </tbody>
     </table>
-    <button ng-click="$ctrl.close()" type="button" class="btn btn-primary">
-        Submit & Close
+    <div uib-alert close="curateSuccess = false;" class="alert alert-success" ng-show="curateSuccess">
+      <strong>Curation complete!</strong> You may close this window.
+    </div>
+    <div uib-alert close="curateFailure = false;" class="alert alert-danger" ng-show="curateFailure">
+      <strong>Something went wrong!</strong> Please try again or refresh the page.
+    </div>
+    <button ng-click="$ctrl.submit()" type="button" class="btn btn-primary">
+        Submit
     </button>
 </div>

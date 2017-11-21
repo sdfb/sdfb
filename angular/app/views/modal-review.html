@@ -108,8 +108,14 @@
             </tr>
         </tbody>
     </table>
-    <button ng-click="$ctrl.close()" type="button" class="btn btn-primary contribute">
-        Submit & Close
+    <div uib-alert close="reviewSuccess = false;" class="alert alert-success" ng-show="reviewSuccess">
+      <strong>Your information is submitted!</strong> It will be available on the site once it's been approved by a curator. You may close this window.
+    </div>
+    <div uib-alert close="reviewFailure = false;" class="alert alert-danger" ng-show="reviewFailure">
+      <strong>Something went wrong!</strong> Please try again or refresh the page. If the problem persists, <a href="mailto:SixDegreesFrancisBacon@gmail.com" class="alert-link">contact us</a>.
+    </div>
+    <button ng-click="$ctrl.submit()" type="button" class="btn btn-primary contribute">
+        Submit
     </button>
     <!-- <ul>
         <li class="group {{'g'+group.groupId}}" ng-class="{ 'active': group.active }" ng-repeat="group in $ctrl.groups">

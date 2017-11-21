@@ -250,22 +250,22 @@ angular.module('redesign2017App').component('visualization', {
         }
       });
       modalInstance.result.then(function(result) {
-        result.links.forEach (function(l) {
-          delete l.id;
-        })
-        console.log(result);
-        apiService.writeData(result);
-        $scope.addToDB = {nodes: [], links: [], groups: [], group_assignments: []};
-        $scope.addedNodes = [];
-        $scope.addedLinks = [];
-        $scope.addedGroups = [];
-        $scope.newNode = {};
-        $scope.addedNodeId = 0;
-        $scope.newLink = {source:{}, target: {}};
-        $scope.newGroup = {};
-        $scope.groupAssign = {person: {}, group: {}};
-        $scope.config.added = false;
-        $scope.updateNetwork($scope.data);
+        // result.links.forEach (function(l) {
+        //   delete l.id;
+        // })
+        // console.log(result);
+        // apiService.writeData(result);
+        // $scope.addToDB = {nodes: [], links: [], groups: [], group_assignments: []};
+        // $scope.addedNodes = [];
+        // $scope.addedLinks = [];
+        // $scope.addedGroups = [];
+        // $scope.newNode = {};
+        // $scope.addedNodeId = 0;
+        // $scope.newLink = {source:{}, target: {}};
+        // $scope.newGroup = {};
+        // $scope.groupAssign = {person: {}, group: {}};
+        // $scope.config.added = false;
+        // $scope.updateNetwork($scope.data);
       }, function(reason) {
         console.log(reason);
         $scope.updateNetwork($scope.data);
