@@ -133,7 +133,7 @@ angular.module('redesign2017App').component('visualization', {
       }
     };
 
-    $scope.citation = function() {
+    $rootScope.citation = function() {
       var now = new Date()
       if ($scope.config.confidenceMax > 100) {
         $scope.config.confidenceMax = 100;
@@ -397,16 +397,16 @@ angular.module('redesign2017App').component('visualization', {
       }
     });
 
-    $scope.$watch('groupView', function(newValue, oldValue) {
-      console.log(newValue);
-      if (newValue !== oldValue) {
-        if ($stateParams.ids.length >= 8) {
-          $state.go('home.visualization', {ids: 81, type: newValue});
-        } else {
-          $state.go('home.visualization', {type: newValue});
-        }
-      }
-    });
+    // $scope.$watch('groupView', function(newValue, oldValue) {
+    //   console.log(newValue);
+    //   if (newValue !== oldValue) {
+    //     if ($stateParams.ids.length >= 8) {
+    //       $state.go('home.visualization', {ids: 81, type: newValue});
+    //     } else {
+    //       $state.go('home.visualization', {type: newValue});
+    //     }
+    //   }
+    // });
 
     $transitions.onStart({}, function(transition) {
       if ($scope.$parent.config.contributionMode) {

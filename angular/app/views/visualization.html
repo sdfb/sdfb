@@ -6,10 +6,10 @@
     <search-panel class="panel collapsable left search" ng-class="{'collapsed' : searchClosed}"></search-panel>
     <contextual-info-panel class="panel context" ng-show=" config.viewMode != 'group-timeline' && !$parent.searchClosed " ng-class="{'contribution-mode-on': $parent.config.contributionMode}"></contextual-info-panel>
     <legend-panel class="panel timeline-legend" ng-if=" config.viewMode == 'group-timeline' && !$parent.searchClosed "></legend-panel>
-    <div class="panel collapsable citation" ng-show="!$parent.searchClosed">
+    <!-- <div class="panel collapsable citation" ng-show="!$parent.searchClosed">
       Cite this:
       <input readonly class="form-control" onClick="this.select()" ng-model="citation" ng-model-options="{ getterSetter: true }"/>
-    </div>
+    </div> -->
   </section>
   <div id="viz-title">
     <div>{{ config.networkName }}</div>
