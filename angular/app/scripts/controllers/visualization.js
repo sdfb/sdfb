@@ -93,6 +93,7 @@ angular.module('redesign2017App').component('visualization', {
         $scope.config.viewMode = 'shared-network';
         $rootScope.config.viewMode = 'shared-network';
         $scope.config.networkComplexity = 'all_connections';
+        $scope.config.person1 = $stateParams.ids.split(',')[0];
         $scope.config.networkName = this.networkData.included[0].attributes.name + " & " + this.networkData.included[1].attributes.name + " Network";
         $scope.personTypeahead.selected = this.networkData.included[0].attributes.name;
         $scope.sharedTypeahead.selected = this.networkData.included[1].attributes.name;
