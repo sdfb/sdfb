@@ -10,7 +10,7 @@
 angular.module('redesign2017App').component('visualization', {
   bindings: { networkData: '<' },
   templateUrl: 'views/visualization.html',
-  controller: ['$scope', '$uibModal', '$http', '$log', '$document', '$location', '$window', 'apiService', '$stateParams', '$transitions', '$rootScope', function($scope, $uibModal, $http, $log, $document, $location, $window, apiService, $stateParams, $transitions, $rootScope) {
+  controller: ['$scope', '$uibModal', '$http', '$log', '$document', '$location', '$window', 'apiService', '$stateParams', '$transitions', '$rootScope', '$state', function($scope, $uibModal, $http, $log, $document, $location, $window, apiService, $stateParams, $transitions, $rootScope, $state) {
     var initialConfig = {
           viewObject:0, //0 = people, 1 = groups
           viewMode:'individual-force',
@@ -395,7 +395,18 @@ angular.module('redesign2017App').component('visualization', {
           $scope.updateNetwork($scope.data);
         }
       }
-    })
+    });
+
+    $scope.$watch('groupView', function(newValue, oldValue) {
+      console.log(newValue);
+      if (newValue !== oldValue) {
+        if ($stateParams.ids.length >= 8) {
+          $state.go('home.visualization', {ids: 81, type: newValue});
+        } else {
+          $state.go('home.visualization', {type: newValue});
+        }
+      }
+    });
 
     $transitions.onStart({}, function(transition) {
       if ($scope.$parent.config.contributionMode) {

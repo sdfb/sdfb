@@ -13,6 +13,9 @@ angular.module('redesign2017App')
       restrict: 'E',
       link: function postLink(scope, element, attrs) {
         // element.text('this is the searchPanel directive');
+
+        scope.groupView = 'network';
+
         scope.resetIndividualNetwork = function() {
           console.log('resetIndividualNetwork');
           scope.person.selected = undefined;
@@ -55,13 +58,15 @@ angular.module('redesign2017App')
           $state.go('home.visualization', {ids: $item.id, type:'network'});
         }
 
-        scope.groupView = function(view) {
-          if ($stateParams.ids.length >= 8) {
-            $state.go('home.visualization', {ids: 81, type: view});
-          } else {
-            $state.go('home.visualization', {type: view});
-          }
-        }
+        // scope.groupView = function(view) {
+        //   if ($stateParams.ids.length >= 8) {
+        //     $state.go('home.visualization', {ids: 81, type: view});
+        //   } else {
+        //     $state.go('home.visualization', {type: view});
+        //   }
+        // }
+
+        
 
       }
     };

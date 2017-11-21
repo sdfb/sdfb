@@ -37,8 +37,8 @@
 
     <h4>Visualization layout</h4>
     <div class="btn-group btn-group-justified">
-      <label ng-disabled="$root.config.viewMode !== 'group-force' && $root.config.viewMode !== 'group-timeline'" class="btn btn-primary" ng-click="groupView('network')">Hooke</label>
-      <label ng-disabled="$root.config.viewMode !== 'group-force' && $root.config.viewMode !== 'group-timeline'" class="btn btn-primary" ng-click="groupView('timeline')">Timeline</label>
+      <label ng-disabled="config.viewMode !== 'group-force' && config.viewMode !== 'group-timeline'" class="btn btn-primary" ng-model="groupView" uib-btn-radio="'network'">Hooke</label>
+      <label ng-disabled="config.viewMode !== 'group-force' && config.viewMode !== 'group-timeline'" class="btn btn-primary" ng-model="groupView" uib-btn-radio="'timeline'">Timeline</label>
     </div>
 
     <h4>All Groups Network</h4>
