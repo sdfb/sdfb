@@ -95,13 +95,13 @@ angular.module('redesign2017App')
               ids: ids.toString(),
               certainty: certainty
             }
-        }).then(function successCallback(response){
-          return response.data;
-        },function errorCallback(response){
-          console.error("An error occured while fetching file",response);
-          console.warn("If the issue is related to CORS Origin, try install this extention on Chrome: https://chrome.google.com/webstore/detail/allow-control-allow-origi/nlfbmbojpeacfghkpbjhddihlkkiljbi")
-          return response;
-        });
+        })//.then(function successCallback(response){
+        //   return response.data;
+        // },function errorCallback(response){
+        //   console.error("An error occured while fetching file",response);
+        //   console.warn("If the issue is related to CORS Origin, try install this extention on Chrome: https://chrome.google.com/webstore/detail/allow-control-allow-origi/nlfbmbojpeacfghkpbjhddihlkkiljbi")
+        //   return response;
+        // });
       },
       getAllGroups : function(){
         // Works for a single group as well, just call with a singular ID

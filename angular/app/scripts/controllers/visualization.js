@@ -60,8 +60,9 @@ angular.module('redesign2017App').component('visualization', {
 
 
     this.$onChanges = function() {
+      console.log(this.networkData)
       $scope.data = this.networkData;
-      if ($scope.data === 'error') {
+      if ($scope.data === 'error' || $scope.data.errors || $scope.data.data.errors) {
         $scope.noData = true;
       } else {
         if ($stateParams.type === 'all-groups') {

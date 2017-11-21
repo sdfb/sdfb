@@ -37,7 +37,7 @@ redesign2017App.config(function($stateProvider, $locationProvider, $compileProvi
       networkData: ['apiService', '$stateParams', function(apiService, $stateParams) {
         if ($stateParams.ids.length < 8 && $stateParams.type === 'network') {
           return apiService.getGroupNetwork($stateParams.ids, $stateParams.min_confidence).then(function(result){
-            apiService.result = result;
+            apiService.result = result.data;
             return apiService.result;
           });
         } else if ($stateParams.ids.length < 8 && $stateParams.type === 'timeline') {
