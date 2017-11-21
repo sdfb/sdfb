@@ -38,6 +38,7 @@ angular.module('redesign2017App')
           apiService.logIn($rootScope.user).then(function(result) {
             $rootScope.user = result.data;
             var session = angular.copy($rootScope.user);
+            scope.logInFailed = false;
             delete session.status;
             delete session.error;
 

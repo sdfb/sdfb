@@ -68,10 +68,12 @@
 		    <input class="form-control" ng-model="newGroupAssign.endDate">
 		  </div>
 
-			<button ng-disabled="(newNode.exists && !notInView) || (nodeForm.$invalid && !newNode.exists" class="btn btn-primary" type="submit">Add & Continue</button>
-			<div class="invalid-form" ng-show="nodeForm.$invalid && !newNode.exists">
+			<div class="alert alert-danger" ng-show="nodeForm.$invalid && !newNode.exists">
 				You are missing required fields.
 			</div>
+
+			<button ng-disabled="(newNode.exists && !notInView) || (nodeForm.$invalid && !newNode.exists)" class="btn btn-primary" type="submit">Add & Continue</button>
+
 		</div>
 
 

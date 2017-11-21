@@ -32,11 +32,11 @@
       <textarea type="text" ng-model="newLink.citation" placeholder="{{ sampleCitation }}" class="form-control"></textarea>
 
       <br><input ng-show="$root.user.user_type !== 'Standard'" ng-model="newGroup.is_approved" type="checkbox"/> <span ng-show="$root.user.user_type !== 'Standard'">Approved?</span></input>
-
-  		<button ng-disabled="newGroup.exists || groupForm.$invalid" class="btn btn-primary" type="submit">Add & Continue</button>
-      <div class="invalid-form" ng-show="groupForm.$invalid">
+      <div class="alert alert-danger" ng-show="groupForm.$invalid">
         You are missing required fields.
       </div>
+  		<button ng-disabled="newGroup.exists || groupForm.$invalid" class="btn btn-primary" type="submit">Add & Continue</button>
+
     </div>
 
 

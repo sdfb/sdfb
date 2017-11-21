@@ -27,11 +27,11 @@
 
       <br><input ng-show="$root.user.user_type !== 'Standard'" ng-model="groupAssign.is_approved" type="checkbox"/> <span ng-show="$root.user.user_type !== 'Standard'">Approved?</span></input>
 
-
-      <button ng-disabled="groupAssignForm.$invalid" type="submit" class="btn btn-primary">Add & Continue</button>
-      <div class="invalid-form" ng-show="groupAssignForm.$invalid">
+      <div class="alert alert-danger" ng-show="groupAssignForm.$invalid">
         You are missing required fields.
       </div>
+      <button ng-disabled="groupAssignForm.$invalid" type="submit" class="btn btn-primary">Add & Continue</button>
+
       <p>Your submission needs to be validated by SDFB curators. You will see it as unapproved contribution in the meantime.</p>
 
     </div>

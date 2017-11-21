@@ -42,7 +42,7 @@ $membership: #78729F;
 /* general styles*/
 body {
   background-color: #EFF1F4;
-  padding-top: 50px;
+  padding-top: 30px;
   letter-spacing: 0.5px;
   font-weight: 400;
   font-family: 'Open Sans', sans-serif;
@@ -130,9 +130,19 @@ div.bio {margin-bottom: 60px;}
   background-color: $edge-color;
   font-family: 'Open Sans', sans-serif;
   font-weight: 600;
+  min-height: 30px !important;
+  max-height: 30px !important;
+  margin-bottom: 0;
+
+  .container-fluid {
+    height: 30px !important;
+  }
 
   .navbar-nav > li > a {
     color: $light-color;
+    padding-top:4px !important;
+    padding-bottom:0 !important;
+    height: 29px;
   }
 
   .navbar-left > li > a,
@@ -170,7 +180,7 @@ div.bio {margin-bottom: 60px;}
 
 .contribution-mode-switch {
   border-left: 2px solid white;
-  padding: 4px 15px;
+  padding: 1px 15px;
 
 }
 
@@ -200,7 +210,7 @@ div.bio {margin-bottom: 60px;}
   padding: 0;
 
   .project-img {
-    height: 100%;
+    height: 29px;
   }
 }
 
