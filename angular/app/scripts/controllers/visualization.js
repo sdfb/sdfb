@@ -61,71 +61,75 @@ angular.module('redesign2017App').component('visualization', {
 
     this.$onChanges = function() {
       $scope.data = this.networkData;
-      if ($stateParams.type === 'all-groups') {
-        $scope.config.viewMode = 'all';
-        $rootScope.config.viewMode = 'all';
-        $scope.config.networkName = "Co-membership Network of All Groups"
-        $scope.groupTypeahead.selected = '';
-        $scope.personTypeahead.selected = '';
-        $scope.sharedTypeahead.selected = '';
-        $scope.config.viewObject = 1;
-      } else if ($stateParams.ids.length < 8 && $stateParams.type === 'timeline') {
-        $scope.config.viewMode = 'group-timeline';
-        $rootScope.config.viewMode = 'group-timeline';
-        var groupName = $scope.data.data.data[0].attributes.name;
-        $scope.config.networkName = groupName + " Timeline";
-        $scope.config.networkDesc = $scope.data.data.data[0].attributes.description;
-        $scope.personTypeahead.selected = '';
-        $scope.sharedTypeahead.selected = '';
-        $scope.config.viewObject = 1;
-      } else if ($stateParams.ids.length >= 8 && this.networkData.data.attributes.primary_people.length === 1) {
-        var personName = this.networkData.included[0].attributes.name;
-        $scope.config.viewMode = 'individual-force';
-        $rootScope.config.viewMode = 'individual-force';
-        $scope.config.person1 = $stateParams.ids;
-        $scope.config.networkName = personName + " Network";
-        $scope.config.networkDesc = this.networkData.included[0].attributes.historical_significance;
-        $scope.personTypeahead.selected = personName;
-        $scope.sharedTypeahead.selected = '';
-        $scope.groupTypeahead.selected = '';
-        $scope.config.viewObject = 0;
-      } else if ($stateParams.ids.length > 8 && this.networkData.data.attributes.primary_people.length === 2) {
-        $scope.config.viewMode = 'shared-network';
-        $rootScope.config.viewMode = 'shared-network';
-        $scope.config.networkComplexity = 'all_connections';
-        $scope.config.person1 = $stateParams.ids.split(',')[0];
-        $scope.config.networkName = this.networkData.included[0].attributes.name + " & " + this.networkData.included[1].attributes.name + " Network";
-        $scope.personTypeahead.selected = this.networkData.included[0].attributes.name;
-        $scope.sharedTypeahead.selected = this.networkData.included[1].attributes.name;
-        $scope.groupTypeahead.selected = '';
-        $scope.config.viewObject = 0;
-      } else if ($stateParams.ids.length < 8) {
-        $scope.config.viewMode = 'group-force';
-        $rootScope.config.viewMode = 'group-force';
-        var groupDescription;
-        if (!$scope.data.errors) {
-          $scope.data.included.forEach( function(item) {
-            if (item.id === $scope.data.data.id) {
-              $scope.groupName = item.attributes.name;
-              groupDescription = item.attributes.description;
-            }
-          });
-          $scope.data.included = $scope.data.included.filter(function(n) { return n.id !== $scope.data.data.id; });
-        } else {
-          console.log($rootScope.saveGroup);
-          $rootScope.saveGroup.attributes.startDateType = $rootScope.saveGroup.attributes.startDateType.abbr;
-          $rootScope.saveGroup.attributes.endDateType = $rootScope.saveGroup.attributes.endDateType.abbr;
-          $scope.addToDB.groups.push($rootScope.saveGroup.attributes);
-          $scope.groupName = $rootScope.saveGroup.attributes.name;
-          groupDescription = $rootScope.saveGroup.attributes.description;
-          $scope.data = {data: {id: $stateParams.ids, attributes: {primary_people: [], connections: []}, type: "network"}, included: []};
+      if ($scope.data === 'error') {
+        $scope.noData = true;
+      } else {
+        if ($stateParams.type === 'all-groups') {
+          $scope.config.viewMode = 'all';
+          $rootScope.config.viewMode = 'all';
+          $scope.config.networkName = "Co-membership Network of All Groups"
+          $scope.groupTypeahead.selected = '';
+          $scope.personTypeahead.selected = '';
+          $scope.sharedTypeahead.selected = '';
+          $scope.config.viewObject = 1;
+        } else if ($stateParams.ids.length < 8 && $stateParams.type === 'timeline') {
+          $scope.config.viewMode = 'group-timeline';
+          $rootScope.config.viewMode = 'group-timeline';
+          var groupName = $scope.data.data.data[0].attributes.name;
+          $scope.config.networkName = groupName + " Timeline";
+          $scope.config.networkDesc = $scope.data.data.data[0].attributes.description;
+          $scope.personTypeahead.selected = '';
+          $scope.sharedTypeahead.selected = '';
+          $scope.config.viewObject = 1;
+        } else if ($stateParams.ids.length >= 8 && this.networkData.data.attributes.primary_people.length === 1) {
+          var personName = this.networkData.included[0].attributes.name;
+          $scope.config.viewMode = 'individual-force';
+          $rootScope.config.viewMode = 'individual-force';
+          $scope.config.person1 = $stateParams.ids;
+          $scope.config.networkName = personName + " Network";
+          $scope.config.networkDesc = this.networkData.included[0].attributes.historical_significance;
+          $scope.personTypeahead.selected = personName;
+          $scope.sharedTypeahead.selected = '';
+          $scope.groupTypeahead.selected = '';
+          $scope.config.viewObject = 0;
+        } else if ($stateParams.ids.length > 8 && this.networkData.data.attributes.primary_people.length === 2) {
+          $scope.config.viewMode = 'shared-network';
+          $rootScope.config.viewMode = 'shared-network';
+          $scope.config.networkComplexity = 'all_connections';
+          $scope.config.person1 = $stateParams.ids.split(',')[0];
+          $scope.config.networkName = this.networkData.included[0].attributes.name + " & " + this.networkData.included[1].attributes.name + " Network";
+          $scope.personTypeahead.selected = this.networkData.included[0].attributes.name;
+          $scope.sharedTypeahead.selected = this.networkData.included[1].attributes.name;
+          $scope.groupTypeahead.selected = '';
+          $scope.config.viewObject = 0;
+        } else if ($stateParams.ids.length < 8) {
+          $scope.config.viewMode = 'group-force';
+          $rootScope.config.viewMode = 'group-force';
+          var groupDescription;
+          if (!$scope.data.errors) {
+            $scope.data.included.forEach( function(item) {
+              if (item.id === $scope.data.data.id) {
+                $scope.groupName = item.attributes.name;
+                groupDescription = item.attributes.description;
+              }
+            });
+            $scope.data.included = $scope.data.included.filter(function(n) { return n.id !== $scope.data.data.id; });
+          } else {
+            console.log($rootScope.saveGroup);
+            $rootScope.saveGroup.attributes.startDateType = $rootScope.saveGroup.attributes.startDateType.abbr;
+            $rootScope.saveGroup.attributes.endDateType = $rootScope.saveGroup.attributes.endDateType.abbr;
+            $scope.addToDB.groups.push($rootScope.saveGroup.attributes);
+            $scope.groupName = $rootScope.saveGroup.attributes.name;
+            groupDescription = $rootScope.saveGroup.attributes.description;
+            $scope.data = {data: {id: $stateParams.ids, attributes: {primary_people: [], connections: []}, type: "network"}, included: []};
+          }
+          $scope.config.networkName = $scope.groupName + " Network";
+          $scope.config.networkDesc = groupDescription;
+          $scope.groupTypeahead.selected = groupName;
+          $scope.personTypeahead.selected = '';
+          $scope.sharedTypeahead.selected = '';
+          $scope.config.viewObject = 1;
         }
-        $scope.config.networkName = $scope.groupName + " Network";
-        $scope.config.networkDesc = groupDescription;
-        $scope.groupTypeahead.selected = groupName;
-        $scope.personTypeahead.selected = '';
-        $scope.sharedTypeahead.selected = '';
-        $scope.config.viewObject = 1;
       }
     };
 
