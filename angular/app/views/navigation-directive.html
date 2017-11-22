@@ -28,7 +28,7 @@
             <a class="nav-link dropdown-toggle"  uib-dropdown-toggle style="display: inline-block; cursor: pointer;">
               Download
             </a>
-            <ul uib-dropdown-menu class="dropdown-menu" style="padding:17px;">
+            <ul uib-dropdown-menu class="dropdown-menu" style="padding:17px;" ng-click="$event.stopPropagation()">
               <li><a target="_self" href="/data/SDFB_people_2017_10_13.csv" download="SDFB_people_{{today}}.csv">People</a></li>
               <li><a target="_self" href="/data/SDFB_relationships_2017_10_13.csv" download="SDFB_relationships_{{today}}.csv">Relationships</a></li>
             </ul>
@@ -37,7 +37,7 @@
             <a class="nav-link dropdown-toggle"  uib-dropdown-toggle style="display: inline-block; cursor: pointer;">
               Cite
             </a>
-            <ul uib-dropdown-menu class="dropdown-menu" style="padding:17px;">
+            <ul uib-dropdown-menu class="dropdown-menu" style="padding:17px;" ng-click="$event.stopPropagation()">
               <li><input readonly class="form-control" onClick="this.select()" ng-model="$root.citation" ng-model-options="{ getterSetter: true }"/></li>
             </ul>
           </li>
@@ -50,7 +50,7 @@
               <span ng-show="!$root.user.is_active">Login</span>
               <span ng-show="$root.user.is_active">{{$root.user.username}}</span>
             </a>
-            <div ng-show="!$root.user.is_active" uib-dropdown-menu class="dropdown-menu" style="padding:17px;">
+            <div ng-show="!$root.user.is_active" uib-dropdown-menu class="dropdown-menu" style="padding:17px;" ng-click="$event.stopPropagation()">
               <form class="form" id="formLogin">
                 <h3>Email</h3>
                 <input class="form-control" ng-model="$root.user.email" name="email" id="email" placeholder="Email" type="text">
@@ -61,7 +61,7 @@
               </form>
               <a href ng-click="openSignup()">Sign Up</a> | <a href ng-click="openResetRequest()">Forgot Password?</a>
             </div>
-            <div ng-show="$root.user.is_active" uib-dropdown-menu class="dropdown-menu user-info" style="padding:17px;">
+            <div ng-show="$root.user.is_active" uib-dropdown-menu class="dropdown-menu user-info" style="padding:17px;" ng-click="$event.stopPropagation()">
               <h5>{{$root.user.first_name}} {{$root.user.last_name}} ({{$root.user.id}})</h5>
               <a>edit profile</a>
               <a href ng-click="logOut()">log out</a>

@@ -284,7 +284,7 @@ div.bio {margin-bottom: 60px;}
 .on-the-right {
   // min-width: 20vw;
   width: 22vw;
-  // max-width: 25vw;
+  min-width: 250px;
   max-width: 300px;
   pointer-events: none;
   position: relative;

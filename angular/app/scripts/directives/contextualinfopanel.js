@@ -85,7 +85,9 @@ angular.module('redesign2017App')
         scope.download = 'data:attachment/json;charset=utf-8,' +  encodeURIComponent(JSON.stringify(scope.data, null, 2));
 
         scope.$watch('currentSelection', function(newValue, oldValue) {
-          if (newValue !== oldValue && scope.currentSelection !== {}) {
+
+          if (newValue !== oldValue && scope.currentSelection.type) {
+            console.log(scope.currentSelection.type);
             $rootScope.searchClosed = true;
           }
           if (scope.currentSelection.type == 'group') {
