@@ -97,7 +97,7 @@ angular.module('redesign2017App')
                 scope.newLink.target.id = parseInt(otherNode.id);
                 scope.$apply(function() {
                   scope.addLinkClosed = false;
-                  scope.legendClosed = true;
+                  $rootScope.legendClosed = true;
                   $rootScope.filtersClosed = true;
                   scope.peopleFinderClosed = true;
                   scope.groupAssignClosed = true;
@@ -163,7 +163,7 @@ angular.module('redesign2017App')
               var newLink = {id: scope.addedLinkId, source: d, target: otherNode, weight: 60, start_year: 1500, end_year: 1700, new: true};
               addedLinks.push(newLink);
               scope.$apply(function() {
-                scope.legendClosed = true;
+                $rootScope.legendClosed = true;
                 scope.newLink.id = scope.addedLinkId;
                 scope.addedLinkId += 1;
               });

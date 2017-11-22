@@ -20,6 +20,8 @@ angular.module('redesign2017App')
             if (scope.config.contributionMode) {
               scope.cursorStyle = {'cursor': 'copy'};
               $rootScope.filtersClosed = false;
+              $rootScope.legendClosed = true;
+              $rootScope.searchClosed = true;
             } else {
               scope.cursorStyle = {'cursor': 'auto'};
             }

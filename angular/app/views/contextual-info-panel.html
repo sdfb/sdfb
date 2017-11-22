@@ -3,7 +3,8 @@
   <h4 ng-if="config.contributionMode" class="contribution">Contribute mode</h4>
   <h5 ng-if="config.contributionMode" class="contribution"><i class="fa fa-plus-circle" aria-hidden="true"></i> To add a person: double-click anywhere on the canvas.</h5>
   <h5 ng-if="config.contributionMode" class="contribution"><i class="faXX XXfa-plus-circle" aria-hidden="true" style="display: inline-block; width: 12.5px; height: 14px; background-image: url('/images/add-link-icon-black.svg'); background-repeat: no-repeat; background-size: cover;"></i> To add a relationship: drag a node onto any other node.</h5>
-  <h5 ng-if="config.contributionMode" class="contribution"><i class="fa fa-users" aria-hidden="true"></i> To add a person to a group: drag a node onto the groups bar at the bottom of the screen. </h5>
+  <h5 ng-if="config.contributionMode" class="contribution"><i class="fa fa-users" aria-hidden="true"></i> To add a person to a group: drag a node onto the groups bar at the bottom of the screen, or click on any node and type in a group name.</h5>
+  <h5 ng-if="config.contributionMode" class="contribution"><i class="fa fa-search" aria-hidden="true" style="color:black;"></i> Find any node within this view.</h5>
   <!-- <p><button ng-show="config.viewMode !== 'group-force'" type="button" class="btn btn-primary" ng-click="openTable()">See Table View</button></p>
   <p><button type="button" class="btn btn-primary">Export</button></p> -->
   <div ng-show = "config.viewMode !== 'group-force'" class="btn-group btn-group-justified">

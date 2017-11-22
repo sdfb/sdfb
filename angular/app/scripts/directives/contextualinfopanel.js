@@ -7,7 +7,7 @@
  * # contextualInfoPanel
  */
 angular.module('redesign2017App')
-  .directive('contextualInfoPanel', ['apiService', '$stateParams', function(apiService, $stateParams) {
+  .directive('contextualInfoPanel', ['apiService', '$stateParams', '$rootScope', function(apiService, $stateParams, $rootScope) {
     return {
       templateUrl: './views/contextual-info-panel.html',
       restrict: 'E',
@@ -85,6 +85,9 @@ angular.module('redesign2017App')
         scope.download = 'data:attachment/json;charset=utf-8,' +  encodeURIComponent(JSON.stringify(scope.data, null, 2));
 
         scope.$watch('currentSelection', function(newValue, oldValue) {
+          if (newValue !== oldValue && scope.currentSelection !== {}) {
+            $rootScope.searchClosed = true;
+          }
           if (scope.currentSelection.type == 'group') {
             scope.currentSelection.includes.forEach(function(p, i) {
               p.start_year = scope.currentSelection.data[0].attributes.people[i].start_year;

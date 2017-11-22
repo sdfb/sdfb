@@ -53,7 +53,7 @@ angular.module('redesign2017App')
           addedNodes.push(newNode);
           scope.$apply(function() {
             scope.addNodeClosed = false;
-            scope.legendClosed = true;
+            $rootScope.legendClosed = true;
             scope.addLinkClosed = true;
             scope.groupAssignClosed = true;
             $rootScope.filtersClosed = true;

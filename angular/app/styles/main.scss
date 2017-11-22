@@ -73,6 +73,35 @@ path.danger {
   stroke: $strokeDanger;
 }
 
+#contribute-buttons {
+  float: left;
+}
+// #content {
+//   position: relative;
+//   width: 100%;
+// }
+// #drawer{
+//     height: 100%;
+//     width: 200px;
+//     background-color: lightsteelblue;
+//     position: absolute;
+//     right: 0;
+//     top: 0;
+//     z-index: 99;
+//     white-space: nowrap;
+// }
+// .collapsing-width{
+//     position: relative;
+//     overflow-x: hidden;
+//     -webkit-transition: width 0.35s ease;
+//     -moz-transition: width 0.35s ease;
+//     -o-transition: width 0.35s ease;
+//     transition: width 0.35s ease;
+// }
+// .collapse{
+//     overflow-x: hidden;
+// }
+
 .alert {
   text-transform: none;
 }
@@ -205,6 +234,10 @@ div.bio {margin-bottom: 60px;}
   color: black;
 }
 
+.contribution i {
+  color: $contribution-mode-fill;
+}
+
 .navbar-brand {
   padding: 0;
 
@@ -317,6 +350,7 @@ div.bio {margin-bottom: 60px;}
     border: 1px solid $contribution-mode-fill;
 
     &.collapsed {
+      display: none;
       background-color: $contribution-mode-fill;
       border: 1px solid $contribution-mode-stroke;
     }
@@ -333,6 +367,7 @@ div.bio {margin-bottom: 60px;}
     border: 1px solid $contribution-mode-fill;
 
     &.collapsed {
+      display: none;
       background-color: $contribution-mode-fill;
       border: 1px solid $contribution-mode-stroke;
     }
@@ -348,6 +383,7 @@ div.bio {margin-bottom: 60px;}
     border: 1px solid $contribution-mode-fill;
 
     &.collapsed {
+      display: none;
       background-color: $contribution-mode-fill;
       border: 1px solid $contribution-mode-stroke;
     }
@@ -363,6 +399,7 @@ div.bio {margin-bottom: 60px;}
     border: 1px solid $contribution-mode-fill;
 
     &.collapsed {
+      display: none;
       background-color: $contribution-mode-fill;
       border: 1px solid $contribution-mode-stroke;
     }
@@ -587,8 +624,9 @@ section .legend-box {
 }
 
 .legend-panel h5,
-filters-panel h5 {
+.filters h5 {
   text-align: center;
+  font-size: 10px;
 }
 
 section .legend-text {
@@ -953,6 +991,9 @@ group-timeline {
 /* filters styles */
 filters-panel {
 
+  // height: 25vh;
+  // overflow-y: scroll;
+
   svg .bar {
     fill: $filter-color;
   }
@@ -1017,12 +1058,12 @@ filters-panel.panel h4 {
 
 filters-panel.panel h5 {
   padding-left: 0;
-  margin: 0 0 15px;
+  margin: 0 0 10px;
 }
 
 .panel h5.interaction-info {
   margin-top: 10px;
-  font-size: 13px;
+  font-size: 10px;
   font-style: italic;
 }
 

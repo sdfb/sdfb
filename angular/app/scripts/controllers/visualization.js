@@ -43,8 +43,9 @@ angular.module('redesign2017App').component('visualization', {
     $scope.groupTypeahead = {selected: ''};
     $rootScope.config.viewMode = $scope.config.viewMode;
     // $scope.data = initialData;
-    $scope.legendClosed = false;
+    $rootScope.legendClosed = false;
     $rootScope.filtersClosed = true;
+    $rootScope.searchClosed = false;
     $scope.peopleFinderClosed = true;
     $scope.addNodeClosed = true;
     $scope.addLinkClosed = true;
