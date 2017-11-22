@@ -293,6 +293,9 @@ angular.module('redesign2017App').directive('forceLayout', ['apiService', '$time
                 return sizeEdge(d.weight)
               }
             })
+            .on('dblclick', function(d){
+              $state.go('home.visualization', {ids: [d.source.id,d.target.id].join()});
+            })
             .on('click', function(d) { // Toggle link on click
               toggleClick(d, newLinks, this);
 
