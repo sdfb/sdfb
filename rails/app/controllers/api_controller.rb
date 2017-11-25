@@ -2,6 +2,7 @@ class ApiController < ApplicationController
   skip_before_filter :verify_authenticity_token
   include ApiHelper
 
+  #-----------------------------
   def curate
     return head(:forbidden) unless current_user && ["Admin", "Curator"].include?(current_user.user_type)
     offset = params["offset"] || 0
@@ -36,6 +37,7 @@ class ApiController < ApplicationController
   end
 
 
+  #-----------------------------
   def users
     user_id = params[:id]
     return head(:bad_request) unless user_id
@@ -67,6 +69,7 @@ class ApiController < ApplicationController
     end
   end
 
+  #-----------------------------
   def edit_user
     return head(:forbidden) unless current_user
     return head(:forbidden) unless params["id"].to_s == current_user.id.to_s || current_user.user_type == "Admin"
@@ -90,6 +93,7 @@ class ApiController < ApplicationController
     end
   end
 
+  #-----------------------------
   def new_user
     return head(:forbidden) if current_user
     return head(:bad_request) if params["id"]
@@ -104,10 +108,10 @@ class ApiController < ApplicationController
         format.json { render json: e.record.errors, status: :unprocessable_entity }
         format.html { render :json}
       end
-
     end
   end
 
+  #-----------------------------
   def write
     return head(:forbidden) unless current_user
     person_lookup = {}
@@ -371,6 +375,7 @@ class ApiController < ApplicationController
   # [people description]
   # 
   # @return [type] [description]
+  #-----------------------------
   def people
     ids = params[:ids].split(",")
     begin
@@ -386,6 +391,7 @@ class ApiController < ApplicationController
   end
 
 
+  #-----------------------------
   def relationships
     ids = params[:ids].split(",")
     begin
@@ -406,6 +412,7 @@ class ApiController < ApplicationController
     end
   end
 
+  #-----------------------------
   def typeahead
     type   = params[:type]
     query = params[:q]
@@ -459,6 +466,7 @@ class ApiController < ApplicationController
   end
 
 
+  #-----------------------------
   def groups
       if params[:ids].blank?
         @groups = Group.all
@@ -506,6 +514,7 @@ class ApiController < ApplicationController
   end
 
 
+  #-----------------------------
   def network
     begin
       ids = params[:ids].split(",").map(&:to_i).uniq.sort
@@ -550,6 +559,7 @@ class ApiController < ApplicationController
   end
 
 
+  #-----------------------------
   def group_network
     begin
       ids = params[:ids].split(",").map(&:to_i).uniq.sort
@@ -576,6 +586,7 @@ class ApiController < ApplicationController
   end
 
 
+  #-----------------------------
   def date_math(current_type, new_type, current_date, new_date)
     output_type = nil
     output_date = nil
@@ -629,6 +640,8 @@ class ApiController < ApplicationController
     return [output_type, output_date]
   end
 
+
+  #-----------------------------
   def update_dates(current_object, new_data)
     current_type = current_object.start_date_type
     new_type = new_data["startDateType"]

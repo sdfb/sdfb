@@ -212,7 +212,7 @@ ActiveRecord::Schema.define(version: 20171116045001) do
     t.string   "first_name",             limit: 255
     t.boolean  "is_active",                          default: true
     t.string   "last_name",              limit: 255
-    t.string   "user_type",              limit: 255, default: "Standard"
+    t.string   "user_type",                          default: "Standard"
     t.string   "prefix",                 limit: 255
     t.string   "orcid",                  limit: 255
     t.integer  "created_by"
