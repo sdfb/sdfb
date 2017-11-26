@@ -103,21 +103,24 @@ class User < ActiveRecord::Base
   def contributions
     obj = {}
     return obj unless self.id 
-    obj[:people] = Person.approved_user(self.id).collect do |g| 
+    obj[:people] = Person.all_approved.for_user(self.id)
+    .sort_by{|g| g.approved_on}.reverse.collect do |g| 
       {
         id: g.id, 
         name: g.display_name, 
         is_approved: g.is_approved
       }
     end
-    obj[:relationships] = (Relationship.approved_user(self.id) + Relationship.all_approved.for_user(self.id)).collect do |g| 
+    obj[:relationships] = Relationship.all_approved.for_user(self.id)
+    .sort_by{|g| g.approved_on}.reverse.collect do |g| 
       {
         id: g.id, 
         people: g.get_both_names, 
         is_approved: g.is_approved
       }
     end
-    obj[:relationship_types] = (UserRelContrib.approved_user(self.id) + UserRelContrib.all_approved.for_user(self.id)).collect do |g| 
+    obj[:relationship_types] = UserRelContrib.all_approved.for_user(self.id)
+    .sort_by{|g| g.approved_on}.reverse.collect do |g| 
       {
         id: g.id, 
         people: g.relationship.get_both_names, 
@@ -125,14 +128,16 @@ class User < ActiveRecord::Base
         is_approved: g.is_approved
       }
     end
-    obj[:groups] = (Group.approved_user(self.id)+ Group.all_approved.for_user(self.id)).collect do |g| 
+    obj[:groups] = Group.all_approved.for_user(self.id)
+    .sort_by{|g| g.approved_on}.reverse.collect do |g| 
       {
         id: g.id, 
         name: g.name, 
         is_approved: g.is_approved
       }
     end
-    obj[:group_assignments] = (GroupAssignment.approved_user(self.id) + GroupAssignment.all_approved.for_user(self.id)).collect do |g|
+    obj[:group_assignments] = GroupAssignment.all_approved.for_user(self.id)
+    .sort_by{|g| g.approved_on}.reverse.collect do |g|
       {
         id: g.id, 
         person_name: g.person.display_name, 
