@@ -89,13 +89,14 @@ class User < ActiveRecord::Base
     UserRelContrib.for_user(self.id).where('is_approved = ?', true).to_a.each do |contrib|
       points += 1
     end
-    if self.user_type == "Curator" || self.user_type == "Admin"
-        points += Group.approved_user(self.id).to_a.count()
-        points += GroupAssignment.approved_user(self.id).to_a.count()
-        points += Person.approved_user(self.id).to_a.count()
-        points += Relationship.approved_user(self.id).to_a.count()
-        points += UserRelContrib.approved_user(self.id).to_a.count()
-    end
+    # THIS IS THE CODE FOR COUNTING APPROVALS IN SCORES.
+    # if self.user_type == "Curator" || self.user_type == "Admin"
+    #     points += Group.approved_user(self.id).to_a.count()
+    #     points += GroupAssignment.approved_user(self.id).to_a.count()
+    #     points += Person.approved_user(self.id).to_a.count()
+    #     points += Relationship.approved_user(self.id).to_a.count()
+    #     points += UserRelContrib.approved_user(self.id).to_a.count()
+    # end
     return points
   end
 
