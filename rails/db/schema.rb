@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171116045001) do
+ActiveRecord::Schema.define(version: 20171126130518) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -34,7 +34,7 @@ ActiveRecord::Schema.define(version: 20171116045001) do
     t.datetime "updated_at",                                  null: false
     t.string   "start_date_type", limit: 255
     t.string   "end_date_type",   limit: 255
-    t.text     "bibliography"
+    t.text     "citation"
   end
 
   add_index "group_assignments", ["approved_by"], name: "index_group_assignments_on_approved_by", using: :btree
@@ -57,7 +57,7 @@ ActiveRecord::Schema.define(version: 20171116045001) do
     t.datetime "updated_at",                                  null: false
     t.string   "start_date_type", limit: 255
     t.string   "end_date_type",   limit: 255
-    t.text     "bibliography"
+    t.text     "citation"
   end
 
   add_index "groups", ["approved_by"], name: "index_groups_on_approved_by", using: :btree
@@ -88,7 +88,7 @@ ActiveRecord::Schema.define(version: 20171116045001) do
     t.datetime "updated_at",                                          null: false
     t.string   "display_name",            limit: 255
     t.text     "search_names_all"
-    t.text     "bibliography"
+    t.text     "citation"
     t.text     "aliases"
   end
 
@@ -105,7 +105,7 @@ ActiveRecord::Schema.define(version: 20171116045001) do
     t.boolean  "is_active",                            default: true
     t.datetime "created_at",                                           null: false
     t.datetime "updated_at",                                           null: false
-    t.text     "bibliography"
+    t.text     "citation"
   end
 
   add_index "rel_cat_assigns", ["approved_by"], name: "index_rel_cat_assigns_on_approved_by", using: :btree
@@ -114,16 +114,16 @@ ActiveRecord::Schema.define(version: 20171116045001) do
   add_index "rel_cat_assigns", ["relationship_type_id"], name: "index_rel_cat_assigns_on_relationship_type_id", using: :btree
 
   create_table "relationship_categories", force: :cascade do |t|
-    t.string   "name",         limit: 255
+    t.string   "name",        limit: 255
     t.text     "description"
-    t.boolean  "is_approved",              default: false
+    t.boolean  "is_approved",             default: false
     t.integer  "approved_by"
     t.datetime "approved_on"
     t.integer  "created_by"
-    t.boolean  "is_active",                default: true
-    t.datetime "created_at",                               null: false
-    t.datetime "updated_at",                               null: false
-    t.text     "bibliography"
+    t.boolean  "is_active",               default: true
+    t.datetime "created_at",                              null: false
+    t.datetime "updated_at",                              null: false
+    t.text     "citation"
   end
 
   add_index "relationship_categories", ["approved_by"], name: "index_relationship_categories_on_approved_by", using: :btree
@@ -140,7 +140,7 @@ ActiveRecord::Schema.define(version: 20171116045001) do
     t.integer  "created_by"
     t.datetime "created_at",                                            null: false
     t.datetime "updated_at",                                            null: false
-    t.text     "bibliography"
+    t.text     "citation"
   end
 
   add_index "relationship_types", ["approved_by"], name: "index_relationship_types_on_approved_by", using: :btree
@@ -168,7 +168,7 @@ ActiveRecord::Schema.define(version: 20171116045001) do
     t.datetime "updated_at",                                     null: false
     t.string   "start_date_type",    limit: 255
     t.string   "end_date_type",      limit: 255
-    t.text     "bibliography"
+    t.text     "citation"
     t.boolean  "altered",                        default: false
   end
 
@@ -181,7 +181,7 @@ ActiveRecord::Schema.define(version: 20171116045001) do
     t.integer  "relationship_id"
     t.integer  "created_by"
     t.integer  "certainty"
-    t.text     "bibliography"
+    t.text     "citation"
     t.integer  "relationship_type_id"
     t.integer  "start_year"
     t.string   "start_month",          limit: 255

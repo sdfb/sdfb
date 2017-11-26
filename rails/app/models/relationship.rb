@@ -3,7 +3,7 @@ class Relationship < ActiveRecord::Base
   include Approvable
   
   attr_accessible :max_certainty, :created_by, :original_certainty, :person1_index, :person2_index,
-  :justification, :created_at, :bibliography,
+  :justification, :created_at, :citation,
   :start_year, :start_month, :start_day, :end_year, :end_month, :end_day,
   :start_date_type, :end_date_type
 

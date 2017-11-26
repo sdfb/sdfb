@@ -8,7 +8,7 @@ class UserRelContrib < ActiveRecord::Base
   :created_by, :created_at, :is_locked,
   :start_year, :start_month, :start_day, :start_date_type,
   :end_year, :end_month, :end_day, :end_date_type,
- :bibliography, :certainty
+ :citation, :certainty
 
   # Relationships
   # -----------------------------
@@ -22,7 +22,7 @@ class UserRelContrib < ActiveRecord::Base
   validates_presence_of :created_by
   validates_presence_of :relationship_id
   validates_presence_of :relationship_type_id
-  validates_length_of   :bibliography, minimum: 10, allow_blank: true
+  validates_length_of   :citation, minimum: 10, allow_blank: true
   validates :start_year, numericality: { greater_than_or_equal_to: SDFB::EARLIEST_BIRTH_YEAR, less_than_or_equal_to: SDFB::LATEST_DEATH_YEAR }, allow_nil: true
   validates :end_year,   numericality: { greater_than_or_equal_to: SDFB::EARLIEST_BIRTH_YEAR, less_than_or_equal_to: SDFB::LATEST_DEATH_YEAR }, allow_nil: true
   validates_inclusion_of :start_date_type, in: SDFB::DATE_TYPES, if: "self.start_year.present?"
@@ -40,7 +40,7 @@ class UserRelContrib < ActiveRecord::Base
   # Callbacks
   # ----------------------------- 
   before_save :create_start_and_end_date
-  before_save { remove_trailing_spaces(:bibliography)}
+  before_save { remove_trailing_spaces(:citation)}
   after_save :update_max_certainty
   after_save :updated_altered_state!
   after_create :set_approval_metadata

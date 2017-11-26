@@ -9,7 +9,7 @@ json.attributes do
   json.historical_significance person.historical_significance
   json.name person.display_name
   json.groups person.approved_group_ids
-  json.citations person.bibliography
+  json.citations person.citation
   json.created_by person.created_by
 end
 json.type "person"

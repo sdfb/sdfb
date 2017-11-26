@@ -123,10 +123,6 @@ class ApiController < ApplicationController
           placeholder_id = node["id"]
           node.delete("id")
         end
-        if node["citation"]
-          node["bibliography"] = node["citation"]
-          node.delete("citation")
-        end
         if node["name"]
           node["display_name"] = node["name"]
           node.delete("name")
@@ -194,7 +190,7 @@ class ApiController < ApplicationController
           end_date_type: group["endDateType"],
           description: group["description"],
           justification: group["justification"],
-          bibliography: group["citation"]
+          citation: group["citation"]
         }
         if ["Admin", "Curator"].include?(current_user.user_type)
           if group.keys.include?("is_approved")
@@ -248,7 +244,7 @@ class ApiController < ApplicationController
             person1_index: source_id,
             person2_index: target_id,
             created_by: current_user.id,
-            bibliography: link["citation"],
+            citation: link["citation"],
             original_certainty: link["confidence"],
           }
           rel = Relationship.create!(new_record)
@@ -265,7 +261,7 @@ class ApiController < ApplicationController
           start_year: link["startDate"],
           end_year: link["endDate"],
           certainty: link["confidence"],
-          bibliography: link["citation"],
+          citation: link["citation"],
           relationship_type_id: link["relType"]
         }
         UserRelContrib.create!(new_rel_asssign)
@@ -289,7 +285,7 @@ class ApiController < ApplicationController
           end_year: assignment["endDate"],
           start_date_type: assignment["startDateType"],
           end_date_type: assignment["endDateType"],
-          bibliography: assignment["citation"]
+          citation: assignment["citation"]
         }
         if ["Admin", "Curator"].include?(current_user.user_type)
           if assignment.keys.include?("is_approved")
@@ -319,7 +315,7 @@ class ApiController < ApplicationController
           end_date_type: relationship["endDateType"],
           end_year: relationship["endDate"],
           justification: relationship["justification"],
-          bibliography: relationship["citation"]
+          citation: relationship["citation"]
         }
         if ["Admin", "Curator"].include?(current_user.user_type)
           if relationship.keys.include?("is_approved")
@@ -348,7 +344,7 @@ class ApiController < ApplicationController
           start_year: link["startDate"],
           end_year: link["endDate"],
           certainty: link["confidence"],
-          bibliography: link["citation"],
+          citation: link["citation"],
           relationship_type_id: link["relType"]
         }
         if ["Admin", "Curator"].include?(current_user.user_type)

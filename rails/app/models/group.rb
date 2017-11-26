@@ -2,7 +2,7 @@ class Group < ActiveRecord::Base
 
   include Approvable
 
-  attr_accessible  :description, :name, :justification, :bibliography,
+  attr_accessible  :description, :name, :justification, :citation,
                    :start_year, :end_year, :start_date_type, :end_date_type,
                    :created_by, :created_at
   
