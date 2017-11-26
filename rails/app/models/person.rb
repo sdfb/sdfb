@@ -6,8 +6,8 @@ class Person < ActiveRecord::Base
   attr_accessible :prefix, :title, :first_name, :last_name, :suffix, :gender,
                   :display_name, :aliases, :search_names_all, :odnb_id, 
                   :historical_significance, :justification, :citation,
-                  :birth_year_type, :ext_birth_year,
-                  :death_year_type, :ext_death_year,
+                  :birth_year_type, :birth_year,
+                  :death_year_type, :death_year,
                   :created_by, :created_at
 
   # Relationships
@@ -25,9 +25,9 @@ class Person < ActiveRecord::Base
   validates_presence_of :created_by
   validates_presence_of :gender
   validates_presence_of :birth_year_type
-  validates_presence_of :ext_birth_year
+  validates_presence_of :birth_year
   validates_presence_of :death_year_type
-  validates_presence_of :ext_death_year
+  validates_presence_of :death_year
   ## first_name must be at least 1 character
   validates_length_of :first_name, :minimum => 1, :allow_blank => true
   ## last_name must be at least 1 character
@@ -105,15 +105,15 @@ class Person < ActiveRecord::Base
     invalid_death_year_format = false
 
     # if the birth year converted to an integer is 0 then the date was not an integer
-    if self.ext_birth_year.present?
-      if self.ext_birth_year.to_i == 0
-        errors.add(:ext_birth_year, "Please check the format of the birth year.")
+    if self.birth_year.present?
+      if self.birth_year.to_i == 0
+        errors.add(:birth_year, "Please check the format of the birth year.")
         invalid_birth_year_format = true
       # if valid format continue checking
       else
         # check that birth year is before SDFB::LATEST_YEAR or throw error
-        if self.ext_birth_year.to_i > SDFB::LATEST_YEAR
-          errors.add(:ext_birth_year, "The birth year must be before #{SDFB::LATEST_YEAR}")
+        if self.birth_year.to_i > SDFB::LATEST_YEAR
+          errors.add(:birth_year, "The birth year must be before #{SDFB::LATEST_YEAR}")
         end
       end
     end
@@ -121,7 +121,7 @@ class Person < ActiveRecord::Base
     # if the death year converted to an integer is 0 then the date was not an integer
     if self.ext_death_year.present?
       if self.ext_death_year.to_i == 0
-        errors.add(:ext_death_year, "Please check the format of the death year.")
+        errors.add(:death_year, "Please check the format of the death year.")
         invalid_death_year_format = true
       # if valid format continue checking
       else

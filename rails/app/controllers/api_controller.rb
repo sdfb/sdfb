@@ -132,7 +132,7 @@ class ApiController < ApplicationController
           node.delete("alternates")
         end
         if node["birthDate"]
-          node["ext_birth_year"] = node["birthDate"]
+          node["birth_year"] = node["birthDate"]
           node.delete("birthDate")
         end
         if node["birthDateType"]
@@ -140,7 +140,7 @@ class ApiController < ApplicationController
           node.delete("birthDateType")
         end
         if node["deathDate"]
-          node["ext_death_year"] = node["deathDate"]
+          node["death_year"] = node["deathDate"]
           node.delete("deathDate")
         end
         if node["deathDateType"]

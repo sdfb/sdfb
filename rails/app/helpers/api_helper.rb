@@ -22,9 +22,9 @@ module ApiHelper
           id: person.id.to_s,
           type: "person",
           attributes: {
-            birth_year: person.ext_birth_year,
+            birth_year: person.birth_year,
             birth_year_type: person.birth_year_type,
-            death_year: person.ext_death_year,
+            death_year: person.death_year,
             death_year_type: person.death_year_type,
             odnb_id: person.odnb_id,
             gender: person.gender,

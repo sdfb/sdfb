@@ -70,9 +70,9 @@ francis = Person.where(
   created_by: sdfb_admin_id,
   gender: 'male',
   birth_year_type: 'IN',
-  ext_birth_year: '1561',
+  birth_year: '1561',
   death_year_type: 'IN',
-  ext_death_year: '1626',
+  death_year: '1626',
   approved_by: sdfb_admin_id,
   is_approved: true
 ).first_or_create!
@@ -83,9 +83,9 @@ anne = Person.where(
   created_by: sdfb_admin_id,
   gender: 'female',
   birth_year_type: 'IN',
-  ext_birth_year: '1528',
+  birth_year: '1528',
   death_year_type: 'IN',
-  ext_death_year: '1610',
+  death_year: '1610',
   approved_by: sdfb_admin_id,
   is_approved: true
 ).first_or_create!
@@ -105,9 +105,9 @@ third_wheel = Person.where(
   created_by: sdfb_admin_id,
   gender: 'female',
   birth_year_type: 'IN',
-  ext_birth_year: '1528',
+  birth_year: '1528',
   death_year_type: 'IN',
-  ext_death_year: '1610',
+  death_year: '1610',
   approved_by: sdfb_admin_id,
   is_approved: true
 ).first_or_create!
