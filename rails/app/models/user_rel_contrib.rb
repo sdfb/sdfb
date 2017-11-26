@@ -68,12 +68,12 @@ class UserRelContrib < ActiveRecord::Base
     person1_record = Person.find(person1_index)
     person2_record = Person.find(person2_index)
     if (! person1_record.nil?)
-      birth_year_1 = person1_record.ext_birth_year
-      death_year_1 = person1_record.ext_death_year
+      birth_year_1 = person1_record.birth_year
+      death_year_1 = person1_record.death_year
     end
     if (! person2_record.nil?)
-      birth_year_2 = person2_record.ext_birth_year
-      death_year_2 = person2_record.ext_death_year
+      birth_year_2 = person2_record.birth_year
+      death_year_2 = person2_record.death_year
     end
 
     #Only use default start date if the user does not enter a start year
