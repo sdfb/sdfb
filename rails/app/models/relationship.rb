@@ -59,7 +59,6 @@ class Relationship < ActiveRecord::Base
                                    relationship_id: self.id,
                                    is_approved: self.is_approved,
                                    is_active: true,
-                                   is_locked: true,
                                    relationship_type_id: 4,
                                    created_by: 3,
                                    certainty: self.original_certainty
@@ -229,7 +228,6 @@ class Relationship < ActiveRecord::Base
           u.relationship_id = self.id
           u.is_approved = true
           u.is_active = true
-          u.is_locked = true
           u.relationship_type_id = 4
           u.certainty = self.original_certainty
           u.created_by = 3

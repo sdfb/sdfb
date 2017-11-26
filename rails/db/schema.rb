@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171126130518) do
+ActiveRecord::Schema.define(version: 20171126131026) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -193,11 +193,10 @@ ActiveRecord::Schema.define(version: 20171126130518) do
     t.date     "approved_on"
     t.boolean  "is_approved",                      default: true
     t.boolean  "is_active",                        default: true
-    t.datetime "created_at",                                       null: false
-    t.datetime "updated_at",                                       null: false
+    t.datetime "created_at",                                      null: false
+    t.datetime "updated_at",                                      null: false
     t.string   "start_date_type",      limit: 255
     t.string   "end_date_type",        limit: 255
-    t.boolean  "is_locked",                        default: false
   end
 
   add_index "user_rel_contribs", ["approved_by"], name: "index_user_rel_contribs_on_approved_by", using: :btree

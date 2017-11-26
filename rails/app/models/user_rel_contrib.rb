@@ -5,7 +5,7 @@ class UserRelContrib < ActiveRecord::Base
   include Approvable
 
   attr_accessible :relationship_id, :relationship_type_id, 
-  :created_by, :created_at, :is_locked,
+  :created_by, :created_at,
   :start_year, :start_month, :start_day, :start_date_type,
   :end_year, :end_month, :end_day, :end_date_type,
  :citation, :certainty
@@ -31,7 +31,6 @@ class UserRelContrib < ActiveRecord::Base
   # Scope
   # ----------------------------- 
   scope :for_user, -> (user_input) { where('created_by = ?', "#{user_input}") }
-  scope :is_locked, -> { where(is_locked: true) } 
   scope :all_averages_for_relationship, -> (relID) {
       select(:relationship_type_id, "AVG(certainty) as avg_certainty")
       .where('relationship_id = ?', relID)
@@ -136,20 +135,18 @@ class UserRelContrib < ActiveRecord::Base
   # update the maximum certainty
   # -----------------------------
   def update_max_certainty
-    if self.is_locked != true
-      # find averages by relationship type
-      averages_by_rel_type = UserRelContrib.all_approved.all_averages_for_relationship(self.relationship_id)
+    # find averages by relationship type
+    averages_by_rel_type = UserRelContrib.all_approved.all_averages_for_relationship(self.relationship_id)
 
-      ###If there are no rel_types that are approved, then do nothing because this is taken care of in the relationship callback
+    ###If there are no rel_types that are approved, then do nothing because this is taken care of in the relationship callback
 
-      if ! averages_by_rel_type.nil? 
+    if ! averages_by_rel_type.nil? 
 
-        # calculate the relationship's maximum certainty
-        new_max_certainty = averages_by_rel_type.map { |e| e.avg_certainty.to_f }.max 
-        
-        # update the relationships certainty list and max certainty
-        Relationship.update(self.relationship_id, max_certainty: new_max_certainty)
-      end
+      # calculate the relationship's maximum certainty
+      new_max_certainty = averages_by_rel_type.map { |e| e.avg_certainty.to_f }.max 
+      
+      # update the relationships certainty list and max certainty
+      Relationship.update(self.relationship_id, max_certainty: new_max_certainty)
     end
   end
 
