@@ -3,16 +3,16 @@ class Person < ActiveRecord::Base
   include WhitespaceStripper
   include Approvable
 
-  attr_accessible :prefix, :title, :first_name, :last_name, :suffix, :display_name, 
-                  :aliases, :search_names_all, :odnb_id, :citation,
-                  :historical_significance, :justification,  :gender, 
-                  :birth_year_type, :ext_birth_year, :alt_birth_year,       
-                  :death_year_type, :ext_death_year, :alt_death_year,
+  attr_accessible :prefix, :title, :first_name, :last_name, :suffix, :gender,
+                  :display_name, :aliases, :search_names_all, :odnb_id, 
+                  :historical_significance, :justification, :citation,
+                  :birth_year_type, :ext_birth_year,
+                  :death_year_type, :ext_death_year,
                   :created_by, :created_at
 
   # Relationships
   # -----------------------------
-  has_many :group_assignments,    dependent: :destroy
+  has_many :group_assignments, dependent: :destroy
   has_many :groups, through: :group_assignments
   belongs_to :user
 
