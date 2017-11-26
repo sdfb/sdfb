@@ -7,6 +7,7 @@ Sdfb::Application.routes.draw do
     get  'api/users'
     get  'api/all_relationships'
     get  'api/relationships'
+    get  'api/recent_contributions'
     get  'api/groups'
     get  'api/network'
     get  'api/groups/network', action: :group_network, controller: :api

@@ -36,6 +36,30 @@ class ApiController < ApplicationController
     end
   end
 
+  #-----------------------------
+  def recent_contributions
+    size = params["size"] || 5
+    person_ids = []
+    group_ids = []
+
+    @people = Person.all_approved.limit(size).order(:approved_on)
+    
+    @groups = Group.all_approved.limit(size).order(:approved_on)
+
+    @relationships = Relationship.all_approved.limit(size).order(:approved_on)
+    person_ids += @relationships.collect{|l| [l.person1_index,l.person2_index]}.flatten
+    
+    @assignments = GroupAssignment.all_approved.limit(size).order(:approved_on)
+    person_ids += @assignments.collect{|l| l.person_id}
+    group_ids += @assignments.collect{|l| l.group_id}
+
+    @links = UserRelContrib.all_approved.limit(size).order(:approved_on)
+    person_ids += @links.collect{|l| [l.relationship.person1_index,l.relationship.person2_index]}.flatten
+
+    @other_people = Person.find(person_ids.uniq)
+    @other_groups = Group.find(group_ids.uniq)
+  end
+
 
   #-----------------------------
   def all_people
