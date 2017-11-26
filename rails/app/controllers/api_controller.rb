@@ -38,6 +38,26 @@ class ApiController < ApplicationController
 
 
   #-----------------------------
+  def all_people
+    offset = params["offset"] || 0
+    size = params["size"] || 20
+    @people = Person.all_approved.limit(size).offset(offset).order(:display_name)
+    render "people"
+  end  
+
+  #-----------------------------
+  def all_relationships
+    offset = params["offset"] || 0
+    size = params["size"] || 20
+    @relationships = Relationship.all_approved.limit(size).offset(offset).order(max_certainty: :desc)
+    person_ids = @relationships.collect{|l| [l.person1_index,l.person2_index]}.flatten.uniq
+    @people = Person.find(person_ids)
+    render "curation_relationships"
+
+  end  
+
+
+  #-----------------------------
   def users
     user_id = params[:id]
     return head(:bad_request) unless user_id

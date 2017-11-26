@@ -2,8 +2,10 @@ Sdfb::Application.routes.draw do
 
   # API Routes
   defaults format: :json, via: [:get] do
+    get  'api/all_people'
     get  'api/people'
     get  'api/users'
+    get  'api/all_relationships'
     get  'api/relationships'
     get  'api/groups'
     get  'api/network'
