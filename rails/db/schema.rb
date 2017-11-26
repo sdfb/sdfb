@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171126131026) do
+ActiveRecord::Schema.define(version: 20171126131641) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -21,11 +21,7 @@ ActiveRecord::Schema.define(version: 20171126131026) do
     t.integer  "group_id"
     t.integer  "person_id"
     t.integer  "start_year"
-    t.string   "start_month",     limit: 255
-    t.integer  "start_day"
     t.integer  "end_year"
-    t.string   "end_month",       limit: 255
-    t.integer  "end_day"
     t.integer  "approved_by"
     t.datetime "approved_on"
     t.boolean  "is_approved",                 default: false
@@ -154,11 +150,7 @@ ActiveRecord::Schema.define(version: 20171126131026) do
     t.integer  "created_by"
     t.integer  "max_certainty"
     t.integer  "start_year"
-    t.string   "start_month",        limit: 255
-    t.integer  "start_day"
     t.integer  "end_year"
-    t.string   "end_month",          limit: 255
-    t.integer  "end_day"
     t.text     "justification"
     t.integer  "approved_by"
     t.datetime "approved_on"
@@ -184,11 +176,7 @@ ActiveRecord::Schema.define(version: 20171126131026) do
     t.text     "citation"
     t.integer  "relationship_type_id"
     t.integer  "start_year"
-    t.string   "start_month",          limit: 255
-    t.integer  "start_day"
     t.integer  "end_year"
-    t.string   "end_month",            limit: 255
-    t.integer  "end_day"
     t.integer  "approved_by"
     t.date     "approved_on"
     t.boolean  "is_approved",                      default: true

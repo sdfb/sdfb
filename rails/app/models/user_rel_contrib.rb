@@ -6,8 +6,8 @@ class UserRelContrib < ActiveRecord::Base
 
   attr_accessible :relationship_id, :relationship_type_id, 
   :created_by, :created_at,
-  :start_year, :start_month, :start_day, :start_date_type,
-  :end_year, :end_month, :end_day, :end_date_type,
+  :start_year,  :start_date_type,
+  :end_year, :end_date_type,
  :citation, :certainty
 
   # Relationships

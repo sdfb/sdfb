@@ -4,7 +4,7 @@ class Relationship < ActiveRecord::Base
   
   attr_accessible :max_certainty, :created_by, :original_certainty, :person1_index, :person2_index,
   :justification, :created_at, :citation,
-  :start_year, :start_month, :start_day, :end_year, :end_month, :end_day,
+  :start_year,  :end_year, 
   :start_date_type, :end_date_type
 
   # Relationships
@@ -66,11 +66,7 @@ class Relationship < ActiveRecord::Base
 
     met_record.update_attributes(certainty: self.original_certainty,
                                  start_year: self.start_year,
-                                 start_month: self.start_month,
-                                 start_day: self.start_day,
-                                 end_year: self.end_year,
-                                 end_month: self.end_month,
-                                 end_day: self.end_day
+                                 end_year: self.end_year
     )
 
     met_record.save
