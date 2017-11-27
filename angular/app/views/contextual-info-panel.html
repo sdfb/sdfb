@@ -81,10 +81,11 @@
     <img src='/images/jstor.png' ng-click="searchJstor()"/>
     <i class="fa fa-google" ng-click="searchGoogle()"></i>
     <span>
+
       <button ng-show="currentSelection.type === 'person'" ng-class="{'no-user' : currentSelection.attributes.created_by === 2}" type="button" class="btn btn-primary" ui-sref="home.visualization({ ids: currentSelection.id })">Visualize</button>
-      <button ng-show="currentSelection.type === 'group'" ng-class="{'no-user' : currentSelection.attributes.created_by === 2}" type="button" class="btn btn-primary pull-right" ui-sref="home.visualization({ ids: currentSelection.data[0].id, type: 'network' })">Visualize</button>
+      <button ng-show="currentSelection.type === 'group'" ng-class="{'no-user' : currentSelection.data[0].attributes.created_by === 2}" type="button" class="btn btn-primary" ui-sref="home.visualization({ ids: currentSelection.data[0].id, type: 'network' })">Visualize</button>
       <button ng-show="currentSelection.type === 'relationship'" type="button" class="btn btn-primary" ui-sref="home.visualization({ ids: currentSelection.source.id + ',' + currentSelection.target.id })">Shared Network</button>
+      <i ng-show="currentSelection.type === 'person' || currentSelection.type === 'group'" class="fa fa-book" uib-tooltip="{{selectionCitation}}" tooltip-placement="bottom"></i>
     </span>
   </p>
-  <!-- <p><a ng-click="scope.openTable()">Further info&hellip;</a></p> -->
 </section>
