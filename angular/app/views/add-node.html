@@ -3,7 +3,7 @@
 		<h3 class="">Add person to this view</h3><span class="remove-btn contribute" ng-click="removeNode(newNode.id)">remove this node</span>
 		<div class="form-content">
 			<h4 class="paragraph-title">Person Name <i class="fa fa-asterisk" aria-hidden="true"></i></h4>
-		  <input type="text" name="personName" ng-model="newNode.name" placeholder="Search for a person" typeahead-template-url="views/groupsTypeaheadTemplate.html" uib-typeahead="person as person.attributes.name for person in callPersonTypeahead($viewValue)" typeahead-loading="loadingPersonAdd" typeahead-no-results="noResultsPersonAdd" class="form-control" typeahead-show-hint="true" typeahead-min-length="5" typeahead-on-select="foundPerson($item)" typeahead-wait-ms='500' required>
+		  <input type="text" name="personName" ng-model="newNode.name" placeholder="Search for a person" typeahead-template-url="views/groupsTypeaheadTemplate.html" uib-typeahead="person as person.attributes.name for person in callPersonTypeahead($viewValue)" typeahead-loading="loadingPersonAdd" typeahead-no-results="noResultsPersonAdd" class="form-control" typeahead-show-hint="true" typeahead-on-select="foundPerson($item)" typeahead-wait-ms='500' required>
 			<i ng-show="loadingPersonAdd" class="glyphicon glyphicon-refresh"></i>
 			<!-- <div ng-show="noResultsPersonAdd">
 				<i class="glyphicon glyphicon-remove"></i> Person not found: click canvas to add
