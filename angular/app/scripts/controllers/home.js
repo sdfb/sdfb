@@ -10,7 +10,7 @@
 angular.module('redesign2017App').component('home', {
   // bindings: { networkData: '<' },
   templateUrl: 'views/home.html',
-  controller: ['$scope', '$stateParams', '$uibModal', '$log', '$cookieStore', 'apiService', '$rootScope', '$http', function($scope, $stateParams, $uibModal, $log, $cookieStore, apiService, $rootScope, $http) {
+  controller: ['$scope', '$stateParams', '$uibModal', '$log', '$cookieStore', 'apiService', '$rootScope', '$http', '$transitions', '$window', function($scope, $stateParams, $uibModal, $log, $cookieStore, apiService, $rootScope, $http, $transitions, $window) {
     $scope.config = {
       contributionMode: false,
       layout: 'individual-force',
@@ -133,6 +133,17 @@ angular.module('redesign2017App').component('home', {
         $log.info('Modal dismissed at: ' + new Date());
       });
     };
+
+    $transitions.onBefore({}, function(transition) {
+      console.log(transition);
+      if ($scope.config.contributionMode) {
+        if ($window.confirm("If you leave this page without submitting your changes, they will be lost. If you'd like to leave anyway, click 'okay'?")) {
+          return true;
+        } else {
+          return false;
+        }
+      }
+    });
 
 	}]
 });
