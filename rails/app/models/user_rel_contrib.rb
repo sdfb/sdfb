@@ -5,10 +5,10 @@ class UserRelContrib < ActiveRecord::Base
   include Approvable
 
   attr_accessible :relationship_id, :relationship_type_id, 
-  :created_by, :created_at, :is_locked,
-  :start_year, :start_month, :start_day, :start_date_type,
-  :end_year, :end_month, :end_day, :end_date_type,
- :bibliography, :certainty
+  :created_by, :created_at,
+  :start_year,  :start_date_type,
+  :end_year, :end_date_type,
+ :citation, :certainty
 
   # Relationships
   # -----------------------------
@@ -22,7 +22,7 @@ class UserRelContrib < ActiveRecord::Base
   validates_presence_of :created_by
   validates_presence_of :relationship_id
   validates_presence_of :relationship_type_id
-  validates_length_of   :bibliography, minimum: 10, allow_blank: true
+  validates_length_of   :citation, minimum: 10, allow_blank: true
   validates :start_year, numericality: { greater_than_or_equal_to: SDFB::EARLIEST_BIRTH_YEAR, less_than_or_equal_to: SDFB::LATEST_DEATH_YEAR }, allow_nil: true
   validates :end_year,   numericality: { greater_than_or_equal_to: SDFB::EARLIEST_BIRTH_YEAR, less_than_or_equal_to: SDFB::LATEST_DEATH_YEAR }, allow_nil: true
   validates_inclusion_of :start_date_type, in: SDFB::DATE_TYPES, if: "self.start_year.present?"
@@ -31,7 +31,6 @@ class UserRelContrib < ActiveRecord::Base
   # Scope
   # ----------------------------- 
   scope :for_user, -> (user_input) { where('created_by = ?', "#{user_input}") }
-  scope :is_locked, -> { where(is_locked: true) } 
   scope :all_averages_for_relationship, -> (relID) {
       select(:relationship_type_id, "AVG(certainty) as avg_certainty")
       .where('relationship_id = ?', relID)
@@ -40,7 +39,7 @@ class UserRelContrib < ActiveRecord::Base
   # Callbacks
   # ----------------------------- 
   before_save :create_start_and_end_date
-  before_save { remove_trailing_spaces(:bibliography)}
+  before_save { remove_trailing_spaces(:citation)}
   after_save :update_max_certainty
   after_save :updated_altered_state!
   after_create :set_approval_metadata
@@ -69,12 +68,12 @@ class UserRelContrib < ActiveRecord::Base
     person1_record = Person.find(person1_index)
     person2_record = Person.find(person2_index)
     if (! person1_record.nil?)
-      birth_year_1 = person1_record.ext_birth_year
-      death_year_1 = person1_record.ext_death_year
+      birth_year_1 = person1_record.birth_year
+      death_year_1 = person1_record.death_year
     end
     if (! person2_record.nil?)
-      birth_year_2 = person2_record.ext_birth_year
-      death_year_2 = person2_record.ext_death_year
+      birth_year_2 = person2_record.birth_year
+      death_year_2 = person2_record.death_year
     end
 
     #Only use default start date if the user does not enter a start year
@@ -136,20 +135,18 @@ class UserRelContrib < ActiveRecord::Base
   # update the maximum certainty
   # -----------------------------
   def update_max_certainty
-    if self.is_locked != true
-      # find averages by relationship type
-      averages_by_rel_type = UserRelContrib.all_approved.all_averages_for_relationship(self.relationship_id)
+    # find averages by relationship type
+    averages_by_rel_type = UserRelContrib.all_approved.all_averages_for_relationship(self.relationship_id)
 
-      ###If there are no rel_types that are approved, then do nothing because this is taken care of in the relationship callback
+    ###If there are no rel_types that are approved, then do nothing because this is taken care of in the relationship callback
 
-      if ! averages_by_rel_type.nil? 
+    if ! averages_by_rel_type.nil? 
 
-        # calculate the relationship's maximum certainty
-        new_max_certainty = averages_by_rel_type.map { |e| e.avg_certainty.to_f }.max 
-        
-        # update the relationships certainty list and max certainty
-        Relationship.update(self.relationship_id, max_certainty: new_max_certainty)
-      end
+      # calculate the relationship's maximum certainty
+      new_max_certainty = averages_by_rel_type.map { |e| e.avg_certainty.to_f }.max 
+      
+      # update the relationships certainty list and max certainty
+      Relationship.update(self.relationship_id, max_certainty: new_max_certainty)
     end
   end
 

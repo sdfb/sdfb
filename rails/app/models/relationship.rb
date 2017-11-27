@@ -3,8 +3,8 @@ class Relationship < ActiveRecord::Base
   include Approvable
   
   attr_accessible :max_certainty, :created_by, :original_certainty, :person1_index, :person2_index,
-  :justification, :created_at, :bibliography,
-  :start_year, :start_month, :start_day, :end_year, :end_month, :end_day,
+  :justification, :created_at, :citation,
+  :start_year,  :end_year, 
   :start_date_type, :end_date_type
 
   # Relationships
@@ -59,7 +59,6 @@ class Relationship < ActiveRecord::Base
                                    relationship_id: self.id,
                                    is_approved: self.is_approved,
                                    is_active: true,
-                                   is_locked: true,
                                    relationship_type_id: 4,
                                    created_by: 3,
                                    certainty: self.original_certainty
@@ -67,11 +66,7 @@ class Relationship < ActiveRecord::Base
 
     met_record.update_attributes(certainty: self.original_certainty,
                                  start_year: self.start_year,
-                                 start_month: self.start_month,
-                                 start_day: self.start_day,
-                                 end_year: self.end_year,
-                                 end_month: self.end_month,
-                                 end_day: self.end_day
+                                 end_year: self.end_year
     )
 
     met_record.save
@@ -94,12 +89,12 @@ class Relationship < ActiveRecord::Base
       person1_record = Person.find(self.person1_index)
       person2_record = Person.find(self.person2_index)
       if (! person1_record.nil?)
-        birth_year_1 = person1_record.ext_birth_year
-        death_year_1 = person1_record.ext_death_year
+        birth_year_1 = person1_record.birth_year
+        death_year_1 = person1_record.death_year
       end
       if (! person2_record.nil?)
-        birth_year_2 = person2_record.ext_birth_year
-        death_year_2 = person2_record.ext_death_year
+        birth_year_2 = person2_record.birth_year
+        death_year_2 = person2_record.death_year
       end
       retrieved_birth_death_year_flag = true
     end
@@ -146,12 +141,12 @@ class Relationship < ActiveRecord::Base
             person1_record = Person.find(self.person1_index)
             person2_record = Person.find(self.person2_index)
             if (! person1_record.nil?)
-              birth_year_1 = person1_record.ext_birth_year
-              death_year_1 = person1_record.ext_death_year
+              birth_year_1 = person1_record.birth_year
+              death_year_1 = person1_record.death_year
             end
             if (! person2_record.nil?)
-              birth_year_2 = person2_record.ext_birth_year
-              death_year_2 = person2_record.ext_death_year
+              birth_year_2 = person2_record.birth_year
+              death_year_2 = person2_record.death_year
             end
             retrieved_birth_death_year_flag = true
           end
@@ -229,7 +224,6 @@ class Relationship < ActiveRecord::Base
           u.relationship_id = self.id
           u.is_approved = true
           u.is_active = true
-          u.is_locked = true
           u.relationship_type_id = 4
           u.certainty = self.original_certainty
           u.created_by = 3

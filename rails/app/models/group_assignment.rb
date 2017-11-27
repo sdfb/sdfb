@@ -4,7 +4,7 @@ class GroupAssignment < ActiveRecord::Base
   include Approvable
 
   attr_accessible :created_by, :group_id, :person_id, :start_date, :end_date, :created_at,
-    :start_year, :start_month, :start_day, :end_year, :end_month, :end_day, :bibliography,
+    :start_year,  :end_year, :citation,
     :start_date_type, :end_date_type
   
   # Relationships
@@ -57,7 +57,7 @@ class GroupAssignment < ActiveRecord::Base
 
   # -----------------------------
   def set_start_year
-    possible_dates = [person.ext_birth_year, group.start_year]
+    possible_dates = [person.birth_year, group.start_year]
     possible_dates.map!{|year| year.present? ? year.to_i : SDFB::EARLIEST_YEAR}
     self.start_year = possible_dates.max
     self.start_date_type = "AF/IN"
@@ -65,7 +65,7 @@ class GroupAssignment < ActiveRecord::Base
 
   # -----------------------------
   def set_end_year
-    possible_dates = [person.ext_death_year, group.end_year]
+    possible_dates = [person.death_year, group.end_year]
     possible_dates.map!{|year| year.present? ? year.to_i : SDFB::LATEST_YEAR}
     self.end_year = possible_dates.min
     self.end_date_type = "BF/IN"

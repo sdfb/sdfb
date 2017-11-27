@@ -2,6 +2,7 @@ class ApiController < ApplicationController
   skip_before_filter :verify_authenticity_token
   include ApiHelper
 
+  #-----------------------------
   def curate
     return head(:forbidden) unless current_user && ["Admin", "Curator"].include?(current_user.user_type)
     offset = params["offset"] || 0
@@ -35,7 +36,52 @@ class ApiController < ApplicationController
     end
   end
 
+  #-----------------------------
+  def recent_contributions
+    size = params["size"] || 5
+    person_ids = []
+    group_ids = []
 
+    @people = Person.all_approved.limit(size).order(:approved_on)
+    
+    @groups = Group.all_approved.limit(size).order(:approved_on)
+
+    @relationships = Relationship.all_approved.limit(size).order(:approved_on)
+    person_ids += @relationships.collect{|l| [l.person1_index,l.person2_index]}.flatten
+    
+    @assignments = GroupAssignment.all_approved.limit(size).order(:approved_on)
+    person_ids += @assignments.collect{|l| l.person_id}
+    group_ids += @assignments.collect{|l| l.group_id}
+
+    @links = UserRelContrib.all_approved.limit(size).order(:approved_on)
+    person_ids += @links.collect{|l| [l.relationship.person1_index,l.relationship.person2_index]}.flatten
+
+    @other_people = Person.find(person_ids.uniq)
+    @other_groups = Group.find(group_ids.uniq)
+  end
+
+
+  #-----------------------------
+  def all_people
+    offset = params["offset"] || 0
+    size = params["size"] || 20
+    @people = Person.all_approved.limit(size).offset(offset).order(:display_name)
+    render "people"
+  end  
+
+  #-----------------------------
+  def all_relationships
+    offset = params["offset"] || 0
+    size = params["size"] || 20
+    @relationships = Relationship.all_approved.limit(size).offset(offset).order(max_certainty: :desc)
+    person_ids = @relationships.collect{|l| [l.person1_index,l.person2_index]}.flatten.uniq
+    @people = Person.find(person_ids)
+    render "curation_relationships"
+
+  end  
+
+
+  #-----------------------------
   def users
     user_id = params[:id]
     return head(:bad_request) unless user_id
@@ -67,6 +113,7 @@ class ApiController < ApplicationController
     end
   end
 
+  #-----------------------------
   def edit_user
     return head(:forbidden) unless current_user
     return head(:forbidden) unless params["id"].to_s == current_user.id.to_s || current_user.user_type == "Admin"
@@ -90,6 +137,7 @@ class ApiController < ApplicationController
     end
   end
 
+  #-----------------------------
   def new_user
     return head(:forbidden) if current_user
     return head(:bad_request) if params["id"]
@@ -104,10 +152,10 @@ class ApiController < ApplicationController
         format.json { render json: e.record.errors, status: :unprocessable_entity }
         format.html { render :json}
       end
-
     end
   end
 
+  #-----------------------------
   def write
     return head(:forbidden) unless current_user
     person_lookup = {}
@@ -119,10 +167,6 @@ class ApiController < ApplicationController
           placeholder_id = node["id"]
           node.delete("id")
         end
-        if node["citation"]
-          node["bibliography"] = node["citation"]
-          node.delete("citation")
-        end
         if node["name"]
           node["display_name"] = node["name"]
           node.delete("name")
@@ -132,7 +176,7 @@ class ApiController < ApplicationController
           node.delete("alternates")
         end
         if node["birthDate"]
-          node["ext_birth_year"] = node["birthDate"]
+          node["birth_year"] = node["birthDate"]
           node.delete("birthDate")
         end
         if node["birthDateType"]
@@ -140,7 +184,7 @@ class ApiController < ApplicationController
           node.delete("birthDateType")
         end
         if node["deathDate"]
-          node["ext_death_year"] = node["deathDate"]
+          node["death_year"] = node["deathDate"]
           node.delete("deathDate")
         end
         if node["deathDateType"]
@@ -190,7 +234,7 @@ class ApiController < ApplicationController
           end_date_type: group["endDateType"],
           description: group["description"],
           justification: group["justification"],
-          bibliography: group["citation"]
+          citation: group["citation"]
         }
         if ["Admin", "Curator"].include?(current_user.user_type)
           if group.keys.include?("is_approved")
@@ -244,7 +288,7 @@ class ApiController < ApplicationController
             person1_index: source_id,
             person2_index: target_id,
             created_by: current_user.id,
-            bibliography: link["citation"],
+            citation: link["citation"],
             original_certainty: link["confidence"],
           }
           rel = Relationship.create!(new_record)
@@ -261,7 +305,7 @@ class ApiController < ApplicationController
           start_year: link["startDate"],
           end_year: link["endDate"],
           certainty: link["confidence"],
-          bibliography: link["citation"],
+          citation: link["citation"],
           relationship_type_id: link["relType"]
         }
         UserRelContrib.create!(new_rel_asssign)
@@ -285,7 +329,7 @@ class ApiController < ApplicationController
           end_year: assignment["endDate"],
           start_date_type: assignment["startDateType"],
           end_date_type: assignment["endDateType"],
-          bibliography: assignment["citation"]
+          citation: assignment["citation"]
         }
         if ["Admin", "Curator"].include?(current_user.user_type)
           if assignment.keys.include?("is_approved")
@@ -315,7 +359,7 @@ class ApiController < ApplicationController
           end_date_type: relationship["endDateType"],
           end_year: relationship["endDate"],
           justification: relationship["justification"],
-          bibliography: relationship["citation"]
+          citation: relationship["citation"]
         }
         if ["Admin", "Curator"].include?(current_user.user_type)
           if relationship.keys.include?("is_approved")
@@ -344,7 +388,7 @@ class ApiController < ApplicationController
           start_year: link["startDate"],
           end_year: link["endDate"],
           certainty: link["confidence"],
-          bibliography: link["citation"],
+          citation: link["citation"],
           relationship_type_id: link["relType"]
         }
         if ["Admin", "Curator"].include?(current_user.user_type)
@@ -371,6 +415,7 @@ class ApiController < ApplicationController
   # [people description]
   # 
   # @return [type] [description]
+  #-----------------------------
   def people
     ids = params[:ids].split(",")
     begin
@@ -386,6 +431,7 @@ class ApiController < ApplicationController
   end
 
 
+  #-----------------------------
   def relationships
     ids = params[:ids].split(",")
     begin
@@ -406,6 +452,7 @@ class ApiController < ApplicationController
     end
   end
 
+  #-----------------------------
   def typeahead
     type   = params[:type]
     query = params[:q]
@@ -459,6 +506,7 @@ class ApiController < ApplicationController
   end
 
 
+  #-----------------------------
   def groups
       if params[:ids].blank?
         @groups = Group.all
@@ -506,6 +554,7 @@ class ApiController < ApplicationController
   end
 
 
+  #-----------------------------
   def network
     begin
       ids = params[:ids].split(",").map(&:to_i).uniq.sort
@@ -550,6 +599,7 @@ class ApiController < ApplicationController
   end
 
 
+  #-----------------------------
   def group_network
     begin
       ids = params[:ids].split(",").map(&:to_i).uniq.sort
@@ -576,6 +626,7 @@ class ApiController < ApplicationController
   end
 
 
+  #-----------------------------
   def date_math(current_type, new_type, current_date, new_date)
     output_type = nil
     output_date = nil
@@ -629,6 +680,8 @@ class ApiController < ApplicationController
     return [output_type, output_date]
   end
 
+
+  #-----------------------------
   def update_dates(current_object, new_data)
     current_type = current_object.start_date_type
     new_type = new_data["startDateType"]

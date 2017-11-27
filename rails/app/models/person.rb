@@ -3,16 +3,16 @@ class Person < ActiveRecord::Base
   include WhitespaceStripper
   include Approvable
 
-  attr_accessible :prefix, :title, :first_name, :last_name, :suffix, :display_name, 
-                  :aliases, :search_names_all, :odnb_id, :bibliography,
-                  :historical_significance, :justification,  :gender, 
-                  :birth_year_type, :ext_birth_year, :alt_birth_year,       
-                  :death_year_type, :ext_death_year, :alt_death_year,
+  attr_accessible :prefix, :title, :first_name, :last_name, :suffix, :gender,
+                  :display_name, :aliases, :search_names_all, :odnb_id, 
+                  :historical_significance, :justification, :citation,
+                  :birth_year_type, :birth_year,
+                  :death_year_type, :death_year,
                   :created_by, :created_at
 
   # Relationships
   # -----------------------------
-  has_many :group_assignments,    dependent: :destroy
+  has_many :group_assignments, dependent: :destroy
   has_many :groups, through: :group_assignments
   belongs_to :user
 
@@ -25,9 +25,9 @@ class Person < ActiveRecord::Base
   validates_presence_of :created_by
   validates_presence_of :gender
   validates_presence_of :birth_year_type
-  validates_presence_of :ext_birth_year
+  validates_presence_of :birth_year
   validates_presence_of :death_year_type
-  validates_presence_of :ext_death_year
+  validates_presence_of :death_year
   ## first_name must be at least 1 character
   validates_length_of :first_name, :minimum => 1, :allow_blank => true
   ## last_name must be at least 1 character
@@ -105,39 +105,39 @@ class Person < ActiveRecord::Base
     invalid_death_year_format = false
 
     # if the birth year converted to an integer is 0 then the date was not an integer
-    if self.ext_birth_year.present?
-      if self.ext_birth_year.to_i == 0
-        errors.add(:ext_birth_year, "Please check the format of the birth year.")
+    if self.birth_year.present?
+      if self.birth_year.to_i == 0
+        errors.add(:birth_year, "Please check the format of the birth year.")
         invalid_birth_year_format = true
       # if valid format continue checking
       else
         # check that birth year is before SDFB::LATEST_YEAR or throw error
-        if self.ext_birth_year.to_i > SDFB::LATEST_YEAR
-          errors.add(:ext_birth_year, "The birth year must be before #{SDFB::LATEST_YEAR}")
+        if self.birth_year.to_i > SDFB::LATEST_YEAR
+          errors.add(:birth_year, "The birth year must be before #{SDFB::LATEST_YEAR}")
         end
       end
     end
 
     # if the death year converted to an integer is 0 then the date was not an integer
-    if self.ext_death_year.present?
-      if self.ext_death_year.to_i == 0
-        errors.add(:ext_death_year, "Please check the format of the death year.")
+    if self.death_year.present?
+      if self.death_year.to_i == 0
+        errors.add(:death_year, "Please check the format of the death year.")
         invalid_death_year_format = true
       # if valid format continue checking
       else
         # check that death year is after SDFB::EARLIEST_YEAR or throw error
-        if self.ext_death_year.to_i < SDFB::EARLIEST_YEAR
-          errors.add(:ext_death_year, "The death year must be after #{SDFB::EARLIEST_YEAR}")
+        if self.death_year.to_i < SDFB::EARLIEST_YEAR
+          errors.add(:death_year, "The death year must be after #{SDFB::EARLIEST_YEAR}")
         end
       end
     end
 
     # perform this check if both years are entered and the birth year and the death year formats are valid
-    if (! (self.ext_birth_year.blank? || self.ext_death_year.blank?)) && ((invalid_birth_year_format == false) && (invalid_death_year_format == false))
+    if (! (self.birth_year.blank? || self.death_year.blank?)) && ((invalid_birth_year_format == false) && (invalid_death_year_format == false))
       # check that birth year is equal to or before death year
-      if (self.ext_birth_year.to_i > self.ext_death_year.to_i)
-        errors.add(:ext_birth_year, "The birth year must be less than or equal to the death year")
-        errors.add(:ext_death_year, "The death year must be greater than or equal to the birth year")
+      if (self.birth_year.to_i > self.death_year.to_i)
+        errors.add(:birth_year, "The birth year must be less than or equal to the death year")
+        errors.add(:death_year, "The death year must be greater than or equal to the birth year")
       end
     end
   end
