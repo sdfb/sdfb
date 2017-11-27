@@ -29,13 +29,13 @@
       <h4>Start date <i class="fa fa-asterisk" aria-hidden="true"></i></h4>
       <div class="input-group">
         <select name="startType" required class="input-group-addon" ng-model="newLink.startDateType" ng-options="type.name for type in config.dateTypes" id="startDateType"></select><i class="fa fa-caret-down" aria-hidden="true"></i>
-        <input name="startDate" class="form-control" ng-model="newLink.startDate" ng-model-options="{ getterSetter: true }" id="startDate">
+        <input name="startDate" type="number" class="form-control" ng-model="newLink.startDate" ng-model-options="{ getterSetter: true }" id="startDate">
       </div>
 
       <h4>End date <i class="fa fa-asterisk" aria-hidden="true"></i></h4>
       <div class="input-group">
         <select name="endType" required class="input-group-addon" ng-model="newLink.endDateType" ng-options="type.name for type in config.dateTypes" id="endDateType"></select><i class="fa fa-caret-down" aria-hidden="true"></i>
-        <input name="endDate" class="form-control" ng-model="newLink.endDate" id="endDate">
+        <input name="endDate" type="number" class="form-control" ng-model="newLink.endDate" id="endDate">
       </div>
 
       <h4>Your confidence level <i class="fa fa-asterisk" aria-hidden="true"></i></h4>

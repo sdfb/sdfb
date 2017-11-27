@@ -13,13 +13,13 @@
       <h4>Start date <i class="fa fa-asterisk" aria-hidden="true"></i></h4>
       <div class="input-group">
         <select name="startType" required class="input-group-addon" ng-model="groupAssign.startDateType" ng-options="type.name for type in config.dateTypes"></select><i class="fa fa-caret-down" aria-hidden="true"></i>
-        <input name="startDate" required class="form-control" ng-model="groupAssign.startDate" ng-model-options="{ getterSetter: true }">
+        <input name="startDate" required type="number" ng-minlength=4 ng-maxlength=4 class="form-control" ng-model="groupAssign.startDate" ng-model-options="{ getterSetter: true }">
       </div>
 
       <h4>End date <i class="fa fa-asterisk" aria-hidden="true"></i></h4>
       <div class="input-group">
         <select name="endType" required class="input-group-addon" ng-model="groupAssign.endDateType" ng-options="type.name for type in config.dateTypes"></select><i class="fa fa-caret-down" aria-hidden="true"></i>
-        <input name="endDate" required class="form-control" ng-model="groupAssign.endDate">
+        <input name="endDate" required type="number" ng-minlength=4 ng-maxlength=4 class="form-control" ng-model="groupAssign.endDate">
       </div>
 
       <h4>Citation</h4>
@@ -42,6 +42,12 @@
 				</div>
 				<div ng-show="groupAssignForm.endDate.$error.required">
 					You must include an end date.
+				</div>
+        <div ng-show="groupForm.startDate.$error.number || groupForm.startDate.$error.minlength || groupForm.startDate.$error.maxlength">
+					Start date must be a 4-digit year.
+				</div>
+				<div ng-show="groupForm.endDate.$error.number || groupForm.endDate.$error.minlength || groupForm.endDate.$error.maxlength">
+					End date must be a 4-digit year.
 				</div>
       </div>
       <button ng-disabled="groupAssignForm.$invalid" type="submit" class="btn btn-primary">Add & Continue</button>
