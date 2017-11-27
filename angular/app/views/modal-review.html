@@ -45,6 +45,7 @@
               <td class="target-column">Target Name</td>
               <td class="start-column">Start Date</td>
               <td class="end-column">End Date</td>
+              <td class="type-column">Type</td>
               <td class="conf-column">Confidence</td>
               <td class="action-column">Remove</td>
             </tr>
@@ -55,6 +56,7 @@
                 <td>{{ rel.target.name }}</td>
                 <td>{{ rel.startDateType }} {{ rel.startDate }}</td>
                 <td>{{ rel.endDateType }} {{ rel.endDate }}</td>
+                <td>{{ rel.relTypeName }}</td>
                 <td>{{ rel.confidence }}</td>
                 <td>
                     <i class="fa fa-times" aria-hidden="true" type="button" ng-click="$ctrl.remove($index, $ctrl.addToDB.links, $ctrl.addedLinks)" aria-label="Remove"></i>
@@ -108,7 +110,8 @@
             </tr>
         </tbody>
     </table>
-    <button ng-click="$ctrl.close()" type="button" class="btn btn-primary contribute">
+    
+    <button ng-click="$ctrl.submit()" type="button" class="btn btn-primary contribute">
         Submit & Close
     </button>
     <!-- <ul>

@@ -37,7 +37,7 @@ redesign2017App.config(function($stateProvider, $locationProvider, $compileProvi
       networkData: ['apiService', '$stateParams', function(apiService, $stateParams) {
         if ($stateParams.ids.length < 8 && $stateParams.type === 'network') {
           return apiService.getGroupNetwork($stateParams.ids, $stateParams.min_confidence).then(function(result){
-            apiService.result = result;
+            apiService.result = result.data;
             return apiService.result;
           });
         } else if ($stateParams.ids.length < 8 && $stateParams.type === 'timeline') {
@@ -52,8 +52,12 @@ redesign2017App.config(function($stateProvider, $locationProvider, $compileProvi
           });
         } else {
           return apiService.getNetwork($stateParams.ids, $stateParams.min_confidence).then(function(result){
-            apiService.result = result;
+            apiService.result = result.data;
             return apiService.result;
+          }, function(error) {
+            console.log("THIS IS AN ERROR");
+            console.error("An error occured while fetching file",error);
+            return "error";
           });
         }
       }]

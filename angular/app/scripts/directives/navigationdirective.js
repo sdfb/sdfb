@@ -20,6 +20,8 @@ angular.module('redesign2017App')
             if (scope.config.contributionMode) {
               scope.cursorStyle = {'cursor': 'copy'};
               $rootScope.filtersClosed = false;
+              $rootScope.legendClosed = true;
+              $rootScope.searchClosed = true;
             } else {
               scope.cursorStyle = {'cursor': 'auto'};
             }
@@ -35,13 +37,17 @@ angular.module('redesign2017App')
         scope.today = now.getFullYear() + '_' + (now.getMonth()+1) + '_' + now.getDate();
 
         scope.logIn = function() {
-          apiService.logIn($rootScope.user).then(function successCallback(result) {
+          apiService.logIn($rootScope.user).then(function(result) {
             $rootScope.user = result.data;
             var session = angular.copy($rootScope.user);
+            scope.logInFailed = false;
             delete session.status;
             delete session.error;
 
             $cookieStore.put('session', session);
+          }, function(error) {
+            scope.logInFailed = true;
+            console.log(error);
           });
         }
 

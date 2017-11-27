@@ -7,7 +7,7 @@
  * # addNode
  */
 angular.module('redesign2017App')
-  .directive('groupAssign', ['apiService', '$timeout', '$window', function (apiService, $timeout, $window) {
+  .directive('groupAssign', ['apiService', '$timeout', '$window', "$rootScope", function (apiService, $timeout, $window, $rootScope) {
     return {
       templateUrl: './views/group-assign.html',
       restrict: 'E',
@@ -40,8 +40,8 @@ angular.module('redesign2017App')
                 scope.groupAssign.group.id = g.groupId;
                 scope.groupAssignClosed = false;
                 scope.addLinkClosed = true;
-                scope.legendClosed = true;
-                scope.filtersClosed = true;
+                $rootScope.legendClosed = true;
+                $rootScope.filtersClosed = true;
                 scope.peopleFinderClosed = true;
                 scope.populateGroupDates(d.id, g.groupId);
               });

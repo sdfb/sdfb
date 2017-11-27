@@ -42,7 +42,7 @@ $membership: #78729F;
 /* general styles*/
 body {
   background-color: #EFF1F4;
-  padding-top: 50px;
+  padding-top: 30px;
   letter-spacing: 0.5px;
   font-weight: 400;
   font-family: 'Open Sans', sans-serif;
@@ -73,8 +73,38 @@ path.danger {
   stroke: $strokeDanger;
 }
 
-.invalid-form {
-  color: $degree0;
+#contribute-buttons {
+  float: left;
+}
+// #content {
+//   position: relative;
+//   width: 100%;
+// }
+// #drawer{
+//     height: 100%;
+//     width: 200px;
+//     background-color: lightsteelblue;
+//     position: absolute;
+//     right: 0;
+//     top: 0;
+//     z-index: 99;
+//     white-space: nowrap;
+// }
+// .collapsing-width{
+//     position: relative;
+//     overflow-x: hidden;
+//     -webkit-transition: width 0.35s ease;
+//     -moz-transition: width 0.35s ease;
+//     -o-transition: width 0.35s ease;
+//     transition: width 0.35s ease;
+// }
+// .collapse{
+//     overflow-x: hidden;
+// }
+
+.alert {
+  text-transform: none;
+  z-index: 101;
 }
 
 .about div, .help div {
@@ -86,6 +116,9 @@ path.danger {
   width: 75%;
 }
 
+label[disabled] {
+    pointer-events: none;
+}
 
 .modal-dialog .about h3, .modal-dialog .help h3 {
   font-weight: normal;
@@ -129,9 +162,19 @@ div.bio {margin-bottom: 60px;}
   background-color: $edge-color;
   font-family: 'Open Sans', sans-serif;
   font-weight: 600;
+  min-height: 30px !important;
+  max-height: 30px !important;
+  margin-bottom: 0;
+
+  .container-fluid {
+    height: 30px !important;
+  }
 
   .navbar-nav > li > a {
     color: $light-color;
+    padding-top:4px !important;
+    padding-bottom:0 !important;
+    height: 29px;
   }
 
   .navbar-left > li > a,
@@ -169,7 +212,7 @@ div.bio {margin-bottom: 60px;}
 
 .contribution-mode-switch {
   border-left: 2px solid white;
-  padding: 4px 15px;
+  padding: 1px 15px;
 
 }
 
@@ -195,11 +238,15 @@ div.bio {margin-bottom: 60px;}
   color: black;
 }
 
+.contribution i {
+  color: $contribution-mode-fill;
+}
+
 .navbar-brand {
   padding: 0;
 
   .project-img {
-    height: 100%;
+    height: 29px;
   }
 }
 
@@ -215,7 +262,7 @@ div.bio {margin-bottom: 60px;}
   position: fixed;
   pointer-events: none;
   z-index: 100;
-  // text-align: center;
+  // overflow-y: auto;
 }
 
 .panels-container * {
@@ -241,7 +288,7 @@ div.bio {margin-bottom: 60px;}
 .on-the-right {
   // min-width: 20vw;
   width: 22vw;
-  // max-width: 25vw;
+  min-width: 250px;
   max-width: 300px;
   pointer-events: none;
   position: relative;
@@ -262,10 +309,6 @@ div.bio {margin-bottom: 60px;}
   transition: all 0.5s ease;
 }
 
-.panel.citation input {
-  display: inline;
-  width: auto;
-}
 
 .panel.smallest {
   width: 32px;
@@ -311,6 +354,7 @@ div.bio {margin-bottom: 60px;}
     border: 1px solid $contribution-mode-fill;
 
     &.collapsed {
+      display: none;
       background-color: $contribution-mode-fill;
       border: 1px solid $contribution-mode-stroke;
     }
@@ -327,6 +371,7 @@ div.bio {margin-bottom: 60px;}
     border: 1px solid $contribution-mode-fill;
 
     &.collapsed {
+      display: none;
       background-color: $contribution-mode-fill;
       border: 1px solid $contribution-mode-stroke;
     }
@@ -342,6 +387,7 @@ div.bio {margin-bottom: 60px;}
     border: 1px solid $contribution-mode-fill;
 
     &.collapsed {
+      display: none;
       background-color: $contribution-mode-fill;
       border: 1px solid $contribution-mode-stroke;
     }
@@ -357,6 +403,7 @@ div.bio {margin-bottom: 60px;}
     border: 1px solid $contribution-mode-fill;
 
     &.collapsed {
+      display: none;
       background-color: $contribution-mode-fill;
       border: 1px solid $contribution-mode-stroke;
     }
@@ -397,6 +444,17 @@ div.bio {margin-bottom: 60px;}
   padding: 0;
 }
 
+.panel.collapsable.citation {
+  font-size: 10px;
+  padding: 6px 8px;
+}
+
+.panel.citation input {
+  font-size: 10px;
+  display: inline;
+  width: 80%;
+}
+
 .panel.collapsable > section, .panel.collapsable > div {
   opacity: 1;
   -webkit-transition: opacity 0.5s 0.3s;
@@ -435,6 +493,7 @@ div.bio {margin-bottom: 60px;}
   top: 12px;
   width: 15px;
   text-shadow: none;
+  cursor: pointer;
 }
 
 .panel.collapsable .fa-times {
@@ -483,8 +542,8 @@ div.bio {margin-bottom: 60px;}
   font-size: 18px;
   color: #434055;
   letter-spacing: 0.75px;
-  max-width: 200%;
-  white-space: nowrap;
+  max-width: 30%;
+  // white-space: nowrap;
   background-color: $panels-bg;
   border: 1px solid $panels-stroke;
   border-radius: 4px;
@@ -569,8 +628,9 @@ section .legend-box {
 }
 
 .legend-panel h5,
-filters-panel h5 {
+.filters h5 {
   text-align: center;
+  font-size: 10px;
 }
 
 section .legend-text {
@@ -935,6 +995,9 @@ group-timeline {
 /* filters styles */
 filters-panel {
 
+  // height: 25vh;
+  // overflow-y: scroll;
+
   svg .bar {
     fill: $filter-color;
   }
@@ -999,12 +1062,12 @@ filters-panel.panel h4 {
 
 filters-panel.panel h5 {
   padding-left: 0;
-  margin: 0 0 15px;
+  margin: 0 0 10px;
 }
 
 .panel h5.interaction-info {
   margin-top: 10px;
-  font-size: 13px;
+  font-size: 10px;
   font-style: italic;
 }
 
@@ -1126,12 +1189,12 @@ contextual-info-panel .btn {
 }
 
 .btn.contribute {
-  background-color: $contribution-mode-fill;
+  background-color: $light-color;
   border-color: $contribution-mode-stroke;
-  color: $light-color;
+  color: $contribution-mode-fill;
 
   i {
-    color: $light-color;
+    color: $contribution-mode-fill;
     opacity: 1;
   }
 }
@@ -1366,6 +1429,7 @@ add-link.panel section {
 /* Contextual Info Panel*/
 contextual-info-panel.panel {
   background-color: $light-color;
+  margin-bottom: 5px;
 }
 
 .groupBar .group {
@@ -1377,7 +1441,7 @@ contextual-info-panel.panel.contribution-mode-on {
 }
 
 .all-types {
-  max-height: 20vh;
+  max-height: 10vh;
   overflow-y: auto;
 }
 contextual-info-panel > section, contextual-info-panel > div > section {
@@ -1395,6 +1459,7 @@ contextual-info-panel > section, contextual-info-panel > div > section {
   .person-right {
     float: right;
     text-align: center;
+    margin-top: 10px;
   }
 
   p.person-right {
@@ -1544,19 +1609,39 @@ small-timeline .label.relationship {
   // -webkit-box-pack: center;
   // -ms-flex-pack: center;
   // justify-content: center;
-  padding: 10px 15px;
+  // padding: 10px 15px;
   // -webkit-box-align: center;
   // -ms-flex-align: center;
   // align-items: center;
   border-radius: 0 0 3px 3px;
   border-bottom: 0;
 
-  button {
-    padding: 2px 8px;
-    margin-top: 5px;
-    width: auto;
+  span {
+    float: right;
+    border-left: 2px solid darkgray;
+    padding-left: 5px;
+
+    button {
+      padding: 2px 8px;
+      // margin: 0 0 0 20px;
+      margin-bottom: 0px;
+      // @include float-right;
+      vertical-align: middle;
+      width: auto;
+    }
   }
+
+
 }
+
+// contextual-info-panel p {
+//   float: right;
+//   width: 25%;
+// }
+//
+// contextual-info-panel h2 {
+//   float: left;
+// }
 
 #more-info a {
   margin-left: 10px;
@@ -1568,21 +1653,23 @@ small-timeline .label.relationship {
 
 #more-info img {
   width: auto;
-  height: 35px;
+  height: 20px;
 
   cursor: pointer;
 }
 
 #more-info i {
-  font-size: 35px;
-  // margin-top: 5px;
+  font-size: 20px;
+  margin-right: 5px;
   cursor: pointer;
   vertical-align: middle;
 }
 
-#more-info button {
-  margin-left: 20px;
+#more-info i.fa-book {
+  cursor: default;
 }
+
+
 /* people finder */
 people-finder {
   height: 100px;

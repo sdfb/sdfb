@@ -72,7 +72,7 @@ angular.module('redesign2017App')
 
         scope.linkAlert = function() {
           if (scope.addLinkClosed) {
-            $window.alert('To add a relationship, drag a node onto any other. If the node you need is not in this view, add it by double-clicking.');
+            $window.alert('To add a relationship, drag a node onto any other. If the node you need is not in this view, add it by double-clicking. You can search within this view by clicking the magnifying glass on the right.');
           } else {
             scope.addLinkClosed = true;
           }
@@ -97,7 +97,7 @@ angular.module('redesign2017App')
                 scope.newLink.target.id = parseInt(otherNode.id);
                 scope.$apply(function() {
                   scope.addLinkClosed = false;
-                  scope.legendClosed = true;
+                  $rootScope.legendClosed = true;
                   $rootScope.filtersClosed = true;
                   scope.peopleFinderClosed = true;
                   scope.groupAssignClosed = true;
@@ -163,7 +163,7 @@ angular.module('redesign2017App')
               var newLink = {id: scope.addedLinkId, source: d, target: otherNode, weight: 60, start_year: 1500, end_year: 1700, new: true};
               addedLinks.push(newLink);
               scope.$apply(function() {
-                scope.legendClosed = true;
+                $rootScope.legendClosed = true;
                 scope.newLink.id = scope.addedLinkId;
                 scope.addedLinkId += 1;
               });

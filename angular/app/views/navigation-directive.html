@@ -28,13 +28,21 @@
             <a class="nav-link dropdown-toggle"  uib-dropdown-toggle style="display: inline-block; cursor: pointer;">
               Download
             </a>
-            <ul uib-dropdown-menu class="dropdown-menu" style="padding:17px;">
+            <ul uib-dropdown-menu class="dropdown-menu" style="padding:17px;" ng-click="$event.stopPropagation()">
               <li><a target="_self" href="/data/SDFB_people_2017_10_13.csv" download="SDFB_people_{{today}}.csv">People</a></li>
               <li><a target="_self" href="/data/SDFB_relationships_2017_10_13.csv" download="SDFB_relationships_{{today}}.csv">Relationships</a></li>
             </ul>
           </li>
-          <li><a href ui-sref="home.about">About</a></li>
-          <li><a href ui-sref="home.help">Help</a></li>
+          <li uib-dropdown>
+            <a class="nav-link dropdown-toggle"  uib-dropdown-toggle style="display: inline-block; cursor: pointer;">
+              Cite
+            </a>
+            <ul uib-dropdown-menu class="dropdown-menu" style="padding:17px;" ng-click="$event.stopPropagation()">
+              <li><input readonly class="form-control" onClick="this.select()" ng-model="$root.citation" ng-model-options="{ getterSetter: true }"/></li>
+            </ul>
+          </li>
+          <li><a href ui-sref="home.about" target="_blank">About</a></li>
+          <li><a href ui-sref="home.help" target="_blank">Help</a></li>
           <li class="log-in" ng-show="$root.user.is_active && $root.user.user_type !== 'Standard'"><a href ng-click="openCurate()">Curate</a></li>
           <!-- <li class="log-in"><a href ng-click="openCurate()">Curate</a></li> -->
           <li class="log-in" uib-dropdown>
@@ -42,17 +50,18 @@
               <span ng-show="!$root.user.is_active">Login</span>
               <span ng-show="$root.user.is_active">{{$root.user.username}}</span>
             </a>
-            <div ng-show="!$root.user.is_active" uib-dropdown-menu class="dropdown-menu" style="padding:17px;">
+            <div ng-show="!$root.user.is_active" uib-dropdown-menu class="dropdown-menu" style="padding:17px;" ng-click="$event.stopPropagation()">
               <form class="form" id="formLogin">
                 <h3>Email</h3>
                 <input class="form-control" ng-model="$root.user.email" name="email" id="email" placeholder="Email" type="text">
                 <h3>Password</h3>
                 <input class="form-control" ng-model="$root.user.password" name="password" id="password" placeholder="Password" type="password"><br>
+                <div uib-alert close="logInFailed = false;" class="alert alert-danger" ng-show="logInFailed">Incorrect Username or Password</div>
                 <button type="button" id="btnLogin" class="btn btn-primary" ng-click="logIn()">Login</button>
               </form>
               <a href ng-click="openSignup()">Sign Up</a> | <a href ng-click="openResetRequest()">Forgot Password?</a>
             </div>
-            <div ng-show="$root.user.is_active" uib-dropdown-menu class="dropdown-menu user-info" style="padding:17px;">
+            <div ng-show="$root.user.is_active" uib-dropdown-menu class="dropdown-menu user-info" style="padding:17px;" ng-click="$event.stopPropagation()">
               <h5>{{$root.user.first_name}} {{$root.user.last_name}} ({{$root.user.id}})</h5>
               <a>edit profile</a>
               <a href ng-click="logOut()">log out</a>

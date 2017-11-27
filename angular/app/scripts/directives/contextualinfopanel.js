@@ -7,7 +7,7 @@
  * # contextualInfoPanel
  */
 angular.module('redesign2017App')
-  .directive('contextualInfoPanel', ['apiService', '$stateParams', function(apiService, $stateParams) {
+  .directive('contextualInfoPanel', ['apiService', '$stateParams', '$rootScope', function(apiService, $stateParams, $rootScope) {
     return {
       templateUrl: './views/contextual-info-panel.html',
       restrict: 'E',
@@ -85,17 +85,31 @@ angular.module('redesign2017App')
         scope.download = 'data:attachment/json;charset=utf-8,' +  encodeURIComponent(JSON.stringify(scope.data, null, 2));
 
         scope.$watch('currentSelection', function(newValue, oldValue) {
+
+          if (newValue !== oldValue && scope.currentSelection.type) {
+            $rootScope.searchClosed = true;
+          }
           if (scope.currentSelection.type == 'group') {
             scope.currentSelection.includes.forEach(function(p, i) {
               p.start_year = scope.currentSelection.data[0].attributes.people[i].start_year;
               p.start_year_type = scope.currentSelection.data[0].attributes.people[i].start_year_type;
             })
+            if (!scope.currentSelection.data[0].attributes.citations) {
+              scope.selectionCitation = "No citation provided";
+            } else {
+              scope.selectionCitation = scope.currentSelection.data[0].attributes.citations;
+            }
           };
 
           if (scope.currentSelection.type === 'person') {
             apiService.getUserName(scope.currentSelection.attributes.created_by).then(function(result) {
               scope.currentSelection.attributes.created_by_name = result.data.username;
             });
+            if (!scope.currentSelection.attributes.citations) {
+              scope.selectionCitation = "No citation provided";
+            } else {
+              scope.selectionCitation = scope.currentSelection.attributes.citations;
+            }
           } else if (scope.currentSelection.type === 'group') {
             apiService.getUserName(scope.currentSelection.data[0].attributes.created_by).then(function(result) {
               scope.currentSelection.data[0].attributes.created_by_name = result.data.username;

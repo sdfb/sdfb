@@ -50,7 +50,7 @@ angular.module('redesign2017App')
           addedGroups.push(newGroup);
           scope.$apply(function() {
             scope.addGroupClosed = false;
-            scope.legendClosed = true;
+            $rootScope.legendClosed = true;
             scope.newGroup.id = scope.addedGroupId;
             $rootScope.filtersClosed = true;
             scope.addedGroupId -= 1;

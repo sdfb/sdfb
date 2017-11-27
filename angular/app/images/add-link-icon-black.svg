@@ -8,8 +8,8 @@
         <g id="Edit-Node-1" transform="translate(-1398.000000, -318.000000)">
             <g id="add-link" transform="translate(1385.000000, 305.000000)">
                 <g id="add-link-icon" transform="translate(13.000000, 12.000000)">
-                    <path d="M16,22 C16,13.163444 8.836556,6 -2.22044605e-16,6" id="Oval" stroke="#000000" stroke-width="2"></path>
-                    <text id="plus---FontAwesome" font-family="FontAwesome" font-size="14" font-weight="normal" fill="#000000">
+                    <path d="M16,22 C16,13.163444 8.836556,6 -2.22044605e-16,6" id="Oval" stroke="#F5A623" stroke-width="2"></path>
+                    <text id="plus---FontAwesome" font-family="FontAwesome" font-size="14" font-weight="normal" fill="#F5A623">
                         <tspan x="12" y="9">+</tspan>
                     </text>
                 </g>

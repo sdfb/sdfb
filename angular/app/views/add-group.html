@@ -4,7 +4,7 @@
     <div class="form-content">
   		<h4 class="paragraph-title">Group Name <i class="fa fa-asterisk" aria-hidden="true"></i></h4>
   	  <!-- <input placeholder="Search for a person" type="text" ng-model="person.added" uib-typeahead="person for person in peopleToSelect | filter:$viewValue | limitTo:8" class="form-control"> -->
-  		<input required type="text" ng-model="newGroup.name" placeholder="Search for a group" uib-typeahead="group as group.name for group in callGroupsTypeahead($viewValue)" typeahead-loading="loadingNewGroups" typeahead-no-results="noResultsNewGroups" class="form-control" class="form-control" typeahead-show-hint="true" typeahead-min-length="3" typeahead-on-select="foundNewGroup($item)">
+  		<input name="name" required type="text" ng-model="newGroup.name" placeholder="Search for a group" uib-typeahead="group as group.name for group in callGroupsTypeahead($viewValue)" typeahead-loading="loadingNewGroups" typeahead-no-results="noResultsNewGroups" class="form-control" class="form-control" typeahead-show-hint="true" typeahead-wait-ms='500' typeahead-on-select="foundNewGroup($item)">
       <i ng-show="loadingNewGroups" class="glyphicon glyphicon-refresh"></i>
       <div ng-show="noResultsNewGroups">
         <i class="glyphicon glyphicon-remove"></i> No Results Found: Add this group
@@ -18,25 +18,45 @@
 
   		<h4>Start date <i class="fa fa-asterisk" aria-hidden="true"></i></h4>
   	  <div class="input-group">
-  			<select required class="input-group-addon" ng-model="newGroup.startDateType" ng-disabled="newGroup.exists" ng-options="type.name for type in config.dateTypes"></select><i class="fa fa-caret-down" aria-hidden="true"></i>
-  	    <input required ng-disabled="newGroup.exists" class="form-control" ng-model="newGroup.startDate">
+  			<select name="startType" required class="input-group-addon" ng-model="newGroup.startDateType" ng-disabled="newGroup.exists" ng-options="type.name for type in config.dateTypes"></select><i class="fa fa-caret-down" aria-hidden="true"></i>
+  	    <input name="startDate" required type="number" ng-minlength=4 ng-maxlength=4 ng-disabled="newGroup.exists" class="form-control" ng-model="newGroup.startDate">
   	  </div>
 
   	  <h4>End date <i class="fa fa-asterisk" aria-hidden="true"></i></h4>
   	  <div class="input-group">
-  			<select required class="input-group-addon" ng-model="newGroup.endDateType" ng-disabled="newGroup.exists" ng-options="type.name for type in config.dateTypes"></select><i class="fa fa-caret-down" aria-hidden="true"></i>
-  	    <input required class="form-control" ng-disabled="newGroup.exists" ng-model="newGroup.endDate">
+  			<select name="endType" required class="input-group-addon" ng-model="newGroup.endDateType" ng-disabled="newGroup.exists" ng-options="type.name for type in config.dateTypes"></select><i class="fa fa-caret-down" aria-hidden="true"></i>
+  	    <input name="endDate" required type="number" ng-minlength=4 ng-maxlength=4 class="form-control" ng-disabled="newGroup.exists" ng-model="newGroup.endDate">
   	  </div>
 
       <h4>Citation</h4>
       <textarea type="text" ng-model="newLink.citation" placeholder="{{ sampleCitation }}" class="form-control"></textarea>
 
       <br><input ng-show="$root.user.user_type !== 'Standard'" ng-model="newGroup.is_approved" type="checkbox"/> <span ng-show="$root.user.user_type !== 'Standard'">Approved?</span></input>
-
-  		<button ng-disabled="newGroup.exists || groupForm.$invalid" class="btn btn-primary" type="submit">Add & Continue</button>
-      <div class="invalid-form" ng-show="groupForm.$invalid">
-        You are missing required fields.
+      <div class="alert alert-danger" ng-show="groupForm.$invalid">
+        <div ng-show="groupForm.name.$error.required">
+					You must include a name.
+				</div>
+				<div ng-show="groupForm.startType.$error.required">
+					You must select a start date type from the dropdown.
+				</div>
+				<div ng-show="groupForm.endType.$error.required">
+					You must select an end date type from the dropdown.
+				</div>
+				<div ng-show="groupForm.startDate.$error.required">
+					You must include a start date.
+				</div>
+				<div ng-show="groupForm.endDate.$error.required">
+					You must include an end date.
+				</div>
+        <div ng-show="groupForm.startDate.$error.number || groupForm.startDate.$error.minlength || groupForm.startDate.$error.maxlength">
+					Start date must be a 4-digit year.
+				</div>
+				<div ng-show="groupForm.endDate.$error.number || groupForm.endDate.$error.minlength || groupForm.endDate.$error.maxlength">
+					End date must be a 4-digit year.
+				</div>
       </div>
+  		<button ng-disabled="newGroup.exists || groupForm.$invalid" class="btn btn-primary" type="submit">Add & Continue</button>
+
     </div>
 
 

@@ -86,11 +86,11 @@ angular.module('redesign2017App')
       $uibModalInstance.dismiss('cancel');
     };
 
-    $ctrl.close = function() {
+    $ctrl.submit = function() {
       $ctrl.addToDB = {}
       $ctrl.addToDB.auth_token = $rootScope.user.auth_token;
       $ctrl.addToDB.nodes = [];
-      $ctrl.people.forEach(function (p) {
+      $ctrl.people.forEach(function (p, i) {
         var newPerson = {};
         newPerson.id = parseInt(p.id);
         // newPerson.name = p.attributes.name;
@@ -104,20 +104,22 @@ angular.module('redesign2017App')
         newPerson.is_active = !p.is_dismissed;
         if (newPerson.is_approved || newPerson.is_active === false) {
           $ctrl.addToDB.nodes.push(newPerson);
+          $ctrl.people.splice(i,1);
         }
       });
       $ctrl.addToDB.relationships = [];
-      $ctrl.relationships.forEach(function(r) {
+      $ctrl.relationships.forEach(function(r, i) {
         var newRelationship = {};
         newRelationship.id = parseInt(r.id);
         newRelationship.is_approved = r.is_approved;
         newRelationship.is_active = !r.is_dismissed;
         if (newRelationship.is_approved || newRelationship.is_active === false) {
           $ctrl.addToDB.relationships.push(newRelationship);
+          $ctrl.relationships.splice(i,1);
         }
       });
       $ctrl.addToDB.relationshipAssignments = [];
-      $ctrl.relTypes.forEach(function(r) {
+      $ctrl.relTypes.forEach(function(r, i) {
         var newRelType = {};
         newRelType.id = parseInt(r.id);
         newRelType.is_approved = r.is_approved;
@@ -126,10 +128,11 @@ angular.module('redesign2017App')
         if (newRelType.is_approved || newRelType.is_active === false) {
           console.log('gotcha')
           $ctrl.addToDB.relationshipAssignments.push(newRelType);
+          $ctrl.relTypes.splice(i,1);
         }
       })
       $ctrl.addToDB.groups = [];
-      $ctrl.groups.forEach(function (g) {
+      $ctrl.groups.forEach(function (g, i) {
         var newGroup = {};
         newGroup.id = parseInt(g.id);
         // newPerson.name = p.attributes.name;
@@ -143,10 +146,11 @@ angular.module('redesign2017App')
         newGroup.is_active = !g.is_dismissed;
         if (newGroup.is_approved || newGroup.is_active === false) {
           $ctrl.addToDB.groups.push(newGroup);
+          $ctrl.groups.splice(i,1);
         }
       });
       $ctrl.addToDB.group_assignments = [];
-      $ctrl.group_assignments.forEach(function (g) {
+      $ctrl.group_assignments.forEach(function (g, i) {
         var newGroupAssign = {};
         newGroupAssign.id = parseInt(g.id);
         // newPerson.name = p.attributes.name;
@@ -160,11 +164,17 @@ angular.module('redesign2017App')
         newGroupAssign.is_active = !g.is_dismissed;
         if (newGroupAssign.is_approved || newGroupAssign.is_active === false) {
           $ctrl.addToDB.group_assignments.push(newGroupAssign);
+          $ctrl.group_assignments.splice(i,1);
         }
       });
 
-      // apiService.writeData($ctrl.addToDB);
-      $uibModalInstance.close($ctrl.addToDB);
+      apiService.writeData($ctrl.addToDB).then(function(result) {
+        $scope.curateSuccess = true;
+      }, function(error) {
+        console.error("An error occured while fetching file",error);
+        $scope.curateFailure = true;
+      });
+      // $uibModalInstance.close($ctrl.addToDB);
     }
 
   }]);
