@@ -53,23 +53,7 @@ angular.module('redesign2017App')
       $ctrl.addToDB.links.forEach (function(l) {
         delete l.id;
       })
-      apiService.writeData($ctrl.addToDB).then(function(result) {
-        $ctrl.addToDB = {nodes: [], links: [], groups: [], group_assignments: []};
-        $ctrl.addedNodes = [];
-        $ctrl.addedLinks = [];
-        $ctrl.addedGroups = [];
-        // $scope.$parent.newNode = {};
-        // $scope.$parent.addedNodeId = 0;
-        // $scope.$parent.newLink = {source:{}, target: {}};
-        // $scope.$parent.newGroup = {};
-        // $scope.$parent.groupAssign = {person: {}, group: {}};
-        // $scope.$parent.config.added = false;
-        $scope.reviewSuccess = true;
-        // $scope.$parent.updateNetwork($scope.$parent.data);
-      }, function(error) {
-        console.error("An error occured while fetching file",error);
-        $scope.reviewFailure = true;
-      });
+      $uibModalInstance.close($ctrl.addToDB);
 
     }
 

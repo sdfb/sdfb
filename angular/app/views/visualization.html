@@ -1,7 +1,14 @@
-<div uib-alert close="noData = false;" class="alert alert-danger" ng-show="noData">
-  There are <strong>no data</strong> for these IDs. Please hit the back button or try again with a different search or URL.
-</div>
+
 <div class="panels-container">
+  <div uib-alert close="noData = false;" class="alert alert-danger" ng-show="noData" >
+    There are <strong>no data</strong> for these IDs. Please hit the back button or try again with a different search or URL.
+  </div>
+  <div uib-alert close="reviewSuccess = false;" class="alert alert-success" ng-show="reviewSuccess" dismiss-on-timeout=3000>
+    <strong>Your information is submitted!</strong> It will be available on the site once it's been approved by a curator.
+  </div>
+  <div uib-alert close="reviewFailure = false;" class="alert alert-danger" ng-show="reviewFailure">
+    <strong>Something went wrong!</strong> Please try again, log out and back in, or refresh the page. If the problem persists, <a href="mailto:SixDegreesFrancisBacon@gmail.com" class="alert-link">contact us</a>.
+  </div>
   <section class="on-the-left">
     <search-panel class="panel collapsable left search" ng-class="{'collapsed' : $root.searchClosed}"></search-panel>
     <contextual-info-panel class="panel context" ng-show=" config.viewMode != 'group-timeline' && !$parent.searchClosed " ng-class="{'contribution-mode-on': $parent.config.contributionMode}"></contextual-info-panel>

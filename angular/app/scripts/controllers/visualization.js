@@ -259,22 +259,23 @@ angular.module('redesign2017App').component('visualization', {
         }
       });
       modalInstance.result.then(function(result) {
-        // result.links.forEach (function(l) {
-        //   delete l.id;
-        // })
-        // console.log(result);
-        // apiService.writeData(result);
-        // $scope.addToDB = {nodes: [], links: [], groups: [], group_assignments: []};
-        // $scope.addedNodes = [];
-        // $scope.addedLinks = [];
-        // $scope.addedGroups = [];
-        // $scope.newNode = {};
-        // $scope.addedNodeId = 0;
-        // $scope.newLink = {source:{}, target: {}};
-        // $scope.newGroup = {};
-        // $scope.groupAssign = {person: {}, group: {}};
-        // $scope.config.added = false;
-        // $scope.updateNetwork($scope.data);
+        apiService.writeData(result).then(function(r) {
+          $scope.addToDB = {nodes: [], links: [], groups: [], group_assignments: []};
+          $scope.addedNodes = [];
+          $scope.addedLinks = [];
+          $scope.addedGroups = [];
+          $scope.newNode = {};
+          $scope.addedNodeId = 0;
+          $scope.newLink = {source:{}, target: {}};
+          $scope.newGroup = {};
+          $scope.groupAssign = {person: {}, group: {}};
+          $scope.config.added = false;
+          $scope.reviewSuccess = true;
+          $scope.updateNetwork($scope.data);
+        }, function(error) {
+          console.error("An error occured while fetching file",error);
+          $scope.reviewFailure = true;
+        });
       }, function(reason) {
         console.log(reason);
         $scope.updateNetwork($scope.data);

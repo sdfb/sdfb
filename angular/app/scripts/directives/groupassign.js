@@ -7,7 +7,7 @@
  * # addNode
  */
 angular.module('redesign2017App')
-  .directive('groupAssign', ['apiService', '$timeout', '$window', function (apiService, $timeout, $window) {
+  .directive('groupAssign', ['apiService', '$timeout', '$window', "$rootScope", function (apiService, $timeout, $window, $rootScope) {
     return {
       templateUrl: './views/group-assign.html',
       restrict: 'E',
