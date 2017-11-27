@@ -15,19 +15,19 @@
 			</div>
 			<h4>Birth date <i class="fa fa-asterisk" aria-hidden="true"></i></h4>
 		  <div class="input-group">
-				<select class="input-group-addon" ng-model="newNode.birthDateType" ng-disabled="newNode.exists" ng-options="type.name for type in config.dateTypes" required></select><i class="fa fa-caret-down" aria-hidden="true"></i>
-		    <input ng-disabled="newNode.exists" class="form-control" ng-model="newNode.birthDate" required>
+				<select name="birthType" class="input-group-addon" ng-model="newNode.birthDateType" ng-disabled="newNode.exists" ng-options="type.name for type in config.dateTypes" required></select><i class="fa fa-caret-down" aria-hidden="true"></i>
+		    <input name="birthDate" ng-disabled="newNode.exists" class="form-control" ng-model="newNode.birthDate" required>
 		  </div>
 
 		  <h4>Death date <i class="fa fa-asterisk" aria-hidden="true"></i></h4>
 		  <div class="input-group">
-				<select class="input-group-addon" ng-model="newNode.deathDateType" ng-disabled="newNode.exists" ng-options="type.name for type in config.dateTypes" required></select><i class="fa fa-caret-down" aria-hidden="true"></i>
-		    <input class="form-control" ng-disabled="newNode.exists" ng-model="newNode.deathDate">
+				<select name="deathType" class="input-group-addon" ng-model="newNode.deathDateType" ng-disabled="newNode.exists" ng-options="type.name for type in config.dateTypes" required></select><i class="fa fa-caret-down" aria-hidden="true"></i>
+		    <input name="deathDate" required class="form-control" ng-disabled="newNode.exists" ng-model="newNode.deathDate">
 		  </div>
 
 			<h4>Gender <i class="fa fa-asterisk" aria-hidden="true"></i></h4>
 		  <div class="input-group">
-				<select class="input-group-reltype" ng-model="newNode.gender" ng-disabled="newNode.exists" ng-options="type for type in config.genderTypes" required></select><i class="fa fa-caret-down reltype" aria-hidden="true"></i>
+				<select name="gender" class="input-group-reltype" ng-model="newNode.gender" ng-disabled="newNode.exists" ng-options="type for type in config.genderTypes" required></select><i class="fa fa-caret-down reltype" aria-hidden="true"></i>
 		  </div>
 
 			<h4>Prefix</h4>
@@ -68,8 +68,25 @@
 		    <input class="form-control" ng-model="newGroupAssign.endDate">
 		  </div>
 
-			<div class="alert alert-danger" ng-show="nodeForm.$invalid && !newNode.exists">
-				You are missing required fields.
+			<div class="alert alert-danger" ng-show="nodeForm.$invalid && !newNode.exists && (nodeForm.$dirty || nodeForm.$touched)">
+				<div ng-show="nodeForm.personName.$error.required">
+					You must include a name.
+				</div>
+				<div ng-show="nodeForm.gender.$error.required">
+					You must select a gender from the dropdown.
+				</div>
+				<div ng-show="nodeForm.birthType.$error.required">
+					You must select a birth date type from the dropdown.
+				</div>
+				<div ng-show="nodeForm.deathType.$error.required">
+					You must select a death date type from the dropdown.
+				</div>
+				<div ng-show="nodeForm.birthDate.$error.required">
+					You must include a birth date.
+				</div>
+				<div ng-show="nodeForm.deathDate.$error.required">
+					You must include a death date.
+				</div>
 			</div>
 
 			<button ng-disabled="(newNode.exists && !notInView) || (nodeForm.$invalid && !newNode.exists)" class="btn btn-primary" type="submit">Add & Continue</button>
