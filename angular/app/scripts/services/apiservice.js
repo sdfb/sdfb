@@ -398,6 +398,14 @@ angular.module('redesign2017App')
           console.warn("If the issue is related to CORS Origin, try install this extention on Chrome: https://chrome.google.com/webstore/detail/allow-control-allow-origi/nlfbmbojpeacfghkpbjhddihlkkiljbi")
           return response;
         });
+      },
+      getRecent : function(){
+
+        var url = baseUrl + '/api/recent_contributions';
+        return $http({
+          method: 'GET',
+          url: url
+        });
       }
     }
   });
