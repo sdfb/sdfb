@@ -28,7 +28,7 @@
   	    <input name="endDate" required type="number" ng-minlength=4 ng-maxlength=4 class="form-control" ng-disabled="newGroup.exists" ng-model="newGroup.endDate">
   	  </div>
 
-      <h4>Citation</h4>
+      <h4>References</h4>
       <textarea type="text" ng-model="newLink.citation" placeholder="{{ sampleCitation }}" class="form-control"></textarea>
 
       <br><input ng-show="$root.user.user_type !== 'Standard'" ng-model="newGroup.is_approved" type="checkbox"/> <span ng-show="$root.user.user_type !== 'Standard'">Approved?</span></input>
