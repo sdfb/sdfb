@@ -69,7 +69,9 @@ redesign2017App.config(function($stateProvider, $locationProvider, $compileProvi
     url: 'people/{page}',
     resolve: {
       people: ['apiService', '$stateParams', function(apiService, $stateParams) {
-        return apiService.getAllPeople(100,$stateParams.page).then(function(result){
+        var size = 100;
+        var offset = ($stateParams.page-1)*size;
+        return apiService.getAllPeople(size,offset).then(function(result){
           return result.data;
         });
       }]
