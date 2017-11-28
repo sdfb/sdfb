@@ -1,9 +1,9 @@
 <!-- <navigation-directive></navigation-directive> -->
-<div class="panels-container">
-	<div class="btn-group btn-group-justified">
+<div class="tables-container">
+	<!-- <div class="btn-group btn-group-justified">
 		<label class="btn btn-primary" ng-model="dataType" uib-btn-radio="'people'">People</label>
 		<label class="btn btn-primary" ng-model="dataType" uib-btn-radio="'relationships'">Relationships</label>
-	</div>
+	</div> -->
 	<table id="people" class="table table-hover">
 			<thead>
 					<tr>
@@ -12,18 +12,18 @@
 							<td class="sig-column">Historical Significance</td>
 							<td class="birth-column">Birth Date</td>
 							<td class="death-column">Death Date</td>
-							<td class="connections-column">Degree</td>
+							<td class="connections-column">Gender</td>
 							<td class="action-column">Action</td>
 					</tr>
 			</thead>
 			<tbody>
 					<tr class="person {{'p'+person.id}}" ng-class="{ 'active': group.active }" ng-repeat="person in people">
 							<td>{{ person.id }}</td>
-							<td>{{ person.display_name }}</td>
-							<td>{{ person.historical_significance }}</td>
-							<td>{{ person.birth_year_type }} {{ person.ext_birth_year }}</td>
-							<td>{{ person.death_year_type }} {{ person.ext_death_year }}</td>
-							<td>{{ person.degree }}</td>
+							<td>{{ person.attributes.name }}</td>
+							<td>{{ person.attributes.historical_significance }}</td>
+							<td>{{ person.attributes.birth_year_type }} {{ person.attributes.birth_year }}</td>
+							<td>{{ person.attributes.death_year_type }} {{ person.attributes.death_year }}</td>
+							<td>{{ person.attributes.gender }}</td>
 							<td>
 									<button ui-sref="home.visualization({ ids: person.id, type: 'network' })" type="button" class="btn btn-primary">
 											Visualize

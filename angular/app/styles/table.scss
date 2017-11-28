@@ -171,3 +171,14 @@ thead {
 .table > thead > tr > td:last-of-type {
   padding-right: 0;
 }
+
+table#people {
+  width: 80%;
+
+}
+
+.tables-container {
+  height: 100vh;
+  overflow-y: scroll;
+  padding: 20px;
+}

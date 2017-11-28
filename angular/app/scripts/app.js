@@ -64,17 +64,17 @@ redesign2017App.config(function($stateProvider, $locationProvider, $compileProvi
     },
     component: 'visualization'
   }
-  var tableState = {
-    name: 'home.browse',
-    url: 'browse',
+  var peopleState = {
+    name: 'home.people',
+    url: 'people/{page}',
     resolve: {
-      tableData: ['$http', function($http) {
-        return $http.get("/data/SDFB_people_2017_10_13.csv").then(function(result){
+      people: ['apiService', '$stateParams', function(apiService, $stateParams) {
+        return apiService.getAllPeople(100,$stateParams.page).then(function(result){
           return result.data;
         });
       }]
     },
-    component: 'browse'
+    component: 'people'
   }
   var userState = {
     name: "home.user",
@@ -264,7 +264,7 @@ redesign2017App.config(function($stateProvider, $locationProvider, $compileProvi
 
   $stateProvider.state(homeState);
   $stateProvider.state(vizState);
-  $stateProvider.state(tableState);
+  $stateProvider.state(peopleState);
   $stateProvider.state(userState);
   $stateProvider.state(resetState);
   $stateProvider.state(aboutState);
