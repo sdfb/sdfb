@@ -10,6 +10,11 @@
       <h4>Group <i class="fa fa-asterisk" aria-hidden="true"></i></h4>
       <input name="name" required type="text" ng-model="groupAssign.group.name" class="form-control" uib-typeahead="group as group.name for group in callGroupsTypeahead($viewValue)" typeahead-loading="loadingGroups" typeahead-no-results="noResultsGroups" typeahead-show-hint="true" typeahead-min-length="3" typeahead-on-select="groupAssignSelected($item, $model, $label, $event)">
 
+      <div class="alert alert-danger" ng-show="impossibleGroupAssign">
+        There is no overlap between the person's life dates and the group's dates. Please select a different group or person.
+      </div>
+
+
       <h4>Start date <i class="fa fa-asterisk" aria-hidden="true"></i></h4>
       <div class="input-group">
         <select name="startType" required class="input-group-addon" ng-model="groupAssign.startDateType" ng-options="type.name for type in config.dateTypes"></select><i class="fa fa-caret-down" aria-hidden="true"></i>
@@ -50,7 +55,7 @@
 					End date must be a 4-digit year.
 				</div>
       </div>
-      <button ng-disabled="groupAssignForm.$invalid" type="submit" class="btn btn-primary">Add & Continue</button>
+      <button ng-disabled="groupAssignForm.$invalid || impossibleGroupAssign" type="submit" class="btn btn-primary">Add & Continue</button>
 
       <p>Your submission needs to be validated by SDFB curators. You will see it as unapproved contribution in the meantime.</p>
 

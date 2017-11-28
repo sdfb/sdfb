@@ -162,16 +162,23 @@ angular.module('redesign2017App')
               apiService.getGroups(groupId).then(function (result) {
                 var groupStartYear = result.data.data[0].attributes.start_year;
                 var groupEndYear = result.data.data[0].attributes.end_year;
+                console.log(personBirthYear,groupStartYear);
+                console.log(personDeathYear,groupEndYear);
                 $timeout(function(){
-                  if (personBirthYear >= groupStartYear) {
-                    scope.groupAssign.startDate = personBirthYear;
+                  if (personDeathYear < groupStartYear || personBirthYear > groupEndYear) {
+                    scope.impossibleGroupAssign = true;
                   } else {
-                    scope.groupAssign.startDate = groupStartYear;
-                  };
-                  if (personDeathYear <= groupEndYear) {
-                    scope.groupAssign.endDate = personDeathYear;
-                  } else {
-                    scope.groupAssign.endDate = groupEndYear;
+                    scope.impossibleGroupAssign = false;
+                    if (personBirthYear >= groupStartYear) {
+                      scope.groupAssign.startDate = personBirthYear;
+                    } else {
+                      scope.groupAssign.startDate = groupStartYear;
+                    };
+                    if (personDeathYear <= groupEndYear) {
+                      scope.groupAssign.endDate = personDeathYear;
+                    } else {
+                      scope.groupAssign.endDate = groupEndYear;
+                    }
                   }
                 });
               });
