@@ -200,6 +200,7 @@ redesign2017App.config(function($stateProvider, $locationProvider, $compileProvi
               });
               $scope.relationships = recent.data.relationships;
 
+              $scope.relTypes = []
               recent.data.links.forEach(function(d) {
                 apiService.getUserName(d.attributes.created_by).then(function(result) {
                   d.attributes.created_by_name = result.data.username;
@@ -211,9 +212,12 @@ redesign2017App.config(function($stateProvider, $locationProvider, $compileProvi
                   if (i.id === d.attributes.relationship.attributes.person_2.toString()) {
                     d.attributes.relationship.attributes.person_2_name = i.attributes.name;
                   }
-                })
+                });
+                if (d.attributes.created_by !== 3) {
+                  $scope.relTypes.push(d);
+                }
               });
-              $scope.relTypes = recent.data.links;
+              // $scope.relTypes = recent.data.links;
 
               $scope.groups = recent.data.groups;
               $scope.groups.forEach(function(g) {
