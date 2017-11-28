@@ -14,6 +14,10 @@
      console.log("table view!")
      $scope.config = {contributionMode: false};
      this.$onChanges = function() {
+
+       if($stateParams.page === 'undefined') {
+        $state.go('home.people', {page: '1'})
+       }
        $scope.people = this.people.data;
        console.log($scope.people);
        $scope.currentPage = $stateParams.page;
