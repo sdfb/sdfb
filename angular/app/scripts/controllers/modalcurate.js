@@ -70,16 +70,6 @@ angular.module('redesign2017App')
       })
     });
     $ctrl.group_assignments = group_assignments.data;
-    // $ctrl.addToDB = addToDB;
-    // $ctrl.sendData = sendData;
-
-    // $ctrl.remove = function(index, list) {
-    //   list.splice(index,1);
-    // };
-
-    // $ctrl.ok = function() {
-    //   $uibModalInstance.close($ctrl.selected.group);
-    // };
 
     $ctrl.cancel = function() {
       console.log('dismiss')
@@ -138,13 +128,6 @@ angular.module('redesign2017App')
       $ctrl.groups.forEach(function (g, i) {
         var newGroup = {};
         newGroup.id = parseInt(g.id);
-        // newPerson.name = p.attributes.name;
-        // newPerson.birthDate = p.attributes.birth_year;
-        // newPerson.birthDateType = p.attributes.birth_year_type;
-        // newPerson.deathDate = p.attributes.death_year;
-        // newPerson.deathDateType = p.attributes.death_year_type;
-        // newPerson.gender = p.attributes.gender;
-        // newPerson.historical_significance = p.attributes.historical_significance;
         newGroup.is_approved = g.is_approved;
         newGroup.is_active = !g.is_dismissed;
         newGroup.name = g.attributes.name;
@@ -159,13 +142,6 @@ angular.module('redesign2017App')
       $ctrl.group_assignments.forEach(function (g, i) {
         var newGroupAssign = {};
         newGroupAssign.id = parseInt(g.id);
-        // newPerson.name = p.attributes.name;
-        // newPerson.birthDate = p.attributes.birth_year;
-        // newPerson.birthDateType = p.attributes.birth_year_type;
-        // newPerson.deathDate = p.attributes.death_year;
-        // newPerson.deathDateType = p.attributes.death_year_type;
-        // newPerson.gender = p.attributes.gender;
-        // newPerson.historical_significance = p.attributes.historical_significance;
         newGroupAssign.is_approved = g.is_approved;
         newGroupAssign.is_active = !g.is_dismissed;
         newGroupAssign.citations = g.attributes.citations;
