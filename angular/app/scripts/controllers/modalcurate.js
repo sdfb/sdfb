@@ -93,13 +93,14 @@ angular.module('redesign2017App')
       $ctrl.people.forEach(function (p, i) {
         var newPerson = {};
         newPerson.id = parseInt(p.id);
-        // newPerson.name = p.attributes.name;
+        newPerson.name = p.attributes.name;
         // newPerson.birthDate = p.attributes.birth_year;
         // newPerson.birthDateType = p.attributes.birth_year_type;
         // newPerson.deathDate = p.attributes.death_year;
         // newPerson.deathDateType = p.attributes.death_year_type;
         // newPerson.gender = p.attributes.gender;
-        // newPerson.historical_significance = p.attributes.historical_significance;
+        newPerson.historical_significance = p.attributes.historical_significance;
+        newPerson.citations = p.attributes.citations;
         newPerson.is_approved = p.is_approved;
         newPerson.is_active = !p.is_dismissed;
         if (newPerson.is_approved || newPerson.is_active === false) {
