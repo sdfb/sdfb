@@ -47,8 +47,8 @@
 			</thead>
 			<tbody>
 					<tr class="rel {{'r'+rel.id}}" ng-class="{ 'active': group.active }" ng-repeat="rel in relationships">
-							<td>{{ rel.attributes.person_1_name }}</td>
-							<td>{{ rel.attributes.person_2_name }}</td>
+							<td><a href ui-sref="home.visualization({ids: rel.attributes.person_1, type: 'network', min_confidence: '60'})">{{ rel.attributes.person_1_name }}</a></td>
+							<td><a href ui-sref="home.visualization({ids: rel.attributes.person_2, type: 'network', min_confidence: '60'})">{{ rel.attributes.person_2_name }}</a></td>
 							<td>{{ rel.attributes.start_year_type }} {{ rel.attributes.start_year }}</td>
 							<td>{{ rel.attributes.end_year_type }} {{ rel.attributes.end_year }}</td>
 							<td><a href ui-sref="home.user({userId: rel.attributes.created_by})">{{rel.attributes.created_by_name}}</a></td>
