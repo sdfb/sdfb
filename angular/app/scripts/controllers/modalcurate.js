@@ -114,6 +114,7 @@ angular.module('redesign2017App')
         newRelationship.id = parseInt(r.id);
         newRelationship.is_approved = r.is_approved;
         newRelationship.is_active = !r.is_dismissed;
+        newRelationship.citations = r.attributes.citations;
         if (newRelationship.is_approved || newRelationship.is_active === false) {
           $ctrl.addToDB.relationships.push(newRelationship);
           $ctrl.relationships.splice(i,1);
@@ -125,6 +126,7 @@ angular.module('redesign2017App')
         newRelType.id = parseInt(r.id);
         newRelType.is_approved = r.is_approved;
         newRelType.is_active = !r.is_dismissed;
+        newRelType.citations = r.attributes.citations;
         console.log(newRelType.is_approved, newRelType.is_active);
         if (newRelType.is_approved || newRelType.is_active === false) {
           console.log('gotcha')
@@ -145,6 +147,9 @@ angular.module('redesign2017App')
         // newPerson.historical_significance = p.attributes.historical_significance;
         newGroup.is_approved = g.is_approved;
         newGroup.is_active = !g.is_dismissed;
+        newGroup.name = g.attributes.name;
+        newGroup.description = g.attributes.description;
+        newGroup.citations = g.attributes.citations;
         if (newGroup.is_approved || newGroup.is_active === false) {
           $ctrl.addToDB.groups.push(newGroup);
           $ctrl.groups.splice(i,1);
@@ -163,6 +168,7 @@ angular.module('redesign2017App')
         // newPerson.historical_significance = p.attributes.historical_significance;
         newGroupAssign.is_approved = g.is_approved;
         newGroupAssign.is_active = !g.is_dismissed;
+        newGroupAssign.citations = g.attributes.citations;
         if (newGroupAssign.is_approved || newGroupAssign.is_active === false) {
           $ctrl.addToDB.group_assignments.push(newGroupAssign);
           $ctrl.group_assignments.splice(i,1);
