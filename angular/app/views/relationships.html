@@ -1,38 +1,7 @@
 <!-- <navigation-directive></navigation-directive> -->
+<a class="btn btn-primary table-btn" target="_self" href="/data/SDFB_relationships_2017_10_13.csv" download="SDFB_relationships_{{today}}.csv">Download All Relationships</a><br/>
 <ul uib-pagination direction-links="true" ng-change="pageChanged()" max-size="10" boundary-links="true" boundary-link-numbers="true" total-items="totalItems" ng-model="currentPage"></ul>
 <div class="tables-container">
-	<!-- <div class="btn-group btn-group-justified">
-		<label class="btn btn-primary" ng-model="dataType" uib-btn-radio="'relationships'">relationships</label>
-		<label class="btn btn-primary" ng-model="dataType" uib-btn-radio="'relationships'">relationships</label>
-	</div> -->
-	<!-- <table  class="table table-hover">
-			<thead>
-					<tr>
-							<td class="id-column">ID</td>
-							<td class="name-column">Name</td>
-							<td class="sig-column">Historical Significance</td>
-							<td class="birth-column">Birth Date</td>
-							<td class="death-column">Death Date</td>
-							<td class="connections-column">Gender</td>
-							<td class="action-column">Action</td>
-					</tr>
-			</thead>
-			<tbody>
-					<tr class="rel {{'p'+rel.id}}" ng-class="{ 'active': group.active }" ng-repeat="rel in relationships">
-							<td>{{ rel.id }}</td>
-							<td>{{ rel.attributes.name }}</td>
-							<td>{{ rel.attributes.historical_significance }}</td>
-							<td>{{ rel.attributes.birth_year_type }} {{ rel.attributes.birth_year }}</td>
-							<td>{{ rel.attributes.death_year_type }} {{ rel.attributes.death_year }}</td>
-							<td>{{ rel.attributes.gender }}</td>
-							<td>
-									<button ui-sref="home.visualization({ ids: rel.id, type: 'network' })" type="button" class="btn btn-primary">
-											Visualize
-									</button>
-							</td>
-					</tr>
-			</tbody>
-	</table> -->
 	<table id="relationships" class="table table-hover">
 			<thead>
 					<tr>
