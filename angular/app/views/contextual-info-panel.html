@@ -15,7 +15,7 @@
 </section>
 <section ng-if="currentSelection.type == 'person' " id="XXXcurrent-selection-person1">
   <div class="person-right">
-    <a href ng-click="console.log('clicked'); $root.openEditPerson(currentSelection.id)"><i class="fa fa-pencil" aria-hidden="true"></i></a>
+    <a href ng-show="$root.user.is_active && $root.user.user_type !== 'Standard'" ng-click="$root.openEditPerson(currentSelection.id)"><i class="fa fa-pencil" aria-hidden="true"></i></a>
     <p ng-show="currentSelection.attributes.created_by !== 2" class="person-created"><a href ui-sref="home.user({userId: currentSelection.attributes.created_by})">{{currentSelection.attributes.created_by_name}}</a></p>
   </div>
   <h2>{{currentSelection.attributes.name }}</h2>
