@@ -146,7 +146,7 @@ class UserRelContrib < ActiveRecord::Base
       new_max_certainty = averages_by_rel_type.map { |e| e.avg_certainty.to_f }.max 
       
       # update the relationships certainty list and max certainty
-      Relationship.update(self.relationship_id, max_certainty: new_max_certainty)
+      self.relationship.update_column(:max_certainty, new_max_certainty)
     end
   end
 
