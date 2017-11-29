@@ -121,7 +121,7 @@ class User < ActiveRecord::Base
       }
     end
     obj[:relationship_types] = UserRelContrib.all_approved.for_user(self.id)
-    .sort_by{|g| g.approved_on}.reverse.collect do |g| 
+    .sort_by{|g| g.approved_on || Date.new(0)}.reverse.collect do |g| 
       {
         id: g.id, 
         people: g.relationship.get_both_names, 
