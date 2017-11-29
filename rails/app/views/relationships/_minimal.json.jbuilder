@@ -9,6 +9,7 @@ json.types do
     json.end_year rel_type.end_year
     json.end_year_type rel_type.end_date_type
     json.created_by rel_type.created_by
+    json.citations rel_type.citation
   end
 end
 json.type "relationship"
