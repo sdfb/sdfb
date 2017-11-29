@@ -20,7 +20,6 @@
        }
        $scope.relationships = this.relationships.data;
        var included = this.relationships.included;
-       console.log($scope.relationships);
        $scope.relationships.forEach(function(d) {
          apiService.getUserName(d.attributes.created_by).then(function(result) {
            d.attributes.created_by_name = result.data.username;
