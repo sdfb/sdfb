@@ -306,7 +306,7 @@ angular.module('redesign2017App')
           cBrushSelection.selectAll("brush-text")
             .data([{
               type: "w",
-              confidence: 60
+              confidence: scope.minConf
             }, {
               type: "e",
               confidence: 100
@@ -338,7 +338,7 @@ angular.module('redesign2017App')
               return d.confidence + "%";
             });
 
-          cBrushSelection.call(cBrush.move, /*confidenceX.range()*/[confidenceX(60),confidenceWidth]);
+          cBrushSelection.call(cBrush.move, /*confidenceX.range()*/[confidenceX(scope.minConf),confidenceWidth]);
 
           function updateBrush() {
             var brushPositionX = d3.select(".confidence-container .selection").node().getBBox().x,

@@ -1,0 +1,33 @@
+<!-- <navigation-directive></navigation-directive> -->
+<a class="btn btn-primary table-btn" target="_self" href="/data/SDFB_relationships_2017_10_13.csv" download="SDFB_relationships_{{today}}.csv">Download All Relationships</a><br/>
+<ul uib-pagination direction-links="true" ng-change="pageChanged()" max-size="10" boundary-links="true" boundary-link-numbers="true" total-items="totalItems" ng-model="currentPage"></ul>
+<div class="tables-container">
+	<table id="relationships" class="table table-hover">
+			<thead>
+					<tr>
+						<td class="source-column">Source Name</td>
+						<td class="target-column">Target Name</td>
+						<td class="start-column">Start Date</td>
+						<td class="end-column">End Date</td>
+						<td class="created-column">Created By</td>
+						<td class="cite-column">References</td>
+						<td class="action-column">Action</td>
+					</tr>
+			</thead>
+			<tbody>
+					<tr class="rel {{'r'+rel.id}}" ng-class="{ 'active': group.active }" ng-repeat="rel in relationships">
+							<td><a href ui-sref="home.visualization({ids: rel.attributes.person_1, type: 'network', min_confidence: '60'})">{{ rel.attributes.person_1_name }}</a></td>
+							<td><a href ui-sref="home.visualization({ids: rel.attributes.person_2, type: 'network', min_confidence: '60'})">{{ rel.attributes.person_2_name }}</a></td>
+							<td>{{ rel.attributes.start_year_type }} {{ rel.attributes.start_year }}</td>
+							<td>{{ rel.attributes.end_year_type }} {{ rel.attributes.end_year }}</td>
+							<td><a href ui-sref="home.user({userId: rel.attributes.created_by})">{{rel.attributes.created_by_name}}</a></td>
+							<td>{{rel.attributes.citations}}</td>
+							<td>
+									<button ng-click="goToShared(rel.attributes.person_1,rel.attributes.person_2)" type="button" class="btn btn-primary">
+											Visualize
+									</button>
+							</td>
+					</tr>
+			</tbody>
+	</table>
+</div>

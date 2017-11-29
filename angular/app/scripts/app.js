@@ -64,17 +64,34 @@ redesign2017App.config(function($stateProvider, $locationProvider, $compileProvi
     },
     component: 'visualization'
   }
-  var tableState = {
-    name: 'home.browse',
-    url: 'browse',
+  var peopleState = {
+    name: 'home.people',
+    url: 'people/{page}',
     resolve: {
-      tableData: ['$http', function($http) {
-        return $http.get("/data/SDFB_people_2017_10_13.csv").then(function(result){
+      people: ['apiService', '$stateParams', function(apiService, $stateParams) {
+        var size = 100;
+        var offset = ($stateParams.page-1)*size;
+        return apiService.getAllPeople(size,offset).then(function(result){
           return result.data;
         });
       }]
     },
-    component: 'browse'
+    component: 'people'
+  }
+  var relationshipsState = {
+    name: 'home.relationships',
+    url: 'relationships/{page}',
+    resolve: {
+      relationships: ['apiService', '$stateParams', function(apiService, $stateParams) {
+        var size = 100;
+        var offset = ($stateParams.page-1)*size;
+        return apiService.getAllRelationships(size,offset).then(function(result){
+          console.log(result);
+          return result.data;
+        });
+      }]
+    },
+    component: 'relationships'
   }
   var userState = {
     name: "home.user",
@@ -161,6 +178,94 @@ redesign2017App.config(function($stateProvider, $locationProvider, $compileProvi
         });
     }]
   }
+  var recentState = {
+    name: "home.recent",
+    url: "recent",
+    onEnter: ['$stateParams', '$state', '$uibModal', '$resource', function($stateParams, $state, $uibModal, $resource) {
+        $uibModal.open({
+            templateUrl: './views/modal-recent.html',
+            resolve: {
+              recent: ['apiService', function(apiService) {
+                return apiService.getRecent().then(function(result){
+                  return result;
+                })
+              }]
+            },
+            controller: ['$scope', 'recent', 'apiService', function($scope, recent, apiService) {
+              console.log(recent.data);
+              recent = recent.data;
+              $scope.people = recent.data.people;
+
+              $scope.people.forEach(function(p) {
+                apiService.getUserName(p.attributes.created_by).then(function(result) {
+                  p.attributes.created_by_name = result.data.username;
+                });
+              })
+
+              recent.data.relationships.forEach(function(d) {
+                apiService.getUserName(d.created_by).then(function(result) {
+                  d.created_by_name = result.data.username;
+                });
+                // recent.includes.forEach(function(i) {
+                //   if (i.id === d.attributes.person_1.toString()) {
+                //     d.attributes.person_1_name = i.attributes.name;
+                //   }
+                //   if (i.id === d.attributes.person_2.toString()) {
+                //     d.attributes.person_2_name = i.attributes.name;
+                //   }
+                // })
+              });
+              $scope.relationships = recent.data.relationships;
+
+              $scope.relTypes = []
+              recent.data.links.forEach(function(d) {
+                apiService.getUserName(d.attributes.created_by).then(function(result) {
+                  d.attributes.created_by_name = result.data.username;
+                });
+                recent.includes.forEach(function(i) {
+                  if (i.id === d.attributes.relationship.attributes.person_1.toString()) {
+                    d.attributes.relationship.attributes.person_1_name = i.attributes.name;
+                  }
+                  if (i.id === d.attributes.relationship.attributes.person_2.toString()) {
+                    d.attributes.relationship.attributes.person_2_name = i.attributes.name;
+                  }
+                });
+                if (d.attributes.created_by !== 3) {
+                  $scope.relTypes.push(d);
+                }
+              });
+              // $scope.relTypes = recent.data.links;
+
+              $scope.groups = recent.data.groups;
+              $scope.groups.forEach(function(g) {
+                apiService.getUserName(g.attributes.created_by).then(function(result) {
+                  g.attributes.created_by_name = result.data.username;
+                });
+              })
+
+              recent.data.group_assignments.forEach(function(d) {
+                apiService.getUserName(d.attributes.created_by).then(function(result) {
+                  d.attributes.created_by_name = result.data.username;
+                });
+                recent.includes.forEach(function(i) {
+                  if (i.id === d.attributes.person_id.toString()) {
+                    d.attributes.person_name = i.attributes.name;
+                  }
+                  if (i.id === d.attributes.group_id.toString()) {
+                    d.attributes.group_name = i.attributes.name;
+                  }
+                })
+              });
+              $scope.group_assignments = recent.data.group_assignments;
+              $scope.dismiss = function() {
+                $scope.$dismiss();
+              };
+            }]
+        }).result.finally(function() {
+            $state.go('^');
+        });
+    }]
+  }
   var helpState = {
     name: "home.help",
     url: "help",
@@ -180,10 +285,12 @@ redesign2017App.config(function($stateProvider, $locationProvider, $compileProvi
 
   $stateProvider.state(homeState);
   $stateProvider.state(vizState);
-  $stateProvider.state(tableState);
+  $stateProvider.state(peopleState);
+  $stateProvider.state(relationshipsState);
   $stateProvider.state(userState);
   $stateProvider.state(resetState);
   $stateProvider.state(aboutState);
+  $stateProvider.state(recentState);
   $stateProvider.state(helpState);
   $locationProvider.html5Mode(true);
   $compileProvider.aHrefSanitizationWhitelist(/^\s*(https?|ftp|mailto|data):/);

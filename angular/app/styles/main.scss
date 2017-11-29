@@ -74,33 +74,8 @@ path.danger {
 }
 
 #contribute-buttons {
-  float: left;
+  float: right;
 }
-// #content {
-//   position: relative;
-//   width: 100%;
-// }
-// #drawer{
-//     height: 100%;
-//     width: 200px;
-//     background-color: lightsteelblue;
-//     position: absolute;
-//     right: 0;
-//     top: 0;
-//     z-index: 99;
-//     white-space: nowrap;
-// }
-// .collapsing-width{
-//     position: relative;
-//     overflow-x: hidden;
-//     -webkit-transition: width 0.35s ease;
-//     -moz-transition: width 0.35s ease;
-//     -o-transition: width 0.35s ease;
-//     transition: width 0.35s ease;
-// }
-// .collapse{
-//     overflow-x: hidden;
-// }
 
 .alert {
   text-transform: none;
@@ -1189,12 +1164,12 @@ contextual-info-panel .btn {
 }
 
 .btn.contribute {
-  background-color: $light-color;
+  background-color: $contribution-mode-fill;
   border-color: $contribution-mode-stroke;
-  color: $contribution-mode-fill;
+  color: $light-color;
 
   i {
-    color: $contribution-mode-fill;
+    color: $light-color;
     opacity: 1;
   }
 }
@@ -1732,7 +1707,97 @@ people-finder {
   }
 }
 
+.edit-person {
+  input, textarea {
+    width: 50%;
+  }
+  h3 {
+    margin-top: 10px;
+  }
+  textarea {
+    margin-bottom: 5px;
+  }
 
+  .input-group {
+    position: relative;
+    width: 50%;
+
+    input.form-control {
+      width: 60%;
+      float: right;
+    }
+
+    .input-group-addon {
+      width: 40%;
+    }
+
+    .input-group-reltype {
+      width: 100%;
+      border-radius: 4px;
+    }
+
+    .input-group-addon, .input-group-reltype {
+      background-color: $contribution-mode-fill;
+      border: 1px solid $contribution-mode-stroke;
+      color: $light-color;
+      text-transform: capitalize !important;
+      cursor: pointer;
+      font-size: 13px;
+      height: 30px;
+      padding: 4px 6px 6px 6px;
+      text-align: left;
+      float: left;
+      text-transform: uppercase;
+      -moz-appearance: none;
+      appearance: none;
+      -webkit-appearance: none;
+
+      optgroup {
+        background-color: $light-color;
+        color: $contribution-mode-fill;
+      }
+
+      option {
+        background-color: $light-color;
+        color: $contribution-mode-fill;
+
+        &:active,
+        &:active:focus,
+        &:active:hover,
+        &:focus,
+        &:hover {
+          -webkit-box-shadow: inset 20px 20px orange;
+          box-shadow: inset 20px 20px orange;
+        }
+      }
+    }
+
+    .input-group-addon:not(:first-child):not(:last-child) {
+      border-bottom-right-radius: 4px;
+      border-top-right-radius: 4px;
+    }
+
+    .fa-caret-down {
+      right: 62%;
+    }
+
+    .fa-caret-down.reltype {
+      right: 5%;
+    }
+
+    .fa-caret-down, .fa-caret-down.reltype {
+      border-left: 1px solid rgba(255,255,255,0.5);
+      bottom: 3px;
+      color: $light-color;
+      cursor: pointer;
+      height: 80%;
+      line-height: 27px;
+      padding-left: 6px;
+      pointer-events: none;
+      position: absolute;
+    }
+  }
+}
 
 /*User information*/
 

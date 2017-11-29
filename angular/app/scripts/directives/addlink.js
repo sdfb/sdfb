@@ -11,7 +11,7 @@ angular.module('redesign2017App')
       templateUrl: './views/add-link.html',
       restrict: 'E',
       link: function postLink(scope, element, attrs) {
-        scope.newLink.startDateType = scope.newLink.endDateType = scope.config.dateTypes[1];
+        // scope.newLink.startDateType = scope.newLink.endDateType = scope.config.dateTypes[1];
 
         scope.config.relTypeCats = null;
         $http.get("/data/rel_cats.json").then(function(result){
@@ -78,6 +78,39 @@ angular.module('redesign2017App')
           }
         }
 
+        scope.prepopulate = function(sourceNode, targetNode) {
+          scope.newLink.startDateType = scope.config.dateTypes[5];
+          scope.newLink.endDateType = scope.config.dateTypes[3];
+          scope.newLink.source.name = sourceNode.attributes.name;
+          scope.newLink.source.id = parseInt(sourceNode.id);
+          scope.newLink.target.name = targetNode.attributes.name;
+          scope.newLink.target.id = parseInt(targetNode.id);
+          if (sourceNode.id && targetNode.id) {
+            apiService.getPeople(sourceNode.id.toString()+','+targetNode.id.toString()).then(function (result) {
+              var person1BirthYear = parseInt(result.data[0].attributes.birth_year);
+              var person1DeathYear = parseInt(result.data[0].attributes.death_year);
+              var person2BirthYear = parseInt(result.data[1].attributes.birth_year);
+              var person2DeathYear = parseInt(result.data[1].attributes.death_year);
+              $timeout(function(){
+                if (person1BirthYear >= person2BirthYear) {
+                  // d3.select('#startDate').attr('placeholder', person1BirthYear);
+                  scope.newLink.startDate = person1BirthYear;
+                } else {
+                  // d3.select('#startDate').attr('placeholder', person2BirthYear);
+                  scope.newLink.startDate = person2BirthYear;
+                };
+                if (person1DeathYear <= person2DeathYear) {
+                  // d3.select('#endDate').attr('placeholder', person1DeathYear);
+                  scope.newLink.endDate = person1DeathYear;
+                } else {
+                  // d3.select('#endDate').attr('placeholder', person2DeathYear);
+                  scope.newLink.endDate = person2DeathYear;
+                }
+              })
+            });
+          }
+        }
+
         scope.showNewLink = function(d, nodes) {
           // var nodes = scope.data.included;
           nodes.forEach(function (otherNode) {
@@ -91,10 +124,7 @@ angular.module('redesign2017App')
 
                 d3.select("#n"+otherNode.id).transition()
                   .attr('r', 25);
-                scope.newLink.source.name = d.attributes.name;
-                scope.newLink.source.id = parseInt(d.id);
-                scope.newLink.target.name = otherNode.attributes.name;
-                scope.newLink.target.id = parseInt(otherNode.id);
+
                 scope.$apply(function() {
                   scope.addLinkClosed = false;
                   $rootScope.legendClosed = true;
@@ -103,26 +133,8 @@ angular.module('redesign2017App')
                   scope.groupAssignClosed = true;
                   scope.addNodeClosed = true;
                 });
-                if (d.id && otherNode.id) {
-                  apiService.getPeople(d.id.toString()+','+otherNode.id.toString()).then(function (result) {
-                    var person1BirthYear = parseInt(result.data[0].attributes.birth_year);
-                    var person1DeathYear = parseInt(result.data[0].attributes.death_year);
-                    var person2BirthYear = parseInt(result.data[1].attributes.birth_year);
-                    var person2DeathYear = parseInt(result.data[1].attributes.death_year);
-                    $timeout(function(){
-                      if (person1BirthYear >= person2BirthYear) {
-                        d3.select('#startDate').attr('placeholder', person1BirthYear);
-                      } else {
-                        d3.select('#startDate').attr('placeholder', person2BirthYear);
-                      };
-                      if (person1DeathYear <= person2DeathYear) {
-                        d3.select('#endDate').attr('placeholder', person1DeathYear);
-                      } else {
-                        d3.select('#endDate').attr('placeholder', person2DeathYear);
-                      }
-                    })
-                  });
-                }
+                scope.prepopulate(d, otherNode);
+
               }
               else {
                 otherNode.radius = false;
@@ -160,7 +172,8 @@ angular.module('redesign2017App')
             var nodeDistance = Math.sqrt(Math.pow(otherNode.x - d3.event.x, 2) + Math.pow(otherNode.y - d3.event.y, 2));
             if (otherNode != d && nodeDistance < 10) {
               console.log("new link added:", otherNode.attributes.name);
-              var newLink = {id: scope.addedLinkId, source: d, target: otherNode, weight: 60, start_year: 1500, end_year: 1700, new: true};
+              console.log(scope.newLink.startDate);
+              var newLink = {id: scope.addedLinkId, source: d, target: otherNode, weight: angular.copy(scope.newLink.confidence), start_year: angular.copy(scope.newLink.startDate), end_year: angular.copy(scope.newLink.endDate), start_year_type: angular.copy(scope.newLink.startDateType), end_year_type:angular.copy(scope.newLink.endDateType), new: true};
               addedLinks.push(newLink);
               scope.$apply(function() {
                 $rootScope.legendClosed = true;

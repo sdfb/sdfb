@@ -1,0 +1,42 @@
+<div class="modal-header">
+    <h3 class="modal-title" id="modal-title">Edit Person</h3>
+    <i class="fa fa-times close-btn" aria-hidden="true" type="button" ng-click="$ctrl.cancel()" aria-label="Close"></i>
+</div>
+<div class="modal-body edit-person" id="modal-edit-person-body">
+    <form name="editPersonForm" novalidate class="form" ng-submit="$ctrl.close()">
+      <h3>Name <i class="fa fa-asterisk" aria-hidden="true"></i></h3>
+      <input class="form-control" ng-model="$ctrl.person.attributes.name" type="text">
+      <h3>Historical Significance</h3>
+      <textarea class="form-control" ng-model="$ctrl.person.attributes.historical_significance" type="text"></textarea>
+      <h3>Birth date <i class="fa fa-asterisk" aria-hidden="true"></i></h3>
+		  <div class="input-group">
+				<select name="birthType" class="input-group-addon" ng-model="$ctrl.person.attributes.birth_year_type" ng-options="type.name for type in $ctrl.dateTypes" required></select><i class="fa fa-caret-down" aria-hidden="true"></i>
+		    <input name="birthDate" type="text" ng-minlength=4 ng-maxlength=4 class="form-control" ng-model="$ctrl.person.attributes.birth_year" required>
+		  </div>
+
+		  <h3>Death date <i class="fa fa-asterisk" aria-hidden="true"></i></h3>
+		  <div class="input-group">
+				<select name="deathType" class="input-group-addon" ng-model="$ctrl.person.attributes.death_year_type" ng-options="type.name for type in $ctrl.dateTypes" required></select><i class="fa fa-caret-down" aria-hidden="true"></i>
+		    <input name="deathDate" required type="text" ng-minlength=4 ng-maxlength=4 class="form-control" ng-model="$ctrl.person.attributes.death_year">
+		  </div>
+
+			<h3>Gender <i class="fa fa-asterisk" aria-hidden="true"></i></h3>
+		  <div class="input-group">
+				<select name="gender" class="input-group-reltype" ng-model="$ctrl.person.attributes.gender" ng-options="type for type in $ctrl.genderTypes" required></select><i class="fa fa-caret-down reltype" aria-hidden="true"></i>
+		  </div>
+      <!-- <h3>Birth Year <i class="fa fa-asterisk" aria-hidden="true"></i></h3>
+      <input required class="form-control" ng-model="$ctrl.person.attributes.birth_year" type="text">
+      <h3>Death Year <i class="fa fa-asterisk" aria-hidden="true"></i></h3>
+      <input required class="form-control" ng-model="$ctrl.person.attributes.death_year" type="text">
+      <h3>Gender <i class="fa fa-asterisk" aria-hidden="true"></i></h3>
+      <input class="form-control" ng-model="$ctrl.person.attributes.gender" type="text"> -->
+      <h3>ODNB ID</h3>
+      <input class="form-control" ng-model="$ctrl.person.attributes.odnb_id" type="text">
+      <h3>References</h3>
+      <textarea class="form-control" ng-model="$ctrl.person.attributes.citations" type="text"></textarea>
+      <button ng-disabled="signupForm.$invalid" type="submit" id="btnLogin" class="btn btn-primary">Edit Person Info</button>
+      <div class="alert alert-danger" ng-show="editPersonForm.$invalid">
+				You are missing required fields.
+			</div>
+    </form>
+</div>

@@ -13,8 +13,8 @@
   			<p>Group already in <i>Six Degrees</i>. Try a different group name.</p>
   		</div>
 
-      <h4>Description</h4>
-      <input class="form-control" ng-model="newGroup.description" ng-disabled="newGroup.exists" placeholder="Description">
+      <h4>Description <i class="fa fa-asterisk" aria-hidden="true"></i></h4>
+      <input name="description" required class="form-control" ng-model="newGroup.description" ng-disabled="newGroup.exists" placeholder="Description">
 
   		<h4>Start date <i class="fa fa-asterisk" aria-hidden="true"></i></h4>
   	  <div class="input-group">
@@ -28,13 +28,16 @@
   	    <input name="endDate" required type="number" ng-minlength=4 ng-maxlength=4 class="form-control" ng-disabled="newGroup.exists" ng-model="newGroup.endDate">
   	  </div>
 
-      <h4>Citation</h4>
+      <h4>References</h4>
       <textarea type="text" ng-model="newLink.citation" placeholder="{{ sampleCitation }}" class="form-control"></textarea>
 
       <br><input ng-show="$root.user.user_type !== 'Standard'" ng-model="newGroup.is_approved" type="checkbox"/> <span ng-show="$root.user.user_type !== 'Standard'">Approved?</span></input>
       <div class="alert alert-danger" ng-show="groupForm.$invalid">
         <div ng-show="groupForm.name.$error.required">
 					You must include a name.
+				</div>
+        <div ng-show="groupForm.description.$error.required">
+					You must include a description.
 				</div>
 				<div ng-show="groupForm.startType.$error.required">
 					You must select a start date type from the dropdown.

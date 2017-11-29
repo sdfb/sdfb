@@ -156,6 +156,18 @@ angular.module('redesign2017App')
           return response;
         });
       },
+      getAllPeople : function(size, offset){
+
+        var url = baseUrl + '/api/all_people';
+        return $http({
+          method: 'GET',
+          url: url,
+          params: {
+              size: size.toString(),
+              offset: offset.toString()
+            }
+        });
+      },
       getRelationship : function(ids){
 
         var url = baseUrl + '/api/relationships';
@@ -171,6 +183,18 @@ angular.module('redesign2017App')
           console.error("An error occured while fetching file",response);
           console.warn("If the issue is related to CORS Origin, try install this extention on Chrome: https://chrome.google.com/webstore/detail/allow-control-allow-origi/nlfbmbojpeacfghkpbjhddihlkkiljbi")
           return response;
+        });
+      },
+      getAllRelationships : function(size, offset){
+
+        var url = baseUrl + '/api/all_relationships';
+        return $http({
+          method: 'GET',
+          url: url,
+          params: {
+              size: size.toString(),
+              offset: offset.toString()
+            }
         });
       },
       writeData : function(data){
@@ -397,6 +421,14 @@ angular.module('redesign2017App')
           console.error("An error occured while fetching file",response);
           console.warn("If the issue is related to CORS Origin, try install this extention on Chrome: https://chrome.google.com/webstore/detail/allow-control-allow-origi/nlfbmbojpeacfghkpbjhddihlkkiljbi")
           return response;
+        });
+      },
+      getRecent : function(){
+
+        var url = baseUrl + '/api/recent_contributions';
+        return $http({
+          method: 'GET',
+          url: url
         });
       }
     }

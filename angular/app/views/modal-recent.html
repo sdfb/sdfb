@@ -2,8 +2,8 @@
     <h3 class="modal-title" id="modal-title">List of Minor Groups</h3>
 </div> -->
 <div class="modal-body curate" id="modal-curate-body">
-    <h3 class="modal-title">Curate Recent Submissions</h3>
-    <i class="fa fa-times close-btn" aria-hidden="true" type="button" ng-click="$ctrl.cancel()" aria-label="Close"></i>
+    <h3 class="modal-title">Recently Approved Submissions</h3>
+    <i class="fa fa-times close-btn" aria-hidden="true" type="button" ng-click="cancel()" aria-label="Close"></i>
     <h4 class="modal-title">New People</h4>
     <table class="table table-hover curate people">
       <thead>
@@ -19,30 +19,21 @@
               <td class="gender-column">Gender</td>
               <td class="created-column">Created By</td>
               <td class="cite-column">References</td>
-              <td class="action-column">Approve?</td>
-              <td class="action-column">Discard?</td>
           </tr>
       </thead>
         <tbody>
-            <tr class="person {{'p'+person.id}}" ng-class="{ 'active': group.active }" ng-repeat="person in $ctrl.people">
-                <td><input class="form-control" ng-model="person.attributes.name"/></td>
+            <tr class="person {{'p'+person.id}}" ng-class="{ 'active': group.active }" ng-repeat="person in people">
+                <td>{{person.attributes.name}}</td>
                 <!-- <td>{{ person.attributes.prefix }}</td>
                 <td>{{ person.attributes.title }}</td>
                 <td>{{ person.attributes.suffix }}</td> -->
-                <td><textarea class="form-control" ng-model="person.attributes.historical_significance"></textarea></td>
+                <td>{{person.attributes.historical_significance}}</textarea></td>
 
                 <td>{{ person.attributes.birth_year_type }} {{ person.attributes.birth_year }}</td>
                 <td>{{ person.attributes.death_year_type }} {{ person.attributes.death_year }}</td>
                 <td>{{ person.attributes.gender }}</td>
                 <td><a href ui-sref="home.user({userId: person.attributes.created_by})">{{person.attributes.created_by_name}}</a></td>
-                <td><textarea class="form-control" ng-model="person.attributes.citations"></textarea></td>
-                <td>
-                  <input ng-model="person.is_approved" type="checkbox"/>
-                    <!-- <i class="fa fa-times" aria-hidden="true" type="button" ng-click="$ctrl.remove($index, $ctrl.addToDB.nodes)" aria-label="Remove"></i> -->
-                </td>
-                <td>
-                  <input ng-model="person.is_dismissed" type="checkbox"/>
-                </td>
+                <td>{{person.attributes.citations}}</td>
             </tr>
         </tbody>
     </table>
@@ -56,25 +47,17 @@
               <td class="end-column">End Date</td>
               <td class="created-column">Created By</td>
               <td class="cite-column">References</td>
-              <td class="action-column">Approve?</td>
-              <td class="action-column">Discard?</td>
             </tr>
         </thead>
         <tbody>
-            <tr class="rel {{'r'+rel.id}}" ng-class="{ 'active': group.active }" ng-repeat="rel in $ctrl.relationships">
-                <td>{{ rel.attributes.person_1_name }}</td>
+            <tr class="rel {{'r'+rel.id}}" ng-class="{ 'active': group.active }" ng-repeat="rel in relationships">
+                <td>{{rel.id}}</td>
+                <!-- <td>{{ rel.attributes.person_1_name }}</td> -->
                 <td>{{ rel.attributes.person_2_name }}</td>
                 <td>{{ rel.attributes.start_year_type }} {{ rel.attributes.start_year }}</td>
                 <td>{{ rel.attributes.end_year_type }} {{ rel.attributes.end_year }}</td>
-                <td><a href ui-sref="home.user({userId: rel.attributes.created_by})">{{rel.attributes.created_by_name}}</a></td>
-                <td><textarea class="form-control" ng-model="rel.attributes.citations"></textarea></td>
-                <td>
-                  <input ng-model="rel.is_approved" type="checkbox"/>
-                    <!-- <i class="fa fa-times" aria-hidden="true" type="button" ng-click="$ctrl.remove($index, $ctrl.addToDB.links)" aria-label="Remove"></i> -->
-                </td>
-                <td>
-                  <input ng-model="rel.is_dismissed" type="checkbox"/>
-                </td>
+                <td><a href ui-sref="home.user({userId: rel.created_by})">{{rel.created_by_name}}</a></td>
+                <td>{{rel.attributes.citations}}</td>
             </tr>
         </tbody>
     </table>
@@ -90,12 +73,10 @@
               <td class="type-column">Type</td>
               <td class="created-column">Created By</td>
               <td class="cite-column">References</td>
-              <td class="action-column">Approve?</td>
-              <td class="action-column">Discard?</td>
             </tr>
         </thead>
         <tbody>
-            <tr class="rel {{'r'+rel.id}}" ng-class="{ 'active': group.active }" ng-repeat="rel in $ctrl.relTypes">
+            <tr class="rel {{'r'+rel.id}}" ng-class="{ 'active': group.active }" ng-repeat="rel in relTypes">
                 <td>{{ rel.attributes.relationship.attributes.person_1_name }}</td>
                 <td>{{ rel.attributes.relationship.attributes.person_2_name }}</td>
                 <td>{{ rel.attributes.start_year_type }} {{ rel.attributes.start_year }}</td>
@@ -103,14 +84,7 @@
                 <td>{{ rel.attributes.confidence }}</td>
                 <td>{{ rel.attributes.type }}</td>
                 <td><a href ui-sref="home.user({userId: rel.attributes.created_by})">{{rel.attributes.created_by_name}}</a></td>
-                <td><textarea class="form-control" ng-model="rel.attributes.citations"></textarea></td>
-                <td>
-                  <input ng-model="rel.is_approved" type="checkbox"/>
-                    <!-- <i class="fa fa-times" aria-hidden="true" type="button" ng-click="$ctrl.remove($index, $ctrl.addToDB.links)" aria-label="Remove"></i> -->
-                </td>
-                <td>
-                  <input ng-model="rel.is_dismissed" type="checkbox"/>
-                </td>
+                <td>{{rel.attributes.citations}}</td>
             </tr>
         </tbody>
     </table>
@@ -124,25 +98,16 @@
               <td class="end-column">End Date</td>
               <td class="created-column">Created By</td>
               <td class="cite-column">References</td>
-              <td class="action-column">Approve?</td>
-              <td class="action-column">Discard?</td>
             </tr>
         </thead>
         <tbody>
-            <tr class="group {{'g'+group.id}}" ng-class="{ 'active': group.active }" ng-repeat="group in $ctrl.groups">
-                <td><input class="form-control" ng-model="group.attributes.name"/></td>
-                <td><textarea class="form-control" ng-model="group.attributes.description"></textarea></td>
+            <tr class="group {{'g'+group.id}}" ng-class="{ 'active': group.active }" ng-repeat="group in groups">
+                <td>{{group.attributes.name}}</td>
+                <td>{{group.attributes.description}}</td>
                 <td>{{ group.attributes.start_year_type }} {{ group.attributes.start_year }}</td>
                 <td>{{ group.attributes.end_year_type }} {{ group.attributes.end_year }}</td>
                 <td><a href ui-sref="home.user({userId: group.attributes.created_by})">{{group.attributes.created_by_name}}</a></td>
-                <td><textarea class="form-control" ng-model="group.attributes.citations"></textarea></td>
-                <td>
-                  <input ng-model="group.is_approved" type="checkbox"/>
-                    <!-- <i class="fa fa-times" aria-hidden="true" type="button" ng-click="$ctrl.remove($index, $ctrl.addToDB.groups)" aria-label="Remove"></i> -->
-                </td>
-                <td>
-                  <input ng-model="group.is_dismissed" type="checkbox"/>
-                </td>
+                <td>{{group.attributes.citations}}</td>
             </tr>
         </tbody>
     </table>
@@ -156,35 +121,20 @@
               <td class="end-column">End Date</td>
               <td class="created-column">Created By</td>
               <td class="cite-column">References</td>
-              <td class="action-column">Approve?</td>
-              <td class="action-column">Discard?</td>
             </tr>
         </thead>
         <tbody>
-            <tr class="rel {{'r'+rel.id}}" ng-class="{ 'active': group.active }" ng-repeat="rel in $ctrl.group_assignments">
+            <tr class="rel {{'r'+rel.id}}" ng-class="{ 'active': group.active }" ng-repeat="rel in group_assignments">
                 <td>{{ rel.attributes.person_name }}</td>
                 <td>{{ rel.attributes.group_name }}</td>
                 <td>{{ rel.attributes.start_year_type }} {{ rel.attributes.start_year }}</td>
                 <td>{{ rel.attributes.end_year_type }} {{ rel.attributes.end_year }}</td>
                 <td><a href ui-sref="home.user({userId: rel.attributes.created_by})">{{rel.attributes.created_by_name}}</a></td>
-                <td><textarea class="form-control" ng-model="rel.attributes.citations"></textarea></td>
-                <td>
-                  <input ng-model="rel.is_approved" type="checkbox"/>
-                    <!-- <i class="fa fa-times" aria-hidden="true" type="button" ng-click="$ctrl.remove($index, $ctrl.addToDB.group_assignments)" aria-label="Remove"></i> -->
-                </td>
-                <td>
-                  <input ng-model="rel.is_dismissed" type="checkbox"/>
-                </td>
+                <td>{{rel.attributes.citations}}</td>
             </tr>
         </tbody>
     </table>
-    <div uib-alert close="curateSuccess = false;" class="alert alert-success" ng-show="curateSuccess">
-      <strong>Curation complete!</strong> You may close this window.
-    </div>
-    <div uib-alert close="curateFailure = false;" class="alert alert-danger" ng-show="curateFailure">
-      <strong>Something went wrong!</strong> Please try again or refresh the page.
-    </div>
-    <button ng-click="$ctrl.submit()" type="button" class="btn btn-primary">
-        Submit
+    <button ng-click="dismiss()" type="button" class="btn btn-primary">
+        Close
     </button>
 </div>

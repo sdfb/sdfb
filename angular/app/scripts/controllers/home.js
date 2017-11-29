@@ -134,6 +134,42 @@ angular.module('redesign2017App').component('home', {
       });
     };
 
+    $rootScope.openEditPerson = function(personId, size, parentSelector) {
+      console.log(personId);
+      var parentElem = parentSelector ?
+        angular.element($document[0].querySelector('.modal-demo ' + parentSelector)) : undefined;
+      var modalInstance = $uibModal.open({
+        animation: $scope.modalAnimationsEnabled,
+        ariaLabelledBy: 'modal-edit-person',
+        ariaDescribedBy: 'modal-edit-person-body',
+        templateUrl: './views/modal-edit-person.html',
+        controller: 'ModalEditPersonCtrl',
+        controllerAs: '$ctrl',
+        size: size,
+        appendTo: parentElem,
+        resolve: {
+          person: function() {
+            return apiService.getPeople(personId).then(function(result) {
+              return result;
+            });
+          }
+        }
+      });
+      modalInstance.result.then(function(result) {
+        console.log(result);
+        var toDB = {nodes: [result], auth_token: $rootScope.user.auth_token}
+        apiService.writeData(toDB).then(function successCallback(response) {
+          console.log('success!');
+          $rootScope.personEditSuccess = true;
+        }, function errorCallback(error) {
+          console.log(error);
+          $rootScope.personEditFailure = true;
+        });
+      }, function() {
+        $log.info('Modal dismissed at: ' + new Date());
+      });
+    };
+
     $transitions.onBefore({}, function(transition) {
       console.log(transition);
       if ($scope.config.contributionMode) {

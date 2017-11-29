@@ -1,0 +1,43 @@
+<!-- <navigation-directive></navigation-directive> -->
+<a class="btn btn-primary table-btn" target="_self" href="/data/SDFB_people_2017_10_13.csv" download="SDFB_people_{{today}}.csv">Download All People</a><br/>
+<ul uib-pagination direction-links="true" ng-change="pageChanged()" max-size="10" boundary-links="true" boundary-link-numbers="true" total-items="totalItems" ng-model="currentPage"></ul>
+
+
+<div class="tables-container">
+	<!-- <div class="btn-group btn-group-justified">
+		<label class="btn btn-primary" ng-model="dataType" uib-btn-radio="'people'">People</label>
+		<label class="btn btn-primary" ng-model="dataType" uib-btn-radio="'personationships'">personationships</label>
+	</div> -->
+	<table id="people" class="table table-hover">
+			<thead>
+					<tr>
+							<td class="id-column">ID</td>
+							<td class="name-column">Name</td>
+							<td class="sig-column">Historical Significance</td>
+							<td class="birth-column">Birth Date</td>
+							<td class="death-column">Death Date</td>
+							<td class="connections-column">Gender</td>
+							<td class="created-column">Created By</td>
+							<td class="cite-column">References</td>
+							<td class="action-column">Action</td>
+					</tr>
+			</thead>
+			<tbody>
+					<tr class="person {{'p'+person.id}}" ng-class="{ 'active': group.active }" ng-repeat="person in people">
+							<td>{{ person.id }}</td>
+							<td>{{ person.attributes.name }}</td>
+							<td>{{ person.attributes.historical_significance }}</td>
+							<td>{{ person.attributes.birth_year_type }} {{ person.attributes.birth_year }}</td>
+							<td>{{ person.attributes.death_year_type }} {{ person.attributes.death_year }}</td>
+							<td>{{ person.attributes.gender }}</td>
+							<td><a href ui-sref="home.user({userId: person.attributes.created_by})">{{person.attributes.created_by_name}}</a></td>
+							<td>{{person.attributes.citations}}</td>
+							<td>
+									<button ui-sref="home.visualization({ ids: person.id, type: 'network' })" type="button" class="btn btn-primary">
+											Visualize
+									</button>
+							</td>
+					</tr>
+			</tbody>
+	</table>
+</div>

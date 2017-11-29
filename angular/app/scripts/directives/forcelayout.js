@@ -299,25 +299,12 @@ angular.module('redesign2017App').directive('forceLayout', ['apiService', '$time
             .on('click', function(d) { // Toggle link on click
               toggleClick(d, newLinks, this);
 
-              if (d.new) {
-
-                console.log(d);
-                scope.$apply(function() {
-                  scope.newLink.source.name = d.source.attributes.name;
-                  scope.newLink.source.id = d.source.id;
-                  scope.newLink.target.name = d.target.attributes.name;
-                  scope.newLink.target.id = d.target.id;
-                  scope.newLink.confidence = d.weight;
-                  scope.newLink.startDate = d.start_year;
-                  scope.newLink.startDateType = d.start_year_type;
-                  scope.newLink.endDate = d.end_year;
-                  scope.newLink.endDateType = d.end_year_type;
-                  scope.newLink.relType = d.relType;
-                  scope.newLink.id = d.id;
-                  scope.addLinkClosed = false;
-                  console.log(scope.newLink);
-                });
-              }
+              console.log(d);
+              scope.$apply(function() {
+                scope.prepopulate(d.source, d.target);
+                scope.newLink.id = d.id;
+                scope.addLinkClosed = false;
+              });
             });
 
 

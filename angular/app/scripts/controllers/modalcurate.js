@@ -70,16 +70,6 @@ angular.module('redesign2017App')
       })
     });
     $ctrl.group_assignments = group_assignments.data;
-    // $ctrl.addToDB = addToDB;
-    // $ctrl.sendData = sendData;
-
-    // $ctrl.remove = function(index, list) {
-    //   list.splice(index,1);
-    // };
-
-    // $ctrl.ok = function() {
-    //   $uibModalInstance.close($ctrl.selected.group);
-    // };
 
     $ctrl.cancel = function() {
       console.log('dismiss')
@@ -93,13 +83,14 @@ angular.module('redesign2017App')
       $ctrl.people.forEach(function (p, i) {
         var newPerson = {};
         newPerson.id = parseInt(p.id);
-        // newPerson.name = p.attributes.name;
+        newPerson.name = p.attributes.name;
         // newPerson.birthDate = p.attributes.birth_year;
         // newPerson.birthDateType = p.attributes.birth_year_type;
         // newPerson.deathDate = p.attributes.death_year;
         // newPerson.deathDateType = p.attributes.death_year_type;
         // newPerson.gender = p.attributes.gender;
-        // newPerson.historical_significance = p.attributes.historical_significance;
+        newPerson.historical_significance = p.attributes.historical_significance;
+        newPerson.citations = p.attributes.citations;
         newPerson.is_approved = p.is_approved;
         newPerson.is_active = !p.is_dismissed;
         if (newPerson.is_approved || newPerson.is_active === false) {
@@ -113,6 +104,7 @@ angular.module('redesign2017App')
         newRelationship.id = parseInt(r.id);
         newRelationship.is_approved = r.is_approved;
         newRelationship.is_active = !r.is_dismissed;
+        newRelationship.citations = r.attributes.citations;
         if (newRelationship.is_approved || newRelationship.is_active === false) {
           $ctrl.addToDB.relationships.push(newRelationship);
           $ctrl.relationships.splice(i,1);
@@ -124,6 +116,7 @@ angular.module('redesign2017App')
         newRelType.id = parseInt(r.id);
         newRelType.is_approved = r.is_approved;
         newRelType.is_active = !r.is_dismissed;
+        newRelType.citations = r.attributes.citations;
         console.log(newRelType.is_approved, newRelType.is_active);
         if (newRelType.is_approved || newRelType.is_active === false) {
           console.log('gotcha')
@@ -135,15 +128,11 @@ angular.module('redesign2017App')
       $ctrl.groups.forEach(function (g, i) {
         var newGroup = {};
         newGroup.id = parseInt(g.id);
-        // newPerson.name = p.attributes.name;
-        // newPerson.birthDate = p.attributes.birth_year;
-        // newPerson.birthDateType = p.attributes.birth_year_type;
-        // newPerson.deathDate = p.attributes.death_year;
-        // newPerson.deathDateType = p.attributes.death_year_type;
-        // newPerson.gender = p.attributes.gender;
-        // newPerson.historical_significance = p.attributes.historical_significance;
         newGroup.is_approved = g.is_approved;
         newGroup.is_active = !g.is_dismissed;
+        newGroup.name = g.attributes.name;
+        newGroup.description = g.attributes.description;
+        newGroup.citations = g.attributes.citations;
         if (newGroup.is_approved || newGroup.is_active === false) {
           $ctrl.addToDB.groups.push(newGroup);
           $ctrl.groups.splice(i,1);
@@ -153,15 +142,9 @@ angular.module('redesign2017App')
       $ctrl.group_assignments.forEach(function (g, i) {
         var newGroupAssign = {};
         newGroupAssign.id = parseInt(g.id);
-        // newPerson.name = p.attributes.name;
-        // newPerson.birthDate = p.attributes.birth_year;
-        // newPerson.birthDateType = p.attributes.birth_year_type;
-        // newPerson.deathDate = p.attributes.death_year;
-        // newPerson.deathDateType = p.attributes.death_year_type;
-        // newPerson.gender = p.attributes.gender;
-        // newPerson.historical_significance = p.attributes.historical_significance;
         newGroupAssign.is_approved = g.is_approved;
         newGroupAssign.is_active = !g.is_dismissed;
+        newGroupAssign.citations = g.attributes.citations;
         if (newGroupAssign.is_approved || newGroupAssign.is_active === false) {
           $ctrl.addToDB.group_assignments.push(newGroupAssign);
           $ctrl.group_assignments.splice(i,1);

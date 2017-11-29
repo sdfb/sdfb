@@ -20,7 +20,7 @@ angular.module('redesign2017App').component('visualization', {
           networkComplexity: '2',
           dateMin:1500,
           dateMax:1700,
-          confidenceMin:60,
+          confidenceMin:$stateParams.min_confidence,
           confidenceMax:100,
           layout: 'individual-force',
           login: {

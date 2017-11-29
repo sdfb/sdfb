@@ -40,7 +40,7 @@ table {
   }
 }
 
-table.curate {
+table.curate, table#relationships, table#people {
   td {
     white-space: initial;
     // overflow: scroll;
@@ -170,4 +170,21 @@ thead {
 .table > tbody > tr > td:last-of-type,
 .table > thead > tr > td:last-of-type {
   padding-right: 0;
+}
+
+table#people, table#relationships {
+  width: 80%;
+
+}
+
+.tables-container {
+  height: 100vh;
+  overflow-y: scroll;
+  padding: 20px;
+}
+
+.table-btn {
+  width: 300px;
+  margin-top: 10px;
+  margin-left: 10px;
 }
