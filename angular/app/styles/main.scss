@@ -74,33 +74,8 @@ path.danger {
 }
 
 #contribute-buttons {
-  float: left;
+  float: right;
 }
-// #content {
-//   position: relative;
-//   width: 100%;
-// }
-// #drawer{
-//     height: 100%;
-//     width: 200px;
-//     background-color: lightsteelblue;
-//     position: absolute;
-//     right: 0;
-//     top: 0;
-//     z-index: 99;
-//     white-space: nowrap;
-// }
-// .collapsing-width{
-//     position: relative;
-//     overflow-x: hidden;
-//     -webkit-transition: width 0.35s ease;
-//     -moz-transition: width 0.35s ease;
-//     -o-transition: width 0.35s ease;
-//     transition: width 0.35s ease;
-// }
-// .collapse{
-//     overflow-x: hidden;
-// }
 
 .alert {
   text-transform: none;
@@ -1189,12 +1164,12 @@ contextual-info-panel .btn {
 }
 
 .btn.contribute {
-  background-color: $light-color;
+  background-color: $contribution-mode-fill;
   border-color: $contribution-mode-stroke;
-  color: $contribution-mode-fill;
+  color: $light-color;
 
   i {
-    color: $contribution-mode-fill;
+    color: $light-color;
     opacity: 1;
   }
 }
