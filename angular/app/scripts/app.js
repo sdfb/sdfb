@@ -78,6 +78,21 @@ redesign2017App.config(function($stateProvider, $locationProvider, $compileProvi
     },
     component: 'people'
   }
+  var relationshipsState = {
+    name: 'home.relationships',
+    url: 'relationships/{page}',
+    resolve: {
+      relationships: ['apiService', '$stateParams', function(apiService, $stateParams) {
+        var size = 100;
+        var offset = ($stateParams.page-1)*size;
+        return apiService.getAllRelationships(size,offset).then(function(result){
+          console.log(result);
+          return result.data;
+        });
+      }]
+    },
+    component: 'relationships'
+  }
   var userState = {
     name: "home.user",
     url: "user/{userId}",
@@ -271,6 +286,7 @@ redesign2017App.config(function($stateProvider, $locationProvider, $compileProvi
   $stateProvider.state(homeState);
   $stateProvider.state(vizState);
   $stateProvider.state(peopleState);
+  $stateProvider.state(relationshipsState);
   $stateProvider.state(userState);
   $stateProvider.state(resetState);
   $stateProvider.state(aboutState);

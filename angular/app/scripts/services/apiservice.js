@@ -185,6 +185,18 @@ angular.module('redesign2017App')
           return response;
         });
       },
+      getAllRelationships : function(size, offset){
+
+        var url = baseUrl + '/api/all_relationships';
+        return $http({
+          method: 'GET',
+          url: url,
+          params: {
+              size: size.toString(),
+              offset: offset.toString()
+            }
+        });
+      },
       writeData : function(data){
 
         var url = baseUrl + '/api/write';

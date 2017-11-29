@@ -1,0 +1,64 @@
+<!-- <navigation-directive></navigation-directive> -->
+<ul uib-pagination direction-links="true" ng-change="pageChanged()" max-size="10" boundary-links="true" boundary-link-numbers="true" total-items="totalItems" ng-model="currentPage"></ul>
+<div class="tables-container">
+	<!-- <div class="btn-group btn-group-justified">
+		<label class="btn btn-primary" ng-model="dataType" uib-btn-radio="'relationships'">relationships</label>
+		<label class="btn btn-primary" ng-model="dataType" uib-btn-radio="'relationships'">relationships</label>
+	</div> -->
+	<!-- <table  class="table table-hover">
+			<thead>
+					<tr>
+							<td class="id-column">ID</td>
+							<td class="name-column">Name</td>
+							<td class="sig-column">Historical Significance</td>
+							<td class="birth-column">Birth Date</td>
+							<td class="death-column">Death Date</td>
+							<td class="connections-column">Gender</td>
+							<td class="action-column">Action</td>
+					</tr>
+			</thead>
+			<tbody>
+					<tr class="rel {{'p'+rel.id}}" ng-class="{ 'active': group.active }" ng-repeat="rel in relationships">
+							<td>{{ rel.id }}</td>
+							<td>{{ rel.attributes.name }}</td>
+							<td>{{ rel.attributes.historical_significance }}</td>
+							<td>{{ rel.attributes.birth_year_type }} {{ rel.attributes.birth_year }}</td>
+							<td>{{ rel.attributes.death_year_type }} {{ rel.attributes.death_year }}</td>
+							<td>{{ rel.attributes.gender }}</td>
+							<td>
+									<button ui-sref="home.visualization({ ids: rel.id, type: 'network' })" type="button" class="btn btn-primary">
+											Visualize
+									</button>
+							</td>
+					</tr>
+			</tbody>
+	</table> -->
+	<table id="relationships" class="table table-hover">
+			<thead>
+					<tr>
+						<td class="source-column">Source Name</td>
+						<td class="target-column">Target Name</td>
+						<td class="start-column">Start Date</td>
+						<td class="end-column">End Date</td>
+						<td class="created-column">Created By</td>
+						<td class="cite-column">References</td>
+						<td class="action-column">Action</td>
+					</tr>
+			</thead>
+			<tbody>
+					<tr class="rel {{'r'+rel.id}}" ng-class="{ 'active': group.active }" ng-repeat="rel in relationships">
+							<td>{{ rel.attributes.person_1_name }}</td>
+							<td>{{ rel.attributes.person_2_name }}</td>
+							<td>{{ rel.attributes.start_year_type }} {{ rel.attributes.start_year }}</td>
+							<td>{{ rel.attributes.end_year_type }} {{ rel.attributes.end_year }}</td>
+							<td><a href ui-sref="home.user({userId: rel.attributes.created_by})">{{rel.attributes.created_by_name}}</a></td>
+							<td>{{rel.attributes.citations}}</td>
+							<td>
+									<button ng-click="goToShared(rel.attributes.person_1,rel.attributes.person_2)" type="button" class="btn btn-primary">
+											Visualize
+									</button>
+							</td>
+					</tr>
+			</tbody>
+	</table>
+</div>
