@@ -1,0 +1,30 @@
+<div class="modal-header">
+    <h3 class="modal-title" id="modal-title">Edit User Information</h3>
+    <i class="fa fa-times close-btn" aria-hidden="true" type="button" ng-click="$ctrl.cancel()" aria-label="Close"></i>
+</div>
+<div class="modal-body edit-user" id="modal-edit-user-body">
+    <form name="editUserForm" novalidate class="form" id="formLogin" ng-submit="$ctrl.close()">
+      <h3>First name</h3>
+      <input class="form-control" ng-model="$ctrl.new.first_name" type="text">
+      <h3>Last name</h3>
+      <input class="form-control" ng-model="$ctrl.new.last_name" type="text">
+      <h3>Email <i class="fa fa-asterisk" aria-hidden="true"></i></h3>
+      <input required class="form-control" ng-model="$ctrl.new.email" type="text">
+      <h3>Username <i class="fa fa-asterisk" aria-hidden="true"></i></h3>
+      <input required class="form-control" ng-model="$ctrl.new.username" type="text">
+      <h3>Affiliation</h3>
+      <input class="form-control" ng-model="$ctrl.new.affiliation" type="text">
+      <h3>About</h3>
+      <input class="form-control" ng-model="$ctrl.new.about_description" type="text">
+      <h3>ORCID</h3>
+      <input class="form-control" ng-model="$ctrl.new.orcid" type="text" placeholder="e.g. http://orcid.org/0000-...">
+      <h3>New Password</h3>
+      <input class="form-control" ng-model="$ctrl.new.password" type="password">
+      <h3>Confirm Password</h3>
+      <input class="form-control" ng-model="$ctrl.new.password_confirmation" type="password"><br>
+      <button ng-disabled="editUserForm.$invalid" type="submit" id="btnLogin" class="btn btn-primary">Edit Info</button>
+      <div class="alert alert-danger" ng-show="editUserForm.$invalid">
+				You are missing required fields.
+			</div>
+    </form>
+</div>

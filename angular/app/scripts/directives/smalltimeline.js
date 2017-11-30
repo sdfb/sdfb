@@ -110,6 +110,9 @@ angular.module('redesign2017App')
               .attr("y", function(d) {
                 return height / 2 - 6;
               })
+              .classed("hidden", function(d) {
+                return scope.currentSelection.attributes.birth_year < 1480;
+              })
               .text(function(d) {
                 return x.domain()[0]
               });
@@ -122,6 +125,9 @@ angular.module('redesign2017App')
               })
               .attr("y", function(d) {
                 return height / 2 - 6;
+              })
+              .classed("hidden", function(d) {
+                return scope.currentSelection.attributes.birth_year > 1720;
               })
               .text(function(d) {
                 return x.domain()[1]
@@ -183,7 +189,7 @@ angular.module('redesign2017App')
   		            .attr('class', 'label relationship')
   		            .attr("x", width/2)
   		            .attr("y", function(d) {
-  		              return height;
+  		              return height-1;
   		            })
   		            .text(rel_types[scope.currentSelection.attributes.relationshipKind]+' ('+scope.currentSelection.attributes.confidence+'% confidence)');
   						}

@@ -77,9 +77,9 @@
 <section id="more-info" ng-if="currentSelection.type">
   <p>
 
-    <img src='/images/odnb.gif' ng-click="searchODNB()" ng-attr-title="Search in ODNB"/>
-    <img src='/images/jstor.png' ng-click="searchJstor()"/>
-    <i class="fa fa-google" ng-click="searchGoogle()"></i>
+    <img src='/images/odnb.gif' ng-click="searchODNB()" ng-attr-title="Search ODNB"/>
+    <img src='/images/jstor.png' ng-click="searchJstor()" ng-attr-title="Search JSTOR"/>
+    <i class="fa fa-google" ng-click="searchGoogle()" ng-attr-title="Search Google"></i>
     <span>
 
       <button ng-show="currentSelection.type === 'person'" ng-class="{'no-user' : currentSelection.attributes.created_by === 2}" type="button" class="btn btn-primary" ui-sref="home.visualization({ ids: currentSelection.id })">Visualize</button>

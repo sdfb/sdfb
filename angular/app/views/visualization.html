@@ -9,7 +9,10 @@
   <div uib-alert close="$root.personEditSuccess = false;" class="alert alert-success" ng-show="$root.personEditSuccess" dismiss-on-timeout=3000>
     <strong>Person edited successfully!</strong> Refresh to see your changes.
   </div>
-  <div uib-alert close="reviewFailure = false; $root.personEditFailure = false;" class="alert alert-danger" ng-show="reviewFailure || $root.personEditFailure">
+  <div uib-alert close="$root.userEditSuccess = false;" class="alert alert-success" ng-show="$root.userEditSuccess" dismiss-on-timeout=3000>
+    <strong>User information edited successfully!</strong>
+  </div>
+  <div uib-alert close="reviewFailure = false; $root.personEditFailure = false; $root.userEditFailure= false;" class="alert alert-danger" ng-show="reviewFailure || $root.personEditFailure || $root.userEditFailure">
     <strong>Something went wrong!</strong> Please try again, log out and back in, or refresh the page. If the problem persists, <a href="mailto:SixDegreesFrancisBacon@gmail.com" class="alert-link">contact us</a>.
   </div>
   <section class="on-the-left">

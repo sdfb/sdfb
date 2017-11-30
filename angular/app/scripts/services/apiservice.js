@@ -13,9 +13,9 @@ angular.module('redesign2017App')
     // CORSproxy = '';
     // var apiUrl = 'http://sixdegrees-api.herokuapp.com';
     // var apiUrl = "http://ec2-54-242-188-143.compute-1.amazonaws.com/tools"
+    // var apiUrl = "http://sixdegr-dev.library.cmu.edu/tools"
 
-
-    var apiUrl = "http://sixdegr-dev.library.cmu.edu/tools"
+    var apiUrl = "http://sixdegreesoffrancisbacon.com/tools"
     // var baseUrl = CORSproxy + apiUrl;
     var baseUrl = apiUrl;
     // Public API here
@@ -300,12 +300,6 @@ angular.module('redesign2017App')
           method: 'POST',
           url: url,
           data: JSON.stringify(data)
-        }).then(function successCallback(response){
-          return response;
-        },function errorCallback(response){
-          console.error("An error occured while fetching file",response);
-          console.warn("If the issue is related to CORS Origin, try install this extention on Chrome: https://chrome.google.com/webstore/detail/allow-control-allow-origi/nlfbmbojpeacfghkpbjhddihlkkiljbi")
-          return response;
         });
       },
       requestReset : function(data){

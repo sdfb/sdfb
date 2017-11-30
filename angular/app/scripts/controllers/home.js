@@ -113,6 +113,32 @@ angular.module('redesign2017App').component('home', {
       });
     };
 
+    $scope.openEditUser = function(size, parentSelector) {
+      var parentElem = parentSelector ?
+        angular.element($document[0].querySelector('.modal-demo ' + parentSelector)) : undefined;
+      var modalInstance = $uibModal.open({
+        animation: $scope.modalAnimationsEnabled,
+        ariaLabelledBy: 'modal-edit-user',
+        ariaDescribedBy: 'modal-edit-user-body',
+        templateUrl: './views/modal-edit-user.html',
+        controller: 'ModalEditUserCtrl',
+        controllerAs: '$ctrl',
+        size: size,
+        appendTo: parentElem
+      });
+      modalInstance.result.then(function(result) {
+        console.log(result);
+        apiService.editUser(result).then(function successCallback(response) {
+          $rootScope.userEditSuccess = true;
+        }, function errorCallback(error) {
+          console.log(error);
+          $rootScope.userEditFailure = true;
+        });
+      }, function() {
+        $log.info('Modal dismissed at: ' + new Date());
+      });
+    };
+
     $scope.openResetRequest = function(size, parentSelector) {
       var parentElem = parentSelector ?
         angular.element($document[0].querySelector('.modal-demo ' + parentSelector)) : undefined;
