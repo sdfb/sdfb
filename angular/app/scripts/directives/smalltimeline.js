@@ -183,7 +183,7 @@ angular.module('redesign2017App')
   		            .attr('class', 'label relationship')
   		            .attr("x", width/2)
   		            .attr("y", function(d) {
-  		              return height;
+  		              return height-1;
   		            })
   		            .text(rel_types[scope.currentSelection.attributes.relationshipKind]+' ('+scope.currentSelection.attributes.confidence+'% confidence)');
   						}
