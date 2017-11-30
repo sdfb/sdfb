@@ -52,7 +52,15 @@
             </ul>
           </li>
           <li><a href ui-sref="home.about" target="_blank">About</a></li>
-          <li><a href ui-sref="home.help" target="_blank">Help</a></li>
+          <!-- <li><a href ui-sref="home.help" target="_blank">Help</a></li> -->
+          <li uib-dropdown>
+            <a class="nav-link dropdown-toggle"  uib-dropdown-toggle style="display: inline-block; cursor: pointer;">
+              Help
+            </a>
+            <ul uib-dropdown-menu class="dropdown-menu" style="padding:17px;" ng-click="$event.stopPropagation()">
+              <li><a target="_blank" href ui-sref="home.help">Read Tutorial</a></li>
+              <li><a target="_blank" href="http://goo.gl/forms/J4u7kgI6h4">Give Feedback</a></li></ul>
+          </li>
           <li class="log-in" ng-show="$root.user.is_active && $root.user.user_type !== 'Standard'"><a href ng-click="openCurate()">Curate</a></li>
           <!-- <li class="log-in"><a href ng-click="openCurate()">Curate</a></li> -->
           <li class="log-in" uib-dropdown>
