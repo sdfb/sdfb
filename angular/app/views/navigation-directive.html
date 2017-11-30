@@ -73,7 +73,7 @@
             </div>
             <div ng-show="$root.user.is_active" uib-dropdown-menu class="dropdown-menu user-info" style="padding:17px;" ng-click="$event.stopPropagation()">
               <h5>{{$root.user.first_name}} {{$root.user.last_name}} ({{$root.user.id}})</h5>
-              <a>edit profile</a>
+              <a href ng-click="openEditUser()">edit profile</a>
               <a href ng-click="logOut()">log out</a>
               <p>{{$root.user.user_type}} User</p>
 
