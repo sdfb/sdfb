@@ -137,18 +137,10 @@ redesign2017App.config(function($stateProvider, $locationProvider, $compileProvi
     onEnter: ['$stateParams', '$state', '$uibModal', '$resource', function($stateParams, $state, $uibModal, $resource) {
         $uibModal.open({
             templateUrl: './views/modal-reset.html',
-            // resolve: {
-            //   token: ['$stateParams', 'apiService', function($stateParams, apiService) {
-            //     console.log($stateParams.token);
-            //     return $stateParams.token;
-            //   }]
-            // },
             controller: ['$scope', 'apiService', '$stateParams', function($scope, apiService, $stateParams) {
               $scope.dismiss = function() {
                 $scope.$dismiss();
               };
-
-
 
               $scope.save = function() {
                 $scope.new.reset_token = $stateParams.token;
@@ -192,7 +184,6 @@ redesign2017App.config(function($stateProvider, $locationProvider, $compileProvi
               }]
             },
             controller: ['$scope', 'recent', 'apiService', function($scope, recent, apiService) {
-              console.log(recent.data);
               recent = recent.data;
               $scope.people = recent.data.people;
 
@@ -203,17 +194,17 @@ redesign2017App.config(function($stateProvider, $locationProvider, $compileProvi
               })
 
               recent.data.relationships.forEach(function(d) {
-                apiService.getUserName(d.created_by).then(function(result) {
-                  d.created_by_name = result.data.username;
+                apiService.getUserName(d.attributes.created_by).then(function(result) {
+                  d.attributes.created_by_name = result.data.username;
                 });
-                // recent.includes.forEach(function(i) {
-                //   if (i.id === d.attributes.person_1.toString()) {
-                //     d.attributes.person_1_name = i.attributes.name;
-                //   }
-                //   if (i.id === d.attributes.person_2.toString()) {
-                //     d.attributes.person_2_name = i.attributes.name;
-                //   }
-                // })
+                recent.includes.forEach(function(i) {
+                  if (i.id === d.attributes.person_1.toString()) {
+                    d.attributes.person_1_name = i.attributes.name;
+                  }
+                  if (i.id === d.attributes.person_2.toString()) {
+                    d.attributes.person_2_name = i.attributes.name;
+                  }
+                })
               });
               $scope.relationships = recent.data.relationships;
 

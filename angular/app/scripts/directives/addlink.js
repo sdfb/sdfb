@@ -11,7 +11,6 @@ angular.module('redesign2017App')
       templateUrl: './views/add-link.html',
       restrict: 'E',
       link: function postLink(scope, element, attrs) {
-        // scope.newLink.startDateType = scope.newLink.endDateType = scope.config.dateTypes[1];
 
         scope.config.relTypeCats = null;
         $http.get("/data/rel_cats.json").then(function(result){
@@ -19,46 +18,16 @@ angular.module('redesign2017App')
             scope.newLink.relType = scope.config.relTypeCats[10];
         });
 
-        // console.log(scope.config.relTypeCats);
         scope.newLink.source = {};
         scope.newLink.target = {};
         scope.addedLinkId = 0;
         scope.slider = {
           value: 60,
           options: {
-            // showTicksValues: true,
             floor: 0,
             ceil: 100,
-            // step: 20,
-            // hideLimitLabels: true,
-            // hidePointerLabels: true,
-            // showTicks: true,
-            // stepsArray: [
-            //   { value: 0, legend: 'Impossible' },
-            //   { value: 20, legend: 'Highly improbable'  },
-            //   { value: 40, legend: 'Improbable'  },
-            //   { value: 60, legend: 'Possible' },
-            //   { value: 80, legend: 'Likely' },
-            //   { value: 100, legend: 'Sure' },
-            // ],
             translate: function(v) {
                 return v;
-                // switch (v) {
-                //     case 0:
-                //     return 'Highly improbable';
-                //     // case 20:
-                //     // return 'Highly improbable';
-                //     // case 40:
-                //     // return 'Improbable';
-                //     // case 60:
-                //     // return 'Possible';
-                //     // case 80:
-                //     // return 'Likely';
-                //     case 100:
-                //     return 'Certain';
-                //     default:
-                //     return 'mmm';
-                // }
             }
           }
         };
@@ -93,17 +62,13 @@ angular.module('redesign2017App')
               var person2DeathYear = parseInt(result.data[1].attributes.death_year);
               $timeout(function(){
                 if (person1BirthYear >= person2BirthYear) {
-                  // d3.select('#startDate').attr('placeholder', person1BirthYear);
                   scope.newLink.startDate = person1BirthYear;
                 } else {
-                  // d3.select('#startDate').attr('placeholder', person2BirthYear);
                   scope.newLink.startDate = person2BirthYear;
                 };
                 if (person1DeathYear <= person2DeathYear) {
-                  // d3.select('#endDate').attr('placeholder', person1DeathYear);
                   scope.newLink.endDate = person1DeathYear;
                 } else {
-                  // d3.select('#endDate').attr('placeholder', person2DeathYear);
                   scope.newLink.endDate = person2DeathYear;
                 }
               })
@@ -112,7 +77,6 @@ angular.module('redesign2017App')
         }
 
         scope.showNewLink = function(d, nodes) {
-          // var nodes = scope.data.included;
           nodes.forEach(function (otherNode) {
             var distance = Math.sqrt(Math.pow(otherNode.x - d3.event.x, 2) + Math.pow(otherNode.y - d3.event.y, 2));
             if (scope.config.contributionMode) {
@@ -255,15 +219,9 @@ angular.module('redesign2017App')
             newLink.relType = newLink.relType.id;
             scope.addToDB.links.push(newLink);
           }
-          // newLink.startDateType = newLink.startDateType.abbr;
-          // newLink.endDateType = newLink.endDateType.abbr;
-          // newLink.relType = newLink.relType.id.toString();
-          // scope.addToDB.links.push(newLink);
           console.log(scope.addToDB);
           scope.addLinkClosed = true;
           scope.newLink = {source: {}, target: {}};
-          d3.select('#startDate').attr('placeholder', null);
-          d3.select('#endDate').attr('placeholder', null);
           scope.config.added = true;
           scope.newLink.startDateType = scope.newLink.endDateType = scope.config.dateTypes[1];
           scope.newLink.relType = scope.config.relTypeCats[10];

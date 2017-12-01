@@ -91,7 +91,8 @@ table.curate.rel-type {
   .source-column, .target-column {
     width: 15%;
   }
-  .conf-column {
+
+  .start-column, .end-column, .conf-column {
     width: 10%;
   }
 }

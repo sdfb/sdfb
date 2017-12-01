@@ -24,9 +24,6 @@
         <tbody>
             <tr class="person {{'p'+person.id}}" ng-class="{ 'active': group.active }" ng-repeat="person in people">
                 <td>{{person.attributes.name}}</td>
-                <!-- <td>{{ person.attributes.prefix }}</td>
-                <td>{{ person.attributes.title }}</td>
-                <td>{{ person.attributes.suffix }}</td> -->
                 <td>{{person.attributes.historical_significance}}</textarea></td>
 
                 <td>{{ person.attributes.birth_year_type }} {{ person.attributes.birth_year }}</td>
@@ -38,7 +35,7 @@
         </tbody>
     </table>
     <h4 class="modal-title">New Relationships</h4>
-    <table class="table table-hover curate">
+    <table class="table table-hover curate rel-type">
         <thead>
             <tr>
               <td class="source-column">Source Name</td>
@@ -51,12 +48,11 @@
         </thead>
         <tbody>
             <tr class="rel {{'r'+rel.id}}" ng-class="{ 'active': group.active }" ng-repeat="rel in relationships">
-                <td>{{rel.id}}</td>
-                <!-- <td>{{ rel.attributes.person_1_name }}</td> -->
+                <td>{{ rel.attributes.person_1_name }}</td>
                 <td>{{ rel.attributes.person_2_name }}</td>
                 <td>{{ rel.attributes.start_year_type }} {{ rel.attributes.start_year }}</td>
                 <td>{{ rel.attributes.end_year_type }} {{ rel.attributes.end_year }}</td>
-                <td><a href ui-sref="home.user({userId: rel.created_by})">{{rel.created_by_name}}</a></td>
+                <td><a href ui-sref="home.user({userId: rel.attributes.created_by})">{{rel.attributes.created_by_name}}</a></td>
                 <td>{{rel.attributes.citations}}</td>
             </tr>
         </tbody>

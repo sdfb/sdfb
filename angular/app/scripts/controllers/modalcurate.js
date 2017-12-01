@@ -34,7 +34,10 @@ angular.module('redesign2017App')
     });
     $ctrl.relationships = relationships.data;
 
-    relTypes.data.forEach(function(d) {
+    var filteredRelTypes = angular.copy(relTypes.data);
+    filteredRelTypes = filteredRelTypes.filter(function(d) { return d.attributes.created_by !== 3; });
+
+    filteredRelTypes.forEach(function(d) {
       apiService.getUserName(d.attributes.created_by).then(function(result) {
         d.attributes.created_by_name = result.data.username;
       });
@@ -47,7 +50,7 @@ angular.module('redesign2017App')
         }
       })
     });
-    $ctrl.relTypes = relTypes.data;
+    $ctrl.relTypes = filteredRelTypes;
 
     $ctrl.groups = groups.data;
     $ctrl.groups.forEach(function(g) {
@@ -72,7 +75,6 @@ angular.module('redesign2017App')
     $ctrl.group_assignments = group_assignments.data;
 
     $ctrl.cancel = function() {
-      console.log('dismiss')
       $uibModalInstance.dismiss('cancel');
     };
 
@@ -84,11 +86,6 @@ angular.module('redesign2017App')
         var newPerson = {};
         newPerson.id = parseInt(p.id);
         newPerson.name = p.attributes.name;
-        // newPerson.birthDate = p.attributes.birth_year;
-        // newPerson.birthDateType = p.attributes.birth_year_type;
-        // newPerson.deathDate = p.attributes.death_year;
-        // newPerson.deathDateType = p.attributes.death_year_type;
-        // newPerson.gender = p.attributes.gender;
         newPerson.historical_significance = p.attributes.historical_significance;
         newPerson.citations = p.attributes.citations;
         newPerson.is_approved = p.is_approved;
@@ -117,13 +114,22 @@ angular.module('redesign2017App')
         newRelType.is_approved = r.is_approved;
         newRelType.is_active = !r.is_dismissed;
         newRelType.citations = r.attributes.citations;
-        console.log(newRelType.is_approved, newRelType.is_active);
         if (newRelType.is_approved || newRelType.is_active === false) {
-          console.log('gotcha')
           $ctrl.addToDB.relationshipAssignments.push(newRelType);
           $ctrl.relTypes.splice(i,1);
         }
-      })
+      });
+      relTypes.data.forEach(function(r) {
+        $ctrl.addToDB.relationships.forEach(function(rel) {
+          if (rel.id === parseInt(r.attributes.relationship.id) && r.attributes.created_by === 3) {
+            var newRelType = {};
+            newRelType.id = parseInt(r.id);
+            newRelType.is_approved = rel.is_approved;
+            newRelType.is_active = rel.is_active;
+            $ctrl.addToDB.relationshipAssignments.push(newRelType);
+          }
+        })
+      });
       $ctrl.addToDB.groups = [];
       $ctrl.groups.forEach(function (g, i) {
         var newGroup = {};

@@ -131,13 +131,7 @@ angular.module('redesign2017App')
               ids: ids.toString(),
               certainty: certainty
             }
-        })//.then(function successCallback(response){
-        //   return response.data;
-        // },function errorCallback(response){
-        //   console.error("An error occured while fetching file",response);
-        //   console.warn("If the issue is related to CORS Origin, try install this extention on Chrome: https://chrome.google.com/webstore/detail/allow-control-allow-origi/nlfbmbojpeacfghkpbjhddihlkkiljbi")
-        //   return response;
-        // });
+        });
       },
       getPeople : function(ids){
 
@@ -204,13 +198,7 @@ angular.module('redesign2017App')
           method: 'POST',
           url: url,
           data: angular.toJson(data)
-        })//.then(function successCallback(response){
-        //   return response;
-        // },function errorCallback(response){
-        //   console.error("An error occured while fetching file",response);
-        //   console.warn("If the issue is related to CORS Origin, try install this extention on Chrome: https://chrome.google.com/webstore/detail/allow-control-allow-origi/nlfbmbojpeacfghkpbjhddihlkkiljbi")
-        //   return response;
-        // });
+        });
       },
       logIn : function(data){
 
@@ -219,14 +207,7 @@ angular.module('redesign2017App')
           method: 'POST',
           url: url,
           data: JSON.stringify(data)
-        })//.then(function successCallback(response){
-        //   return response;
-        //
-        // },function errorCallback(response){
-        //   console.error("An error occured while fetching file",response);
-        //   console.warn("If the issue is related to CORS Origin, try install this extention on Chrome: https://chrome.google.com/webstore/detail/allow-control-allow-origi/nlfbmbojpeacfghkpbjhddihlkkiljbi")
-        //   return response;
-        // });
+        });
       },
       logOut : function(data){
 
