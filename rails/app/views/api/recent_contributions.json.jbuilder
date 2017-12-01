@@ -10,7 +10,7 @@ if @people
       json.partial! "group_assignments/include", collection: @assignments, as: :assignment 
     end
     json.relationships do
-      json.partial! 'relationships/minimal', collection: @relationships, as: :relationship
+      json.partial! 'relationships/include', collection: @relationships, as: :relationship
     end
     json.links do
       json.partial! 'user_rel_contribs/include', collection: @links, as: :link
