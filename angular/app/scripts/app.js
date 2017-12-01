@@ -184,7 +184,6 @@ redesign2017App.config(function($stateProvider, $locationProvider, $compileProvi
               }]
             },
             controller: ['$scope', 'recent', 'apiService', function($scope, recent, apiService) {
-              console.log(recent.data);
               recent = recent.data;
               $scope.people = recent.data.people;
 
