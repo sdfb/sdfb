@@ -127,7 +127,7 @@ angular.module('redesign2017App')
                 return height / 2 - 6;
               })
               .classed("hidden", function(d) {
-                return scope.currentSelection.attributes.birth_year > 1720;
+                return scope.currentSelection.attributes.death_year > 1720;
               })
               .text(function(d) {
                 return x.domain()[1]
