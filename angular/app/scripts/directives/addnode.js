@@ -35,7 +35,6 @@ angular.module('redesign2017App')
 
         // When canvas is clicked, add a new circle with dummy data
         scope.addNode = function(addedNodes, point, update) {
-          console.log(scope.data);
 
           scope.newNode.exists = false;
 
@@ -49,7 +48,6 @@ angular.module('redesign2017App')
           newNode.fy = y;
           newNode.absx = x;
           newNode.absy = y;
-          console.log(newNode);
           addedNodes.push(newNode);
           scope.$apply(function() {
             scope.addNodeClosed = false;
@@ -83,16 +81,9 @@ angular.module('redesign2017App')
           d3.selectAll('.node').each(function(d) { ids_in_view[d.id] = true; });
           if ($item.id in ids_in_view) {
             scope.notInView = false;
-            //
-            // var origValue = d3.select('#n'+$item.id).attr('r');
-            // d3.select('#n'+$item.id)
-            //   .transition(5000).attr('r', 50)
-            //   .transition(5000).attr('r', origValue);
 
             d3.selectAll('.label').classed('hidden', true);
-            d3.select("#l"+$item.id).classed('hidden', false);//function(l) {
-              // return (l.attributes.name.toLowerCase().search(scope.newNode.name.toLowerCase()) != -1) ? false : true;
-            // });
+            d3.select("#l"+$item.id).classed('hidden', false);
           }
           else {
             scope.notInView = true;
@@ -100,7 +91,6 @@ angular.module('redesign2017App')
         }
 
         scope.removeNode = function(id) {
-          console.log(id);
           scope.addedNodes.forEach(function(a, i) {
             if (a.id === id) {
               scope.addedNodes.splice(i,1);
@@ -130,7 +120,6 @@ angular.module('redesign2017App')
 
           if (scope.notInView === true || scope.notInView === undefined) {
             scope.addedNodes.forEach(function (a,i) {
-              console.log(a.id, scope.newNode.id);
               if (a.id === scope.origId) {
                 scope.addedNodes[i].attributes = scope.newNode;
                 scope.addedNodes[i].id = scope.newNode.id;
@@ -138,11 +127,8 @@ angular.module('redesign2017App')
             });
             var allIDs = {};
             scope.addToDB.nodes.forEach(function(n) { allIDs[n.id] = true; });
-            // if (!scope.newNode.exists) {
               if (scope.origId in allIDs) {
-                console.log('not working');
                 scope.addToDB.nodes.forEach(function (a,i) {
-                  console.log(a.id, scope.newNode.id);
                   if (a.id === scope.origId) {
                     var newNode = angular.copy(scope.newNode);
                     scope.addToDB.nodes[i] = newNode;
@@ -151,7 +137,6 @@ angular.module('redesign2017App')
                   }
                 })
               } else if (!scope.newNode.exists) {
-                console.log("working");
                 var newNode = angular.copy(scope.newNode);
                 newNode.birthDateType = newNode.birthDateType.abbr;
                 newNode.deathDateType = newNode.deathDateType.abbr;
