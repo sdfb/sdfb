@@ -197,7 +197,6 @@ angular.module('redesign2017App').component('home', {
     };
 
     $transitions.onBefore({}, function(transition) {
-      console.log(transition);
       if ($scope.config.contributionMode) {
         if ($window.confirm("If you leave this page without submitting your changes, they will be lost. If you'd like to leave anyway, click 'okay'?")) {
           return true;
