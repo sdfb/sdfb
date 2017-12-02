@@ -686,18 +686,18 @@ class ApiController < ApplicationController
     current_type = current_object.start_date_type
     new_type = new_data["startDateType"]
     current_date = current_object.start_year
-    new_date = current_object["startDate"].to_i
+    new_date = new_data["startDate"].to_i
     start_type, start_year = date_math(current_type, new_type, current_date, new_date)
     current_object.start_year = start_year if start_year
-    current_object.start_year_type = start_type if start_type
+    current_object.start_date_type = start_type if start_type
 
     current_type = current_object.end_date_type
     new_type = new_data["endDateType"]
     current_date = current_object.end_year
-    new_date = current_object["endDate"].to_i
+    new_date = new_data["endDate"].to_i
     end_type, end_year = date_math(current_type, new_type, current_date, new_date)
     current_object.end_year = end_year if end_year
-    current_object.end_year_type = end_type if end_type
+    current_object.end_date_type = end_type if end_type
 
     current_object.save!
   end
