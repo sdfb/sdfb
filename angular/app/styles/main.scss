@@ -1712,6 +1712,9 @@ people-finder {
   input, textarea {
     width: 50%;
   }
+  input#dismiss {
+    width: auto;
+  }
   h3 {
     margin-top: 10px;
   }
