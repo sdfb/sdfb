@@ -83,6 +83,22 @@ angular.module('redesign2017App')
                   .attr('href', "/user/"+scope.thisType.created_by)
                   // .attr('ui-sref', "home.user({userId: thisType.created_by})")
                   .text(scope.currentSelection.types[i].created_by_name);
+                created.append('i')
+                  .classed('fa fa-book', true)
+                  .attr('id', 'c'+i);
+
+                function citation() {
+                  if (scope.currentSelection.types[i].citations) {
+                    return scope.currentSelection.types[i].citations;
+                  } else {
+                    return "No additional references provided upon contribution";
+                  }
+                }
+                $('#c'+i).tooltip({
+                  container: 'body',
+                  title: citation(),
+                  placement: 'right'
+                })
               });
             }
           } else {
