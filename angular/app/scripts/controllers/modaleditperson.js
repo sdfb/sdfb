@@ -39,10 +39,17 @@ angular.module('redesign2017App')
       editPerson.odnb_id = $ctrl.person.attributes.odnb_id;
       editPerson.gender = $ctrl.person.attributes.gender;
       editPerson.citations = $ctrl.person.attributes.citations;
+      editPerson.alternates = $ctrl.person.attributes.alternates;
+      editPerson.prefix = $ctrl.person.attributes.prefix;
+      editPerson.title = $ctrl.person.attributes.title;
+      editPerson.suffix = $ctrl.person.attributes.suffix;
       editPerson.birthDate = $ctrl.person.attributes.birth_year;
       editPerson.deathDate = $ctrl.person.attributes.death_year;
       editPerson.birthDateType = $ctrl.person.attributes.birth_year_type.abbr;
       editPerson.deathDateType = $ctrl.person.attributes.death_year_type.abbr;
+      if ($ctrl.person.is_dismissed) {
+        editPerson.is_active = !$ctrl.person.is_dismissed;
+      }
       $uibModalInstance.close(editPerson);
     }
 

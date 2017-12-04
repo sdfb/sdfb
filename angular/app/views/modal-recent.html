@@ -1,6 +1,3 @@
-<!-- <div class="modal-header">
-    <h3 class="modal-title" id="modal-title">List of Minor Groups</h3>
-</div> -->
 <div class="modal-body curate" id="modal-curate-body">
     <h3 class="modal-title">Recently Approved Submissions</h3>
     <i class="fa fa-times close-btn" aria-hidden="true" type="button" ng-click="dismiss()" aria-label="Close"></i>
@@ -9,16 +6,13 @@
       <thead>
           <tr>
               <td class="name-column">Name</td>
-              <!-- <td class="prefix-column">Prefix</td>
-              <td class="title-column">Title</td>
-              <td class="suffix-column">Suffix</td> -->
               <td class="sig-column">Historical Significance</td>
-
               <td class="start-column">Birth</td>
               <td class="end-column">Death</td>
               <td class="gender-column">Gender</td>
               <td class="created-column">Created By</td>
               <td class="cite-column">References</td>
+              <td ng-show="$root.user.is_active && $root.user.user_type !== 'Standard'" class="edit-column">Edit</td>
           </tr>
       </thead>
         <tbody>
@@ -31,6 +25,7 @@
                 <td>{{ person.attributes.gender }}</td>
                 <td><a href ui-sref="home.user({userId: person.attributes.created_by})">{{person.attributes.created_by_name}}</a></td>
                 <td>{{person.attributes.citations}}</td>
+                <td ng-show="$root.user.is_active && $root.user.user_type !== 'Standard'"><a href ng-click="$root.openEditPerson(person.id)"><i class="fa fa-pencil" aria-hidden="true"></i></a></td>
             </tr>
         </tbody>
     </table>

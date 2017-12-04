@@ -43,8 +43,6 @@ table {
 table.curate, table#relationships, table#people {
   td {
     white-space: initial;
-    // overflow: scroll;
-    // overflow-x: scroll;
     text-overflow: initial;
   }
   .cite-column {
@@ -54,14 +52,10 @@ table.curate, table#relationships, table#people {
     width: 8%;
   }
   .action-column {
-    width: 8%;
+    width: 100px;
   }
 }
 table.curate.people {
-  // font-size: 12px;
-  // table-layout: fixed;
-  // white-space: nowrap;
-  //
 
 
   .name-column {

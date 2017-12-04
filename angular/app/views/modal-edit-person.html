@@ -24,16 +24,22 @@
 		  <div class="input-group">
 				<select name="gender" class="input-group-reltype" ng-model="$ctrl.person.attributes.gender" ng-options="type for type in $ctrl.genderTypes" required></select><i class="fa fa-caret-down reltype" aria-hidden="true"></i>
 		  </div>
-      <!-- <h3>Birth Year <i class="fa fa-asterisk" aria-hidden="true"></i></h3>
-      <input required class="form-control" ng-model="$ctrl.person.attributes.birth_year" type="text">
-      <h3>Death Year <i class="fa fa-asterisk" aria-hidden="true"></i></h3>
-      <input required class="form-control" ng-model="$ctrl.person.attributes.death_year" type="text">
-      <h3>Gender <i class="fa fa-asterisk" aria-hidden="true"></i></h3>
-      <input class="form-control" ng-model="$ctrl.person.attributes.gender" type="text"> -->
+
+      <h3>Prefix</h3>
+			<input class="form-control" ng-model="$ctrl.person.attributes.prefix" placeholder="Prefix">
+
+			<h3>Title</h3>
+			<input class="form-control" ng-model="$ctrl.person.attributes.title" placeholder="Title">
+
+			<h3>Suffix</h3>
+			<input class="form-control" ng-model="$ctrl.person.attributes.suffix" placeholder="Suffix">
       <h3>ODNB ID</h3>
       <input class="form-control" ng-model="$ctrl.person.attributes.odnb_id" type="text">
+      <h3>Alternate Names</h3>
+			<input class="form-control" ng-model="$ctrl.person.attributes.alternates" placeholder="Alternate Names (comma-separated)">
       <h3>References</h3>
       <textarea class="form-control" ng-model="$ctrl.person.attributes.citations" type="text"></textarea>
+      <h3>Dismiss this person?  <input id="dismiss" ng-model="$ctrl.person.is_dismissed" type="checkbox"/>  [Warning: This will erase the person from the website.]</h3>
       <button ng-disabled="signupForm.$invalid" type="submit" id="btnLogin" class="btn btn-primary">Edit Person Info</button>
       <div class="alert alert-danger" ng-show="editPersonForm.$invalid">
 				You are missing required fields.

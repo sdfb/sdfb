@@ -95,7 +95,7 @@ angular.module('redesign2017App')
               p.start_year_type = scope.currentSelection.data[0].attributes.people[i].start_year_type;
             })
             if (!scope.currentSelection.data[0].attributes.citations) {
-              scope.selectionCitation = "No citation provided";
+              scope.selectionCitation = "No additional references provided upon contribution";
             } else {
               scope.selectionCitation = scope.currentSelection.data[0].attributes.citations;
             }
@@ -106,7 +106,7 @@ angular.module('redesign2017App')
               scope.currentSelection.attributes.created_by_name = result.data.username;
             });
             if (!scope.currentSelection.attributes.citations) {
-              scope.selectionCitation = "No citation provided";
+              scope.selectionCitation = "No additional references provided upon contribution";
             } else {
               scope.selectionCitation = scope.currentSelection.attributes.citations;
             }

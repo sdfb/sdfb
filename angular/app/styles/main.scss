@@ -120,6 +120,10 @@ div.bio {margin-bottom: 60px;}
   margin: 5px;
 }
 
+#studio {
+  max-width: 150px;
+}
+
 .about h4, .help h4 {
   margin-top: 30px;
 }
@@ -1711,6 +1715,9 @@ people-finder {
 .edit-person {
   input, textarea {
     width: 50%;
+  }
+  input#dismiss {
+    width: auto;
   }
   h3 {
     margin-top: 10px;
