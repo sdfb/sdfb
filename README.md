@@ -1,3 +1,11 @@
+# Six Degrees of Francis Bacon
+
+The repository contains the codebase for the *Six Degrees of Francis Bacon* web application. For the network inference and estimation code, see [this separate repository](https://github.com/sdfb/sdfb_network), and for the original 2015 beta site, see the 2015-beta branch of this repo.
+
+Six Degrees of Francis Bacon is a digital reconstruction of the early modern social network that scholars and students from all over the world can collaboratively expand, revise, curate, and critique. Unlike published prose, Six Degrees is extensible, collaborative, and interoperable: extensible in that people and associations can always be added, modified, developed, or, removed; collaborative in that it synthesizes the work of many scholars; interoperable in that new work on the network is put into immediate relation to previously studied relationships.
+
+The code in this repository runs the web application which supports this collaborative digital reconstruction. It is made up of a Ruby on Rails backend (a set of API endpoints that communicate with a Postgres database), and an AngularJS frontend. Included in the Angular code is a set of D3js network visualizations. The code is split into modularized chunks for easy reuse. For example, the code for the network graphs can be found in `angular/app/scripts/directives/forcelayout.js`. Instructions for how to get this code up and running on your own server are below.
+
 # Installation and Server Setup
 
 All of these instructions assume a basic Linux (Ubuntu) server with Postgres, Ruby, Rails, and Node already installed.
