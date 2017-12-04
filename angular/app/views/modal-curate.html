@@ -19,8 +19,8 @@
               <td class="gender-column">Gender</td>
               <td class="created-column">Created By</td>
               <td class="cite-column">References</td>
-              <td class="action-column">Approve?</td>
-              <td class="action-column">Discard?</td>
+              <td class="action-column">Approve?<br>All? <input ng-model="approveAllPeople" type="checkbox"/></td>
+              <td class="action-column">Discard?<br>All? <input ng-model="discardAllPeople" type="checkbox"/></td>
           </tr>
       </thead>
         <tbody>
@@ -37,11 +37,11 @@
                 <td><a href ui-sref="home.user({userId: person.attributes.created_by})">{{person.attributes.created_by_name}}</a></td>
                 <td><textarea class="form-control" ng-model="person.attributes.citations"></textarea></td>
                 <td>
-                  <input ng-model="person.is_approved" type="checkbox"/>
+                  <input ng-model="person.is_approved" ng-checked="approveAllPeople" type="checkbox"/>
                     <!-- <i class="fa fa-times" aria-hidden="true" type="button" ng-click="$ctrl.remove($index, $ctrl.addToDB.nodes)" aria-label="Remove"></i> -->
                 </td>
                 <td>
-                  <input ng-model="person.is_dismissed" type="checkbox"/>
+                  <input ng-model="person.is_dismissed" ng-checked="discardAllPeople" type="checkbox"/>
                 </td>
             </tr>
         </tbody>
@@ -56,8 +56,8 @@
               <td class="end-column">End Date</td>
               <td class="created-column">Created By</td>
               <td class="cite-column">References</td>
-              <td class="action-column">Approve?</td>
-              <td class="action-column">Discard?</td>
+              <td class="action-column">Approve?<br>All? <input ng-model="approveAllRelationships" type="checkbox"/></td>
+              <td class="action-column">Discard?<br>All? <input ng-model="discardAllRelationships" type="checkbox"/></td>
             </tr>
         </thead>
         <tbody>
@@ -69,11 +69,11 @@
                 <td><a href ui-sref="home.user({userId: rel.attributes.created_by})">{{rel.attributes.created_by_name}}</a></td>
                 <td><textarea class="form-control" ng-model="rel.attributes.citations"></textarea></td>
                 <td>
-                  <input ng-model="rel.is_approved" type="checkbox"/>
+                  <input ng-model="rel.is_approved" ng-checked="approveAllRelationships" type="checkbox"/>
                     <!-- <i class="fa fa-times" aria-hidden="true" type="button" ng-click="$ctrl.remove($index, $ctrl.addToDB.links)" aria-label="Remove"></i> -->
                 </td>
                 <td>
-                  <input ng-model="rel.is_dismissed" type="checkbox"/>
+                  <input ng-model="rel.is_dismissed" ng-checked="discardAllRelationships" type="checkbox"/>
                 </td>
             </tr>
         </tbody>
@@ -90,8 +90,8 @@
               <td class="type-column">Type</td>
               <td class="created-column">Created By</td>
               <td class="cite-column">References</td>
-              <td class="action-column">Approve?</td>
-              <td class="action-column">Discard?</td>
+              <td class="action-column">Approve?<br>All? <input ng-model="approveAllRelTypes" type="checkbox"/></td>
+              <td class="action-column">Discard?<br>All? <input ng-model="discardAllRelTypes" type="checkbox"/></td>
             </tr>
         </thead>
         <tbody>
@@ -105,11 +105,11 @@
                 <td><a href ui-sref="home.user({userId: rel.attributes.created_by})">{{rel.attributes.created_by_name}}</a></td>
                 <td><textarea class="form-control" ng-model="rel.attributes.citations"></textarea></td>
                 <td>
-                  <input ng-model="rel.is_approved" type="checkbox"/>
+                  <input ng-model="rel.is_approved" ng-checked="approveAllRelTypes" type="checkbox"/>
                     <!-- <i class="fa fa-times" aria-hidden="true" type="button" ng-click="$ctrl.remove($index, $ctrl.addToDB.links)" aria-label="Remove"></i> -->
                 </td>
                 <td>
-                  <input ng-model="rel.is_dismissed" type="checkbox"/>
+                  <input ng-model="rel.is_dismissed" ng-checked="discardAllRelTypes" type="checkbox"/>
                 </td>
             </tr>
         </tbody>
@@ -124,8 +124,8 @@
               <td class="end-column">End Date</td>
               <td class="created-column">Created By</td>
               <td class="cite-column">References</td>
-              <td class="action-column">Approve?</td>
-              <td class="action-column">Discard?</td>
+              <td class="action-column">Approve?<br>All? <input ng-model="approveAllGroups" type="checkbox"/></td>
+              <td class="action-column">Discard?<br>All? <input ng-model="discardAllGroups" type="checkbox"/></td>
             </tr>
         </thead>
         <tbody>
@@ -137,11 +137,11 @@
                 <td><a href ui-sref="home.user({userId: group.attributes.created_by})">{{group.attributes.created_by_name}}</a></td>
                 <td><textarea class="form-control" ng-model="group.attributes.citations"></textarea></td>
                 <td>
-                  <input ng-model="group.is_approved" type="checkbox"/>
+                  <input ng-model="group.is_approved" ng-checked="approveAllGroups" type="checkbox"/>
                     <!-- <i class="fa fa-times" aria-hidden="true" type="button" ng-click="$ctrl.remove($index, $ctrl.addToDB.groups)" aria-label="Remove"></i> -->
                 </td>
                 <td>
-                  <input ng-model="group.is_dismissed" type="checkbox"/>
+                  <input ng-model="group.is_dismissed" ng-checked="discardAllGroups" type="checkbox"/>
                 </td>
             </tr>
         </tbody>
@@ -156,8 +156,8 @@
               <td class="end-column">End Date</td>
               <td class="created-column">Created By</td>
               <td class="cite-column">References</td>
-              <td class="action-column">Approve?</td>
-              <td class="action-column">Discard?</td>
+              <td class="action-column">Approve?<br>All? <input ng-model="approveAllGroupAssigns" type="checkbox"/></td>
+              <td class="action-column">Discard?<br>All? <input ng-model="discardAllGroupAssigns" type="checkbox"/></td>
             </tr>
         </thead>
         <tbody>
@@ -169,11 +169,11 @@
                 <td><a href ui-sref="home.user({userId: rel.attributes.created_by})">{{rel.attributes.created_by_name}}</a></td>
                 <td><textarea class="form-control" ng-model="rel.attributes.citations"></textarea></td>
                 <td>
-                  <input ng-model="rel.is_approved" type="checkbox"/>
+                  <input ng-model="rel.is_approved" ng-checked="approveAllGroupAssigns" type="checkbox"/>
                     <!-- <i class="fa fa-times" aria-hidden="true" type="button" ng-click="$ctrl.remove($index, $ctrl.addToDB.group_assignments)" aria-label="Remove"></i> -->
                 </td>
                 <td>
-                  <input ng-model="rel.is_dismissed" type="checkbox"/>
+                  <input ng-model="rel.is_dismissed" ng-checked="discardAllGroupAssigns" type="checkbox"/>
                 </td>
             </tr>
         </tbody>
