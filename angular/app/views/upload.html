@@ -1,0 +1,87 @@
+<!-- <navigation-directive></navigation-directive> -->
+<!-- <a class="btn btn-primary table-btn" target="_self" href="/data/SDFB_relationships_2017_10_13.csv" download="SDFB_relationships_{{today}}.csv">Download All Relationships</a><br/>
+<ul uib-pagination direction-links="true" ng-change="pageChanged()" max-size="10" boundary-links="true" boundary-link-numbers="true" total-items="totalItems" ng-model="currentPage"></ul>
+<div class="tables-container">
+	<table id="relationships" class="table table-hover">
+			<thead>
+					<tr>
+						<td class="source-column">Source Name</td>
+						<td class="target-column">Target Name</td>
+						<td class="start-column">Start Date</td>
+						<td class="end-column">End Date</td>
+						<td class="created-column">Created By</td>
+						<td class="cite-column">References</td>
+						<td class="action-column">Action</td>
+					</tr>
+			</thead>
+			<tbody>
+					<tr class="rel {{'r'+rel.id}}" ng-class="{ 'active': group.active }" ng-repeat="rel in relationships">
+							<td><a href ui-sref="home.visualization({ids: rel.attributes.person_1, type: 'network', min_confidence: '60'})">{{ rel.attributes.person_1_name }}</a></td>
+							<td><a href ui-sref="home.visualization({ids: rel.attributes.person_2, type: 'network', min_confidence: '60'})">{{ rel.attributes.person_2_name }}</a></td>
+							<td>{{ rel.attributes.start_year_type }} {{ rel.attributes.start_year }}</td>
+							<td>{{ rel.attributes.end_year_type }} {{ rel.attributes.end_year }}</td>
+							<td><a href ui-sref="home.user({userId: rel.attributes.created_by})">{{rel.attributes.created_by_name}}</a></td>
+							<td>{{rel.attributes.citations}}</td>
+							<td>
+									<button ng-click="goToShared(rel.attributes.person_1,rel.attributes.person_2)" type="button" class="btn btn-primary">
+											Visualize
+									</button>
+							</td>
+					</tr>
+			</tbody>
+	</table>
+</div> -->
+
+<div class="container-fluid">
+    <div class="row">
+
+			<div class="col-md-2">
+				<h4>Upload Your Data to <em>Six Degrees</em></h4>
+			</div>
+      <div class="col-md-10">
+
+        <form class="form-horizontal" name="uploadForm" ng-submit="processData()">
+          <div class="form-group">
+            <div class="col-md-8">
+              <textarea class="form-control" rows="8" placeholder="Paste data from your spreadsheet or drag CSV file here"></textarea>
+            </div>
+          </div>
+          <div class="form-group">
+            <div class="col-md-2">
+              <button class="btn btn-primary" type="submit" data-loading-text="Calculating..." autocomplete="off">Upload</button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-3 collapse">
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            <h4 class="panel-title">
+              Global metrics
+            </h4>
+          </div>
+          <div class="panel-body"></div>
+        </div>
+      </div>
+      <div class="col-md-7 collapse" id="metrics">
+        <div class="table-responsive">
+          <table class="table table-hover sortable">
+            <thead>
+              <tr>
+                <th class="nosort" data-sortcolumn="0" data-sortkey="0-0">Node ID</th>
+                <th data-defaultsort="desc" class="up sorted" data-sortcolumn="1" data-sortkey="1-0"><div class="mozilla">Degree<span class="sign arrow up"></span></div></th>
+                <th data-firstsort="desc" class="nosort" data-sortcolumn="2" data-sortkey="2-0">Betweenness Centrality</th>
+                <th data-firstsort="desc" class="nosort" data-sortcolumn="3" data-sortkey="3-0">Eigenvector Centrality</th>
+                <th data-firstsort="desc" class="nosort" data-sortcolumn="4" data-sortkey="4-0">Clustering Coefficient</th>
+              </tr>
+            </thead>
+            <tbody>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+</div>
