@@ -79,6 +79,10 @@ angular.module('redesign2017App').component('visualization', {
           var groupName = $scope.data.data.data[0].attributes.name;
           $scope.config.networkName = groupName + " Timeline";
           $scope.config.networkDesc = $scope.data.data.data[0].attributes.description;
+          $scope.config.groupStartType = $scope.data.data.data[0].attributes.start_year_type;
+          $scope.config.groupStart = $scope.data.data.data[0].attributes.start_year;
+          $scope.config.groupEndType = $scope.data.data.data[0].attributes.end_year_type;
+          $scope.config.groupEnd = $scope.data.data.data[0].attributes.end_year;
           $scope.personTypeahead.selected = '';
           $scope.sharedTypeahead.selected = '';
           $scope.config.viewObject = 1;
@@ -112,6 +116,10 @@ angular.module('redesign2017App').component('visualization', {
               if (item.id === $scope.data.data.id) {
                 $scope.groupName = item.attributes.name;
                 groupDescription = item.attributes.description;
+                $scope.config.groupStartType = item.attributes.start_year_type;
+                $scope.config.groupStart = item.attributes.start_year;
+                $scope.config.groupEndType = item.attributes.end_year_type;
+                $scope.config.groupEnd = item.attributes.end_year;
               }
             });
             $scope.data.included = $scope.data.included.filter(function(n) { return n.id !== $scope.data.data.id; });
