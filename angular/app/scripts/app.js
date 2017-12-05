@@ -93,6 +93,11 @@ redesign2017App.config(function($stateProvider, $locationProvider, $compileProvi
     },
     component: 'relationships'
   }
+  var uploadState = {
+    name: 'home.upload',
+    url: 'upload',
+    component: 'upload'
+  }
   var userState = {
     name: "home.user",
     url: "user/{userId}",
@@ -278,6 +283,7 @@ redesign2017App.config(function($stateProvider, $locationProvider, $compileProvi
   $stateProvider.state(vizState);
   $stateProvider.state(peopleState);
   $stateProvider.state(relationshipsState);
+  $stateProvider.state(uploadState);
   $stateProvider.state(userState);
   $stateProvider.state(resetState);
   $stateProvider.state(aboutState);
