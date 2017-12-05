@@ -74,15 +74,22 @@ angular.module('redesign2017App')
               makeTimeline();
               apiService.getUserName(scope.currentSelection.types[i].created_by).then(function(result) {
                 scope.currentSelection.types[i].created_by_name = result.data.username;
-                scope.thisType = {}
-                scope.thisType.created_by = scope.currentSelection.types[i].created_by;
+                scope.thisType = {};
+                if (scope.currentSelection.types[i].created_by === 3 && scope.currentSelection.types.length === 1) {
+                  scope.thisType.created_by = scope.currentSelection.created_by;
+                  scope.thisType.created_by_name = scope.currentSelection.created_by_name;
+
+                } else {
+                  scope.thisType.created_by = scope.currentSelection.types[i].created_by;
+                  scope.thisType.created_by_name = scope.currentSelection.types[i].created_by_name;
+                }
                 var created = d3.select(element[0]).append('p')
                   .attr('class', 'person-right');
                   // .text('created by: ');
                 created.append('a')
                   .attr('href', "/user/"+scope.thisType.created_by)
                   // .attr('ui-sref', "home.user({userId: thisType.created_by})")
-                  .text(scope.currentSelection.types[i].created_by_name);
+                  .text(scope.thisType.created_by_name);
                 created.append('i')
                   .classed('fa fa-book', true)
                   .attr('id', 'c'+i);
