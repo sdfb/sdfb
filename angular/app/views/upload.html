@@ -40,7 +40,7 @@
 			</div>
       <div class="col-md-10">
 
-        <form class="form-horizontal" name="uploadForm" ng-submit="processData()">
+        <form class="form-horizontal" name="uploadForm" ng-submit="readCSV()">
           <div class="form-group">
             <div class="col-md-8">
               <textarea class="form-control" rows="8" placeholder="Paste data from your spreadsheet or drag CSV file here"></textarea>
@@ -50,37 +50,34 @@
             <div class="col-md-2">
               <button class="btn btn-primary" type="submit" data-loading-text="Calculating..." autocomplete="off">Upload</button>
             </div>
+            <div class="col-md-8">
+              <label class="radio-inline"><input type="radio" ng-model="csvType" value="people" name="optradio">People</label>
+              <label class="radio-inline"><input type="radio" ng-model="csvType" value="relationships" name="optradio">Relationships</label>
+              <label class="radio-inline"><input type="radio" ng-model="csvType" value="group_assignments" name="optradio">Group Assignments</label>
+            </div>
           </div>
         </form>
       </div>
     </div>
     <div class="row">
-      <div class="col-md-3 collapse">
-        <div class="panel panel-default">
+      <div class="col-md-2">
+        <!-- <div class="panel panel-default">
           <div class="panel-heading">
             <h4 class="panel-title">
               Global metrics
             </h4>
           </div>
           <div class="panel-body"></div>
-        </div>
+        </div> -->
       </div>
-      <div class="col-md-7 collapse" id="metrics">
-        <div class="table-responsive">
-          <table class="table table-hover sortable">
-            <thead>
-              <tr>
-                <th class="nosort" data-sortcolumn="0" data-sortkey="0-0">Node ID</th>
-                <th data-defaultsort="desc" class="up sorted" data-sortcolumn="1" data-sortkey="1-0"><div class="mozilla">Degree<span class="sign arrow up"></span></div></th>
-                <th data-firstsort="desc" class="nosort" data-sortcolumn="2" data-sortkey="2-0">Betweenness Centrality</th>
-                <th data-firstsort="desc" class="nosort" data-sortcolumn="3" data-sortkey="3-0">Eigenvector Centrality</th>
-                <th data-firstsort="desc" class="nosort" data-sortcolumn="4" data-sortkey="4-0">Clustering Coefficient</th>
-              </tr>
-            </thead>
-            <tbody>
-            </tbody>
-          </table>
-        </div>
+      <div class="col-md-8" id="metrics">
+        <form class="form" name="uploadPeople" ng-submit="writePeople()">
+          <div ng-repeat="person in peopleRows">
+            {{person.name}} <br>
+            <label class="radio"><input type="radio" ng-model="csvType" value="people" checked name="optradio">People</label>
+            <label class="radio"><input type="radio" ng-model="csvType" value="relationships" name="optradio">Relationships</label>
+          </div>
+        </form>
       </div>
     </div>
 

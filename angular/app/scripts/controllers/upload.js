@@ -29,7 +29,8 @@
         }
       });
 
-      $scope.processData = function() {
+      $scope.csvType = "people";
+      $scope.readCSV = function() {
         var data = $('textarea').val();
         var rows = [];
         var header = data.split('\n')[0].split(",");
@@ -41,9 +42,18 @@
           })
           rows.push(row);
         });
+        $scope.csvRows = rows;
+        console.log($scope.csvRows, $scope.csvType);
+        if ($scope.csvType === "people") {
+          processPeople($scope.csvRows);
+        }
+      }
+
+      function processPeople(rows) {
         rows.forEach(function(r) {
-          apiService.personTypeahead(r["Display Name"]).then(function successCallback(response) {
+          apiService.personTypeahead(r.name).then(function successCallback(response) {
             if (response.data.length > 0) {
+              r.found = true;
               response.data.forEach(function(p) {
                 apiService.getPeople(p.id).then(function(result) {
                   console.log(result.data);
@@ -51,11 +61,14 @@
               })
             } else {
               console.log('none found!');
+              r.found = false;
             }
           }, function errorCallback(error) {
             console.log('error!');
+            console.error(error);
           });
-        })
+        });
+        $scope.peopleRows = rows;
       }
 
 
