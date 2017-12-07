@@ -1716,6 +1716,61 @@ people-finder {
   }
 }
 
+#upload {
+  height: 800px;
+  overflow: auto;
+
+  // .person-form {
+  //   background: $light-color;
+  //
+  // }
+  h3 {
+    // color: $contribution-mode-fill;
+    font-size: 18px;
+    font-weight: bold;
+  }
+  hr {
+    border-color: $panels-stroke;
+  }
+  label.radio {
+    background: $panels-bg;
+    border: 1px solid $panels-stroke;
+    border-radius: 4px;
+    padding: 5px;
+  }
+}
+// #upload {
+//   .input-group-addon {
+//     background-color: $contribution-mode-fill;
+//     border: 1px solid $contribution-mode-stroke;
+//     color: $light-color;
+//     text-transform: capitalize !important;
+//     cursor: pointer;
+//     font-size: 13px;
+//     height: 30px;
+//     padding: 4px 6px 6px 6px;
+//     text-align: left;
+//     // float: left;
+//     text-transform: uppercase;
+//     -moz-appearance: none;
+//     appearance: none;
+//     -webkit-appearance: none;
+//
+//     option {
+//       background-color: $light-color;
+//       color: $contribution-mode-fill;
+//
+//       &:active,
+//       &:active:focus,
+//       &:active:hover,
+//       &:focus,
+//       &:hover {
+//         -webkit-box-shadow: inset 20px 20px orange;
+//         box-shadow: inset 20px 20px orange;
+//       }
+//     }
+//   }
+// }
 .edit-person {
   input, textarea {
     width: 50%;

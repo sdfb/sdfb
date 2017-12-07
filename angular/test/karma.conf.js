@@ -37,6 +37,7 @@ module.exports = function(config) {
       'bower_components/angularjs-slider/dist/rzslider.js',
       'bower_components/angular-loading-bar/build/loading-bar.js',
       'bower_components/angular-mocks/angular-mocks.js',
+      'bower_components/jquery-csv/src/jquery.csv.js',
       // endbower
       'app/scripts/**/*.js',
       'test/mock/**/*.js',

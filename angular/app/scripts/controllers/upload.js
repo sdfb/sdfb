@@ -10,6 +10,9 @@
  angular.module('redesign2017App').component('upload', {
    templateUrl: 'views/upload.html',
    controller: ['$scope', '$stateParams', '$state', 'apiService', function($scope, $stateParams, $state, apiService) {
+     $scope.dateTypes = [{'name':'IN', 'abbr': 'IN'}, {'name': 'CIRCA', 'abbr': 'CA'}, {'name': 'BEFORE', 'abbr': 'BF'}, {'name': 'BEFORE/IN', 'abbr': 'BF/IN'},{'name': 'AFTER', 'abbr': 'AF'}, {'name': 'AFTER/IN', 'abbr': 'AF/IN'}];
+     $scope.gender = ['male', 'female', 'gender_nonconforming'];
+     
      $('textarea').on('dragover', function(e) {
         e.preventDefault(e);
         e.stopPropagation(e);
@@ -32,17 +35,7 @@
       $scope.csvType = "people";
       $scope.readCSV = function() {
         var data = $('textarea').val();
-        var rows = [];
-        var header = data.split('\n')[0].split(",");
-        console.log(header);
-        data.split("\n").slice(1,).forEach(function(l) {
-          var row = {};
-          l.split(',').forEach(function(w, i) {
-            row[header[i]] = w;
-          })
-          rows.push(row);
-        });
-        $scope.csvRows = rows;
+        $scope.csvRows = $.csv.toObjects(data);
         console.log($scope.csvRows, $scope.csvType);
         if ($scope.csvType === "people") {
           processPeople($scope.csvRows);

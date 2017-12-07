@@ -1,10 +1,10 @@
 <div class="container-fluid">
     <div class="row">
 
-			<div class="col-md-2">
+			<!-- <div class="col-md-2"> -->
 				<h4>Upload Your Data to <em>Six Degrees</em></h4>
-			</div>
-      <div class="col-md-10">
+			<!-- </div> -->
+      <div class="col-md-12">
 
         <form class="form-horizontal" name="uploadForm" ng-submit="readCSV()">
           <div class="form-group">
@@ -26,28 +26,67 @@
       </div>
     </div>
     <div class="row">
-      <div class="col-md-2">
-        <!-- <div class="panel panel-default">
-          <div class="panel-heading">
-            <h4 class="panel-title">
-              Global metrics
-            </h4>
-          </div>
-          <div class="panel-body"></div>
-        </div> -->
-      </div>
-      <div class="col-md-8" id="metrics">
+      <div class="col-md-1"></div>
+      <div class="col-md-11" id="upload">
         <form class="form" name="uploadPeople" ng-submit="writePeople()">
-          <div ng-repeat="person in peopleRows">
-            <form>
-            {{person.name}} <br>
+          <div class="person-form" ng-repeat="person in peopleRows" ng-init="personIndex = $index; person.choice = 'new'">
+            <h3>{{person.name}}</h3> <br>
             <div ng-repeat="p in person.foundPeople">
-              <label class="radio"><input type="radio" ng-model="person.choice" value="existing" name="optradio">
+              <label class="radio"><input type="radio" ng-model="person.choice" value="existing" name="{{personIndex}}">
                 Existing person: {{p.attributes.name}}, {{p.attributes.historical_significance}}, Born: {{ p.attributes.birth_year_type }} {{ p.attributes.birth_year }}, Died: {{ p.attributes.death_year_type }} {{ p.attributes.death_year }}
               </label>
             </div>
-            <label class="radio"><input type="radio" ng-model="person.choice" value="new" name="optradio">New person</label>
-            </form>
+            <div>
+              <label class="radio">
+                <input type="radio" ng-model="person.choice" value="new" name="{{personIndex}}">
+                <div class="form-group row">
+                  <div class="col-md-1">
+                    New person:
+                  </div>
+
+                  <div class="col-md-2 form-group">
+                    <label for="inputKey" class="control-label">Name <i class="fa fa-asterisk" aria-hidden="true"></i></label>
+                    <input type="text" class="form-control" ng-model="person.name" id="inputKey" placeholder="Name">
+                  </div>
+
+                  <div class="col-md-2 form-group">
+                    <label for="inputValue" class="control-label">Historical Significance</label>
+                    <input type="text" class="form-control" ng-model="person.historical_significance" id="inputValue" placeholder="Historical Significance">
+                  </div>
+                  <div class="col-md-2 form-group">
+                    <label for="birthDate" class="control-label">Birth date <i class="fa fa-asterisk" aria-hidden="true"></i></label>
+              		  <div class="input-group">
+              				<select name="birthType" class="form-control" ng-model="person.birth_year_type" ng-options="type.name for type in dateTypes"></select>
+                      <span class="input-group-addon" style="width:0px; padding-left:0px; padding-right:0px; border:none;"></span>
+              		    <input id="birthDate" name="birthDate" type="text" ng-minlength=4 ng-maxlength=4 class="form-control" ng-model="person.birth_year">
+              		  </div>
+                  </div>
+                  <div class="col-md-2 form-group">
+                    <label for="deathDate" class="control-label">Death date <i class="fa fa-asterisk" aria-hidden="true"></i></label>
+              		  <div class="input-group">
+              				<select name="deathType" class="form-control" ng-model="person.death_year_type" ng-options="type.name for type in dateTypes"></select>
+                      <span class="input-group-addon" style="width:0px; padding-left:0px; padding-right:0px; border:none;"></span>
+              		    <input id="deathDate" name="deathDate" type="text" ng-minlength=4 ng-maxlength=4 class="form-control" ng-model="person.death_year">
+              		  </div>
+                  </div>
+                  <div class="col-md-2 form-group">
+                    <label for="gender" class="control-label">Gender <i class="fa fa-asterisk" aria-hidden="true"></i></label>
+            				<select name="gender" class="form-control" ng-model="person.gender" ng-options="type for type in gender"></select>
+                  </div>
+                  <div class="col-md-1"></div>
+                  <div class="col-md-2 form-group">
+                    <label for="alternates" class="control-label">Alternate Names</label>
+              			<input name="alternates" class="form-control" ng-model="person.alternates" placeholder="Alternate Names (comma-separated)">
+                  </div>
+
+                  <div class="col-md-2 form-group">
+              			<label for="references" class="control-label">References</label>
+              	    <textarea name="references" type="text" ng-model="person.citation" class="form-control"></textarea>
+                  </div>
+                </div>
+              </label>
+            </div>
+            <hr>
           </div>
         </form>
       </div>
