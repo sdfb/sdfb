@@ -35,7 +35,7 @@
         var rows = [];
         var header = data.split('\n')[0].split(",");
         console.log(header);
-        data.split("\n").slice(1,-1).forEach(function(l) {
+        data.split("\n").slice(1,).forEach(function(l) {
           var row = {};
           l.split(',').forEach(function(w, i) {
             row[header[i]] = w;
@@ -56,7 +56,7 @@
               r.found = true;
               response.data.forEach(function(p) {
                 apiService.getPeople(p.id).then(function(result) {
-                  console.log(result.data);
+                  r.foundPeople = result.data;
                 })
               })
             } else {
