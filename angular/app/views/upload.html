@@ -25,14 +25,14 @@
         </form>
       </div>
     </div>
-    <div class="row">
+    <div class="row upload-content">
       <div class="col-md-1"></div>
       <div class="col-md-11" id="upload">
         <form class="form" name="uploadPeople" ng-submit="writePeople()">
-          <div class="person-form" ng-repeat="person in peopleRows" ng-init="personIndex = $index; person.choice = 'new'">
-            <h3>{{person.name}}</h3> <br>
+          <div class="person-form" ng-repeat="person in peopleRows" ng-init="personIndex = $index; person.choice = 'new'; person.birth_year_type = person.death_year_type = dateTypes[0];">
+            <h3>{{person.name}}:</h3> <br>
             <div ng-repeat="p in person.foundPeople">
-              <label class="radio"><input type="radio" ng-model="person.choice" value="existing" name="{{personIndex}}">
+              <label class="radio"><input type="radio" ng-model="person.choice" value="{{$index}}" name="{{personIndex}}">
                 Existing person: {{p.attributes.name}}, {{p.attributes.historical_significance}}, Born: {{ p.attributes.birth_year_type }} {{ p.attributes.birth_year }}, Died: {{ p.attributes.death_year_type }} {{ p.attributes.death_year }}
               </label>
             </div>
@@ -86,7 +86,38 @@
                 </div>
               </label>
             </div>
-            <hr>
+            <!-- <hr> -->
+          </div>
+          <div>
+            <label ng-show="peopleRows" for="showGroupAssign" class="control-label">Add all of these people to a group</label>
+            <input ng-show="peopleRows" type="checkbox" ng-model="alsoGroupAssign" aria-label="Toggle ngShow">
+      			<!-- <h4 style="display:inline;" ng-show="config.viewMode == 'group-force'"></h4> -->
+            <div ng-show="alsoGroupAssign">
+              <div class="col-md-2 form-group">
+                <label for='groupName' class='control-label'>Group <i class="fa fa-asterisk" aria-hidden="true"></i></label>
+                <input name="groupName" type="text" ng-model="groupAssign.group" class="form-control" uib-typeahead="group as group.name for group in callGroupsTypeahead($viewValue)" typeahead-loading="loadingGroups" typeahead-no-results="noResultsGroups" typeahead-show-hint="true" typeahead-min-length="3" typeahead-on-select="groupSelected($item, $model, $label, $event)">
+              </div>
+              <!-- <div class="col-md-2 form-group">
+          			<label for="startDate" class="control-label">Start date</label>
+          		  <div class="input-group">
+          				<select class="form-control" ng-model="groupAssign.startDateType" ng-options="type.name for type in dateTypes"></select>
+                  <span class="input-group-addon" style="width:0px; padding-left:0px; padding-right:0px; border:none;"></span>
+                  <input name='startDate' class="form-control" ng-model="groupAssign.startDate">
+          		  </div>
+              </div>
+
+              <div class="col-md-2 form-group">
+          			<label for="endDate" class="control-label">End date</label>
+          		  <div class="input-group">
+          				<select class="form-control" ng-model="groupAssign.endDateType" ng-options="type.name for type in dateTypes"></select>
+                  <span class="input-group-addon" style="width:0px; padding-left:0px; padding-right:0px; border:none;"></span>
+                  <input name='endDate' type='text' class="form-control" ng-model="groupAssign.endDate">
+          		  </div>
+              </div> -->
+            </div>
+          </div>
+          <div ng-show="peopleRows" class="col-md-2">
+            <button type="submit" class="btn btn-primary">Submit & Approve</button>
           </div>
         </form>
       </div>
