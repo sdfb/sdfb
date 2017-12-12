@@ -42,7 +42,7 @@ angular.module('redesign2017App')
         scope.callPersonTypeahead = function(val) {
           return apiService.personTypeahead(val).then(function(result){
             var allIDs = [];
-            result.forEach(function(r) {
+            result.data.forEach(function(r) {
               allIDs.push(r.id);
             })
             return apiService.getPeople(allIDs).then(function(peopleResult) {

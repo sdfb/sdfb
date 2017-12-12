@@ -40,7 +40,7 @@
       <h3>References</h3>
       <textarea class="form-control" ng-model="$ctrl.person.attributes.citations" type="text"></textarea>
       <h3>Dismiss this person?  <input id="dismiss" ng-model="$ctrl.person.is_dismissed" type="checkbox"/>  [Warning: This will erase the person from the website.]</h3>
-      <button ng-disabled="signupForm.$invalid" type="submit" id="btnLogin" class="btn btn-primary">Edit Person Info</button>
+      <button ng-disabled="editPersonForm.$invalid" type="submit" id="btnLogin" class="btn btn-primary">Edit Person Info</button>
       <div class="alert alert-danger" ng-show="editPersonForm.$invalid">
 				You are missing required fields.
 			</div>

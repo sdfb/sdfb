@@ -27,6 +27,7 @@
   <div id="viz-title">
     <div>{{ config.networkName }}</div>
     <p>{{ config.networkDesc }}</p>
+    <p ng-show=" config.viewMode === 'group-timeline' || config.viewMode === 'group-force'">Started {{ config.groupStartType }} {{ config.groupStart }}, Ended {{ config.groupEndType }} {{ config.groupEnd }}</p>
   </div>
   <section class="on-the-right" ng-show=" config.viewMode != 'group-timeline' ">
     <div id="contribute-buttons">

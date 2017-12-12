@@ -528,6 +528,8 @@ div.bio {margin-bottom: 60px;}
   border-radius: 4px;
   padding: 2.5px;
   text-align: center;
+
+  p { margin: 2.5px 0 2.5px; }
 }
 /* search panel styles*/
 search-panel.panel {
@@ -1447,6 +1449,8 @@ contextual-info-panel > section, contextual-info-panel > div > section {
     text-align: center;
     margin-bottom: 0;
     margin-top: 0;
+
+    i { margin-left: 3px;}
   }
 
   .btn.go {
@@ -1709,6 +1713,34 @@ people-finder {
   .btn-primary {
     padding: 2px 8px;
     width: auto;
+  }
+}
+
+upload .container-fluid {
+  height: 95vh;
+  overflow-y: scroll;
+
+  .person-form {
+  //   border: 1px solid $panels-stroke;
+  //   border-radius: 4px;
+    margin: 5px 0 10px;
+  //   padding: 5px;
+  }
+  h3 {
+    // color: $contribution-mode-fill;
+    font-size: 18px;
+    font-weight: bold;
+    text-decoration: underline;
+  }
+  hr {
+    border-color: $panels-stroke;
+  }
+  label.radio {
+    background: $panels-bg;
+    border: 1px solid $panels-stroke;
+    border-radius: 4px;
+    padding: 5px;
+    margin: 2px 0 2px;
   }
 }
 
