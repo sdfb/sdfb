@@ -219,14 +219,14 @@ angular.module('redesign2017App').component('home', {
       });
       modalInstance.result.then(function(result) {
         console.log(result);
-        // var toDB = {nodes: [result], auth_token: $rootScope.user.auth_token}
-        // apiService.writeData(toDB).then(function successCallback(response) {
-        //   console.log('success!');
-        //   $rootScope.personEditSuccess = true;
-        // }, function errorCallback(error) {
-        //   console.log(error);
-        //   $rootScope.personEditFailure = true;
-        // });
+        var toDB = {groups: [result], auth_token: $rootScope.user.auth_token}
+        apiService.writeData(toDB).then(function successCallback(response) {
+          console.log('success!');
+          $rootScope.groupEditSuccess = true;
+        }, function errorCallback(error) {
+          console.log(error);
+          $rootScope.groupEditFailure = true;
+        });
       }, function() {
         $log.info('Modal dismissed at: ' + new Date());
       });

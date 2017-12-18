@@ -31,25 +31,19 @@ angular.module('redesign2017App')
     };
 
     $ctrl.close = function() {
-      var editPerson = {};
-      editPerson.id = $ctrl.group.id;
-      editPerson.name = $ctrl.group.attributes.name;
-      editPerson.historical_significance = $ctrl.group.attributes.historical_significance;
-      editPerson.odnb_id = $ctrl.group.attributes.odnb_id;
-      editPerson.gender = $ctrl.group.attributes.gender;
-      editPerson.citations = $ctrl.group.attributes.citations;
-      editPerson.alternates = $ctrl.group.attributes.alternates;
-      editPerson.prefix = $ctrl.group.attributes.prefix;
-      editPerson.title = $ctrl.group.attributes.title;
-      editPerson.suffix = $ctrl.group.attributes.suffix;
-      editPerson.birthDate = $ctrl.group.attributes.birth_year;
-      editPerson.deathDate = $ctrl.group.attributes.death_year;
-      editPerson.birthDateType = $ctrl.group.attributes.birth_year_type.abbr;
-      editPerson.deathDateType = $ctrl.group.attributes.death_year_type.abbr;
+      var editGroup = {};
+      editGroup.id = parseInt($ctrl.group.id);
+      editGroup.name = $ctrl.group.attributes.name;
+      editGroup.description = $ctrl.group.attributes.description;
+      editGroup.citations = $ctrl.group.attributes.citations;
+      editGroup.startDate = $ctrl.group.attributes.start_year;
+      editGroup.endDate = $ctrl.group.attributes.end_year;
+      editGroup.startDateType = $ctrl.group.attributes.start_year_type.abbr;
+      editGroup.endDateType = $ctrl.group.attributes.end_year_type.abbr;
       if ($ctrl.group.is_dismissed) {
-        editPerson.is_active = !$ctrl.group.is_dismissed;
+        editGroup.is_active = !$ctrl.group.is_dismissed;
       }
-      $uibModalInstance.close(editPerson);
+      $uibModalInstance.close(editGroup);
     }
 
   }]);
