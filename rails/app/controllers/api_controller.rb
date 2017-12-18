@@ -320,7 +320,7 @@ class ApiController < ApplicationController
         person_id = person_lookup[person_id] if person_id && person_id.to_i < 1_000_000
         group_id  = group_lookup[group_id]   if group_id && group_id.to_i  < 0
        
-        update_dates(Group.find(group_id),assignment) if group_id
+        # update_dates(Group.find(group_id),assignment) if group_id
 
         new_record = {
           person_id: person_id,
