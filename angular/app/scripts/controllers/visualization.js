@@ -224,6 +224,13 @@ angular.module('redesign2017App').component('visualization', {
       });
     };
 
+    $scope.openEditGroupModal = function() {
+      if ($scope.config.viewMode === 'group-force') {
+        $rootScope.openEditGroup($scope.data.data.id);
+      } else if ($scope.config.viewMode === 'group-timeline') {
+        $rootScope.openEditGroup($scope.data.data.data[0].id);
+      }
+    }
     // $scope.sendData = function() {
     //   console.log($scope.addToDB);
     //   $scope.addToDB = {nodes: [], links: [], groups: [], group_assignments: []};

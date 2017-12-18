@@ -27,7 +27,7 @@
   <div id="viz-title">
     <div>{{ config.networkName }}</div>
     <p>{{ config.networkDesc }}</p>
-    <p ng-show=" config.viewMode === 'group-timeline' || config.viewMode === 'group-force'">Started {{ config.groupStartType }} {{ config.groupStart }}, Ended {{ config.groupEndType }} {{ config.groupEnd }}</p>
+    <p ng-show=" config.viewMode === 'group-timeline' || config.viewMode === 'group-force'">Started {{ config.groupStartType }} {{ config.groupStart }}, Ended {{ config.groupEndType }} {{ config.groupEnd }} <a href ng-show="$root.user.is_active && $root.user.user_type !== 'Standard'" ng-click="openEditGroupModal()"><i class="fa fa-pencil" aria-hidden="true"></i></a></p>
   </div>
   <section class="on-the-right" ng-show=" config.viewMode != 'group-timeline' ">
     <div id="contribute-buttons">

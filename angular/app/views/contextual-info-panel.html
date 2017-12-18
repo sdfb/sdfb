@@ -47,8 +47,7 @@
 </section>
 <section ng-if="currentSelection.type == 'group'">
   <div class="person-right">
-
-
+    <a href ng-show="$root.user.is_active && $root.user.user_type !== 'Standard'" ng-click="$root.openEditGroup(currentSelection.data[0].id)"><i class="fa fa-pencil" aria-hidden="true"></i></a>
     <p ng-show="currentSelection.data[0].attributes.created_by !== 2" class="person-created"><a href ui-sref="home.user({userId: currentSelection.data[0].attributes.created_by})">{{currentSelection.data[0].attributes.created_by_name}}</a></p>
   </div>
   <!-- <button type="button" class="btn btn-primary go" ui-sref="home.visualization({ ids: currentSelection.data[0].id })">Visualize</button> -->
