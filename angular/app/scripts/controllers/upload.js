@@ -136,6 +136,7 @@
               newGroupAssign.endDate = groupEndYear;
             }
             delete newGroupAssign.group.name;
+            newGroupAssign.is_approved = true;
 
             addToDB.group_assignments.push(newGroupAssign);
           })
