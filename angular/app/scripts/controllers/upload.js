@@ -85,7 +85,6 @@
         apiService.getGroups($item.id).then(function (result) {
           groupStartYear = result.data.data[0].attributes.start_year.toString();
           groupEndYear = result.data.data[0].attributes.end_year.toString();
-          console.log(result.data.data[0], groupStartYear, groupEndYear)
         });
       }
 

@@ -314,13 +314,20 @@ angular.module('redesign2017App')
             var json = newValue.data;
             groupInfo = json.data[0].attributes;
             groupInfo.id = json.data[0].id;
+            // console.log(groupInfo);
+            var peopleById = {};
+            groupInfo.people.forEach(function(p) {
+              peopleById[p.person_id] = p;
+            });
+            console.log(peopleById);
 
             members = json.includes;
+            console.log(members);
             members.forEach(function(m, i) {
-              m.attributes.start_year = groupInfo.people[i].start_year;
-              m.attributes.start_year_type = groupInfo.people[i].start_year_type;
-              m.attributes.end_year = groupInfo.people[i].end_year;
-              m.attributes.end_year_type = groupInfo.people[i].end_year_type;
+              m.attributes.start_year = peopleById[parseInt(m.id)].start_year;
+              m.attributes.start_year_type = peopleById[parseInt(m.id)].start_year_type;
+              m.attributes.end_year = peopleById[parseInt(m.id)].end_year;
+              m.attributes.end_year_type = peopleById[parseInt(m.id)].end_year_type;
             })
 
             update(members);
