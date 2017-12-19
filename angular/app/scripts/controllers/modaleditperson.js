@@ -38,7 +38,7 @@ angular.module('redesign2017App')
       editPerson.historical_significance = $ctrl.person.attributes.historical_significance;
       editPerson.odnb_id = $ctrl.person.attributes.odnb_id;
       editPerson.gender = $ctrl.person.attributes.gender;
-      editPerson.citations = $ctrl.person.attributes.citations;
+      editPerson.citation = $ctrl.person.attributes.citations;
       editPerson.alternates = $ctrl.person.attributes.alternates;
       editPerson.prefix = $ctrl.person.attributes.prefix;
       editPerson.title = $ctrl.person.attributes.title;
