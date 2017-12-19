@@ -32,13 +32,13 @@ angular.module('redesign2017App')
           } else if (scope.currentSelection.type === 'relationship') {
             var name1 = scope.currentSelection.source.attributes.name.replace(' ','+');
             var name2 = scope.currentSelection.target.attributes.name.replace(' ','+');
-            var url = 'http://www.oxforddnb.com/search/articles/?searchForm=%2Fsearch%2Ffulltext%2Findex.jsp&text1="{{name1}}"&textFieldLimiter1=article_text&textQualifier1=+AND+&bool1=+AND+&text2="{{name2}}"%20&textFieldLimiter2=article_text&textQualifier2=+AND+&bool2=+AND+&text3=&textFieldLimiter3=article_text&textQualifier3=EXACT&search=Search';
+            var url = 'http://www.oxforddnb.com/search?btog=chap&f_0=fulltext&f_1=fulltext&o_1=AND&q_0="{{name1}}"&q_1="{{name2}}"';
             url = url.replace('{{name1}}', name1.toLowerCase());
             url = url.replace('{{name2}}', name2.toLowerCase());
             window.open(url, '_blank');
           } else if (scope.currentSelection.type === 'group') {
             var name = scope.currentSelection.data[0].attributes.name.replace(' ','+');
-            var url = 'http://www.oxforddnb.com/search/articles/?searchForm=%2Fsearch%2Ffulltext%2Findex.jsp&text1="{{name}}"&textFieldLimiter1=article_text&textQualifier1=+AND+&bool1=+AND+&text2=&textFieldLimiter2=article_text&textQualifier2=+AND+&bool2=+AND+&text3=&textFieldLimiter3=article_text&textQualifier3=EXACT&search=Search';
+            var url = 'http://www.oxforddnb.com/search?btog=chap&q0="{{name}}"';
             window.open(url.replace('{{name}}', name.toLowerCase()), '_blank');
           }
         }
