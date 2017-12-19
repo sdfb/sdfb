@@ -1042,6 +1042,7 @@ angular.module('redesign2017App').directive('forceLayout', ['apiService', '$time
                   if (scope.config.viewMode === 'group-force') {
                     scope.groupAssign.group.id = $stateParams.ids;
                     scope.groupAssign.group.name = scope.groupName;
+                    scope.populateGroupDates(d.id, $stateParams.ids);
                   }
                   scope.groupAssignClosed = false;
                   scope.addLinkClosed = true;
