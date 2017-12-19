@@ -25,7 +25,7 @@
     <table class="table table-hover">
         <tbody>
             <tr class="person {{'p'+person.id}}" ng-class="{ 'active': group.active }" ng-repeat="person in user.contributions.people">
-                <td><a ng-click="dismiss()" ui-sref="home.visualization({ ids: person.id })">{{person.name}}</a></td>
+                <td><a ng-click="dismiss()" ui-sref="home.visualization({ ids: person.id, type: 'network', min_confidence: '60' })">{{person.name}}</a></td>
             </tr>
         </tbody>
     </table>
@@ -56,7 +56,7 @@
     <table class="table table-hover">
         <tbody>
             <tr class="group {{'g'+group.id}}" ng-class="{ 'active': group.active }" ng-repeat="group in user.contributions.groups">
-                <td><a ng-click="dismiss()" ui-sref="home.visualization({ ids: group.id })">{{group.name}}</a></td>
+                <td><a ng-click="dismiss()" ui-sref="home.visualization({ ids: group.id, type: 'network', min_confidence: '60' })">{{group.name}}</a></td>
             </tr>
         </tbody>
     </table>
