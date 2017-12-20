@@ -38,9 +38,11 @@
       $scope.readCSV = function() {
         var data = $('textarea').val();
         $scope.csvRows = $.csv.toObjects(data);
-        console.log($scope.csvRows, $scope.csvType);
+        console.log($scope.csvRows);
         if ($scope.csvType === "people") {
           processPeople($scope.csvRows);
+        } else if ($scope.csvType === "relationships") {
+          processRelationships($scope.csvRows);
         }
       }
 
@@ -74,6 +76,64 @@
           }
         });
         $scope.peopleRows = rows;
+      }
+
+      function processRelationships(rows) {
+        rows.forEach(function(r) {
+          if (r.source_id) {
+            apiService.getPeople(r.source_id).then(function successCallback(result) {
+              r.foundSourcePeople = result.data;
+              r.sourceFound = true;
+              r.sourceChoice = '0';
+            }, function errorCallback(error) {
+              console.log(error);
+            });
+          } else if (r.source_name) {
+            apiService.personTypeahead(r.source_name).then(function successCallback(response) {
+              if (response.data.length > 0) {
+                r.sourceFound = true;
+                response.data.forEach(function(p) {
+                  apiService.getPeople(p.id).then(function(result) {
+                    r.foundSourcePeople = result.data;
+                  })
+                })
+              } else {
+                console.log('none found!');
+                r.sourceFound = false;
+              }
+            }, function errorCallback(error) {
+              console.log('error!');
+              console.error(error);
+            });
+          }
+          if (r.target_id) {
+            apiService.getPeople(r.target_id).then(function successCallback(result) {
+              r.foundTargetPeople = result.data;
+              r.targetFound = true;
+              r.targetChoice = '0';
+            }, function errorCallback(error) {
+              console.log(error);
+            });
+          } else if (r.target_name) {
+            apiService.personTypeahead(r.target_name).then(function successCallback(response) {
+              if (response.data.length > 0) {
+                r.targetFound = true;
+                response.data.forEach(function(p) {
+                  apiService.getPeople(p.id).then(function(result) {
+                    r.foundTargetPeople = result.data;
+                  })
+                })
+              } else {
+                console.log('none found!');
+                r.targetFound = false;
+              }
+            }, function errorCallback(error) {
+              console.log('error!');
+              console.error(error);
+            });
+          }
+        });
+        $scope.relRows = rows;
       }
 
       $scope.callGroupsTypeahead = function(val) {
