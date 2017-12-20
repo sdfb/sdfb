@@ -35,7 +35,7 @@
       <div class="col-md-11" id="upload">
         <form class="form" name="uploadPeople" ng-submit="writePeople()">
           <div class="person-form" ng-repeat="person in peopleRows" ng-init="personIndex = $index; person.choice = 'new'; person.birth_year_type = person.death_year_type = dateTypes[0];">
-            <h3>{{person.name}}:</h3> <br>
+            <h3>{{$index+1}}) {{person.name}}:</h3> <br>
             <div ng-repeat="p in person.foundPeople">
               <label class="radio"><input type="radio" ng-model="person.choice" value="{{$index}}" name="{{personIndex}}">
                 Existing person: {{p.attributes.name}}, {{p.attributes.historical_significance}}, Born: {{ p.attributes.birth_year_type }} {{ p.attributes.birth_year }}, Died: {{ p.attributes.death_year_type }} {{ p.attributes.death_year }}
@@ -130,9 +130,41 @@
     <div ng-show="csvType === 'relationships'" class="row upload-content">
       <div class="col-md-1"></div>
       <div class="col-md-11" id="upload">
-        <form class="form" name="uploadPeople" ng-submit="writePeople()">
+        <form class="form" name="uploadPeople" ng-submit="writeRelationships()">
           <div class="person-form" ng-repeat="rel in relRows" ng-init="relIndex = $index; rel.sourceChoice = 'new'; rel.targetChoice = 'new'; person.birth_year_type = person.death_year_type = dateTypes[0];">
-            <h3>{{rel.source_name}} & {{rel.target_name}}:</h3> <br>
+            <h3>{{$index+1}}) {{rel.source_name}} & {{rel.target_name}}:</h3> <br>
+            <div class="form-group row">
+              <div class="col-md-2 form-group">
+                <label for="startDate" class="control-label">Start date <i class="fa fa-asterisk" aria-hidden="true"></i></label>
+                <div class="input-group">
+                  <select name="startType" class="form-control" ng-model="rel.start_year_type" ng-options="type.name for type in dateTypes"></select>
+                  <span class="input-group-addon" style="width:0px; padding-left:0px; padding-right:0px; border:none;"></span>
+                  <input id="startDate" name="startDate" type="text" ng-minlength=4 ng-maxlength=4 class="form-control" ng-model="rel.start_year">
+                </div>
+              </div>
+              <div class="col-md-2 form-group">
+                <label for="endDate" class="control-label">End date <i class="fa fa-asterisk" aria-hidden="true"></i></label>
+                <div class="input-group">
+                  <select name="endType" class="form-control" ng-model="rel.end_year_type" ng-options="type.name for type in dateTypes"></select>
+                  <span class="input-group-addon" style="width:0px; padding-left:0px; padding-right:0px; border:none;"></span>
+                  <input id="endDate" name="endDate" type="text" ng-minlength=4 ng-maxlength=4 class="form-control" ng-model="rel.end_death_year">
+                </div>
+              </div>
+              <div class="col-md-3 form-group">
+                <label for="relType" class="control-label">Relationship Type <i class="fa fa-asterisk" aria-hidden="true"></i></label>
+                <select name="relType" class="form-control" ng-model="rel.relType" ng-options="type.name group by type.category for type in relTypeCats" required></select>
+                <!-- <select name="gender" class="form-control" ng-model="rel.source_gender" ng-options="type for type in gender"></select> -->
+              </div>
+              <div class="col-md-3 form-group" ng-init="rel.confidence=60;">
+                <label for="confidence" class="control-label">Your confidence level <i class="fa fa-asterisk" aria-hidden="true"></i></label>
+                <input name="confidence" class="form-control confidence" ng-model="rel.confidence" required>
+                <rzslider rz-slider-model="rel.confidence" rz-slider-options="slider.options" class="with-legend" ng-model="rel.confidence"></rzslider>
+              </div>
+              <div class="col-md-2 form-group">
+                <label for="references" class="control-label">References</label>
+                <textarea name="references" type="text" ng-model="rel.citation" class="form-control"></textarea>
+              </div>
+            </div>
             <div>Choose source:</div>
             <div ng-repeat="p in rel.foundSourcePeople">
               <label class="radio"><input type="radio" ng-model="rel.sourceChoice" value="{{$index}}" name="source{{relIndex}}">
@@ -247,7 +279,7 @@
             </div>
             <!-- <hr> -->
           </div>
-          <div ng-show="peopleRows" class="col-md-2">
+          <div ng-show="relRows" class="col-md-2">
             <button type="submit" class="btn btn-primary">Submit & Approve</button>
           </div>
         </form>

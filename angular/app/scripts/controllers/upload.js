@@ -9,9 +9,26 @@
  */
  angular.module('redesign2017App').component('upload', {
    templateUrl: 'views/upload.html',
-   controller: ['$scope', '$stateParams', '$state', 'apiService', '$rootScope', function($scope, $stateParams, $state, apiService, $rootScope) {
+   controller: ['$scope', '$stateParams', '$state', 'apiService', '$rootScope', '$http', function($scope, $stateParams, $state, apiService, $rootScope, $http) {
      $scope.dateTypes = [{'name':'IN', 'abbr': 'IN'}, {'name': 'CIRCA', 'abbr': 'CA'}, {'name': 'BEFORE', 'abbr': 'BF'}, {'name': 'BEFORE/IN', 'abbr': 'BF/IN'},{'name': 'AFTER', 'abbr': 'AF'}, {'name': 'AFTER/IN', 'abbr': 'AF/IN'}];
      $scope.gender = ['male', 'female', 'gender_nonconforming'];
+     $scope.relTypeCats = null;
+     $http.get("/data/rel_cats.json").then(function(result){
+         $scope.relTypeCats = result.data;
+         // scope.newLink.relType = scope.config.relTypeCats[10];
+     });
+     $scope.slider = {
+       value: 60,
+       options: {
+         floor: 0,
+         ceil: 100,
+         translate: function(v) {
+             return v;
+         }
+       }
+     };
+     // scope.newLink.confidence = scope.slider.value;
+
      var groupStartYear,
          groupEndYear;
 
@@ -38,7 +55,6 @@
       $scope.readCSV = function() {
         var data = $('textarea').val();
         $scope.csvRows = $.csv.toObjects(data);
-        console.log($scope.csvRows);
         if ($scope.csvType === "people") {
           processPeople($scope.csvRows);
         } else if ($scope.csvType === "relationships") {
@@ -60,9 +76,10 @@
             apiService.personTypeahead(r.name).then(function successCallback(response) {
               if (response.data.length > 0) {
                 r.found = true;
+                r.foundPeople = [];
                 response.data.forEach(function(p) {
                   apiService.getPeople(p.id).then(function(result) {
-                    r.foundPeople = result.data;
+                    r.foundPeople.push(result.data[0]);
                   })
                 })
               } else {
@@ -80,6 +97,7 @@
 
       function processRelationships(rows) {
         rows.forEach(function(r) {
+          r.relType = $scope.relTypeCats[10];
           if (r.source_id) {
             apiService.getPeople(r.source_id).then(function successCallback(result) {
               r.foundSourcePeople = result.data;
@@ -92,9 +110,10 @@
             apiService.personTypeahead(r.source_name).then(function successCallback(response) {
               if (response.data.length > 0) {
                 r.sourceFound = true;
+                r.foundSourcePeople = [];
                 response.data.forEach(function(p) {
                   apiService.getPeople(p.id).then(function(result) {
-                    r.foundSourcePeople = result.data;
+                    r.foundSourcePeople.push(result.data[0]);
                   })
                 })
               } else {
@@ -118,9 +137,10 @@
             apiService.personTypeahead(r.target_name).then(function successCallback(response) {
               if (response.data.length > 0) {
                 r.targetFound = true;
+                r.foundTargetPeople = [];
                 response.data.forEach(function(p) {
                   apiService.getPeople(p.id).then(function(result) {
-                    r.foundTargetPeople = result.data;
+                    r.foundTargetPeople.push(result.data[0]);
                   })
                 })
               } else {
@@ -207,6 +227,66 @@
         }, function errorCallback(error) {
           console.error(error);
         });
+      }
+
+      $scope.writeRelationships = function() {
+        var addToDB = {};
+        addToDB.nodes = [];
+        addToDB.links = [];
+        $scope.relRows.forEach(function(p, i) {
+          var newLink = {};
+          if (p.sourceChoice === 'new') {
+            var newNode = {};
+            newLink.source = {};
+            var id = (i+1)*2 - 1;
+            newNode.id = id;
+            newLink.source.id = id;
+            newNode.name = p.source_name;
+            newNode.historical_significance = p.source_historical_significance;
+            newNode.birthDate = p.source_birth_year;
+            newNode.birthDateType = p.source_birth_year_type.abbr;
+            newNode.deathDate = p.source_death_year;
+            newNode.deathDateType = p.source_death_year_type.abbr;
+            newNode.gender = p.source_gender;
+            newNode.is_approved = true;
+            addToDB.nodes.push(newNode);
+          }
+          else if (p.sourceChoice !== 'new'){
+            var chosen = p.foundSourcePeople[parseInt(p.sourceChoice)];
+            newLink.source = {};
+            newLink.source.id = chosen.id;
+          }
+          if (p.targetChoice === 'new') {
+            var newNode = {};
+            newLink.target = {};
+            var id = (i+1)*2;
+            newNode.id = id;
+            newLink.target.id = id;
+            newNode.name = p.source_name;
+            newNode.historical_significance = p.target_historical_significance;
+            newNode.birthDate = p.target_birth_year;
+            newNode.birthDateType = p.target_birth_year_type.abbr;
+            newNode.deathDate = p.target_death_year;
+            newNode.deathDateType = p.target_death_year_type.abbr;
+            newNode.gender = p.target_gender;
+            newNode.is_approved = true;
+            addToDB.nodes.push(newNode);
+          } else if (p.targetChoice !== 'new') {
+            var chosen = p.foundTargetPeople[parseInt(p.targetChoice)];
+            newLink.target = {};
+            newLink.target.id = chosen.id;
+          }
+          newLink.startDate = p.start_year;
+          newLink.startDateType = p.start_year_type.abbr;
+          newLink.endDate = p.end_year;
+          newLink.endDateType = p.end_year_type.abbr;
+          newLink.relType = p.relType.id;
+          newLink.confidence = p.confidence;
+          newLink.citation = p.citation;
+          newLink.is_approved = true;
+          addToDB.links.push(newLink);
+        });
+        console.log(addToDB);
       }
 
 

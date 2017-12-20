@@ -1742,6 +1742,44 @@ upload .container-fluid {
     padding: 5px;
     margin: 2px 0 2px;
   }
+
+  .rzslider {
+    margin: 20px 0 25px;
+    // width: 68%;
+
+    .rz-bar {
+      background-color: $mainTextColor;
+      height: 2px;
+      margin: 0 1%;
+      top: 15px;
+      width: 98%;
+    }
+
+    .rz-pointer {
+      width: 10px;
+      height: 10px;
+      top: auto;
+      bottom: 0;
+      background-color: $contribution-mode-fill;
+
+      &:after {
+        display: none;
+      }
+    }
+
+    .rz-bubble {
+      bottom: 8px;
+      font-size: 11px;
+      padding: 1px 0;
+    }
+
+    .rz-tick {
+      background: $mainTextColor;
+      height: 6px;
+      margin-left: 1px;
+      width: 6px;
+    }
+  }
 }
 
 .edit-person, .edit-group {
