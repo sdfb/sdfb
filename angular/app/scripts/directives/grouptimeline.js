@@ -87,7 +87,6 @@ angular.module('redesign2017App')
 
         function update(data) {
 
-          // console.log(data);
           svg.attr("width", width);
           var numLines = data.map(function(d) { return d.assignementID; }).length;
           svg.attr("height", numLines * 20 + margin.top + margin.bottom);
@@ -97,10 +96,8 @@ angular.module('redesign2017App')
           var minX = Math.floor(d3.min(data, function(d) { return d.attributes.birth_year }) * 0.1) * 10;
           var maxX = Math.ceil(+d3.max(data, function(d) { return d.attributes.death_year }) * 0.1) * 10;
 
-          // console.log(minX, maxX);
           var amountFactor = 20;
           var amountGuides = (maxX - minX) / amountFactor
-          // console.log(amountGuides);
 
           x.domain([minX, maxX]);
           y.rangeRound([height, 0]).domain(data.map(function(d) { return d.id }));
@@ -121,9 +118,6 @@ angular.module('redesign2017App')
                   .attr("transform", "translate(0, " + (y(e.id) + y.bandwidth() / 2) + ")")
               })
               svg.attr("height", numLines * 20 + margin.top + margin.bottom);
-              // update selction and trigger event for other directives
-              // scope.currentSelection = {};
-              // scope.$apply(); // no need to trigger events, just apply
             });
 
           var person = g.selectAll("#group-timeline .membership");
@@ -314,13 +308,17 @@ angular.module('redesign2017App')
             var json = newValue.data;
             groupInfo = json.data[0].attributes;
             groupInfo.id = json.data[0].id;
+            var peopleById = {};
+            groupInfo.people.forEach(function(p) {
+              peopleById[p.person_id] = p;
+            });
 
             members = json.includes;
             members.forEach(function(m, i) {
-              m.attributes.start_year = groupInfo.people[i].start_year;
-              m.attributes.start_year_type = groupInfo.people[i].start_year_type;
-              m.attributes.end_year = groupInfo.people[i].end_year;
-              m.attributes.end_year_type = groupInfo.people[i].end_year_type;
+              m.attributes.start_year = peopleById[parseInt(m.id)].start_year;
+              m.attributes.start_year_type = peopleById[parseInt(m.id)].start_year_type;
+              m.attributes.end_year = peopleById[parseInt(m.id)].end_year;
+              m.attributes.end_year_type = peopleById[parseInt(m.id)].end_year_type;
             })
 
             update(members);

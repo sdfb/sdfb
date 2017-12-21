@@ -196,6 +196,42 @@ angular.module('redesign2017App').component('home', {
       });
     };
 
+    $rootScope.openEditGroup = function(groupId, size, parentSelector) {
+      console.log(groupId);
+      var parentElem = parentSelector ?
+        angular.element($document[0].querySelector('.modal-demo ' + parentSelector)) : undefined;
+      var modalInstance = $uibModal.open({
+        animation: $scope.modalAnimationsEnabled,
+        ariaLabelledBy: 'modal-edit-group',
+        ariaDescribedBy: 'modal-edit-group-body',
+        templateUrl: './views/modal-edit-group.html',
+        controller: 'ModalEditGroupCtrl',
+        controllerAs: '$ctrl',
+        size: size,
+        appendTo: parentElem,
+        resolve: {
+          group: function() {
+            return apiService.getGroups(groupId).then(function(result) {
+              return result;
+            });
+          }
+        }
+      });
+      modalInstance.result.then(function(result) {
+        console.log(result);
+        var toDB = {groups: [result], auth_token: $rootScope.user.auth_token}
+        apiService.writeData(toDB).then(function successCallback(response) {
+          console.log('success!');
+          $rootScope.groupEditSuccess = true;
+        }, function errorCallback(error) {
+          console.log(error);
+          $rootScope.groupEditFailure = true;
+        });
+      }, function() {
+        $log.info('Modal dismissed at: ' + new Date());
+      });
+    };
+
     $transitions.onBefore({}, function(transition) {
       if ($scope.config.contributionMode) {
         if ($window.confirm("If you leave this page without submitting your changes, they will be lost. If you'd like to leave anyway, click 'okay'?")) {

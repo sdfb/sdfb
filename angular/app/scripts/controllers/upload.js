@@ -9,9 +9,27 @@
  */
  angular.module('redesign2017App').component('upload', {
    templateUrl: 'views/upload.html',
-   controller: ['$scope', '$stateParams', '$state', 'apiService', '$rootScope', function($scope, $stateParams, $state, apiService, $rootScope) {
+   controller: ['$scope', '$stateParams', '$state', 'apiService', '$rootScope', '$http', function($scope, $stateParams, $state, apiService, $rootScope, $http) {
+     $scope.showInstructions = true;
      $scope.dateTypes = [{'name':'IN', 'abbr': 'IN'}, {'name': 'CIRCA', 'abbr': 'CA'}, {'name': 'BEFORE', 'abbr': 'BF'}, {'name': 'BEFORE/IN', 'abbr': 'BF/IN'},{'name': 'AFTER', 'abbr': 'AF'}, {'name': 'AFTER/IN', 'abbr': 'AF/IN'}];
      $scope.gender = ['male', 'female', 'gender_nonconforming'];
+     $scope.relTypeCats = null;
+     $http.get("/data/rel_cats.json").then(function(result){
+         $scope.relTypeCats = result.data;
+         // scope.newLink.relType = scope.config.relTypeCats[10];
+     });
+     $scope.slider = {
+       value: 60,
+       options: {
+         floor: 0,
+         ceil: 100,
+         translate: function(v) {
+             return v;
+         }
+       }
+     };
+     // scope.newLink.confidence = scope.slider.value;
+
      var groupStartYear,
          groupEndYear;
 
@@ -38,9 +56,12 @@
       $scope.readCSV = function() {
         var data = $('textarea').val();
         $scope.csvRows = $.csv.toObjects(data);
-        console.log($scope.csvRows, $scope.csvType);
         if ($scope.csvType === "people") {
           processPeople($scope.csvRows);
+        } else if ($scope.csvType === "relationships") {
+          processRelationships($scope.csvRows);
+        } else {
+          processGroupAssigns($scope.csvRows);
         }
       }
 
@@ -58,9 +79,10 @@
             apiService.personTypeahead(r.name).then(function successCallback(response) {
               if (response.data.length > 0) {
                 r.found = true;
+                r.foundPeople = [];
                 response.data.forEach(function(p) {
                   apiService.getPeople(p.id).then(function(result) {
-                    r.foundPeople = result.data;
+                    r.foundPeople.push(result.data[0]);
                   })
                 })
               } else {
@@ -76,6 +98,127 @@
         $scope.peopleRows = rows;
       }
 
+      function processRelationships(rows) {
+        rows.forEach(function(r) {
+          r.relType = $scope.relTypeCats[10];
+          if (r.source_id) {
+            apiService.getPeople(r.source_id).then(function successCallback(result) {
+              r.foundSourcePeople = result.data;
+              r.sourceFound = true;
+              r.sourceChoice = '0';
+            }, function errorCallback(error) {
+              console.log(error);
+            });
+          } else if (r.source_name) {
+            apiService.personTypeahead(r.source_name).then(function successCallback(response) {
+              if (response.data.length > 0) {
+                r.sourceFound = true;
+                r.foundSourcePeople = [];
+                response.data.forEach(function(p) {
+                  apiService.getPeople(p.id).then(function(result) {
+                    r.foundSourcePeople.push(result.data[0]);
+                  })
+                })
+              } else {
+                console.log('none found!');
+                r.sourceFound = false;
+              }
+            }, function errorCallback(error) {
+              console.log('error!');
+              console.error(error);
+            });
+          }
+          if (r.target_id) {
+            apiService.getPeople(r.target_id).then(function successCallback(result) {
+              r.foundTargetPeople = result.data;
+              r.targetFound = true;
+              r.targetChoice = '0';
+            }, function errorCallback(error) {
+              console.log(error);
+            });
+          } else if (r.target_name) {
+            apiService.personTypeahead(r.target_name).then(function successCallback(response) {
+              if (response.data.length > 0) {
+                r.targetFound = true;
+                r.foundTargetPeople = [];
+                response.data.forEach(function(p) {
+                  apiService.getPeople(p.id).then(function(result) {
+                    r.foundTargetPeople.push(result.data[0]);
+                  })
+                })
+              } else {
+                console.log('none found!');
+                r.targetFound = false;
+              }
+            }, function errorCallback(error) {
+              console.log('error!');
+              console.error(error);
+            });
+          }
+        });
+        $scope.relRows = rows;
+      }
+
+      function processGroupAssigns(rows) {
+        rows.forEach(function(r) {
+          if (r.person_id) {
+            apiService.getPeople(r.person_id).then(function successCallback(result) {
+              r.foundSourcePeople = result.data;
+              r.personFound = true;
+              r.personChoice = '0';
+            }, function errorCallback(error) {
+              console.log(error);
+            });
+          } else if (r.person_name) {
+            apiService.personTypeahead(r.person_name).then(function successCallback(response) {
+              if (response.data.length > 0) {
+                r.personFound = true;
+                r.foundPeople = [];
+                response.data.forEach(function(p) {
+                  apiService.getPeople(p.id).then(function(result) {
+                    r.foundPeople.push(result.data[0]);
+                  })
+                })
+              } else {
+                console.log('none found!');
+                r.personFound = false;
+              }
+            }, function errorCallback(error) {
+              console.log('error!');
+              console.error(error);
+            });
+          }
+          if (r.group_id) {
+            apiService.getGroups(r.group_id).then(function successCallback(result) {
+              r.foundTargetPeople = result.data;
+              r.groupFound = true;
+              r.groupChoice = '0';
+            }, function errorCallback(error) {
+              console.log(error);
+            });
+          } else if (r.group_name) {
+            apiService.groupsTypeahead(r.group_name).then(function successCallback(response) {
+              if (response.length > 0) {
+                r.groupFound = true;
+                r.foundGroups = [];
+                response.forEach(function(p) {
+                  apiService.getGroups(p.id).then(function(result) {
+                    r.foundGroups.push(result.data.data[0]);
+                  })
+                });
+              } else {
+                console.log('none found!');
+                r.groupFound = false;
+              }
+            }, function errorCallback(error) {
+              console.log('error!');
+              console.error(error);
+            });
+          }
+        });
+        $scope.gRows = rows;
+      }
+
       $scope.callGroupsTypeahead = function(val) {
         return apiService.groupsTypeahead(val);
       };
@@ -85,7 +228,6 @@
         apiService.getGroups($item.id).then(function (result) {
           groupStartYear = result.data.data[0].attributes.start_year.toString();
           groupEndYear = result.data.data[0].attributes.end_year.toString();
-          console.log(result.data.data[0], groupStartYear, groupEndYear)
         });
       }
 
@@ -136,6 +278,7 @@
               newGroupAssign.endDate = groupEndYear;
             }
             delete newGroupAssign.group.name;
+            newGroupAssign.is_approved = true;
 
             addToDB.group_assignments.push(newGroupAssign);
           })
@@ -144,8 +287,145 @@
         console.log(addToDB);
         apiService.writeData(addToDB).then(function successCallback(result) {
           console.log('success!');
+          $scope.uploadSuccess = true;
+          $scope.peopleRows = [];
         }, function errorCallback(error) {
           console.error(error);
+          $scope.uploadFailure = true;
+        });
+      }
+
+      $scope.writeRelationships = function() {
+        var addToDB = {};
+        addToDB.nodes = [];
+        addToDB.links = [];
+        $scope.relRows.forEach(function(p, i) {
+          var newLink = {};
+          if (p.sourceChoice === 'new') {
+            var newNode = {};
+            newLink.source = {};
+            var id = (i+1)*2 - 1;
+            newNode.id = id;
+            newLink.source.id = id;
+            newNode.name = p.source_name;
+            newNode.historical_significance = p.source_historical_significance;
+            newNode.birthDate = p.source_birth_year;
+            newNode.birthDateType = p.source_birth_year_type.abbr;
+            newNode.deathDate = p.source_death_year;
+            newNode.deathDateType = p.source_death_year_type.abbr;
+            newNode.gender = p.source_gender;
+            newNode.is_approved = true;
+            addToDB.nodes.push(newNode);
+          }
+          else if (p.sourceChoice !== 'new'){
+            var chosen = p.foundSourcePeople[parseInt(p.sourceChoice)];
+            newLink.source = {};
+            newLink.source.id = chosen.id;
+          }
+          if (p.targetChoice === 'new') {
+            var newNode = {};
+            newLink.target = {};
+            var id = (i+1)*2;
+            newNode.id = id;
+            newLink.target.id = id;
+            newNode.name = p.target_name;
+            newNode.historical_significance = p.target_historical_significance;
+            newNode.birthDate = p.target_birth_year;
+            newNode.birthDateType = p.target_birth_year_type.abbr;
+            newNode.deathDate = p.target_death_year;
+            newNode.deathDateType = p.target_death_year_type.abbr;
+            newNode.gender = p.target_gender;
+            newNode.is_approved = true;
+            addToDB.nodes.push(newNode);
+          } else if (p.targetChoice !== 'new') {
+            var chosen = p.foundTargetPeople[parseInt(p.targetChoice)];
+            newLink.target = {};
+            newLink.target.id = chosen.id;
+          }
+          newLink.startDate = p.start_year;
+          newLink.startDateType = p.start_year_type.abbr;
+          newLink.endDate = p.end_year;
+          newLink.endDateType = p.end_year_type.abbr;
+          newLink.relType = p.relType.id;
+          newLink.confidence = p.confidence;
+          newLink.citation = p.citation;
+          newLink.is_approved = true;
+          addToDB.links.push(newLink);
+        });
+        console.log(addToDB);
+        apiService.writeData(addToDB).then(function successCallback(result) {
+          console.log('success!');
+          $scope.uploadSuccess = true;
+          $scope.relRows = [];
+        }, function errorCallback(error) {
+          console.error(error);
+          $scope.uploadFailure = true;
+        });
+      }
+
+      $scope.writeGroupAssigns = function() {
+        var addToDB = {};
+        addToDB.nodes = [];
+        addToDB.groups = [];
+        addToDB.group_assignments = [];
+        $scope.gRows.forEach(function(p, i) {
+          var newGroupAssign = {};
+          if (p.personChoice === 'new') {
+            var newNode = {};
+            newGroupAssign.person = {};
+            var id = i;
+            newNode.id = id;
+            newGroupAssign.person.id = id;
+            newNode.name = p.person_name;
+            newNode.historical_significance = p.person_historical_significance;
+            newNode.birthDate = p.person_birth_year;
+            newNode.birthDateType = p.person_birth_year_type.abbr;
+            newNode.deathDate = p.person_death_year;
+            newNode.deathDateType = p.person_death_year_type.abbr;
+            newNode.gender = p.person_gender;
+            newNode.is_approved = true;
+            addToDB.nodes.push(newNode);
+          }
+          else if (p.personChoice !== 'new'){
+            var chosen = p.foundPeople[parseInt(p.personChoice)];
+            newGroupAssign.person = {};
+            newGroupAssign.person.id = chosen.id;
+          }
+          if (p.groupChoice === 'new') {
+            var newGroup = {};
+            newGroupAssign.group = {};
+            var id = 0-(i+1);
+            newGroup.id = id;
+            newGroupAssign.group.id = id;
+            newGroup.name = p.group_name;
+            newGroup.description = p.group_description;
+            newGroup.startDate = p.group_start_year;
+            newGroup.startDateType = p.group_start_year_type.abbr;
+            newGroup.endDate = p.group_end_year;
+            newGroup.endDateType = p.group_end_year_type.abbr;
+            newGroup.is_approved = true;
+            addToDB.groups.push(newGroup);
+          } else if (p.groupChoice !== 'new') {
+            var chosen = p.foundGroups[parseInt(p.groupChoice)];
+            newGroupAssign.group = {};
+            newGroupAssign.group.id = chosen.id;
+          }
+          newGroupAssign.startDate = p.start_year;
+          newGroupAssign.startDateType = p.start_year_type.abbr;
+          newGroupAssign.endDate = p.end_year;
+          newGroupAssign.endDateType = p.end_year_type.abbr;
+          newGroupAssign.citation = p.citation;
+          newGroupAssign.is_approved = true;
+          addToDB.group_assignments.push(newGroupAssign);
+        });
+        console.log(addToDB);
+        apiService.writeData(addToDB).then(function successCallback(result) {
+          console.log('success!');
+          $scope.uploadSuccess = true;
+          $scope.gRows = [];
+        }, function errorCallback(error) {
+          console.error(error);
+          $scope.uploadFailure = true;
         });
       }
 

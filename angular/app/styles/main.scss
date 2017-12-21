@@ -1421,10 +1421,10 @@ contextual-info-panel.panel.contribution-mode-on {
   border-color: $contribution-mode-fill;
 }
 
-.all-types {
-  max-height: 10vh;
-  overflow-y: auto;
-}
+// .all-types {
+//   max-height: 10vh;
+//   overflow-y: auto;
+// }
 contextual-info-panel > section, contextual-info-panel > div > section {
   padding: 5px 15px 0;
   // text-align: center;
@@ -1474,8 +1474,8 @@ contextual-info-panel > div > section.rel-type {
   background-color: $panels-bg;
   border-top: 1px solid $panels-stroke;
   border-bottom: 1px solid $panels-stroke;
-  padding-top: 12px;
-  padding-bottom: 12px;
+  // padding-top: 12px;
+  padding-bottom: 2px;
 }
 
 .contribution-mode-on contextual-info-panel > div > section.rel-type {
@@ -1720,6 +1720,27 @@ upload .container-fluid {
   height: 95vh;
   overflow-y: scroll;
 
+  .upload-title {
+    display: inline-block;
+    margin-left: 15px;
+  }
+
+  .instructions-toggle {
+    font-size: 12px;
+    margin-left: 8px;
+  }
+
+  .instructions {
+    background-color: $panels-bg;
+    border: 1px solid $panels-stroke;
+    border-radius: 4px;
+    margin-left: 15px;
+    margin-bottom: 10px;
+    padding: 5px;
+
+    div { margin-top: 15px; }
+  }
+
   .person-form {
   //   border: 1px solid $panels-stroke;
   //   border-radius: 4px;
@@ -1742,9 +1763,47 @@ upload .container-fluid {
     padding: 5px;
     margin: 2px 0 2px;
   }
+
+  .rzslider {
+    margin: 20px 0 25px;
+    // width: 68%;
+
+    .rz-bar {
+      background-color: $mainTextColor;
+      height: 2px;
+      margin: 0 1%;
+      top: 15px;
+      width: 98%;
+    }
+
+    .rz-pointer {
+      width: 10px;
+      height: 10px;
+      top: auto;
+      bottom: 0;
+      background-color: $contribution-mode-fill;
+
+      &:after {
+        display: none;
+      }
+    }
+
+    .rz-bubble {
+      bottom: 8px;
+      font-size: 11px;
+      padding: 1px 0;
+    }
+
+    .rz-tick {
+      background: $mainTextColor;
+      height: 6px;
+      margin-left: 1px;
+      width: 6px;
+    }
+  }
 }
 
-.edit-person {
+.edit-person, .edit-group {
   input, textarea {
     width: 50%;
   }
@@ -1846,6 +1905,10 @@ upload .container-fluid {
     margin-top: 15px;
   }
 }
+
+.small-screen-warning {
+  display: none;
+}
 /*MEDIA QUERIES*/
 $screen-xs-max: 767;
 $screen-sm-min: 768;
@@ -1857,3 +1920,12 @@ $screen-lg-min: 1200;
 @media (min-width: $screen-sm-min) and (max-width: $screen-sm-max) {}
 @media (min-width: $screen-md-min) and (max-width: $screen-md-max) {}
 @media (min-width: $screen-lg-min) {}
+
+@media (max-width: 800px) and (max-height: 800px) {
+  .small-screen-warning {
+    display: block;
+  }
+  ui-view {
+    display: none;
+  }
+}

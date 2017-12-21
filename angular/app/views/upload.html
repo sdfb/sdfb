@@ -1,9 +1,45 @@
 <div class="container-fluid">
+  <div uib-alert close="uploadSuccess = false;" class="alert alert-success" ng-show="uploadSuccess">
+    <strong>Data uploaded successfully!</strong> You can now return to the main site to see your data in action.
+  </div>
+  <div uib-alert close="uploadFailure = false" class="alert alert-danger" ng-show="uploadFailure">
+    <strong>Something went wrong!</strong> Please check that all required fields are filled in and all information is correct. If the problem persists, <a href="mailto:SixDegreesFrancisBacon@gmail.com" class="alert-link">contact us</a>.
+  </div>
     <div class="row">
+			<h4 class="upload-title">Upload Your Data to <em>Six Degrees</em></h4>
+      <a href ng-click="showInstructions = !showInstructions;" class="instructions-toggle">
+        <span ng-show="showInstructions">Hide instructions [-]</span>
+        <span ng-show="!showInstructions">Show instructions [+]</span>
+      </a>
+    </div>
+    <div class="row">
+      <div class="instructions col-md-7" ng-show="showInstructions">
+        <h5>Instructions and Tips</h5>
+        <div>To upload your dataset to <em>Six Degrees of Francis Bacon</em>, simply copy-paste your data or drag a CSV (comma-separated value) file into the box below. Because you already have curator status, all your contributions here will be automatically approved, so keep in mind that <em>Six Degrees</em> only accepts people, relationships, and groups who were living or active between 1500 and 1700.</div>
 
-			<!-- <div class="col-md-2"> -->
-				<h4>Upload Your Data to <em>Six Degrees</em></h4>
-			<!-- </div> -->
+        <div>Your data should include a header line with the following REQUIRED column names:</div>
+        <ul>
+          <li>People: <code>name</code> or <code>id</code> for each individual.</li>
+          <li>Relationships: <code>source_name</code> or <code>source_id</code> AND <code>target_name</code> or <code>target_id</code> for each relationship.</li>
+          <li>Group Assignments: <code>person_name</code> or <code>person_id</code> AND <code>group_name</code> or <code>group_id</code> for each group assignment.</li>
+        </ul>
+
+        <div>If you provide names, this upload page will search our data for matching people or groups and prompt you to fill out any remaining information. IDs are not strictly necessary, but if you choose to use them, they must match the appropriate <em>Six Degrees</em> IDs. Try our data downloads in the navigation bar to retrieve those IDs.</div>
+
+        <div>In addition to the required fields, you may also add the following optional fields:</div>
+        <ul>
+          <li>People: <code>historical_significance</code>, <code>birth_year</code>, <code>death_year</code>, <code>gender</code>, <code>citation</code></li>
+          <li>Relationships: <code>start_year</code>, <code>end_year</code>, <code>confidence</code>, <code>citation</code></li>
+          <li>Group Assignments: <code>start_year</code>, <code>end_year</code>, <code>citation</code></li>
+        </ul>
+
+        <div>When you upload your data, you'll be guided through the task of providing any other necessary information. Once that process is complete, your data will be fully incorporated into <em>Six Degrees</em> and credited to you!</div>
+
+        <div>If you have a series of relationships that include a lot of people not yet in <em>Six Degrees</em>, we recommend uploading a set of "People" data first. If you have a list of people that all belong in a single existing group, you can upload a table of people: at the bottom of the page you will have the chance to add all of them to one of our groups.</div>
+      </div>
+    </div>
+
+    <div class="row">
       <div class="col-md-12">
 
         <form class="form-horizontal" name="uploadForm" ng-submit="readCSV()">
@@ -25,12 +61,12 @@
         </form>
       </div>
     </div>
-    <div class="row upload-content">
+    <div ng-show="csvType === 'people'" class="row upload-content">
       <div class="col-md-1"></div>
       <div class="col-md-11" id="upload">
         <form class="form" name="uploadPeople" ng-submit="writePeople()">
           <div class="person-form" ng-repeat="person in peopleRows" ng-init="personIndex = $index; person.choice = 'new'; person.birth_year_type = person.death_year_type = dateTypes[0];">
-            <h3>{{person.name}}:</h3> <br>
+            <h3>{{$index+1}}) {{person.name}}:</h3> <br>
             <div ng-repeat="p in person.foundPeople">
               <label class="radio"><input type="radio" ng-model="person.choice" value="{{$index}}" name="{{personIndex}}">
                 Existing person: {{p.attributes.name}}, {{p.attributes.historical_significance}}, Born: {{ p.attributes.birth_year_type }} {{ p.attributes.birth_year }}, Died: {{ p.attributes.death_year_type }} {{ p.attributes.death_year }}
@@ -117,6 +153,303 @@
             </div>
           </div>
           <div ng-show="peopleRows" class="col-md-2">
+            <button type="submit" class="btn btn-primary">Submit & Approve</button>
+          </div>
+        </form>
+      </div>
+    </div>
+    <div ng-show="csvType === 'relationships'" class="row upload-content">
+      <div class="col-md-1"></div>
+      <div class="col-md-11" id="upload">
+        <form class="form" name="uploadRelationships" ng-submit="writeRelationships()">
+          <div class="person-form" ng-repeat="rel in relRows" ng-init="relIndex = $index; rel.sourceChoice = 'new'; rel.targetChoice = 'new'; person.birth_year_type = person.death_year_type = dateTypes[0];">
+            <h3>{{$index+1}}) {{rel.source_name}} & {{rel.target_name}}:</h3> <br>
+            <div class="form-group row">
+              <div class="col-md-2 form-group">
+                <label for="startDate" class="control-label">Start date <i class="fa fa-asterisk" aria-hidden="true"></i></label>
+                <div class="input-group">
+                  <select name="startType" class="form-control" ng-model="rel.start_year_type" ng-options="type.name for type in dateTypes"></select>
+                  <span class="input-group-addon" style="width:0px; padding-left:0px; padding-right:0px; border:none;"></span>
+                  <input id="startDate" name="startDate" type="text" ng-minlength=4 ng-maxlength=4 class="form-control" ng-model="rel.start_year">
+                </div>
+              </div>
+              <div class="col-md-2 form-group">
+                <label for="endDate" class="control-label">End date <i class="fa fa-asterisk" aria-hidden="true"></i></label>
+                <div class="input-group">
+                  <select name="endType" class="form-control" ng-model="rel.end_year_type" ng-options="type.name for type in dateTypes"></select>
+                  <span class="input-group-addon" style="width:0px; padding-left:0px; padding-right:0px; border:none;"></span>
+                  <input id="endDate" name="endDate" type="text" ng-minlength=4 ng-maxlength=4 class="form-control" ng-model="rel.end_death_year">
+                </div>
+              </div>
+              <div class="col-md-3 form-group">
+                <label for="relType" class="control-label">Relationship Type <i class="fa fa-asterisk" aria-hidden="true"></i></label>
+                <select name="relType" class="form-control" ng-model="rel.relType" ng-options="type.name group by type.category for type in relTypeCats" required></select>
+                <!-- <select name="gender" class="form-control" ng-model="rel.source_gender" ng-options="type for type in gender"></select> -->
+              </div>
+              <div class="col-md-3 form-group" ng-init="rel.confidence=60;">
+                <label for="confidence" class="control-label">Your confidence level <i class="fa fa-asterisk" aria-hidden="true"></i></label>
+                <input name="confidence" class="form-control confidence" ng-model="rel.confidence" required>
+                <rzslider rz-slider-model="rel.confidence" rz-slider-options="slider.options" class="with-legend" ng-model="rel.confidence"></rzslider>
+              </div>
+              <div class="col-md-2 form-group">
+                <label for="references" class="control-label">References</label>
+                <textarea name="references" type="text" ng-model="rel.citation" class="form-control"></textarea>
+              </div>
+            </div>
+            <div>Choose source:</div>
+            <div ng-repeat="p in rel.foundSourcePeople">
+              <label class="radio"><input type="radio" ng-model="rel.sourceChoice" value="{{$index}}" name="source{{relIndex}}">
+                Existing person: {{p.attributes.name}}, {{p.attributes.historical_significance}}, Born: {{ p.attributes.birth_year_type }} {{ p.attributes.birth_year }}, Died: {{ p.attributes.death_year_type }} {{ p.attributes.death_year }}
+              </label>
+            </div>
+            <div>
+              <label class="radio">
+                <input type="radio" ng-model="rel.sourceChoice" value="new" name="source{{relIndex}}">
+                <div class="form-group row">
+                  <div class="col-md-1">
+                    New person:
+                  </div>
+
+                  <div class="col-md-2 form-group">
+                    <label for="inputKey" class="control-label">Name <i class="fa fa-asterisk" aria-hidden="true"></i></label>
+                    <input type="text" class="form-control" ng-model="rel.source_name" id="inputKey" placeholder="Name">
+                  </div>
+
+                  <div class="col-md-2 form-group">
+                    <label for="inputValue" class="control-label">Historical Significance</label>
+                    <input type="text" class="form-control" ng-model="rel.source_historical_significance" id="inputValue" placeholder="Historical Significance">
+                  </div>
+                  <div class="col-md-2 form-group">
+                    <label for="birthDate" class="control-label">Birth date <i class="fa fa-asterisk" aria-hidden="true"></i></label>
+              		  <div class="input-group">
+              				<select name="birthType" class="form-control" ng-model="rel.source_birth_year_type" ng-options="type.name for type in dateTypes"></select>
+                      <span class="input-group-addon" style="width:0px; padding-left:0px; padding-right:0px; border:none;"></span>
+              		    <input id="birthDate" name="birthDate" type="text" ng-minlength=4 ng-maxlength=4 class="form-control" ng-model="rel.source_birth_year">
+              		  </div>
+                  </div>
+                  <div class="col-md-2 form-group">
+                    <label for="deathDate" class="control-label">Death date <i class="fa fa-asterisk" aria-hidden="true"></i></label>
+              		  <div class="input-group">
+              				<select name="deathType" class="form-control" ng-model="rel.source_death_year_type" ng-options="type.name for type in dateTypes"></select>
+                      <span class="input-group-addon" style="width:0px; padding-left:0px; padding-right:0px; border:none;"></span>
+              		    <input id="deathDate" name="deathDate" type="text" ng-minlength=4 ng-maxlength=4 class="form-control" ng-model="rel.source_death_year">
+              		  </div>
+                  </div>
+                  <div class="col-md-2 form-group">
+                    <label for="gender" class="control-label">Gender <i class="fa fa-asterisk" aria-hidden="true"></i></label>
+            				<select name="gender" class="form-control" ng-model="rel.source_gender" ng-options="type for type in gender"></select>
+                  </div>
+                  <div class="col-md-1"></div>
+                  <div class="col-md-2 form-group">
+                    <label for="alternates" class="control-label">Alternate Names</label>
+              			<input name="alternates" class="form-control" ng-model="rel.source_alternates" placeholder="Alternate Names (comma-separated)">
+                  </div>
+
+                  <div class="col-md-2 form-group">
+              			<label for="references" class="control-label">References</label>
+              	    <textarea name="references" type="text" ng-model="rel.source_citation" class="form-control"></textarea>
+                  </div>
+                </div>
+              </label>
+            </div>
+            <div>Choose target:</div>
+            <div ng-repeat="p in rel.foundTargetPeople">
+              <label class="radio"><input type="radio" ng-model="rel.targetChoice" value="{{$index}}" name="target{{relIndex}}">
+                Existing person: {{p.attributes.name}}, {{p.attributes.historical_significance}}, Born: {{ p.attributes.birth_year_type }} {{ p.attributes.birth_year }}, Died: {{ p.attributes.death_year_type }} {{ p.attributes.death_year }}
+              </label>
+            </div>
+            <div>
+              <label class="radio">
+                <input type="radio" ng-model="rel.targetChoice" value="new" name="target{{relIndex}}">
+                <div class="form-group row">
+                  <div class="col-md-1">
+                    New person:
+                  </div>
+
+                  <div class="col-md-2 form-group">
+                    <label for="inputKey" class="control-label">Name <i class="fa fa-asterisk" aria-hidden="true"></i></label>
+                    <input type="text" class="form-control" ng-model="rel.target_name" id="inputKey" placeholder="Name">
+                  </div>
+
+                  <div class="col-md-2 form-group">
+                    <label for="inputValue" class="control-label">Historical Significance</label>
+                    <input type="text" class="form-control" ng-model="rel.target_historical_significance" id="inputValue" placeholder="Historical Significance">
+                  </div>
+                  <div class="col-md-2 form-group">
+                    <label for="birthDate" class="control-label">Birth date <i class="fa fa-asterisk" aria-hidden="true"></i></label>
+              		  <div class="input-group">
+              				<select name="birthType" class="form-control" ng-model="rel.target_birth_year_type" ng-options="type.name for type in dateTypes"></select>
+                      <span class="input-group-addon" style="width:0px; padding-left:0px; padding-right:0px; border:none;"></span>
+              		    <input id="birthDate" name="birthDate" type="text" ng-minlength=4 ng-maxlength=4 class="form-control" ng-model="rel.target_birth_year">
+              		  </div>
+                  </div>
+                  <div class="col-md-2 form-group">
+                    <label for="deathDate" class="control-label">Death date <i class="fa fa-asterisk" aria-hidden="true"></i></label>
+              		  <div class="input-group">
+              				<select name="deathType" class="form-control" ng-model="rel.target_death_year_type" ng-options="type.name for type in dateTypes"></select>
+                      <span class="input-group-addon" style="width:0px; padding-left:0px; padding-right:0px; border:none;"></span>
+              		    <input id="deathDate" name="deathDate" type="text" ng-minlength=4 ng-maxlength=4 class="form-control" ng-model="rel.target_death_year">
+              		  </div>
+                  </div>
+                  <div class="col-md-2 form-group">
+                    <label for="gender" class="control-label">Gender <i class="fa fa-asterisk" aria-hidden="true"></i></label>
+            				<select name="gender" class="form-control" ng-model="rel.target_gender" ng-options="type for type in gender"></select>
+                  </div>
+                  <div class="col-md-1"></div>
+                  <div class="col-md-2 form-group">
+                    <label for="alternates" class="control-label">Alternate Names</label>
+              			<input name="alternates" class="form-control" ng-model="rel.target_alternates" placeholder="Alternate Names (comma-separated)">
+                  </div>
+
+                  <div class="col-md-2 form-group">
+              			<label for="references" class="control-label">References</label>
+              	    <textarea name="references" type="text" ng-model="rel.target_citation" class="form-control"></textarea>
+                  </div>
+                </div>
+              </label>
+            </div>
+            <!-- <hr> -->
+          </div>
+          <div ng-show="relRows" class="col-md-2">
+            <button type="submit" class="btn btn-primary">Submit & Approve</button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <div ng-show="csvType === 'group_assignments'" class="row upload-content">
+      <div class="col-md-1"></div>
+      <div class="col-md-11" id="upload">
+        <form class="form" name="uploadGroupAssigns" ng-submit="writeGroupAssigns()">
+          <div class="person-form" ng-repeat="g in gRows" ng-init="gIndex = $index; g.personChoice = 'new'; g.groupChoice = 'new'; g.start_year_type = g.end_year_type = dateTypes[0];">
+            <h3>{{$index+1}}) {{g.person_name}} & {{g.group_name}}:</h3> <br>
+            <div class="form-group row">
+              <div class="col-md-2 form-group">
+                <label for="startDate" class="control-label">Start date <i class="fa fa-asterisk" aria-hidden="true"></i></label>
+                <div class="input-group">
+                  <select name="startType" class="form-control" ng-model="g.start_year_type" ng-options="type.name for type in dateTypes"></select>
+                  <span class="input-group-addon" style="width:0px; padding-left:0px; padding-right:0px; border:none;"></span>
+                  <input id="startDate" name="startDate" type="text" ng-minlength=4 ng-maxlength=4 class="form-control" ng-model="g.start_year">
+                </div>
+              </div>
+              <div class="col-md-2 form-group">
+                <label for="endDate" class="control-label">End date <i class="fa fa-asterisk" aria-hidden="true"></i></label>
+                <div class="input-group">
+                  <select name="endType" class="form-control" ng-model="g.end_year_type" ng-options="type.name for type in dateTypes"></select>
+                  <span class="input-group-addon" style="width:0px; padding-left:0px; padding-right:0px; border:none;"></span>
+                  <input id="endDate" name="endDate" type="text" ng-minlength=4 ng-maxlength=4 class="form-control" ng-model="g.end_year">
+                </div>
+              </div>
+              <div class="col-md-2 form-group">
+                <label for="references" class="control-label">References</label>
+                <textarea name="references" type="text" ng-model="g.citation" class="form-control"></textarea>
+              </div>
+            </div>
+            <div>Choose person:</div>
+            <div ng-repeat="p in g.foundPeople">
+              <label class="radio"><input type="radio" ng-model="g.personChoice" value="{{$index}}" name="person{{gIndex}}">
+                Existing person: {{p.attributes.name}}, {{p.attributes.historical_significance}}, Born: {{ p.attributes.birth_year_type }} {{ p.attributes.birth_year }}, Died: {{ p.attributes.death_year_type }} {{ p.attributes.death_year }}
+              </label>
+            </div>
+            <div>
+              <label class="radio">
+                <input type="radio" ng-model="g.personChoice" value="new" name="person{{gIndex}}">
+                <div class="form-group row">
+                  <div class="col-md-1">
+                    New person:
+                  </div>
+
+                  <div class="col-md-2 form-group">
+                    <label for="inputKey" class="control-label">Name <i class="fa fa-asterisk" aria-hidden="true"></i></label>
+                    <input type="text" class="form-control" ng-model="g.person_name" id="inputKey" placeholder="Name">
+                  </div>
+
+                  <div class="col-md-2 form-group">
+                    <label for="inputValue" class="control-label">Historical Significance</label>
+                    <input type="text" class="form-control" ng-model="g.person_historical_significance" id="inputValue" placeholder="Historical Significance">
+                  </div>
+                  <div class="col-md-2 form-group">
+                    <label for="birthDate" class="control-label">Birth date <i class="fa fa-asterisk" aria-hidden="true"></i></label>
+                    <div class="input-group">
+                      <select name="birthType" class="form-control" ng-model="g.person_birth_year_type" ng-options="type.name for type in dateTypes"></select>
+                      <span class="input-group-addon" style="width:0px; padding-left:0px; padding-right:0px; border:none;"></span>
+                      <input id="birthDate" name="birthDate" type="text" ng-minlength=4 ng-maxlength=4 class="form-control" ng-model="g.person_birth_year">
+                    </div>
+                  </div>
+                  <div class="col-md-2 form-group">
+                    <label for="deathDate" class="control-label">Death date <i class="fa fa-asterisk" aria-hidden="true"></i></label>
+                    <div class="input-group">
+                      <select name="deathType" class="form-control" ng-model="g.person_death_year_type" ng-options="type.name for type in dateTypes"></select>
+                      <span class="input-group-addon" style="width:0px; padding-left:0px; padding-right:0px; border:none;"></span>
+                      <input id="deathDate" name="deathDate" type="text" ng-minlength=4 ng-maxlength=4 class="form-control" ng-model="g.person_death_year">
+                    </div>
+                  </div>
+                  <div class="col-md-2 form-group">
+                    <label for="gender" class="control-label">Gender <i class="fa fa-asterisk" aria-hidden="true"></i></label>
+                    <select name="gender" class="form-control" ng-model="g.person_gender" ng-options="type for type in gender"></select>
+                  </div>
+                  <div class="col-md-1"></div>
+                  <div class="col-md-2 form-group">
+                    <label for="alternates" class="control-label">Alternate Names</label>
+                    <input name="alternates" class="form-control" ng-model="g.person_alternates" placeholder="Alternate Names (comma-separated)">
+                  </div>
+
+                  <div class="col-md-2 form-group">
+                    <label for="references" class="control-label">References</label>
+                    <textarea name="references" type="text" ng-model="g.person_citation" class="form-control"></textarea>
+                  </div>
+                </div>
+              </label>
+            </div>
+            <div>Choose group:</div>
+            <div ng-repeat="p in g.foundGroups">
+              <label class="radio"><input type="radio" ng-model="g.groupChoice" value="{{$index}}" name="group{{gIndex}}">
+                Existing person: {{p.attributes.name}}, {{p.attributes.description}}, Started: {{ p.attributes.start_year_type }} {{ p.attributes.start_year }}, Ended: {{ p.attributes.end_year_type }} {{ p.attributes.end_year }}
+              </label>
+            </div>
+            <div>
+              <label class="radio">
+                <input type="radio" ng-model="g.groupChoice" value="new" name="group{{gIndex}}">
+                <div class="form-group row">
+                  <div class="col-md-1">
+                    New group:
+                  </div>
+
+                  <div class="col-md-2 form-group">
+                    <label for="inputKey" class="control-label">Name <i class="fa fa-asterisk" aria-hidden="true"></i></label>
+                    <input type="text" class="form-control" ng-model="g.group_name" id="inputKey" placeholder="Name">
+                  </div>
+
+                  <div class="col-md-2 form-group">
+                    <label for="inputValue" class="control-label">Description</label>
+                    <input type="text" class="form-control" ng-model="g.group_description" id="inputValue" placeholder="Description">
+                  </div>
+                  <div class="col-md-2 form-group">
+                    <label for="startDate" class="control-label">Start date <i class="fa fa-asterisk" aria-hidden="true"></i></label>
+                    <div class="input-group">
+                      <select name="startType" class="form-control" ng-model="g.group_start_year_type" ng-options="type.name for type in dateTypes"></select>
+                      <span class="input-group-addon" style="width:0px; padding-left:0px; padding-right:0px; border:none;"></span>
+                      <input id="startDate" name="startDate" type="text" ng-minlength=4 ng-maxlength=4 class="form-control" ng-model="g.group_start_year">
+                    </div>
+                  </div>
+                  <div class="col-md-2 form-group">
+                    <label for="endDate" class="control-label">End date <i class="fa fa-asterisk" aria-hidden="true"></i></label>
+                    <div class="input-group">
+                      <select name="endType" class="form-control" ng-model="g.group_end_year_type" ng-options="type.name for type in dateTypes"></select>
+                      <span class="input-group-addon" style="width:0px; padding-left:0px; padding-right:0px; border:none;"></span>
+                      <input id="endDate" name="endDate" type="text" ng-minlength=4 ng-maxlength=4 class="form-control" ng-model="g.group_end_year">
+                    </div>
+                  </div>
+                  <div class="col-md-2 form-group">
+                    <label for="references" class="control-label">References</label>
+                    <textarea name="references" type="text" ng-model="g.group_citation" class="form-control"></textarea>
+                  </div>
+                </div>
+              </label>
+            </div>
+            <!-- <hr> -->
+          </div>
+          <div ng-show="gRows" class="col-md-2">
             <button type="submit" class="btn btn-primary">Submit & Approve</button>
           </div>
         </form>

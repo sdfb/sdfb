@@ -11,6 +11,16 @@ angular.module('redesign2017App').component('visualization', {
   bindings: { networkData: '<' },
   templateUrl: 'views/visualization.html',
   controller: ['$scope', '$uibModal', '$http', '$log', '$document', '$location', '$window', 'apiService', '$stateParams', '$transitions', '$rootScope', '$state', function($scope, $uibModal, $http, $log, $document, $location, $window, apiService, $stateParams, $transitions, $rootScope, $state) {
+    $('.form-content .input-group').on('focus', 'input[type=number]', function (e) {
+      $(this).on('mousewheel.disableScroll', function (e) {
+        e.preventDefault()
+      })
+    });
+    $('.form-content .input-group').on('blur', 'input[type=number]', function (e) {
+      $(this).off('mousewheel.disableScroll')
+    });
+
+
     var initialConfig = {
           viewObject:0, //0 = people, 1 = groups
           viewMode:'individual-force',
@@ -224,6 +234,13 @@ angular.module('redesign2017App').component('visualization', {
       });
     };
 
+    $scope.openEditGroupModal = function() {
+      if ($scope.config.viewMode === 'group-force') {
+        $rootScope.openEditGroup($scope.data.data.id);
+      } else if ($scope.config.viewMode === 'group-timeline') {
+        $rootScope.openEditGroup($scope.data.data.data[0].id);
+      }
+    }
     // $scope.sendData = function() {
     //   console.log($scope.addToDB);
     //   $scope.addToDB = {nodes: [], links: [], groups: [], group_assignments: []};

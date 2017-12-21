@@ -9,10 +9,13 @@
   <div uib-alert close="$root.personEditSuccess = false;" class="alert alert-success" ng-show="$root.personEditSuccess" dismiss-on-timeout=3000>
     <strong>Person edited successfully!</strong> Refresh to see your changes.
   </div>
+  <div uib-alert close="$root.groupEditSuccess = false;" class="alert alert-success" ng-show="$root.groupEditSuccess" dismiss-on-timeout=3000>
+    <strong>Person edited successfully!</strong> Refresh to see your changes.
+  </div>
   <div uib-alert close="$root.userEditSuccess = false;" class="alert alert-success" ng-show="$root.userEditSuccess" dismiss-on-timeout=3000>
     <strong>User information edited successfully!</strong>
   </div>
-  <div uib-alert close="reviewFailure = false; $root.personEditFailure = false; $root.userEditFailure= false;" class="alert alert-danger" ng-show="reviewFailure || $root.personEditFailure || $root.userEditFailure">
+  <div uib-alert close="reviewFailure = false; $root.personEditFailure = false; $root.userEditFailure= false; $root.groupEditFailure = false" class="alert alert-danger" ng-show="reviewFailure || $root.personEditFailure || $root.userEditFailure || $root.groupEditFailure">
     <strong>Something went wrong!</strong> Please try again, log out and back in, or refresh the page. If the problem persists, <a href="mailto:SixDegreesFrancisBacon@gmail.com" class="alert-link">contact us</a>.
   </div>
   <section class="on-the-left">
@@ -27,7 +30,7 @@
   <div id="viz-title">
     <div>{{ config.networkName }}</div>
     <p>{{ config.networkDesc }}</p>
-    <p ng-show=" config.viewMode === 'group-timeline' || config.viewMode === 'group-force'">Started {{ config.groupStartType }} {{ config.groupStart }}, Ended {{ config.groupEndType }} {{ config.groupEnd }}</p>
+    <p ng-show=" config.viewMode === 'group-timeline' || config.viewMode === 'group-force'">Started {{ config.groupStartType }} {{ config.groupStart }}, Ended {{ config.groupEndType }} {{ config.groupEnd }} <a href ng-show="$root.user.is_active && $root.user.user_type !== 'Standard'" ng-click="openEditGroupModal()"><i class="fa fa-pencil" aria-hidden="true"></i></a></p>
   </div>
   <section class="on-the-right" ng-show=" config.viewMode != 'group-timeline' ">
     <div id="contribute-buttons">
