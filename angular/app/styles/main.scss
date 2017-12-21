@@ -1720,6 +1720,27 @@ upload .container-fluid {
   height: 95vh;
   overflow-y: scroll;
 
+  .upload-title {
+    display: inline-block;
+    margin-left: 15px;
+  }
+
+  .instructions-toggle {
+    font-size: 12px;
+    margin-left: 8px;
+  }
+
+  .instructions {
+    background-color: $panels-bg;
+    border: 1px solid $panels-stroke;
+    border-radius: 4px;
+    margin-left: 15px;
+    margin-bottom: 10px;
+    padding: 5px;
+
+    div { margin-top: 15px; }
+  }
+
   .person-form {
   //   border: 1px solid $panels-stroke;
   //   border-radius: 4px;

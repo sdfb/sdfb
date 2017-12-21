@@ -1,9 +1,39 @@
 <div class="container-fluid">
     <div class="row">
+			<h4 class="upload-title">Upload Your Data to <em>Six Degrees</em></h4>
+      <a href ng-click="showInstructions = !showInstructions;" class="instructions-toggle">
+        <span ng-show="showInstructions">Hide instructions [-]</span>
+        <span ng-show="!showInstructions">Show instructions [+]</span>
+      </a>
+    </div>
+    <div class="row">
+      <div class="instructions col-md-7" ng-show="showInstructions">
+        <h5>Instructions and Tips</h5>
+        <div>To upload your dataset to <em>Six Degrees of Francis Bacon</em>, simply copy-paste your data or drag a CSV (comma-separated value) file into the box below. Because you already have curator status, all your contributions here will be automatically approved, so keep in mind that <em>Six Degrees</em> only accepts people, relationships, and groups who were living or active between 1500 and 1700.</div>
 
-			<!-- <div class="col-md-2"> -->
-				<h4>Upload Your Data to <em>Six Degrees</em></h4>
-			<!-- </div> -->
+        <div>Your data should include a header line with the following REQUIRED column names:</div>
+        <ul>
+          <li>People: <code>name</code> or <code>id</code> for each individual.</li>
+          <li>Relationships: <code>source_name</code> or <code>source_id</code> AND <code>target_name</code> or <code>target_id</code> for each relationship.</li>
+          <li>Group Assignments: <code>person_name</code> or <code>person_id</code> AND <code>group_name</code> or <code>group_id</code> for each group assignment.</li>
+        </ul>
+
+        <div>If you provide names, this upload page will search our data for matching people or groups and prompt you to fill out any remaining information. IDs are not strictly necessary, but if you choose to use them, they must match the appropriate <em>Six Degrees</em> IDs. Try our data downloads in the navigation bar to retrieve those IDs.</div>
+
+        <div>In addition to the required fields, you may also add the following optional fields:</div>
+        <ul>
+          <li>People: <code>historical_significance</code>, <code>birth_year</code>, <code>death_year</code>, <code>gender</code>, <code>citation</code></li>
+          <li>Relationships: <code>start_year</code>, <code>end_year</code>, <code>confidence</code>, <code>citation</code></li>
+          <li>Group Assignments: <code>start_year</code>, <code>end_year</code>, <code>citation</code></li>
+        </ul>
+
+        <div>When you upload your data, you'll be guided through the task of providing any other necessary information. Once that process is complete, your data will be fully incorporated into <em>Six Degrees</em> and credited to you!</div>
+
+        <div>If you have a series of relationships that include a lot of people not yet in <em>Six Degrees</em>, we recommend uploading a set of "People" data first. If you have a list of people that all belong in a single existing group, you can upload a table of people: at the bottom of the page you will have the chance to add all of them to one of our groups.</div>
+      </div>
+    </div>
+
+    <div class="row">
       <div class="col-md-12">
 
         <form class="form-horizontal" name="uploadForm" ng-submit="readCSV()">

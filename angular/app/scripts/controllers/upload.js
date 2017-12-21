@@ -10,6 +10,7 @@
  angular.module('redesign2017App').component('upload', {
    templateUrl: 'views/upload.html',
    controller: ['$scope', '$stateParams', '$state', 'apiService', '$rootScope', '$http', function($scope, $stateParams, $state, apiService, $rootScope, $http) {
+     $scope.showInstructions = true;
      $scope.dateTypes = [{'name':'IN', 'abbr': 'IN'}, {'name': 'CIRCA', 'abbr': 'CA'}, {'name': 'BEFORE', 'abbr': 'BF'}, {'name': 'BEFORE/IN', 'abbr': 'BF/IN'},{'name': 'AFTER', 'abbr': 'AF'}, {'name': 'AFTER/IN', 'abbr': 'AF/IN'}];
      $scope.gender = ['male', 'female', 'gender_nonconforming'];
      $scope.relTypeCats = null;
