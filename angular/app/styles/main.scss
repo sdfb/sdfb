@@ -1421,10 +1421,10 @@ contextual-info-panel.panel.contribution-mode-on {
   border-color: $contribution-mode-fill;
 }
 
-.all-types {
-  max-height: 10vh;
-  overflow-y: auto;
-}
+// .all-types {
+//   max-height: 10vh;
+//   overflow-y: auto;
+// }
 contextual-info-panel > section, contextual-info-panel > div > section {
   padding: 5px 15px 0;
   // text-align: center;
@@ -1474,8 +1474,8 @@ contextual-info-panel > div > section.rel-type {
   background-color: $panels-bg;
   border-top: 1px solid $panels-stroke;
   border-bottom: 1px solid $panels-stroke;
-  padding-top: 12px;
-  padding-bottom: 12px;
+  // padding-top: 12px;
+  padding-bottom: 2px;
 }
 
 .contribution-mode-on contextual-info-panel > div > section.rel-type {
