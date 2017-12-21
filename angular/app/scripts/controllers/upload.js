@@ -287,8 +287,11 @@
         console.log(addToDB);
         apiService.writeData(addToDB).then(function successCallback(result) {
           console.log('success!');
+          $scope.uploadSuccess = true;
+          $scope.peopleRows = [];
         }, function errorCallback(error) {
           console.error(error);
+          $scope.uploadFailure = true;
         });
       }
 
@@ -352,8 +355,11 @@
         console.log(addToDB);
         apiService.writeData(addToDB).then(function successCallback(result) {
           console.log('success!');
+          $scope.uploadSuccess = true;
+          $scope.relRows = [];
         }, function errorCallback(error) {
           console.error(error);
+          $scope.uploadFailure = true;
         });
       }
 
@@ -415,8 +421,11 @@
         console.log(addToDB);
         apiService.writeData(addToDB).then(function successCallback(result) {
           console.log('success!');
+          $scope.uploadSuccess = true;
+          $scope.gRows = [];
         }, function errorCallback(error) {
           console.error(error);
+          $scope.uploadFailure = true;
         });
       }
 

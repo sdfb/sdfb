@@ -1,4 +1,10 @@
 <div class="container-fluid">
+  <div uib-alert close="uploadSuccess = false;" class="alert alert-success" ng-show="uploadSuccess">
+    <strong>Data uploaded successfully!</strong> You can now return to the main site to see your data in action.
+  </div>
+  <div uib-alert close="uploadFailure = false" class="alert alert-danger" ng-show="uploadFailure">
+    <strong>Something went wrong!</strong> Please check that all required fields are filled in and all information is correct. If the problem persists, <a href="mailto:SixDegreesFrancisBacon@gmail.com" class="alert-link">contact us</a>.
+  </div>
     <div class="row">
 			<h4 class="upload-title">Upload Your Data to <em>Six Degrees</em></h4>
       <a href ng-click="showInstructions = !showInstructions;" class="instructions-toggle">
