@@ -1884,6 +1884,10 @@ upload .container-fluid {
     margin-top: 15px;
   }
 }
+
+.small-screen-warning {
+  display: none;
+}
 /*MEDIA QUERIES*/
 $screen-xs-max: 767;
 $screen-sm-min: 768;
@@ -1895,3 +1899,12 @@ $screen-lg-min: 1200;
 @media (min-width: $screen-sm-min) and (max-width: $screen-sm-max) {}
 @media (min-width: $screen-md-min) and (max-width: $screen-md-max) {}
 @media (min-width: $screen-lg-min) {}
+
+@media (max-width: 800px) and (max-height: 800px) {
+  .small-screen-warning {
+    display: block;
+  }
+  ui-view {
+    display: none;
+  }
+}
