@@ -14,7 +14,7 @@ def make_nodelist(current_time, dict_cur):
     node_dicts = dict_cur.fetchall()
     node_dicts = [dict(n) for n in node_dicts]
     keys = list(node_dicts[0].keys())
-    with open('angular/app/data/SDFB_people.csv', 'w') as output_file:
+    with open('/var/www/sdfb/angular/app/data/SDFB_people.csv', 'w') as output_file:
         dict_writer = csv.DictWriter(output_file, keys)
         dict_writer.writeheader()
         dict_writer.writerows(node_dicts)
@@ -25,7 +25,7 @@ def make_edgelist(current_time, dict_cur):
     edge_dicts = dict_cur.fetchall()
     edge_dicts = [dict(n) for n in edge_dicts]
     keys = list(edge_dicts[0].keys())
-    with open('angular/app/data/SDFB_relationships.csv', 'w') as output_file:
+    with open('/var/www/sdfb/angular/app/data/SDFB_relationships.csv', 'w') as output_file:
         dict_writer = csv.DictWriter(output_file, keys)
         dict_writer.writeheader()
         dict_writer.writerows(edge_dicts)
