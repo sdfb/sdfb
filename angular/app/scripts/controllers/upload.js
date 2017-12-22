@@ -62,6 +62,7 @@
         } else if (data.indexOf(',') !== -1) {
           $scope.csvRows = $.csv.toObjects(data, {'separator': ','});
         }
+        $scope.showInstructions = false;
         if ($scope.csvType === "people") {
           processPeople($scope.csvRows);
         } else if ($scope.csvType === "relationships") {
