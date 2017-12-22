@@ -3,8 +3,8 @@
 import psycopg2, sys, time, csv
 from psycopg2 import extras
 
-def open_cursor(database_name):
-    conn = psycopg2.connect('dbname='+database_name)
+def open_cursor(database_name, password):
+    conn = psycopg2.connect(dbname=database_name, user='postgres', password=password)
     dict_cur = conn.cursor(cursor_factory=extras.DictCursor)
     return dict_cur
 
@@ -32,7 +32,8 @@ def make_edgelist(current_time, dict_cur):
 
 if __name__ == '__main__':
     database_name = sys.argv[1]
+    password = sys.argv[2]
     current_time = time.strftime("%Y_%m_%d", time.gmtime())
-    dict_cur = open_cursor(database_name)
+    dict_cur = open_cursor(database_name, password)
     make_nodelist(current_time, dict_cur)
     make_edgelist(current_time, dict_cur)
