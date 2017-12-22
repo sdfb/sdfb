@@ -509,10 +509,10 @@ class ApiController < ApplicationController
   #-----------------------------
   def groups
       if params[:ids].blank?
-        @groups = Group.all
+        @groups = Group.all_approved
           .includes(:group_assignments)
           .where('group_assignments.is_approved = ?', true).references(:group_assignments)
-        group_list = Group.all
+        group_list = Group.all_approved
           .includes(:group_assignments, :people)
           .where('group_assignments.is_approved = ?', true)
           .references(:group_assignments)
@@ -540,7 +540,7 @@ class ApiController < ApplicationController
           @groups = Group
             .includes(:group_assignments, :people)
             .where('group_assignments.is_approved = ?', true).references(:group_assignments)
-            .find(ids)
+            .where(id: ids, is_approved: true)
           @people = @groups.map{|g| g.group_assignments.map(&:person)}.reduce(:+).uniq
         rescue ActiveRecord::RecordNotFound => e
           @errors = []
