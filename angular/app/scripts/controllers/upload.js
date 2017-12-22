@@ -55,7 +55,13 @@
       $scope.csvType = "people";
       $scope.readCSV = function() {
         var data = $('textarea').val();
-        $scope.csvRows = $.csv.toObjects(data);
+        if (data.indexOf(' \t') !== -1) {
+          $scope.csvRows = $.csv.toObjects(data, {'separator': ' \t'});
+        } else if (data.indexOf('\t') !== -1) {
+          $scope.csvRows = $.csv.toObjects(data, {'separator': '\t'});
+        } else if (data.indexOf(',') !== -1) {
+          $scope.csvRows = $.csv.toObjects(data, {'separator': ','});
+        }
         if ($scope.csvType === "people") {
           processPeople($scope.csvRows);
         } else if ($scope.csvType === "relationships") {
@@ -160,10 +166,12 @@
       }
 
       function processGroupAssigns(rows) {
+        console.log(rows);
         rows.forEach(function(r) {
           if (r.person_id) {
             apiService.getPeople(r.person_id).then(function successCallback(result) {
-              r.foundSourcePeople = result.data;
+              console.log(result.data);
+              r.foundPeople = result.data;
               r.personFound = true;
               r.personChoice = '0';
             }, function errorCallback(error) {
@@ -190,7 +198,7 @@
           }
           if (r.group_id) {
             apiService.getGroups(r.group_id).then(function successCallback(result) {
-              r.foundTargetPeople = result.data;
+              r.foundGroups = result.data.data;
               r.groupFound = true;
               r.groupChoice = '0';
             }, function errorCallback(error) {
