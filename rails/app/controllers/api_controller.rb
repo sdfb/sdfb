@@ -10,17 +10,17 @@ class ApiController < ApplicationController
     case params["type"]
     when "people"
       @people = Person.all_unapproved.limit(size).offset(offset)
-      render "people"      
+      render "people"
     when "groups"
       @groups = Group.all_unapproved.limit(size).offset(offset)
-      render "groups"    
+      render "groups"
     when "group_assignments"
       @assignments = GroupAssignment.all_unapproved.limit(size).offset(offset)
       person_ids = @assignments.collect{|l| l.person_id}.uniq
       group_ids = @assignments.collect{|l| l.group_id}.uniq
       @people = Person.find(person_ids)
       @groups = Group.find(group_ids)
-      render "group_assignments"      
+      render "group_assignments"
     when "relationships"
       @relationships = Relationship.all_unapproved.limit(size).offset(offset)
       person_ids = @relationships.collect{|l| [l.person1_index,l.person2_index]}.flatten.uniq
@@ -30,7 +30,7 @@ class ApiController < ApplicationController
       @links = UserRelContrib.all_unapproved.limit(size).offset(offset)
       person_ids = @links.collect{|l| [l.relationship.person1_index,l.relationship.person2_index]}.flatten.uniq
       @people = Person.find(person_ids)
-      render "links"      
+      render "links"
     else
       return head(:bad_request)
     end
@@ -43,12 +43,12 @@ class ApiController < ApplicationController
     group_ids = []
 
     @people = Person.all_approved.limit(size).order(approved_on: :desc)
-    
+
     @groups = Group.all_approved.limit(size).order(approved_on: :desc)
 
     @relationships = Relationship.all_approved.limit(size).order(approved_on: :desc)
     person_ids += @relationships.collect{|l| [l.person1_index,l.person2_index]}.flatten
-    
+
     @assignments = GroupAssignment.all_approved.limit(size).order(approved_on: :desc)
     person_ids += @assignments.collect{|l| l.person_id}
     group_ids += @assignments.collect{|l| l.group_id}
@@ -67,7 +67,7 @@ class ApiController < ApplicationController
     size = params["size"] || 20
     @people = Person.all_approved.limit(size).offset(offset).order(:display_name)
     render "people"
-  end  
+  end
 
   #-----------------------------
   def all_relationships
@@ -78,7 +78,7 @@ class ApiController < ApplicationController
     @people = Person.find(person_ids)
     render "curation_relationships"
 
-  end  
+  end
 
 
   #-----------------------------
@@ -163,7 +163,7 @@ class ApiController < ApplicationController
     if nodes = params[:nodes]
       nodes.each do |node|
         placeholder_id = nil
-        if node["id"] && node["id"].to_i < 1_000_000 
+        if node["id"] && node["id"].to_i < 1_000_000
           placeholder_id = node["id"]
           node.delete("id")
         end
@@ -222,7 +222,7 @@ class ApiController < ApplicationController
     if groups = params[:groups]
       groups.each do |group|
         placeholder_id = nil
-        if group["id"] && group["id"]< 0 
+        if group["id"] && group["id"]< 0
           placeholder_id = group["id"]
           group.delete("id")
         end
@@ -243,7 +243,7 @@ class ApiController < ApplicationController
           end
           new_record[:is_active]   = group["is_active"] unless group["is_active"].nil?
         end
-    
+
         if group["id"]
           new_record.reject! {|_,v| v.nil?}
           Group.find(group["id"]).update!(new_record)
@@ -258,23 +258,23 @@ class ApiController < ApplicationController
     if links = params[:links]
       links.each do |link|
 
-        if link["id"] 
+        if link["id"]
           rel = Relationship.find(link["id"])
           puts rel
         else
-          begin        
-            source_id = link["source"]["id"].to_i 
+          begin
+            source_id = link["source"]["id"].to_i
             source_id = person_lookup[source_id]  if source_id  < 1_000_000
           rescue Exception => e
             source_id = nil
           end
           begin
             target_id  = link["target"]["id"].to_i
-            target_id  = person_lookup[target_id] if target_id  < 1_000_000          
+            target_id  = person_lookup[target_id] if target_id  < 1_000_000
           rescue Exception => e
             target_id = nil
           end
-          
+
           if source_id && target_id
             rel = Relationship.where("person1_index = ? AND person2_index = ?", source_id, target_id).first
             rel ||= Relationship.where("person1_index = ? AND person2_index = ?", target_id, source_id).first
@@ -314,12 +314,12 @@ class ApiController < ApplicationController
 
     if group_assignments = params[:group_assignments]
       group_assignments.each do |assignment|
-      
+
         person_id = assignment.dig("person","id")
         group_id  = assignment.dig("group","id")
         person_id = person_lookup[person_id] if person_id && person_id.to_i < 1_000_000
         group_id  = group_lookup[group_id]   if group_id && group_id.to_i  < 0
-       
+
         # update_dates(Group.find(group_id),assignment) if group_id
 
         new_record = {
@@ -348,7 +348,7 @@ class ApiController < ApplicationController
       end
     end
 
-    if relationships = params[:relationships] 
+    if relationships = params[:relationships]
       relationships.each do |relationship|
         new_record = {
           original_certainty: relationship["confidence"],
@@ -368,7 +368,7 @@ class ApiController < ApplicationController
           end
           new_record[:is_active]   = relationship["is_active"] unless relationship["is_active"].nil?
         end
-      
+
         if relationship["id"]
           new_record.reject! {|_,v| v.nil?}
           Relationship.find(relationship["id"]).update!(new_record)
@@ -379,7 +379,7 @@ class ApiController < ApplicationController
       end
     end
 
-    if relationship_assignments = params[:relationshipAssignments] 
+    if relationship_assignments = params[:relationshipAssignments]
       relationship_assignments.each do |link|
         new_record = {
           relationship_id: link["relationshipId"],
@@ -398,7 +398,7 @@ class ApiController < ApplicationController
           end
           new_record[:is_active]   = link["is_active"] unless link["is_active"].nil?
         end
-      
+
         if link["id"]
           new_record.reject! {|_,v| v.nil?}
           UserRelContrib.find(link["id"]).update!(new_record)
@@ -411,9 +411,9 @@ class ApiController < ApplicationController
 
     render json: {status: "200"}
   end
-  # 
+  #
   # [people description]
-  # 
+  #
   # @return [type] [description]
   #-----------------------------
   def people
@@ -437,7 +437,7 @@ class ApiController < ApplicationController
     begin
       @relationships = Relationship.includes(:user_rel_contribs).find(ids)
 
-      first_degree_ids = @relationships.collect do |r| 
+      first_degree_ids = @relationships.collect do |r|
         [r.person1_index, r.person2_index]
       end.flatten.uniq - ids
       @people = Person.includes(:groups).all_approved.find(first_degree_ids)
@@ -447,7 +447,7 @@ class ApiController < ApplicationController
       @errors << {title: "Invalid relationship ID(s)"}
     end
     respond_to do |format|
-      format.json 
+      format.json
       format.html { render :json}
     end
   end
@@ -460,7 +460,7 @@ class ApiController < ApplicationController
     if type.blank? || query.blank?
       raise ActionController::RoutingError.new('Not Found')
     end
-    
+
     lookup = {}
     case type
     when "person"
@@ -553,7 +553,22 @@ class ApiController < ApplicationController
       end
   end
 
-
+  #-----------------------------
+  def groupnames
+    begin
+      ids = params[:ids].split(",")
+      @groups = Group
+        .where(id: ids, is_approved: true)
+    rescue ActiveRecord::RecordNotFound => e
+      @errors = []
+      @errors << {title: "Invalid group ID(s)"}
+    end
+    respond_to do |format|
+      format.json
+      format.html { render :json}
+    end
+  end
+  
   #-----------------------------
   def network
     begin
@@ -567,8 +582,8 @@ class ApiController < ApplicationController
       @people = Person.includes(groups: :group_assignments).all_approved.find(ids)
 
       @relationships = @people.map{|p| p.relationships(max_certainty)}.reduce(:+).uniq
-      
-      first_degree_ids = @relationships.collect do |r| 
+
+      first_degree_ids = @relationships.collect do |r|
         [r.person1_index, r.person2_index]
       end.flatten.uniq - ids
 
@@ -578,7 +593,7 @@ class ApiController < ApplicationController
       @relationships = @relationships | first_degree_relationships
 
       if ids.count == 1
-        second_degree_ids = first_degree_relationships.collect do |r| 
+        second_degree_ids = first_degree_relationships.collect do |r|
           [r.person1_index, r.person2_index]
         end.flatten.uniq - (ids + first_degree_ids)
 
@@ -609,7 +624,7 @@ class ApiController < ApplicationController
       @groups = Group.all_approved.find(ids)
 
       @primary_people = @groups.map(&:approved_people).reduce(:+).uniq
-      
+
       @relationships = @primary_people.map{|p| p.relationships(max_certainty)}.flatten
 
       first_degree_ids = @relationships.collect do |r|
@@ -618,7 +633,7 @@ class ApiController < ApplicationController
 
       secondary_people = Person.includes(:groups).all_approved.find(first_degree_ids)
 
-      @people = secondary_people | @primary_people 
+      @people = secondary_people | @primary_people
     rescue ActiveRecord::RecordNotFound => e
       @errors = []
       @errors << {title: "invalid group ID(s)"}
@@ -644,7 +659,7 @@ class ApiController < ApplicationController
           if current_type == "AF"
             output_type = new_type
             output_date = new_date
-          end            
+          end
         end
       end
     when "BF", "BF/IN"
@@ -660,13 +675,13 @@ class ApiController < ApplicationController
           if current_type == "BF"
             output_type = new_type
             output_date = new_date
-          end  
+          end
         end
       end
     when "CA"
       if (new_date - current_date).abs <= 10
         if new_type == "CA"
-          new_date = (new_date + current_date)/2 
+          new_date = (new_date + current_date)/2
         end
         output_type = new_type
         output_date = new_date
@@ -674,7 +689,7 @@ class ApiController < ApplicationController
     when "IN"
       if new_type == "CA" && (new_date - current_date).abs <= 4
         output_type = "CA"
-        output_date = (new_date + current_date)/2 
+        output_date = (new_date + current_date)/2
       end
     end
     return [output_type, output_date]
