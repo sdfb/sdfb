@@ -323,7 +323,7 @@ angular.module('redesign2017App').component('visualization', {
       });
 
       if (listGroups.length > 0) {
-        apiService.getGroups(listGroups.toString()).then(function (r) {
+        apiService.getSimpleGroups(listGroups.toString()).then(function (r) {
 
           listGroups = _.countBy(listGroups);
 

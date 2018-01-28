@@ -83,6 +83,23 @@ angular.module('redesign2017App')
           return response;
         });
       },
+      getSimpleGroups : function(ids){
+        // Works for a single group as well, just call with a singular ID
+        var url = baseUrl + '/api/groupnames';
+        return $http({
+          method: 'GET',
+          url: url,
+          params: {
+              ids: ids
+            }
+        }).then(function successCallback(response){
+          return response;
+        },function errorCallback(response){
+          console.error("An error occured while fetching file",response);
+          console.warn("If the issue is related to CORS Origin, try install this extention on Chrome: https://chrome.google.com/webstore/detail/allow-control-allow-origi/nlfbmbojpeacfghkpbjhddihlkkiljbi")
+          return response;
+        });
+      },
       getGroupNetwork : function(ids, certainty){
         if (certainty === undefined) {
           certainty = 60;
