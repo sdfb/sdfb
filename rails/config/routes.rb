@@ -9,6 +9,7 @@ Sdfb::Application.routes.draw do
     get  'api/relationships'
     get  'api/recent_contributions'
     get  'api/groups'
+    get  'api/groupnames'
     get  'api/network'
     get  'api/groups/network', action: :group_network, controller: :api
     get  'api/typeahead'
