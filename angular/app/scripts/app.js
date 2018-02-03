@@ -34,7 +34,7 @@ redesign2017App.config(function($stateProvider, $locationProvider, $compileProvi
     name: 'home.visualization',
     url: '?ids&min_confidence&type',
     resolve: {
-      networkData: ['apiService', '$stateParams', function(apiService, $stateParams) {
+      networkData: ['apiService', '$stateParams', '$http', function(apiService, $stateParams, $http) {
         if ($stateParams.ids.length < 8 && $stateParams.type === 'network') {
           return apiService.getGroupNetwork($stateParams.ids, $stateParams.min_confidence).then(function(result){
             apiService.result = result.data;
@@ -46,10 +46,16 @@ redesign2017App.config(function($stateProvider, $locationProvider, $compileProvi
             return apiService.result;
           });
         } else if ($stateParams.type === 'all-groups') {
-          return apiService.getAllGroups().then(function(result){
-            apiService.result = result;
+          // Nightly build method (file created in cronjob)
+          return $http.get("/data/allgroups.json").then(function(result){
+            apiService.result = result.data;
             return apiService.result;
           });
+          // Old code for API method (which had been slow)
+          // return apiService.getAllGroups().then(function(result){
+          //   apiService.result = result;
+          //   return apiService.result;
+          // });
         } else {
           return apiService.getNetwork($stateParams.ids, $stateParams.min_confidence).then(function(result){
             apiService.result = result.data;

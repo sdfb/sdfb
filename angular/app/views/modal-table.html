@@ -54,7 +54,7 @@
                 <td>{{ group.attributes.start_year_type }} {{ group.attributes.start_year }}</td>
                 <td>{{ group.attributes.end_year_type }} {{ group.attributes.end_year }}</td>
                 <td>
-                    <button ng-click="$ctrl.cancel()" ui-sref="home.visualization({ ids: group.id })" type="button" class="btn btn-primary">
+                    <button ng-click="$ctrl.cancel()" ui-sref="home.visualization({ ids: group.id, type: 'network' })" type="button" class="btn btn-primary">
                         Visualize
                     </button>
                 </td>
