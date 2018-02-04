@@ -47,15 +47,15 @@ redesign2017App.config(function($stateProvider, $locationProvider, $compileProvi
           });
         } else if ($stateParams.type === 'all-groups') {
           // Nightly build method (file created in cronjob)
-          return $http.get("/data/allgroups.json").then(function(result){
-            apiService.result = result.data;
-            return apiService.result;
-          });
-          // Old code for API method (which had been slow)
-          // return apiService.getAllGroups().then(function(result){
-          //   apiService.result = result;
+          // return $http.get("/data/allgroups.json").then(function(result){
+          //   apiService.result = result.data;
           //   return apiService.result;
           // });
+          // Old code for API method (which had been slow)
+          return apiService.getAllGroups().then(function(result){
+            apiService.result = result;
+            return apiService.result;
+          });
         } else {
           return apiService.getNetwork($stateParams.ids, $stateParams.min_confidence).then(function(result){
             apiService.result = result.data;
