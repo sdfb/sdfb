@@ -513,7 +513,7 @@ class ApiController < ApplicationController
           .includes(:group_assignments)
           .where('group_assignments.is_approved = ?', true).references(:group_assignments)
         group_list = Group.all_approved
-          .includes(:group_assignments, :people)
+          .includes(:group_assignments)#, :people)
           .where('group_assignments.is_approved = ?', true)
           .references(:group_assignments)
           .to_a
