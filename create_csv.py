@@ -1,6 +1,6 @@
 #! /usr/bin/env python3
 
-import psycopg2, sys, time, csv, json
+import psycopg2, sys, time, csv, json, os, glob
 from psycopg2 import extras
 
 def open_cursor(database_name, password):
@@ -78,6 +78,8 @@ def make_relationshiptypes(current_time, dict_cur):
 if __name__ == '__main__':
     database_name = sys.argv[1]
     password = sys.argv[2]
+    for f in glob.glob('/var/www/sdfb/angular/app/data/SDFB*'):
+        os.remove(f)
     current_time = time.strftime("%Y_%m_%d", time.gmtime())
     dict_cur = open_cursor(database_name, password)
     make_nodelist(current_time, dict_cur)
