@@ -221,6 +221,11 @@
     },
     {
         "category":"Labor/Professional",
+        "id":38,
+        "name":"Patron of"
+    },
+    {
+        "category":"Labor/Professional",
         "id":37,
         "name":"Coworker of"
     },
@@ -393,6 +398,11 @@
         "category":"Political",
         "id":34,
         "name":"Client of"
+    },
+    {
+        "category":"Political",
+        "id":38,
+        "name":"Patron of"
     },
     {
         "category":"Religious",
