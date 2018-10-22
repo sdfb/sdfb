@@ -57,7 +57,7 @@ def make_groupassignments(current_time, dict_cur):
         dict_writer.writerows(edge_dicts)
 
 def make_relationshiptypes(current_time, dict_cur):
-    with open('angular/app/data/rel_cats.json', 'r') as reltypefile:
+    with open('/var/www/sdfb/angular/app/data/rel_cats.json', 'r') as reltypefile:
         reltypes = json.loads(reltypefile.read())
     reltypes = {r['id']:r for r in reltypes}
     dict_cur.execute("SELECT id, relationship_id, relationship_type_id, certainty, start_date_type, start_year, end_date_type, end_year, created_by, created_at, approved_by, approved_on, citation FROM user_rel_contribs WHERE is_approved = true;")
