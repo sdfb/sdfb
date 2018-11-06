@@ -50,11 +50,19 @@ def make_groupassignments(current_time, dict_cur):
     edge_dicts = dict_cur.fetchall()
     edge_dicts = [dict(n) for n in edge_dicts]
     keys = ['id', 'group_id', 'person_id', 'start_date_type', 'start_year', 'end_date_type', 'end_year', 'created_by', 'created_at', 'approved_by', 'approved_on', 'citation']
+    count_duplicates = []
+    cleaned_edge_dicts = []
+    for e in edge_dicts:
+        if (e['group_id'], e['person_id']) not in count_duplicates:
+            count_duplicates.append((e['group_id'], e['person_id']))
+            cleaned_edge_dicts.append(e)
+        else:
+            print("Duplicate found:", e['group_id'], e['person_id'])
     filename = '/var/www/sdfb/angular/dist/data/SDFB_group_assignments_{}.csv'.format(current_time)
     with open(filename, 'w') as output_file:
         dict_writer = csv.DictWriter(output_file, keys)
         dict_writer.writeheader()
-        dict_writer.writerows(edge_dicts)
+        dict_writer.writerows(cleaned_edge_dicts)
 
 def make_relationshiptypes(current_time, dict_cur):
     with open('/var/www/sdfb/angular/dist/data/rel_cats.json', 'r') as reltypefile:
