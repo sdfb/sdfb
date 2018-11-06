@@ -34,7 +34,7 @@ angular.module('redesign2017App')
         }
 
         var now = new Date()
-        scope.today = now.getFullYear() + '_' + (now.getMonth()+1) + '_' + now.getDate();
+        scope.today = now.getFullYear() + '_' + ("0" + (now.getMonth() + 1)).slice(-2) + '_' + ("0" + now.getDate()).slice(-2);
 
         scope.logIn = function() {
           apiService.logIn($rootScope.user).then(function(result) {
